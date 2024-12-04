@@ -27,6 +27,8 @@ class PasswordLoginViewController: WDBaseViewController {
             self?.navigationController?.popToRootViewController(animated: true)
         }).disposed(by: disposeBag)
         
+        ViewHud.addLoadView()
+        
         tapClick()
     }
 

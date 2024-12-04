@@ -31,6 +31,11 @@
 		7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7DD2CFF0E6A0043C196 /* PasswordLoginViewController.swift */; };
 		7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7DF2CFF14350043C196 /* ForgetPasswordViewController.swift */; };
 		7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */; };
+		7325A7E42CFFF8EE0043C196 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 7325A7E32CFFF8EE0043C196 /* loading.json */; };
+		7325A7E62D0000040043C196 /* GetCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E52D0000040043C196 /* GetCodeViewController.swift */; };
+		7325A7EE2D0008D10043C196 /* WLUnitFieldTextPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7EB2D0008D10043C196 /* WLUnitFieldTextPosition.m */; };
+		7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */; };
+		7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E92D0008D10043C196 /* WLUnitField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -75,6 +80,15 @@
 		7325A7DD2CFF0E6A0043C196 /* PasswordLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordLoginViewController.swift; sourceTree = "<group>"; };
 		7325A7DF2CFF14350043C196 /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
 		7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordView.swift; sourceTree = "<group>"; };
+		7325A7E32CFFF8EE0043C196 /* loading.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
+		7325A7E52D0000040043C196 /* GetCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCodeViewController.swift; sourceTree = "<group>"; };
+		7325A7E82D0008D10043C196 /* WLUnitField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLUnitField.h; sourceTree = "<group>"; };
+		7325A7E92D0008D10043C196 /* WLUnitField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLUnitField.m; sourceTree = "<group>"; };
+		7325A7EA2D0008D10043C196 /* WLUnitFieldTextPosition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLUnitFieldTextPosition.h; sourceTree = "<group>"; };
+		7325A7EB2D0008D10043C196 /* WLUnitFieldTextPosition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLUnitFieldTextPosition.m; sourceTree = "<group>"; };
+		7325A7EC2D0008D10043C196 /* WLUnitFieldTextRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLUnitFieldTextRange.h; sourceTree = "<group>"; };
+		7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLUnitFieldTextRange.m; sourceTree = "<group>"; };
+		7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "问道云-Bridging-Header.h"; sourceTree = "<group>"; };
 		845B2366B1013718573E8C55 /* Pods-问道云.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.debug.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.debug.xcconfig"; sourceTree = "<group>"; };
 		BF2EE8A0497D8E69CF0E16AE /* Pods-问道云.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.release.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -191,8 +205,10 @@
 		7325A7AF2CFEE7D90043C196 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				7325A7E32CFFF8EE0043C196 /* loading.json */,
 				7325A7C72CFEEF780043C196 /* Config.swift */,
 				7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */,
+				7325A7E72D0008AF0043C196 /* OC */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -220,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				7325A7CA2CFEF2E70043C196 /* WDLoginViewController.swift */,
+				7325A7E52D0000040043C196 /* GetCodeViewController.swift */,
 				7325A7DD2CFF0E6A0043C196 /* PasswordLoginViewController.swift */,
 				7325A7DF2CFF14350043C196 /* ForgetPasswordViewController.swift */,
 			);
@@ -243,6 +260,20 @@
 				7325A7BB2CFEEE060043C196 /* Pods_问道云.framework */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		7325A7E72D0008AF0043C196 /* OC */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7E82D0008D10043C196 /* WLUnitField.h */,
+				7325A7E92D0008D10043C196 /* WLUnitField.m */,
+				7325A7EA2D0008D10043C196 /* WLUnitFieldTextPosition.h */,
+				7325A7EB2D0008D10043C196 /* WLUnitFieldTextPosition.m */,
+				7325A7EC2D0008D10043C196 /* WLUnitFieldTextRange.h */,
+				7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */,
+				7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */,
+			);
+			path = OC;
 			sourceTree = "<group>";
 		};
 		C61455D1CEA19ADD364A1DEF /* Frameworks */ = {
@@ -288,6 +319,7 @@
 				TargetAttributes = {
 					7325A7802CFEE5240043C196 = {
 						CreatedOnToolsVersion = 16.1;
+						LastSwiftMigration = 1610;
 					};
 				};
 			};
@@ -317,6 +349,7 @@
 			files = (
 				7325A7A42CFEE58D0043C196 /* Assets.xcassets in Resources */,
 				7325A7A62CFEE58D0043C196 /* LaunchScreen.storyboard in Resources */,
+				7325A7E42CFFF8EE0043C196 /* loading.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,7 +402,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7325A7E62D0000040043C196 /* GetCodeViewController.swift in Sources */,
 				7325A7D12CFEFBE60043C196 /* WDYModel.swift in Sources */,
+				7325A7EE2D0008D10043C196 /* WLUnitFieldTextPosition.m in Sources */,
+				7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */,
+				7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */,
 				7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
@@ -413,6 +450,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -440,6 +478,8 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "问道云/Config/OC/问道云-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -451,6 +491,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -478,6 +519,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "问道云/Config/OC/问道云-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

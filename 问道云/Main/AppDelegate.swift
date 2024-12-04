@@ -21,9 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         keyBordManager()
+        rootVcPush()
         window = UIWindow()
         window?.frame = UIScreen.main.bounds
-        window?.rootViewController = WDNavigationController(rootViewController: WDLoginViewController())
+        window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
         window?.makeKeyAndVisible()
         return true
     }
@@ -36,6 +37,14 @@ extension AppDelegate {
         let manager = IQKeyboardManager.shared
         manager.enable = true
         manager.shouldResignOnTouchOutside = true
+    }
+    
+    func rootVcPush() {
+        NotificationCenter.default.addObserver(self, selector: #selector(setUpRootVc(_ :)), name: NSNotification.Name(ROOT_VC), object: nil)
+    }
+    
+    @objc func setUpRootVc(_ notification: Notification) {
+        window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
     }
     
 }

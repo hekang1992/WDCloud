@@ -103,8 +103,9 @@ class RequestManager: NSObject {
     private let provider = MoyaProvider<APIService>()
     
     private func requestData(target: APIService, completion: @escaping (Result<BaseModel, Error>) -> Void) {
-        
+        ViewHud.addLoadView()
         provider.request(target) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let response):
                 do {

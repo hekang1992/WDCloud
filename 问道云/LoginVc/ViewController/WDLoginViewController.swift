@@ -26,8 +26,19 @@ class WDLoginViewController: WDBaseViewController {
         loginView.mimaBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.tapClick()
         }).disposed(by: disposeBag)
+        
+        //获取验证码
+        loginView.sendBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.getCodeInfo()
+        }).disposed(by: disposeBag)
+        
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loginView.phoneTx.becomeFirstResponder()
+    }
+    
 }
 
 extension WDLoginViewController {
@@ -35,6 +46,28 @@ extension WDLoginViewController {
     func tapClick() {
         let passwordVc = PasswordLoginViewController()
         self.navigationController?.pushViewController(passwordVc, animated: true)
+    }
+    
+    //获取验证码
+    func getCodeInfo() {
+        let man = RequestManager()
+        let dict = ["phone": self.loginView.phoneTx.text ?? ""]
+        man.requestAPI(params: dict, pageUrl: get_code, method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                self?.pushCodeVc()
+                ToastViewConfig.showToast(message: success.msg ?? "")
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    func pushCodeVc() {
+        let codeVc = GetCodeViewController()
+        codeVc.phoneStr = self.loginView.phoneTx.text ?? ""
+        self.navigationController?.pushViewController(codeVc, animated: true)
     }
     
 }

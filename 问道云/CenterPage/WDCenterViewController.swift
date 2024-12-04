@@ -13,6 +13,9 @@ class WDCenterViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if IS_LOGIN {
+            print("登录成功=================")
+        }
     }
     
 
