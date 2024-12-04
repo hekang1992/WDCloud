@@ -6,30 +6,78 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A79D2CFEE58D0043C196 /* AppDelegate.swift */; };
+		7325A7A42CFEE58D0043C196 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7325A79E2CFEE58D0043C196 /* Assets.xcassets */; };
+		7325A7A62CFEE58D0043C196 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7325A7A12CFEE58D0043C196 /* LaunchScreen.storyboard */; };
+		7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7B32CFEE9520043C196 /* RequestManager.swift */; };
+		7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7B52CFEECDD0043C196 /* WDBaseViewController.swift */; };
+		7325A7B82CFEECF00043C196 /* WDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7B72CFEECF00043C196 /* WDNavigationController.swift */; };
+		7325A7BA2CFEED0F0043C196 /* WDTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7B92CFEED0F0043C196 /* WDTabBarController.swift */; };
+		7325A7BD2CFEEE060043C196 /* Pods_问道云.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7325A7BB2CFEEE060043C196 /* Pods_问道云.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7BF2CFEEE5F0043C196 /* WDHomeViewController.swift */; };
+		7325A7C22CFEEE6E0043C196 /* WDRiskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7C12CFEEE6E0043C196 /* WDRiskViewController.swift */; };
+		7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7C32CFEEE8B0043C196 /* WDDiligenceViewController.swift */; };
+		7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7C52CFEEE9A0043C196 /* WDCenterViewController.swift */; };
+		7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7C72CFEEF780043C196 /* Config.swift */; };
+		7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7CA2CFEF2E70043C196 /* WDLoginViewController.swift */; };
+		7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7CC2CFEFA0B0043C196 /* APIUrl.swift */; };
+		7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */; };
+		7325A7D12CFEFBE60043C196 /* WDYModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7D02CFEFBDE0043C196 /* WDYModel.swift */; };
+		7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7D42CFEFCC40043C196 /* LoginView.swift */; };
+		7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7D72CFF075B0043C196 /* BaseView.swift */; };
+		7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7D92CFF0BE10043C196 /* CodeView.swift */; };
+		7325A7DC2CFF0DBE0043C196 /* PasswordLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7DB2CFF0DBE0043C196 /* PasswordLoginView.swift */; };
+		7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7DD2CFF0E6A0043C196 /* PasswordLoginViewController.swift */; };
+		7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7DF2CFF14350043C196 /* ForgetPasswordViewController.swift */; };
+		7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7325A7BE2CFEEE060043C196 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7325A7BD2CFEEE060043C196 /* Pods_问道云.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		68995903FB3663C128436F79 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7325A7812CFEE5240043C196 /* 问道云.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "问道云.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7325A79D2CFEE58D0043C196 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7325A79E2CFEE58D0043C196 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7325A79F2CFEE58D0043C196 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7325A7A02CFEE58D0043C196 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7325A7B32CFEE9520043C196 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
+		7325A7B52CFEECDD0043C196 /* WDBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDBaseViewController.swift; sourceTree = "<group>"; };
+		7325A7B72CFEECF00043C196 /* WDNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDNavigationController.swift; sourceTree = "<group>"; };
+		7325A7B92CFEED0F0043C196 /* WDTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDTabBarController.swift; sourceTree = "<group>"; };
+		7325A7BB2CFEEE060043C196 /* Pods_问道云.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_问道云.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7325A7BF2CFEEE5F0043C196 /* WDHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDHomeViewController.swift; sourceTree = "<group>"; };
+		7325A7C12CFEEE6E0043C196 /* WDRiskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDRiskViewController.swift; sourceTree = "<group>"; };
+		7325A7C32CFEEE8B0043C196 /* WDDiligenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDDiligenceViewController.swift; sourceTree = "<group>"; };
+		7325A7C52CFEEE9A0043C196 /* WDCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDCenterViewController.swift; sourceTree = "<group>"; };
+		7325A7C72CFEEF780043C196 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		7325A7CA2CFEF2E70043C196 /* WDLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDLoginViewController.swift; sourceTree = "<group>"; };
+		7325A7CC2CFEFA0B0043C196 /* APIUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIUrl.swift; sourceTree = "<group>"; };
+		7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDLoginConfig.swift; sourceTree = "<group>"; };
+		7325A7D02CFEFBDE0043C196 /* WDYModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDYModel.swift; sourceTree = "<group>"; };
+		7325A7D42CFEFCC40043C196 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		7325A7D72CFF075B0043C196 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		7325A7D92CFF0BE10043C196 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
+		7325A7DB2CFF0DBE0043C196 /* PasswordLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordLoginView.swift; sourceTree = "<group>"; };
+		7325A7DD2CFF0E6A0043C196 /* PasswordLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordLoginViewController.swift; sourceTree = "<group>"; };
+		7325A7DF2CFF14350043C196 /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
+		7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordView.swift; sourceTree = "<group>"; };
+		845B2366B1013718573E8C55 /* Pods-问道云.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.debug.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.debug.xcconfig"; sourceTree = "<group>"; };
+		BF2EE8A0497D8E69CF0E16AE /* Pods-问道云.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.release.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		7325A7932CFEE5250043C196 /* Exceptions for "问道云" folder in "问道云" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 7325A7802CFEE5240043C196 /* 问道云 */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		7325A7832CFEE5240043C196 /* 问道云 */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				7325A7932CFEE5250043C196 /* Exceptions for "问道云" folder in "问道云" target */,
-			);
-			path = "问道云";
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		7325A77E2CFEE5240043C196 /* Frameworks */ = {
@@ -42,11 +90,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1704BF539669D5C8F403B1DD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				845B2366B1013718573E8C55 /* Pods-问道云.debug.xcconfig */,
+				BF2EE8A0497D8E69CF0E16AE /* Pods-问道云.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		7325A7782CFEE5230043C196 = {
 			isa = PBXGroup;
 			children = (
-				7325A7832CFEE5240043C196 /* 问道云 */,
+				7325A7A22CFEE58D0043C196 /* 问道云 */,
 				7325A7822CFEE5240043C196 /* Products */,
+				1704BF539669D5C8F403B1DD /* Pods */,
+				C61455D1CEA19ADD364A1DEF /* Frameworks */,
+				7325A7D62CFF059E0043C196 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +118,141 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		7325A79C2CFEE58D0043C196 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				7325A79F2CFEE58D0043C196 /* Info.plist */,
+				7325A79E2CFEE58D0043C196 /* Assets.xcassets */,
+				7325A79D2CFEE58D0043C196 /* AppDelegate.swift */,
+				7325A7A12CFEE58D0043C196 /* LaunchScreen.storyboard */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		7325A7A22CFEE58D0043C196 /* 问道云 */ = {
+			isa = PBXGroup;
+			children = (
+				7325A79C2CFEE58D0043C196 /* Main */,
+				7325A7AF2CFEE7D90043C196 /* Config */,
+				7325A7AC2CFEE7B20043C196 /* BaseVc */,
+				7325A7B02CFEE7E30043C196 /* RequsetManager */,
+				7325A7C92CFEF1F20043C196 /* LoginVc */,
+				7325A7A82CFEE6C30043C196 /* HomePage */,
+				7325A7AB2CFEE6E20043C196 /* RiskPage */,
+				7325A7AA2CFEE6DF0043C196 /* DiligencePage */,
+				7325A7A92CFEE6C70043C196 /* CenterPage */,
+			);
+			path = "问道云";
+			sourceTree = "<group>";
+		};
+		7325A7A82CFEE6C30043C196 /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7BF2CFEEE5F0043C196 /* WDHomeViewController.swift */,
+			);
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		7325A7A92CFEE6C70043C196 /* CenterPage */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7C52CFEEE9A0043C196 /* WDCenterViewController.swift */,
+			);
+			path = CenterPage;
+			sourceTree = "<group>";
+		};
+		7325A7AA2CFEE6DF0043C196 /* DiligencePage */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7C32CFEEE8B0043C196 /* WDDiligenceViewController.swift */,
+			);
+			path = DiligencePage;
+			sourceTree = "<group>";
+		};
+		7325A7AB2CFEE6E20043C196 /* RiskPage */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7C12CFEEE6E0043C196 /* WDRiskViewController.swift */,
+			);
+			path = RiskPage;
+			sourceTree = "<group>";
+		};
+		7325A7AC2CFEE7B20043C196 /* BaseVc */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7B52CFEECDD0043C196 /* WDBaseViewController.swift */,
+				7325A7B72CFEECF00043C196 /* WDNavigationController.swift */,
+				7325A7B92CFEED0F0043C196 /* WDTabBarController.swift */,
+				7325A7D72CFF075B0043C196 /* BaseView.swift */,
+			);
+			path = BaseVc;
+			sourceTree = "<group>";
+		};
+		7325A7AF2CFEE7D90043C196 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7C72CFEEF780043C196 /* Config.swift */,
+				7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		7325A7B02CFEE7E30043C196 /* RequsetManager */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7CC2CFEFA0B0043C196 /* APIUrl.swift */,
+				7325A7D02CFEFBDE0043C196 /* WDYModel.swift */,
+				7325A7B32CFEE9520043C196 /* RequestManager.swift */,
+			);
+			path = RequsetManager;
+			sourceTree = "<group>";
+		};
+		7325A7C92CFEF1F20043C196 /* LoginVc */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7D32CFEFCAA0043C196 /* View */,
+				7325A7D22CFEFCA70043C196 /* ViewController */,
+			);
+			path = LoginVc;
+			sourceTree = "<group>";
+		};
+		7325A7D22CFEFCA70043C196 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7CA2CFEF2E70043C196 /* WDLoginViewController.swift */,
+				7325A7DD2CFF0E6A0043C196 /* PasswordLoginViewController.swift */,
+				7325A7DF2CFF14350043C196 /* ForgetPasswordViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		7325A7D32CFEFCAA0043C196 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7D42CFEFCC40043C196 /* LoginView.swift */,
+				7325A7D92CFF0BE10043C196 /* CodeView.swift */,
+				7325A7DB2CFF0DBE0043C196 /* PasswordLoginView.swift */,
+				7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7325A7D62CFF059E0043C196 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7BB2CFEEE060043C196 /* Pods_问道云.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		C61455D1CEA19ADD364A1DEF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				68995903FB3663C128436F79 /* Pods____.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -65,20 +260,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7325A7942CFEE5250043C196 /* Build configuration list for PBXNativeTarget "问道云" */;
 			buildPhases = (
+				DD2821E764D8BC316599F4C2 /* [CP] Check Pods Manifest.lock */,
 				7325A77D2CFEE5240043C196 /* Sources */,
 				7325A77E2CFEE5240043C196 /* Frameworks */,
 				7325A77F2CFEE5240043C196 /* Resources */,
+				2A9988620076DD649A48B438 /* [CP] Embed Pods Frameworks */,
+				7325A7BE2CFEEE060043C196 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				7325A7832CFEE5240043C196 /* 问道云 */,
-			);
 			name = "问道云";
-			packageProductDependencies = (
-			);
 			productName = "问道云";
 			productReference = 7325A7812CFEE5240043C196 /* 问道云.app */;
 			productType = "com.apple.product-type.application";
@@ -122,73 +315,171 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7325A7A42CFEE58D0043C196 /* Assets.xcassets in Resources */,
+				7325A7A62CFEE58D0043C196 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2A9988620076DD649A48B438 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-问道云/Pods-问道云-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-问道云/Pods-问道云-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-问道云/Pods-问道云-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DD2821E764D8BC316599F4C2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-问道云-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7325A77D2CFEE5240043C196 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7325A7D12CFEFBE60043C196 /* WDYModel.swift in Sources */,
+				7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */,
+				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
+				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
+				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
+				7325A7C22CFEEE6E0043C196 /* WDRiskViewController.swift in Sources */,
+				7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */,
+				7325A7BA2CFEED0F0043C196 /* WDTabBarController.swift in Sources */,
+				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
+				7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */,
+				7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */,
+				7325A7DC2CFF0DBE0043C196 /* PasswordLoginView.swift in Sources */,
+				7325A7B82CFEECF00043C196 /* WDNavigationController.swift in Sources */,
+				7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */,
+				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
+				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
+				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
+				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
+				7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */,
+				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,
+				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		7325A7A12CFEE58D0043C196 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7325A7A02CFEE58D0043C196 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		7325A7952CFEE5250043C196 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 845B2366B1013718573E8C55 /* Pods-问道云.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "WDY.---";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = peizhiwenjian;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		7325A7962CFEE5250043C196 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF2EE8A0497D8E69CF0E16AE /* Pods-问道云.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "WDY.---";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = peizhiwenjian;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

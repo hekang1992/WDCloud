@@ -1,0 +1,6 @@
+framework module MBProgressHUD_WJExtension {
+  umbrella header "MBProgressHUD+WJExtension-umbrella.h"
+
+  export *
+  module * { export * }
+}
