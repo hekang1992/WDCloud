@@ -94,9 +94,9 @@ class PasswordLoginView: BaseView {
         yinsiLabel.font = .regularFontOfSize(size: 12)
         yinsiLabel.numberOfLines = 0
         yinsiLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
-        yinsiLabel.text = "我已阅读并同意《问道云协议》和《问道云隐私服务政策》条款"
+        yinsiLabel.text = "我已阅读并同意《问道云协议》和《问道云隐私政策》条款"
         let customType1 = ActiveType.custom(pattern: "\\b《问道云协议》\\b")
-        let customType2 = ActiveType.custom(pattern: "\\b《问道云隐私服务政策》\\b")
+        let customType2 = ActiveType.custom(pattern: "\\b《问道云隐私政策》\\b")
         yinsiLabel.enabledTypes.append(customType1)
         yinsiLabel.enabledTypes.append(customType2)
         yinsiLabel.customColor[customType1] = UIColor.init(cssStr: "#547AFF")
@@ -114,15 +114,15 @@ class PasswordLoginView: BaseView {
         return yinsiLabel
     }()
     
-    lazy var sendBtn: UIButton = {
-        let sendBtn = UIButton(type: .custom)
-        sendBtn.setTitle("登录", for: .normal)
-        sendBtn.layer.cornerRadius = 4
-        sendBtn.isEnabled = false
-        sendBtn.backgroundColor = UIColor.init(cssStr: "#D0D4DA")
-        sendBtn.titleLabel?.font = .regularFontOfSize(size: 18)
-        sendBtn.setTitleColor(UIColor.init(cssStr: "#FFFFFF"), for: .normal)
-        return sendBtn
+    lazy var loginBtn: UIButton = {
+        let loginBtn = UIButton(type: .custom)
+        loginBtn.setTitle("登录", for: .normal)
+        loginBtn.layer.cornerRadius = 4
+        loginBtn.isEnabled = false
+        loginBtn.backgroundColor = UIColor.init(cssStr: "#D0D4DA")
+        loginBtn.titleLabel?.font = .regularFontOfSize(size: 18)
+        loginBtn.setTitleColor(UIColor.init(cssStr: "#FFFFFF"), for: .normal)
+        return loginBtn
     }()
     
     lazy var footView: LoginFootView = {
@@ -141,7 +141,7 @@ class PasswordLoginView: BaseView {
         addSubview(passTx)
         addSubview(clickBtn)
         addSubview(yinsiLabel)
-        addSubview(sendBtn)
+        addSubview(loginBtn)
         addSubview(wangjimimaBtn)
         addSubview(footView)
         backBtn.snp.makeConstraints { make in
@@ -189,19 +189,19 @@ class PasswordLoginView: BaseView {
             make.left.equalTo(lineView1.snp.left)
         }
         clickBtn.snp.makeConstraints { make in
-            make.top.equalTo(lineView1.snp.bottom).offset(10)
-            make.left.equalToSuperview().offset(20)
-            make.size.equalTo(CGSize(width: 26, height: 26))
+            make.top.equalTo(lineView1.snp.bottom).offset(17.5)
+            make.left.equalToSuperview().offset(29)
+            make.size.equalTo(CGSize(width: 12, height: 12))
         }
         yinsiLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(clickBtn.snp.centerY)
+            make.top.equalTo(lineView1.snp.bottom).offset(15.5)
             make.left.equalTo(clickBtn.snp.right).offset(6)
             make.right.equalToSuperview().offset(-20)
         }
-        sendBtn.snp.makeConstraints { make in
+        loginBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.height.equalTo(48)
-            make.top.equalTo(yinsiLabel.snp.bottom).offset(15.5)
+            make.top.equalTo(yinsiLabel.snp.bottom).offset(35)
             make.left.equalToSuperview().offset(30)
         }
         footView.snp.makeConstraints { make in
@@ -231,11 +231,11 @@ extension PasswordLoginView {
             self.clickBtn.isSelected.toggle()
             let bool = !isAgreeBinder.value
             if bool == true {
-                self.sendBtn.isEnabled = true
-                self.sendBtn.backgroundColor = UIColor.init(cssStr: "#547AFF")
+                self.loginBtn.isEnabled = true
+                self.loginBtn.backgroundColor = UIColor.init(cssStr: "#547AFF")
             }else {
-                self.sendBtn.isEnabled = false
-                self.sendBtn.backgroundColor = UIColor.init(cssStr: "#D0D4DA")
+                self.loginBtn.isEnabled = false
+                self.loginBtn.backgroundColor = UIColor.init(cssStr: "#D0D4DA")
             }
             isAgreeBinder.accept(bool)
         }).disposed(by: disposeBag)

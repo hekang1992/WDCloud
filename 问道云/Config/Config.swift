@@ -192,6 +192,14 @@ class ToastViewConfig {
     }
 }
 
+class PushLoginConfig {
+    static func popLogin(from viewController: UIViewController) {
+        let loginVc = WDLoginViewController()
+        let rootVc = WDNavigationController(rootViewController: loginVc)
+        rootVc.modalPresentationStyle = .overFullScreen
+        viewController.present(rootVc, animated: true, completion: nil)
+    }
+}
 
 
 

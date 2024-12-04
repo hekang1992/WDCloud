@@ -83,9 +83,7 @@ extension APIService: TargetType {
         if let sessionId: String = UserDefaults.standard.object(forKey: WDY_SESSIONID) as? String {
             sessionID = sessionId
         }
-        if sessionID.count > 0 {
-            headers["Authorization"] = "Bearer " + sessionID
-        }
+        headers["Authorization"] = "Bearer " + sessionID
         return headers
     }
     

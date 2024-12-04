@@ -94,6 +94,7 @@ extension GetCodeViewController {
             switch result {
             case .success(let success):
                 //保存登录信息和跳转到首页
+                ToastViewConfig.showToast(message: success.msg ?? "")
                 if let model = success.data {
                     let phone = model.userinfo?.username ?? ""
                     let token = model.access_token ?? ""

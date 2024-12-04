@@ -14,6 +14,9 @@ import MBProgressHUD_WJExtension
 
 class LoginView: BaseView {
     
+    var block1: (() -> Void)?
+    var block2: (() -> Void)?
+    
     private let isAgreeBinder: BehaviorRelay<Bool> = .init(value: false)
 
     lazy var backBtn: UIButton = {
@@ -77,9 +80,9 @@ class LoginView: BaseView {
         yinsiLabel.font = .regularFontOfSize(size: 12)
         yinsiLabel.numberOfLines = 0
         yinsiLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
-        yinsiLabel.text = "我已阅读并同意《问道云协议》和《问道云隐私服务政策》条款"
+        yinsiLabel.text = "我已阅读并同意《问道云协议》和《问道云隐私政策》条款"
         let customType1 = ActiveType.custom(pattern: "\\b《问道云协议》\\b")
-        let customType2 = ActiveType.custom(pattern: "\\b《问道云隐私服务政策》\\b")
+        let customType2 = ActiveType.custom(pattern: "\\b《问道云隐私政策》\\b")
         yinsiLabel.enabledTypes.append(customType1)
         yinsiLabel.enabledTypes.append(customType2)
         yinsiLabel.customColor[customType1] = UIColor.init(cssStr: "#547AFF")
@@ -87,10 +90,10 @@ class LoginView: BaseView {
         yinsiLabel.customSelectedColor[customType1] = UIColor.init(cssStr: "#547AFF")
         yinsiLabel.customSelectedColor[customType2] = UIColor.init(cssStr: "#547AFF")
         yinsiLabel.handleCustomTap(for: customType1) { [weak self] element in
-            MBProgressHUD.wj_showPlainText("点击协议", view: nil)
+            self?.block1?()
         }
         yinsiLabel.handleCustomTap(for: customType2) { [weak self] element in
-            MBProgressHUD.wj_showPlainText("点击政策", view: nil)
+            self?.block2?()
         }
         let attributedString = NSMutableAttributedString(string: yinsiLabel.text!)
         yinsiLabel.attributedText = attributedString
@@ -196,19 +199,19 @@ class LoginView: BaseView {
             make.height.equalTo(0.5)
         }
         clickBtn.snp.makeConstraints { make in
-            make.top.equalTo(lineView.snp.bottom).offset(10)
-            make.left.equalToSuperview().offset(20)
-            make.size.equalTo(CGSize(width: 26, height: 26))
+            make.top.equalTo(lineView.snp.bottom).offset(17.5)
+            make.left.equalToSuperview().offset(29)
+            make.size.equalTo(CGSize(width: 12, height: 12))
         }
         yinsiLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(clickBtn.snp.centerY)
+            make.top.equalTo(lineView.snp.bottom).offset(15.5)
             make.left.equalTo(clickBtn.snp.right).offset(6)
             make.right.equalToSuperview().offset(-20)
         }
         sendBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.height.equalTo(48)
-            make.top.equalTo(yinsiLabel.snp.bottom).offset(15.5)
+            make.top.equalTo(yinsiLabel.snp.bottom).offset(32.5)
             make.left.equalToSuperview().offset(30)
         }
         oneBtn.snp.makeConstraints { make in

@@ -9,6 +9,8 @@ import UIKit
 
 class PasswordLoginViewController: WDBaseViewController {
     
+    var phoneStr: String = ""
+    
     lazy var passView: PasswordLoginView = {
         let passView = PasswordLoginView()
         return passView
@@ -27,9 +29,14 @@ class PasswordLoginViewController: WDBaseViewController {
             self?.navigationController?.popToRootViewController(animated: true)
         }).disposed(by: disposeBag)
         
-        ViewHud.addLoadView()
+        passView.phoneTx.text = self.phoneStr
         
         tapClick()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        passView.phoneTx.becomeFirstResponder()
     }
 
 }
@@ -37,14 +44,37 @@ class PasswordLoginViewController: WDBaseViewController {
 extension PasswordLoginViewController {
     
     func tapClick() {
-        
         self.passView.wangjimimaBtn.rx.tap.subscribe(onNext: { [weak self] in
             let forgetVc = ForgetPasswordViewController()
+            forgetVc.phoneStr = self?.phoneStr ?? ""
             self?.navigationController?.pushViewController(forgetVc, animated: true)
         }).disposed(by: disposeBag)
         
-        
-        
+        self.passView.loginBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.loginInfo()
+        }).disposed(by: disposeBag)
+    }
+    
+    func loginInfo() {
+        let man = RequestManager()
+        let dict = ["username": self.passView.phoneTx.text ?? "",
+                    "password": self.passView.passTx.text ?? ""]
+        man.requestAPI(params: dict, pageUrl: password_login, method: .post) { result in
+            switch result {
+            case .success(let success):
+                //保存登录信息和跳转到首页
+                ToastViewConfig.showToast(message: "登录成功!")
+                if let model = success.data {
+                    let phone = model.userinfo?.username ?? ""
+                    let token = model.access_token ?? ""
+                    WDLoginConfig.saveLoginInfo(phone, token)
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

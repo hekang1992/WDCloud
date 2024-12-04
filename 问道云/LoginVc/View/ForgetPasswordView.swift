@@ -82,6 +82,7 @@ class ForgetPasswordView: BaseView {
         let sendCodeBtn = UIButton(type: .custom)
         sendCodeBtn.setTitle("获取验证码", for: .normal)
         sendCodeBtn.titleLabel?.font = .regularFontOfSize(size: 13)
+        sendCodeBtn.contentHorizontalAlignment = .right
         sendCodeBtn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
         return sendCodeBtn
     }()
@@ -184,7 +185,7 @@ class ForgetPasswordView: BaseView {
         sendCodeBtn.snp.makeConstraints { make in
             make.bottom.equalTo(lineView1.snp.top).offset(-10.5)
             make.right.equalTo(lineView1.snp.right)
-            make.size.equalTo(CGSize(width: 65, height: 18.5))
+            make.size.equalTo(CGSize(width: 115, height: 18.5))
         }
         lineView2.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

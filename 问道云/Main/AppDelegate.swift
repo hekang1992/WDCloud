@@ -12,11 +12,6 @@ import IQKeyboardManagerSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    
-    lazy var tabBarVc: WDTabBarController = {
-        let tabBarVc = WDTabBarController()
-        return tabBarVc
-    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -24,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootVcPush()
         window = UIWindow()
         window?.frame = UIScreen.main.bounds
-        window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
+        window?.rootViewController = WDNavigationController(rootViewController: WDTabBarController())
         window?.makeKeyAndVisible()
         return true
     }
@@ -44,7 +39,7 @@ extension AppDelegate {
     }
     
     @objc func setUpRootVc(_ notification: Notification) {
-        window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
+        window?.rootViewController = WDNavigationController(rootViewController: WDTabBarController())
     }
     
 }

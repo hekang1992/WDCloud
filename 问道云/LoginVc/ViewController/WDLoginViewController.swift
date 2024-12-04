@@ -32,6 +32,13 @@ class WDLoginViewController: WDBaseViewController {
             self?.getCodeInfo()
         }).disposed(by: disposeBag)
         
+        loginView.block1 = { [weak self] in
+            self?.pushWebPage(from: agreement_url)
+        }
+        
+        loginView.block2 = { [weak self] in
+            self?.pushWebPage(from: privacy_url)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -44,7 +51,9 @@ class WDLoginViewController: WDBaseViewController {
 extension WDLoginViewController {
     
     func tapClick() {
+        //密码登录
         let passwordVc = PasswordLoginViewController()
+        passwordVc.phoneStr = self.loginView.phoneTx.text ?? ""
         self.navigationController?.pushViewController(passwordVc, animated: true)
     }
     

@@ -8,6 +8,14 @@
 import UIKit
 
 class WDCenterViewController: WDBaseViewController {
+    
+    lazy var nextBtn: UIButton = {
+        let nextBtn = UIButton(type: .custom)
+        nextBtn.backgroundColor = .orange
+        nextBtn.setTitle("登录/注册", for: .normal)
+        nextBtn.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        return nextBtn
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,6 +24,16 @@ class WDCenterViewController: WDBaseViewController {
         if IS_LOGIN {
             print("登录成功=================")
         }
+        view.addSubview(nextBtn)
+        nextBtn.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: 200, height: 200))
+        }
+        
+        nextBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.popLogin()
+        }).disposed(by: disposeBag)
+        
     }
     
 

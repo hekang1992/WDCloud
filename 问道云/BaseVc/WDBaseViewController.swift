@@ -18,16 +18,30 @@ class WDBaseViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+
+
+extension WDBaseViewController {
+    
+    func popLogin() {
+        let loginVc = WDLoginViewController()
+        let rootVc = WDNavigationController(rootViewController: loginVc)
+        rootVc.modalPresentationStyle = .overFullScreen
+        self.present(rootVc, animated: true)
+        
+        loginVc.loginView.backBtn.rx.tap.subscribe(onNext: {
+            WDLoginConfig.removeLoginInfo()
+            NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
+        }).disposed(by: disposeBag)
+    }
+    
+    func pushWebPage(from pageUrl: String) {
+        let webVc = WebPageViewController()
+        let webUrl = base_url + pageUrl
+        webVc.pageUrl.accept(webUrl)
+        self.navigationController?.pushViewController(webVc, animated: true)
+    }
+    
+}
+

@@ -36,6 +36,7 @@
 		7325A7EE2D0008D10043C196 /* WLUnitFieldTextPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7EB2D0008D10043C196 /* WLUnitFieldTextPosition.m */; };
 		7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */; };
 		7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E92D0008D10043C196 /* WLUnitField.m */; };
+		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,6 +90,7 @@
 		7325A7EC2D0008D10043C196 /* WLUnitFieldTextRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLUnitFieldTextRange.h; sourceTree = "<group>"; };
 		7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLUnitFieldTextRange.m; sourceTree = "<group>"; };
 		7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "问道云-Bridging-Header.h"; sourceTree = "<group>"; };
+		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		845B2366B1013718573E8C55 /* Pods-问道云.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.debug.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.debug.xcconfig"; sourceTree = "<group>"; };
 		BF2EE8A0497D8E69CF0E16AE /* Pods-问道云.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.release.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -150,6 +152,7 @@
 				7325A7AF2CFEE7D90043C196 /* Config */,
 				7325A7AC2CFEE7B20043C196 /* BaseVc */,
 				7325A7B02CFEE7E30043C196 /* RequsetManager */,
+				73CFEB902D0056DD00B2FE1B /* WebPage */,
 				7325A7C92CFEF1F20043C196 /* LoginVc */,
 				7325A7A82CFEE6C30043C196 /* HomePage */,
 				7325A7AB2CFEE6E20043C196 /* RiskPage */,
@@ -194,9 +197,9 @@
 		7325A7AC2CFEE7B20043C196 /* BaseVc */ = {
 			isa = PBXGroup;
 			children = (
+				7325A7B92CFEED0F0043C196 /* WDTabBarController.swift */,
 				7325A7B52CFEECDD0043C196 /* WDBaseViewController.swift */,
 				7325A7B72CFEECF00043C196 /* WDNavigationController.swift */,
-				7325A7B92CFEED0F0043C196 /* WDTabBarController.swift */,
 				7325A7D72CFF075B0043C196 /* BaseView.swift */,
 			);
 			path = BaseVc;
@@ -274,6 +277,14 @@
 				7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */,
 			);
 			path = OC;
+			sourceTree = "<group>";
+		};
+		73CFEB902D0056DD00B2FE1B /* WebPage */ = {
+			isa = PBXGroup;
+			children = (
+				73CFEB912D00570400B2FE1B /* WebPageViewController.swift */,
+			);
+			path = WebPage;
 			sourceTree = "<group>";
 		};
 		C61455D1CEA19ADD364A1DEF /* Frameworks */ = {
@@ -408,6 +419,7 @@
 				7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */,
 				7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */,
 				7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */,
+				73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
