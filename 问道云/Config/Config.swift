@@ -11,6 +11,12 @@ import Toaster
 
 let ROOT_VC = "ROOT_VC"
 
+let SCREEN_WIDTH = UIScreen.main.bounds.size.width
+
+let SCREEN_HEIGHT = UIScreen.main.bounds.size.height
+
+let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+
 //颜色
 extension UIColor {
     convenience init?(cssStr: String) {
@@ -27,6 +33,18 @@ extension UIColor {
         let blue = CGFloat(rgbValue & 0x0000FF) / 255.0
         self.init(red: red, green: green, blue: blue, alpha: 1.0)
     }
+    
+    class func random() -> UIColor {
+        return UIColor(red: randomNumber(),
+                       green: randomNumber(),
+                       blue: randomNumber(),
+                       alpha: 1.0)
+    }
+    
+    private class func randomNumber() -> CGFloat {
+        return CGFloat(arc4random()) / CGFloat(UInt32.max)
+    }
+    
 }
 
 //字体
@@ -78,7 +96,7 @@ class HapticFeedbackManager {
 //获取导航栏高度
 class StatusHeightManager {
     
-    static var statusBarHeight:CGFloat {
+    static var statusBarHeight: CGFloat {
         var height: CGFloat = 20.0;
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.delegate!.window!!
@@ -87,7 +105,7 @@ class StatusHeightManager {
         return height
     }
     
-    static var navigationBarHeight:CGFloat {
+    static var navigationBarHeight: CGFloat {
         var navBarHeight: CGFloat = 64.0;
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.delegate!.window!!
@@ -97,7 +115,11 @@ class StatusHeightManager {
         return navBarHeight
     }
     
-    static var safeAreaBottomHeight:CGFloat {
+    static var allHeight: CGFloat {
+        return statusBarHeight + navigationBarHeight
+    }
+    
+    static var safeAreaBottomHeight: CGFloat {
         var safeHeight: CGFloat = 0;
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.delegate!.window!!
@@ -201,8 +223,125 @@ class PushLoginConfig {
     }
 }
 
+//电话号码*******
+class PhoneNumberFormatter {
+    static func formatPhoneNumber(phoneNumber: String) -> String {
+        if phoneNumber.count == 11 {
+            let start = phoneNumber.prefix(3)
+            let end = phoneNumber.suffix(2)
+            let masked = String(repeating: "*", count: phoneNumber.count - 5)
+            return start + masked + end
+        }
+        return phoneNumber
+    }
+}
 
+//按钮图片和文字的位置
+enum ButtonEdgeInsetsStyle {
+    case top // image in top，label in bottom
+    case left  // image in left，label in right
+    case bottom  // image in bottom，label in top
+    case right // image in right，label in left
+}
 
+extension UIButton {
+    func layoutButtonEdgeInsets(style: ButtonEdgeInsetsStyle, space: CGFloat) {
+        setNeedsLayout()
+        layoutIfNeeded()
+        var labelWidth: CGFloat = 0.0
+        var labelHeight: CGFloat = 0.0
+        var imageEdgeInset = UIEdgeInsets.zero
+        var labelEdgeInset = UIEdgeInsets.zero
+        let imageWith = self.imageView?.frame.size.width
+        let imageHeight = self.imageView?.frame.size.height
+        
+        labelWidth = (self.titleLabel?.intrinsicContentSize.width)!
+        labelWidth = min(labelWidth, frame.width - space - imageWith!)
+        labelHeight = (self.titleLabel?.intrinsicContentSize.height)!
+        
+        switch style {
+        case .top:
+            if ((self.titleLabel?.intrinsicContentSize.width ?? 0) + (imageWith ?? 0)) > frame.width {
+                let imageOffsetX = (frame.width - imageWith!) / 2
+                imageEdgeInset = UIEdgeInsets(top: -labelHeight - space / 2.0, left: imageOffsetX, bottom: 0, right: -imageOffsetX)
+            } else {
+                imageEdgeInset = UIEdgeInsets(top: -labelHeight - space / 2.0, left: 0, bottom: 0, right: -labelWidth)
+            }
+            labelEdgeInset = UIEdgeInsets(top: 0, left: -imageWith!, bottom: -imageHeight! - space / 2.0, right: 0)
+        case .left:
+            imageEdgeInset = UIEdgeInsets(top: 0, left: -space / 2.0, bottom: 0, right: space / 2.0)
+            labelEdgeInset = UIEdgeInsets(top: 0, left: space / 2.0, bottom: 0, right: -space / 2.0)
+        case .bottom:
+            imageEdgeInset = UIEdgeInsets(top: 0, left: 0, bottom: -labelHeight - space / 2.0, right: -labelWidth)
+            labelEdgeInset = UIEdgeInsets(top: -imageHeight! - space / 2.0, left: -imageWith!, bottom: 0, right: 0)
+        case .right:
+            imageEdgeInset = UIEdgeInsets(top: 0, left: labelWidth + space / 2.0, bottom: 0, right: -labelWidth - space / 2.0)
+            labelEdgeInset = UIEdgeInsets(top: 0, left: -imageWith! - space / 2.0, bottom: 0, right: imageWith! + space / 2.0)
+        }
+        self.titleEdgeInsets = labelEdgeInset
+        self.imageEdgeInsets = imageEdgeInset
+    }
+}
 
+//无数据页面
+class LLemptyView: UIView {
+    lazy var bgImageView: UIImageView = {
+        let bgImageView = UIImageView()
+        bgImageView.image = UIImage(named: "wushujuimage")
+        return bgImageView
+    }()
+    
+    lazy var mlabel: UILabel = {
+        let mlabel = UILabel()
+        mlabel.font = .regularFontOfSize(size: 15)
+        mlabel.textColor = UIColor.init(cssStr: "#999999")
+        mlabel.textAlignment = .center
+        mlabel.text = "暂无相关数据"
+        return mlabel
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(bgImageView)
+        addSubview(mlabel)
+        bgImageView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: 163, height: 163))
+        }
+        mlabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(bgImageView.snp.bottom).offset(10)
+            make.height.equalTo(21)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
 
-
+//获取当前控制器
+extension UIViewController {
+    class func getCurrentViewController() -> UIViewController {
+        let rootVc = keyWindow?.rootViewController
+        let currentVc = getCurrentViewController(rootVc!)
+        return currentVc
+    }
+    
+    class func getCurrentViewController(_ rootVc: UIViewController) -> UIViewController {
+        var currentVc: UIViewController
+        var rootCtr = rootVc
+        if rootCtr.presentedViewController != nil {
+            rootCtr = rootVc.presentedViewController!
+        }
+        if rootVc.isKind(of: UITabBarController.classForCoder()) {
+            currentVc = getCurrentViewController((rootVc as! UITabBarController).selectedViewController!)
+        } else if rootVc.isKind(of: UINavigationController.classForCoder()) {
+            currentVc = getCurrentViewController((rootVc as! UINavigationController).visibleViewController!)
+        } else {
+            currentVc = rootCtr
+        }
+        return currentVc
+    }
+}

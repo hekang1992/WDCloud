@@ -12,6 +12,9 @@ import MBProgressHUD_WJExtension
 
 class PasswordLoginView: BaseView {
     
+    var block1: (() -> Void)?
+    var block2: (() -> Void)?
+    
     private let isAgreeBinder: BehaviorRelay<Bool> = .init(value: false)
     
     lazy var backBtn: UIButton = {
@@ -65,6 +68,7 @@ class PasswordLoginView: BaseView {
         passTx.attributedPlaceholder = attrString
         passTx.font = .regularFontOfSize(size: 16)
         passTx.textColor = UIColor.init(cssStr: "#27344B")
+        passTx.isSecureTextEntry = true
         return passTx
     }()
     
@@ -104,10 +108,10 @@ class PasswordLoginView: BaseView {
         yinsiLabel.customSelectedColor[customType1] = UIColor.init(cssStr: "#547AFF")
         yinsiLabel.customSelectedColor[customType2] = UIColor.init(cssStr: "#547AFF")
         yinsiLabel.handleCustomTap(for: customType1) { [weak self] element in
-            MBProgressHUD.wj_showPlainText("点击协议", view: nil)
+            self?.block1?()
         }
         yinsiLabel.handleCustomTap(for: customType2) { [weak self] element in
-            MBProgressHUD.wj_showPlainText("点击政策", view: nil)
+            self?.block2?()
         }
         let attributedString = NSMutableAttributedString(string: yinsiLabel.text!)
         yinsiLabel.attributedText = attributedString

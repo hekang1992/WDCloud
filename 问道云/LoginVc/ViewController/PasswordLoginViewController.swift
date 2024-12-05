@@ -31,6 +31,14 @@ class PasswordLoginViewController: WDBaseViewController {
         
         passView.phoneTx.text = self.phoneStr
         
+        passView.block1 = { [weak self] in
+            self?.pushWebPage(from: agreement_url)
+        }
+        
+        passView.block2 = { [weak self] in
+            self?.pushWebPage(from: privacy_url)
+        }
+        
         tapClick()
     }
     
@@ -67,7 +75,8 @@ extension PasswordLoginViewController {
                 if let model = success.data {
                     let phone = model.userinfo?.username ?? ""
                     let token = model.access_token ?? ""
-                    WDLoginConfig.saveLoginInfo(phone, token)
+                    let customernumber = model.customernumber ?? ""
+                    WDLoginConfig.saveLoginInfo(phone, token, customernumber)
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
                 break

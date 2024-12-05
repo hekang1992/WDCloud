@@ -121,9 +121,14 @@ class RequestManager: NSObject {
     
     private func handleResponse(baseModel: BaseModel, completion: @escaping (Result<BaseModel, Error>) -> Void) {
         let msg = baseModel.msg ?? ""
-        if baseModel.code == 200 {
+        let code = baseModel.code ?? 0
+        if code == 200 {
             completion(.success(baseModel))
         } else {
+            if code == 401 {
+                let vc = UIViewController.getCurrentViewController() as? WDBaseViewController
+                vc?.popLogin()
+            }
             let error = NSError()
             completion(.failure(error))
             MBProgressHUD.wj_showPlainText(msg, view: nil)

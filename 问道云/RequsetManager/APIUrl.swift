@@ -22,3 +22,8 @@ let get_code = "/operation/messageVerification/sendcode"
 let get_code_login = "/auth/loginmessage"
 let rest_password = "/operation/messageVerification/resetpassword"
 let password_login = "/auth/customerlogin"
+
+/**
+ 个人中心
+ */
+let buymore_info = "/operation/enterpriseclientbm/buymoreinfo"

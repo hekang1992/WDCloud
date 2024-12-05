@@ -12,7 +12,7 @@ import RxRelay
 class WebPageViewController: WDBaseViewController {
     
     lazy var headView: HeadView = {
-        let headView = HeadView()
+        let headView = HeadView(frame: .zero, typeEnum: .none)
         return headView
     }()
     
@@ -66,7 +66,7 @@ class WebPageViewController: WDBaseViewController {
         webView.rx.observe(String.self, "title")
             .subscribe(onNext: { [weak self] title in
                 DispatchQueue.main.async {
-                    self?.headView.mlabel.text = title ?? ""
+                    self?.headView.titlelabel.text = title ?? ""
                 }
             }).disposed(by: disposeBag)
         

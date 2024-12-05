@@ -37,6 +37,10 @@
 		7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */; };
 		7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E92D0008D10043C196 /* WLUnitField.m */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
+		73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB952D01415C00B2FE1B /* UserCenterView.swift */; };
+		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
+		73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */; };
+		73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -91,6 +95,10 @@
 		7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLUnitFieldTextRange.m; sourceTree = "<group>"; };
 		7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "问道云-Bridging-Header.h"; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
+		73CFEB952D01415C00B2FE1B /* UserCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterView.swift; sourceTree = "<group>"; };
+		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
+		73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAllOrderSController.swift; sourceTree = "<group>"; };
+		73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAllOrderView.swift; sourceTree = "<group>"; };
 		845B2366B1013718573E8C55 /* Pods-问道云.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.debug.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.debug.xcconfig"; sourceTree = "<group>"; };
 		BF2EE8A0497D8E69CF0E16AE /* Pods-问道云.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.release.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -173,7 +181,8 @@
 		7325A7A92CFEE6C70043C196 /* CenterPage */ = {
 			isa = PBXGroup;
 			children = (
-				7325A7C52CFEEE9A0043C196 /* WDCenterViewController.swift */,
+				73CFEB932D01413A00B2FE1B /* View */,
+				73CFEB942D01413F00B2FE1B /* Controller */,
 			);
 			path = CenterPage;
 			sourceTree = "<group>";
@@ -197,10 +206,10 @@
 		7325A7AC2CFEE7B20043C196 /* BaseVc */ = {
 			isa = PBXGroup;
 			children = (
+				7325A7D72CFF075B0043C196 /* BaseView.swift */,
 				7325A7B92CFEED0F0043C196 /* WDTabBarController.swift */,
 				7325A7B52CFEECDD0043C196 /* WDBaseViewController.swift */,
 				7325A7B72CFEECF00043C196 /* WDNavigationController.swift */,
-				7325A7D72CFF075B0043C196 /* BaseView.swift */,
 			);
 			path = BaseVc;
 			sourceTree = "<group>";
@@ -285,6 +294,25 @@
 				73CFEB912D00570400B2FE1B /* WebPageViewController.swift */,
 			);
 			path = WebPage;
+			sourceTree = "<group>";
+		};
+		73CFEB932D01413A00B2FE1B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				73CFEB952D01415C00B2FE1B /* UserCenterView.swift */,
+				73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */,
+				73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		73CFEB942D01413F00B2FE1B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7C52CFEEE9A0043C196 /* WDCenterViewController.swift */,
+				73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		C61455D1CEA19ADD364A1DEF /* Frameworks */ = {
@@ -421,6 +449,7 @@
 				7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */,
 				73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
+				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
 				7325A7C22CFEEE6E0043C196 /* WDRiskViewController.swift in Sources */,
@@ -430,15 +459,18 @@
 				7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */,
 				7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */,
 				7325A7DC2CFF0DBE0043C196 /* PasswordLoginView.swift in Sources */,
+				73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */,
 				7325A7B82CFEECF00043C196 /* WDNavigationController.swift in Sources */,
 				7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */,
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
+				73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
 				7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */,
 				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,
+				73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

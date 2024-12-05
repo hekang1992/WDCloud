@@ -11,12 +11,17 @@ import RxSwift
 class WDBaseViewController: UIViewController {
     
     let disposeBag = DisposeBag()
+    
+    lazy var emptyView: LLemptyView = {
+        let emptyView = LLemptyView()
+        return emptyView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.init(cssStr: "#F4F6FC")
     }
 
 }
@@ -41,6 +46,15 @@ extension WDBaseViewController {
         let webUrl = base_url + pageUrl
         webVc.pageUrl.accept(webUrl)
         self.navigationController?.pushViewController(webVc, animated: true)
+    }
+    
+    func addNodataView(form view: UIView) {
+        view.addSubview(self.emptyView)
+        self.emptyView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview().offset((SCREEN_WIDTH - 163) * 0.5)
+            make.size.equalTo(CGSize(width: 163, height: 163))
+        }
     }
     
 }

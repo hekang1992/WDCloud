@@ -110,6 +110,7 @@ class ForgetPasswordView: BaseView {
         passTx.attributedPlaceholder = attrString
         passTx.font = .regularFontOfSize(size: 18)
         passTx.textColor = UIColor.init(cssStr: "#27344B")
+        passTx.isSecureTextEntry = true
         return passTx
     }()
     

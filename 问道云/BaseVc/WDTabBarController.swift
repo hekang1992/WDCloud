@@ -78,7 +78,7 @@ class WDTabBarController: UITabBarController, UITabBarControllerDelegate {
     // 监听 TabBarItem 被点击时触发的事件
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         // 获取选中的 TabBarItem
-        HapticFeedbackManager.triggerImpactFeedback(style: .heavy)
+        HapticFeedbackManager.triggerImpactFeedback(style: .medium)
         guard let selectedItem = tabBarController.tabBar.selectedItem else { return }
         // 获取被点击 TabBarItem 对应的视图
         if let selectedView = selectedItem.value(forKey: "view") as? UIView {

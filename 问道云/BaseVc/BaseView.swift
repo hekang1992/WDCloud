@@ -9,10 +9,18 @@ import UIKit
 import RxSwift
 
 class BaseView: UIView {
-
+    
     let disposeBag = DisposeBag()
 }
 
+enum NavRightType {
+    case none
+    case oneBtn
+    case twoBtn
+    case threeBtn
+}
+
+//导航栏headview
 class HeadView: UIView {
     
     lazy var backBtn: UIButton = {
@@ -21,12 +29,12 @@ class HeadView: UIView {
         return backBtn
     }()
     
-    lazy var mlabel: UILabel = {
-        let mlabel = UILabel()
-        mlabel.textColor = .black
-        mlabel.textAlignment = .center
-        mlabel.font = .boldSystemFont(ofSize: 16)
-        return mlabel
+    lazy var titlelabel: UILabel = {
+        let titlelabel = UILabel()
+        titlelabel.textColor = .init(cssStr: "#333333")
+        titlelabel.textAlignment = .center
+        titlelabel.font = .mediumFontOfSize(size: 17)
+        return titlelabel
     }()
     
     lazy var bgView: UIView = {
@@ -35,36 +43,74 @@ class HeadView: UIView {
         return bgView
     }()
     
-    lazy var addBtn: UIButton = {
-        let addBtn = UIButton(type: .custom)
-        addBtn.isHidden = true
-        addBtn.setImage(UIImage(named: "Sliaddinge"), for: .normal)
-        return addBtn
+    lazy var oneBtn: UIButton = {
+        let oneBtn = UIButton(type: .custom)
+        return oneBtn
     }()
     
-    override init(frame: CGRect) {
+    lazy var twoBtn: UIButton = {
+        let twoBtn = UIButton(type: .custom)
+        return twoBtn
+    }()
+    
+    lazy var threeBtn: UIButton = {
+        let threeBtn = UIButton(type: .custom)
+        return threeBtn
+    }()
+    
+    init(frame: CGRect, typeEnum: NavRightType) {
         super.init(frame: frame)
         addSubview(bgView)
         bgView.addSubview(backBtn)
-        bgView.addSubview(mlabel)
-        bgView.addSubview(addBtn)
+        bgView.addSubview(titlelabel)
+        bgView.addSubview(oneBtn)
+        bgView.addSubview(twoBtn)
+        bgView.addSubview(threeBtn)
+        let hiddenStates: [Bool]
+        switch typeEnum {
+        case .none:
+            hiddenStates = [true, true, true]
+            break
+        case .oneBtn:
+            hiddenStates = [false, true, true]
+            break
+        case .twoBtn:
+            hiddenStates = [false, false, true]
+            break
+        case .threeBtn:
+            hiddenStates = [false, false, false]
+            break
+        }
+        [oneBtn, twoBtn, threeBtn].enumerated().forEach { index, button in
+            button.isHidden = hiddenStates[index]
+        }
         
         bgView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         backBtn.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(StatusHeightManager.statusBarHeight + 14)
+            make.top.equalToSuperview().offset(StatusHeightManager.statusBarHeight + 13)
             make.left.equalToSuperview().offset(26)
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
-        mlabel.snp.makeConstraints { make in
+        titlelabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalTo(backBtn.snp.centerY)
             make.height.equalTo(17)
         }
-        addBtn.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(StatusHeightManager.statusBarHeight + 14)
-            make.right.equalToSuperview().offset(-21)
+        oneBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(backBtn.snp.centerY)
+            make.right.equalToSuperview().offset(-11)
+            make.size.equalTo(CGSize(width: 24, height: 24))
+        }
+        twoBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(backBtn.snp.centerY)
+            make.right.equalTo(oneBtn.snp.left).offset(-6)
+            make.size.equalTo(CGSize(width: 24, height: 24))
+        }
+        threeBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(backBtn.snp.centerY)
+            make.right.equalTo(twoBtn.snp.left).offset(-7.5)
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
     }

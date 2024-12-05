@@ -98,7 +98,8 @@ extension GetCodeViewController {
                 if let model = success.data {
                     let phone = model.userinfo?.username ?? ""
                     let token = model.access_token ?? ""
-                    WDLoginConfig.saveLoginInfo(phone, token)
+                    let customernumber = model.customernumber ?? ""
+                    WDLoginConfig.saveLoginInfo(phone, token, customernumber)
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
                 break

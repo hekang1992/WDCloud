@@ -26,6 +26,12 @@ class DataModel {
     var userIdentity: String?
     var expires_in: String?
     var userinfo: userinfoModel?//用户信息模型
+    var accounttype: Int?//会员类型
+    var viplevel: String?
+    var endtime: String?
+    var comboname: String?
+    var combotypenumber: String?
+    var combonumber: Int?//多少天
     init(json: JSON) {
         self.access_token = json["access_token"].string
         self.customernumber = json["customernumber"].string
@@ -34,6 +40,12 @@ class DataModel {
         self.userIdentity = json["userIdentity"].string
         self.expires_in = json["expires_in"].string
         self.userinfo = userinfoModel(json: json["userinfo"])
+        self.accounttype = json["accounttype"].intValue
+        self.viplevel = json["viplevel"].string
+        self.endtime = json["endtime"].string
+        self.comboname = json["comboname"].string
+        self.combotypenumber = json["combotypenumber"].string
+        self.combonumber = json["combonumber"].intValue
     }
     
 }
