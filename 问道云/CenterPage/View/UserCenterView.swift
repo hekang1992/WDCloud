@@ -50,6 +50,7 @@ class UserCenterView: BaseView {
     
     lazy var huiyuanIcon: UIImageView = {
         let huiyuanIcon = UIImageView()
+        huiyuanIcon.isHidden = true
         huiyuanIcon.image = UIImage(named: "normalvip")
         return huiyuanIcon
     }()

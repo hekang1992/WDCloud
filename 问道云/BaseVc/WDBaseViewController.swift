@@ -51,7 +51,8 @@ extension WDBaseViewController {
     func addNodataView(form view: UIView) {
         view.addSubview(self.emptyView)
         self.emptyView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.top.equalToSuperview().offset(150)
+            make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset((SCREEN_WIDTH - 163) * 0.5)
             make.size.equalTo(CGSize(width: 163, height: 163))
         }

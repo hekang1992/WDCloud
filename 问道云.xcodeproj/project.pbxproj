@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C09977CBC52B8E37BDDEB09 /* Pods____.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68995903FB3663C128436F79 /* Pods____.framework */; };
+		7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD802D01A55900770009 /* OrderListViewCell.swift */; };
+		7314AD832D01AC6800770009 /* MyInvoicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD822D01AC6800770009 /* MyInvoicesViewController.swift */; };
 		7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A79D2CFEE58D0043C196 /* AppDelegate.swift */; };
 		7325A7A42CFEE58D0043C196 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7325A79E2CFEE58D0043C196 /* Assets.xcassets */; };
 		7325A7A62CFEE58D0043C196 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7325A7A12CFEE58D0043C196 /* LaunchScreen.storyboard */; };
@@ -58,7 +61,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		68995903FB3663C128436F79 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		68995903FB3663C128436F79 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods____.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7314AD802D01A55900770009 /* OrderListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewCell.swift; sourceTree = "<group>"; };
+		7314AD822D01AC6800770009 /* MyInvoicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInvoicesViewController.swift; sourceTree = "<group>"; };
 		7325A7812CFEE5240043C196 /* 问道云.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "问道云.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7325A79D2CFEE58D0043C196 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7325A79E2CFEE58D0043C196 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C09977CBC52B8E37BDDEB09 /* Pods____.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +308,7 @@
 				73CFEB952D01415C00B2FE1B /* UserCenterView.swift */,
 				73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */,
 				73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */,
+				7314AD802D01A55900770009 /* OrderListViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -311,6 +318,7 @@
 			children = (
 				7325A7C52CFEEE9A0043C196 /* WDCenterViewController.swift */,
 				73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */,
+				7314AD822D01AC6800770009 /* MyInvoicesViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -449,6 +457,7 @@
 				7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */,
 				73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
+				7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
@@ -470,6 +479,7 @@
 				7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */,
 				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,
+				7314AD832D01AC6800770009 /* MyInvoicesViewController.swift in Sources */,
 				73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,6 +513,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "问道云-企业风险预警";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -513,10 +524,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald.test;
+				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = peizhiwenjian;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -544,6 +555,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "问道云-企业风险预警";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -554,10 +566,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald.test;
+				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = peizhiwenjian;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

@@ -39,5 +39,7 @@ target '问道云' do
   pod 'MBProgressHUD+WJExtension', '~> 1.3.1'
   
   pod 'ActiveLabel', '~> 1.1.0'
+  
+  pod 'RxDataSources', '~> 5.0.0'
 
 end

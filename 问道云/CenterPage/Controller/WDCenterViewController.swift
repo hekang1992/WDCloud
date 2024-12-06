@@ -11,6 +11,8 @@ import RxSwift
 
 class WDCenterViewController: WDBaseViewController {
     
+    var model: DataModel?
+    
     var modelArray: [String] = ["发票抬头", "我要开票", "客服中心", "微信通知", "邀请好友", "分享好友", "加入分销", "联系我们", "意见反馈", "团体中心"]
     
     lazy var centerView: UserCenterView = {
@@ -52,8 +54,15 @@ class WDCenterViewController: WDBaseViewController {
         
         //跳转订单页面
         self.centerView.orderBtn.rx.tap.subscribe(onNext: { [weak self] in
-            let orderListVc = UserAllOrderSController()
-            self?.navigationController?.pushViewController(orderListVc, animated: true)
+            if IS_LOGIN {
+                let orderListVc = UserAllOrderSController()
+                if let model = self?.model {
+                    orderListVc.model.accept(model)
+                }
+                self?.navigationController?.pushViewController(orderListVc, animated: true)
+            }else {
+                self?.popLogin()
+            }
         }).disposed(by: disposeBag)
     }
 }
@@ -71,6 +80,7 @@ extension WDCenterViewController {
             switch result {
             case .success(let success):
                 if let model = success.data {
+                    self.model = model
                     getCenterInfo(model: model)
                 }
                 break

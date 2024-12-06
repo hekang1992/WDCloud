@@ -32,6 +32,8 @@ class DataModel {
     var comboname: String?
     var combotypenumber: String?
     var combonumber: Int?//多少天
+    var total: Int?//列表总个数
+    var rows: [rowsModel]?
     init(json: JSON) {
         self.access_token = json["access_token"].string
         self.customernumber = json["customernumber"].string
@@ -46,6 +48,8 @@ class DataModel {
         self.comboname = json["comboname"].string
         self.combotypenumber = json["combotypenumber"].string
         self.combonumber = json["combonumber"].intValue
+        self.total = json["total"].intValue
+        self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
     }
     
 }
@@ -62,5 +66,12 @@ class userinfoModel {
         self.username = json["username"].string
         self.createdate = json["createdate"].string
         self.userIdentity = json["userIdentity"].string
+    }
+}
+
+class rowsModel {
+    var comboname: String?
+    init(json: JSON) {
+        self.comboname = json["comboname"].string
     }
 }

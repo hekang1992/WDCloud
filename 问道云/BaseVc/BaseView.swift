@@ -45,16 +45,19 @@ class HeadView: UIView {
     
     lazy var oneBtn: UIButton = {
         let oneBtn = UIButton(type: .custom)
+        oneBtn.adjustsImageWhenHighlighted = false
         return oneBtn
     }()
     
     lazy var twoBtn: UIButton = {
         let twoBtn = UIButton(type: .custom)
+        twoBtn.adjustsImageWhenHighlighted = false
         return twoBtn
     }()
     
     lazy var threeBtn: UIButton = {
         let threeBtn = UIButton(type: .custom)
+        threeBtn.adjustsImageWhenHighlighted = false
         return threeBtn
     }()
     
@@ -100,7 +103,7 @@ class HeadView: UIView {
         }
         oneBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
-            make.right.equalToSuperview().offset(-11)
+            make.right.equalToSuperview().offset(-12)
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
         twoBtn.snp.makeConstraints { make in

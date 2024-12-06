@@ -27,3 +27,4 @@ let password_login = "/auth/customerlogin"
  个人中心
  */
 let buymore_info = "/operation/enterpriseclientbm/buymoreinfo"
+let myorder_info = "/operation/customerorder/myorder"
