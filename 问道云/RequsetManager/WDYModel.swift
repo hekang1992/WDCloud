@@ -6,6 +6,7 @@
 //
 
 import SwiftyJSON
+import Differentiator
 
 class BaseModel {
     var code: Int?
@@ -51,7 +52,6 @@ class DataModel {
         self.total = json["total"].intValue
         self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
     }
-    
 }
 
 class userinfoModel {
@@ -71,7 +71,17 @@ class userinfoModel {
 
 class rowsModel {
     var comboname: String?
+    var orderstate: String?//订单状态
+    var ordernumber: String?
+    var ordertime: String?
+    var payway: String?
+    var pirce: Float?
     init(json: JSON) {
         self.comboname = json["comboname"].string
+        self.orderstate = json["orderstate"].string
+        self.ordernumber = json["ordernumber"].string
+        self.ordertime = json["ordertime"].string
+        self.payway = json["payway"].string
+        self.pirce = json["pirce"].floatValue
     }
 }

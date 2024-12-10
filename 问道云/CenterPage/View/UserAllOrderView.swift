@@ -45,10 +45,9 @@ class UserAllOrderView: BaseView {
             make.left.right.bottom.equalToSuperview()
         }
         
-        
         model.asObservable().compactMap { $0?.rows }.asObservable().bind(to: tableView.rx.items(cellIdentifier: "OrderListViewCell", cellType: OrderListViewCell.self)) { row, model, cell in
             cell.model.accept(model)
-            cell.backgroundColor = .white
+            cell.backgroundColor = UIColor.init(cssStr: "#F3F3F3")
             cell.selectionStyle = .none
         }.disposed(by: disposeBag)
         
