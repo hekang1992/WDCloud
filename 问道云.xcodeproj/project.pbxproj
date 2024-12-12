@@ -38,6 +38,11 @@
 		7325A7EE2D0008D10043C196 /* WLUnitFieldTextPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7EB2D0008D10043C196 /* WLUnitFieldTextPosition.m */; };
 		7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */; };
 		7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E92D0008D10043C196 /* WLUnitField.m */; };
+		7335F6E62D0AD8620074985F /* MyDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6E52D0AD8620074985F /* MyDownloadViewController.swift */; };
+		7335F6EA2D0ADA050074985F /* MyDownloadSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6E92D0ADA050074985F /* MyDownloadSearchView.swift */; };
+		7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EB2D0ADA620074985F /* MyDownloadView.swift */; };
+		7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */; };
+		7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
 		73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB952D01415C00B2FE1B /* UserCenterView.swift */; };
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
@@ -98,6 +103,11 @@
 		7325A7EC2D0008D10043C196 /* WLUnitFieldTextRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLUnitFieldTextRange.h; sourceTree = "<group>"; };
 		7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLUnitFieldTextRange.m; sourceTree = "<group>"; };
 		7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "问道云-Bridging-Header.h"; sourceTree = "<group>"; };
+		7335F6E52D0AD8620074985F /* MyDownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewController.swift; sourceTree = "<group>"; };
+		7335F6E92D0ADA050074985F /* MyDownloadSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadSearchView.swift; sourceTree = "<group>"; };
+		7335F6EB2D0ADA620074985F /* MyDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadView.swift; sourceTree = "<group>"; };
+		7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewNormalCell.swift; sourceTree = "<group>"; };
+		7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewEditCell.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		73CFEB952D01415C00B2FE1B /* UserCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterView.swift; sourceTree = "<group>"; };
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
@@ -307,6 +317,10 @@
 				73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */,
 				73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */,
 				7314AD802D01A55900770009 /* OrderListViewCell.swift */,
+				7335F6E92D0ADA050074985F /* MyDownloadSearchView.swift */,
+				7335F6EB2D0ADA620074985F /* MyDownloadView.swift */,
+				7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */,
+				7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -316,6 +330,7 @@
 			children = (
 				7325A7C52CFEEE9A0043C196 /* WDCenterViewController.swift */,
 				73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */,
+				7335F6E52D0AD8620074985F /* MyDownloadViewController.swift */,
 				7314AD822D01AC6800770009 /* MyInvoicesViewController.swift */,
 			);
 			path = Controller;
@@ -459,7 +474,11 @@
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
+				7335F6EA2D0ADA050074985F /* MyDownloadSearchView.swift in Sources */,
 				7325A7C22CFEEE6E0043C196 /* WDRiskViewController.swift in Sources */,
+				7335F6E62D0AD8620074985F /* MyDownloadViewController.swift in Sources */,
+				7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */,
+				7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */,
 				7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */,
 				7325A7BA2CFEED0F0043C196 /* WDTabBarController.swift in Sources */,
 				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
@@ -472,6 +491,7 @@
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
 				73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */,
+				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
 				7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */,
@@ -511,7 +531,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "问道云-企业风险预警";
+				INFOPLIST_KEY_CFBundleDisplayName = "问道云";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -553,7 +573,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "问道云-企业风险预警";
+				INFOPLIST_KEY_CFBundleDisplayName = "问道云";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

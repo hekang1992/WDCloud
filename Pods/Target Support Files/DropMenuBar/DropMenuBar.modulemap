@@ -1,0 +1,6 @@
+framework module DropMenuBar {
+  umbrella header "DropMenuBar-umbrella.h"
+
+  export *
+  module * { export * }
+}

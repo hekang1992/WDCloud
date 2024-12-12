@@ -41,5 +41,7 @@ target '问道云' do
   pod 'ActiveLabel', '~> 1.1.0'
   
   pod 'RxDataSources', '~> 5.0.0'
+  
+  pod 'DropMenuBar', '~> 1.0.4'
 
 end

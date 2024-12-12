@@ -29,20 +29,6 @@ class WDCenterViewController: WDBaseViewController {
             make.edges.equalToSuperview()
         }
         
-        if IS_LOGIN {
-            //获取套餐信息
-            getBuymoreinfo()
-            centerView.huiyuanIcon.isHidden = false
-        }else {
-            centerView.phoneLabel.rx.tapGesture()
-                .when(.recognized)
-                .subscribe(onNext: { [weak self] _ in
-                    self?.popLogin()
-            }).disposed(by: disposeBag)
-            centerView.huiyuanIcon.isHidden = true
-            modelArray.remove(at: modelArray.count - 1)
-            self.centerView.modelArray.accept(modelArray)
-        }
         self.centerView.collectionView.rx.modelSelected(String.self).subscribe(onNext: { [weak self] title in
             ToastViewConfig.showToast(message: title)
             if !IS_LOGIN {
@@ -64,6 +50,37 @@ class WDCenterViewController: WDBaseViewController {
                 self?.popLogin()
             }
         }).disposed(by: disposeBag)
+        
+        //跳转我的下载
+        self.centerView.downloadBtn.rx.tap.subscribe(onNext: { [weak self] in
+            if IS_LOGIN {
+                let downloadVc = MyDownloadViewController()
+                if let model = self?.model {
+                    downloadVc.model.accept(model)
+                }
+                self?.navigationController?.pushViewController(downloadVc, animated: true)
+            }else {
+                self?.popLogin()
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if IS_LOGIN {
+            //获取套餐信息
+            getBuymoreinfo()
+            centerView.huiyuanIcon.isHidden = false
+        }else {
+            centerView.phoneLabel.rx.tapGesture()
+                .when(.recognized)
+                .subscribe(onNext: { [weak self] _ in
+                    self?.popLogin()
+            }).disposed(by: disposeBag)
+            centerView.huiyuanIcon.isHidden = true
+            modelArray.remove(at: modelArray.count - 1)
+            self.centerView.modelArray.accept(modelArray)
+        }
     }
 }
 

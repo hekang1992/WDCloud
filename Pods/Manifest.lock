@@ -3,6 +3,7 @@ PODS:
   - Alamofire (5.10.2)
   - DeviceKit (5.2.3)
   - Differentiator (5.0.0)
+  - DropMenuBar (1.0.4)
   - IQKeyboardManagerSwift (6.5.16)
   - JXSegmentedView (1.4.1)
   - Kingfisher (7.11.0)
@@ -35,6 +36,7 @@ PODS:
 DEPENDENCIES:
   - ActiveLabel (~> 1.1.0)
   - DeviceKit (~> 5.2.2)
+  - DropMenuBar (~> 1.0.4)
   - IQKeyboardManagerSwift (~> 6.5.16)
   - JXSegmentedView (~> 1.4.1)
   - Kingfisher (~> 7.11.0)
@@ -58,6 +60,7 @@ SPEC REPOS:
     - Alamofire
     - DeviceKit
     - Differentiator
+    - DropMenuBar
     - IQKeyboardManagerSwift
     - JXSegmentedView
     - Kingfisher
@@ -81,6 +84,7 @@ SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
   DeviceKit: 4504e64df8f8ad1c42aae68f30ece5b51d56022a
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  DropMenuBar: cc34985e8a5b5796209bf4fe57cc1cd589b68efc
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
   JXSegmentedView: cd73555ce2134d1656db2cb383ba9c2f36fb5078
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
@@ -99,6 +103,6 @@ SPEC CHECKSUMS:
   TYAlertController: c121090edb0bea7426f987da94cdddd81eef4231
   TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
 
-PODFILE CHECKSUM: 27bac1e75abddeed1356e0fa9e556ccfe808b0b7
+PODFILE CHECKSUM: 6b25839aef34a5cb7aa304fadf664048c01030cb
 
 COCOAPODS: 1.16.2

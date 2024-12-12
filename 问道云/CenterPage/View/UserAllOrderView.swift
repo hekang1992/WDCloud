@@ -11,7 +11,7 @@ import RxDataSources
 
 class UserAllOrderView: BaseView {
     
-    var model = BehaviorRelay<DataModel?>(value: nil)
+    var modelArray = BehaviorRelay<[rowsModel]>(value: [])
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -28,24 +28,23 @@ class UserAllOrderView: BaseView {
     
     lazy var filterView: UIView = {
         let filterView = UIView()
-        filterView.backgroundColor = .random()
+        filterView.backgroundColor = .white
         return filterView
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(filterView)
         addSubview(tableView)
+        addSubview(filterView)
+        tableView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(41.5)
+            make.left.right.bottom.equalToSuperview()
+        }
         filterView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(41.5)
         }
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(filterView.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
-        }
-        
-        model.asObservable().compactMap { $0?.rows }.asObservable().bind(to: tableView.rx.items(cellIdentifier: "OrderListViewCell", cellType: OrderListViewCell.self)) { row, model, cell in
+        modelArray.asObservable().bind(to: tableView.rx.items(cellIdentifier: "OrderListViewCell", cellType: OrderListViewCell.self)) { row, model, cell in
             cell.model.accept(model)
             cell.backgroundColor = UIColor.init(cssStr: "#F3F3F3")
             cell.selectionStyle = .none
