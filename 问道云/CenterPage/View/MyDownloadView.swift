@@ -23,7 +23,10 @@ class MyDownloadView: BaseView {
     
     var modelArray = BehaviorRelay<[rowsModel]>(value: [])
     
+    let isDeleteMode = BehaviorRelay<Bool>(value: false) // 控制是否是删除模式
+    
     var selectBlock: ((rowsModel) -> Void)?//选择
+    
     var moreBtnBlock: ((rowsModel) -> Void)?//点击...
     
     lazy var tableView: UITableView = {
@@ -64,16 +67,24 @@ class MyDownloadView: BaseView {
         modelArray.asObservable().bind(to: tableView.rx.items) { [weak self] tableView, index, model in
             guard let self = self else { return UITableViewCell() }
             let indexPath = IndexPath(row: index, section: 0)
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MyDownloadViewNormalCell", for: indexPath) as! MyDownloadViewNormalCell
-            cell.model.accept(model)
-            cell.selectionStyle = .none
-            cell.backgroundColor = .clear
-            cell.block = { [weak self] model in
-                if let self = self {
-                    self.moreBtnBlock?(model)
+            if !self.isDeleteMode.value {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MyDownloadViewNormalCell", for: indexPath) as! MyDownloadViewNormalCell
+                cell.model.accept(model)
+                cell.selectionStyle = .none
+                cell.backgroundColor = .clear
+                cell.block = { [weak self] model in
+                    if let self = self {
+                        self.moreBtnBlock?(model)
+                    }
                 }
+                return cell
+            }else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MyDownloadViewEditCell", for: indexPath) as! MyDownloadViewEditCell
+                cell.model = model
+                cell.selectionStyle = .none
+                cell.backgroundColor = .clear
+                return cell
             }
-            return cell
         }.disposed(by: disposeBag)
         
         

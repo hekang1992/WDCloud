@@ -139,10 +139,12 @@ extension UserAllOrderSController {
                     }
                 }else {
                     self.addNodataView(form: self.orderView)
+                    self.orderView.tableView.mj_footer?.isHidden = true
                 }
                 break
             case .failure(_):
                 self.addNodataView(form: self.orderView)
+                self.orderView.tableView.mj_footer?.isHidden = true
                 break
             }
         }

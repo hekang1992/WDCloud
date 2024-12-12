@@ -18,7 +18,15 @@ class MyDownloadViewController: WDBaseViewController {
     var isChoiceDate: String = ""
     var pageNum: Int = 1
     
+    var downloadModel = BehaviorRelay<[rowsModel]?>(value: nil)
+    
+    var model = BehaviorRelay<DataModel?>(value: nil)
+    
+    var deleteArray: [String] = []
+    
     var allArray: [rowsModel] = []//加载更多
+    
+    let isDeleteMode = BehaviorRelay<Bool>(value: false) // 控制是否是删除模式
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
@@ -47,12 +55,6 @@ class MyDownloadViewController: WDBaseViewController {
         return sendView
     }()
     
-    var downloadModel = BehaviorRelay<[rowsModel]?>(value: nil)
-    
-    var model = BehaviorRelay<DataModel?>(value: nil)
-    
-    var deleteArray: [String] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,6 +66,13 @@ class MyDownloadViewController: WDBaseViewController {
         }
         headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
+        
+        headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            let currentMode = self?.isDeleteMode.value ?? false
+            self?.isDeleteMode.accept(!currentMode)
+            self?.downloadView.isDeleteMode.accept(!currentMode)
+            self?.downloadView.modelArray.accept(self?.allArray ?? [])
         }).disposed(by: disposeBag)
         
         view.addSubview(downloadView)
@@ -152,7 +161,6 @@ extension MyDownloadViewController {
             getPdfInfo()
         }
         
-        
         let leixing2 = MenuAction(title: "时间", style: .typeList)!
         let menuView = DropMenuBar(action: [leixing1, leixing2])!
         self.downloadView.addSubview(menuView)
@@ -209,10 +217,12 @@ extension MyDownloadViewController {
                     }
                 }else {
                     self.addNodataView(form: self.downloadView)
+                    self.downloadView.tableView.mj_footer?.isHidden = true
                 }
                 break
             case .failure(_):
                 self.addNodataView(form: self.downloadView)
+                self.downloadView.tableView.mj_footer?.isHidden = true
                 break
             }
         }
