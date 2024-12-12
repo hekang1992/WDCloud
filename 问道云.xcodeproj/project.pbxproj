@@ -43,6 +43,7 @@
 		7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EB2D0ADA620074985F /* MyDownloadView.swift */; };
 		7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */; };
 		7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */; };
+		7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
 		73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB952D01415C00B2FE1B /* UserCenterView.swift */; };
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
@@ -108,6 +109,7 @@
 		7335F6EB2D0ADA620074985F /* MyDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadView.swift; sourceTree = "<group>"; };
 		7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewNormalCell.swift; sourceTree = "<group>"; };
 		7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewEditCell.swift; sourceTree = "<group>"; };
+		7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBtnPopView.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		73CFEB952D01415C00B2FE1B /* UserCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterView.swift; sourceTree = "<group>"; };
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				7335F6EB2D0ADA620074985F /* MyDownloadView.swift */,
 				7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */,
 				7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */,
+				7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */,
 				7325A7B82CFEECF00043C196 /* WDNavigationController.swift in Sources */,
 				7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */,
+				7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */,
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
 				73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */,

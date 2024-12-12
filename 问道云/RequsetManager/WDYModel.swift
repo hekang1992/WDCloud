@@ -85,10 +85,11 @@ class rowsModel {
     var descprtion: String?
     var code: String?
     var value: String?
-    var downloadfilename: String?
     var firmname: String?
-    var createtime: String?
-    var filepathH5: String?
+    var createtime: String?//创建时间
+    var filepathH5: String?//h5链接
+    var downloadfilename: String?//名称
+    var dataid: String?//id号
     init(json: JSON) {
         self.comboname = json["comboname"].stringValue
         self.orderstate = json["orderstate"].stringValue
@@ -105,5 +106,6 @@ class rowsModel {
         self.firmname = json["firmname"].stringValue
         self.createtime = json["createtime"].stringValue
         self.filepathH5 = json["filepathH5"].stringValue
+        self.dataid = json["dataid"].stringValue
     }
 }

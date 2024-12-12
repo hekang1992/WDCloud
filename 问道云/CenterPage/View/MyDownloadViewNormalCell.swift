@@ -103,11 +103,11 @@ class MyDownloadViewNormalCell: UITableViewCell {
             make.bottom.equalToSuperview()
         }
         
-//        moreBtn.rx.tap.subscribe(onNext: { [weak self] in
-//            if let self = self, let model1 = self.model {
-//                self.block?(model1)
-//            }
-//        }).disposed(by: disposeBag)
+        moreBtn.rx.tap.subscribe(onNext: { [weak self] in
+            if let self = self, let model1 = self.model.value {
+                self.block?(model1)
+            }
+        }).disposed(by: disposeBag)
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }

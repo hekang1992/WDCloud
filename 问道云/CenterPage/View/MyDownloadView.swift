@@ -23,7 +23,8 @@ class MyDownloadView: BaseView {
     
     var modelArray = BehaviorRelay<[rowsModel]>(value: [])
     
-    var selectBlock: ((rowsModel) -> Void)?
+    var selectBlock: ((rowsModel) -> Void)?//选择
+    var moreBtnBlock: ((rowsModel) -> Void)?//点击...
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -67,6 +68,11 @@ class MyDownloadView: BaseView {
             cell.model.accept(model)
             cell.selectionStyle = .none
             cell.backgroundColor = .clear
+            cell.block = { [weak self] model in
+                if let self = self {
+                    self.moreBtnBlock?(model)
+                }
+            }
             return cell
         }.disposed(by: disposeBag)
         

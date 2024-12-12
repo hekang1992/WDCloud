@@ -9,6 +9,7 @@ import UIKit
 import RxRelay
 import DropMenuBar
 import MJRefresh
+import TYAlertController
 
 class MyDownloadViewController: WDBaseViewController {
     
@@ -31,13 +32,30 @@ class MyDownloadViewController: WDBaseViewController {
         return downloadView
     }()
     
+    lazy var morePopView: PopMoreBtnView = {
+        let morePopView = PopMoreBtnView(frame: self.view.bounds)
+        return morePopView
+    }()
+    
+    lazy var cmmView: CMMView = {
+        let cmmView = CMMView(frame: self.view.bounds)
+        return cmmView
+    }()
+    
+    lazy var sendView: SendEmailView = {
+        let sendView = SendEmailView(frame: self.view.bounds)
+        return sendView
+    }()
+    
     var downloadModel = BehaviorRelay<[rowsModel]?>(value: nil)
     
     var model = BehaviorRelay<DataModel?>(value: nil)
-
+    
+    var deleteArray: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(headView)
         headView.snp.makeConstraints { make in
@@ -69,12 +87,53 @@ class MyDownloadViewController: WDBaseViewController {
         self.downloadView.selectBlock = { [weak self] model in
             self?.pushWebPage(from: model.filepathH5 ?? "")
         }
+        //点击更多按钮
+        self.downloadView.moreBtnBlock = { [weak self] model in
+            guard let self = self else { return }
+            let alertVc = TYAlertController(alert: morePopView, preferredStyle: .actionSheet)
+            morePopView.model.accept(model)
+            self.present(alertVc!, animated: true)
+            
+            morePopView.block = { [weak self] in
+                self?.dismiss(animated: true)
+            }
+            morePopView.block1 = { [weak self] in
+                self?.dismiss(animated: true, completion: {
+                    let alertVc = TYAlertController(alert: self?.cmmView, preferredStyle: .alert)
+                    self?.present(alertVc!, animated: true)
+                    self?.cmmView.model = model
+                    self?.cmmView.cblock = {
+                        self?.dismiss(animated: true)
+                    }
+                })
+            }
+            morePopView.block2 = { [weak self] in
+                self?.dismiss(animated: true, completion: {
+                    let alertVc = TYAlertController(alert: self?.sendView, preferredStyle: .alert)
+                    self?.present(alertVc!, animated: true)
+                    self?.sendView.model = model
+                    self?.sendView.cblock = {
+                        self?.dismiss(animated: true)
+                    }
+                })
+            }
+            morePopView.block3 = { [weak self] in
+                self?.dismiss(animated: true) {
+                    ShowAlertManager.showAlert(title: "提示", message: "确定要删除选中的文件?", confirmAction: {
+                        self?.deleteArray.append(model.dataid ?? "")
+                        self?.deletePdf(from: self?.deleteArray ?? [])
+                    }, cancelAction: {
+                        
+                    })
+                }
+            }
+        }
         
         addDownList()
         getDownloadTypeList()
         getPdfInfo()
     }
-
+    
 }
 
 extension MyDownloadViewController {
@@ -154,6 +213,20 @@ extension MyDownloadViewController {
                 break
             case .failure(_):
                 self.addNodataView(form: self.downloadView)
+                break
+            }
+        }
+    }
+    
+    //删除文件
+    func deletePdf(from dataid: [String]) {
+        let dict = ["ids": dataid]
+        let man = RequestManager()
+        man.requestAPI(params: dict, pageUrl: "/operation/mydownload/customerDownload", method: .put) { result in
+            switch result {
+            case .success(_):
+                break
+            case .failure(_):
                 break
             }
         }

@@ -345,3 +345,59 @@ extension UIViewController {
         return currentVc
     }
 }
+
+// 弹窗
+class ShowAlertManager {
+    
+    /// 获取当前的视图控制器
+    static func getTopViewController() -> UIViewController? {
+        // 获取应用的所有窗口
+        let windows = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+        
+        // 获取最顶部的视图控制器
+        var topController = windows.first?.rootViewController
+        while let presentedController = topController?.presentedViewController {
+            topController = presentedController
+        }
+        return topController
+    }
+    
+    /// 通用的Alert封装方法
+    /// - Parameters:
+    ///   - title: 弹窗标题
+    ///   - message: 弹窗内容
+    ///   - confirmTitle: 确认按钮标题
+    ///   - cancelTitle: 取消按钮标题（默认为nil，即没有取消按钮）
+    ///   - confirmAction: 点击确认按钮的回调
+    ///   - cancelAction: 点击取消按钮的回调（默认为nil）
+    static func showAlert(title: String?,
+                          message: String?,
+                          confirmTitle: String = "确定",
+                          cancelTitle: String? = "取消",
+                          confirmAction: (() -> Void)? = nil,
+                          cancelAction: (() -> Void)? = nil) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        // 添加确认按钮
+        let confirmButton = UIAlertAction(title: confirmTitle, style: .default) { _ in
+            confirmAction?() // 点击确认按钮时执行的操作
+        }
+        alert.addAction(confirmButton)
+        
+        // 如果有取消按钮，则添加
+        if let cancelTitle = cancelTitle {
+            let cancelButton = UIAlertAction(title: cancelTitle, style: .cancel) { _ in
+                cancelAction?()
+            }
+            alert.addAction(cancelButton)
+        }
+        
+        // 获取当前视图控制器并呈现提示框
+        if let topController = getTopViewController() {
+            topController.present(alert, animated: true, completion: nil)
+        }
+    }
+}
