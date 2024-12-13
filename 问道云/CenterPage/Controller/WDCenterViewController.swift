@@ -13,7 +13,9 @@ class WDCenterViewController: WDBaseViewController {
     
     var model: DataModel?
     
-    var modelArray: [String] = ["发票抬头", "我要开票", "客服中心", "微信通知", "邀请好友", "分享好友", "加入分销", "联系我们", "意见反馈", "团体中心"]
+    var modelArray1: [String] = ["发票抬头", "我要开票", "客服中心", "微信通知", "邀请好友", "分享好友", "加入分销", "联系我们", "意见反馈", "团体中心"]
+    
+    var modelArray2: [String] = ["发票抬头", "我要开票", "客服中心", "微信通知", "邀请好友", "分享好友", "加入分销", "联系我们", "意见反馈"]
     
     lazy var centerView: UserCenterView = {
         let centerView = UserCenterView()
@@ -31,8 +33,12 @@ class WDCenterViewController: WDBaseViewController {
         
         //跳转设置页面
         centerView.setBtn.rx.tap.subscribe(onNext: { [weak self] in
-            let settingVc = SettingViewController()
-            self?.navigationController?.pushViewController(settingVc, animated: true)
+            if IS_LOGIN {
+                let settingVc = SettingViewController()
+                self?.navigationController?.pushViewController(settingVc, animated: true)
+            }else {
+                self?.popLogin()
+            }
         }).disposed(by: disposeBag)
         
         self.centerView.collectionView.rx.modelSelected(String.self).subscribe(onNext: { [weak self] title in
@@ -69,6 +75,7 @@ class WDCenterViewController: WDBaseViewController {
                 self?.popLogin()
             }
         }).disposed(by: disposeBag)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,8 +91,7 @@ class WDCenterViewController: WDBaseViewController {
                     self?.popLogin()
             }).disposed(by: disposeBag)
             centerView.huiyuanIcon.isHidden = true
-            modelArray.remove(at: modelArray.count - 1)
-            self.centerView.modelArray.accept(modelArray)
+            self.centerView.modelArray.accept(modelArray2)
         }
     }
 }
@@ -137,9 +143,11 @@ extension WDCenterViewController {
         centerView.ktImageView.image = UIImage(named: ktImageName)
         centerView.huiyuanIcon.image = UIImage(named: huiyuanIconName)
         if accounttype != 2  {
-            modelArray.remove(at: modelArray.count - 1)
+            self.centerView.modelArray.accept(modelArray2)
+        }else {
+            self.centerView.modelArray.accept(modelArray1)
         }
-        self.centerView.modelArray.accept(modelArray)
+        
     }
     
 }

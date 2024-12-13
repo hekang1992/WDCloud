@@ -47,6 +47,8 @@
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
 		73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE02D0C06E700FC4C49 /* SettingView.swift */; };
 		73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */; };
+		73A21DEA2D0C2F2B00FC4C49 /* RiskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE92D0C2F2B00FC4C49 /* RiskView.swift */; };
+		73A21DEE2D0C32A600FC4C49 /* DiligenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DED2D0C32A600FC4C49 /* DiligenceView.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
 		73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB952D01415C00B2FE1B /* UserCenterView.swift */; };
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
@@ -117,6 +119,8 @@
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		73A21DE02D0C06E700FC4C49 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
+		73A21DE92D0C2F2B00FC4C49 /* RiskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskView.swift; sourceTree = "<group>"; };
+		73A21DED2D0C32A600FC4C49 /* DiligenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiligenceView.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		73CFEB952D01415C00B2FE1B /* UserCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterView.swift; sourceTree = "<group>"; };
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
@@ -214,7 +218,8 @@
 		7325A7AA2CFEE6DF0043C196 /* DiligencePage */ = {
 			isa = PBXGroup;
 			children = (
-				7325A7C32CFEEE8B0043C196 /* WDDiligenceViewController.swift */,
+				73A21DEC2D0C329300FC4C49 /* View */,
+				73A21DEB2D0C328700FC4C49 /* Controller */,
 			);
 			path = DiligencePage;
 			sourceTree = "<group>";
@@ -222,7 +227,8 @@
 		7325A7AB2CFEE6E20043C196 /* RiskPage */ = {
 			isa = PBXGroup;
 			children = (
-				7325A7C12CFEEE6E0043C196 /* WDRiskViewController.swift */,
+				73A21DE62D0C2E0B00FC4C49 /* View */,
+				73A21DE52D0C2E0800FC4C49 /* Controller */,
 			);
 			path = RiskPage;
 			sourceTree = "<group>";
@@ -310,6 +316,38 @@
 				7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */,
 			);
 			path = OC;
+			sourceTree = "<group>";
+		};
+		73A21DE52D0C2E0800FC4C49 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7C12CFEEE6E0043C196 /* WDRiskViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		73A21DE62D0C2E0B00FC4C49 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				73A21DE92D0C2F2B00FC4C49 /* RiskView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		73A21DEB2D0C328700FC4C49 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7C32CFEEE8B0043C196 /* WDDiligenceViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		73A21DEC2D0C329300FC4C49 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				73A21DED2D0C32A600FC4C49 /* DiligenceView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		73CFEB902D0056DD00B2FE1B /* WebPage */ = {
@@ -492,7 +530,9 @@
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
+				73A21DEA2D0C2F2B00FC4C49 /* RiskView.swift in Sources */,
 				7335F6EA2D0ADA050074985F /* MyDownloadSearchView.swift in Sources */,
+				73A21DEE2D0C32A600FC4C49 /* DiligenceView.swift in Sources */,
 				7325A7C22CFEEE6E0043C196 /* WDRiskViewController.swift in Sources */,
 				7335F6E62D0AD8620074985F /* MyDownloadViewController.swift in Sources */,
 				7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */,

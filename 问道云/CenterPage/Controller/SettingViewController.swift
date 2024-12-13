@@ -166,8 +166,29 @@ extension SettingViewController {
             .rx
             .tap
             .subscribe(onNext: { [weak self] in
-                ToastViewConfig.showToast(message: "退出账号")
+                ShowAlertManager.showAlert(title: "提示", message: "是否退出账号?", confirmAction: {
+                    self?.logout()
+                })
             }).disposed(by: disposeBag)
+    }
+    
+    //退出账号
+    func logout() {
+        let man = RequestManager()
+        let dict = [String: Any]()
+        man.requestAPI(params: dict,
+                       pageUrl: log_out,
+                       method: .delete) { result in
+            switch result {
+            case .success(_):
+                WDLoginConfig.removeLoginInfo()
+                ToastViewConfig.showToast(message: "退出成功!")
+                NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }
