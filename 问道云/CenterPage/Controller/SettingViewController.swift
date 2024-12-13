@@ -53,8 +53,9 @@ extension SettingViewController {
             .rx
             .tapGesture()
             .when(.recognized)
-            .subscribe(onNext: {_ in
-                ToastViewConfig.showToast(message: "账号管理")
+            .subscribe(onNext: { [weak self] _ in
+                let accountVc = AccountManagerViewController()
+                self?.navigationController?.pushViewController(accountVc, animated: true)
             }).disposed(by: disposeBag)
         
         settingView.twoListView.bgView

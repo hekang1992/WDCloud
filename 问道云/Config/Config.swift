@@ -440,3 +440,34 @@ class GetCacheConfig {
     }
     
 }
+
+//密码验证
+class PasswordConfig {
+    
+    static  func isPasswordValid(_ password: String) -> Bool {
+        // 检查长度是否符合
+        guard password.count >= 8 && password.count <= 20 else {
+            return false
+        }
+        
+        // 定义正则表达式模式
+        let letterPattern = ".*[A-Za-z]+.*" // 至少一个字母
+        let digitPattern = ".*[0-9]+.*"     // 至少一个数字
+        let specialCharPattern = ".*[^A-Za-z0-9]+.*" // 至少一个特殊字符（不包括空格）
+        
+        // 创建正则表达式
+        let letterRegex = try! NSRegularExpression(pattern: letterPattern)
+        let digitRegex = try! NSRegularExpression(pattern: digitPattern)
+        let specialCharRegex = try! NSRegularExpression(pattern: specialCharPattern)
+        
+        // 检查各类字符是否存在
+        let hasLetter = letterRegex.firstMatch(in: password, options: [], range: NSRange(location: 0, length: password.utf16.count)) != nil
+        let hasDigit = digitRegex.firstMatch(in: password, options: [], range: NSRange(location: 0, length: password.utf16.count)) != nil
+        let hasSpecialChar = specialCharRegex.firstMatch(in: password, options: [], range: NSRange(location: 0, length: password.utf16.count)) != nil
+        
+        // 至少两种类型组合
+        let validCount = [hasLetter, hasDigit, hasSpecialChar].filter { $0 }.count
+        return validCount >= 2
+    }
+    
+}
