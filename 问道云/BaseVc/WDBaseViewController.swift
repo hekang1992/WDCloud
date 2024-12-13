@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import DropMenuBar
+import BRPickerView
 
 class WDBaseViewController: UIViewController {
     
@@ -107,6 +108,37 @@ extension WDBaseViewController {
         let model5 = ItemModel(text: "近一年", currentID: "year", isSelect: false)!
         let modelArray = [model1, model2, model3, model4, model5]
         return modelArray
+    }
+    
+    //自定义时间选择
+    func getPopTimeDatePicker(completion: @escaping (String?) -> Void) {
+        let datePickerView = BRDatePickerView()
+        datePickerView.pickerMode = .YMD
+        datePickerView.title = "自定义时间"
+        datePickerView.minDate = NSDate.br_setYear(1900, month: 01, day: 01)
+        datePickerView.maxDate = Date()
+        datePickerView.resultBlock = { selectDate, selectValue in
+            guard let selectValue = selectValue else {
+                completion(nil)
+                return
+            }
+            let selectedArray = selectValue.components(separatedBy: "-")
+            if selectedArray.count == 3 {
+                let selectedDay = selectedArray[2]
+                let selectedMonth = selectedArray[1]
+                let selectedYear = selectedArray[0]
+                let timeStr = "\(selectedYear)-\(selectedMonth)-\(selectedDay)"
+                completion(timeStr)
+            } else {
+                completion(nil)
+            }
+        }
+        let customStyle = BRPickerStyle()
+        customStyle.pickerColor = .white
+        customStyle.pickerTextFont = .mediumFontOfSize(size: 16)
+        customStyle.selectRowTextColor = UIColor.init(cssStr: "#547AFF")
+        datePickerView.pickerStyle = customStyle
+        datePickerView.show()
     }
 }
 

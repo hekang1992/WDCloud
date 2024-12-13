@@ -1,6 +1,32 @@
 PODS:
   - ActiveLabel (1.1.0)
   - Alamofire (5.10.2)
+  - BRPickerView (2.9.1):
+    - BRPickerView/All (= 2.9.1)
+  - BRPickerView/All (2.9.1):
+    - BRPickerView/Default
+    - BRPickerView/Deprecated
+  - BRPickerView/Core (2.9.1)
+  - BRPickerView/DatePicker (2.9.1):
+    - BRPickerView/Core
+  - BRPickerView/Default (2.9.1):
+    - BRPickerView/DatePicker
+    - BRPickerView/TextPicker
+  - BRPickerView/Deprecated (2.9.1):
+    - BRPickerView/Core
+    - BRPickerView/Deprecated/AddressPickerView (= 2.9.1)
+    - BRPickerView/Deprecated/Base (= 2.9.1)
+    - BRPickerView/Deprecated/StringPickerView (= 2.9.1)
+  - BRPickerView/Deprecated/AddressPickerView (2.9.1):
+    - BRPickerView/Core
+    - BRPickerView/Deprecated/Base
+  - BRPickerView/Deprecated/Base (2.9.1):
+    - BRPickerView/Core
+  - BRPickerView/Deprecated/StringPickerView (2.9.1):
+    - BRPickerView/Core
+    - BRPickerView/Deprecated/Base
+  - BRPickerView/TextPicker (2.9.1):
+    - BRPickerView/Core
   - DeviceKit (5.2.3)
   - Differentiator (5.0.0)
   - DropMenuBar (1.0.4)
@@ -35,6 +61,7 @@ PODS:
 
 DEPENDENCIES:
   - ActiveLabel (~> 1.1.0)
+  - BRPickerView (~> 2.9.1)
   - DeviceKit (~> 5.2.2)
   - DropMenuBar (~> 1.0.4)
   - IQKeyboardManagerSwift (~> 6.5.16)
@@ -58,6 +85,7 @@ SPEC REPOS:
   trunk:
     - ActiveLabel
     - Alamofire
+    - BRPickerView
     - DeviceKit
     - Differentiator
     - DropMenuBar
@@ -82,6 +110,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   ActiveLabel: 5e3f4de79a1952d4604b845a0610d4776e4b82b3
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
+  BRPickerView: 6dd69ea2c48e0a0abf1d197a705050e13143ee63
   DeviceKit: 4504e64df8f8ad1c42aae68f30ece5b51d56022a
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   DropMenuBar: cc34985e8a5b5796209bf4fe57cc1cd589b68efc
@@ -103,6 +132,6 @@ SPEC CHECKSUMS:
   TYAlertController: c121090edb0bea7426f987da94cdddd81eef4231
   TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
 
-PODFILE CHECKSUM: 6b25839aef34a5cb7aa304fadf664048c01030cb
+PODFILE CHECKSUM: 8eba977195e58ed6b3dc4c91085d096a73a3a94e
 
 COCOAPODS: 1.16.2

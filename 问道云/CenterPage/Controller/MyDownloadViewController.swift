@@ -26,6 +26,14 @@ class MyDownloadViewController: WDBaseViewController {
     
     var allArray: [rowsModel] = []//加载更多
     
+    var startDateRelay = BehaviorRelay<String?>(value: nil)//开始时间
+    
+    var endDateRelay = BehaviorRelay<String?>(value: nil)//结束时间
+    
+    var startTime: String = ""//开始时间
+    
+    var endTime: String = ""//结束时间
+    
     let isDeleteMode = BehaviorRelay<Bool>(value: false) // 控制是否是删除模式
     
     lazy var headView: HeadView = {
@@ -108,21 +116,27 @@ class MyDownloadViewController: WDBaseViewController {
             }
             morePopView.block1 = { [weak self] in
                 self?.dismiss(animated: true, completion: {
-                    let alertVc = TYAlertController(alert: self?.cmmView, preferredStyle: .alert)
+                    let alertVc = TYAlertController(alert: self?.cmmView, preferredStyle: .actionSheet)
                     self?.present(alertVc!, animated: true)
                     self?.cmmView.model = model
                     self?.cmmView.cblock = {
                         self?.dismiss(animated: true)
                     }
+                    self?.cmmView.sblock = {
+                        self?.changeName(form: model)
+                    }
                 })
             }
             morePopView.block2 = { [weak self] in
                 self?.dismiss(animated: true, completion: {
-                    let alertVc = TYAlertController(alert: self?.sendView, preferredStyle: .alert)
+                    let alertVc = TYAlertController(alert: self?.sendView, preferredStyle: .actionSheet)
                     self?.present(alertVc!, animated: true)
                     self?.sendView.model = model
                     self?.sendView.cblock = {
                         self?.dismiss(animated: true)
+                    }
+                    self?.sendView.sblock = {
+                        self?.sendEmailInfo(form: model)
                     }
                 })
             }
@@ -161,7 +175,83 @@ extension MyDownloadViewController {
             getPdfInfo()
         }
         
-        let leixing2 = MenuAction(title: "时间", style: .typeList)!
+        let leixing2 = MenuAction(title: "时间", style: .typeCustom)!
+        var modelArray = getListTime(from: true)
+        leixing2.displayCustomWithMenu = { [weak self] in
+            let timeView = TimeDownView()
+            if ((self?.startDateRelay.value?.isEmpty) != nil) && ((self?.endDateRelay.value?.isEmpty) != nil) {
+                timeView.startDateRelay.accept(self?.startDateRelay.value)
+                timeView.endDateRelay.accept(self?.endDateRelay.value)
+            }
+            timeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 315)
+            //点击全部,今天,近一周等
+            timeView.block = { model in
+                self?.pageNum = 1
+                self?.isChoiceDate = model.currentID ?? ""
+                self?.getPdfInfo()
+                self?.startTime = ""
+                self?.endTime = ""
+                self?.startDateRelay.accept("")
+                self?.endDateRelay.accept("")
+                if model.displayText != "全部" {
+                    leixing2.adjustTitle(model.displayText ?? "", textColor: UIColor.init(cssStr: "#547AFF"))
+                }else {
+                    leixing2.adjustTitle("时间", textColor: UIColor.init(cssStr: "#000000"))
+                }
+            }
+            //点击开始时间
+            timeView.startTimeBlock = { [weak self] btn in
+                self?.getPopTimeDatePicker(completion: { time in
+                    self?.startTime = time ?? ""
+                    btn.setTitle(time, for: .normal)
+                    btn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
+                    if ((self?.startTime.isEmpty) != nil) && ((self?.endTime.isEmpty) != nil) {
+                        timeView.btn?.isEnabled = true
+                        timeView.btn?.backgroundColor = UIColor.init(cssStr: "#307CFF")
+                    }
+                })
+            }
+            //点击结束时间
+            timeView.endTimeBlock = { [weak self] btn in
+                self?.getPopTimeDatePicker(completion: { time in
+                    self?.endTime = time ?? ""
+                    btn.setTitle(time, for: .normal)
+                    btn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
+                    if ((self?.startTime.isEmpty) != nil) && ((self?.endTime.isEmpty) != nil) {
+                        timeView.btn?.isEnabled = true
+                        timeView.btn?.backgroundColor = UIColor.init(cssStr: "#307CFF")
+                    }
+                })
+            }
+            //点击确认
+            timeView.sureTimeBlock = { [weak self] btn in
+                self?.pageNum = 1
+                let startTime = self?.startTime ?? ""
+                let endTime = self?.endTime ?? ""
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                if let startDate = dateFormatter.date(from: startTime),
+                   let endDate = dateFormatter.date(from: endTime) {
+                    if startDate > endDate {
+                        ToastViewConfig.showToast(message: "时间格式不正确!")
+                        return
+                    }
+                } else {
+                    ToastViewConfig.showToast(message: "时间格式不正确!")
+                    return
+                }
+                self?.startDateRelay.accept(self?.startTime)
+                self?.endDateRelay.accept(self?.endTime)
+                self?.isChoiceDate = startTime + "|" + endTime
+                leixing2.adjustTitle(startTime + "|" + endTime, textColor: UIColor.init(cssStr: "#547AFF"))
+                modelArray = self?.getListTime(from: false) ?? []
+                self?.getPdfInfo()
+            }
+            timeView.modelArray = modelArray
+            timeView.tableView.reloadData()
+            return timeView
+        }
+        
         let menuView = DropMenuBar(action: [leixing1, leixing2])!
         self.downloadView.addSubview(menuView)
         menuView.snp.makeConstraints { make in
@@ -232,9 +322,52 @@ extension MyDownloadViewController {
     func deletePdf(from dataid: [String]) {
         let dict = ["ids": dataid]
         let man = RequestManager()
-        man.requestAPI(params: dict, pageUrl: "/operation/mydownload/customerDownload", method: .put) { result in
+        man.requestAPI(params: dict, pageUrl: "/operation/mydownload/customerDownload", method: .put) { [weak self] result in
             switch result {
-            case .success(_):
+            case .success(let success):
+                if success.code == 200 {
+                    self?.dismiss(animated: true, completion: {
+                        self?.pageNum = 1
+                        self?.getPdfInfo()
+                    })
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //重命名
+    func changeName(form model: rowsModel) {
+        let man = RequestManager()
+        let dict = ["dataId": model.dataid ?? "", "downLoadFileName": self.cmmView.tf.text ?? ""]
+        man.requestAPI(params: dict, pageUrl: "/operation/mydownload/updateCustomerDownload", method: .put) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.dismiss(animated: true, completion: {
+                        self?.pageNum = 1
+                        self?.getPdfInfo()
+                    })
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //发送邮箱
+    func sendEmailInfo(form model: rowsModel) {
+        let man = RequestManager()
+        let dict = ["dataid": model.dataid ?? "", "emailnumber": self.sendView.tf.text ?? "", "type": "1"]
+        man.requestAPI(params: dict, pageUrl: "/operation/mydownload/sendingMailbox", method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.dismiss(animated: true)
+                }
                 break
             case .failure(_):
                 break

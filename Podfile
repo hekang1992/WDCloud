@@ -43,5 +43,7 @@ target '问道云' do
   pod 'RxDataSources', '~> 5.0.0'
   
   pod 'DropMenuBar', '~> 1.0.4'
+  
+  pod 'BRPickerView', '~> 2.9.1'
 
 end
