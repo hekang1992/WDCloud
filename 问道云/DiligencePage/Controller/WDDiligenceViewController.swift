@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import JXSegmentedView
 
 class WDDiligenceViewController: WDBaseViewController {
     
@@ -23,6 +24,11 @@ class WDDiligenceViewController: WDBaseViewController {
         let diligenceView = DiligenceView()
         return diligenceView
     }()
+    
+    private lazy var segmentedView: JXSegmentedView = createSegmentedView()
+    private lazy var cocsciew: UIScrollView = createCocsciew()
+    private var segmurce: JXSegmentedTitleDataSource!
+    private var listVCArray = [DiligenceListViewController]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +43,11 @@ class WDDiligenceViewController: WDBaseViewController {
             make.left.right.top.equalToSuperview()
             make.height.equalTo(StatusHeightManager.navigationBarHeight)
         }
+        //添加切换
+        addsentMentView()
+        //添加子控制器
+        setupViewControllers()
     }
-    
 
     /*
     // MARK: - Navigation
@@ -50,4 +59,78 @@ class WDDiligenceViewController: WDBaseViewController {
     }
     */
 
+}
+
+extension WDDiligenceViewController: JXSegmentedViewDelegate {
+    
+    func addsentMentView() {
+        diligenceView.addSubview(segmentedView)
+        diligenceView.addSubview(cocsciew)
+        segmentedView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(headView.snp.bottom).offset(24)
+            make.height.equalTo(32)
+        }
+        cocsciew.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(segmentedView.snp.bottom)
+        }
+    }
+    
+    func setupViewControllers() {
+        listVCArray.forEach { $0.view.removeFromSuperview() }
+        listVCArray.removeAll()
+        for _ in 0..<3 {
+            let vc = DiligenceListViewController()
+            cocsciew.addSubview(vc.view)
+            listVCArray.append(vc)
+        }
+        
+        updateViewControllersLayout()
+        segmentedView(segmentedView, didSelectedItemAt: 0)
+    }
+    
+    private func updateViewControllersLayout() {
+        for (index, vc) in listVCArray.enumerated() {
+            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - segmentedView.frame.maxY)
+        }
+    }
+    
+    private func createCocsciew() -> UIScrollView {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .random()
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 3, height: 0)
+        return scrollView
+    }
+    
+    private func createSegmentedView() -> JXSegmentedView {
+        let segmentedView = JXSegmentedView()
+        segmentedView.delegate = self
+        segmentedView.backgroundColor = .clear
+        segmurce = JXSegmentedTitleDataSource()
+        segmurce.titles = ["基础班", "专业版", "定制版"]
+        segmurce.isTitleColorGradientEnabled = true
+        segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
+        segmurce.titleNormalFont = .regularFontOfSize(size: 14)
+        segmurce.titleNormalColor = .white
+        segmurce.titleSelectedColor = .white
+        segmentedView.dataSource = segmurce
+        let indicator = createSegmentedIndicator()
+        segmentedView.indicators = [indicator]
+        segmentedView.contentScrollView = cocsciew
+        return segmentedView
+    }
+    
+    private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
+        let indicator = JXSegmentedIndicatorLineView()
+        indicator.indicatorWidth = JXSegmentedViewAutomaticDimension
+        indicator.indicatorHeight = 2
+        indicator.lineStyle = .lengthen
+        indicator.indicatorColor = .white
+        return indicator
+    }
+    
 }
