@@ -53,6 +53,7 @@
 		73A21DF22D0C39E000FC4C49 /* RiskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF12D0C39E000FC4C49 /* RiskListViewController.swift */; };
 		73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */; };
 		73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */; };
+		73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
 		73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB952D01415C00B2FE1B /* UserCenterView.swift */; };
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
@@ -129,6 +130,7 @@
 		73A21DF12D0C39E000FC4C49 /* RiskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskListViewController.swift; sourceTree = "<group>"; };
 		73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerViewController.swift; sourceTree = "<group>"; };
 		73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPasswordViewController.swift; sourceTree = "<group>"; };
+		73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAuthorityViewController.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		73CFEB952D01415C00B2FE1B /* UserCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterView.swift; sourceTree = "<group>"; };
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */,
 				73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */,
 				73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */,
+				73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
+				73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */,
 				7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */,
 				73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */,
 				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,

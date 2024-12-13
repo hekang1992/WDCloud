@@ -149,8 +149,9 @@ extension SettingViewController {
             .rx
             .tapGesture()
             .when(.recognized)
-            .subscribe(onNext: {_ in
-                ToastViewConfig.showToast(message: "权限设置")
+            .subscribe(onNext: { [weak self] _ in
+                let authVc = SettingAuthorityViewController()
+                self?.navigationController?.pushViewController(authVc, animated: true)
             }).disposed(by: disposeBag)
         
         //关于我们

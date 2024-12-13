@@ -334,6 +334,7 @@ extension SettingPasswordViewController {
         man.requestAPI(params: dict, pageUrl: "/operation/messageVerification/resetpassword", method: .post) { [weak self] result in
             switch result {
             case .success(_):
+                ToastViewConfig.showToast(message: "密码设置成功!")
                 self?.navigationController?.popToRootViewController(animated: true)
                 break
             case .failure(_):
