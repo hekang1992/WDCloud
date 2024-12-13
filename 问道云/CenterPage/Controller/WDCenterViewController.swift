@@ -29,6 +29,12 @@ class WDCenterViewController: WDBaseViewController {
             make.edges.equalToSuperview()
         }
         
+        //跳转设置页面
+        centerView.setBtn.rx.tap.subscribe(onNext: { [weak self] in
+            let settingVc = SettingViewController()
+            self?.navigationController?.pushViewController(settingVc, animated: true)
+        }).disposed(by: disposeBag)
+        
         self.centerView.collectionView.rx.modelSelected(String.self).subscribe(onNext: { [weak self] title in
             ToastViewConfig.showToast(message: title)
             if !IS_LOGIN {

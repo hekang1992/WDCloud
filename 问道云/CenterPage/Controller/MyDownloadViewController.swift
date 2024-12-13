@@ -6,9 +6,10 @@
 //  我的下载
 
 import UIKit
-import RxRelay
-import DropMenuBar
+import RxSwift
+import RxCocoa
 import MJRefresh
+import DropMenuBar
 import TYAlertController
 
 class MyDownloadViewController: WDBaseViewController {
@@ -150,7 +151,24 @@ class MyDownloadViewController: WDBaseViewController {
                     })
                 }
             }
+            morePopView.block4 = { model in
+                self.dismiss(animated: true) {
+                    self.shareButtonTapped(from: model)
+                }
+            }
         }
+        //搜索数据
+        self.downloadView.searchView.serachTx
+            .rx
+            .controlEvent(.editingChanged)
+            .withLatestFrom(self.downloadView.searchView.serachTx.rx.text.orEmpty)
+            .distinctUntilChanged()
+            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] text in
+            self?.pageNum = 1
+            self?.downloadfilename = text
+            self?.getPdfInfo()
+        }).disposed(by: disposeBag)
         
         addDownList()
         getDownloadTypeList()
@@ -279,7 +297,7 @@ extension MyDownloadViewController {
     //获取下载文件
     func getPdfInfo() {
         let man = RequestManager()
-        let dict = ["downloadtype": downloadtype, "downloadfilename": downloadfilename, "isChoiceDate": isChoiceDate, "pageNum": pageNum, "pageSize": 5] as [String : Any]
+        let dict = ["downloadtype": downloadtype, "downloadfilename": downloadfilename, "isChoiceDate": isChoiceDate, "pageNum": pageNum, "pageSize": 10] as [String : Any]
         man.requestAPI(params: dict, pageUrl: customerDownload_list, method: .get) { [weak self] result in
             guard let self = self else { return }
             self.downloadView.tableView.mj_header?.endRefreshing()
@@ -375,4 +393,17 @@ extension MyDownloadViewController {
         }
     }
     
+    func shareButtonTapped(from model: rowsModel) {
+        if let pdfURL = URL(string: model.filepathH5 ?? "") {
+            let activityViewController = UIActivityViewController(activityItems: [pdfURL], applicationActivities: nil)
+            if let popoverController = activityViewController.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                popoverController.permittedArrowDirections = .down
+            }
+            present(activityViewController, animated: true, completion: nil)
+        } else {
+            print("Invalid URL")
+        }
+    }
 }

@@ -401,3 +401,42 @@ class ShowAlertManager {
         }
     }
 }
+
+//获取缓存方法
+class GetCacheConfig {
+    
+    /// 获取缓存大小，单位为 MB
+    static func getCacheSizeInMB() -> String {
+        let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        do {
+            let files = try FileManager.default.contentsOfDirectory(at: cachePath, includingPropertiesForKeys: [.fileSizeKey], options: .skipsHiddenFiles)
+            let totalSize = files.reduce(0) { total, fileURL in
+                let fileSize = (try? fileURL.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0
+                return total + fileSize
+            }
+            return String(format: "%.2fMB", convertBytesToMB(totalSize))
+        } catch {
+            print("Error calculating cache size: \(error)")
+            return "Error calculating size"
+        }
+    }
+
+    /// 将字节转换为 MB
+    static func convertBytesToMB(_ bytes: Int) -> Double {
+        return Double(bytes) / 1024.0 / 1024.0
+    }
+    
+    static func clearCache() {
+        let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        do {
+            let files = try FileManager.default.contentsOfDirectory(at: cachePath, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            for file in files {
+                try FileManager.default.removeItem(at: file)
+            }
+            print("Cache cleared")
+        } catch {
+            print("Error clearing cache: \(error)")
+        }
+    }
+    
+}

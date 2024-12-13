@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import DropMenuBar
 import BRPickerView
+import Kingfisher
 
 class WDBaseViewController: UIViewController {
     
