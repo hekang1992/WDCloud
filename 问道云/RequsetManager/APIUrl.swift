@@ -6,8 +6,8 @@
 //
 
 //域名
-let base_url = "https://testh5.wintaocloud.com"
-//let base_url = "https://h5.wintaocloud.com"
+//let base_url = "https://testh5.wintaocloud.com"
+let base_url = "https://h5.wintaocloud.com"
 
 //用户协议
 let agreement_url = "/user-agreement"
@@ -35,3 +35,11 @@ let myorder_info = "/operation/customerorder/myorder"
 let combotype_list = "operation/combotype/list"
 let customerDownload_list = "/operation/mydownload/customerDownload"
 let log_out = "/auth/logout"
+
+/**
+ 发票相关
+ */
+let invoiceriseit_selecinvoicerise = "/operation/invoiceriseit/selecinvoicerise"//列表
+let operation_invoiceriseit = "/operation/invoiceriseit/add"//添加
+let invoiceriseit_updateinvoicerise = "/operation/invoiceriseit/updateinvoicerise"//修改
+let invoiceriseit_deleteinvoicerise = "/operation/invoiceriseit/deleteinvoicerise"//删除

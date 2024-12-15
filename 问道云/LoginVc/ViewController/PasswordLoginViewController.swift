@@ -63,6 +63,7 @@ extension PasswordLoginViewController {
         }).disposed(by: disposeBag)
     }
     
+    //密码登录
     func loginInfo() {
         let man = RequestManager()
         let dict = ["username": self.passView.phoneTx.text ?? "",

@@ -43,10 +43,10 @@ class WDCenterViewController: WDBaseViewController {
         
         self.centerView.collectionView.rx.modelSelected(String.self).subscribe(onNext: { [weak self] title in
             ToastViewConfig.showToast(message: title)
-            if !IS_LOGIN {
-                self?.popLogin()
+            if IS_LOGIN {
+                self?.toPushWithTitle(form: title)
             }else {
-                
+                self?.popLogin()
             }
         }).disposed(by: disposeBag)
         
@@ -75,6 +75,39 @@ class WDCenterViewController: WDBaseViewController {
                 self?.popLogin()
             }
         }).disposed(by: disposeBag)
+        
+        //跳转关注页面
+        self.centerView.focusBtn.rx.tap.subscribe(onNext: { [weak self] in
+            if IS_LOGIN {
+                let focusVc = FocusViewController()
+                if let model = self?.model {
+                    focusVc.model.accept(model)
+                }
+                self?.navigationController?.pushViewController(focusVc, animated: true)
+            }else {
+                self?.popLogin()
+            }
+        }).disposed(by: disposeBag)
+        
+        //跳转浏览历史
+        self.centerView.historyBtn.rx.tap.subscribe(onNext: { [weak self] in
+            if IS_LOGIN {
+                let historyVc = BrowsingHistoryViewController()
+                if let model = self?.model {
+                    historyVc.model.accept(model)
+                }
+                self?.navigationController?.pushViewController(historyVc, animated: true)
+            }else {
+                self?.popLogin()
+            }
+        }).disposed(by: disposeBag)
+        
+        self.centerView.ctImageView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            let menVc = MembershipCenterViewController()
+            self?.navigationController?.pushViewController(menVc, animated: true)
+        }).disposed(by: disposeBag)
+        
+//
         
         //监控
         self.centerView.jiankongBtn.rx.tap.subscribe(onNext: {
@@ -156,6 +189,40 @@ extension WDCenterViewController {
             self.centerView.modelArray.accept(modelArray1)
         }
         
+    }
+    
+    //更多功能跳转
+    func toPushWithTitle(form title: String) {
+        switch title {
+        case "发票抬头":
+            let addVc = AddInvoiceViewController()
+            self.navigationController?.pushViewController(addVc, animated: true)
+            break
+        case "我要开盘":
+            break
+        case "客服中心":
+            break
+        case "微信通知":
+            let wechatVc = WechatPushViewController()
+            self.navigationController?.pushViewController(wechatVc, animated: true)
+            break
+        case "邀请好友":
+            break
+        case "分享好友":
+            break
+        case "加入分销":
+            break
+        case "联系我们":
+            let conVc = ContactUsViewController()
+            self.navigationController?.pushViewController(conVc, animated: true)
+            break
+        case "意见反馈":
+            break
+        case "团体中心":
+            break
+        default:
+            break
+        }
     }
     
 }

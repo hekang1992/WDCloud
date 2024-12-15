@@ -73,6 +73,7 @@ class HeadView: UIView {
         switch typeEnum {
         case .none:
             hiddenStates = [true, true, true]
+//            oneBtn.setImage(UIImage(named: "launchlogo"), for: .normal)
             break
         case .oneBtn:
             hiddenStates = [false, true, true]

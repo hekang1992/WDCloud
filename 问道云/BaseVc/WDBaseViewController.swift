@@ -32,6 +32,17 @@ class WDBaseViewController: UIViewController {
 
 extension WDBaseViewController {
     
+    func addHeadView(from headView: HeadView) {
+        view.addSubview(headView)
+        headView.snp.makeConstraints { make in
+            make.left.right.top.equalToSuperview()
+            make.height.equalTo(StatusHeightManager.navigationBarHeight)
+        }
+        headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
+    }
+    
     func popLogin() {
         let loginVc = WDLoginViewController()
         let rootVc = WDNavigationController(rootViewController: loginVc)
@@ -141,5 +152,7 @@ extension WDBaseViewController {
         datePickerView.pickerStyle = customStyle
         datePickerView.show()
     }
+    
+    
 }
 

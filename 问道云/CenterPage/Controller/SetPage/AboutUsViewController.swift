@@ -19,14 +19,7 @@ class AboutUsViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.addSubview(headView)
-        headView.snp.makeConstraints { make in
-            make.left.right.top.equalToSuperview()
-            make.height.equalTo(StatusHeightManager.navigationBarHeight)
-        }
-        headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }).disposed(by: disposeBag)
+        addHeadView(from: headView)
         
         
         let iconImageView = UIImageView()
@@ -36,7 +29,7 @@ class AboutUsViewController: WDBaseViewController {
         iconImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 60, height: 60))
-            make.top.equalTo(headView.snp.bottom).offset(60)
+            make.top.equalTo(headView.snp.bottom).offset(32)
         }
         
         let mlabel = UILabel()

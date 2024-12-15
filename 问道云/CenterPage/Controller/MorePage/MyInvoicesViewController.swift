@@ -23,11 +23,7 @@ class MyInvoicesViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.addSubview(headView)
-        headView.snp.makeConstraints { make in
-            make.left.right.top.equalToSuperview()
-            make.height.equalTo(StatusHeightManager.navigationBarHeight)
-        }
+        addHeadView(from: headView)
     }
     
 

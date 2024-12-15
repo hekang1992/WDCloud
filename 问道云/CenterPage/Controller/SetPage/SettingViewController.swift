@@ -24,15 +24,7 @@ class SettingViewController: WDBaseViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        view.addSubview(headView)
-        headView.snp.makeConstraints { make in
-            make.left.right.top.equalToSuperview()
-            make.height.equalTo(StatusHeightManager.navigationBarHeight)
-        }
-        headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }).disposed(by: disposeBag)
-        
+        addHeadView(from: headView)
         view.addSubview(settingView)
         settingView.snp.makeConstraints { make in
             make.top.equalTo(headView.snp.bottom).offset(4)

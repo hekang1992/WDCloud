@@ -54,14 +54,7 @@ class SettingAuthorityViewController: WDBaseViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        view.addSubview(headView)
-        headView.snp.makeConstraints { make in
-            make.left.right.top.equalToSuperview()
-            make.height.equalTo(StatusHeightManager.navigationBarHeight)
-        }
-        headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }).disposed(by: disposeBag)
+        addHeadView(from: headView)
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in

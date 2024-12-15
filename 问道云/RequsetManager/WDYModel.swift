@@ -75,7 +75,7 @@ class userinfoModel {
 
 class rowsModel {
     var comboname: String?
-    var orderstate: String?//订单状态
+    var orderstate: String?// 订单状态，0待支付 1已支付 2已失效 3已退款
     var ordernumber: String?
     var ordertime: String?
     var payway: String?

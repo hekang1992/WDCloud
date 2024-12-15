@@ -11,11 +11,6 @@ import IQKeyboardManagerSwift
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    lazy var tabBarVc: WDTabBarController = {
-        let tabBarVc = WDTabBarController()
-        return tabBarVc
-    }()
-    
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -24,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootVcPush()
         window = UIWindow()
         window?.frame = UIScreen.main.bounds
-        window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
+        window?.rootViewController = WDNavigationController(rootViewController: WDTabBarController())
         window?.makeKeyAndVisible()
         return true
     }
@@ -46,15 +41,17 @@ extension AppDelegate {
     }
     
     @objc func setUpRootVc(_ notification: Notification) {
-        window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
+        window?.rootViewController = WDNavigationController(rootViewController: WDTabBarController())
     }
     
     @objc func goRiskVc(_ notification: Notification) {
+        let tabBarVc = WDTabBarController()
         tabBarVc.selectedIndex = 1
         window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
     }
     
     @objc func goDiliVc(_ notification: Notification) {
+        let tabBarVc = WDTabBarController()
         tabBarVc.selectedIndex = 2
         window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
     }

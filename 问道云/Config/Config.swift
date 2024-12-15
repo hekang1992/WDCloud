@@ -72,6 +72,53 @@ extension UIFont {
     
 }
 
+//按钮图片和文字的位置
+enum ButtonEdgeInsetsStyle {
+    case top // image in top，label in bottom
+    case left  // image in left，label in right
+    case bottom  // image in bottom，label in top
+    case right // image in right，label in left
+}
+
+extension UIButton {
+    func layoutButtonEdgeInsets(style: ButtonEdgeInsetsStyle, space: CGFloat) {
+        setNeedsLayout()
+        layoutIfNeeded()
+        var labelWidth: CGFloat = 0.0
+        var labelHeight: CGFloat = 0.0
+        var imageEdgeInset = UIEdgeInsets.zero
+        var labelEdgeInset = UIEdgeInsets.zero
+        let imageWith = self.imageView?.frame.size.width
+        let imageHeight = self.imageView?.frame.size.height
+        
+        labelWidth = (self.titleLabel?.intrinsicContentSize.width)!
+        labelWidth = min(labelWidth, frame.width - space - imageWith!)
+        labelHeight = (self.titleLabel?.intrinsicContentSize.height)!
+        
+        switch style {
+        case .top:
+            if ((self.titleLabel?.intrinsicContentSize.width ?? 0) + (imageWith ?? 0)) > frame.width {
+                let imageOffsetX = (frame.width - imageWith!) / 2
+                imageEdgeInset = UIEdgeInsets(top: -labelHeight - space / 2.0, left: imageOffsetX, bottom: 0, right: -imageOffsetX)
+            } else {
+                imageEdgeInset = UIEdgeInsets(top: -labelHeight - space / 2.0, left: 0, bottom: 0, right: -labelWidth)
+            }
+            labelEdgeInset = UIEdgeInsets(top: 0, left: -imageWith!, bottom: -imageHeight! - space / 2.0, right: 0)
+        case .left:
+            imageEdgeInset = UIEdgeInsets(top: 0, left: -space / 2.0, bottom: 0, right: space / 2.0)
+            labelEdgeInset = UIEdgeInsets(top: 0, left: space / 2.0, bottom: 0, right: -space / 2.0)
+        case .bottom:
+            imageEdgeInset = UIEdgeInsets(top: 0, left: 0, bottom: -labelHeight - space / 2.0, right: -labelWidth)
+            labelEdgeInset = UIEdgeInsets(top: -imageHeight! - space / 2.0, left: -imageWith!, bottom: 0, right: 0)
+        case .right:
+            imageEdgeInset = UIEdgeInsets(top: 0, left: labelWidth + space / 2.0, bottom: 0, right: -labelWidth - space / 2.0)
+            labelEdgeInset = UIEdgeInsets(top: 0, left: -imageWith! - space / 2.0, bottom: 0, right: imageWith! + space / 2.0)
+        }
+        self.titleEdgeInsets = labelEdgeInset
+        self.imageEdgeInsets = imageEdgeInset
+    }
+}
+
 // 定义一个类或扩展来封装振动反馈
 class HapticFeedbackManager {
     
@@ -237,53 +284,6 @@ class PhoneNumberFormatter {
             return start + masked + end
         }
         return phoneNumber
-    }
-}
-
-//按钮图片和文字的位置
-enum ButtonEdgeInsetsStyle {
-    case top // image in top，label in bottom
-    case left  // image in left，label in right
-    case bottom  // image in bottom，label in top
-    case right // image in right，label in left
-}
-
-extension UIButton {
-    func layoutButtonEdgeInsets(style: ButtonEdgeInsetsStyle, space: CGFloat) {
-        setNeedsLayout()
-        layoutIfNeeded()
-        var labelWidth: CGFloat = 0.0
-        var labelHeight: CGFloat = 0.0
-        var imageEdgeInset = UIEdgeInsets.zero
-        var labelEdgeInset = UIEdgeInsets.zero
-        let imageWith = self.imageView?.frame.size.width
-        let imageHeight = self.imageView?.frame.size.height
-        
-        labelWidth = (self.titleLabel?.intrinsicContentSize.width)!
-        labelWidth = min(labelWidth, frame.width - space - imageWith!)
-        labelHeight = (self.titleLabel?.intrinsicContentSize.height)!
-        
-        switch style {
-        case .top:
-            if ((self.titleLabel?.intrinsicContentSize.width ?? 0) + (imageWith ?? 0)) > frame.width {
-                let imageOffsetX = (frame.width - imageWith!) / 2
-                imageEdgeInset = UIEdgeInsets(top: -labelHeight - space / 2.0, left: imageOffsetX, bottom: 0, right: -imageOffsetX)
-            } else {
-                imageEdgeInset = UIEdgeInsets(top: -labelHeight - space / 2.0, left: 0, bottom: 0, right: -labelWidth)
-            }
-            labelEdgeInset = UIEdgeInsets(top: 0, left: -imageWith!, bottom: -imageHeight! - space / 2.0, right: 0)
-        case .left:
-            imageEdgeInset = UIEdgeInsets(top: 0, left: -space / 2.0, bottom: 0, right: space / 2.0)
-            labelEdgeInset = UIEdgeInsets(top: 0, left: space / 2.0, bottom: 0, right: -space / 2.0)
-        case .bottom:
-            imageEdgeInset = UIEdgeInsets(top: 0, left: 0, bottom: -labelHeight - space / 2.0, right: -labelWidth)
-            labelEdgeInset = UIEdgeInsets(top: -imageHeight! - space / 2.0, left: -imageWith!, bottom: 0, right: 0)
-        case .right:
-            imageEdgeInset = UIEdgeInsets(top: 0, left: labelWidth + space / 2.0, bottom: 0, right: -labelWidth - space / 2.0)
-            labelEdgeInset = UIEdgeInsets(top: 0, left: -imageWith! - space / 2.0, bottom: 0, right: imageWith! + space / 2.0)
-        }
-        self.titleEdgeInsets = labelEdgeInset
-        self.imageEdgeInsets = imageEdgeInset
     }
 }
 
