@@ -76,6 +76,14 @@ class WDCenterViewController: WDBaseViewController {
             }
         }).disposed(by: disposeBag)
         
+        //监控
+        self.centerView.jiankongBtn.rx.tap.subscribe(onNext: {
+            NotificationCenter.default.post(name: NSNotification.Name(RISK_VC), object: nil)
+        }).disposed(by: disposeBag)
+        //调查
+        self.centerView.tiaochaBtn.rx.tap.subscribe(onNext: {
+            NotificationCenter.default.post(name: NSNotification.Name(DILI_VC), object: nil)
+        }).disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -11,6 +11,10 @@ import Toaster
 
 let ROOT_VC = "ROOT_VC"
 
+let RISK_VC = "RISK_VC"
+
+let DILI_VC = "DILI_VC"
+
 let SCREEN_WIDTH = UIScreen.main.bounds.size.width
 
 let SCREEN_HEIGHT = UIScreen.main.bounds.size.height
