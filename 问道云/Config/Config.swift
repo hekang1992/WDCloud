@@ -119,6 +119,58 @@ extension UIButton {
     }
 }
 
+//图片拓展
+extension UIImage {
+    class func imageOfText(_ text: String,
+                           size: (CGFloat, CGFloat),
+                           bgColor: UIColor = .random(),
+                           textColor: UIColor = .white,
+                           cornerRadius: CGFloat = 0) -> UIImage? {
+        // 过滤空""
+        if text.isEmpty { return nil }
+        // 取第一个字符
+        let letter = (text as NSString).substring(to: 1)
+        let sise = CGSize(width: size.0, height: size.1)
+        let rect = CGRect(origin: CGPoint.zero, size: sise)
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(sise, false, scale)
+        guard let ctx = UIGraphicsGetCurrentContext() else { return nil }
+        // 取较小的边
+        let minSide = min(size.0, size.1)
+        // 是否圆角裁剪
+        if cornerRadius > 0 {
+            UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).addClip()
+        }
+        // 设置填充颜色
+        ctx.setFillColor(bgColor.cgColor)
+        // 填充绘制
+        ctx.fill(rect)
+        
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 0
+        
+        let attr = [
+            NSAttributedString.Key.foregroundColor : textColor,
+            NSAttributedString.Key.font : UIFont.boldFontOfSize(size: minSide * 0.5),
+            NSAttributedString.Key.paragraphStyle: style,
+            NSAttributedString.Key.kern: 0
+        ] as [NSAttributedString.Key : Any]
+        
+        let textLabel = UILabel()
+        textLabel.textAlignment = .center
+        textLabel.attributedText = .init(string: letter, attributes: attr)
+        textLabel.sizeToFit()
+        let textW = textLabel.frame.width
+        let textH = textLabel.frame.height
+        textLabel.drawText(in: .init(x: minSide / 2 - textW / 2, y: minSide / 2 - textH / 2, width: textW, height: textH))
+        // 得到图片
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        // 关闭上下文
+        UIGraphicsEndImageContext()
+        return image
+    }
+}
+
 // 定义一个类或扩展来封装振动反馈
 class HapticFeedbackManager {
     
@@ -325,6 +377,72 @@ class LLemptyView: UIView {
     
 }
 
+//无网络页面
+class NoNetView: UIView {
+    
+    lazy var bgView: UIView = {
+        let bgView = UIView()
+        bgView.backgroundColor = .white
+        return bgView
+    }()
+    
+    lazy var bgImageView: UIImageView = {
+        let bgImageView = UIImageView()
+        bgImageView.image = UIImage(named: "duanwangimge")
+        return bgImageView
+    }()
+    
+    lazy var mlabel: UILabel = {
+        let mlabel = UILabel()
+        mlabel.font = .regularFontOfSize(size: 20)
+        mlabel.textColor = UIColor.init(cssStr: "#666666")
+        mlabel.textAlignment = .center
+        mlabel.text = "加载失败"
+        return mlabel
+    }()
+    
+    lazy var refreshBtn: UIButton = {
+        let refreshBtn = UIButton(type: .custom)
+        refreshBtn.setImage(UIImage(named: "shuaxinimage"), for: .normal)
+        refreshBtn.setTitle("点击刷新", for: .normal)
+        refreshBtn.titleLabel?.font = .mediumFontOfSize(size: 15)
+        refreshBtn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
+        return refreshBtn
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(bgView)
+        addSubview(bgImageView)
+        addSubview(mlabel)
+        addSubview(refreshBtn)
+        bgView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        bgImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(230)
+            make.size.equalTo(CGSize(width: 110, height: 110))
+        }
+        mlabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(bgImageView.snp.bottom).offset(10)
+            make.height.equalTo(28)
+        }
+        refreshBtn.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(mlabel.snp.bottom).offset(12)
+            make.size.equalTo(CGSize(width: 88, height: 21))
+        }
+        refreshBtn.layoutButtonEdgeInsets(style: .left, space: 5)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
 //获取当前控制器
 extension UIViewController {
     class func getCurrentViewController() -> UIViewController {
@@ -424,7 +542,7 @@ class GetCacheConfig {
             return "Error calculating size"
         }
     }
-
+    
     /// 将字节转换为 MB
     static func convertBytesToMB(_ bytes: Int) -> Double {
         return Double(bytes) / 1024.0 / 1024.0

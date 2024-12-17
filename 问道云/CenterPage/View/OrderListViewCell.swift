@@ -9,9 +9,7 @@ import UIKit
 import RxRelay
 import RxSwift
 
-class OrderListViewCell: UITableViewCell {
-    
-    let disposeBag = DisposeBag()
+class OrderListViewCell: BaseViewCell {
     
     var model = BehaviorRelay<rowsModel?>(value: nil)
 

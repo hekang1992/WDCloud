@@ -8,9 +8,7 @@
 import UIKit
 import RxSwift
 
-class MyDownloadViewEditCell: UITableViewCell {
-
-    let disposeBag = DisposeBag()
+class MyDownloadViewEditCell: BaseViewCell {
     
     var block: ((rowsModel) -> Void)?
     

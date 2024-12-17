@@ -13,6 +13,11 @@ class BaseView: UIView {
     let disposeBag = DisposeBag()
 }
 
+class BaseViewCell: UITableViewCell {
+    
+    let disposeBag = DisposeBag()
+}
+
 enum NavRightType {
     case none
     case oneBtn
@@ -105,7 +110,7 @@ class HeadView: UIView {
         oneBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
             make.right.equalToSuperview().offset(-12)
-            make.size.equalTo(CGSize(width: 24, height: 24))
+            make.height.equalTo(24)
         }
         twoBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)

@@ -51,7 +51,13 @@
 		737416362D0EC37400E6CD23 /* MembershipCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416352D0EC37400E6CD23 /* MembershipCenterViewController.swift */; };
 		737416382D0EC54500E6CD23 /* MembershipCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416372D0EC54500E6CD23 /* MembershipCenterView.swift */; };
 		7374163A2D0ED72600E6CD23 /* WechatPushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416392D0ED72600E6CD23 /* WechatPushViewController.swift */; };
-		7374163C2D0EDC3000E6CD23 /* AddInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374163B2D0EDC3000E6CD23 /* AddInvoiceViewController.swift */; };
+		7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374163B2D0EDC3000E6CD23 /* InvoiceListViewController.swift */; };
+		7374163E2D0FC4B300E6CD23 /* InviteFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374163D2D0FC4B300E6CD23 /* InviteFriendViewController.swift */; };
+		737416422D0FD0D000E6CD23 /* InvoiceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416412D0FD0D000E6CD23 /* InvoiceListView.swift */; };
+		737416442D0FD74F00E6CD23 /* AddInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416432D0FD74F00E6CD23 /* AddInvoiceViewController.swift */; };
+		737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416452D0FD79C00E6CD23 /* AddInvoiceView.swift */; };
+		737416482D0FD94B00E6CD23 /* AddInvoiceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416472D0FD94B00E6CD23 /* AddInvoiceViewCell.swift */; };
+		7374164E2D100BB200E6CD23 /* SearchInvoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374164D2D100BB200E6CD23 /* SearchInvoiceCell.swift */; };
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
 		73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE02D0C06E700FC4C49 /* SettingView.swift */; };
 		73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */; };
@@ -92,7 +98,6 @@
 		7325A79D2CFEE58D0043C196 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7325A79E2CFEE58D0043C196 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7325A79F2CFEE58D0043C196 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7325A7A02CFEE58D0043C196 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7325A7B32CFEE9520043C196 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		7325A7B52CFEECDD0043C196 /* WDBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDBaseViewController.swift; sourceTree = "<group>"; };
 		7325A7B72CFEECF00043C196 /* WDNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDNavigationController.swift; sourceTree = "<group>"; };
@@ -136,7 +141,15 @@
 		737416352D0EC37400E6CD23 /* MembershipCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCenterViewController.swift; sourceTree = "<group>"; };
 		737416372D0EC54500E6CD23 /* MembershipCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCenterView.swift; sourceTree = "<group>"; };
 		737416392D0ED72600E6CD23 /* WechatPushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WechatPushViewController.swift; sourceTree = "<group>"; };
-		7374163B2D0EDC3000E6CD23 /* AddInvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceViewController.swift; sourceTree = "<group>"; };
+		7374163B2D0EDC3000E6CD23 /* InvoiceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceListViewController.swift; sourceTree = "<group>"; };
+		7374163D2D0FC4B300E6CD23 /* InviteFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteFriendViewController.swift; sourceTree = "<group>"; };
+		737416412D0FD0D000E6CD23 /* InvoiceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceListView.swift; sourceTree = "<group>"; };
+		737416432D0FD74F00E6CD23 /* AddInvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceViewController.swift; sourceTree = "<group>"; };
+		737416452D0FD79C00E6CD23 /* AddInvoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceView.swift; sourceTree = "<group>"; };
+		737416472D0FD94B00E6CD23 /* AddInvoiceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceViewCell.swift; sourceTree = "<group>"; };
+		7374164D2D100BB200E6CD23 /* SearchInvoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInvoiceCell.swift; sourceTree = "<group>"; };
+		7374164F2D1016FA00E6CD23 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		737416502D10170C00E6CD23 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		73A21DE02D0C06E700FC4C49 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
@@ -374,7 +387,9 @@
 				7314AD822D01AC6800770009 /* MyInvoicesViewController.swift */,
 				737416332D0EBCB000E6CD23 /* ContactUsViewController.swift */,
 				737416392D0ED72600E6CD23 /* WechatPushViewController.swift */,
-				7374163B2D0EDC3000E6CD23 /* AddInvoiceViewController.swift */,
+				7374163B2D0EDC3000E6CD23 /* InvoiceListViewController.swift */,
+				737416432D0FD74F00E6CD23 /* AddInvoiceViewController.swift */,
+				7374163D2D0FC4B300E6CD23 /* InviteFriendViewController.swift */,
 			);
 			path = MorePage;
 			sourceTree = "<group>";
@@ -437,6 +452,10 @@
 				73A21DE02D0C06E700FC4C49 /* SettingView.swift */,
 				7374162E2D0EB9E400E6CD23 /* HistoryView.swift */,
 				737416372D0EC54500E6CD23 /* MembershipCenterView.swift */,
+				737416412D0FD0D000E6CD23 /* InvoiceListView.swift */,
+				737416452D0FD79C00E6CD23 /* AddInvoiceView.swift */,
+				737416472D0FD94B00E6CD23 /* AddInvoiceViewCell.swift */,
+				7374164D2D100BB200E6CD23 /* SearchInvoiceCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -500,10 +519,10 @@
 				};
 			};
 			buildConfigurationList = 7325A77C2CFEE5230043C196 /* Build configuration list for PBXProject "问道云" */;
-			developmentRegion = en;
+			developmentRegion = "zh-Hans";
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				"zh-Hans",
 				Base,
 			);
 			mainGroup = 7325A7782CFEE5230043C196;
@@ -588,12 +607,14 @@
 				7374162D2D0EB87F00E6CD23 /* FocusViewController.swift in Sources */,
 				7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */,
 				73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */,
+				7374164E2D100BB200E6CD23 /* SearchInvoiceCell.swift in Sources */,
 				73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
 				7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */,
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
+				737416482D0FD94B00E6CD23 /* AddInvoiceViewCell.swift in Sources */,
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
 				7374162F2D0EB9E400E6CD23 /* HistoryView.swift in Sources */,
 				73A21DEA2D0C2F2B00FC4C49 /* RiskView.swift in Sources */,
@@ -605,12 +626,14 @@
 				7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */,
 				7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */,
 				7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */,
+				737416422D0FD0D000E6CD23 /* InvoiceListView.swift in Sources */,
 				7325A7BA2CFEED0F0043C196 /* WDTabBarController.swift in Sources */,
 				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
 				7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */,
 				7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */,
-				7374163C2D0EDC3000E6CD23 /* AddInvoiceViewController.swift in Sources */,
+				7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */,
 				7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */,
+				737416442D0FD74F00E6CD23 /* AddInvoiceViewController.swift in Sources */,
 				7325A7DC2CFF0DBE0043C196 /* PasswordLoginView.swift in Sources */,
 				73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */,
 				73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */,
@@ -620,6 +643,7 @@
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
 				737416382D0EC54500E6CD23 /* MembershipCenterView.swift in Sources */,
+				7374163E2D0FC4B300E6CD23 /* InviteFriendViewController.swift in Sources */,
 				737416342D0EBCB000E6CD23 /* ContactUsViewController.swift in Sources */,
 				73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
@@ -632,6 +656,7 @@
 				73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */,
 				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,
 				7374163A2D0ED72600E6CD23 /* WechatPushViewController.swift in Sources */,
+				737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,
 				7314AD832D01AC6800770009 /* MyInvoicesViewController.swift in Sources */,
 				73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */,
@@ -644,7 +669,8 @@
 		7325A7A12CFEE58D0043C196 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				7325A7A02CFEE58D0043C196 /* Base */,
+				7374164F2D1016FA00E6CD23 /* zh-Hans */,
+				737416502D10170C00E6CD23 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -740,6 +766,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -803,6 +830,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

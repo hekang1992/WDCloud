@@ -10,8 +10,9 @@ import RxRelay
 import RxSwift
 
 struct DescModel {
-    let title: String
-    let descTitle: String
+    var title: String
+    var descTitle: String
+    var text = BehaviorRelay(value: "")
     init(title: String = "", descTitle: String = "") {
         self.title = title
         self.descTitle = descTitle
@@ -20,14 +21,14 @@ struct DescModel {
 
 class SettingAuthorityViewController: WDBaseViewController {
     
-    lazy var model1 = DescModel(title: "相机权限", descTitle: "用于扫名片、扫码登录等服务")
-    lazy var model2 = DescModel(title: "通讯录读取权限", descTitle: "用于人脉雷达识别通讯录访问等服务")
-    lazy var model3 = DescModel(title: "通讯录写入权限", descTitle: "用于拨打企业联系电话快速加入通讯录等服务")
-    lazy var model4 = DescModel(title: "麦克风权限", descTitle: "用于使用语音搜索等功能")
-    lazy var model5 = DescModel(title: "位置权限", descTitle: "用于通过您的当前位置信息政策使用附近企业等功能")
-    lazy var model6 = DescModel(title: "文件储存权限", descTitle: "用于保存、上传图片等功能")
+    let model1 = DescModel(title: "相机权限", descTitle: "用于扫名片、扫码登录等服务")
+    let model2 = DescModel(title: "通讯录读取权限", descTitle: "用于人脉雷达识别通讯录访问等服务")
+    let model3 = DescModel(title: "通讯录写入权限", descTitle: "用于拨打企业联系电话快速加入通讯录等服务")
+    let model4 = DescModel(title: "麦克风权限", descTitle: "用于使用语音搜索等功能")
+    let model5 = DescModel(title: "位置权限", descTitle: "用于通过您的当前位置信息政策使用附近企业等功能")
+    let model6 = DescModel(title: "文件储存权限", descTitle: "用于保存、上传图片等功能")
     
-    lazy var array: [DescModel] = [model1, model2, model3, model4, model5, model6]
+    var array: [DescModel] = []
     
     var modelArray = BehaviorRelay<[DescModel]>(value: [])
     
@@ -61,6 +62,12 @@ class SettingAuthorityViewController: WDBaseViewController {
             make.top.equalTo(headView.snp.bottom).offset(4)
             make.left.bottom.right.equalToSuperview()
         }
+        array.append(model1)
+        array.append(model2)
+        array.append(model3)
+        array.append(model4)
+        array.append(model5)
+        array.append(model6)
         self.modelArray.accept(array)
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
         
@@ -108,9 +115,7 @@ extension SettingAuthorityViewController: UITableViewDelegate {
 }
 
 
-class AuthViewCell: UITableViewCell {
-    
-    let disposeBag = DisposeBag()
+class AuthViewCell: BaseViewCell {
     
     var model = BehaviorRelay<DescModel?>(value: nil)
     

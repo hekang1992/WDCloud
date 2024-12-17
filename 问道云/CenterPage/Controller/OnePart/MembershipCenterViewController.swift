@@ -10,9 +10,10 @@ import UIKit
 class MembershipCenterViewController: WDBaseViewController {
     
     lazy var headView: HeadView = {
-        let headView = HeadView(frame: .zero, typeEnum: .none)
+        let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "会员中心"
         headView.bgView.backgroundColor = .clear
+        headView.oneBtn.setImage(UIImage(named: "wodediingdan"), for: .normal)
         return headView
     }()
     
@@ -30,6 +31,10 @@ class MembershipCenterViewController: WDBaseViewController {
             make.edges.equalToSuperview()
         }
         addHeadView(from: headView)
+        headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            let orderListVc = UserAllOrderSController()
+            self?.navigationController?.pushViewController(orderListVc, animated: true)
+        }).disposed(by: disposeBag)
     }
     
 

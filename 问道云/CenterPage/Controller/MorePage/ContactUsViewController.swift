@@ -55,12 +55,11 @@ class ContactUsViewController: WDBaseViewController {
         ctImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.left.right.equalToSuperview()
-            make.height.equalTo(312)
+            make.height.equalTo(314)
             make.top.equalTo(mlabel.snp.bottom).offset(18.5)
         }
     }
     
-
     /*
     // MARK: - Navigation
 

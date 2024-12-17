@@ -13,10 +13,12 @@ class BaseModel {
     var msg: String?
     var data: DataModel?
     var rows: [rowsModel]?
+    var datas: [rowsModel]?//搜索的数组
     init(json: JSON) {
         self.code = json["code"].intValue
         self.msg = json["msg"].stringValue
         self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
+        self.datas = json["data"].arrayValue.map { rowsModel(json: $0) }
         self.data = DataModel(json: json["data"])
     }
 }
@@ -90,7 +92,23 @@ class rowsModel {
     var filepathH5: String?//h5链接
     var downloadfilename: String?//名称
     var dataid: String?//id号
+    var entityId: String?
+    var entityName: String?
+    var phone: String?
+    var registerAddress: String?
+    var usCreditCode: String?
+    var logo: String?
+    var companyname: String?
+    var companynumber: String?
     init(json: JSON) {
+        self.companynumber = json["companynumber"].stringValue
+        self.companyname = json["companyname"].stringValue
+        self.logo = json["logo"].stringValue
+        self.entityId = json["entityId"].stringValue
+        self.entityName = json["entityName"].stringValue
+        self.phone = json["phone"].stringValue
+        self.registerAddress = json["registerAddress"].stringValue
+        self.usCreditCode = json["usCreditCode"].stringValue
         self.comboname = json["comboname"].stringValue
         self.orderstate = json["orderstate"].stringValue
         self.ordernumber = json["ordernumber"].stringValue

@@ -19,6 +19,11 @@ class WDBaseViewController: UIViewController {
         let emptyView = LLemptyView()
         return emptyView
     }()
+    
+    lazy var noNetView: NoNetView = {
+        let noNetView = NoNetView()
+        return noNetView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +79,13 @@ extension WDBaseViewController {
             make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset((SCREEN_WIDTH - 163) * 0.5)
             make.size.equalTo(CGSize(width: 163, height: 163))
+        }
+    }
+    
+    func addNoNetView(form view: UIView) {
+        view.addSubview(self.noNetView)
+        self.noNetView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     

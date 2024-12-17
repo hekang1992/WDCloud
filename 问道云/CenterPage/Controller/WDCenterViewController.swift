@@ -152,9 +152,14 @@ extension WDCenterViewController {
                 if let model = success.data {
                     self.model = model
                     getCenterInfo(model: model)
+                    self.noNetView.removeFromSuperview()
                 }
                 break
             case .failure(_):
+                self.addNoNetView(form: self.centerView)
+                self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
+                    self?.getBuymoreinfo()
+                }).disposed(by: disposeBag)
                 break
             }
         }
@@ -195,10 +200,13 @@ extension WDCenterViewController {
     func toPushWithTitle(form title: String) {
         switch title {
         case "发票抬头":
-            let addVc = AddInvoiceViewController()
+            let addVc = InvoiceListViewController()
+            if let model = self.model {
+                addVc.model.accept(model)
+            }
             self.navigationController?.pushViewController(addVc, animated: true)
             break
-        case "我要开盘":
+        case "我要开票":
             break
         case "客服中心":
             break
@@ -207,6 +215,8 @@ extension WDCenterViewController {
             self.navigationController?.pushViewController(wechatVc, animated: true)
             break
         case "邀请好友":
+            let viteVc = InviteFriendViewController()
+            self.navigationController?.pushViewController(viteVc, animated: true)
             break
         case "分享好友":
             break

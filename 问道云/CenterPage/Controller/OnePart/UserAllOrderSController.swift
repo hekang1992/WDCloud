@@ -121,6 +121,7 @@ extension UserAllOrderSController {
                     self.allArray.append(contentsOf: rows)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
+                        self.noNetView.removeFromSuperview()
                     }else {
                         self.addNodataView(form: self.orderView)
                     }
@@ -136,7 +137,13 @@ extension UserAllOrderSController {
                 }
                 break
             case .failure(_):
-                self.addNodataView(form: self.orderView)
+                self.addNoNetView(form: self.orderView)
+                self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
+                    //获取订单状态
+                    self?.getCombotype()
+                    //获取订单信息
+                    self?.getOrderInfo(form: 0, pageNum: 1, orderstate: orderstate)
+                }).disposed(by: disposeBag)
                 self.orderView.tableView.mj_footer?.isHidden = true
                 break
             }

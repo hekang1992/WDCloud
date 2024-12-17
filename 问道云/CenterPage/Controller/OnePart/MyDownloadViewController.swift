@@ -307,6 +307,7 @@ extension MyDownloadViewController {
                     self.allArray.append(contentsOf: rows)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
+                        self.noNetView.removeFromSuperview()
                     }else {
                         self.addNodataView(form: self.downloadView)
                     }
@@ -319,6 +320,10 @@ extension MyDownloadViewController {
                 }else {
                     self.addNodataView(form: self.downloadView)
                     self.downloadView.tableView.mj_footer?.isHidden = true
+                    self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
+                        self?.getDownloadTypeList()
+                        self?.getPdfInfo()
+                    }).disposed(by: disposeBag)
                 }
                 break
             case .failure(_):
