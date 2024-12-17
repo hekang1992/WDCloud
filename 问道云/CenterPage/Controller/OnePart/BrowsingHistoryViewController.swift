@@ -111,7 +111,7 @@ extension BrowsingHistoryViewController: JXSegmentedViewDelegate {
         segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
         segmurce.titleNormalFont = .regularFontOfSize(size: 14)
         segmurce.titleNormalColor = UIColor.init(cssStr: "#666666")!
-        segmurce.titleSelectedColor = UIColor.init(cssStr: "#333333")!
+        segmurce.titleSelectedColor = UIColor.init(cssStr: "#547AFF")!
         segmentedView.dataSource = segmurce
         let indicator = createSegmentedIndicator()
         segmentedView.indicators = [indicator]

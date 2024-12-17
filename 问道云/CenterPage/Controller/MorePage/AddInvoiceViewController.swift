@@ -159,7 +159,7 @@ extension AddInvoiceViewController: UITableViewDelegate {
         man.requestAPI(params: dict, pageUrl: "/firminfo/entity/search", method: .get) { [weak self] result in
             switch result {
             case .success(let success):
-                if let data = success.datas {
+                if let data = success.datas, data.count > 0 {
                     self?.tableView.isHidden = false
                     self?.modelArray.accept(data)
                 }

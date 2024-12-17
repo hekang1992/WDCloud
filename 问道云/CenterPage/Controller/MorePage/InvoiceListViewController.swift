@@ -40,6 +40,28 @@ class InvoiceListViewController: WDBaseViewController {
             addVc.model.accept(self.model.value)
             self.navigationController?.pushViewController(addVc, animated: true)
         }).disposed(by: disposeBag)
+        
+        listView.deleteBlock = { [weak self] model in
+            ShowAlertManager.showAlert(title: "提示", message: "是否确认删除?", confirmAction: {
+                self?.deleteInfo(from: model)
+            })
+        }
+        
+        listView.pasteBlock = { model in
+            let name = "企业名称: \(model.companyname ?? "")"
+            let shuihao = "税号: \(model.companynumber ?? "")"
+            let dizhi = "地址: \(model.address ?? "")"
+            let phone = "电话号码: \(model.contact ?? "")"
+            let kaihu = "开户银行: \(model.bankname ?? "")"
+            let bank = "银行账户: \(model.bankfullname ?? "")"
+            UIPasteboard.general.string = "\(name)\n\(shuihao)\n\(dizhi)\n\(phone)\n\(kaihu)\n\(bank)"
+            ToastViewConfig.showToast(message: "复制成功!")
+        }
+        
+        listView.shareBlock = { model in
+            
+        }
+        
     }
     
     
@@ -81,6 +103,22 @@ extension InvoiceListViewController {
                 self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
                     self?.getInvoListInfo()
                 }).disposed(by: disposeBag)
+                break
+            }
+        }
+    }
+    
+    func deleteInfo(from model: rowsModel) {
+        let dict = ["dataid": model.dataid ?? ""]
+        let man = RequestManager()
+        man.requestAPI(params: dict, pageUrl: "/operation/invoiceriseit/deleteinvoicerise", method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.getInvoListInfo()
+                }
+                break
+            case .failure(_):
                 break
             }
         }

@@ -100,7 +100,8 @@ class rowsModel {
     var logo: String?
     var companyname: String?
     var companynumber: String?
-    var defaultstate: String?
+    var defaultstate: String?// 默认状态
+    var zidingyiState: String?// 自定义默认状态
     var address: String?
     var bankname: String?
     var bankfullname: String?

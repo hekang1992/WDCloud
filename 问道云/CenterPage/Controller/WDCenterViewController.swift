@@ -207,6 +207,11 @@ extension WDCenterViewController {
             self.navigationController?.pushViewController(addVc, animated: true)
             break
         case "我要开票":
+            let tickVc = MyTicketViewController()
+            if let model = self.model {
+                tickVc.model.accept(model)
+            }
+            self.navigationController?.pushViewController(tickVc, animated: true)
             break
         case "客服中心":
             break

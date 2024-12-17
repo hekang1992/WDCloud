@@ -263,7 +263,7 @@ class UserCenterView: BaseView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 24
-        layout.minimumInteritemSpacing = (SCREEN_WIDTH - 288) / 3
+        layout.minimumInteritemSpacing = (SCREEN_WIDTH - 300) / 3
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(UserCenterItemCell.self, forCellWithReuseIdentifier: "UserCenterItemCell")
         return collectionView
@@ -440,7 +440,7 @@ class UserCenterView: BaseView {
         }
         whiteView2.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.left.equalTo(whiteView.snp.left)
+            make.left.equalToSuperview().offset(20)
             make.top.equalTo(whiteView1.snp.bottom).offset(8)
             make.height.equalTo(234.5)
             make.bottom.equalToSuperview().offset(-20)

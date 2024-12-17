@@ -100,6 +100,10 @@ class InvoiceNormalListCell: BaseViewCell {
 
 class InvoiceSelectListCell: BaseViewCell {
     
+    var deleteBlock: ((rowsModel) -> Void)?
+    var pasteBlock: (((rowsModel)) -> Void)?
+    var shareBlock: (((rowsModel)) -> Void)?
+    
     var model = BehaviorRelay<rowsModel?>(value: nil)
     
     lazy var nameLabel: UILabel = {
@@ -222,6 +226,28 @@ class InvoiceSelectListCell: BaseViewCell {
         return lineView
     }()
     
+    lazy var itemImageView: UIImageView = {
+        let itemImageView = UIImageView()
+        itemImageView.isUserInteractionEnabled = true
+        itemImageView.image = UIImage(named: "itemImage")
+        return itemImageView
+    }()
+    
+    lazy var deleteBtn: UIButton = {
+        let deleteBtn = UIButton(type: .custom)
+        return deleteBtn
+    }()
+    
+    lazy var pasteBtn: UIButton = {
+        let pasteBtn = UIButton(type: .custom)
+        return pasteBtn
+    }()
+    
+    lazy var shareBtn: UIButton = {
+        let shareBtn = UIButton(type: .custom)
+        return shareBtn
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(bgView)
@@ -239,6 +265,10 @@ class InvoiceSelectListCell: BaseViewCell {
         contentView.addSubview(label4)
         contentView.addSubview(label5)
         contentView.addSubview(lineView)
+        contentView.addSubview(itemImageView)
+        itemImageView.addSubview(deleteBtn)
+        itemImageView.addSubview(pasteBtn)
+        itemImageView.addSubview(shareBtn)
         nameLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(20)
@@ -318,6 +348,24 @@ class InvoiceSelectListCell: BaseViewCell {
             make.height.equalTo(0.5)
             make.top.equalTo(nameLabel.snp.bottom).offset(282)
         }
+        itemImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(lineView.snp.bottom).offset(4)
+            make.size.equalTo(CGSize(width: 343, height: 36))
+        }
+        deleteBtn.snp.makeConstraints { make in
+            make.left.top.bottom.equalToSuperview()
+            make.width.equalTo(343 * 0.33)
+        }
+        shareBtn.snp.makeConstraints { make in
+            make.right.top.bottom.equalToSuperview()
+            make.width.equalTo(343 * 0.33)
+        }
+        pasteBtn.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.left.equalTo(deleteBtn.snp.right)
+            make.right.equalTo(shareBtn.snp.left)
+        }
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             nameLabel.text = model.companyname ?? ""
@@ -326,7 +374,7 @@ class InvoiceSelectListCell: BaseViewCell {
             label2.text = model.address ?? ""
             label3.text = model.bankname ?? ""
             label4.text = model.bankfullname ?? ""
-            label5.text = model.contactnumber ?? ""
+            label5.text = model.contact ?? ""
             if model.defaultstate == "1" {
                 self.morenImageView.isHidden = false
             }else {
@@ -334,6 +382,21 @@ class InvoiceSelectListCell: BaseViewCell {
             }
         }).disposed(by: disposeBag)
         
+        //删除
+        deleteBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = model.value else { return }
+            self.deleteBlock?(model)
+        }).disposed(by: disposeBag)
+        //复制
+        pasteBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = model.value else { return }
+            self.pasteBlock?(model)
+        }).disposed(by: disposeBag)
+        //分享
+        shareBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = model.value else { return }
+            self.shareBlock?(model)
+        }).disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
@@ -343,6 +406,10 @@ class InvoiceSelectListCell: BaseViewCell {
 
 
 class InvoiceListView: BaseView {
+    
+    var deleteBlock: ((rowsModel) -> Void)?
+    var pasteBlock: (((rowsModel)) -> Void)?
+    var shareBlock: (((rowsModel)) -> Void)?
     
     var model = BehaviorRelay<DataModel?>(value: nil)
     
@@ -421,15 +488,14 @@ class InvoiceListView: BaseView {
             }
         }).disposed(by: disposeBag)
         
-//        model
-//            .asObservable()
-//            .compactMap { $0?.rows }
-//            .bind(to: tableView.rx.items(cellIdentifier: "InvoiceNormalListCell", cellType: InvoiceNormalListCell.self)) { row, model ,cell in
-//            cell.model.accept(model)
-//            cell.selectionStyle = .none
-//            cell.backgroundColor = .clear
-//        }.disposed(by: disposeBag)
-        
+        //        model
+        //            .asObservable()
+        //            .compactMap { $0?.rows }
+        //            .bind(to: tableView.rx.items(cellIdentifier: "InvoiceNormalListCell", cellType: InvoiceNormalListCell.self)) { row, model ,cell in
+        //            cell.model.accept(model)
+        //            cell.selectionStyle = .none
+        //            cell.backgroundColor = .clear
+        //        }.disposed(by: disposeBag)
         
         model
             .asObservable()
@@ -437,11 +503,28 @@ class InvoiceListView: BaseView {
             .bind(to: tableView.rx.items) { [weak self] tableView, index, model in
                 guard let self = self else { return UITableViewCell() }
                 let defaultstate = model.defaultstate ?? ""
+                //自定义默认状态
+                let zidingyiState = model.zidingyiState ?? ""
+                //是否是默认发票抬头
                 if defaultstate == "1" {
                     if let cell = tableView.dequeueReusableCell(withIdentifier: "InvoiceSelectListCell", for: IndexPath(row: index, section: 0)) as? InvoiceSelectListCell  {
                         cell.backgroundColor = .clear
                         cell.selectionStyle = .none
                         cell.model.accept(model)
+                        cell.deleteBlock = { [weak self] model in
+                            self?.deleteBlock?(model)
+                        }
+                        cell.pasteBlock = { [weak self] model in
+                            self?.pasteBlock?(model)
+                        }
+                        cell.shareBlock = { [weak self] model in
+                            self?.shareBlock?(model)
+                        }
+                        if zidingyiState == "1" {
+                            cell.morenImageView.isHidden = true
+                        }else {
+                            cell.morenImageView.isHidden = false
+                        }
                         return cell
                     }
                 }else {
@@ -455,9 +538,16 @@ class InvoiceListView: BaseView {
                 return UITableViewCell()
             }.disposed(by: disposeBag)
         
-        
-        
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
+        
+        
+        tableView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
+            guard let self = self else { return }
+            self.model.value?.rows?.forEach { $0.defaultstate = "0" }
+            self.model.value?.rows?[indexPath.row].defaultstate = "1"
+            self.model.value?.rows?[indexPath.row].zidingyiState = "1"
+            self.tableView.reloadData()
+        }).disposed(by: disposeBag)
         
     }
     
