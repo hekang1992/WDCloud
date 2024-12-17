@@ -100,7 +100,17 @@ class rowsModel {
     var logo: String?
     var companyname: String?
     var companynumber: String?
+    var defaultstate: String?
+    var address: String?
+    var bankname: String?
+    var bankfullname: String?
+    var contact: String?
     init(json: JSON) {
+        self.contact = json["contact"].stringValue
+        self.bankfullname = json["bankfullname"].stringValue
+        self.bankname = json["bankname"].stringValue
+        self.address = json["address"].stringValue
+        self.defaultstate = json["defaultstate"].stringValue
         self.companynumber = json["companynumber"].stringValue
         self.companyname = json["companyname"].stringValue
         self.logo = json["logo"].stringValue

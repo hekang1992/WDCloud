@@ -8,7 +8,7 @@
 import UIKit
 import RxRelay
 
-class InvoiceListCell: BaseViewCell {
+class InvoiceNormalListCell: BaseViewCell {
     
     var model = BehaviorRelay<rowsModel?>(value: nil)
     
@@ -40,12 +40,20 @@ class InvoiceListCell: BaseViewCell {
         return ctImageView
     }()
     
+    lazy var morenImageView: UIImageView = {
+        let morenImageView = UIImageView()
+        morenImageView.isHidden = true
+        morenImageView.image = UIImage(named: "morenimage")
+        return morenImageView
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(bgView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(numLabel)
         contentView.addSubview(ctImageView)
+        contentView.addSubview(morenImageView)
         nameLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(19)
             make.top.equalToSuperview().offset(20)
@@ -66,10 +74,20 @@ class InvoiceListCell: BaseViewCell {
             make.right.equalToSuperview().offset(-20)
             make.size.equalTo(CGSize(width: 50, height: 50))
         }
+        morenImageView.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 41, height: 35))
+            make.left.equalToSuperview()
+            make.top.equalToSuperview()
+        }
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             nameLabel.text = model.companyname ?? ""
-            numLabel.text = model.companynumber ?? ""
+            numLabel.text = "税号:  \(model.companynumber ?? "")"
+            if model.defaultstate == "1" {
+                self.morenImageView.isHidden = false
+            }else {
+                self.morenImageView.isHidden = true
+            }
         }).disposed(by: disposeBag)
         
     }
@@ -79,6 +97,250 @@ class InvoiceListCell: BaseViewCell {
     }
     
 }
+
+class InvoiceSelectListCell: BaseViewCell {
+    
+    var model = BehaviorRelay<rowsModel?>(value: nil)
+    
+    lazy var nameLabel: UILabel = {
+        let nameLabel = UILabel()
+        nameLabel.textColor = UIColor.init(cssStr: "#547AFF")
+        nameLabel.font = .mediumFontOfSize(size: 16)
+        nameLabel.textAlignment = .center
+        return nameLabel
+    }()
+    
+    lazy var ctImageView: UIImageView = {
+        let ctImageView = UIImageView()
+        ctImageView.image = UIImage(named: "erweimaimage")
+        return ctImageView
+    }()
+    
+    lazy var morenImageView: UIImageView = {
+        let morenImageView = UIImageView()
+        morenImageView.isHidden = true
+        morenImageView.image = UIImage(named: "morenimage")
+        return morenImageView
+    }()
+    
+    lazy var onelabel: UILabel = {
+        let onelabel = UILabel()
+        onelabel.textColor = UIColor.init(cssStr: "#999999")
+        onelabel.textAlignment = .left
+        onelabel.font = .regularFontOfSize(size: 13)
+        onelabel.text = "税号:"
+        return onelabel
+    }()
+    
+    lazy var twolabel: UILabel = {
+        let twolabel = UILabel()
+        twolabel.textColor = UIColor.init(cssStr: "#999999")
+        twolabel.textAlignment = .left
+        twolabel.font = .regularFontOfSize(size: 13)
+        twolabel.text = "地址:"
+        return twolabel
+    }()
+    
+    lazy var threelabel: UILabel = {
+        let threelabel = UILabel()
+        threelabel.textColor = UIColor.init(cssStr: "#999999")
+        threelabel.textAlignment = .left
+        threelabel.font = .regularFontOfSize(size: 13)
+        threelabel.text = "开户银行:"
+        return threelabel
+    }()
+    
+    lazy var fourlabel: UILabel = {
+        let fourlabel = UILabel()
+        fourlabel.textColor = UIColor.init(cssStr: "#999999")
+        fourlabel.textAlignment = .left
+        fourlabel.font = .regularFontOfSize(size: 13)
+        fourlabel.text = "银行账号:"
+        return fourlabel
+    }()
+    
+    lazy var fivelabel: UILabel = {
+        let fivelabel = UILabel()
+        fivelabel.textColor = UIColor.init(cssStr: "#999999")
+        fivelabel.textAlignment = .left
+        fivelabel.font = .regularFontOfSize(size: 13)
+        fivelabel.text = "电话号码:"
+        return fivelabel
+    }()
+    
+    lazy var label1: UILabel = {
+        let label1 = UILabel()
+        label1.textColor = UIColor.init(cssStr: "#333333")
+        label1.textAlignment = .left
+        label1.font = .regularFontOfSize(size: 13)
+        return label1
+    }()
+    
+    lazy var label2: UILabel = {
+        let label2 = UILabel()
+        label2.textColor = UIColor.init(cssStr: "#333333")
+        label2.textAlignment = .left
+        label2.font = .regularFontOfSize(size: 13)
+        label2.numberOfLines = 0
+        return label2
+    }()
+    
+    lazy var label3: UILabel = {
+        let label3 = UILabel()
+        label3.textColor = UIColor.init(cssStr: "#333333")
+        label3.textAlignment = .left
+        label3.font = .regularFontOfSize(size: 13)
+        label3.numberOfLines = 0
+        return label3
+    }()
+    
+    lazy var label4: UILabel = {
+        let label4 = UILabel()
+        label4.textColor = UIColor.init(cssStr: "#333333")
+        label4.textAlignment = .left
+        label4.font = .regularFontOfSize(size: 13)
+        return label4
+    }()
+    
+    lazy var label5: UILabel = {
+        let label5 = UILabel()
+        label5.textColor = UIColor.init(cssStr: "#333333")
+        label5.textAlignment = .left
+        label5.font = .regularFontOfSize(size: 13)
+        return label5
+    }()
+    
+    lazy var bgView: UIView = {
+        let bgView = UIView()
+        bgView.backgroundColor = .white
+        return bgView
+    }()
+    
+    lazy var lineView: UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = .init(cssStr: "#E7E7E7")
+        return lineView
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(bgView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(onelabel)
+        contentView.addSubview(twolabel)
+        contentView.addSubview(threelabel)
+        contentView.addSubview(fourlabel)
+        contentView.addSubview(fivelabel)
+        contentView.addSubview(ctImageView)
+        contentView.addSubview(morenImageView)
+        contentView.addSubview(label1)
+        contentView.addSubview(label2)
+        contentView.addSubview(label3)
+        contentView.addSubview(label4)
+        contentView.addSubview(label5)
+        contentView.addSubview(lineView)
+        nameLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(20)
+            make.height.equalTo(22.5)
+            make.bottom.equalToSuperview().offset(-334)
+        }
+        ctImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(nameLabel.snp.bottom).offset(15)
+            make.size.equalTo(CGSize(width: 100, height: 100))
+        }
+        onelabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(56.5)
+            make.top.equalTo(ctImageView.snp.bottom).offset(30)
+            make.size.equalTo(CGSize(width: 69.5, height: 18.5))
+        }
+        twolabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(56.5)
+            make.top.equalTo(onelabel.snp.bottom).offset(6)
+            make.size.equalTo(CGSize(width: 69.5, height: 18.5))
+        }
+        threelabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(56.5)
+            make.top.equalTo(twolabel.snp.bottom).offset(6)
+            make.size.equalTo(CGSize(width: 69.5, height: 18.5))
+        }
+        fourlabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(56.5)
+            make.top.equalTo(threelabel.snp.bottom).offset(6)
+            make.size.equalTo(CGSize(width: 69.5, height: 18.5))
+        }
+        fivelabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(56.5)
+            make.top.equalTo(fourlabel.snp.bottom).offset(6)
+            make.size.equalTo(CGSize(width: 69.5, height: 18.5))
+        }
+        label1.snp.makeConstraints { make in
+            make.centerY.equalTo(onelabel.snp.centerY)
+            make.height.equalTo(18.5)
+            make.left.equalTo(onelabel.snp.right).offset(16)
+            make.right.equalToSuperview().offset(-20)
+        }
+        label2.snp.makeConstraints { make in
+            make.centerY.equalTo(twolabel.snp.centerY)
+            make.left.equalTo(twolabel.snp.right).offset(16)
+            make.right.equalToSuperview().offset(-20)
+        }
+        label3.snp.makeConstraints { make in
+            make.centerY.equalTo(threelabel.snp.centerY)
+            make.left.equalTo(threelabel.snp.right).offset(16)
+            make.right.equalToSuperview().offset(-20)
+        }
+        label4.snp.makeConstraints { make in
+            make.centerY.equalTo(fourlabel.snp.centerY)
+            make.height.equalTo(18.5)
+            make.left.equalTo(fourlabel.snp.right).offset(16)
+            make.right.equalToSuperview().offset(-20)
+        }
+        label5.snp.makeConstraints { make in
+            make.centerY.equalTo(fivelabel.snp.centerY)
+            make.height.equalTo(18.5)
+            make.left.equalTo(fivelabel.snp.right).offset(16)
+            make.right.equalToSuperview().offset(-20)
+        }
+        bgView.snp.makeConstraints { make in
+            make.left.top.right.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-6)
+        }
+        morenImageView.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 41, height: 35))
+            make.left.equalToSuperview()
+            make.top.equalToSuperview()
+        }
+        lineView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(16)
+            make.height.equalTo(0.5)
+            make.top.equalTo(nameLabel.snp.bottom).offset(282)
+        }
+        model.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            nameLabel.text = model.companyname ?? ""
+            ctImageView.image = .qrImageForString(qrString: model.companynumber ?? "")
+            label1.text = model.companynumber ?? ""
+            label2.text = model.address ?? ""
+            label3.text = model.bankname ?? ""
+            label4.text = model.bankfullname ?? ""
+            label5.text = model.contactnumber ?? ""
+            if model.defaultstate == "1" {
+                self.morenImageView.isHidden = false
+            }else {
+                self.morenImageView.isHidden = true
+            }
+        }).disposed(by: disposeBag)
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 
 class InvoiceListView: BaseView {
     
@@ -118,7 +380,8 @@ class InvoiceListView: BaseView {
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
-        tableView.register(InvoiceListCell.self, forCellReuseIdentifier: "InvoiceListCell")
+        tableView.register(InvoiceNormalListCell.self, forCellReuseIdentifier: "InvoiceNormalListCell")
+        tableView.register(InvoiceSelectListCell.self, forCellReuseIdentifier: "InvoiceSelectListCell")
         return tableView
     }()
     
@@ -158,13 +421,41 @@ class InvoiceListView: BaseView {
             }
         }).disposed(by: disposeBag)
         
-        model.asObservable().compactMap {
-            $0?.rows
-        }.bind(to: tableView.rx.items(cellIdentifier: "InvoiceListCell", cellType: InvoiceListCell.self)) { row, model ,cell in
-            cell.model.accept(model)
-            cell.selectionStyle = .none
-            cell.backgroundColor = .clear
-        }.disposed(by: disposeBag)
+//        model
+//            .asObservable()
+//            .compactMap { $0?.rows }
+//            .bind(to: tableView.rx.items(cellIdentifier: "InvoiceNormalListCell", cellType: InvoiceNormalListCell.self)) { row, model ,cell in
+//            cell.model.accept(model)
+//            cell.selectionStyle = .none
+//            cell.backgroundColor = .clear
+//        }.disposed(by: disposeBag)
+        
+        
+        model
+            .asObservable()
+            .compactMap { $0?.rows }
+            .bind(to: tableView.rx.items) { [weak self] tableView, index, model in
+                guard let self = self else { return UITableViewCell() }
+                let defaultstate = model.defaultstate ?? ""
+                if defaultstate == "1" {
+                    if let cell = tableView.dequeueReusableCell(withIdentifier: "InvoiceSelectListCell", for: IndexPath(row: index, section: 0)) as? InvoiceSelectListCell  {
+                        cell.backgroundColor = .clear
+                        cell.selectionStyle = .none
+                        cell.model.accept(model)
+                        return cell
+                    }
+                }else {
+                    if let cell = tableView.dequeueReusableCell(withIdentifier: "InvoiceNormalListCell", for: IndexPath(row: index, section: 0)) as? InvoiceNormalListCell  {
+                        cell.backgroundColor = .clear
+                        cell.selectionStyle = .none
+                        cell.model.accept(model)
+                        return cell
+                    }
+                }
+                return UITableViewCell()
+            }.disposed(by: disposeBag)
+        
+        
         
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
         
