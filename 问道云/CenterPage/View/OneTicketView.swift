@@ -42,6 +42,14 @@ class OneTicketCell: BaseViewCell {
         return twoLabel
     }()
     
+    lazy var priceLabel: UILabel = {
+        let priceLabel = UILabel()
+        priceLabel.textColor = .init(cssStr: "#F55B5B")
+        priceLabel.font = .mediumFontOfSize(size: 14)
+        priceLabel.textAlignment = .right
+        return priceLabel
+    }()
+    
     lazy var whiteView: UIView = {
         let whiteView = UIView()
         whiteView.backgroundColor = .white
@@ -56,6 +64,7 @@ class OneTicketCell: BaseViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(oneLabel)
         contentView.addSubview(twoLabel)
+        whiteView.addSubview(priceLabel)
         icon.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: 22, height: 22))
@@ -83,11 +92,17 @@ class OneTicketCell: BaseViewCell {
             make.width.equalTo(SCREEN_WIDTH - 51)
             make.bottom.equalToSuperview().offset(-8)
         }
+        priceLabel.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-12)
+            make.top.equalToSuperview().offset(17)
+            make.size.equalTo(CGSize(width: 80, height: 20))
+        }
         rowsModel.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             nameLabel.text = model.invoicecontent ?? ""
             oneLabel.text = model.ordernumber ?? ""
             twoLabel.text = model.createTime ?? ""
+            priceLabel.text = "¥\(model.invoiceamount ?? "")"
             if model.isChecked {
                 icon.image = UIImage(named: "Checkb_sel")
             }else {
@@ -107,6 +122,8 @@ class OneTicketView: BaseView {
     var modelArray = BehaviorRelay<[rowsModel]>(value: [])
     
     var selectedCount = BehaviorRelay<Int>(value: 0)
+    
+    var count = 0
     
 //    // 用于统计当前被选中的项数
 //    var selectedCount = 0 {
@@ -147,16 +164,16 @@ class OneTicketView: BaseView {
         super.init(frame: frame)
         addSubview(tableView)
         addSubview(sureBtn)
-        sureBtn.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(45)
-            make.size.equalTo(CGSize(width: SCREEN_WIDTH - 90, height: 45))
-            make.bottom.equalToSuperview().offset(-34)
-        }
         tableView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
-            make.bottom.equalTo(sureBtn.snp.top).offset(-10)
+            make.bottom.equalToSuperview().offset(-100)
         }
-        
+        sureBtn.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(45)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(45)
+            make.top.equalToSuperview().offset(200)
+        }
         modelArray.asObservable().bind(to: tableView.rx.items(cellIdentifier: "OneTicketCell", cellType: OneTicketCell.self)) { row, model, cell in
             cell.rowsModel.accept(model)
             cell.selectionStyle = .none
@@ -169,13 +186,12 @@ class OneTicketView: BaseView {
             model.isChecked.toggle()
             tableView.reloadRows(at: [indexPath], with: .automatic)
             // 更新选中计数
-            var selectedCount = 0
             if model.isChecked {
-                selectedCount += 1
-                self.selectedCount.accept(selectedCount) // 选中项数加 1
+                count += 1
+                self.selectedCount.accept(count) // 选中项数加 1
             } else {
-                selectedCount -= 1  // 选中项数减 1
-                self.selectedCount.accept(selectedCount)
+                count -= 1  // 选中项数减 1
+                self.selectedCount.accept(count)
             }
         }).disposed(by: disposeBag)
         

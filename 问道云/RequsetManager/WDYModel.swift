@@ -108,9 +108,11 @@ class rowsModel {
     var contact: String?
     var invoicecontent: String?
     var createTime: String?
+    var invoiceamount: String?
     var isChecked: Bool = false//记录cell是否被点击啦..
     init(json: JSON) {
         self.isChecked = json["isChecked"].boolValue
+        self.invoiceamount = json["invoiceamount"].stringValue
         self.createTime = json["createTime"].stringValue
         self.invoicecontent = json["invoicecontent"].stringValue
         self.contact = json["contact"].stringValue
