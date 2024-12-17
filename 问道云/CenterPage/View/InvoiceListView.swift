@@ -520,11 +520,11 @@ class InvoiceListView: BaseView {
                         cell.shareBlock = { [weak self] model in
                             self?.shareBlock?(model)
                         }
-                        if zidingyiState == "1" {
-                            cell.morenImageView.isHidden = true
-                        }else {
-                            cell.morenImageView.isHidden = false
-                        }
+//                        if zidingyiState == "1" {
+//                            cell.morenImageView.isHidden = true
+//                        }else {
+//                            cell.morenImageView.isHidden = false
+//                        }
                         return cell
                     }
                 }else {

@@ -66,7 +66,7 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
         segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
         segmurce.titleNormalFont = .regularFontOfSize(size: 14)
         segmurce.titleNormalColor = UIColor.init(cssStr: "#666666")!
-        segmurce.titleSelectedColor = UIColor.init(cssStr: "#333333")!
+        segmurce.titleSelectedColor = UIColor.init(cssStr: "#547AFF")!
         segmentedView.dataSource = segmurce
         let indicator = createSegmentedIndicator()
         segmentedView.indicators = [indicator]
@@ -98,11 +98,12 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
         ticketView.addSubview(cocsciew)
         segmentedView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(24)
+            make.top.equalTo(headView.snp.bottom).offset(12)
             make.height.equalTo(32)
         }
         cocsciew.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
+            make.left.bottom.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
             make.top.equalTo(segmentedView.snp.bottom)
         }
     }
@@ -111,10 +112,12 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
         listVCArray.forEach { $0.view.removeFromSuperview() }
         listVCArray.removeAll()
         let oneVc = OneTicketViewController()
+        oneVc.model.accept(model.value)
         cocsciew.addSubview(oneVc.view)
         listVCArray.append(oneVc)
         
         let twoVc = TwoTicketViewController()
+        twoVc.model.accept(model.value)
         cocsciew.addSubview(twoVc.view)
         listVCArray.append(twoVc)
         
@@ -124,7 +127,7 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
     
     private func updateViewControllersLayout() {
         for (index, vc) in listVCArray.enumerated() {
-            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - segmentedView.frame.maxY)
+            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: 0)
         }
     }
     

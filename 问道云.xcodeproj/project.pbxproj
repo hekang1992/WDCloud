@@ -78,6 +78,7 @@
 		73F6046A2D1171280061D5D3 /* MyTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604692D1171280061D5D3 /* MyTicketView.swift */; };
 		73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */; };
 		73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046D2D1172B90061D5D3 /* TwoTicketViewController.swift */; };
+		73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -174,6 +175,7 @@
 		73F604692D1171280061D5D3 /* MyTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketView.swift; sourceTree = "<group>"; };
 		73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTicketViewController.swift; sourceTree = "<group>"; };
 		73F6046D2D1172B90061D5D3 /* TwoTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoTicketViewController.swift; sourceTree = "<group>"; };
+		73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTicketView.swift; sourceTree = "<group>"; };
 		845B2366B1013718573E8C55 /* Pods-问道云.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.debug.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.debug.xcconfig"; sourceTree = "<group>"; };
 		BF2EE8A0497D8E69CF0E16AE /* Pods-问道云.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.release.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -468,6 +470,7 @@
 				737416472D0FD94B00E6CD23 /* AddInvoiceViewCell.swift */,
 				7374164D2D100BB200E6CD23 /* SearchInvoiceCell.swift */,
 				73F604692D1171280061D5D3 /* MyTicketView.swift */,
+				73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -628,6 +631,7 @@
 				73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
 				737416482D0FD94B00E6CD23 /* AddInvoiceViewCell.swift in Sources */,
+				73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */,
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
 				7374162F2D0EB9E400E6CD23 /* HistoryView.swift in Sources */,
 				73A21DEA2D0C2F2B00FC4C49 /* RiskView.swift in Sources */,
