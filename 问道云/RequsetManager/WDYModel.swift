@@ -109,8 +109,16 @@ class rowsModel {
     var invoicecontent: String?
     var createTime: String?
     var invoiceamount: String?
+    var invoicetype: String?//发票类型
     var isChecked: Bool = false//记录cell是否被点击啦..
+    var unitname: String?//抬头
+    var taxpayernumber: String?//税号
+    var handlestate: String?//税号
     init(json: JSON) {
+        self.handlestate = json["handlestate"].stringValue
+        self.taxpayernumber = json["taxpayernumber"].stringValue
+        self.unitname = json["unitname"].stringValue
+        self.invoicetype = json["invoicetype"].stringValue
         self.isChecked = json["isChecked"].boolValue
         self.invoiceamount = json["invoiceamount"].stringValue
         self.createTime = json["createTime"].stringValue

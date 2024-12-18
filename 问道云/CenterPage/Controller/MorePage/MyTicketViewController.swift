@@ -101,7 +101,7 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
             make.top.equalTo(headView.snp.bottom).offset(12)
             make.height.equalTo(32)
         }
-        cocsciew.frame = CGRectMake(0, StatusHeightManager.statusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.statusBarHeight)
+        cocsciew.frame = CGRectMake(0, 44, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44)
     }
     
     func setupViewControllers() {
@@ -123,7 +123,7 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
     
     private func updateViewControllersLayout() {
         for (index, vc) in listVCArray.enumerated() {
-            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - StatusHeightManager.statusBarHeight)
+            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44)
         }
     }
     

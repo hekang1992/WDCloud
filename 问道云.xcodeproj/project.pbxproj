@@ -73,6 +73,7 @@
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
 		73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */; };
 		73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */; };
+		73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E56BE02D1274630015BF34 /* TwoTicketView.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */; };
 		73F6046A2D1171280061D5D3 /* MyTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604692D1171280061D5D3 /* MyTicketView.swift */; };
@@ -170,6 +171,7 @@
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
 		73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAllOrderSController.swift; sourceTree = "<group>"; };
 		73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAllOrderView.swift; sourceTree = "<group>"; };
+		73E56BE02D1274630015BF34 /* TwoTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoTicketView.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketViewController.swift; sourceTree = "<group>"; };
 		73F604692D1171280061D5D3 /* MyTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketView.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 				7374164D2D100BB200E6CD23 /* SearchInvoiceCell.swift */,
 				73F604692D1171280061D5D3 /* MyTicketView.swift */,
 				73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */,
+				73E56BE02D1274630015BF34 /* TwoTicketView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -661,6 +664,7 @@
 				7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */,
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
+				73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */,
 				737416382D0EC54500E6CD23 /* MembershipCenterView.swift in Sources */,
 				7374163E2D0FC4B300E6CD23 /* InviteFriendViewController.swift in Sources */,
 				737416342D0EBCB000E6CD23 /* ContactUsViewController.swift in Sources */,

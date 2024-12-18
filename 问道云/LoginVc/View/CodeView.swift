@@ -37,8 +37,8 @@ class CodeView: BaseView {
         let codeInputView = WLUnitField(inputUnitCount: 6)
         codeInputView.borderRadius = 5
         codeInputView.borderWidth = 0.5
-        codeInputView.trackTintColor = UIColor.init(cssStr: "#3849F7")
-        codeInputView.cursorColor = UIColor.init(cssStr: "#3F96FF")
+        codeInputView.trackTintColor = UIColor.init(cssStr: "#547AFF")
+        codeInputView.cursorColor = UIColor.init(cssStr: "#547AFF")
         codeInputView.textFont = UIFont.mediumFontOfSize(size: 50)
         codeInputView.textColor = UIColor.init(cssStr: "#27344C")
         codeInputView.delegate = self

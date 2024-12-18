@@ -54,8 +54,8 @@ extension OneTicketViewController {
     func getListInfo() {
         let man = RequestManager()
         let customernumber = model.value?.customernumber ?? ""
-        let dict = ["customernumber": customernumber, "pageNum": pageNum] as [String : Any]
-        man.requestAPI(params: dict, pageUrl: "/operation/invoiceRecord/selecinvoiceriseRecord", method: .get) { [weak self] result in
+        let dict = ["customernumber": customernumber, "pageNum": pageNum, "pageSize": 10] as [String : Any]
+        man.requestAPI(params: dict, pageUrl: "/operation/invoiceRecord/selecinvoicerise", method: .get) { [weak self] result in
             guard let self = self else { return }
             self.oneTicketView.tableView.mj_header?.endRefreshing()
             self.oneTicketView.tableView.mj_footer?.endRefreshing()
@@ -75,7 +75,13 @@ extension OneTicketViewController {
                     }else {
                         self.oneTicketView.tableView.mj_footer?.isHidden = true
                     }
-                    
+                    if total != 0 {
+                        self.emptyView.removeFromSuperview()
+                        self.noNetView.removeFromSuperview()
+                    }else {
+                        self.addNodataView(form: self.oneTicketView)
+                        
+                    }
                 }
                 break
             case .failure(_):

@@ -99,10 +99,10 @@ class OneTicketCell: BaseViewCell {
         }
         rowsModel.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            nameLabel.text = model.invoicecontent ?? ""
-            oneLabel.text = model.ordernumber ?? ""
-            twoLabel.text = model.createTime ?? ""
-            priceLabel.text = "¥\(model.invoiceamount ?? "")"
+            nameLabel.text = model.comboname ?? ""
+            oneLabel.text = "订单编号:\(model.ordernumber ?? "")"
+            twoLabel.text = "购买时间:\(model.ordertime ?? "")"
+            priceLabel.text = "¥\(model.pirce ?? 0.00)"
             if model.isChecked {
                 icon.image = UIImage(named: "Checkb_sel")
             }else {
@@ -166,13 +166,13 @@ class OneTicketView: BaseView {
         addSubview(sureBtn)
         tableView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-100)
+            make.height.equalTo(SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 144)
         }
         sureBtn.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(45)
             make.centerX.equalToSuperview()
             make.height.equalTo(45)
-            make.top.equalToSuperview().offset(200)
+            make.top.equalTo(tableView.snp.bottom).offset(18)
         }
         modelArray.asObservable().bind(to: tableView.rx.items(cellIdentifier: "OneTicketCell", cellType: OneTicketCell.self)) { row, model, cell in
             cell.rowsModel.accept(model)
