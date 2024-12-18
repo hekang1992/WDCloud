@@ -117,6 +117,17 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
         cocsciew.addSubview(twoVc.view)
         listVCArray.append(twoVc)
         
+        oneVc.toOpenTicketBlock = { [weak self] model in
+            let listVc = InvoiceListViewController()
+            listVc.rowModel.accept(model)
+            listVc.model.accept(self?.model.value)
+            self?.navigationController?.pushViewController(listVc, animated: true)
+        }
+        
+        twoVc.linkBlock = { [weak self] model in
+            self?.pushWebPage(from: model.localpdflink ?? "")
+        }
+        
         updateViewControllersLayout()
         segmentedView(segmentedView, didSelectedItemAt: 0)
     }

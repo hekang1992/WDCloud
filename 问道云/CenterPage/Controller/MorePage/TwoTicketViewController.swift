@@ -17,6 +17,8 @@ class TwoTicketViewController: WDBaseViewController {
     
     var allArray: [rowsModel] = []//加载更多
     
+    var linkBlock: ((rowsModel) -> Void)?
+    
     lazy var twoTicketView: TwoTicketView = {
         let twoTicketView = TwoTicketView()
         return twoTicketView
@@ -43,6 +45,10 @@ class TwoTicketViewController: WDBaseViewController {
             guard let self = self else { return }
             getListInfo()
         })
+        //点击打开发票
+        twoTicketView.linkBlock = { [weak self] model in
+            self?.linkBlock?(model)
+        }
         
     }
     

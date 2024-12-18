@@ -114,7 +114,9 @@ class rowsModel {
     var unitname: String?//抬头
     var taxpayernumber: String?//税号
     var handlestate: String?//税号
+    var localpdflink: String?//发票地址
     init(json: JSON) {
+        self.localpdflink = json["localpdflink"].stringValue
         self.handlestate = json["handlestate"].stringValue
         self.taxpayernumber = json["taxpayernumber"].stringValue
         self.unitname = json["unitname"].stringValue

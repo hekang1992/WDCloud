@@ -119,19 +119,13 @@ class OneTicketCell: BaseViewCell {
 
 class OneTicketView: BaseView {
     
+    var model = BehaviorRelay<rowsModel?>(value: nil)
+    
     var modelArray = BehaviorRelay<[rowsModel]>(value: [])
     
     var selectedCount = BehaviorRelay<Int>(value: 0)
     
-    var count = 0
-    
-//    // 用于统计当前被选中的项数
-//    var selectedCount = 0 {
-//        didSet {
-//            // 每次选中状态改变时，更新 UI 显示选中的数量
-//            print("Selected Count: \(selectedCount)")
-//        }
-//    }
+    var backBlock: ((rowsModel) -> Void)?
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -182,16 +176,20 @@ class OneTicketView: BaseView {
         
         tableView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
             guard let self = self else { return }
-            let model = modelArray.value[indexPath.row]
-            model.isChecked.toggle()
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-            // 更新选中计数
-            if model.isChecked {
-                count += 1
-                self.selectedCount.accept(count) // 选中项数加 1
-            } else {
-                count -= 1  // 选中项数减 1
-                self.selectedCount.accept(count)
+            let models = self.modelArray.value
+            for i in 0..<models.count {
+                models[i].isChecked = (i == indexPath.row)
+            }
+            self.selectedCount.accept(1)
+            self.modelArray.accept(models)
+            self.model.accept(models[indexPath.row])
+        }).disposed(by: disposeBag)
+        
+        sureBtn.rx.tap.subscribe(onNext: { [weak self] in
+            if let self = self, let model = model.value {
+                self.backBlock?(model)
+            }else {
+                ToastViewConfig.showToast(message: "请选择需要开具发票的订单")
             }
         }).disposed(by: disposeBag)
         

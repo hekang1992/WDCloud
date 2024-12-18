@@ -10,6 +10,8 @@ import RxRelay
 
 class TwoTicketCell: BaseViewCell {
     
+    var linkBlock: ((rowsModel) -> Void)?
+    
     var rowsModel = BehaviorRelay<rowsModel?>(value: nil)
     
     lazy var nameLabel: UILabel = {
@@ -100,6 +102,33 @@ class TwoTicketCell: BaseViewCell {
         return priceLabel
     }()
     
+    lazy var lineView: UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = .init(cssStr: "#D5D5D5")
+        return lineView
+    }()
+    
+    lazy var openBtn: UIButton = {
+        let openBtn = UIButton(type: .custom)
+        openBtn.setTitle("打开发票", for: .normal)
+        openBtn.layer.cornerRadius = 2.5
+        openBtn.titleLabel?.font = .regularFontOfSize(size: 13)
+        openBtn.backgroundColor = UIColor.init(cssStr: "#EEEEEE")
+        openBtn.setTitleColor(UIColor.init(cssStr: "#333333"), for: .normal)
+        openBtn.isEnabled = false
+        return openBtn
+    }()
+    
+    lazy var againBtn: UIButton = {
+        let againBtn = UIButton(type: .custom)
+        againBtn.setTitle("申请重开发票", for: .normal)
+        againBtn.layer.cornerRadius = 2.5
+        againBtn.titleLabel?.font = .mediumFontOfSize(size: 13)
+        againBtn.backgroundColor = UIColor.init(cssStr: "#3849F7")?.withAlphaComponent(0.1)
+        againBtn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
+        return againBtn
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(whiteView)
@@ -112,6 +141,9 @@ class TwoTicketCell: BaseViewCell {
         contentView.addSubview(taxNumLabel)
         contentView.addSubview(timeLabel)
         contentView.addSubview(priceLabel)
+        contentView.addSubview(lineView)
+        contentView.addSubview(openBtn)
+        contentView.addSubview(againBtn)
         whiteView.addSubview(typeImageView)
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(15)
@@ -122,28 +154,25 @@ class TwoTicketCell: BaseViewCell {
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(nameLabel.snp.bottom).offset(14)
             make.height.equalTo(18.5)
+            make.width.equalTo(30)
         }
         twoLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(oneLabel.snp.bottom).offset(6)
             make.height.equalTo(18.5)
+            make.width.equalTo(30)
         }
         threeLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(twoLabel.snp.bottom).offset(6)
             make.height.equalTo(18.5)
+            make.width.equalTo(62)
         }
         fourLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(threeLabel.snp.bottom).offset(6)
             make.height.equalTo(18.5)
-            make.bottom.equalToSuperview().offset(-25)
-        }
-        whiteView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(11)
-            make.top.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-8)
+            make.width.equalTo(62)
         }
         headLabel.snp.makeConstraints { make in
             make.centerY.equalTo(oneLabel.snp.centerY)
@@ -159,15 +188,38 @@ class TwoTicketCell: BaseViewCell {
         }
         timeLabel.snp.makeConstraints { make in
             make.centerY.equalTo(threeLabel.snp.centerY)
-            make.left.equalTo(threeLabel.snp.right).offset(8)
+            make.left.equalTo(threeLabel.snp.right).offset(6)
             make.height.equalTo(20)
             make.right.equalToSuperview().offset(-20)
         }
         priceLabel.snp.makeConstraints { make in
             make.centerY.equalTo(fourLabel.snp.centerY)
-            make.left.equalTo(fourLabel.snp.right).offset(8)
+            make.left.equalTo(fourLabel.snp.right).offset(6)
             make.height.equalTo(20)
             make.right.equalToSuperview().offset(-20)
+        }
+        lineView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(19)
+            make.height.equalTo(0.5)
+            make.top.equalTo(priceLabel.snp.bottom).offset(7)
+            make.bottom.equalToSuperview().offset(-57.5)
+        }
+        openBtn.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-21.5)
+            make.top.equalTo(lineView.snp.bottom).offset(7)
+            make.size.equalTo(CGSize(width: 76, height: 28))
+        }
+        againBtn.snp.makeConstraints { make in
+            make.right.equalTo(openBtn.snp.left).offset(-6)
+            make.top.equalTo(lineView.snp.bottom).offset(7)
+            make.size.equalTo(CGSize(width: 84.5, height: 28))
+        }
+        whiteView.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(11)
+            make.top.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-8)
         }
         typeImageView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 80, height: 80))
@@ -182,10 +234,26 @@ class TwoTicketCell: BaseViewCell {
             timeLabel.text = model.createTime ?? ""
             nameLabel.text = model.invoicetype == "1" ? "增值税专用发票(专票)" :
                              model.invoicetype == "2" ? "增值税普通发票(普票)" : "其他类型发票"
-
             typeImageView.image = model.handlestate == "3" ?
                                   UIImage(named: "watermarkwacnehng") : UIImage(named: "watermarkjinxinzhong")
+            if model.handlestate == "3" {
+                openBtn.isEnabled = true
+                openBtn.backgroundColor = UIColor.init(cssStr: "#3849F7")?.withAlphaComponent(0.1)
+                openBtn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
+            }else {
+                openBtn.isEnabled = false
+                openBtn.backgroundColor = UIColor.init(cssStr: "#EEEEEE")
+                openBtn.setTitleColor(UIColor.init(cssStr: "#333333"), for: .normal)
+            }
         }).disposed(by: disposeBag)
+        
+        
+        self.openBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = self.rowsModel.value else { return }
+            self.linkBlock?(model)
+        }).disposed(by: disposeBag)
+        
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -195,6 +263,8 @@ class TwoTicketCell: BaseViewCell {
 }
 
 class TwoTicketView: BaseView {
+    
+    var linkBlock: ((rowsModel) -> Void)?
     
     var modelArray = BehaviorRelay<[rowsModel]>(value: [])
     
@@ -226,6 +296,10 @@ class TwoTicketView: BaseView {
             cell.rowsModel.accept(model)
             cell.selectionStyle = .none
             cell.backgroundColor = .clear
+            cell.linkBlock = { [weak self] model in
+                guard let self = self else { return }
+                self.linkBlock?(model)
+            }
         }.disposed(by: disposeBag)
     }
     

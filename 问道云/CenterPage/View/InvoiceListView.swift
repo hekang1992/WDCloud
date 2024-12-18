@@ -101,8 +101,15 @@ class InvoiceNormalListCell: BaseViewCell {
 class InvoiceSelectListCell: BaseViewCell {
     
     var deleteBlock: ((rowsModel) -> Void)?
+    
     var pasteBlock: (((rowsModel)) -> Void)?
+    
     var shareBlock: (((rowsModel)) -> Void)?
+    
+    var isShowType = BehaviorRelay<String>(value: "0")
+    
+    //选择开票
+    var toTicketBlock: (((rowsModel)) -> Void)?
     
     var model = BehaviorRelay<rowsModel?>(value: nil)
     
@@ -248,6 +255,18 @@ class InvoiceSelectListCell: BaseViewCell {
         return shareBtn
     }()
     
+    lazy var ticketBtn: UIButton = {
+        let ticketBtn = UIButton(type: .custom)
+        ticketBtn.setImage(UIImage(named: "kaipiaoimgebtn"), for: .normal)
+        return ticketBtn
+    }()
+    
+    lazy var lineView1: UIView = {
+        let lineView1 = UIView()
+        lineView1.backgroundColor = .init(cssStr: "#F4F7FB")
+        return lineView1
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(bgView)
@@ -382,6 +401,36 @@ class InvoiceSelectListCell: BaseViewCell {
             }
         }).disposed(by: disposeBag)
         
+        isShowType.asObservable().subscribe(onNext: { [weak self] isShowType in
+            guard let self = self else { return }
+            if isShowType == "1" {
+                ticketBtn.isHidden = false
+                lineView1.isHidden = false
+                contentView.addSubview(lineView1)
+                contentView.addSubview(ticketBtn)
+                lineView1.snp.makeConstraints { make in
+                    make.centerX.equalToSuperview()
+                    make.left.equalToSuperview()
+                    make.height.equalTo(1.5)
+                    make.top.equalTo(self.itemImageView.snp.bottom).offset(1.5)
+                }
+                nameLabel.snp.updateConstraints { make in
+                    make.bottom.equalToSuperview().offset(-390)
+                }
+                ticketBtn.snp.makeConstraints { make in
+                    make.centerX.equalToSuperview()
+                    make.size.equalTo(CGSize(width: 142, height: 61))
+                    make.top.equalTo(self.itemImageView.snp.bottom).offset(7.5)
+                }
+            }else {
+                ticketBtn.isHidden = true
+                lineView1.isHidden = true
+                nameLabel.snp.updateConstraints { make in
+                    make.bottom.equalToSuperview().offset(-334)
+                }
+            }
+        }).disposed(by: disposeBag)
+        
         //删除
         deleteBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self, let model = model.value else { return }
@@ -397,6 +446,12 @@ class InvoiceSelectListCell: BaseViewCell {
             guard let self = self, let model = model.value else { return }
             self.shareBlock?(model)
         }).disposed(by: disposeBag)
+        
+        ticketBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = model.value else { return }
+            self.toTicketBlock?(model)
+        }).disposed(by: disposeBag)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -407,11 +462,23 @@ class InvoiceSelectListCell: BaseViewCell {
 
 class InvoiceListView: BaseView {
     
+    //是否是点击
+    var isClickType = BehaviorRelay<Bool>(value: false)
+    //删除
     var deleteBlock: ((rowsModel) -> Void)?
+    
+    //复制
     var pasteBlock: (((rowsModel)) -> Void)?
+    
+    //分享
     var shareBlock: (((rowsModel)) -> Void)?
     
+    var toTicketBlock: (((rowsModel)) -> Void)?
+    
     var model = BehaviorRelay<DataModel?>(value: nil)
+    
+    //是否展示开票按钮
+    var isShowType = BehaviorRelay<String?>(value: nil)
     
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
@@ -438,7 +505,7 @@ class InvoiceListView: BaseView {
     }()
     
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
+        let tableView = UITableView(frame: .zero, style: .plain)
         tableView.estimatedRowHeight = 80
         tableView.isHidden = true
         tableView.rowHeight = UITableView.automaticDimension
@@ -449,6 +516,9 @@ class InvoiceListView: BaseView {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(InvoiceNormalListCell.self, forCellReuseIdentifier: "InvoiceNormalListCell")
         tableView.register(InvoiceSelectListCell.self, forCellReuseIdentifier: "InvoiceSelectListCell")
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
         return tableView
     }()
     
@@ -488,25 +558,20 @@ class InvoiceListView: BaseView {
             }
         }).disposed(by: disposeBag)
         
-        //        model
-        //            .asObservable()
-        //            .compactMap { $0?.rows }
-        //            .bind(to: tableView.rx.items(cellIdentifier: "InvoiceNormalListCell", cellType: InvoiceNormalListCell.self)) { row, model ,cell in
-        //            cell.model.accept(model)
-        //            cell.selectionStyle = .none
-        //            cell.backgroundColor = .clear
-        //        }.disposed(by: disposeBag)
-        
         model
             .asObservable()
             .compactMap { $0?.rows }
             .bind(to: tableView.rx.items) { [weak self] tableView, index, model in
                 guard let self = self else { return UITableViewCell() }
-                let defaultstate = model.defaultstate ?? ""
-                //自定义默认状态
-                let zidingyiState = model.zidingyiState ?? ""
-                //是否是默认发票抬头
-                if defaultstate == "1" {
+                let isClick = self.isClickType.value
+                if !isClick {
+                    if model.defaultstate == "1" {
+                        model.isChecked = true
+                    } else {
+                        model.isChecked = false
+                    }
+                }
+                if model.isChecked {
                     if let cell = tableView.dequeueReusableCell(withIdentifier: "InvoiceSelectListCell", for: IndexPath(row: index, section: 0)) as? InvoiceSelectListCell  {
                         cell.backgroundColor = .clear
                         cell.selectionStyle = .none
@@ -520,11 +585,10 @@ class InvoiceListView: BaseView {
                         cell.shareBlock = { [weak self] model in
                             self?.shareBlock?(model)
                         }
-//                        if zidingyiState == "1" {
-//                            cell.morenImageView.isHidden = true
-//                        }else {
-//                            cell.morenImageView.isHidden = false
-//                        }
+                        cell.toTicketBlock = { [weak self] model in
+                            self?.toTicketBlock?(model)
+                        }
+                        cell.isShowType.accept(self.isShowType.value ?? "0")
                         return cell
                     }
                 }else {
@@ -540,13 +604,21 @@ class InvoiceListView: BaseView {
         
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
         
-        
         tableView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
             guard let self = self else { return }
-            self.model.value?.rows?.forEach { $0.defaultstate = "0" }
-            self.model.value?.rows?[indexPath.row].defaultstate = "1"
-            self.model.value?.rows?[indexPath.row].zidingyiState = "1"
-            self.tableView.reloadData()
+            // 获取 model 和 rows
+            let model = self.model.value
+            let rows = model?.rows ?? []
+            // 重置所有 cell 的 `isChecked` 状态为折叠
+            rows.forEach { row in
+                row.isChecked = false // 所有项折叠
+            }
+            // 选择当前点击的 `cell`
+            rows[indexPath.row].isChecked = true
+            // 更新模型并通知更新
+            model?.rows = rows
+            self.isClickType.accept(true)
+            self.model.accept(model)
         }).disposed(by: disposeBag)
         
     }

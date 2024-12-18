@@ -17,6 +17,8 @@ class OneTicketViewController: WDBaseViewController {
     
     var allArray: [rowsModel] = []//加载更多
     
+    var toOpenTicketBlock: ((rowsModel) -> Void)?
+    
     lazy var oneTicketView: OneTicketView = {
         let oneTicketView = OneTicketView()
         return oneTicketView
@@ -43,7 +45,10 @@ class OneTicketViewController: WDBaseViewController {
             guard let self = self else { return }
             getListInfo()
         })
-        
+        //去开票立即开票
+        oneTicketView.backBlock = { [weak self] model in
+            self?.toOpenTicketBlock?(model)
+        }
     }
     
 }

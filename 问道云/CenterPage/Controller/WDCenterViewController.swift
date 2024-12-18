@@ -42,7 +42,6 @@ class WDCenterViewController: WDBaseViewController {
         }).disposed(by: disposeBag)
         
         self.centerView.collectionView.rx.modelSelected(String.self).subscribe(onNext: { [weak self] title in
-            ToastViewConfig.showToast(message: title)
             if IS_LOGIN {
                 self?.toPushWithTitle(form: title)
             }else {

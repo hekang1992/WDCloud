@@ -95,8 +95,10 @@ class WebPageViewController: WDBaseViewController {
         }).disposed(by: disposeBag)
         
         if let url = URL(string: pageUrl.value) {
-            print("pageurl=====:\(url)")
+            print("pageurl=====\(url)")
             webView.load(URLRequest(url: url))
+        }else {
+            print("Invalid URL")
         }
         
     }
@@ -110,6 +112,9 @@ extension WebPageViewController: WKScriptMessageHandler, WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let url = navigationAction.request.url {
+            print("Intercepting URL: \(url)")
+        }
         decisionHandler(.allow)
     }
     
@@ -119,17 +124,20 @@ extension WebPageViewController: WKScriptMessageHandler, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         ViewHud.addLoadView()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
-            ViewHud.hideLoadView()
-        }
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
+        //            ViewHud.hideLoadView()
+        //        }
+        print("开始加载======开始加载")
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         ViewHud.hideLoadView()
+        print("结束加载======结束加载")
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         ViewHud.hideLoadView()
+        print("加载失败======加载失败")
     }
     
 }

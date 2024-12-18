@@ -12,6 +12,9 @@ class InvoiceListViewController: WDBaseViewController {
     
     var model = BehaviorRelay<DataModel?>(value: nil)
     
+    //开票的数据模型
+    var rowModel = BehaviorRelay<rowsModel?>(value: nil)
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .none)
         headView.titlelabel.text = "发票抬头"
@@ -27,6 +30,11 @@ class InvoiceListViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if self.rowModel.value != nil {
+            listView.isShowType.accept("1")
+        }else {
+            listView.isShowType.accept("0")
+        }
         addHeadView(from: headView)
         view.addSubview(listView)
         listView.snp.makeConstraints { make in
@@ -60,6 +68,10 @@ class InvoiceListViewController: WDBaseViewController {
         
         listView.shareBlock = { model in
             
+        }
+        
+        listView.toTicketBlock = { model in
+            print("model=======\(model.companyname ?? "")")
         }
         
     }
