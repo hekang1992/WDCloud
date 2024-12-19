@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD802D01A55900770009 /* OrderListViewCell.swift */; };
 		7314AD832D01AC6800770009 /* MyInvoicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD822D01AC6800770009 /* MyInvoicesViewController.swift */; };
+		7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */; };
+		7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */; };
 		7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A79D2CFEE58D0043C196 /* AppDelegate.swift */; };
 		7325A7A42CFEE58D0043C196 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7325A79E2CFEE58D0043C196 /* Assets.xcassets */; };
 		7325A7A62CFEE58D0043C196 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7325A7A12CFEE58D0043C196 /* LaunchScreen.storyboard */; };
@@ -100,6 +102,8 @@
 		68995903FB3663C128436F79 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7314AD802D01A55900770009 /* OrderListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewCell.swift; sourceTree = "<group>"; };
 		7314AD822D01AC6800770009 /* MyInvoicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInvoicesViewController.swift; sourceTree = "<group>"; };
+		7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketViewController.swift; sourceTree = "<group>"; };
+		7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketView.swift; sourceTree = "<group>"; };
 		7325A7812CFEE5240043C196 /* 问道云.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "问道云.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7325A79D2CFEE58D0043C196 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7325A79E2CFEE58D0043C196 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -401,6 +405,7 @@
 				737416392D0ED72600E6CD23 /* WechatPushViewController.swift */,
 				7374163B2D0EDC3000E6CD23 /* InvoiceListViewController.swift */,
 				737416432D0FD74F00E6CD23 /* AddInvoiceViewController.swift */,
+				7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */,
 				73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */,
 				73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */,
 				73F6046D2D1172B90061D5D3 /* TwoTicketViewController.swift */,
@@ -474,6 +479,7 @@
 				73F604692D1171280061D5D3 /* MyTicketView.swift */,
 				73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */,
 				73E56BE02D1274630015BF34 /* TwoTicketView.swift */,
+				7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -669,6 +675,7 @@
 				7374163E2D0FC4B300E6CD23 /* InviteFriendViewController.swift in Sources */,
 				737416342D0EBCB000E6CD23 /* ContactUsViewController.swift in Sources */,
 				73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */,
+				7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
 				73A21DF02D0C39BF00FC4C49 /* DiligenceListViewController.swift in Sources */,
 				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
@@ -682,6 +689,7 @@
 				737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,
 				73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */,
+				7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */,
 				7314AD832D01AC6800770009 /* MyInvoicesViewController.swift in Sources */,
 				73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */,
 			);
@@ -729,10 +737,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = peizhiwenjian;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -772,10 +780,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = peizhiwenjian;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

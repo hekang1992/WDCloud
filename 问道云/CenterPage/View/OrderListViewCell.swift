@@ -189,7 +189,8 @@ class OrderListViewCell: BaseViewCell {
             orderLabel.text = model.ordernumber ?? ""
             timeLabel.text = model.ordertime ?? ""
             payLabel.text = model.payway ?? ""
-            moneyLabel.text = "¥\(model.pirce ?? 0.00)"
+            let price = String(format: "%.2f", model.pirce ?? 0.00)
+            moneyLabel.text = "¥\(price)"
             let orderstate = model.orderstate ?? ""
             if orderstate == "0" {
                 ctImageView.image = UIImage(named: "weizhijinngimge")

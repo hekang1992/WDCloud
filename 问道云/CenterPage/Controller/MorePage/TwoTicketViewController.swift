@@ -28,8 +28,6 @@ class TwoTicketViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        getListInfo()
-        
         view.addSubview(twoTicketView)
         twoTicketView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -49,7 +47,6 @@ class TwoTicketViewController: WDBaseViewController {
         twoTicketView.linkBlock = { [weak self] model in
             self?.linkBlock?(model)
         }
-        
     }
     
 }

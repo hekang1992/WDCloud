@@ -28,8 +28,6 @@ class OneTicketViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        getListInfo()
-        
         view.addSubview(oneTicketView)
         oneTicketView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

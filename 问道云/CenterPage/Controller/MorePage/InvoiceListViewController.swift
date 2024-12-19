@@ -70,8 +70,11 @@ class InvoiceListViewController: WDBaseViewController {
             
         }
         
-        listView.toTicketBlock = { model in
-            print("model=======\(model.companyname ?? "")")
+        listView.toTicketBlock = { [weak self] model in
+            let openVc = OpenTicketViewController()
+            openVc.rowsModel.accept(model)
+            openVc.model.accept(self?.rowModel.value)
+            self?.navigationController?.pushViewController(openVc, animated: true)
         }
         
     }

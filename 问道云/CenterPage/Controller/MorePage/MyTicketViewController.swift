@@ -8,6 +8,29 @@
 import UIKit
 import RxRelay
 import JXSegmentedView
+import TYAlertController
+
+class DescTicketView: UIView {
+    
+    lazy var bgImageView: UIImageView = {
+        let bgImageView = UIImageView()
+        bgImageView.image = UIImage(named: "kaipiaomiaoshu")
+        return bgImageView
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(bgImageView)
+        bgImageView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: 311, height: 450))
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
 class MyTicketViewController: WDBaseViewController {
     
@@ -19,7 +42,8 @@ class MyTicketViewController: WDBaseViewController {
     private var listVCArray = [WDBaseViewController]()
     
     lazy var headView: HeadView = {
-        let headView = HeadView(frame: .zero, typeEnum: .none)
+        let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
+        headView.oneBtn.setImage(UIImage(named: "kaipiaoshuoming"), for: .normal)
         headView.titlelabel.text = "发票列表"
         return headView
     }()
@@ -40,20 +64,39 @@ class MyTicketViewController: WDBaseViewController {
             make.top.equalTo(headView.snp.bottom)
             make.left.right.bottom.equalToSuperview()
         }
-        
+        headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let ticketView = DescTicketView(frame: self.view.bounds)
+            let alertVc = TYAlertController(alert: ticketView, preferredStyle: .alert)!
+            self.present(alertVc, animated: true)
+            ticketView.bgImageView.rx.tapGesture().when(.recognized).subscribe(onNext: {_ in 
+                self.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         //添加切换
         addsentMentView()
         //添加子控制器
         setupViewControllers()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        segmentedView(segmentedView, didSelectedItemAt: 0)
+    }
+    
 }
 
 extension MyTicketViewController: JXSegmentedViewDelegate {
     
     //代理方法
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
-        
+        if index == 0 {
+            let oneVc = self.listVCArray[0] as! OneTicketViewController
+            oneVc.getListInfo()
+        }else {
+            let twoVc = self.listVCArray[1] as! TwoTicketViewController
+            twoVc.getListInfo()
+        }
     }
     
     private func createSegmentedView() -> JXSegmentedView {
@@ -117,6 +160,7 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
         cocsciew.addSubview(twoVc.view)
         listVCArray.append(twoVc)
         
+        //push到发票抬头页面
         oneVc.toOpenTicketBlock = { [weak self] model in
             let listVc = InvoiceListViewController()
             listVc.rowModel.accept(model)
@@ -129,7 +173,6 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
         }
         
         updateViewControllersLayout()
-        segmentedView(segmentedView, didSelectedItemAt: 0)
     }
     
     private func updateViewControllersLayout() {

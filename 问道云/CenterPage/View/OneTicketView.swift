@@ -102,7 +102,8 @@ class OneTicketCell: BaseViewCell {
             nameLabel.text = model.comboname ?? ""
             oneLabel.text = "订单编号:\(model.ordernumber ?? "")"
             twoLabel.text = "购买时间:\(model.ordertime ?? "")"
-            priceLabel.text = "¥\(model.pirce ?? 0.00)"
+            let price = String(format: "%.2f", model.pirce ?? 0.00)
+            priceLabel.text = "¥\(price)"
             if model.isChecked {
                 icon.image = UIImage(named: "Checkb_sel")
             }else {
@@ -114,7 +115,6 @@ class OneTicketCell: BaseViewCell {
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 class OneTicketView: BaseView {

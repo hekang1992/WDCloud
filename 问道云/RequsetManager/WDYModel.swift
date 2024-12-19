@@ -81,7 +81,7 @@ class rowsModel {
     var ordernumber: String?
     var ordertime: String?
     var payway: String?
-    var pirce: Float?
+    var pirce: Double?
     var combotypename: String?//name
     var combotypenumber: Int?//type
     var descprtion: String?
@@ -143,7 +143,7 @@ class rowsModel {
         self.ordernumber = json["ordernumber"].stringValue
         self.ordertime = json["ordertime"].stringValue
         self.payway = json["payway"].stringValue
-        self.pirce = json["pirce"].floatValue
+        self.pirce = json["pirce"].doubleValue
         self.combotypename = json["combotypename"].stringValue
         self.combotypenumber = json["combotypenumber"].intValue
         self.descprtion = json["descprtion"].stringValue

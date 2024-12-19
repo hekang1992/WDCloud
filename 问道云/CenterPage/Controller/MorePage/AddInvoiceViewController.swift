@@ -162,6 +162,9 @@ extension AddInvoiceViewController: UITableViewDelegate {
                 if let data = success.datas, data.count > 0 {
                     self?.tableView.isHidden = false
                     self?.modelArray.accept(data)
+                }else {
+                    self?.tableView.isHidden = true
+                    self?.modelArray.accept([])
                 }
                 break
             case .failure(_):
