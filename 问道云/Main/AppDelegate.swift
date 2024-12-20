@@ -12,21 +12,42 @@ import IQKeyboardManagerSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         keyBordManager()
         rootVcPush()
+        openWechat()
         window = UIWindow()
         window?.frame = UIScreen.main.bounds
         window?.rootViewController = WDNavigationController(rootViewController: WDTabBarController())
         window?.makeKeyAndVisible()
         return true
     }
-
+    
 }
 
-extension AppDelegate {
+extension AppDelegate: WXApiDelegate {
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return WXApi.handleOpen(url, delegate: self)
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        return WXApi.handleOpenUniversalLink(userActivity, delegate: self)
+    }
+    
+    func onReq(_ req: BaseReq) {
+        
+    }
+    
+    func onResp(_ resp: BaseResp) {
+        
+    }
+    
+    private func openWechat() {
+        WXApi.registerApp("wx24b1a40f5ff2811e", universalLink: "https://www.wintaocloud.com/iOS/")
+    }
     
     private func keyBordManager() {
         let manager = IQKeyboardManager.shared

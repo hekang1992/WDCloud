@@ -21,6 +21,10 @@ let SCREEN_HEIGHT = UIScreen.main.bounds.size.height
 
 let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
 
+/**
+ 微信分享
+ */
+
 //颜色
 extension UIColor {
     convenience init?(cssStr: String) {
@@ -49,6 +53,20 @@ extension UIColor {
         return CGFloat(arc4random()) / CGFloat(UInt32.max)
     }
     
+}
+
+extension UIView {
+    func setTopCorners(radius: CGFloat) {
+        let path = UIBezierPath(
+            roundedRect: self.bounds,
+            byRoundingCorners: [.topLeft, .topRight],
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        self.layer.mask = shapeLayer
+    }
 }
 
 //字体

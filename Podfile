@@ -46,4 +46,6 @@ target '问道云' do
   
   pod 'BRPickerView', '~> 2.9.1'
 
+  pod 'WechatOpenSDK', '~> 2.0.4'
+  
 end

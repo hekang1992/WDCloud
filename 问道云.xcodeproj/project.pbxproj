@@ -12,7 +12,6 @@
 		7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */; };
 		7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A79D2CFEE58D0043C196 /* AppDelegate.swift */; };
 		7325A7A42CFEE58D0043C196 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7325A79E2CFEE58D0043C196 /* Assets.xcassets */; };
-		7325A7A62CFEE58D0043C196 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7325A7A12CFEE58D0043C196 /* LaunchScreen.storyboard */; };
 		7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7B32CFEE9520043C196 /* RequestManager.swift */; };
 		7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7B52CFEECDD0043C196 /* WDBaseViewController.swift */; };
 		7325A7B82CFEECF00043C196 /* WDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7B72CFEECF00043C196 /* WDNavigationController.swift */; };
@@ -45,6 +44,8 @@
 		7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */; };
 		7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */; };
 		7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */; };
+		73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73460D102D150DD400EC9408 /* DeleteAccountViewController.swift */; };
+		73460D132D15162500EC9408 /* DeleteSureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73460D122D15162500EC9408 /* DeleteSureViewController.swift */; };
 		7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374162A2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift */; };
 		7374162D2D0EB87F00E6CD23 /* FocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374162C2D0EB87F00E6CD23 /* FocusViewController.swift */; };
 		7374162F2D0EB9E400E6CD23 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374162E2D0EB9E400E6CD23 /* HistoryView.swift */; };
@@ -74,6 +75,7 @@
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
 		73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */; };
 		73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */; };
+		73E306D22D154E9E00D18943 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73E306D12D154E9D00D18943 /* Launch Screen.storyboard */; };
 		73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E56BE02D1274630015BF34 /* TwoTicketView.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */; };
@@ -142,6 +144,12 @@
 		7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewNormalCell.swift; sourceTree = "<group>"; };
 		7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewEditCell.swift; sourceTree = "<group>"; };
 		7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBtnPopView.swift; sourceTree = "<group>"; };
+		73460D102D150DD400EC9408 /* DeleteAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewController.swift; sourceTree = "<group>"; };
+		73460D122D15162500EC9408 /* DeleteSureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSureViewController.swift; sourceTree = "<group>"; };
+		73460D142D154C6900EC9408 /* WechatOpenSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WechatOpenSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73460D162D154CB900EC9408 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		73460D182D154CC100EC9408 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		73460D1A2D154CCB00EC9408 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		7374162A2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsingHistoryViewController.swift; sourceTree = "<group>"; };
 		7374162C2D0EB87F00E6CD23 /* FocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewController.swift; sourceTree = "<group>"; };
 		7374162E2D0EB9E400E6CD23 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
@@ -156,8 +164,6 @@
 		737416452D0FD79C00E6CD23 /* AddInvoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceView.swift; sourceTree = "<group>"; };
 		737416472D0FD94B00E6CD23 /* AddInvoiceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceViewCell.swift; sourceTree = "<group>"; };
 		7374164D2D100BB200E6CD23 /* SearchInvoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInvoiceCell.swift; sourceTree = "<group>"; };
-		7374164F2D1016FA00E6CD23 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		737416502D10170C00E6CD23 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		73A21DE02D0C06E700FC4C49 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
@@ -173,6 +179,9 @@
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
 		73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAllOrderSController.swift; sourceTree = "<group>"; };
 		73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAllOrderView.swift; sourceTree = "<group>"; };
+		73E306D12D154E9D00D18943 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		73E306D32D15521800D18943 /* 问道云.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "问道云.entitlements"; sourceTree = "<group>"; };
+		73E306D42D1552FC00D18943 /* WechatOpenSDK-XCFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "WechatOpenSDK-XCFramework.xcframework"; path = "Pods/WechatOpenSDK-XCFramework/WechatOpenSDK-XCFramework.xcframework"; sourceTree = "<group>"; };
 		73E56BE02D1274630015BF34 /* TwoTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoTicketView.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketViewController.swift; sourceTree = "<group>"; };
@@ -229,7 +238,7 @@
 				7325A79F2CFEE58D0043C196 /* Info.plist */,
 				7325A79E2CFEE58D0043C196 /* Assets.xcassets */,
 				7325A79D2CFEE58D0043C196 /* AppDelegate.swift */,
-				7325A7A12CFEE58D0043C196 /* LaunchScreen.storyboard */,
+				73E306D12D154E9D00D18943 /* Launch Screen.storyboard */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -237,6 +246,7 @@
 		7325A7A22CFEE58D0043C196 /* 问道云 */ = {
 			isa = PBXGroup;
 			children = (
+				73E306D32D15521800D18943 /* 问道云.entitlements */,
 				7325A79C2CFEE58D0043C196 /* Main */,
 				7325A7AF2CFEE7D90043C196 /* Config */,
 				7325A7AC2CFEE7B20043C196 /* BaseVc */,
@@ -391,6 +401,8 @@
 				73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */,
 				73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */,
 				73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */,
+				73460D102D150DD400EC9408 /* DeleteAccountViewController.swift */,
+				73460D122D15162500EC9408 /* DeleteSureViewController.swift */,
 			);
 			path = SetPage;
 			sourceTree = "<group>";
@@ -495,6 +507,11 @@
 		C61455D1CEA19ADD364A1DEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73E306D42D1552FC00D18943 /* WechatOpenSDK-XCFramework.xcframework */,
+				73460D1A2D154CCB00EC9408 /* WebKit.framework */,
+				73460D182D154CC100EC9408 /* Security.framework */,
+				73460D162D154CB900EC9408 /* CoreGraphics.framework */,
+				73460D142D154C6900EC9408 /* WechatOpenSDK.framework */,
 				68995903FB3663C128436F79 /* Pods____.framework */,
 			);
 			name = Frameworks;
@@ -563,8 +580,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73E306D22D154E9E00D18943 /* Launch Screen.storyboard in Resources */,
 				7325A7A42CFEE58D0043C196 /* Assets.xcassets in Resources */,
-				7325A7A62CFEE58D0043C196 /* LaunchScreen.storyboard in Resources */,
 				7325A7E42CFFF8EE0043C196 /* loading.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -647,6 +664,7 @@
 				7335F6E62D0AD8620074985F /* MyDownloadViewController.swift in Sources */,
 				737416362D0EC37400E6CD23 /* MembershipCenterViewController.swift in Sources */,
 				7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */,
+				73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */,
 				7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */,
 				7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */,
 				737416422D0FD0D000E6CD23 /* InvoiceListView.swift in Sources */,
@@ -675,6 +693,7 @@
 				7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
 				73A21DF02D0C39BF00FC4C49 /* DiligenceListViewController.swift in Sources */,
+				73460D132D15162500EC9408 /* DeleteSureViewController.swift in Sources */,
 				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
@@ -693,18 +712,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		7325A7A12CFEE58D0043C196 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7374164F2D1016FA00E6CD23 /* zh-Hans */,
-				737416502D10170C00E6CD23 /* zh-Hans */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		7325A7952CFEE5250043C196 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -713,6 +720,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -723,7 +731,7 @@
 				INFOPLIST_FILE = "问道云/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "问道云";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -733,10 +741,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald.test;
+				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = peizhiwenjian;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -756,6 +764,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -766,7 +775,7 @@
 				INFOPLIST_FILE = "问道云/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "问道云";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -776,10 +785,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald.test;
+				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = peizhiwenjian;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

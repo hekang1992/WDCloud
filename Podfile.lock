@@ -58,6 +58,7 @@ PODS:
   - Toaster (2.3.0)
   - TYAlertController (1.2.0)
   - TYCyclePagerView (1.2.0)
+  - WechatOpenSDK (2.0.4)
 
 DEPENDENCIES:
   - ActiveLabel (~> 1.1.0)
@@ -80,6 +81,7 @@ DEPENDENCIES:
   - Toaster (~> 2.3.0)
   - TYAlertController (~> 1.2.0)
   - TYCyclePagerView (~> 1.2.0)
+  - WechatOpenSDK (~> 2.0.4)
 
 SPEC REPOS:
   trunk:
@@ -106,6 +108,7 @@ SPEC REPOS:
     - Toaster
     - TYAlertController
     - TYCyclePagerView
+    - WechatOpenSDK
 
 SPEC CHECKSUMS:
   ActiveLabel: 5e3f4de79a1952d4604b845a0610d4776e4b82b3
@@ -131,7 +134,8 @@ SPEC CHECKSUMS:
   Toaster: c3473963c78e8cabbf6ea6f11ad0fdaae6f54987
   TYAlertController: c121090edb0bea7426f987da94cdddd81eef4231
   TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
+  WechatOpenSDK: 290989072e87b79d52225a01bb4e5e58f6f88593
 
-PODFILE CHECKSUM: 8eba977195e58ed6b3dc4c91085d096a73a3a94e
+PODFILE CHECKSUM: 2c7972d79342a52be7fa72ea20cf62d8b607bf02
 
 COCOAPODS: 1.16.2

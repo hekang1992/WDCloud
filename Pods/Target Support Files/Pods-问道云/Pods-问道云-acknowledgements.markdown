@@ -474,6 +474,11 @@ SOFTWARE.
        0. You just DO WHAT THE FUCK YOU WANT TO.
 
 
+## WechatOpenSDK
+
+Copyright 2020 tencent.com. All rights reserved.
+
+
 ## lottie-ios
 
                                  Apache License

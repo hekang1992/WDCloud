@@ -70,6 +70,12 @@ class AccountManagerViewController: WDBaseViewController {
             self?.navigationController?.pushViewController(setpassVc, animated: true)
         }).disposed(by: disposeBag)
         
+        
+        twoSettingView.bgView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            let setpassVc = DeleteAccountViewController()
+            self?.navigationController?.pushViewController(setpassVc, animated: true)
+        }).disposed(by: disposeBag)
+        
     }
     
 
