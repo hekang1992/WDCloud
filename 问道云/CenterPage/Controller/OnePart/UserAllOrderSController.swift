@@ -58,9 +58,9 @@ class UserAllOrderSController: WDBaseViewController {
             getOrderInfo(form: combotypenumber, pageNum: pageIndex, orderstate: orderstate)
         })
         self.headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
-            let invoVc = MyInvoicesViewController()
-            invoVc.model.accept(self?.model.value)
-            self?.navigationController?.pushViewController(invoVc, animated: true)
+            let ticketVc = MyTicketViewController()
+            ticketVc.model.accept(self?.model.value)
+            self?.navigationController?.pushViewController(ticketVc, animated: true)
         }).disposed(by: disposeBag)
         //获取订单状态
         getCombotype()

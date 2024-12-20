@@ -35,7 +35,7 @@ class OpenTicketViewController: WDBaseViewController {
     var bankname: String?//银行账号
     var invoicetype: String?//发票类型
     var checktakerphone: String?//联系人电话
-    var invoiceamount: String?//发票金额
+    var invoiceamount: Double?//发票金额
     var invoicecontent: String?//开票内容
     var paynumber: String?//支付单号
     var customernumber: String?//客户单号
@@ -55,60 +55,120 @@ class OpenTicketViewController: WDBaseViewController {
         openTicketView.model2.accept(rowsModel.value)
         openTicketView.tableView.reloadData()
         
+        //发票类型
         openTicketView.zero
             .filter { !$0.isEmpty }
             .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] str in
-            print("发票类型======\(str)")
+            .subscribe(onNext: { [weak self] invoicetype in
+                self?.invoicetype = invoicetype
         }).disposed(by: disposeBag)
+        
+        //单位名称
         openTicketView.one
             .filter { !$0.isEmpty }
             .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] str in
-            print("单位名称======\(str)")
+            .subscribe(onNext: { [weak self] unitname in
+                self?.unitname = unitname
         }).disposed(by: disposeBag)
+        
+        //税号
         openTicketView.two
             .filter { !$0.isEmpty }
             .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] str in
-            print("税号======\(str)")
+            .subscribe(onNext: { [weak self] taxpayernumber in
+                self?.taxpayernumber = taxpayernumber
         }).disposed(by: disposeBag)
+        
+        //地址
         openTicketView.three
             .filter { !$0.isEmpty }
             .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] str in
-            print("地址======\(str)")
+            .subscribe(onNext: { [weak self] registeraddress in
+                self?.registeraddress = registeraddress
         }).disposed(by: disposeBag)
+        
+        //银行
         openTicketView.four
             .filter { !$0.isEmpty }
             .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] str in
-            print("银行======\(str)")
+            .subscribe(onNext: { [weak self] bankfullname in
+                self?.bankfullname = bankfullname
         }).disposed(by: disposeBag)
+        
+        //账号
         openTicketView.five
             .filter { !$0.isEmpty }
             .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] str in
-            print("账号======\(str)")
+            .subscribe(onNext: { [weak self] bankname in
+                self?.bankname = bankname
         }).disposed(by: disposeBag)
+        
+        //电话
         openTicketView.six
             .filter { !$0.isEmpty }
             .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] str in
-            print("电话======\(str)")
+            .subscribe(onNext: { [weak self] registerphone in
+                self?.registerphone = registerphone
         }).disposed(by: disposeBag)
+        
+        //联系电话
         openTicketView.seven
             .filter { !$0.isEmpty }
             .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] str in
-            print("联系电话======\(str)")
+            .subscribe(onNext: { [weak self] checktakerphone in
+                self?.checktakerphone = checktakerphone
         }).disposed(by: disposeBag)
+        
+        //接收邮箱
         openTicketView.eight
             .filter { !$0.isEmpty }
             .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] str in
-            print("接收邮箱======\(str)")
+            .subscribe(onNext: { [weak self] checktakermailbox in
+                self?.checktakermailbox = checktakermailbox
         }).disposed(by: disposeBag)
+        
+        
+        openTicketView.sureBtn
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] in
+            self?.toSaveTicket()
+        }).disposed(by: disposeBag)
+        
     }
+}
 
+extension OpenTicketViewController {
+    
+    //提交开票信息
+    private func toSaveTicket() {
+        let man = RequestManager()
+        let dict = ["unitname": unitname ?? "",
+                    "taxpayernumber": taxpayernumber ?? "",
+                    "checktakermailbox": checktakermailbox ?? "",
+                    "registeraddress": registeraddress ?? "",
+                    "registerphone": registerphone ?? "",
+                    "bankfullname": bankfullname ?? "",
+                    "bankname": bankname ?? "",
+                    "invoicetype": invoicetype ?? "",
+                    "checktakerphone": checktakerphone ?? "",
+                    "invoiceamount": model.value?.pirce ?? 0.00,
+                    "invoicecontent": model.value?.comboname ?? "",
+                    "paynumber": model.value?.paynumber ?? "",
+                    "recipients": ""] as [String : Any]
+        man.requestAPI(params: dict, pageUrl: "/operation/invoiceRecord/addinvoiceriseRecord", method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.navigationController?.popViewController(animated: true)
+                    ToastViewConfig.showToast(message: success.msg ?? "")
+                }
+                break
+            case .failure(let failure):
+                break
+            }
+        }
+        
+    }
+    
 }

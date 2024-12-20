@@ -130,7 +130,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DropCell"];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
     cell.backgroundColor = [UIColor clearColor];
     ItemModel *currentModel;
@@ -149,7 +149,8 @@
     }
     cell.textLabel.text = currentModel.displayText;
     cell.textLabel.textColor = currentModel.seleceted ? [UIColor colorWithRed:0.33 green:0.48 blue:1 alpha:1] : [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1];
-    
+    cell.accessoryType = currentModel.seleceted ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    cell.backgroundColor = currentModel.seleceted ? [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1]  : UIColor.clearColor;
     return cell;
 }
 
