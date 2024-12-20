@@ -285,7 +285,7 @@ extension DeleteSureViewController {
 
     //删除账号
     func deleteAccount() {
-        let customernumber = UserDefaults.standard.object(forKey: WDY_CUSTOMERNUMBER) as? String ?? ""
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let phone = self.numLabel.text ?? ""
         let code = self.codeTx.text ?? ""
         let man = RequestManager()

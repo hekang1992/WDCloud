@@ -21,10 +21,6 @@ let SCREEN_HEIGHT = UIScreen.main.bounds.size.height
 
 let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
 
-/**
- 微信分享
- */
-
 //颜色
 extension UIColor {
     convenience init?(cssStr: String) {
@@ -650,6 +646,15 @@ class PasswordConfig {
         // 至少两种类型组合
         let validCount = [hasLetter, hasDigit, hasSpecialChar].filter { $0 }.count
         return validCount >= 2
+    }
+    
+}
+
+class GetSaveLoginInfoConfig {
+    
+    static func getCustomerNumber() -> String {
+        let customernumber = UserDefaults.standard.object(forKey: WDY_CUSTOMERNUMBER) as? String ?? ""
+        return customernumber
     }
     
 }

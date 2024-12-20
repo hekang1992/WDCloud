@@ -32,7 +32,7 @@ let password_login = "/auth/customerlogin"
  */
 let buymore_info = "/operation/enterpriseclientbm/buymoreinfo"
 let myorder_info = "/operation/customerorder/myorder"
-let combotype_list = "operation/combotype/list"
+let combotype_list = "/operation/combotype/list"
 let customerDownload_list = "/operation/mydownload/customerDownload"
 let log_out = "/auth/logout"
 

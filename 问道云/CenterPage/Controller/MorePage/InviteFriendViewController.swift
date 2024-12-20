@@ -125,6 +125,8 @@ class InviteFriendViewController: WDBaseViewController {
         return viteBtn
     }()
     
+    var inviteStr: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -171,46 +173,60 @@ class InviteFriendViewController: WDBaseViewController {
             }).disposed(by: disposeBag)
         }).disposed(by: disposeBag)
         
+        let recommendCustomernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        inviteStr = base_url + "/propagate-buy?recommendType=2&isRootCustomer=1&recommendCustomernumber=\(recommendCustomernumber)"
     }
     
 }
 
-
 extension InviteFriendViewController {
     
     private func friendInfo() {
-        let message = WXMediaMessage()
-        message.title = "分享标题"
-        message.description = "分享描述"
-        message.setThumbImage(UIImage(named: "launchlogo")!)
-        let webpageObject = WXWebpageObject()
-        webpageObject.webpageUrl = "https://www.baidu.com"
-        message.mediaObject = webpageObject
         
-        let req = SendMessageToWXReq()
-        req.message = message
-        req.bText = false // 是否是纯文本
-        req.scene = Int32(WXSceneSession.rawValue)
-        WXApi.send(req) { success in
-            print(success ? "请求发送成功" : "请求发送失败")
-        }
+        shareContent(
+            title: "问道云邀请您即刻领取会员",
+            description: "注册有好礼,开通会员,享专属权益",
+            thumbImageName: "wechaimageicon",
+            webpageUrl: inviteStr,
+            scene: Int32(WXSceneSession.rawValue)
+        )
     }
     
     private func cycleInfo() {
+        shareContent(
+            title: "问道云邀请您即刻领取会员",
+            description: "注册有好礼,开通会员,享专属权益",
+            thumbImageName: "wechaimageicon",
+            webpageUrl: inviteStr,
+            scene: Int32(WXSceneTimeline.rawValue)
+        )
+    }
+    
+    private func shareContent(title: String, description: String, thumbImageName: String, webpageUrl: String, scene: Int32) {
+        guard WXApi.isWXAppInstalled() else {
+            ToastViewConfig.showToast(message: "您尚未安装微信，请先完成安装后再尝试分享!")
+            return
+        }
+        guard let thumbImage = UIImage(named: thumbImageName) else {
+            return
+        }
         let message = WXMediaMessage()
-        message.title = "分享标题"
-        message.description = "分享描述"
-        message.setThumbImage(UIImage(named: "launchlogo")!)
+        message.title = title
+        message.description = description
+        message.setThumbImage(thumbImage)
+        
         let webpageObject = WXWebpageObject()
-        webpageObject.webpageUrl = "https://www.baidu.com"
+        webpageObject.webpageUrl = webpageUrl
         message.mediaObject = webpageObject
         
         let req = SendMessageToWXReq()
         req.message = message
         req.bText = false
-        req.scene = Int32(WXSceneTimeline.rawValue)
+        req.scene = scene
+        
         WXApi.send(req) { success in
             print(success ? "请求发送成功" : "请求发送失败")
         }
     }
+    
 }

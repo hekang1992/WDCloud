@@ -8,6 +8,7 @@
 import UIKit
 import RxGesture
 import RxSwift
+import TYAlertController
 
 class WDCenterViewController: WDBaseViewController {
     
@@ -21,6 +22,16 @@ class WDCenterViewController: WDBaseViewController {
         let centerView = UserCenterView()
         return centerView
     }()
+    
+    lazy var codeView: MyQRCodeView = {
+        let codeView = MyQRCodeView(frame: self.view.bounds)
+        let recommendCustomernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let qrString = base_url + "/customer-service-centers/invite-friends?recommendType='2'&isRootCustomer='2'&recommendCustomernumber=\(recommendCustomernumber)"
+        codeView.codeicon.image = .qrImageForString(qrString: qrString)
+        return codeView
+    }()
+    
+    var isDistributor: String = "0"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,6 +134,8 @@ class WDCenterViewController: WDBaseViewController {
         if IS_LOGIN {
             //获取套餐信息
             getBuymoreinfo()
+            //获取是否是分销商
+            getChanelPartner()
             centerView.huiyuanIcon.isHidden = false
         }else {
             centerView.phoneLabel.rx.tapGesture()
@@ -140,7 +153,7 @@ extension WDCenterViewController {
     
     func getBuymoreinfo() {
         let man = RequestManager()
-        let customernumber = UserDefaults.standard.object(forKey: WDY_CUSTOMERNUMBER) as? String ?? ""
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: buymore_info,
@@ -159,6 +172,23 @@ extension WDCenterViewController {
                 self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
                     self?.getBuymoreinfo()
                 }).disposed(by: disposeBag)
+                break
+            }
+        }
+    }
+    
+    //获取是否是分销商
+    func getChanelPartner() {
+        let man = RequestManager()
+        let dict = ["customernumber": GetSaveLoginInfoConfig.getCustomerNumber()]
+        man.requestAPI(params: dict, pageUrl: "/operation/partner/ischnnelpartner", method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.isDistributor = success.data?.isDistributor ?? ""
+                }
+                break
+            case .failure(_):
                 break
             }
         }
@@ -223,8 +253,21 @@ extension WDCenterViewController {
             self.navigationController?.pushViewController(viteVc, animated: true)
             break
         case "分享好友":
+            let alertVc = TYAlertController(alert: codeView, preferredStyle: .actionSheet)
+            self.present(alertVc!, animated: true)
+            codeView.closeBtn.rx.tap.subscribe(onNext: { [weak self] in
+                self?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
             break
         case "加入分销":
+            var url: String = ""
+            let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+            if self.isDistributor == "1" {
+                url = base_url + "/distribution-service/distribution-center?customernumber=\(customernumber)"
+            }else {
+                url = base_url + "/distribution-service/distribution-add?customernumber=\(customernumber)"
+            }
+            self.pushWebPage(from: url)
             break
         case "联系我们":
             let conVc = ContactUsViewController()

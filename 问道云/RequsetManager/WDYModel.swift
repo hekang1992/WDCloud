@@ -38,9 +38,11 @@ class DataModel {
     var combotypenumber: String?
     var combonumber: Int?//多少天
     var total: Int?//列表总个数
+    var isDistributor: String?//是否是分销商
     var rows: [rowsModel]?
     var data: [rowsModel]?
     init(json: JSON) {
+        self.isDistributor = json["isDistributor"].stringValue
         self.access_token = json["access_token"].stringValue
         self.customernumber = json["customernumber"].stringValue
         self.user_id = json["user_id"].stringValue

@@ -94,7 +94,7 @@ extension WDBaseViewController {
         var allArray = [ItemModel]()
         let model1 = ItemModel(text: "全部", currentID: "0", isSelect: true)!
         for rowmodel in modelArray {
-            let model = ItemModel(text: rowmodel.descprtion, currentID: String(rowmodel.combotypenumber ?? 0), isSelect: false)!
+            let model = ItemModel(text: rowmodel.combotypename, currentID: String(rowmodel.combotypenumber ?? 0), isSelect: false)!
             allArray.append(model)
         }
         allArray.insert(model1, at: 0)

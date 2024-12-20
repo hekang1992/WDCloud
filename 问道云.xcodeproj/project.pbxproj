@@ -76,6 +76,7 @@
 		73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */; };
 		73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */; };
 		73E306D22D154E9E00D18943 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73E306D12D154E9D00D18943 /* Launch Screen.storyboard */; };
+		73E306DF2D156C0800D18943 /* MyQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E306DE2D156C0800D18943 /* MyQRCodeView.swift */; };
 		73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E56BE02D1274630015BF34 /* TwoTicketView.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */; };
@@ -182,6 +183,7 @@
 		73E306D12D154E9D00D18943 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		73E306D32D15521800D18943 /* 问道云.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "问道云.entitlements"; sourceTree = "<group>"; };
 		73E306D42D1552FC00D18943 /* WechatOpenSDK-XCFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "WechatOpenSDK-XCFramework.xcframework"; path = "Pods/WechatOpenSDK-XCFramework/WechatOpenSDK-XCFramework.xcframework"; sourceTree = "<group>"; };
+		73E306DE2D156C0800D18943 /* MyQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyQRCodeView.swift; sourceTree = "<group>"; };
 		73E56BE02D1274630015BF34 /* TwoTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoTicketView.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketViewController.swift; sourceTree = "<group>"; };
@@ -489,6 +491,7 @@
 				73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */,
 				73E56BE02D1274630015BF34 /* TwoTicketView.swift */,
 				7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */,
+				73E306DE2D156C0800D18943 /* MyQRCodeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -663,6 +666,7 @@
 				7325A7C22CFEEE6E0043C196 /* WDRiskViewController.swift in Sources */,
 				7335F6E62D0AD8620074985F /* MyDownloadViewController.swift in Sources */,
 				737416362D0EC37400E6CD23 /* MembershipCenterViewController.swift in Sources */,
+				73E306DF2D156C0800D18943 /* MyQRCodeView.swift in Sources */,
 				7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */,
 				73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */,
 				7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */,
@@ -721,11 +725,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
+				DEVELOPMENT_TEAM = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
@@ -741,10 +744,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -765,11 +767,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
+				DEVELOPMENT_TEAM = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
@@ -785,10 +786,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

@@ -151,7 +151,7 @@ extension UserAllOrderSController {
     }
     
     func getCombotype() {
-        let dict = ["type": "1"]
+        let dict = [String: Any]()
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: combotype_list, method: .get) { [weak self] result in
             switch result {
