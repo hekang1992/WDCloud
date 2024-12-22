@@ -98,7 +98,7 @@ class HeadView: UIView {
             make.edges.equalToSuperview()
         }
         backBtn.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(StatusHeightManager.statusBarHeight + 13)
+            make.top.equalToSuperview().offset(StatusHeightManager.statusBarHeight + 10)
             make.left.equalToSuperview().offset(26)
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
@@ -109,18 +109,18 @@ class HeadView: UIView {
         }
         oneBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
-            make.right.equalToSuperview().offset(-12)
-            make.height.equalTo(24)
+            make.right.equalToSuperview().offset(-14)
+            make.height.equalTo(25)
         }
         twoBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
             make.right.equalTo(oneBtn.snp.left).offset(-6)
-            make.size.equalTo(CGSize(width: 24, height: 24))
+            make.height.equalTo(25)
         }
         threeBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
-            make.right.equalTo(twoBtn.snp.left).offset(-7.5)
-            make.size.equalTo(CGSize(width: 24, height: 24))
+            make.right.equalTo(twoBtn.snp.left).offset(-6)
+            make.height.equalTo(25)
         }
     }
     

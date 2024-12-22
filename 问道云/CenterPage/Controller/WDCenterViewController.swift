@@ -89,7 +89,7 @@ class WDCenterViewController: WDBaseViewController {
         //跳转关注页面
         self.centerView.focusBtn.rx.tap.subscribe(onNext: { [weak self] in
             if IS_LOGIN {
-                let focusVc = FocusViewController()
+                let focusVc = FocusAllViewController()
                 if let model = self?.model {
                     focusVc.model.accept(model)
                 }

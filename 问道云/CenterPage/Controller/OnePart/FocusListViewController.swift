@@ -1,26 +1,19 @@
 //
-//  FocusViewController.swift
+//  FocusListViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2024/12/15.
-//  我的关注页面
+//  Created by 何康 on 2024/12/21.
+//
 
 import UIKit
-import RxRelay
 
-class FocusViewController: WDBaseViewController {
-    
-    var model = BehaviorRelay<DataModel?>(value: nil)
+class FocusListViewController: UIViewController {
 
-    lazy var headView: HeadView = {
-        let headView = HeadView(frame: .zero, typeEnum: .none)
-        headView.titlelabel.text = "我的关注"
-        return headView
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        addHeadView(from: headView)
+
+        // Do any additional setup after loading the view.
+        view.backgroundColor = .random()
     }
     
 

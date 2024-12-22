@@ -70,7 +70,7 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
         riskView.addSubview(cocsciew)
         segmentedView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(24)
+            make.top.equalTo(headView.snp.bottom).offset(18)
             make.height.equalTo(32)
         }
         cocsciew.snp.makeConstraints { make in

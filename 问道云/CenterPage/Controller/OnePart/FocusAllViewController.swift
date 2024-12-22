@@ -1,44 +1,46 @@
 //
-//  WDDiligenceViewController.swift
+//  FocusViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2024/12/3.
-//
+//  Created by 何康 on 2024/12/15.
+//  我的关注页面
 
 import UIKit
+import RxRelay
 import JXSegmentedView
 
-class WDDiligenceViewController: WDBaseViewController {
+class FocusAllViewController: WDBaseViewController {
     
+    var model = BehaviorRelay<DataModel?>(value: nil)
+
     lazy var headView: HeadView = {
-        let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
-        headView.titlelabel.text = "尽职调查"
-        headView.titlelabel.textColor = .white
-        headView.bgView.backgroundColor = .clear
-        headView.oneBtn.setImage(UIImage(named: "shezhianniuimage"), for: .normal)
-        headView.backBtn.isHidden = true
+        let headView = HeadView(frame: .zero, typeEnum: .twoBtn)
+        headView.oneBtn.setImage(UIImage(named: "santiaogang"), for: .normal)
+        headView.twoBtn.setImage(UIImage(named: "sesachiamge"), for: .normal)
+        headView.titlelabel.text = "我的关注"
         return headView
     }()
     
-    lazy var diligenceView: DiligenceView = {
-        let diligenceView = DiligenceView()
-        return diligenceView
+    lazy var historyView: HistoryView = {
+        let historyView = HistoryView()
+        historyView.backgroundColor = .white
+        return historyView
     }()
     
     private lazy var segmentedView: JXSegmentedView = createSegmentedView()
     private lazy var cocsciew: UIScrollView = createCocsciew()
     private var segmurce: JXSegmentedTitleDataSource!
-    private var listVCArray = [DiligenceListViewController]()
+    private var listVCArray = [FocusListViewController]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
-        view.addSubview(diligenceView)
-        diligenceView.snp.makeConstraints { make in
+        view.addSubview(historyView)
+        historyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        diligenceView.addSubview(headView)
+        historyView.addSubview(headView)
         headView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(StatusHeightManager.navigationBarHeight)
@@ -48,16 +50,17 @@ class WDDiligenceViewController: WDBaseViewController {
         //添加子控制器
         setupViewControllers()
     }
+
 }
 
-extension WDDiligenceViewController: JXSegmentedViewDelegate {
+extension FocusAllViewController: JXSegmentedViewDelegate {
     
     func addsentMentView() {
-        diligenceView.addSubview(segmentedView)
-        diligenceView.addSubview(cocsciew)
+        historyView.addSubview(segmentedView)
+        historyView.addSubview(cocsciew)
         segmentedView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(18)
+            make.top.equalTo(headView.snp.bottom).offset(12)
             make.height.equalTo(32)
         }
         cocsciew.snp.makeConstraints { make in
@@ -69,8 +72,8 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
     func setupViewControllers() {
         listVCArray.forEach { $0.view.removeFromSuperview() }
         listVCArray.removeAll()
-        for _ in 0..<3 {
-            let vc = DiligenceListViewController()
+        for _ in 0..<2 {
+            let vc = FocusListViewController()
             cocsciew.addSubview(vc.view)
             listVCArray.append(vc)
         }
@@ -85,27 +88,21 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
         }
     }
     
-    private func createCocsciew() -> UIScrollView {
-        let scrollView = UIScrollView()
-        scrollView.backgroundColor = .random()
-        scrollView.isPagingEnabled = true
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 3, height: 0)
-        return scrollView
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        
     }
     
     private func createSegmentedView() -> JXSegmentedView {
         let segmentedView = JXSegmentedView()
         segmentedView.delegate = self
-        segmentedView.backgroundColor = .clear
+        segmentedView.backgroundColor = .white
         segmurce = JXSegmentedTitleDataSource()
-        segmurce.titles = ["基础版", "专业版", "定制版"]
+        segmurce.titles = ["企业", "人员"]
         segmurce.isTitleColorGradientEnabled = true
         segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
         segmurce.titleNormalFont = .regularFontOfSize(size: 14)
-        segmurce.titleNormalColor = .white
-        segmurce.titleSelectedColor = .white
+        segmurce.titleNormalColor = UIColor.init(cssStr: "#666666")!
+        segmurce.titleSelectedColor = UIColor.init(cssStr: "#333333")!
         segmentedView.dataSource = segmurce
         let indicator = createSegmentedIndicator()
         segmentedView.indicators = [indicator]
@@ -113,12 +110,22 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
         return segmentedView
     }
     
+    private func createCocsciew() -> UIScrollView {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = UIColor.init(cssStr: "#F5F5F5")
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 2, height: 0)
+        return scrollView
+    }
+    
     private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
         let indicator = JXSegmentedIndicatorLineView()
         indicator.indicatorWidth = JXSegmentedViewAutomaticDimension
         indicator.indicatorHeight = 2
         indicator.lineStyle = .lengthen
-        indicator.indicatorColor = .white
+        indicator.indicatorColor = UIColor.init(cssStr: "#547AFF")!
         return indicator
     }
     
