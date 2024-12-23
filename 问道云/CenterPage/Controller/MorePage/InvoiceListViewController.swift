@@ -114,7 +114,7 @@ extension InvoiceListViewController {
                 }
                 break
             case .failure(_):
-                self.addNoNetView(form: self.listView)
+                self.addNoNetView(from: self.listView)
                 self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
                     self?.getInvoListInfo()
                 }).disposed(by: disposeBag)

@@ -72,7 +72,7 @@ extension WDBaseViewController {
         self.navigationController?.pushViewController(webVc, animated: true)
     }
     
-    func addNodataView(form view: UIView) {
+    func addNodataView(from view: UIView) {
         view.addSubview(self.emptyView)
         self.emptyView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(150)
@@ -82,15 +82,81 @@ extension WDBaseViewController {
         }
     }
     
-    func addNoNetView(form view: UIView) {
+    func addNoNetView(from view: UIView) {
         view.addSubview(self.noNetView)
         self.noNetView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
+    //获取分组状态
+    func getGroupMenuInfo(from modelArray: [rowsModel]) -> [ItemModel]{
+        var allArray = [ItemModel]()
+        let model1 = ItemModel(text: "全部分组", currentID: "0", isSelect: true)!
+        for rowmodel in modelArray {
+            let model = ItemModel(text: rowmodel.groupname, currentID: rowmodel.groupnumber ?? "0", isSelect: false)!
+            allArray.append(model)
+        }
+        allArray.insert(model1, at: 0)
+        return allArray
+    }
+    
+    //获取地区
+    func getRegionInfo(from modelArray: [rowsModel]) -> [ItemModel] {
+        var twoList: [ItemModel] = []
+        let regionModel = ItemModel(text: "全国", currentID: "", isSelect: true)!
+        let noModel = ItemModel(text: "不限", currentID: "", isSelect: true)!
+        twoList.append(regionModel)
+        for (_, rowModel) in modelArray.enumerated() {
+            var model: ItemModel
+            model = ItemModel(text: rowModel.name, currentID: rowModel.code, isSelect: false)
+            var temp: [ItemModel] = []
+            if let children = rowModel.children {
+                temp.append(noModel)
+                for (_, chModel) in children.enumerated() {
+                    let layerModel = ItemModel(
+                        text: chModel.name,
+                        currentID: chModel.code,
+                        isSelect: false
+                    )
+                    temp.append(layerModel!)
+                }
+            }
+            model.dataSource = temp
+            twoList.append(model)
+        }
+        return twoList
+    }
+    
+    //获取行业
+    func getIndustryInfo(from modelArray: [rowsModel]) -> [ItemModel] {
+        var twoList: [ItemModel] = []
+        let allModel = ItemModel(text: "全部", currentID: "", isSelect: true)!
+        let noModel = ItemModel(text: "不限", currentID: "", isSelect: true)!
+        twoList.append(allModel)
+        for (_, rowModel) in modelArray.enumerated() {
+            var model: ItemModel
+            model = ItemModel(text: rowModel.name, currentID: rowModel.code, isSelect: false)
+            var temp: [ItemModel] = []
+            if let children = rowModel.children {
+                temp.append(noModel)
+                for (_, chModel) in children.enumerated() {
+                    let layerModel = ItemModel(
+                        text: chModel.name,
+                        currentID: chModel.code,
+                        isSelect: false
+                    )
+                    temp.append(layerModel!)
+                }
+            }
+            model.dataSource = temp
+            twoList.append(model)
+        }
+        return twoList
+    }
+    
     //添加状态
-    func getListType(form modelArray: [rowsModel]) -> [ItemModel]{
+    func getListType(from modelArray: [rowsModel]) -> [ItemModel]{
         var allArray = [ItemModel]()
         let model1 = ItemModel(text: "全部", currentID: "0", isSelect: true)!
         for rowmodel in modelArray {
@@ -102,7 +168,7 @@ extension WDBaseViewController {
     }
     
     //我的下载筛选状态
-    func getDownloadListType(form modelArray: [rowsModel]) -> [ItemModel]{
+    func getDownloadListType(from modelArray: [rowsModel]) -> [ItemModel]{
         var allArray = [ItemModel]()
         var isFirst = true // 用来判断是否是第一个元素
         for rowmodel in modelArray {

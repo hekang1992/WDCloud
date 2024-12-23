@@ -70,12 +70,13 @@
 		73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */; };
 		73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */; };
 		73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */; };
+		73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752312D18F44F00C47187 /* FocusPeopleViewController.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
 		73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB952D01415C00B2FE1B /* UserCenterView.swift */; };
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
 		73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */; };
 		73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */; };
-		73D50B872D16ACEC00EF081A /* FocusListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D50B862D16ACEC00EF081A /* FocusListViewController.swift */; };
+		73D50B872D16ACEC00EF081A /* FocusCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D50B862D16ACEC00EF081A /* FocusCompanyViewController.swift */; };
 		73E306D22D154E9E00D18943 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73E306D12D154E9D00D18943 /* Launch Screen.storyboard */; };
 		73E306DF2D156C0800D18943 /* MyQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E306DE2D156C0800D18943 /* MyQRCodeView.swift */; };
 		73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E56BE02D1274630015BF34 /* TwoTicketView.swift */; };
@@ -176,12 +177,13 @@
 		73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerViewController.swift; sourceTree = "<group>"; };
 		73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPasswordViewController.swift; sourceTree = "<group>"; };
 		73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAuthorityViewController.swift; sourceTree = "<group>"; };
+		73C752312D18F44F00C47187 /* FocusPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusPeopleViewController.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		73CFEB952D01415C00B2FE1B /* UserCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterView.swift; sourceTree = "<group>"; };
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
 		73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAllOrderSController.swift; sourceTree = "<group>"; };
 		73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAllOrderView.swift; sourceTree = "<group>"; };
-		73D50B862D16ACEC00EF081A /* FocusListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusListViewController.swift; sourceTree = "<group>"; };
+		73D50B862D16ACEC00EF081A /* FocusCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyViewController.swift; sourceTree = "<group>"; };
 		73E306D12D154E9D00D18943 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		73E306D32D15521800D18943 /* 问道云.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "问道云.entitlements"; sourceTree = "<group>"; };
 		73E306D42D1552FC00D18943 /* WechatOpenSDK-XCFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "WechatOpenSDK-XCFramework.xcframework"; path = "Pods/WechatOpenSDK-XCFramework/WechatOpenSDK-XCFramework.xcframework"; sourceTree = "<group>"; };
@@ -391,7 +393,8 @@
 				73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */,
 				7335F6E52D0AD8620074985F /* MyDownloadViewController.swift */,
 				7374162C2D0EB87F00E6CD23 /* FocusAllViewController.swift */,
-				73D50B862D16ACEC00EF081A /* FocusListViewController.swift */,
+				73D50B862D16ACEC00EF081A /* FocusCompanyViewController.swift */,
+				73C752312D18F44F00C47187 /* FocusPeopleViewController.swift */,
 				7374162A2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift */,
 				737416352D0EC37400E6CD23 /* MembershipCenterViewController.swift */,
 			);
@@ -649,6 +652,7 @@
 				73A21DF22D0C39E000FC4C49 /* RiskListViewController.swift in Sources */,
 				7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */,
 				7374162D2D0EB87F00E6CD23 /* FocusAllViewController.swift in Sources */,
+				73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */,
 				7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */,
 				73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */,
 				7374164E2D100BB200E6CD23 /* SearchInvoiceCell.swift in Sources */,
@@ -700,7 +704,7 @@
 				7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
 				73A21DF02D0C39BF00FC4C49 /* DiligenceListViewController.swift in Sources */,
-				73D50B872D16ACEC00EF081A /* FocusListViewController.swift in Sources */,
+				73D50B872D16ACEC00EF081A /* FocusCompanyViewController.swift in Sources */,
 				73460D132D15162500EC9408 /* DeleteSureViewController.swift in Sources */,
 				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,

@@ -10,7 +10,6 @@ import SnapKit
 import ActiveLabel
 import RxSwift
 import RxCocoa
-import MBProgressHUD_WJExtension
 
 class LoginView: BaseView {
     

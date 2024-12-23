@@ -8,7 +8,6 @@
 import UIKit
 import RxRelay
 import ActiveLabel
-import MBProgressHUD_WJExtension
 
 class PasswordLoginView: BaseView {
     

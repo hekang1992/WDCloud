@@ -70,7 +70,7 @@ class UserAllOrderSController: WDBaseViewController {
         let leixing1 = MenuAction(title: "订单类型", style: .typeList)!
         listArray.asObservable().subscribe(onNext: { [weak self] modelArray in
             if let self = self, let modelArray = modelArray {
-                let array = self.getListType(form: modelArray)
+                let array = self.getListType(from: modelArray)
                 leixing1.listDataSource = array
             }
         }).disposed(by: disposeBag)
@@ -123,7 +123,7 @@ extension UserAllOrderSController {
                         self.emptyView.removeFromSuperview()
                         self.noNetView.removeFromSuperview()
                     }else {
-                        self.addNodataView(form: self.orderView)
+                        self.addNodataView(from: self.orderView)
                     }
                     self.orderView.modelArray.accept(self.allArray)
                     if self.allArray.count != total {
@@ -132,12 +132,12 @@ extension UserAllOrderSController {
                         self.orderView.tableView.mj_footer?.isHidden = true
                     }
                 }else {
-                    self.addNodataView(form: self.orderView)
+                    self.addNodataView(from: self.orderView)
                     self.orderView.tableView.mj_footer?.isHidden = true
                 }
                 break
             case .failure(_):
-                self.addNoNetView(form: self.orderView)
+                self.addNoNetView(from: self.orderView)
                 self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
                     //获取订单状态
                     self?.getCombotype()

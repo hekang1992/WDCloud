@@ -118,7 +118,16 @@ class rowsModel {
     var handlestate: String?//税号
     var localpdflink: String?//发票地址
     var paynumber: String?//支付单号
+    var name: String?
+    var children: [rowsModel]?
+    var groupname: String?
+    var groupnumber: String?
     init(json: JSON) {
+        self.groupname = json["groupname"].stringValue
+        self.groupnumber = json["groupnumber"].stringValue
+        self.children = json["children"].arrayValue.map { rowsModel(json: $0) }
+        self.name = json["name"].stringValue
+        self.code = json["code"].stringValue
         self.paynumber = json["paynumber"].stringValue
         self.localpdflink = json["localpdflink"].stringValue
         self.handlestate = json["handlestate"].stringValue

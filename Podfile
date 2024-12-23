@@ -36,8 +36,6 @@ target '问道云' do
   
   pod 'lottie-ios', '~> 4.3.4'
   
-  pod 'MBProgressHUD+WJExtension', '~> 1.3.1'
-  
   pod 'ActiveLabel', '~> 1.1.0'
   
   pod 'RxDataSources', '~> 5.0.0'

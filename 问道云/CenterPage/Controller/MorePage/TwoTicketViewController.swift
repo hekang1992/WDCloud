@@ -82,13 +82,13 @@ extension TwoTicketViewController {
                         self.emptyView.removeFromSuperview()
                         self.noNetView.removeFromSuperview()
                     }else {
-                        self.addNodataView(form: self.twoTicketView)
+                        self.addNodataView(from: self.twoTicketView)
                         
                     }
                 }
                 break
             case .failure(_):
-                self.addNoNetView(form: self.twoTicketView)
+                self.addNoNetView(from: self.twoTicketView)
                 self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
                     self?.pageNum = 1
                     self?.getListInfo()

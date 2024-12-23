@@ -177,7 +177,7 @@ extension MyDownloadViewController {
         let leixing1 = MenuAction(title: "类型", style: .typeList)!
         self.downloadModel.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self, let modelArray = modelArray else { return }
-            leixing1.listDataSource = getDownloadListType(form: modelArray)
+            leixing1.listDataSource = getDownloadListType(from: modelArray)
         }).disposed(by: disposeBag)
         leixing1.didSelectedMenuResult = { [weak self] index, model in
             guard let self = self else { return }
@@ -207,7 +207,7 @@ extension MyDownloadViewController {
                 if model.displayText != "全部" {
                     leixing2.adjustTitle(model.displayText ?? "", textColor: UIColor.init(cssStr: "#547AFF"))
                 }else {
-                    leixing2.adjustTitle("时间", textColor: UIColor.init(cssStr: "#000000"))
+                    leixing2.adjustTitle("时间", textColor: UIColor.init(cssStr: "#666666"))
                 }
             }
             //点击开始时间
@@ -309,7 +309,7 @@ extension MyDownloadViewController {
                         self.emptyView.removeFromSuperview()
                         self.noNetView.removeFromSuperview()
                     }else {
-                        self.addNodataView(form: self.downloadView)
+                        self.addNodataView(from: self.downloadView)
                     }
                     self.downloadView.modelArray.accept(self.allArray)
                     if self.allArray.count != total {
@@ -318,7 +318,7 @@ extension MyDownloadViewController {
                         self.downloadView.tableView.mj_footer?.isHidden = true
                     }
                 }else {
-                    self.addNodataView(form: self.downloadView)
+                    self.addNodataView(from: self.downloadView)
                     self.downloadView.tableView.mj_footer?.isHidden = true
                     self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
                         self?.getDownloadTypeList()
@@ -327,7 +327,7 @@ extension MyDownloadViewController {
                 }
                 break
             case .failure(_):
-                self.addNodataView(form: self.downloadView)
+                self.addNodataView(from: self.downloadView)
                 self.downloadView.tableView.mj_footer?.isHidden = true
                 break
             }

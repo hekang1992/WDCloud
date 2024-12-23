@@ -8,7 +8,6 @@
 import UIKit
 import Moya
 import SwiftyJSON
-import MBProgressHUD_WJExtension
 
 enum APIService {
     case requestAPI(params: [String: Any]?, pageUrl: String, method: Moya.Method)
@@ -131,7 +130,6 @@ class RequestManager: NSObject {
             }
             let error = NSError()
             completion(.failure(error))
-            MBProgressHUD.wj_showPlainText(msg, view: nil)
         }
     }
     

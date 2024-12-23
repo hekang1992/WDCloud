@@ -30,7 +30,7 @@ class FocusAllViewController: WDBaseViewController {
     private lazy var segmentedView: JXSegmentedView = createSegmentedView()
     private lazy var cocsciew: UIScrollView = createCocsciew()
     private var segmurce: JXSegmentedTitleDataSource!
-    private var listVCArray = [FocusListViewController]()
+    private var listVCArray = [WDBaseViewController]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,9 +51,29 @@ class FocusAllViewController: WDBaseViewController {
         setupViewControllers()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        segmentedView(segmentedView, didSelectedItemAt: 0)
+    }
+    
 }
 
 extension FocusAllViewController: JXSegmentedViewDelegate {
+    
+    //代理方法
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        if index == 0 {
+            let oneVc = self.listVCArray[0] as! FocusCompanyViewController
+            oneVc.getAllGroup()
+            oneVc.getRegion()
+            oneVc.getIndustry()
+        }else {
+            let twoVc = self.listVCArray[1] as! FocusPeopleViewController
+            twoVc.getAllGroup()
+            twoVc.getRegion()
+            twoVc.getIndustry()
+        }
+    }
     
     func addsentMentView() {
         historyView.addSubview(segmentedView)
@@ -72,11 +92,14 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
     func setupViewControllers() {
         listVCArray.forEach { $0.view.removeFromSuperview() }
         listVCArray.removeAll()
-        for _ in 0..<2 {
-            let vc = FocusListViewController()
-            cocsciew.addSubview(vc.view)
-            listVCArray.append(vc)
-        }
+        
+        let onevc = FocusCompanyViewController()
+        cocsciew.addSubview(onevc.view)
+        listVCArray.append(onevc)
+        
+        let twovc = FocusPeopleViewController()
+        cocsciew.addSubview(twovc.view)
+        listVCArray.append(twovc)
         
         updateViewControllersLayout()
         segmentedView(segmentedView, didSelectedItemAt: 0)
@@ -86,10 +109,6 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
         for (index, vc) in listVCArray.enumerated() {
             vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - segmentedView.frame.maxY)
         }
-    }
-    
-    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
-        
     }
     
     private func createSegmentedView() -> JXSegmentedView {

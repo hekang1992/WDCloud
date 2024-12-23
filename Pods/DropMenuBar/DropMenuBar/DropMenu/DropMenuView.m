@@ -29,7 +29,7 @@
 @property (nonatomic, assign) NSInteger lastSelectRow;
 // 标记，用于记录是否是恢复上次的选中
 @property (nonatomic, assign) BOOL flag;
-
+@property (nonatomic, strong) NSIndexPath* selectIndexPath;
 
 @end
 
@@ -136,7 +136,17 @@
     ItemModel *currentModel;
     if (tableView == self.tableViewArr[0]) {
         currentModel = self.action.ListDataSource[indexPath.row];
-        
+        if (self.twoListDataSource == nil && self.threeListDataSource == nil) {
+            if (self.selectIndexPath == nil && indexPath.row == 0) {
+                currentModel.seleceted = YES;
+            } else {
+                if (self.selectIndexPath == indexPath) {
+                    currentModel.seleceted = YES;
+                } else {
+                    currentModel.seleceted = NO;
+                }
+            }
+        }
     }else if (tableView == self.tableViewArr[1]) {
         // 根据第一层选中的索引获取包含的第二层数组
         ItemModel *firstModel =self.action.ListDataSource[self.firstSelectRow];
@@ -177,6 +187,7 @@
             [self adjustTableViewsWithCount:2];
         }else {
             // 表明只有一层数据。。选中第一行则恢复初始的title. 反正显示选中的数据
+            self.selectIndexPath = indexPath;
             [self resetActionTitle:selectModel selectRow:indexPath.row];
             if (self.action.didSelectedMenuResult) {
                 self.action.didSelectedMenuResult(indexPath.row, selectModel);

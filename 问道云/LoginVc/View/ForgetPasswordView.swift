@@ -6,11 +6,8 @@
 //
 
 import UIKit
-
-import UIKit
 import RxRelay
 import ActiveLabel
-import MBProgressHUD_WJExtension
 
 class ForgetPasswordView: BaseView {
     

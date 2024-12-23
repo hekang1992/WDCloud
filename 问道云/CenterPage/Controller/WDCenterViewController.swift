@@ -168,7 +168,7 @@ extension WDCenterViewController {
                 }
                 break
             case .failure(_):
-                self.addNoNetView(form: self.centerView)
+                self.addNoNetView(from: self.centerView)
                 self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
                     self?.getBuymoreinfo()
                 }).disposed(by: disposeBag)
