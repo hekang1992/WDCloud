@@ -18,8 +18,20 @@ class FocusCompanyViewController: WDBaseViewController {
     var endDateRelay = BehaviorRelay<String?>(value: nil)//结束时间
     var startTime: String = ""//开始时间
     var endTime: String = ""//结束时间
-    
+    //请求参数
+    var groupNumber: String = ""
+    var followTargetType: String = "1"
+    var followTargetName: String = "1"
     var isChoiceDate: String = ""
+    var firstAreaCode: String = ""
+    var secondAreaCode: String = ""
+    var firstIndustryCode: String = ""
+    var secondIndustryCode: String = ""
+    
+    lazy var companyView: FocusCompanyView = {
+        let companyView = FocusCompanyView()
+        return companyView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,10 +41,10 @@ class FocusCompanyViewController: WDBaseViewController {
         let regionMenu = MenuAction(title: "地区", style: .typeList)!
         let industryMenu = MenuAction(title: "行业", style: .typeList)!
         let timeMenu = MenuAction(title: "时间", style: .typeCustom)!
-        let menuScreeningView = DropMenuBar(action: [groupMenu, regionMenu, industryMenu, timeMenu])!
-        menuScreeningView.backgroundColor = .white
-        view.addSubview(menuScreeningView)
-        menuScreeningView.snp.makeConstraints { make in
+        let menuView = DropMenuBar(action: [groupMenu, regionMenu, industryMenu, timeMenu])!
+        menuView.backgroundColor = .white
+        view.addSubview(menuView)
+        menuView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.height.equalTo(26)
             make.top.equalToSuperview()
@@ -43,9 +55,10 @@ class FocusCompanyViewController: WDBaseViewController {
             let modelArray = getGroupMenuInfo(from: modelArray)
             groupMenu.listDataSource = modelArray
         }).disposed(by: disposeBag)
-        
-        groupMenu.didSelectedMenuResult = { [weak self] index, model in
-            print("index===model===\(index)===\(model?.displayText ?? "")")
+        //分组点击
+        groupMenu.didSelectedMenuResult = { [weak self] index, model, granted in
+            self?.groupNumber = model?.currentID ?? ""
+            self?.getFocusCompanyList()
         }
         
         self.regionModel.asObservable().compactMap { $0?.data }.asObservable().subscribe(onNext: { [weak self] modelArray in
@@ -53,15 +66,33 @@ class FocusCompanyViewController: WDBaseViewController {
             let regionArray = getRegionInfo(from: modelArray)
             regionMenu.listDataSource = regionArray
         }).disposed(by: disposeBag)
-        
-//        regionMenu.didSelectedMenuResult = { [weak self] index, model in
-//            print("index===model===\(index)===\(model?.displayText ?? "")")
-//        }
+        //地区点击
+        regionMenu.didSelectedMenuResult = { [weak self] index, model, granted in
+            if granted {
+                self?.firstAreaCode = model?.currentID ?? ""
+                self?.secondAreaCode = ""
+            }else {
+                self?.firstAreaCode = ""
+                self?.secondAreaCode = model?.currentID ?? ""
+            }
+            self?.getFocusCompanyList()
+        }
         
         self.industryModel.asObservable().compactMap { $0?.data }.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
             industryMenu.listDataSource = getIndustryInfo(from: modelArray)
         }).disposed(by: disposeBag)
+        //行业点击
+        industryMenu.didSelectedMenuResult = { [weak self] index, model, granted in
+            if granted {
+                self?.firstIndustryCode = model?.currentID ?? ""
+                self?.secondIndustryCode = ""
+            }else {
+                self?.firstIndustryCode = ""
+                self?.secondIndustryCode = model?.currentID ?? ""
+            }
+            self?.getFocusCompanyList()
+        }
         
         var modelArray = getListTime(from: true)
         timeMenu.displayCustomWithMenu = { [weak self] in
@@ -73,9 +104,8 @@ class FocusCompanyViewController: WDBaseViewController {
             timeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 315)
             //点击全部,今天,近一周等
             timeView.block = { model in
-//                self?.pageNum = 1
-//                self?.isChoiceDate = model.currentID ?? ""
-//                self?.getPdfInfo()
+                self?.isChoiceDate = model.currentID ?? ""
+                self?.getFocusCompanyList()
                 self?.startTime = ""
                 self?.endTime = ""
                 self?.startDateRelay.accept("")
@@ -112,7 +142,6 @@ class FocusCompanyViewController: WDBaseViewController {
             }
             //点击确认
             timeView.sureTimeBlock = { [weak self] btn in
-//                self?.pageNum = 1
                 let startTime = self?.startTime ?? ""
                 let endTime = self?.endTime ?? ""
                 let dateFormatter = DateFormatter()
@@ -132,13 +161,21 @@ class FocusCompanyViewController: WDBaseViewController {
                 self?.isChoiceDate = startTime + "|" + endTime
                 timeMenu.adjustTitle(startTime + "|" + endTime, textColor: UIColor.init(cssStr: "#547AFF"))
                 modelArray = self?.getListTime(from: false) ?? []
-//                self?.getPdfInfo()
+                self?.getFocusCompanyList()
             }
             timeView.modelArray = modelArray
             timeView.tableView.reloadData()
             return timeView
         }
         
+        view.addSubview(companyView)
+        companyView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.top.equalTo(menuView.snp.bottom).offset(6.5)
+            make.width.equalTo(SCREEN_WIDTH)
+            make.bottom.equalToSuperview()
+        }
+    
     }
     
 }
@@ -196,4 +233,44 @@ extension FocusCompanyViewController {
             }
         }
     }
+    
+    //获取分组公司信息
+    func getFocusCompanyList() {
+        let dict = ["groupNumber": groupNumber,
+                    "followTargetType": followTargetType,
+                    "isChoiceDate": isChoiceDate,
+                    "firstAreaCode": firstAreaCode,
+                    "secondAreaCode": secondAreaCode,
+                    "firstIndustryCode": firstIndustryCode,
+                    "secondIndustryCode": secondIndustryCode] as [String : Any]
+        
+        let man = RequestManager()
+        man.requestAPI(params: dict, pageUrl: "/operation/follow/list", method: .get) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    self.companyView.numLabel.text = String(model.total ?? 0)
+                    if model.total != 0 {
+                        self.companyView.modelArray.accept(model.rows ?? [])
+                        self.emptyView.removeFromSuperview()
+                    }else {
+                        self.addNodataView(from: self.companyView)
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+        
+    }
+    
+}
+
+extension FocusCompanyViewController: UITableViewDelegate {
+    
+    
+    
+    
 }

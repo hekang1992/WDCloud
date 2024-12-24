@@ -67,6 +67,7 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
             oneVc.getAllGroup()
             oneVc.getRegion()
             oneVc.getIndustry()
+            oneVc.getFocusCompanyList()
         }else {
             let twoVc = self.listVCArray[1] as! FocusPeopleViewController
             twoVc.getAllGroup()
@@ -83,10 +84,7 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
             make.top.equalTo(headView.snp.bottom).offset(12)
             make.height.equalTo(32)
         }
-        cocsciew.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(segmentedView.snp.bottom)
-        }
+        cocsciew.frame = CGRectMake(0, StatusHeightManager.navigationBarHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44)
     }
     
     func setupViewControllers() {
@@ -102,12 +100,11 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
         listVCArray.append(twovc)
         
         updateViewControllersLayout()
-        segmentedView(segmentedView, didSelectedItemAt: 0)
     }
     
     private func updateViewControllersLayout() {
         for (index, vc) in listVCArray.enumerated() {
-            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - segmentedView.frame.maxY)
+            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44)
         }
     }
     

@@ -122,7 +122,9 @@ class rowsModel {
     var children: [rowsModel]?
     var groupname: String?
     var groupnumber: String?
+    var customerFollowList: [customerFollowListModel]?
     init(json: JSON) {
+        self.customerFollowList = json["customerFollowList"].arrayValue.map { customerFollowListModel(json: $0) }
         self.groupname = json["groupname"].stringValue
         self.groupnumber = json["groupnumber"].stringValue
         self.children = json["children"].arrayValue.map { rowsModel(json: $0) }
@@ -166,6 +168,19 @@ class rowsModel {
         self.firmname = json["firmname"].stringValue
         self.createtime = json["createtime"].stringValue
         self.filepathH5 = json["filepathH5"].stringValue
+        self.dataid = json["dataid"].stringValue
+    }
+}
+
+class customerFollowListModel {
+    var followtargetname : String?
+    var createTime: String?
+    var entityid: String?
+    var dataid: String?
+    init(json: JSON) {
+        self.followtargetname = json["followtargetname"].stringValue
+        self.createTime = json["createTime"].stringValue
+        self.entityid = json["entityid"].stringValue
         self.dataid = json["dataid"].stringValue
     }
 }

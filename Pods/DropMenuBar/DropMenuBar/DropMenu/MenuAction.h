@@ -20,7 +20,8 @@ typedef NS_ENUM(NSInteger, MenuActionStyle) {
 // 数据源
 @property (nonatomic, strong) NSArray <ItemModel *>*ListDataSource;
 
-@property (nonatomic, copy) void(^didSelectedMenuResult)(NSInteger index, ItemModel *selecModel);
+//granted 是否点击了不限
+@property (nonatomic, copy) void(^didSelectedMenuResult)(NSInteger index, ItemModel *selecModel, BOOL granted);
 
 @property (nonatomic, copy) UIView *(^displayCustomWithMenu)(void);
 

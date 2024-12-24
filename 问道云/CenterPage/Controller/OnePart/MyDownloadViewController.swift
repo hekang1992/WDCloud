@@ -179,7 +179,7 @@ extension MyDownloadViewController {
             guard let self = self, let modelArray = modelArray else { return }
             leixing1.listDataSource = getDownloadListType(from: modelArray)
         }).disposed(by: disposeBag)
-        leixing1.didSelectedMenuResult = { [weak self] index, model in
+        leixing1.didSelectedMenuResult = { [weak self] index, model, granted in
             guard let self = self else { return }
             downloadtype = model?.currentID ?? ""
             pageNum = 1

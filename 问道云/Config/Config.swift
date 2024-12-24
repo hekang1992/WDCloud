@@ -397,6 +397,13 @@ class PhoneNumberFormatter {
 
 //无数据页面
 class LLemptyView: UIView {
+    
+    lazy var bgView: UIView = {
+        let bgView = UIView()
+        bgView.backgroundColor = .white
+        return bgView
+    }()
+    
     lazy var bgImageView: UIImageView = {
         let bgImageView = UIImageView()
         bgImageView.image = UIImage(named: "wushujuimage")
@@ -414,10 +421,16 @@ class LLemptyView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addSubview(bgView)
         addSubview(bgImageView)
         addSubview(mlabel)
+        bgView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(32)
+            make.bottom.left.right.equalToSuperview()
+        }
         bgImageView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(230)
             make.size.equalTo(CGSize(width: 163, height: 163))
         }
         mlabel.snp.makeConstraints { make in

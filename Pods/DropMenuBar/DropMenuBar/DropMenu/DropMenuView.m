@@ -190,7 +190,7 @@
             self.selectIndexPath = indexPath;
             [self resetActionTitle:selectModel selectRow:indexPath.row];
             if (self.action.didSelectedMenuResult) {
-                self.action.didSelectedMenuResult(indexPath.row, selectModel);
+                self.action.didSelectedMenuResult(indexPath.row, selectModel, NO);
             }
             [self dismiss];
         }
@@ -230,13 +230,13 @@
                 // 如果选中的是0， 则将上一级选中的数据返回
                 [self resetActionTitle:self.oneListDataSource[self.firstSelectRow] selectRow:1];
                 if (self.action.didSelectedMenuResult) {
-                    self.action.didSelectedMenuResult(self.firstSelectRow, self.oneListDataSource[self.firstSelectRow]);
+                    self.action.didSelectedMenuResult(self.firstSelectRow, self.oneListDataSource[self.firstSelectRow], YES);
                 }
                 [self dismiss];
             }else {
                 [self resetActionTitle:selectModel selectRow:indexPath.row];
                 if (self.action.didSelectedMenuResult) {
-                    self.action.didSelectedMenuResult(indexPath.row, selectModel);
+                    self.action.didSelectedMenuResult(indexPath.row, selectModel, NO);
                 }
                 [self dismiss];
             }
@@ -261,13 +261,13 @@
             // 如果选中的是0， 则将上一级选中的数据返回
             [self resetActionTitle:self.twoListDataSource[self.secondSelectRow] selectRow:1];
             if (self.action.didSelectedMenuResult) {
-                self.action.didSelectedMenuResult(self.secondSelectRow, self.twoListDataSource[self.secondSelectRow]);
+                self.action.didSelectedMenuResult(self.secondSelectRow, self.twoListDataSource[self.secondSelectRow], YES);
             }
             
         }else {
             [self resetActionTitle:selectModel selectRow:indexPath.row];
             if (self.action.didSelectedMenuResult) {
-                self.action.didSelectedMenuResult(indexPath.row, selectModel);
+                self.action.didSelectedMenuResult(indexPath.row, selectModel, NO);
             }
         }
         

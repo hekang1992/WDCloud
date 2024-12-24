@@ -75,10 +75,7 @@ extension WDBaseViewController {
     func addNodataView(from view: UIView) {
         view.addSubview(self.emptyView)
         self.emptyView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(150)
-            make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset((SCREEN_WIDTH - 163) * 0.5)
-            make.size.equalTo(CGSize(width: 163, height: 163))
+            make.edges.equalToSuperview()
         }
     }
     
@@ -92,9 +89,9 @@ extension WDBaseViewController {
     //获取分组状态
     func getGroupMenuInfo(from modelArray: [rowsModel]) -> [ItemModel]{
         var allArray = [ItemModel]()
-        let model1 = ItemModel(text: "全部分组", currentID: "0", isSelect: true)!
+        let model1 = ItemModel(text: "全部分组", currentID: "", isSelect: true)!
         for rowmodel in modelArray {
-            let model = ItemModel(text: rowmodel.groupname, currentID: rowmodel.groupnumber ?? "0", isSelect: false)!
+            let model = ItemModel(text: rowmodel.groupname, currentID: rowmodel.groupnumber ?? "", isSelect: false)!
             allArray.append(model)
         }
         allArray.insert(model1, at: 0)

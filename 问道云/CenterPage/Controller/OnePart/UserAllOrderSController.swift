@@ -74,7 +74,7 @@ class UserAllOrderSController: WDBaseViewController {
                 leixing1.listDataSource = array
             }
         }).disposed(by: disposeBag)
-        leixing1.didSelectedMenuResult = { [weak self] index, model in
+        leixing1.didSelectedMenuResult = { [weak self] index, model, granted in
             guard let self = self else { return }
             combotypenumber = Int(model?.currentID ?? "0") ?? 0
             getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate)
@@ -82,7 +82,7 @@ class UserAllOrderSController: WDBaseViewController {
         let leixing2 = MenuAction(title: "订单状态", style: .typeList)!
         let orderTypeArray = getListOrderType(from: true)
         leixing2.listDataSource = orderTypeArray
-        leixing2.didSelectedMenuResult = { [weak self] index, model in
+        leixing2.didSelectedMenuResult = { [weak self] index, model, granted in
             guard let self = self else { return }
             orderstate = model?.currentID ?? ""
             getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate)

@@ -43,7 +43,7 @@ class FocusPeopleViewController: WDBaseViewController {
             groupMenu.listDataSource = getGroupMenuInfo(from: modelArray)
         }).disposed(by: disposeBag)
         
-        groupMenu.didSelectedMenuResult = { [weak self] index, model in
+        groupMenu.didSelectedMenuResult = { [weak self] index, model, granted in
             print("index===model===\(index)===\(model?.currentID ?? "")")
         }
         
