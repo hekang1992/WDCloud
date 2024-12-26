@@ -17,7 +17,7 @@ class LoginView: BaseView {
     var block2: (() -> Void)?
     
     private let isAgreeBinder: BehaviorRelay<Bool> = .init(value: false)
-
+    
     lazy var backBtn: UIButton = {
         let backBtn = UIButton(type: .custom)
         backBtn.setImage(UIImage(named: "cancelImage"), for: .normal)

@@ -671,3 +671,42 @@ class GetSaveLoginInfoConfig {
     }
     
 }
+
+class PaddedLabel: UILabel {
+    var padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
+    
+    override func drawText(in rect: CGRect) {
+        let paddedRect = rect.inset(by: padding)
+        super.drawText(in: paddedRect)
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + padding.left + padding.right,
+                      height: size.height + padding.top + padding.bottom)
+    }
+}
+
+//标签颜色
+class TypeColorConfig {
+    static func labelTextColor(form label: PaddedLabel) {
+        let text = label.text ?? ""
+        if text.contains("注销") {
+            label.textColor = UIColor.init(cssStr: "#FF7D00")
+            label.layer.borderWidth = 1
+            label.layer.cornerRadius = 2
+            label.layer.borderColor = UIColor.init(cssStr: "#FF7D00")?.cgColor
+        }else if text.contains("吊销") {
+            label.textColor = UIColor.init(cssStr: "#F55B5B")
+            label.layer.borderWidth = 1
+            label.layer.cornerRadius = 2
+            label.layer.borderColor = UIColor.init(cssStr: "#F55B5B")?.cgColor
+        }else {
+            label.textColor = UIColor.init(cssStr: "#4DC929")
+            label.layer.borderWidth = 1
+            label.layer.cornerRadius = 2
+            label.layer.borderColor = UIColor.init(cssStr: "#4DC929")?.cgColor
+        }
+    }
+}
+

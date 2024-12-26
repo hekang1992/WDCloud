@@ -253,6 +253,7 @@ extension FocusCompanyViewController {
                     self.companyView.numLabel.text = String(model.total ?? 0)
                     if model.total != 0 {
                         self.companyView.modelArray.accept(model.rows ?? [])
+                        self.companyView.tableView.reloadData()
                         self.emptyView.removeFromSuperview()
                     }else {
                         self.addNodataView(from: self.companyView)

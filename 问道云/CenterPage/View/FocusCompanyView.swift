@@ -9,30 +9,32 @@ import UIKit
 import RxRelay
 import RxDataSources
 
-struct SectionModel {
-    var header: String
-    var items: [customerFollowListModel]
-    var isExpanded: Bool  // 标记 Section 是否展开
-    init(header: String, items: [customerFollowListModel], isExpanded: Bool = false) {
-        self.header = header
-        self.items = items
-        self.isExpanded = isExpanded
-    }
-}
-
-extension SectionModel: SectionModelType {
-    typealias Item = customerFollowListModel
-    init(original: SectionModel, items: [customerFollowListModel]) {
-        self = original
-        self.items = items
-    }
-}
+//struct SectionModel {
+//    var header: String
+//    var items: [customerFollowListModel]
+//    var isExpanded: Bool  // 标记 Section 是否展开
+//    init(header: String, items: [customerFollowListModel], isExpanded: Bool = false) {
+//        self.header = header
+//        self.items = items
+//        self.isExpanded = isExpanded
+//    }
+//}
+//
+//extension SectionModel: SectionModelType {
+//    typealias Item = customerFollowListModel
+//    init(original: SectionModel, items: [customerFollowListModel]) {
+//        self = original
+//        self.items = items
+//    }
+//}
 
 class FocusCompanyView: BaseView {
     
+    var isSectionCollapsed: [Bool] = []
+    
     var modelArray = BehaviorRelay<[rowsModel]>(value: [])
     
-    private var arrayRelay = BehaviorRelay<[SectionModel]>(value: [])
+//    private var arrayRelay = BehaviorRelay<[SectionModel]>(value: [])
     
     lazy var descLabel: UILabel = {
         let descLabel = UILabel()
@@ -57,10 +59,12 @@ class FocusCompanyView: BaseView {
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.backgroundColor = .clear
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+        tableView.register(FocusCompanyViewNormalCell.self, forCellReuseIdentifier: "FocusCompanyViewNormalCell")
         //        tableView.register(ALDFocusEditQiyeViewCell.self, forCellReuseIdentifier: "ALDFocusEditQiyeViewCell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
@@ -108,30 +112,35 @@ class FocusCompanyView: BaseView {
             make.top.equalTo(tableView.snp.bottom)
         }
         
-        modelArray.subscribe(onNext: { [weak self] modelArray in
-            let sections = modelArray.enumerated().map { index, model -> SectionModel in
-                let numStr = String(format: "%@", "\(model.groupname ?? "")(\(model.customerFollowList?.count ?? 0))")
-                return SectionModel(header: numStr, items: model.customerFollowList ?? [], isExpanded: false)
-            }
-            self?.arrayRelay.accept(sections)
+        modelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self else { return }
+            self.isSectionCollapsed = Array(repeating: true, count: modelArray.count)
         }).disposed(by: disposeBag)
         
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel>(
-            configureCell: { dataSource, tableView, indexPath, rowModel in
-                let section = dataSource[indexPath.section]
-                if section.isExpanded {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell")!
-                    cell.textLabel?.text = rowModel.followtargetname
-                    return cell
-                } else {
-                    return UITableViewCell()
-                }
-            }
-        )
-        
-        arrayRelay.asObservable().bind(to: tableView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
-        
-        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+//        modelArray.subscribe(onNext: { [weak self] modelArray in
+//            let sections = modelArray.enumerated().map { index, model -> SectionModel in
+//                let numStr = String(format: "%@", "\(model.groupname ?? "")(\(model.customerFollowList?.count ?? 0))")
+//                return SectionModel(header: numStr, items: model.customerFollowList ?? [], isExpanded: false)
+//            }
+//            self?.arrayRelay.accept(sections)
+//        }).disposed(by: disposeBag)
+//        
+//        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel>(
+//            configureCell: { dataSource, tableView, indexPath, rowModel in
+//                let section = dataSource[indexPath.section]
+//                if section.isExpanded {
+//                    let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell")!
+//                    cell.textLabel?.text = rowModel.followtargetname
+//                    return cell
+//                } else {
+//                    return UITableViewCell()
+//                }
+//            }
+//        )
+//        
+//        arrayRelay.asObservable().bind(to: tableView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
+//        
+//        tableView.rx.setDelegate(self).disposed(by: disposeBag)
         
     }
     
@@ -141,7 +150,23 @@ class FocusCompanyView: BaseView {
     
 }
 
-extension FocusCompanyView: UITableViewDelegate {
+extension FocusCompanyView: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FocusCompanyViewNormalCell") as? FocusCompanyViewNormalCell
+        let model = self.modelArray.value[indexPath.section].customerFollowList?[indexPath.row]
+        cell?.model.accept(model)
+        cell?.selectionStyle = .none
+        return cell ?? UITableViewCell()
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.modelArray.value.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return isSectionCollapsed[section] ? 0 : (self.modelArray.value[section].customerFollowList?.count)!
+    }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 10 // Section 之间的间距
@@ -160,7 +185,9 @@ extension FocusCompanyView: UITableViewDelegate {
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")
         let titleLabel = UILabel()
         //设置section组的标题
-        titleLabel.text = arrayRelay.value[section].header
+        let model = self.modelArray.value[section]
+        let numStr = String(format: "%@", "\(model.groupname ?? "")(\(model.customerFollowList?.count ?? 0))")
+        titleLabel.text = numStr
         titleLabel.textAlignment = .left
         titleLabel.font = .mediumFontOfSize(size: 14)
         titleLabel.textColor = .init(cssStr: "#333333")
@@ -176,11 +203,28 @@ extension FocusCompanyView: UITableViewDelegate {
             make.bottom.equalToSuperview()
             make.height.equalTo(0.5)
         }
+        
+        let iconImageView = UIImageView()
+        iconImageView.image = UIImage(named: "righticonimage")
+        headerView.addSubview(iconImageView)
+        iconImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().offset(-19)
+            make.size.equalTo(CGSize(width: 15, height: 15))
+        }
+        let isCollapsed = isSectionCollapsed[section]
+        // 旋转动画
+        UIView.animate(withDuration: 0.3, animations: {
+            if !isCollapsed {
+                iconImageView.transform = iconImageView.transform.rotated(by: .pi / 2)
+            } else {
+                iconImageView.transform = .identity
+            }
+        })
         headerView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
-            var updatedSections = arrayRelay.value
-            updatedSections[section].isExpanded.toggle()
-            arrayRelay.accept(updatedSections)
+            isSectionCollapsed[section].toggle()
+            tableView.reloadSections(IndexSet(integer: section), with: .automatic)
         }).disposed(by: disposeBag)
         return headerView
     }

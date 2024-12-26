@@ -177,10 +177,14 @@ class customerFollowListModel {
     var createTime: String?
     var entityid: String?
     var dataid: String?
+    var firmnamestate: String?
+    var logo: String?
     init(json: JSON) {
         self.followtargetname = json["followtargetname"].stringValue
         self.createTime = json["createTime"].stringValue
         self.entityid = json["entityid"].stringValue
         self.dataid = json["dataid"].stringValue
+        self.firmnamestate = json["firmnamestate"].stringValue
+        self.logo = json["logo"].stringValue
     }
 }

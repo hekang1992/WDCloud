@@ -12,7 +12,7 @@ import JXSegmentedView
 class FocusAllViewController: WDBaseViewController {
     
     var model = BehaviorRelay<DataModel?>(value: nil)
-
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .twoBtn)
         headView.oneBtn.setImage(UIImage(named: "santiaogang"), for: .normal)
@@ -31,10 +31,10 @@ class FocusAllViewController: WDBaseViewController {
     private lazy var cocsciew: UIScrollView = createCocsciew()
     private var segmurce: JXSegmentedTitleDataSource!
     private var listVCArray = [WDBaseViewController]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(historyView)
         historyView.snp.makeConstraints { make in
@@ -50,7 +50,7 @@ class FocusAllViewController: WDBaseViewController {
         //添加子控制器
         setupViewControllers()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         segmentedView(segmentedView, didSelectedItemAt: 0)
@@ -58,7 +58,7 @@ class FocusAllViewController: WDBaseViewController {
     
 }
 
-extension FocusAllViewController: JXSegmentedViewDelegate {
+extension FocusAllViewController: JXSegmentedViewDelegate, UIScrollViewDelegate {
     
     //代理方法
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
@@ -73,6 +73,7 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
             twoVc.getAllGroup()
             twoVc.getRegion()
             twoVc.getIndustry()
+            twoVc.getFocusPeopleList()
         }
     }
     
@@ -132,6 +133,8 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.bounces = false
+        scrollView.alwaysBounceHorizontal = false
         scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 2, height: 0)
         return scrollView
     }
@@ -145,4 +148,15 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
         return indicator
     }
     
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.x < 0 {
+//            scrollView.contentOffset.x = 0
+//        }
+//        // 右边界：contentOffset.x >= 最大值 (contentSize.width - scrollView.bounds.width)
+//        let maxOffsetX = scrollView.contentSize.width - scrollView.bounds.width
+//        if scrollView.contentOffset.x > maxOffsetX {
+//            scrollView.contentOffset.x = maxOffsetX
+//        }
+//    }
+//    
 }
