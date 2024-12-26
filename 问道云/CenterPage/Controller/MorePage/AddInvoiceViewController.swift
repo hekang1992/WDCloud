@@ -87,7 +87,7 @@ class AddInvoiceViewController: WDBaseViewController {
                     .controlEvent(.editingChanged)
                     .withLatestFrom(cell.enterTx.rx.text.orEmpty)
                     .distinctUntilChanged()
-                    .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+                    .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
                     .subscribe(onNext: { text in
                         self.searchStr.accept(text)
                     }).disposed(by: self.disposeBag)
@@ -98,7 +98,7 @@ class AddInvoiceViewController: WDBaseViewController {
         }
         
         self.searchStr
-            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .filter { !$0.isEmpty }
             .subscribe(onNext: { [weak self] text in

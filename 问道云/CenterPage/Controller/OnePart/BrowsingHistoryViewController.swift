@@ -114,6 +114,8 @@ extension BrowsingHistoryViewController: JXSegmentedViewDelegate {
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.bounces = false
+        scrollView.alwaysBounceHorizontal = false
         scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 4, height: 0)
         return scrollView
     }

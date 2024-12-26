@@ -49,6 +49,10 @@ class FocusAllViewController: WDBaseViewController {
         addsentMentView()
         //添加子控制器
         setupViewControllers()
+        headView.twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            let searchVc = FocusSearchViewController()
+            self?.navigationController?.pushViewController(searchVc, animated: false)
+        }).disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -148,15 +152,4 @@ extension FocusAllViewController: JXSegmentedViewDelegate, UIScrollViewDelegate 
         return indicator
     }
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if scrollView.contentOffset.x < 0 {
-//            scrollView.contentOffset.x = 0
-//        }
-//        // 右边界：contentOffset.x >= 最大值 (contentSize.width - scrollView.bounds.width)
-//        let maxOffsetX = scrollView.contentSize.width - scrollView.bounds.width
-//        if scrollView.contentOffset.x > maxOffsetX {
-//            scrollView.contentOffset.x = maxOffsetX
-//        }
-//    }
-//    
 }

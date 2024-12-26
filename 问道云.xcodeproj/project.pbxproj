@@ -75,6 +75,7 @@
 		73C752482D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752472D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift */; };
 		73C7524A2D1D2BD200C47187 /* FocusCompanyEditViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752492D1D2BD200C47187 /* FocusCompanyEditViewCell.swift */; };
 		73C7524C2D1D555400C47187 /* FocusCompanyPopGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C7524B2D1D555400C47187 /* FocusCompanyPopGroupView.swift */; };
+		73C7524E2D1D5A3100C47187 /* FocusSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C7524D2D1D5A3100C47187 /* FocusSearchViewController.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
 		73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB952D01415C00B2FE1B /* UserCenterView.swift */; };
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
@@ -186,6 +187,7 @@
 		73C752472D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyViewNormalCell.swift; sourceTree = "<group>"; };
 		73C752492D1D2BD200C47187 /* FocusCompanyEditViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyEditViewCell.swift; sourceTree = "<group>"; };
 		73C7524B2D1D555400C47187 /* FocusCompanyPopGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyPopGroupView.swift; sourceTree = "<group>"; };
+		73C7524D2D1D5A3100C47187 /* FocusSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSearchViewController.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		73CFEB952D01415C00B2FE1B /* UserCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterView.swift; sourceTree = "<group>"; };
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 			children = (
 				73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */,
 				7335F6E52D0AD8620074985F /* MyDownloadViewController.swift */,
+				73C7524D2D1D5A3100C47187 /* FocusSearchViewController.swift */,
 				7374162C2D0EB87F00E6CD23 /* FocusAllViewController.swift */,
 				73D50B862D16ACEC00EF081A /* FocusCompanyViewController.swift */,
 				73C752312D18F44F00C47187 /* FocusPeopleViewController.swift */,
@@ -671,6 +674,7 @@
 				73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
 				7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */,
+				73C7524E2D1D5A3100C47187 /* FocusSearchViewController.swift in Sources */,
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */,

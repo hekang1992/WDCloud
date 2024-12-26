@@ -96,6 +96,7 @@ class rowsModel {
     var dataid: String?//id号
     var entityId: String?
     var entityName: String?
+    var follow: Bool?
     var phone: String?
     var registerAddress: String?
     var usCreditCode: String?
@@ -124,6 +125,7 @@ class rowsModel {
     var groupnumber: String?
     var customerFollowList: [customerFollowListModel]?
     init(json: JSON) {
+        self.follow = json["follow"].boolValue
         self.customerFollowList = json["customerFollowList"].arrayValue.map { customerFollowListModel(json: $0) }
         self.groupname = json["groupname"].stringValue
         self.groupnumber = json["groupnumber"].stringValue

@@ -156,7 +156,7 @@ class MyDownloadViewController: WDBaseViewController {
             .controlEvent(.editingChanged)
             .withLatestFrom(self.downloadView.searchView.serachTx.rx.text.orEmpty)
             .distinctUntilChanged()
-            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
             self?.pageNum = 1
             self?.downloadfilename = text
