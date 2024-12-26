@@ -1,14 +1,16 @@
 //
-//  FocusCompanyViewNormalCell.swift
+//  FocusCompanyEditViewCell.swift
 //  问道云
 //
 //  Created by 何康 on 2024/12/26.
-//  关注普通cell
+//  关注编辑cell
+
+import UIKit
 
 import UIKit
 import RxRelay
 
-class FocusCompanyViewNormalCell: BaseViewCell {
+class FocusCompanyEditViewCell: BaseViewCell {
     
     var model = BehaviorRelay<customerFollowListModel?>(value: nil)
     
@@ -47,17 +49,29 @@ class FocusCompanyViewNormalCell: BaseViewCell {
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")
         return lineView
     }()
+    
+    lazy var icon: UIImageView = {
+        let icon = UIImageView()
+        icon.image = UIImage(named: "Check_nor")
+        return icon
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(icon)
         contentView.addSubview(ctImageView)
         contentView.addSubview(mlabel)
         contentView.addSubview(typelabel)
         contentView.addSubview(timelabel)
         contentView.addSubview(lineView)
+        icon.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.size.equalTo(CGSize(width: 15, height: 15))
+            make.left.equalToSuperview().offset(10)
+        }
         ctImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(14)
-            make.left.equalToSuperview().offset(10)
+            make.left.equalToSuperview().offset(30)
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
         mlabel.snp.makeConstraints { make in
@@ -101,6 +115,10 @@ class FocusCompanyViewNormalCell: BaseViewCell {
                 ctImageView.image = UIImage.imageOfText(model.followtargetname ?? "", size: (24, 24), cornerRadius: 2)
             }
         }).disposed(by: disposeBag)
+    }
+    
+    func configureDeleteCell(isChecked: Bool) {
+        icon.image = isChecked ? UIImage(named: "Checkb_sel") : UIImage(named: "Check_nor")
     }
     
     @MainActor required init?(coder: NSCoder) {

@@ -227,6 +227,23 @@ extension UIImage {
     }
 }
 
+extension String {
+    var removingEmojis: String {
+        return self.filter { !$0.isEmoji }
+    }
+}
+
+extension Character {
+    var isEmoji: Bool {
+        // 判断是否为表情符号
+        return (0x1F600...0x1F64F).contains(self.unicodeScalars.first!.value) ||  // Emoticons
+        (0x1F300...0x1F5FF).contains(self.unicodeScalars.first!.value) ||  // Misc Symbols and Pictographs
+        (0x1F680...0x1F6FF).contains(self.unicodeScalars.first!.value) ||  // Transport and Map
+        (0x2600...0x26FF).contains(self.unicodeScalars.first!.value) ||   // Misc symbols
+        (0x2700...0x27BF).contains(self.unicodeScalars.first!.value)      // Dingbats
+    }
+}
+
 // 定义一个类或扩展来封装振动反馈
 class HapticFeedbackManager {
     

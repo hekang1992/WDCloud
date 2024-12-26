@@ -8,6 +8,7 @@
 import UIKit
 import DropMenuBar
 import RxRelay
+import TYAlertController
 
 class FocusCompanyViewController: WDBaseViewController {
     
@@ -31,6 +32,11 @@ class FocusCompanyViewController: WDBaseViewController {
     lazy var companyView: FocusCompanyView = {
         let companyView = FocusCompanyView()
         return companyView
+    }()
+    
+    lazy var cmmView: CMMView = {
+        let cmmView = CMMView(frame: self.view.bounds)
+        return cmmView
     }()
 
     override func viewDidLoad() {
@@ -176,6 +182,11 @@ class FocusCompanyViewController: WDBaseViewController {
             make.bottom.equalToSuperview()
         }
     
+        companyView.addBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.addNewGroup()
+        }).disposed(by: disposeBag)
+        
     }
     
 }
@@ -236,6 +247,8 @@ extension FocusCompanyViewController {
     
     //获取分组公司信息
     func getFocusCompanyList() {
+        self.companyView.selectedIndexPaths.removeAll()
+        self.companyView.isDeleteMode.accept(false)
         let dict = ["groupNumber": groupNumber,
                     "followTargetType": followTargetType,
                     "isChoiceDate": isChoiceDate,
@@ -252,7 +265,7 @@ extension FocusCompanyViewController {
                 if let model = success.data {
                     self.companyView.numLabel.text = String(model.total ?? 0)
                     if model.total != 0 {
-                        self.companyView.modelArray.accept(model.rows ?? [])
+                        self.companyView.dataModel.accept(model)
                         self.companyView.tableView.reloadData()
                         self.emptyView.removeFromSuperview()
                     }else {
@@ -271,7 +284,36 @@ extension FocusCompanyViewController {
 
 extension FocusCompanyViewController: UITableViewDelegate {
     
+    func addNewGroup() {
+        let alertVc = TYAlertController(alert: self.cmmView, preferredStyle: .actionSheet)!
+        self.cmmView.nameLabel.text = "添加分组"
+        self.cmmView.tf.placeholder = "请输入分组名称"
+        self.present(alertVc, animated: true)
+        self.cmmView.cblock = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+        self.cmmView.sblock = { [weak self] in
+            self?.addNewInfo()
+        }
+    }
     
-    
+    private func addNewInfo() {
+        let man = RequestManager()
+        let dict = ["groupName": self.cmmView.tf.text ?? "".removingEmojis,
+                    "followTargetType": "1"]
+        man.requestAPI(params: dict, pageUrl: "/operation/followGroup", method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.dismiss(animated: true, completion: {
+                        self?.getFocusCompanyList()
+                    })
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
     
 }

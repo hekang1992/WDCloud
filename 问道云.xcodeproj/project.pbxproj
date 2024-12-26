@@ -73,6 +73,7 @@
 		73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752312D18F44F00C47187 /* FocusPeopleViewController.swift */; };
 		73C752362D19451400C47187 /* FocusCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752352D19451400C47187 /* FocusCompanyView.swift */; };
 		73C752482D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752472D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift */; };
+		73C7524A2D1D2BD200C47187 /* FocusCompanyEditViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752492D1D2BD200C47187 /* FocusCompanyEditViewCell.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
 		73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB952D01415C00B2FE1B /* UserCenterView.swift */; };
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
@@ -182,6 +183,7 @@
 		73C752312D18F44F00C47187 /* FocusPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusPeopleViewController.swift; sourceTree = "<group>"; };
 		73C752352D19451400C47187 /* FocusCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyView.swift; sourceTree = "<group>"; };
 		73C752472D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyViewNormalCell.swift; sourceTree = "<group>"; };
+		73C752492D1D2BD200C47187 /* FocusCompanyEditViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyEditViewCell.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		73CFEB952D01415C00B2FE1B /* UserCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterView.swift; sourceTree = "<group>"; };
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
@@ -504,6 +506,7 @@
 				73E306DE2D156C0800D18943 /* MyQRCodeView.swift */,
 				73C752352D19451400C47187 /* FocusCompanyView.swift */,
 				73C752472D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift */,
+				73C752492D1D2BD200C47187 /* FocusCompanyEditViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -693,6 +696,7 @@
 				7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */,
 				7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */,
 				7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */,
+				73C7524A2D1D2BD200C47187 /* FocusCompanyEditViewCell.swift in Sources */,
 				737416442D0FD74F00E6CD23 /* AddInvoiceViewController.swift in Sources */,
 				7325A7DC2CFF0DBE0043C196 /* PasswordLoginView.swift in Sources */,
 				73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */,

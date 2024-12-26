@@ -256,9 +256,9 @@ class CMMView: BaseView {
         bgView.addSubview(sureBtn)
         cycleView.addSubview(tf)
         
-        
         bgView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(160)
             make.size.equalTo(CGSize(width: 300, height: 177))
         }
         nameLabel.snp.makeConstraints { make in

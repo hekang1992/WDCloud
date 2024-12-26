@@ -127,6 +127,8 @@ class RequestManager: NSObject {
             if code == 401 {
                 let vc = UIViewController.getCurrentViewController() as? WDBaseViewController
                 vc?.popLogin()
+            }else if code == 500 {
+                ToastViewConfig.showToast(message: msg)
             }
             let error = NSError()
             completion(.failure(error))
