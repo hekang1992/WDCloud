@@ -40,6 +40,8 @@ class FocusCompanyView: BaseView {
     
     var selectedIndexPaths = [IndexPath]() // 存储选中的IndexPath
     
+    var selectedDataIds = [String]() // 存储选中的id
+    
     //    private var arrayRelay = BehaviorRelay<[SectionModel]>(value: [])
     
     lazy var descLabel: UILabel = {
@@ -153,19 +155,20 @@ class FocusCompanyView: BaseView {
         }).disposed(by: disposeBag)
         
         footerView.allBtn.rx.tap.subscribe(onNext: { [weak self] in
-            ToastViewConfig.showToast(message: "全选")
             guard let self = self else { return }
             let allCount = self.dataModel.value?.total
             let selectCount = self.selectedIndexPaths.count
             if selectCount == allCount {//全选了
                 footerView.allBtn.setImage(UIImage(named: "Check_nor"), for: .normal)
                 self.selectedIndexPaths.removeAll()
+                self.selectedDataIds.removeAll()
                 self.footerView.cancellabel.text = ""
                 self.footerView.movelabel.text = ""
             }else {
                 //没有全选
                 footerView.allBtn.setImage(UIImage(named: "Checkb_sel"), for: .normal)
                 self.selectedIndexPaths.removeAll()
+                self.selectedDataIds.removeAll()
                 let numberOfSections = tableView.numberOfSections
                 for section in 0..<numberOfSections {
                     let numberOfRows = tableView.numberOfRows(inSection: section)
@@ -173,6 +176,8 @@ class FocusCompanyView: BaseView {
                     for row in 0..<numberOfRows {
                         let indexPath = IndexPath(row: row, section: section)
                         tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                        let datasid = model.customerFollowList?[row].dataid
+                        self.selectedDataIds.append(datasid ?? "")
                         self.selectedIndexPaths.append(indexPath)
                     }
                 }
@@ -182,15 +187,6 @@ class FocusCompanyView: BaseView {
             }
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
-        
-        footerView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
-            ToastViewConfig.showToast(message: "取消关注")
-        }).disposed(by: disposeBag)
-        
-        footerView.movebtn.rx.tap.subscribe(onNext: { [weak self] in
-            ToastViewConfig.showToast(message: "移动到")
-        }).disposed(by: disposeBag)
-        
         
         //        modelArray.subscribe(onNext: { [weak self] modelArray in
         //            let sections = modelArray.enumerated().map { index, model -> SectionModel in
@@ -222,6 +218,7 @@ class FocusCompanyView: BaseView {
             let currentMode = self.isDeleteMode.value
             self.isDeleteMode.accept(!currentMode)
             self.selectedIndexPaths.removeAll()//移除所有选中的cell
+            self.selectedDataIds.removeAll()
             for section in 0..<isSectionCollapsed.count {
                 isSectionCollapsed[section] = currentMode // 设置为展开
                 tableView.reloadSections(IndexSet(integer: section), with: .none) // 刷新每个 section
@@ -352,14 +349,14 @@ extension FocusCompanyView: UITableViewDelegate, UITableViewDataSource {
             let dataId = model.customerFollowList?[indexPath.row].dataid ?? ""
             if let index = self.selectedIndexPaths.firstIndex(of: indexPath) {
                 self.selectedIndexPaths.remove(at: index) //如果已经选中，则取消选中
-//                self.selecteddataids.removeAll {
-//                    $0 == datastr
-//                }
+                self.selectedDataIds.removeAll {
+                    $0 == dataId
+                }
                 cell?.icon.image = UIImage(named: "Check_nor")
                 self.footerView.allBtn.setImage(UIImage(named: "Check_nor"), for: .normal)
             } else {
                 self.selectedIndexPaths.append(indexPath) // 如果未选中，则添加到选中的数组
-//                self.selecteddataids.append(datastr)
+                self.selectedDataIds.append(dataId)
                 cell?.icon.image = UIImage(named: "Checkb_sel")
             }
             let selectCount = self.selectedIndexPaths.count

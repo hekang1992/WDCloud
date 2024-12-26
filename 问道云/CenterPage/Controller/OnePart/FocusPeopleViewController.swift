@@ -187,10 +187,33 @@ class FocusPeopleViewController: WDBaseViewController {
             self.addNewGroup()
         }).disposed(by: disposeBag)
         
+        companyView.footerView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let selectedDataids = companyView.selectedDataIds
+            if selectedDataids.count > 0 {
+                ShowAlertManager.showAlert(title: "提示", message: "确认要取消关注吗? 取消后你仍可以随时再次关注.") {
+                    
+                }
+            }else {
+                ToastViewConfig.showToast(message: "请先选择需要取消关注的对象!")
+            }
+        }).disposed(by: disposeBag)
+        
+        companyView.footerView.movebtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let selectedDataids = companyView.selectedDataIds
+            if selectedDataids.count > 0 {
+                ShowAlertManager.showAlert(title: "提示", message: "确认要移动分组吗?") {
+                    
+                }
+            }else {
+                ToastViewConfig.showToast(message: "请先选择需要移动的对象!")
+            }
+        }).disposed(by: disposeBag)
+        
     }
     
 }
-
 
 extension FocusPeopleViewController {
     
