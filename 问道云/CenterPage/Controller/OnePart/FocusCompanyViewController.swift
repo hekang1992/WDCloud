@@ -34,6 +34,7 @@ class FocusCompanyViewController: WDBaseViewController {
         return companyView
     }()
     
+    //重命名
     lazy var cmmView: CMMView = {
         let cmmView = CMMView(frame: self.view.bounds)
         return cmmView
@@ -204,7 +205,7 @@ class FocusCompanyViewController: WDBaseViewController {
             let selectedDataids = companyView.selectedDataIds
             if selectedDataids.count > 0 {
                 ShowAlertManager.showAlert(title: "提示", message: "确认要移动分组吗?", confirmAction: {
-                    
+                    self.movePopFocus(from: selectedDataids)
                 })
             }else {
                 ToastViewConfig.showToast(message: "请先选择需要移动的对象!")
@@ -357,8 +358,37 @@ extension FocusCompanyViewController: UITableViewDelegate {
         }
     }
     
-    func moveFocus() {
-        
+    func movePopFocus(from ids: [String]) {
+        let groupView = FocusCompanyPopGroupView(frame: self.view.bounds)
+        if let model = self.groupModel.value {
+            groupView.model.accept(model.data ?? [])
+        }
+        let alertVc = TYAlertController(alert: groupView, preferredStyle: .alert)!
+        self.present(alertVc, animated: true)
+        groupView.cblock = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+        groupView.sblock = { [weak self] model in
+            self?.moveFocusInfo(from: model, ids: ids)
+        }
+    }
+    
+    func moveFocusInfo(from model: rowsModel, ids: [String]) {
+        let man = RequestManager()
+        let dict = ["groupNumber": model.groupnumber ?? "", "ids": ids, "followTargetType": "1"] as [String : Any]
+        man.requestAPI(params: dict, pageUrl: "/operation/follow/moveGroup", method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.dismiss(animated: true, completion: {
+                        self?.getFocusCompanyList()
+                    })
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

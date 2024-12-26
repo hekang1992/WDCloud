@@ -191,9 +191,9 @@ class FocusPeopleViewController: WDBaseViewController {
             guard let self = self else { return }
             let selectedDataids = companyView.selectedDataIds
             if selectedDataids.count > 0 {
-                ShowAlertManager.showAlert(title: "提示", message: "确认要取消关注吗? 取消后你仍可以随时再次关注.") {
-                    
-                }
+                ShowAlertManager.showAlert(title: "提示", message: "确认要取消关注吗? 取消后你仍可以随时再次关注.", confirmAction: {
+                    self.cancelFocusInfo(from: selectedDataids)
+                })
             }else {
                 ToastViewConfig.showToast(message: "请先选择需要取消关注的对象!")
             }
@@ -203,9 +203,9 @@ class FocusPeopleViewController: WDBaseViewController {
             guard let self = self else { return }
             let selectedDataids = companyView.selectedDataIds
             if selectedDataids.count > 0 {
-                ShowAlertManager.showAlert(title: "提示", message: "确认要移动分组吗?") {
-                    
-                }
+                ShowAlertManager.showAlert(title: "提示", message: "确认要移动分组吗?", confirmAction: {
+                    self.movePopFocus(from: selectedDataids)
+                })
             }else {
                 ToastViewConfig.showToast(message: "请先选择需要移动的对象!")
             }
@@ -220,7 +220,7 @@ extension FocusPeopleViewController {
     //获取所有分组
     func getAllGroup() {
         let man = RequestManager()
-        let dict = ["followTargetType": "1"]
+        let dict = ["followTargetType": "2"]
         man.requestAPI(params: dict, pageUrl: "/operation/followGroup/list", method: .get) { result in
             switch result {
             case .success(let success):
@@ -325,6 +325,59 @@ extension FocusPeopleViewController: UITableViewDelegate {
         let dict = ["groupName": self.cmmView.tf.text ?? "".removingEmojis,
                     "followTargetType": "2"]
         man.requestAPI(params: dict, pageUrl: "/operation/followGroup", method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.dismiss(animated: true, completion: {
+                        self?.getFocusPeopleList()
+                    })
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //取消关注
+    func cancelFocusInfo(from dataIds: [String]) {
+        let man = RequestManager()
+        let dict = ["ids": dataIds, "followTargetType": "2"] as [String : Any]
+        man.requestAPI(params: dict, pageUrl: "/operation/follow/batchCancel", method: .post) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self.getFocusPeopleList()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //弹窗
+    func movePopFocus(from ids: [String]) {
+        let groupView = FocusCompanyPopGroupView(frame: self.view.bounds)
+        if let model = self.groupModel.value {
+            groupView.model.accept(model.data ?? [])
+        }
+        let alertVc = TYAlertController(alert: groupView, preferredStyle: .alert)!
+        self.present(alertVc, animated: true)
+        groupView.cblock = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+        groupView.sblock = { [weak self] model in
+            self?.moveFocusInfo(from: model, ids: ids)
+        }
+    }
+    
+    
+    //接口调用
+    func moveFocusInfo(from model: rowsModel, ids: [String]) {
+        let man = RequestManager()
+        let dict = ["groupNumber": model.groupnumber ?? "", "ids": ids, "followTargetType": "2"] as [String : Any]
+        man.requestAPI(params: dict, pageUrl: "/operation/follow/moveGroup", method: .post) { [weak self] result in
             switch result {
             case .success(let success):
                 if success.code == 200 {
