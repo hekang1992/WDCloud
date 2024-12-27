@@ -70,6 +70,7 @@
 		73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */; };
 		73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */; };
 		73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */; };
+		73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA12D1E973200D93691 /* MembershipListViewController.swift */; };
 		73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752312D18F44F00C47187 /* FocusPeopleViewController.swift */; };
 		73C752362D19451400C47187 /* FocusCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752352D19451400C47187 /* FocusCompanyView.swift */; };
 		73C752482D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752472D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift */; };
@@ -185,6 +186,7 @@
 		73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerViewController.swift; sourceTree = "<group>"; };
 		73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPasswordViewController.swift; sourceTree = "<group>"; };
 		73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAuthorityViewController.swift; sourceTree = "<group>"; };
+		73BDABA12D1E973200D93691 /* MembershipListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListViewController.swift; sourceTree = "<group>"; };
 		73C752312D18F44F00C47187 /* FocusPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusPeopleViewController.swift; sourceTree = "<group>"; };
 		73C752352D19451400C47187 /* FocusCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyView.swift; sourceTree = "<group>"; };
 		73C752472D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyViewNormalCell.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 				7374162A2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift */,
 				73C752532D1E4B5800C47187 /* HistoryListViewController.swift */,
 				737416352D0EC37400E6CD23 /* MembershipCenterViewController.swift */,
+				73BDABA12D1E973200D93691 /* MembershipListViewController.swift */,
 			);
 			path = OnePart;
 			sourceTree = "<group>";
@@ -712,6 +715,7 @@
 				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
 				73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */,
 				7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */,
+				73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */,
 				7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */,
 				7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */,
 				7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */,

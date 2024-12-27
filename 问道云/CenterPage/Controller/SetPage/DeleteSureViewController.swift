@@ -88,7 +88,7 @@ class DeleteSureViewController: WDBaseViewController {
     
     lazy var numLabel: UILabel = {
         let numLabel = UILabel()
-        numLabel.text = UserDefaults.standard.object(forKey: WDY_PHONE) as? String ?? ""
+        numLabel.text = GetPhoneNumberManager.getPhoneNum()
         numLabel.textColor = .init(cssStr: "#333333")
         numLabel.textAlignment = .left
         numLabel.font = .mediumFontOfSize(size: 14)

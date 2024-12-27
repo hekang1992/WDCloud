@@ -40,7 +40,7 @@ class UserCenterView: BaseView {
         phoneLabel.textColor = .white
         phoneLabel.textAlignment = .left
         if IS_LOGIN {
-            let phone = UserDefaults.standard.object(forKey: WDY_PHONE) as? String ?? ""
+            let phone = GetPhoneNumberManager.getPhoneNum()
             phoneLabel.text = PhoneNumberFormatter.formatPhoneNumber(phoneNumber: phone)
         }else {
             phoneLabel.text = "暂未登录,请登录!"

@@ -113,8 +113,10 @@ class WDCenterViewController: WDBaseViewController {
         }).disposed(by: disposeBag)
         
         self.centerView.ctImageView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            guard let self = self, let model = model else { return }
             let menVc = MembershipCenterViewController()
-            self?.navigationController?.pushViewController(menVc, animated: true)
+            menVc.vipTypeModel.accept(model)
+            self.navigationController?.pushViewController(menVc, animated: true)
         }).disposed(by: disposeBag)
         
 //

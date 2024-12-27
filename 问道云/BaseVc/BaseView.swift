@@ -38,7 +38,7 @@ class HeadView: UIView {
         let titlelabel = UILabel()
         titlelabel.textColor = .init(cssStr: "#333333")
         titlelabel.textAlignment = .center
-        titlelabel.font = .mediumFontOfSize(size: 17)
+        titlelabel.font = .mediumFontOfSize(size: 18)
         return titlelabel
     }()
     

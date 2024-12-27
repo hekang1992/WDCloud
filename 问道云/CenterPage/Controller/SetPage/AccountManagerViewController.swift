@@ -31,7 +31,7 @@ class AccountManagerViewController: WDBaseViewController {
     
     lazy var threeSettingView: SettingListView = {
         let threeSettingView = SettingListView(frame: .zero, type: .text)
-        let phone = UserDefaults.standard.object(forKey: WDY_PHONE) as? String ?? ""
+        let phone = GetPhoneNumberManager.getPhoneNum()
         threeSettingView.rightlabel.text = phone
         threeSettingView.namelabel.text = "我的手机号"
         threeSettingView.namelabel.font = .mediumFontOfSize(size: 14)

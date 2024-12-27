@@ -442,7 +442,7 @@ class LLemptyView: UIView {
         addSubview(bgImageView)
         addSubview(mlabel)
         bgView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(32)
+            make.top.equalToSuperview().offset(1)
             make.bottom.left.right.equalToSuperview()
         }
         bgImageView.snp.makeConstraints { make in
@@ -727,3 +727,11 @@ class TypeColorConfig {
     }
 }
 
+//获取手机号码
+class GetPhoneNumberManager {
+    
+    static func getPhoneNum() -> String {
+        return UserDefaults.standard.object(forKey: WDY_PHONE) as? String ?? ""
+    }
+    
+}

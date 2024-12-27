@@ -25,7 +25,7 @@ class SettingPasswordViewController: WDBaseViewController {
         phonelabel.textColor = UIColor.init(cssStr: "#333333")
         phonelabel.textAlignment = .left
         phonelabel.font = .mediumFontOfSize(size: 14)
-        let phone = UserDefaults.standard.object(forKey: WDY_PHONE) as? String ?? ""
+        let phone = GetPhoneNumberManager.getPhoneNum()
         phonelabel.text = phone
         return phonelabel
     }()

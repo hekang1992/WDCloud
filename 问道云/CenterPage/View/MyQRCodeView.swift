@@ -16,7 +16,7 @@ class MyQRCodeView: BaseView {
     
     lazy var telLabel: UILabel = {
         let telLabel = UILabel()
-        let phone = UserDefaults.standard.object(forKey: WDY_PHONE) as? String ?? ""
+        let phone = GetPhoneNumberManager.getPhoneNum()
         telLabel.text = PhoneNumberFormatter.formatPhoneNumber(phoneNumber: phone)
         telLabel.textColor = .black
         telLabel.font = .mediumFontOfSize(size: 18)
