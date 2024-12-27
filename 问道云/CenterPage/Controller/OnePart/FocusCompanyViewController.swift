@@ -12,6 +12,7 @@ import TYAlertController
 
 class FocusCompanyViewController: WDBaseViewController {
     
+    var dataModel = BehaviorRelay<DataModel?>(value: nil)
     var groupModel = BehaviorRelay<DataModel?>(value: nil)
     var regionModel = BehaviorRelay<DataModel?>(value: nil)
     var industryModel = BehaviorRelay<DataModel?>(value: nil)
@@ -291,6 +292,7 @@ extension FocusCompanyViewController {
                     self.companyView.numLabel.text = String(model.total ?? 0)
                     if model.total != 0 {
                         self.companyView.dataModel.accept(model)
+                        self.dataModel.accept(model)
                         self.companyView.tableView.reloadData()
                         self.emptyView.removeFromSuperview()
                     }else {
@@ -360,8 +362,8 @@ extension FocusCompanyViewController: UITableViewDelegate {
     
     func movePopFocus(from ids: [String]) {
         let groupView = FocusCompanyPopGroupView(frame: self.view.bounds)
-        if let model = self.groupModel.value {
-            groupView.model.accept(model.data ?? [])
+        if let model = self.dataModel.value {
+            groupView.model.accept(model.rows ?? [])
         }
         let alertVc = TYAlertController(alert: groupView, preferredStyle: .alert)!
         self.present(alertVc, animated: true)
