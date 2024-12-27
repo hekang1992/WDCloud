@@ -48,3 +48,8 @@ let invoiceriseit_deleteinvoicerise = "/operation/invoiceriseit/deleteinvoiceris
  个人中心 浏览历史
  */
 let browsing_History = "/operation/clientbrowsecb/selectBrowserecord"
+
+/**
+ 套餐列表
+ */
+let getCombo_selectmember = "/operation/combo/selectmember"

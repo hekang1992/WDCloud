@@ -447,7 +447,7 @@ class LLemptyView: UIView {
         }
         bgImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(230)
+            make.top.equalToSuperview().offset(220)
             make.size.equalTo(CGSize(width: 163, height: 163))
         }
         mlabel.snp.makeConstraints { make in

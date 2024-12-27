@@ -11,6 +11,8 @@ import JXSegmentedView
 
 class MembershipCenterViewController: WDBaseViewController {
     
+    var model = BehaviorRelay<DataModel?>(value: nil)
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "会员中心"
@@ -30,10 +32,10 @@ class MembershipCenterViewController: WDBaseViewController {
     private lazy var cocsciew: UIScrollView = createCocsciew()
     private var segmurce: JXSegmentedTitleDataSource!
     private var listVCArray = [MembershipListViewController]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(memView)
         memView.snp.makeConstraints { make in
@@ -49,6 +51,8 @@ class MembershipCenterViewController: WDBaseViewController {
         addsentMentView()
         //添加子控制器
         setupViewControllers()
+        //获取套餐信息
+        getPriceInfo()
     }
     
 }
@@ -57,27 +61,47 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
     
     //代理方法
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        let targetVc = listVCArray[index]
+        model.asObservable().subscribe(onNext: { model in
+            guard let model = model, let rows = model.rows, !rows.isEmpty else { return  }
+            targetVc.getPriceModelInfo(from: index, model: model)
+        }).disposed(by: disposeBag)
         if index == 0 {
-            self.memView.ctImageView.image = UIImage(named: "huibgimage")
+            UIView.transition(with: self.memView.ctImageView,
+                              duration: 0.5,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                self.memView.ctImageView.image = UIImage(named: "huibgimage")
+            }, completion: nil)
             self.memView.bgImageView.image = UIImage(named: "vipjuxingimage")
             self.memView.desclabel.textColor = UIColor.init(cssStr: "#999999")
             self.headView.titlelabel.textColor = .init(cssStr: "#333333")
             self.headView.backBtn.setImage(UIImage(named: "backimage"), for: .normal)
             self.headView.oneBtn.setImage(UIImage(named: "wodediingdan"), for: .normal)
         }else if index == 1 {
-            self.memView.ctImageView.image = UIImage(named: "svipimagebg")
-            self.memView.bgImageView.image = UIImage(named: "vipjuxingimage")
+            UIView.transition(with: self.memView.ctImageView,
+                              duration: 0.5,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                self.memView.ctImageView.image = UIImage(named: "svipimagebg")
+            }, completion: nil)
+            self.memView.bgImageView.image = UIImage(named: "ssvihuipimage")
             self.memView.desclabel.textColor = UIColor.init(cssStr: "#999999")
             self.headView.titlelabel.textColor = .init(cssStr: "#333333")
             self.headView.backBtn.setImage(UIImage(named: "backimage"), for: .normal)
             self.headView.oneBtn.setImage(UIImage(named: "wodediingdan"), for: .normal)
         }else {
-            self.memView.ctImageView.image = UIImage(named: "blackimagevip")
+            UIView.transition(with: self.memView.ctImageView,
+                              duration: 0.5,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                self.memView.ctImageView.image = UIImage(named: "blackimagevip")
+            }, completion: nil)
             self.memView.bgImageView.image = UIImage(named: "jinseimagevip")
             self.memView.desclabel.textColor = UIColor.init(cssStr: "#3F1C00")
             self.headView.titlelabel.textColor = .white
             self.headView.backBtn.setImage(UIImage(named: "whitebackimge"), for: .normal)
-            self.headView.oneBtn.setImage(UIImage(named: ""), for: .normal)
+            self.headView.oneBtn.setImage(UIImage(named: "whiteorderimge"), for: .normal)
         }
     }
     
@@ -106,6 +130,8 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 3, height: 0)
+        scrollView.bounces = false
+        scrollView.alwaysBounceHorizontal = false
         return scrollView
     }
     
@@ -145,6 +171,27 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
     private func updateViewControllersLayout() {
         for (index, vc) in listVCArray.enumerated() {
             vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44 - 76)
+        }
+    }
+    
+}
+
+extension MembershipCenterViewController {
+    
+    //获取套餐信息
+    func getPriceInfo() {
+        let man = RequestManager()
+        let emptyDict = [String: Any]()
+        man.requestAPI(params: emptyDict, pageUrl: getCombo_selectmember, method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    self?.model.accept(model)
+                }
+                break
+            case .failure(_):
+                break
+            }
         }
     }
     

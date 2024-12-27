@@ -7,24 +7,34 @@
 
 import UIKit
 
-class MembershipListViewController: UIViewController {
+class MembershipListViewController: WDBaseViewController {
+    
+    lazy var listView: MembershipListView = {
+        let listView = MembershipListView()
+        return listView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.backgroundColor = .random()
+        view.addSubview(listView)
+        listView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+
+}
+
+extension MembershipListViewController {
+    
+    //获取套餐信息
+    func getPriceModelInfo(from index: Int, model: DataModel) {
+        if index == 2 {
+            self.addNodataView(from: view)
+        }
+        ToastViewConfig.showToast(message: model.rows?[index].combotypename ?? "")
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
