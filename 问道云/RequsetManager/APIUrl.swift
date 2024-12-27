@@ -43,3 +43,8 @@ let invoiceriseit_selecinvoicerise = "/operation/invoiceriseit/selecinvoicerise"
 let operation_invoiceriseit = "/operation/invoiceriseit/add"//添加
 let invoiceriseit_updateinvoicerise = "/operation/invoiceriseit/updateinvoicerise"//修改
 let invoiceriseit_deleteinvoicerise = "/operation/invoiceriseit/deleteinvoicerise"//删除
+
+/**
+ 个人中心 浏览历史
+ */
+let browsing_History = "/operation/clientbrowsecb/selectBrowserecord"

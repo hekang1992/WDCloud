@@ -81,7 +81,6 @@ class rowsModel {
     var comboname: String?
     var orderstate: String?// 订单状态，0待支付 1已支付 2已失效 3已退款
     var ordernumber: String?
-    var ordertime: String?
     var payway: String?
     var pirce: Double?
     var combotypename: String?//name
@@ -90,7 +89,6 @@ class rowsModel {
     var code: String?
     var value: String?
     var firmname: String?
-    var createtime: String?//创建时间
     var filepathH5: String?//h5链接
     var downloadfilename: String?//名称
     var dataid: String?//id号
@@ -111,6 +109,8 @@ class rowsModel {
     var contact: String?
     var invoicecontent: String?
     var createTime: String?
+    var createtime: String?
+    var ordertime: String?
     var invoiceamount: String?
     var invoicetype: String?//发票类型
     var isChecked: Bool = false//记录cell是否被点击啦..
@@ -124,7 +124,12 @@ class rowsModel {
     var groupname: String?
     var groupnumber: String?
     var customerFollowList: [customerFollowListModel]?
+    var createhourtime: String?
+    var personname: String?
     init(json: JSON) {
+        self.personname = json["personname"].stringValue
+        self.createhourtime = json["createhourtime"].stringValue
+        self.createtime = json["createtime"].stringValue
         self.follow = json["follow"].boolValue
         self.customerFollowList = json["customerFollowList"].arrayValue.map { customerFollowListModel(json: $0) }
         self.groupname = json["groupname"].stringValue

@@ -98,6 +98,8 @@ class SearchFocusCell: BaseViewCell {
 
 class FocusSearchViewController: WDBaseViewController {
     
+    var keyWords: String = ""
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .none)
         headView.titlelabel.text = "添加关注"
@@ -204,13 +206,22 @@ class FocusSearchViewController: WDBaseViewController {
             .distinctUntilChanged()
             .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] keywords in
-                self?.searchInfo(form: keywords)
+                self?.keyWords = keywords
+                self?.searchInfo()
         }).disposed(by: disposeBag)
         
         modelArray.compactMap { $0 }.asObservable().bind(to: tableView.rx.items(cellIdentifier: "SearchFocusCell", cellType: SearchFocusCell.self)) { row, model, cell in
             cell.model.accept(model)
             cell.selectionStyle = .none
             cell.backgroundColor = .white
+            let follow = model.follow ?? false
+            cell.block = { [weak self] model, btn in
+                if follow {
+                    self?.deleteFocusInfo(from: btn, model: model)
+                }else {
+                    self?.addFocusInfo(from: btn, model: model)
+                }
+            }
         }.disposed(by: disposeBag)
         
         self.addNodataView(from: coverView)
@@ -221,8 +232,8 @@ class FocusSearchViewController: WDBaseViewController {
 
 extension FocusSearchViewController {
     
-    private func searchInfo(form keywords: String) {
-        let dict = ["keywords": keywords]
+    private func searchInfo() {
+        let dict = ["keywords": self.keyWords]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/operation/follow/searchEntity", method: .get) { [weak self] result in
             switch result {
@@ -241,6 +252,31 @@ extension FocusSearchViewController {
                 break
             }
         }
+    }
+    
+    //添加关注
+    func addFocusInfo(from btn: UIButton, model: rowsModel) {
+        let man = RequestManager()
+        let dict = ["entityId": model.entityId ?? "",
+                    "followTargetType": "1"]
+        man.requestAPI(params: dict, pageUrl: "/operation/follow/save", method: .post) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
+                model.follow = true
+                btn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+//                self.searchInfo()
+                ToastViewConfig.showToast(message: "关注成功")
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //取消关注
+    func deleteFocusInfo(from btn: UIButton, model: rowsModel) {
+        ToastViewConfig.showToast(message: "暂不支持!")
     }
     
 }

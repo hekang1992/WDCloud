@@ -28,7 +28,7 @@ class BrowsingHistoryViewController: WDBaseViewController {
     private lazy var segmentedView: JXSegmentedView = createSegmentedView()
     private lazy var cocsciew: UIScrollView = createCocsciew()
     private var segmurce: JXSegmentedTitleDataSource!
-    private var listVCArray = [RiskListViewController]()
+    private var listVCArray = [HistoryListViewController]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,17 +61,14 @@ extension BrowsingHistoryViewController: JXSegmentedViewDelegate {
             make.top.equalTo(headView.snp.bottom).offset(12)
             make.height.equalTo(32)
         }
-        cocsciew.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(segmentedView.snp.bottom)
-        }
+        cocsciew.frame = CGRectMake(0, StatusHeightManager.navigationBarHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44)
     }
     
     func setupViewControllers() {
         listVCArray.forEach { $0.view.removeFromSuperview() }
         listVCArray.removeAll()
         for _ in 0..<4 {
-            let vc = RiskListViewController()
+            let vc = HistoryListViewController()
             cocsciew.addSubview(vc.view)
             listVCArray.append(vc)
         }
@@ -82,12 +79,24 @@ extension BrowsingHistoryViewController: JXSegmentedViewDelegate {
     
     private func updateViewControllersLayout() {
         for (index, vc) in listVCArray.enumerated() {
-            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - segmentedView.frame.maxY)
+            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44)
         }
     }
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
-        
+        if index == 0 {
+            let oneVc = self.listVCArray[0] 
+            oneVc.getHistroyListInfo(from: "", pageNum: 1)
+        }else if index == 1 {
+            let twoVc = self.listVCArray[1]
+            twoVc.getHistroyListInfo(from: "1", pageNum: 1)
+        }else if index == 2 {
+            let threeVc = self.listVCArray[2]
+            threeVc.getHistroyListInfo(from: "2", pageNum: 1)
+        }else {
+            let fourVc = self.listVCArray[3]
+            fourVc.getHistroyListInfo(from: "3", pageNum: 1)
+        }
     }
     
     private func createSegmentedView() -> JXSegmentedView {
