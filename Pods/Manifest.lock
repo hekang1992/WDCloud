@@ -30,6 +30,9 @@ PODS:
   - DeviceKit (5.2.3)
   - Differentiator (5.0.0)
   - DropMenuBar (1.0.4)
+  - DYFStore (2.2.0):
+    - DYFSwiftRuntimeProvider
+  - DYFSwiftRuntimeProvider (2.1.1)
   - IQKeyboardManagerSwift (6.5.16)
   - JXSegmentedView (1.4.1)
   - Kingfisher (7.11.0)
@@ -64,6 +67,7 @@ DEPENDENCIES:
   - BRPickerView (~> 2.9.1)
   - DeviceKit (~> 5.2.2)
   - DropMenuBar (~> 1.0.4)
+  - DYFStore (~> 2.2.0)
   - IQKeyboardManagerSwift (~> 6.5.16)
   - JXSegmentedView (~> 1.4.1)
   - Kingfisher (~> 7.11.0)
@@ -89,6 +93,8 @@ SPEC REPOS:
     - DeviceKit
     - Differentiator
     - DropMenuBar
+    - DYFStore
+    - DYFSwiftRuntimeProvider
     - IQKeyboardManagerSwift
     - JXSegmentedView
     - Kingfisher
@@ -114,6 +120,8 @@ SPEC CHECKSUMS:
   DeviceKit: 4504e64df8f8ad1c42aae68f30ece5b51d56022a
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   DropMenuBar: cc34985e8a5b5796209bf4fe57cc1cd589b68efc
+  DYFStore: 1036053c5d4c92b97e8fefd64bf36a9b0a49cd0c
+  DYFSwiftRuntimeProvider: f90dcb2b8c97ff6b5185cc423daf178c7fbcf251
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
   JXSegmentedView: cd73555ce2134d1656db2cb383ba9c2f36fb5078
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
@@ -132,6 +140,6 @@ SPEC CHECKSUMS:
   TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
   WechatOpenSDK: 290989072e87b79d52225a01bb4e5e58f6f88593
 
-PODFILE CHECKSUM: 03359ddab3b030403ffa25bf35a09b81475e074f
+PODFILE CHECKSUM: 2ea3e018bf216927641d80025f2c15fb70ee341f
 
 COCOAPODS: 1.16.2

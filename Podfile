@@ -46,4 +46,6 @@ target '问道云' do
 
   pod 'WechatOpenSDK', '~> 2.0.4'
   
+  pod 'DYFStore', '~> 2.2.0'
+  
 end

@@ -687,6 +687,11 @@ class GetSaveLoginInfoConfig {
         return customernumber
     }
     
+    static func getPhoneNumber() -> String {
+        let phoneNum = UserDefaults.standard.object(forKey: WDY_PHONE) as? String ?? ""
+        return phoneNum
+    }
+    
 }
 
 class PaddedLabel: UILabel {
@@ -729,9 +734,102 @@ class TypeColorConfig {
 
 //获取手机号码
 class GetPhoneNumberManager {
-    
     static func getPhoneNum() -> String {
         return UserDefaults.standard.object(forKey: WDY_PHONE) as? String ?? ""
     }
-    
 }
+
+//获取支付ID
+class GetStoreIDManager {
+    static func storeID(with comboNumber: Any) -> String {
+        return "ald.goods.\(comboNumber)"
+    }
+}
+
+//数字滚动动画
+class NumberAnimator {
+    static func animateNumber(on label: UILabel, from startValue: Int, to endValue: Int, duration: TimeInterval) {
+        let animationDuration = duration
+        let stepCount = 100
+        let stepDuration = animationDuration / Double(stepCount)
+        DispatchQueue.global(qos: .userInteractive).async {
+            for step in 0...stepCount {
+                let progress = Double(step) / Double(stepCount)
+                let newValue = Int(Double(startValue) + progress * Double(endValue - startValue))
+                
+                DispatchQueue.main.async {
+                    label.text = "\(newValue)"
+                }
+                Thread.sleep(forTimeInterval: stepDuration)
+            }
+        }
+    }
+}
+
+//倒计时30分钟
+class CountdownTimer {
+    
+    typealias CountdownUpdate = (String) -> Void
+    // 定义倒计时完成后的回调
+    typealias CountdownCompletion = () -> Void
+    
+    private var timer: Timer?
+    private var remainingTime: Int
+    
+    // 初始化方法
+    init(startTime: String, durationInMinutes: Int) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        guard let startDate = dateFormatter.date(from: startTime) else {
+            fatalError("无效的起始时间格式")
+        }
+        
+        let targetDate = startDate.addingTimeInterval(TimeInterval(durationInMinutes * 60))
+        let currentTime = Date()
+        self.remainingTime = Int(targetDate.timeIntervalSince(currentTime))
+    }
+    
+    // 开始倒计时
+    func startCountdown(update: @escaping CountdownUpdate, completion: @escaping CountdownCompletion) {
+        // 如果倒计时已经结束，不启动定时器
+        if remainingTime <= 0 {
+            update("00:00") // 倒计时已结束
+            completion()
+            return
+        }
+        
+        // 启动每秒触发的定时器
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {  timer in
+//            guard let self = self else { return }
+            
+            // 更新剩余时间
+            self.remainingTime -= 1
+            
+            // 计算分钟和秒数
+            let minutes = self.remainingTime / 60
+            let seconds = self.remainingTime % 60
+            
+            // 格式化为 "mm:ss" 格式
+            let timeString = String(format: "00:%02d:%02d", minutes, seconds)
+            
+            // 每秒更新一次显示
+            update(timeString)
+            
+            // 如果倒计时结束，停止定时器并执行完成回调
+            if self.remainingTime <= 0 {
+                timer.invalidate()
+                update("00:00") // 倒计时结束时显示 00:00
+                completion() // 执行完成回调
+            }
+        }
+    }
+    
+    // 停止倒计时
+    func stopCountdown() {
+        timer?.invalidate()
+        timer = nil
+    }
+}
+
+

@@ -11,6 +11,8 @@ import RxDataSources
 
 class UserAllOrderView: BaseView {
     
+    var block: ((rowsModel) -> Void)?
+    
     var modelArray = BehaviorRelay<[rowsModel]>(value: [])
 
     lazy var tableView: UITableView = {
@@ -48,6 +50,9 @@ class UserAllOrderView: BaseView {
             cell.model.accept(model)
             cell.backgroundColor = UIColor.init(cssStr: "#F3F3F3")
             cell.selectionStyle = .none
+            cell.block = { [weak self] model in
+                self?.block?(model)
+            }
         }.disposed(by: disposeBag)
         
         tableView.rx.setDelegate(self).disposed(by: disposeBag)

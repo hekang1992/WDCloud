@@ -41,7 +41,9 @@ class DataModel {
     var isDistributor: String?//是否是分销商
     var rows: [rowsModel]?
     var data: [rowsModel]?
+    var ordernumber: String?
     init(json: JSON) {
+        self.ordernumber = json["ordernumber"].stringValue
         self.isDistributor = json["isDistributor"].stringValue
         self.access_token = json["access_token"].stringValue
         self.customernumber = json["customernumber"].stringValue
@@ -126,7 +128,15 @@ class rowsModel {
     var customerFollowList: [customerFollowListModel]?
     var createhourtime: String?
     var personname: String?
+    var sellprice: Double?
+    var minconsumption: String?
+    var combonumber: Int?
+    var serviceComboList: [serviceComboListModel]?
     init(json: JSON) {
+        self.combonumber = json["combonumber"].intValue
+        self.serviceComboList = json["serviceComboList"].arrayValue.map { serviceComboListModel(json: $0) }
+        self.minconsumption = json["minconsumption"].stringValue
+        self.sellprice = json["sellprice"].doubleValue
         self.personname = json["personname"].stringValue
         self.createhourtime = json["createhourtime"].stringValue
         self.createtime = json["createtime"].stringValue
@@ -180,7 +190,7 @@ class rowsModel {
 }
 
 class customerFollowListModel {
-    var followtargetname : String?
+    var followtargetname: String?
     var createTime: String?
     var entityid: String?
     var dataid: String?
@@ -193,5 +203,24 @@ class customerFollowListModel {
         self.dataid = json["dataid"].stringValue
         self.firmnamestate = json["firmnamestate"].stringValue
         self.logo = json["logo"].stringValue
+    }
+}
+
+class serviceComboListModel {
+    var comboname: String?
+    var combonumber: Int?//苹果支付产品ID
+    var combotypename: String?
+    var minconsumption: String?
+    var price: Double?
+    var sellprice: Double?
+    var privilegedpic: String?//图片地址
+    init(json: JSON) {
+        self.comboname = json["comboname"].stringValue
+        self.combonumber = json["combonumber"].intValue
+        self.combotypename = json["combotypename"].stringValue
+        self.minconsumption = json["minconsumption"].stringValue
+        self.price = json["price"].doubleValue
+        self.sellprice = json["sellprice"].doubleValue
+        self.privilegedpic = json["privilegedpic"].stringValue
     }
 }

@@ -24,14 +24,14 @@ class WDBaseViewController: UIViewController {
         let noNetView = NoNetView()
         return noNetView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.init(cssStr: "#F4F6FC")
     }
-
+    
 }
 
 
@@ -231,3 +231,55 @@ extension WDBaseViewController {
     
 }
 
+
+extension WDBaseViewController {
+    
+    //购买会员
+    func payMemberInfo(from combonumber: String, complete: (() -> Void)? = nil) {
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let phonenumber = GetSaveLoginInfoConfig.getPhoneNumber()
+        let man = RequestManager()
+        let dict = ["customernumber": customernumber,
+                    "combonumber": combonumber,
+                    "phonenumber": phonenumber,
+                    "ordertype": 1,
+                    "usertype": 1,
+                    "accountcount": 1,
+                    "quantity": 1] as [String : Any]
+        man.requestAPI(params: dict, pageUrl: "/operation/customerorder/addorder", method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    //唤醒苹果支付
+                    let combonumber = String(success.data?.combonumber ?? 0)
+                    let orderNumberID = success.data?.ordernumber ?? ""
+                    self?.toApplePay(form: combonumber, orderNumberID: orderNumberID)
+                }else {
+                    ToastViewConfig.showToast(message: success.msg ?? "")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //支付
+    func toApplePay(form combonumber: String, orderNumberID: String, complete: (() -> Void)? = nil) {
+        ApplePayConfig.buy(with: GetStoreIDManager.storeID(with: combonumber)) {
+            self.paySuccess(from: orderNumberID) {
+                complete?()
+            }
+        }
+    }
+    
+    //支付成功回调
+    private func paySuccess(from orderNumberID: String, complete: (() -> Void)? = nil) {
+        let man = RequestManager()
+        let dict = ["ordernumber": orderNumberID, "payway": "3"]
+        man.requestAPI(params: dict, pageUrl: "/operation/customerorder/callback", method: .post) { result in
+            complete?()
+        }
+    }
+    
+}

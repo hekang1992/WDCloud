@@ -94,6 +94,16 @@ class UserAllOrderSController: WDBaseViewController {
             make.left.right.top.equalToSuperview()
             make.height.equalTo(41.5)
         }
+        
+        //苹果支付,刷新订单列表数据
+        orderView.block = { [weak self] model in
+            guard let self = self else { return }
+            let storeID = String(model.combonumber ?? 0)
+            self.toApplePay(form: storeID, orderNumberID: model.ordernumber ?? "") {
+                self.getOrderInfo(form: self.combotypenumber, pageNum: 1, orderstate: self.orderstate)
+            }
+        }
+        
     }
 
 }

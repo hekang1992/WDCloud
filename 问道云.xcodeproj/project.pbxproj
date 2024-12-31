@@ -46,6 +46,13 @@
 		7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */; };
 		73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73460D102D150DD400EC9408 /* DeleteAccountViewController.swift */; };
 		73460D132D15162500EC9408 /* DeleteSureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73460D122D15162500EC9408 /* DeleteSureViewController.swift */; };
+		736A40D92D223AEB0065FD9D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A40D82D223AEB0065FD9D /* StoreKit.framework */; };
+		736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */; };
+		736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97792D22A61E009CC0DF /* SKExtensions.swift */; };
+		736E97812D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E977B2D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift */; };
+		736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E977C2D22A61E009CC0DF /* SKLoadingView.swift */; };
+		736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E977A2D22A61E009CC0DF /* SKIAPManager.swift */; };
+		736E97852D22A7A0009CC0DF /* ApplePayConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97842D22A792009CC0DF /* ApplePayConfig.swift */; };
 		7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374162A2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift */; };
 		7374162D2D0EB87F00E6CD23 /* FocusAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374162C2D0EB87F00E6CD23 /* FocusAllViewController.swift */; };
 		7374162F2D0EB9E400E6CD23 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374162E2D0EB9E400E6CD23 /* HistoryView.swift */; };
@@ -163,6 +170,13 @@
 		73460D162D154CB900EC9408 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		73460D182D154CC100EC9408 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		73460D1A2D154CCB00EC9408 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		736A40D82D223AEB0065FD9D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYFStoreReceiptVerifier.swift; sourceTree = "<group>"; };
+		736E97792D22A61E009CC0DF /* SKExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKExtensions.swift; sourceTree = "<group>"; };
+		736E977A2D22A61E009CC0DF /* SKIAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKIAPManager.swift; sourceTree = "<group>"; };
+		736E977B2D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKIndefiniteAnimatedSpinner.swift; sourceTree = "<group>"; };
+		736E977C2D22A61E009CC0DF /* SKLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKLoadingView.swift; sourceTree = "<group>"; };
+		736E97842D22A792009CC0DF /* ApplePayConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayConfig.swift; sourceTree = "<group>"; };
 		7374162A2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsingHistoryViewController.swift; sourceTree = "<group>"; };
 		7374162C2D0EB87F00E6CD23 /* FocusAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusAllViewController.swift; sourceTree = "<group>"; };
 		7374162E2D0EB9E400E6CD23 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
@@ -224,6 +238,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				736A40D92D223AEB0065FD9D /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +354,7 @@
 				7325A7E32CFFF8EE0043C196 /* loading.json */,
 				7325A7C72CFEEF780043C196 /* Config.swift */,
 				7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */,
+				736E976F2D22A258009CC0DF /* ApplePay */,
 				7325A7E72D0008AF0043C196 /* OC */,
 			);
 			path = Config;
@@ -405,6 +421,19 @@
 				7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */,
 			);
 			path = OC;
+			sourceTree = "<group>";
+		};
+		736E976F2D22A258009CC0DF /* ApplePay */ = {
+			isa = PBXGroup;
+			children = (
+				736E97842D22A792009CC0DF /* ApplePayConfig.swift */,
+				736E97792D22A61E009CC0DF /* SKExtensions.swift */,
+				736E977A2D22A61E009CC0DF /* SKIAPManager.swift */,
+				736E977C2D22A61E009CC0DF /* SKLoadingView.swift */,
+				736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */,
+				736E977B2D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift */,
+			);
+			path = ApplePay;
 			sourceTree = "<group>";
 		};
 		737416302D0EBBCD00E6CD23 /* OnePart */ = {
@@ -546,6 +575,7 @@
 		C61455D1CEA19ADD364A1DEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				736A40D82D223AEB0065FD9D /* StoreKit.framework */,
 				73E306D42D1552FC00D18943 /* WechatOpenSDK-XCFramework.xcframework */,
 				73460D1A2D154CCB00EC9408 /* WebKit.framework */,
 				73460D182D154CC100EC9408 /* Security.framework */,
@@ -693,6 +723,11 @@
 				73C7524E2D1D5A3100C47187 /* FocusSearchViewController.swift in Sources */,
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
+				736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */,
+				736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */,
+				736E97812D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift in Sources */,
+				736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */,
+				736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */,
 				73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
 				737416482D0FD94B00E6CD23 /* AddInvoiceViewCell.swift in Sources */,
@@ -749,6 +784,7 @@
 				73C752362D19451400C47187 /* FocusCompanyView.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
+				736E97852D22A7A0009CC0DF /* ApplePayConfig.swift in Sources */,
 				73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */,
 				7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */,
 				73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */,

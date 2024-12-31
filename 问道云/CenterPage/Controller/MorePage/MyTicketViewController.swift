@@ -93,9 +93,11 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
         if index == 0 {
             let oneVc = self.listVCArray[0] as! OneTicketViewController
             oneVc.getListInfo()
+            oneVc.pageNum = 1
         }else {
             let twoVc = self.listVCArray[1] as! TwoTicketViewController
             twoVc.getListInfo()
+            twoVc.pageNum = 1
         }
     }
     

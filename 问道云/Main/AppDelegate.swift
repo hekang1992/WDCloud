@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import DYFStore
+import StoreKit
 import IQKeyboardManagerSwift
 
 @main
@@ -18,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         keyBordManager()
         rootVcPush()
         openWechat()
+        initIAPSDK()
         window = UIWindow()
         window?.frame = UIScreen.main.bounds
         window?.rootViewController = WDNavigationController(rootViewController: WDTabBarController())
@@ -75,6 +78,23 @@ extension AppDelegate: WXApiDelegate {
         let tabBarVc = WDTabBarController()
         tabBarVc.selectedIndex = 2
         window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
+    }
+    
+}
+
+//内购相关
+extension AppDelegate: DYFStoreAppStorePaymentDelegate {
+    
+    //
+    func didReceiveAppStorePurchaseRequest(_ queue: SKPaymentQueue, payment: SKPayment, forProduct product: SKProduct) {
+        
+    }
+    
+    func initIAPSDK() {
+        SKIAPManager.shared.addStoreObserver()
+        DYFStore.default.enableLog = true
+        DYFStore.default.addPaymentTransactionObserver()
+        DYFStore.default.delegate = self
     }
     
 }

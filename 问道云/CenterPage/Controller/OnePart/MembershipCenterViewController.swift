@@ -162,6 +162,12 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
             let vc = MembershipListViewController()
             cocsciew.addSubview(vc.view)
             listVCArray.append(vc)
+            vc.agreeView.descLabel.rx
+                .tapGesture()
+                .when(.recognized)
+                .subscribe(onNext: { [weak self] _ in
+                    self?.pushWebPage(from: membership_agreement)
+            }).disposed(by: disposeBag)
         }
         
         updateViewControllersLayout()

@@ -11,7 +11,11 @@ import RxSwift
 
 class OrderListViewCell: BaseViewCell {
     
+    var countdownTimer: CountdownTimer!
+    
     var model = BehaviorRelay<rowsModel?>(value: nil)
+    
+    var block: ((rowsModel) -> Void)?
 
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
@@ -107,6 +111,24 @@ class OrderListViewCell: BaseViewCell {
         return moneyLabel
     }()
     
+    lazy var syLabel: UILabel = {
+        let syLabel = UILabel()
+        syLabel.textAlignment = .left
+        syLabel.textColor = .init(cssStr: "#FF2D55")
+        syLabel.font = .semiboldFontOfSize(size: 12)
+        return syLabel
+    }()
+    
+    lazy var payBtn: UIButton = {
+        let payBtn = UIButton()
+        payBtn.layer.cornerRadius = 2
+        payBtn.titleLabel?.font = .semiboldFontOfSize(size: 12)
+        payBtn.setTitle("立即支付", for: .normal)
+        payBtn.setTitleColor(UIColor.white, for: .normal)
+        payBtn.backgroundColor = .init(cssStr: "#F55B5B")
+        return payBtn
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(bgView)
@@ -122,6 +144,10 @@ class OrderListViewCell: BaseViewCell {
         contentView.addSubview(timeLabel)
         contentView.addSubview(payLabel)
         contentView.addSubview(moneyLabel)
+        
+        contentView.addSubview(syLabel)
+        contentView.addSubview(payBtn)
+        
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.left.equalToSuperview().offset(10)
@@ -174,6 +200,17 @@ class OrderListViewCell: BaseViewCell {
             make.left.equalTo(descLabel4.snp.right).offset(9)
             make.height.equalTo(20)
         }
+        syLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(descLabel4.snp.centerY)
+            make.left.equalTo(moneyLabel.snp.right).offset(9)
+            make.height.equalTo(20)
+        }
+        payBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(descLabel4.snp.centerY)
+            make.right.equalToSuperview().offset(-10)
+            make.width.equalTo(74.5)
+            make.height.equalTo(24)
+        }
         bgView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
             make.bottom.equalToSuperview().offset(-6)
@@ -188,7 +225,10 @@ class OrderListViewCell: BaseViewCell {
             nameLabel.text = model.comboname ?? ""
             orderLabel.text = model.ordernumber ?? ""
             timeLabel.text = model.ordertime ?? ""
-            payLabel.text = model.payway ?? ""
+            let payway = model.payway ?? ""
+            if payway == "3" {
+                payLabel.text = "Apple支付"
+            }
             let price = String(format: "%.2f", model.pirce ?? 0.00)
             moneyLabel.text = "¥\(price)"
             let orderstate = model.orderstate ?? ""
@@ -201,6 +241,27 @@ class OrderListViewCell: BaseViewCell {
             }else {
                 ctImageView.image = UIImage(named: "cancelimage")
             }
+            if orderstate == "0" {
+                self.syLabel.isHidden = false
+                self.payBtn.isHidden = false
+                let countdown = CountdownTimer(startTime: model.ordertime ?? "", durationInMinutes: 30)
+                countdown.startCountdown(update: { remainingTime in
+                    self.syLabel.text = "剩余支付时间 \(remainingTime)"
+                }, completion: {
+                    self.syLabel.isHidden = true
+                    self.payBtn.isHidden = true
+                })
+            }else {
+                self.syLabel.isHidden = true
+                self.payBtn.isHidden = true
+            }
+        }).disposed(by: disposeBag)
+        
+        //立即支付
+        payBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self,
+            let model = model.value else { return }
+            self.block?(model)
         }).disposed(by: disposeBag)
         
     }
