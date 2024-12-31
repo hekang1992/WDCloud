@@ -33,18 +33,27 @@ class UserAllOrderView: BaseView {
         filterView.backgroundColor = .white
         return filterView
     }()
+    
+    lazy var whiteView: UIView = {
+        let whiteView = UIView()
+        return whiteView
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(tableView)
         addSubview(filterView)
-        tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(41.5)
-            make.left.right.bottom.equalToSuperview()
-        }
+        addSubview(whiteView)
+        whiteView.addSubview(tableView)
         filterView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(41.5)
+        }
+        whiteView.snp.makeConstraints { make in
+            make.top.equalTo(filterView.snp.bottom).offset(0.5)
+            make.left.right.bottom.equalToSuperview()
+        }
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         modelArray.asObservable().bind(to: tableView.rx.items(cellIdentifier: "OrderListViewCell", cellType: OrderListViewCell.self)) { row, model, cell in
             cell.model.accept(model)

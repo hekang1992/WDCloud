@@ -133,7 +133,7 @@ extension UserAllOrderSController {
                         self.emptyView.removeFromSuperview()
                         self.noNetView.removeFromSuperview()
                     }else {
-                        self.addNodataView(from: self.orderView)
+                        self.addNodataView(from: self.orderView.whiteView)
                     }
                     self.orderView.modelArray.accept(self.allArray)
                     if self.allArray.count != total {
@@ -142,12 +142,12 @@ extension UserAllOrderSController {
                         self.orderView.tableView.mj_footer?.isHidden = true
                     }
                 }else {
-                    self.addNodataView(from: self.orderView)
+                    self.addNodataView(from: self.orderView.whiteView)
                     self.orderView.tableView.mj_footer?.isHidden = true
                 }
                 break
             case .failure(_):
-                self.addNoNetView(from: self.orderView)
+                self.addNoNetView(from: self.orderView.whiteView)
                 self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
                     //获取订单状态
                     self?.getCombotype()

@@ -14,9 +14,9 @@ class WDCenterViewController: WDBaseViewController {
     
     var model: DataModel?
     
-    var modelArray1: [String] = ["发票抬头", "我要开票", "客服中心", "微信通知", "邀请好友", "分享好友", "加入分销", "联系我们", "意见反馈", "团体中心"]
+    let modelArray1: [String] = ["发票抬头", "我要开票", "客服中心", "微信通知", "邀请好友", "分享好友", "加入分销", "联系我们", "意见反馈", "团体中心"]
     
-    var modelArray2: [String] = ["发票抬头", "我要开票", "客服中心", "微信通知", "邀请好友", "分享好友", "加入分销", "联系我们", "意见反馈"]
+    let modelArray2: [String] = ["发票抬头", "我要开票", "客服中心", "微信通知", "邀请好友", "分享好友", "加入分销", "联系我们", "意见反馈"]
     
     lazy var centerView: UserCenterView = {
         let centerView = UserCenterView()
@@ -112,14 +112,38 @@ class WDCenterViewController: WDBaseViewController {
             }
         }).disposed(by: disposeBag)
         
+        //会员购买页面
         self.centerView.ctImageView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self, let model = model else { return }
-            let menVc = MembershipCenterViewController()
-            menVc.vipTypeModel.accept(model)
-            self.navigationController?.pushViewController(menVc, animated: true)
+            if IS_LOGIN {
+                let menVc = MembershipCenterViewController()
+                menVc.vipTypeModel.accept(model)
+                self.navigationController?.pushViewController(menVc, animated: true)
+            }else {
+                self.popLogin()
+            }
         }).disposed(by: disposeBag)
         
-//
+        //团购会员
+        self.centerView.tuangouBtn.rx.tap.subscribe(onNext: {
+            if IS_LOGIN {
+                ToastViewConfig.showToast(message: "敬请期待!")
+            }else {
+                self.popLogin()
+            }
+        }).disposed(by: disposeBag)
+
+        //赠送会员
+        self.centerView.zengsongBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = model else { return }
+            if IS_LOGIN {
+                let donateVc = DonateMembershipViewController()
+                donateVc.vipTypeModel.accept(model)
+                self.navigationController?.pushViewController(donateVc, animated: true)
+            }else {
+                self.popLogin()
+            }
+        }).disposed(by: disposeBag)
         
         //监控
         self.centerView.jiankongBtn.rx.tap.subscribe(onNext: {

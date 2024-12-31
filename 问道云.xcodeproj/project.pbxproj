@@ -38,6 +38,8 @@
 		7325A7EE2D0008D10043C196 /* WLUnitFieldTextPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7EB2D0008D10043C196 /* WLUnitFieldTextPosition.m */; };
 		7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */; };
 		7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E92D0008D10043C196 /* WLUnitField.m */; };
+		7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */; };
+		7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */; };
 		7335F6E62D0AD8620074985F /* MyDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6E52D0AD8620074985F /* MyDownloadViewController.swift */; };
 		7335F6EA2D0ADA050074985F /* MyDownloadSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6E92D0ADA050074985F /* MyDownloadSearchView.swift */; };
 		7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EB2D0ADA620074985F /* MyDownloadView.swift */; };
@@ -158,6 +160,8 @@
 		7325A7EC2D0008D10043C196 /* WLUnitFieldTextRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLUnitFieldTextRange.h; sourceTree = "<group>"; };
 		7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLUnitFieldTextRange.m; sourceTree = "<group>"; };
 		7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "问道云-Bridging-Header.h"; sourceTree = "<group>"; };
+		7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateMembershipViewController.swift; sourceTree = "<group>"; };
+		7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateMembershipView.swift; sourceTree = "<group>"; };
 		7335F6E52D0AD8620074985F /* MyDownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewController.swift; sourceTree = "<group>"; };
 		7335F6E92D0ADA050074985F /* MyDownloadSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadSearchView.swift; sourceTree = "<group>"; };
 		7335F6EB2D0ADA620074985F /* MyDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadView.swift; sourceTree = "<group>"; };
@@ -449,6 +453,7 @@
 				73C752532D1E4B5800C47187 /* HistoryListViewController.swift */,
 				737416352D0EC37400E6CD23 /* MembershipCenterViewController.swift */,
 				73BDABA12D1E973200D93691 /* MembershipListViewController.swift */,
+				7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */,
 			);
 			path = OnePart;
 			sourceTree = "<group>";
@@ -557,6 +562,7 @@
 				73C752552D1E4DA000C47187 /* HistoryListView.swift */,
 				73C752572D1E728500C47187 /* HistoryListViewCell.swift */,
 				73BDABA32D1EA73100D93691 /* MembershipListView.swift */,
+				7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -705,6 +711,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7325A7E62D0000040043C196 /* GetCodeViewController.swift in Sources */,
+				7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */,
 				7325A7D12CFEFBE60043C196 /* WDYModel.swift in Sources */,
 				7325A7EE2D0008D10043C196 /* WLUnitFieldTextPosition.m in Sources */,
 				7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */,
@@ -790,6 +797,7 @@
 				73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */,
 				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,
 				7374163A2D0ED72600E6CD23 /* WechatPushViewController.swift in Sources */,
+				7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */,
 				737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,
 				73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */,
