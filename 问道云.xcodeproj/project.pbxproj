@@ -40,6 +40,7 @@
 		7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E92D0008D10043C196 /* WLUnitField.m */; };
 		7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */; };
 		7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */; };
+		7330CB822D23E65900778D54 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB812D23E65900778D54 /* ContactManager.swift */; };
 		7335F6E62D0AD8620074985F /* MyDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6E52D0AD8620074985F /* MyDownloadViewController.swift */; };
 		7335F6EA2D0ADA050074985F /* MyDownloadSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6E92D0ADA050074985F /* MyDownloadSearchView.swift */; };
 		7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EB2D0ADA620074985F /* MyDownloadView.swift */; };
@@ -162,6 +163,7 @@
 		7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "问道云-Bridging-Header.h"; sourceTree = "<group>"; };
 		7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateMembershipViewController.swift; sourceTree = "<group>"; };
 		7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateMembershipView.swift; sourceTree = "<group>"; };
+		7330CB812D23E65900778D54 /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		7335F6E52D0AD8620074985F /* MyDownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewController.swift; sourceTree = "<group>"; };
 		7335F6E92D0ADA050074985F /* MyDownloadSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadSearchView.swift; sourceTree = "<group>"; };
 		7335F6EB2D0ADA620074985F /* MyDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadView.swift; sourceTree = "<group>"; };
@@ -355,11 +357,12 @@
 		7325A7AF2CFEE7D90043C196 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				7325A7E72D0008AF0043C196 /* OC */,
+				736E976F2D22A258009CC0DF /* ApplePay */,
 				7325A7E32CFFF8EE0043C196 /* loading.json */,
 				7325A7C72CFEEF780043C196 /* Config.swift */,
 				7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */,
-				736E976F2D22A258009CC0DF /* ApplePay */,
-				7325A7E72D0008AF0043C196 /* OC */,
+				7330CB812D23E65900778D54 /* ContactManager.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -782,6 +785,7 @@
 				737416342D0EBCB000E6CD23 /* ContactUsViewController.swift in Sources */,
 				73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */,
 				7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */,
+				7330CB822D23E65900778D54 /* ContactManager.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
 				73A21DF02D0C39BF00FC4C49 /* DiligenceListViewController.swift in Sources */,
 				73C7524C2D1D555400C47187 /* FocusCompanyPopGroupView.swift in Sources */,
@@ -825,6 +829,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "问道云";
+				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -867,6 +872,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "问道云";
+				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

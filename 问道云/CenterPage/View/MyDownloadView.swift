@@ -43,11 +43,17 @@ class MyDownloadView: BaseView {
         return tableView
     }()
     
+    lazy var whiteView: UIView = {
+        let whiteView = UIView()
+        return whiteView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(searchView)
         addSubview(filterView)
-        addSubview(tableView)
+        addSubview(whiteView)
+        whiteView.addSubview(tableView)
         searchView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(46)
@@ -57,9 +63,12 @@ class MyDownloadView: BaseView {
             make.top.equalTo(searchView.snp.bottom)
             make.height.equalTo(26)
         }
-        tableView.snp.makeConstraints { make in
+        whiteView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(filterView.snp.bottom)
+        }
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
         tableView.rx.setDelegate(self).disposed(by: disposeBag)

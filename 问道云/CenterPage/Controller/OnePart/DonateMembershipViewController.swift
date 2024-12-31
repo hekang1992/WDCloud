@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import ContactsUI
 import JXSegmentedView
 
 class DonateMembershipViewController: WDBaseViewController {
@@ -30,6 +31,12 @@ class DonateMembershipViewController: WDBaseViewController {
     private lazy var cocsciew: UIScrollView = createCocsciew()
     private var segmurce: JXSegmentedTitleDataSource!
     private var listVCArray = [MembershipListViewController]()
+    
+    lazy var contactPicker: CNContactPickerViewController = {
+        let contactPicker = CNContactPickerViewController()
+        contactPicker.delegate = self
+        return contactPicker
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +62,17 @@ class DonateMembershipViewController: WDBaseViewController {
         donateView.sendBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             donateView.sendBtn.isSelected.toggle()
+        }).disposed(by: disposeBag)
+        //获取联系人
+        donateView.contactBtn.rx.tap.subscribe(onNext: { [weak self] in
+            let manager = ContactManager()
+            manager.requestAccess { [weak self] granted, error in
+                guard let self = self else { return }
+                if granted {
+                    let contacts = manager.fetchContacts() ?? []
+                    self.present(contactPicker, animated: true, completion: nil)
+                }
+            }
         }).disposed(by: disposeBag)
     }
     
@@ -166,6 +184,23 @@ extension DonateMembershipViewController {
                 break
             }
         }
+    }
+    
+}
+
+extension DonateMembershipViewController: CNContactPickerDelegate {
+    
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+        let fullName = "\(contact.givenName) \(contact.familyName)"
+        if let phoneNumber = contact.phoneNumbers.first?.value.stringValue {
+            self.donateView.phoneTx.text = phoneNumber
+        } else {
+            print("error")
+        }
+    }
+    
+    func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
+        
     }
     
 }

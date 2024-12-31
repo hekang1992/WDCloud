@@ -35,7 +35,14 @@ class DonateMembershipView: BaseView {
     lazy var enterImageView: UIImageView = {
         let enterImageView = UIImageView()
         enterImageView.image = UIImage(named: "phoneenter")
+        enterImageView.isUserInteractionEnabled = true
         return enterImageView
+    }()
+    
+    //通讯录
+    lazy var contactBtn: UIButton = {
+        let contactBtn = UIButton(type: .custom)
+        return contactBtn
     }()
     
     lazy var sendBtn: UIButton = {
@@ -45,6 +52,19 @@ class DonateMembershipView: BaseView {
         return sendBtn
     }()
     
+    lazy var phoneTx: UITextField = {
+        let phoneTx = UITextField()
+        phoneTx.keyboardType = .numberPad
+        let attrString = NSMutableAttributedString(string: "请输入要赠送的好友手机号码", attributes: [
+            .foregroundColor: UIColor.init(cssStr: "#CECECE") as Any,
+            .font: UIFont.regularFontOfSize(size: 12)
+        ])
+        phoneTx.attributedPlaceholder = attrString
+        phoneTx.font = .regularFontOfSize(size: 14)
+        phoneTx.textColor = UIColor.init(cssStr: "#27344B")
+        return phoneTx
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(whiteView)
@@ -52,6 +72,8 @@ class DonateMembershipView: BaseView {
         addSubview(descLabel)
         addSubview(enterImageView)
         addSubview(sendBtn)
+        enterImageView.addSubview(phoneTx)
+        enterImageView.addSubview(contactBtn)
         whiteView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.height.equalTo(350)
@@ -70,11 +92,32 @@ class DonateMembershipView: BaseView {
             make.top.equalTo(descLabel.snp.bottom).offset(4)
             make.size.equalTo(CGSize(width: 343, height: 54.5))
         }
+        phoneTx.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview().offset(9.5)
+            make.size.equalTo(CGSize(width: 200, height: 31.5))
+        }
+        contactBtn.snp.makeConstraints { make in
+            make.top.right.equalToSuperview()
+            make.size.equalTo(CGSize(width: 50, height: 31))
+        }
         sendBtn.snp.makeConstraints { make in
             make.left.equalTo(descLabel.snp.left)
             make.top.equalTo(enterImageView.snp.bottom).offset(10)
             make.size.equalTo(CGSize(width: 97.5, height: 14))
         }
+        
+        
+        phoneTx.rx.controlEvent(.editingChanged)
+            .withLatestFrom(phoneTx.rx.text.orEmpty)
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                self.phoneTx.text = String(text.prefix(11))
+            })
+            .disposed(by: disposeBag)
+        
+        
+        
     }
     
     @MainActor required init?(coder: NSCoder) {

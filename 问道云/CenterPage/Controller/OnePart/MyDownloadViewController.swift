@@ -309,7 +309,7 @@ extension MyDownloadViewController {
                         self.emptyView.removeFromSuperview()
                         self.noNetView.removeFromSuperview()
                     }else {
-                        self.addNodataView(from: self.downloadView)
+                        self.addNodataView(from: self.downloadView.whiteView)
                     }
                     self.downloadView.modelArray.accept(self.allArray)
                     if self.allArray.count != total {
@@ -318,7 +318,7 @@ extension MyDownloadViewController {
                         self.downloadView.tableView.mj_footer?.isHidden = true
                     }
                 }else {
-                    self.addNodataView(from: self.downloadView)
+                    self.addNodataView(from: self.downloadView.whiteView)
                     self.downloadView.tableView.mj_footer?.isHidden = true
                     self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
                         self?.getDownloadTypeList()
@@ -327,7 +327,7 @@ extension MyDownloadViewController {
                 }
                 break
             case .failure(_):
-                self.addNodataView(from: self.downloadView)
+                self.addNodataView(from: self.downloadView.whiteView)
                 self.downloadView.tableView.mj_footer?.isHidden = true
                 break
             }
