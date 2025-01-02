@@ -174,11 +174,36 @@ class GroupTeamSpecView: BaseView {
         return sureBtn
     }()
     
+    lazy var whiteTwoView: UIView = {
+        let whiteTwoView = UIView()
+        whiteTwoView.backgroundColor = .white
+        return whiteTwoView
+    }()
+    
+    lazy var teamlabel: UILabel = {
+        let teamlabel = UILabel()
+        teamlabel.textColor = UIColor.init(cssStr: "#333333")
+        teamlabel.textAlignment = .left
+        teamlabel.text = "团体成员管理"
+        teamlabel.font = .semiboldFontOfSize(size: 14)
+        return teamlabel
+    }()
+    
+    lazy var numBtn: UIButton = {
+        let numBtn = UIButton(type: .custom)
+        numBtn.setImage(UIImage(named: "righticonimage"), for: .normal)
+        numBtn.titleLabel?.font = .regularFontOfSize(size: 14)
+        numBtn.setTitleColor(.black, for: .normal)
+        numBtn.contentHorizontalAlignment = .right
+        return numBtn
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(scrollView)
         scrollView.addSubview(headView)
         scrollView.addSubview(whiteView)
+        scrollView.addSubview(whiteTwoView)
         
         whiteView.addSubview(viplabel)
         whiteView.addSubview(lineView)
@@ -199,6 +224,10 @@ class GroupTeamSpecView: BaseView {
         
         whiteView.addSubview(descLabel)
         whiteView.addSubview(sureBtn)
+        
+        whiteTwoView.addSubview(teamlabel)
+        whiteTwoView.addSubview(numBtn)
+        
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -308,6 +337,24 @@ class GroupTeamSpecView: BaseView {
             make.left.equalToSuperview().offset(27.5)
             make.height.equalTo(50.5)
         }
+        
+        whiteTwoView.snp.makeConstraints { make in
+            make.top.equalTo(whiteView.snp.bottom).offset(7)
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+            make.height.equalTo(56)
+            make.bottom.equalToSuperview().offset(-20)
+        }
+        teamlabel.snp.makeConstraints { make in
+            make.left.equalTo(phonelabel.snp.left)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(20)
+        }
+        numBtn.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().offset(-12.5)
+            make.size.equalTo(CGSize(width: 60, height: 20))
+        }
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -322,6 +369,7 @@ extension GroupTeamSpecView {
         super.layoutSubviews()
         nextBtn.layoutButtonEdgeInsets(style: .right, space: 2)
         addBtn.layoutButtonEdgeInsets(style: .right, space: 2)
+        numBtn.layoutButtonEdgeInsets(style: .right, space: 9)
     }
     
 }

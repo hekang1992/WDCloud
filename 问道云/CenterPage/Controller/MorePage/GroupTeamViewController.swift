@@ -79,6 +79,15 @@ class GroupTeamViewController: WDBaseViewController {
             })
             .disposed(by: disposeBag)
         
+        specView.nextBtn.rx.tap.subscribe(onNext: { [weak self] in
+            let listVc = GroupListViewController()
+            self?.navigationController?.pushViewController(listVc, animated: true)
+        }).disposed(by: disposeBag)
+        
+        specView.whiteTwoView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            let listVc = GroupListViewController()
+            self?.navigationController?.pushViewController(listVc, animated: true)
+        }).disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -142,6 +151,7 @@ extension GroupTeamViewController {
         self.specView.timelabel.text = model.endtime ?? ""
         let peopleNumStr = (model.useaccountcount ?? "") + "/" + (model.accountcount ?? "");
         self.specView.currentlabel.text = "当前套餐人数: \(peopleNumStr)"
+        self.specView.numBtn.setTitle(model.useaccountcount, for: .normal)
     }
     
 }
