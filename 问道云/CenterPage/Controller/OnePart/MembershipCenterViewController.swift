@@ -160,6 +160,7 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
         listVCArray.removeAll()
         for _ in 0..<3 {
             let vc = MembershipListViewController()
+            vc.ordertype = 1
             cocsciew.addSubview(vc.view)
             listVCArray.append(vc)
             vc.agreeView.descLabel.rx

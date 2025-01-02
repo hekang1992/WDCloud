@@ -455,8 +455,8 @@
 				7374162A2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift */,
 				73C752532D1E4B5800C47187 /* HistoryListViewController.swift */,
 				737416352D0EC37400E6CD23 /* MembershipCenterViewController.swift */,
-				73BDABA12D1E973200D93691 /* MembershipListViewController.swift */,
 				7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */,
+				73BDABA12D1E973200D93691 /* MembershipListViewController.swift */,
 			);
 			path = OnePart;
 			sourceTree = "<group>";

@@ -47,6 +47,7 @@ class DonateMembershipView: BaseView {
     
     lazy var sendBtn: UIButton = {
         let sendBtn = UIButton(type: .custom)
+        sendBtn.adjustsImageWhenHighlighted = false
         sendBtn.setImage(UIImage(named: "shifoufaemsimgnor"), for: .normal)
         sendBtn.setImage(UIImage(named: "shifoufaemsimgesel"), for: .selected)
         return sendBtn

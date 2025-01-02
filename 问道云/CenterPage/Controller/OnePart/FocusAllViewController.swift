@@ -40,7 +40,7 @@ class FocusAllViewController: WDBaseViewController {
         historyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        historyView.addSubview(headView)
+        addHeadView(from: headView)
         headView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(StatusHeightManager.navigationBarHeight)

@@ -235,14 +235,20 @@ extension WDBaseViewController {
 extension WDBaseViewController {
     
     //购买会员
-    func payMemberInfo(from combonumber: String, complete: (() -> Void)? = nil) {
+    func payMemberInfo(from combonumber: String,//store ID
+                       ordertype: Int,//订单类型 1自购 2赠送
+                       friendphone: String,//好友电话
+                       pushmsflag: Int,//是否发送短信
+                       complete: (() -> Void)? = nil) {
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let phonenumber = GetSaveLoginInfoConfig.getPhoneNumber()
         let man = RequestManager()
         let dict = ["customernumber": customernumber,
                     "combonumber": combonumber,
                     "phonenumber": phonenumber,
-                    "ordertype": 1,
+                    "ordertype": ordertype,
+                    "friendphone": friendphone,
+                    "pushmsflag": pushmsflag,
                     "usertype": 1,
                     "accountcount": 1,
                     "quantity": 1] as [String : Any]

@@ -52,28 +52,45 @@ class DonateMembershipViewController: WDBaseViewController {
             let orderListVc = UserAllOrderSController()
             self?.navigationController?.pushViewController(orderListVc, animated: true)
         }).disposed(by: disposeBag)
+        
         //添加切换
         addsentMentView()
+        
         //添加子控制器
         setupViewControllers()
+        
         //获取套餐信息
         getPriceInfo()
+        
         //发送短信是否
         donateView.sendBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             donateView.sendBtn.isSelected.toggle()
+            listVCArray[0].pushmsflag = donateView.sendBtn.isSelected ? 1 : 0
+            listVCArray[1].pushmsflag = donateView.sendBtn.isSelected ? 1 : 0
+            listVCArray[2].pushmsflag = donateView.sendBtn.isSelected ? 1 : 0
         }).disposed(by: disposeBag)
+        
         //获取联系人
         donateView.contactBtn.rx.tap.subscribe(onNext: { [weak self] in
             let manager = ContactManager()
             manager.requestAccess { [weak self] granted, error in
                 guard let self = self else { return }
                 if granted {
-                    let contacts = manager.fetchContacts() ?? []
                     self.present(contactPicker, animated: true, completion: nil)
                 }
             }
         }).disposed(by: disposeBag)
+        
+        donateView.phoneTx
+            .rx.text
+            .orEmpty
+            .subscribe(onNext: { [weak self] phone in
+                self?.listVCArray[0].friendphone = phone
+                self?.listVCArray[1].friendphone = phone
+                self?.listVCArray[2].friendphone = phone
+        }).disposed(by: disposeBag)
+        
     }
     
 }
@@ -144,6 +161,7 @@ extension DonateMembershipViewController: JXSegmentedViewDelegate {
         listVCArray.removeAll()
         for _ in 0..<3 {
             let vc = MembershipListViewController()
+            vc.ordertype = 2
             cocsciew.addSubview(vc.view)
             listVCArray.append(vc)
             vc.agreeView.descLabel.rx
@@ -191,7 +209,6 @@ extension DonateMembershipViewController {
 extension DonateMembershipViewController: CNContactPickerDelegate {
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
-        let fullName = "\(contact.givenName) \(contact.familyName)"
         if let phoneNumber = contact.phoneNumbers.first?.value.stringValue {
             self.donateView.phoneTx.text = phoneNumber
         } else {

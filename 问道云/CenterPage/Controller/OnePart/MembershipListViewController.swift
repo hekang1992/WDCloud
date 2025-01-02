@@ -11,6 +11,12 @@ class MembershipListViewController: WDBaseViewController {
     
     var combonumber: String = "0"
     
+    var ordertype: Int = 0 //是否赠送 1自购 2赠送
+    
+    var friendphone: String = ""//好友电话
+    
+    var pushmsflag: Int = 0 //是否发送短信 0不发 1发送
+    
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
@@ -87,7 +93,11 @@ class MembershipListViewController: WDBaseViewController {
         payView.payBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             if self.isClickPriType {
-                self.payMemberInfo(from: self.combonumber)
+                if ordertype == 1 {
+                    self.payMemberInfo(from: self.combonumber, ordertype: ordertype, friendphone: "", pushmsflag: 0)
+                }else {
+                    self.payMemberInfo(from: self.combonumber, ordertype: ordertype, friendphone: friendphone, pushmsflag: pushmsflag)
+                }
             }else {
                 ToastViewConfig.showToast(message: "请先阅读《问道云会员服务协议》")
             }
