@@ -47,6 +47,9 @@
 		7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */; };
 		7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */; };
 		7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */; };
+		734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E72D2641C400BB4087 /* GroupTeamViewController.swift */; };
+		734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E92D26431900BB4087 /* GroupTeamNorView.swift */; };
+		734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */; };
 		73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73460D102D150DD400EC9408 /* DeleteAccountViewController.swift */; };
 		73460D132D15162500EC9408 /* DeleteSureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73460D122D15162500EC9408 /* DeleteSureViewController.swift */; };
 		736A40D92D223AEB0065FD9D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A40D82D223AEB0065FD9D /* StoreKit.framework */; };
@@ -170,6 +173,9 @@
 		7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewNormalCell.swift; sourceTree = "<group>"; };
 		7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewEditCell.swift; sourceTree = "<group>"; };
 		7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBtnPopView.swift; sourceTree = "<group>"; };
+		734355E72D2641C400BB4087 /* GroupTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamViewController.swift; sourceTree = "<group>"; };
+		734355E92D26431900BB4087 /* GroupTeamNorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamNorView.swift; sourceTree = "<group>"; };
+		734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamSpecView.swift; sourceTree = "<group>"; };
 		73460D102D150DD400EC9408 /* DeleteAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewController.swift; sourceTree = "<group>"; };
 		73460D122D15162500EC9408 /* DeleteSureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSureViewController.swift; sourceTree = "<group>"; };
 		73460D142D154C6900EC9408 /* WechatOpenSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WechatOpenSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -487,6 +493,7 @@
 				73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */,
 				73F6046D2D1172B90061D5D3 /* TwoTicketViewController.swift */,
 				7374163D2D0FC4B300E6CD23 /* InviteFriendViewController.swift */,
+				734355E72D2641C400BB4087 /* GroupTeamViewController.swift */,
 			);
 			path = MorePage;
 			sourceTree = "<group>";
@@ -566,6 +573,8 @@
 				73C752572D1E728500C47187 /* HistoryListViewCell.swift */,
 				73BDABA32D1EA73100D93691 /* MembershipListView.swift */,
 				7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */,
+				734355E92D26431900BB4087 /* GroupTeamNorView.swift */,
+				734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -778,6 +787,7 @@
 				7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */,
 				7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */,
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
+				734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
 				73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */,
 				737416382D0EC54500E6CD23 /* MembershipCenterView.swift in Sources */,
@@ -792,10 +802,12 @@
 				73D50B872D16ACEC00EF081A /* FocusCompanyViewController.swift in Sources */,
 				73460D132D15162500EC9408 /* DeleteSureViewController.swift in Sources */,
 				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
+				734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */,
 				73C752362D19451400C47187 /* FocusCompanyView.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
 				736E97852D22A7A0009CC0DF /* ApplePayConfig.swift in Sources */,
+				734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */,
 				73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */,
 				7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */,
 				73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */,

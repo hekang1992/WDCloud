@@ -158,8 +158,10 @@ class WDCenterViewController: WDBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if IS_LOGIN {
+            
             //获取套餐信息
             getBuymoreinfo()
+            
             //获取是否是分销商
             getChanelPartner()
             centerView.huiyuanIcon.isHidden = false
@@ -296,12 +298,15 @@ extension WDCenterViewController {
             self.pushWebPage(from: url)
             break
         case "联系我们":
-            let conVc = ContactUsViewController()
-            self.navigationController?.pushViewController(conVc, animated: true)
+            let connectVc = ContactUsViewController()
+            self.navigationController?.pushViewController(connectVc, animated: true)
             break
         case "意见反馈":
             break
         case "团体中心":
+            let groupVc = GroupTeamViewController()
+            groupVc.model = model
+            self.navigationController?.pushViewController(groupVc, animated: true)
             break
         default:
             break

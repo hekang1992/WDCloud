@@ -89,7 +89,7 @@ class DonateMembershipViewController: WDBaseViewController {
                 self?.listVCArray[0].friendphone = phone
                 self?.listVCArray[1].friendphone = phone
                 self?.listVCArray[2].friendphone = phone
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
     }
     
@@ -169,7 +169,7 @@ extension DonateMembershipViewController: JXSegmentedViewDelegate {
                 .when(.recognized)
                 .subscribe(onNext: { [weak self] _ in
                     self?.pushWebPage(from: membership_agreement)
-            }).disposed(by: disposeBag)
+                }).disposed(by: disposeBag)
         }
         
         updateViewControllersLayout()

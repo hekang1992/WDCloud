@@ -42,7 +42,17 @@ class DataModel {
     var rows: [rowsModel]?
     var data: [rowsModel]?
     var ordernumber: String?
+    var dataid: String?
+    var firmname: String?
+    var email: String?
+    var useaccountcount: String?//当前人数
+    var accountcount: String?//总人数
     init(json: JSON) {
+        self.useaccountcount = json["useaccountcount"].stringValue
+        self.accountcount = json["accountcount"].stringValue
+        self.email = json["email"].stringValue
+        self.firmname = json["firmname"].stringValue
+        self.dataid = json["dataid"].stringValue
         self.ordernumber = json["ordernumber"].stringValue
         self.isDistributor = json["isDistributor"].stringValue
         self.access_token = json["access_token"].stringValue

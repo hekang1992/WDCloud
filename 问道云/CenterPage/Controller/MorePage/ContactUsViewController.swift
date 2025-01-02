@@ -50,11 +50,11 @@ class ContactUsViewController: WDBaseViewController {
             make.top.equalTo(iconImageView.snp.bottom).offset(15)
             make.height.equalTo(25)
         }
-        let height = SCREEN_W / 376 * 314
+        let height = SCREEN_WIDTH / 376 * 314
         view.addSubview(ctImageView)
         ctImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: SCREEN_W, height: height))
+            make.size.equalTo(CGSize(width: SCREEN_WIDTH, height: height))
             make.top.equalTo(mlabel.snp.bottom).offset(18.5)
         }
     }

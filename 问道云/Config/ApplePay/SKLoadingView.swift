@@ -55,12 +55,6 @@ public func COLOR_RGB(_ r: CGFloat,
     return COLOR_RGBA(r, g, b, 1.0)
 }
 
-/// Returns the width of the screen for the device.
-public let SCREEN_W = UIScreen.main.bounds.size.width
-
-/// Returns the height of the screen for the device.
-public let SCREEN_H = UIScreen.main.bounds.size.height
-
 public class SKLoadingView: UIView {
     
     /// It is used to act as background mask panel.
@@ -183,7 +177,7 @@ public class SKLoadingView: UIView {
         let textSize = self.textLabel.bounds.size
         
         cW = textSize.width + 2*offset
-        cW = cW > (SCREEN_W - 40) ? (SCREEN_W - 40) : cW
+        cW = cW > (SCREEN_WIDTH - 40) ? (SCREEN_WIDTH - 40) : cW
         cW = cW < (iW + 4*offset) ? (iW + 4*offset) : cW
         cH = textSize.height + iW + 3*offset
         self.contentView.frame = CGRect(x: 0, y: 0, width: cW, height: cH)
@@ -285,8 +279,8 @@ public class SKLoadingView: UIView {
             sW = supv.bounds.size.width
             sH = supv.bounds.size.height
         } else {
-            sW = SCREEN_W
-            sH = SCREEN_H
+            sW = SCREEN_WIDTH
+            sH = SCREEN_HEIGHT
         }
         self.frame = CGRect(x: 0, y: 0, width: sW, height: sH)
         
