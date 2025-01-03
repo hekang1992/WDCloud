@@ -36,6 +36,18 @@ class GroupTeamSpecView: BaseView {
         return viplabel
     }()
     
+    lazy var vipBtn: UIButton = {
+        let vipBtn = UIButton(type: .custom)
+        vipBtn.setTitle("续费", for: .normal)
+        vipBtn.titleLabel?.font = .semiboldFontOfSize(size: 10)
+        vipBtn.setTitleColor(.init(cssStr: "#333333"), for: .normal)
+        vipBtn.setImage(UIImage(named: "huiyuanimgeteam"), for: .normal)
+        vipBtn.layer.cornerRadius = 10
+        vipBtn.layer.borderWidth = 1
+        vipBtn.layer.borderColor = UIColor.init(cssStr: "#FFD528")?.cgColor
+        return vipBtn
+    }()
+    
     lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .init(cssStr: "#F6F6F6")
@@ -208,6 +220,7 @@ class GroupTeamSpecView: BaseView {
         scrollView.addSubview(whiteTwoView)
         
         whiteView.addSubview(viplabel)
+        whiteView.addSubview(vipBtn)
         whiteView.addSubview(lineView)
         whiteView.addSubview(endlabel)
         whiteView.addSubview(timelabel)
@@ -249,6 +262,12 @@ class GroupTeamSpecView: BaseView {
             make.left.equalToSuperview().offset(15)
             make.top.equalToSuperview().offset(11)
             make.height.equalTo(25)
+        }
+        vipBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(viplabel.snp.centerY)
+            make.right.equalToSuperview().offset(-12.5)
+            make.width.equalTo(47)
+            make.height.equalTo(20)
         }
         lineView.snp.makeConstraints { make in
             make.height.equalTo(1)
@@ -373,6 +392,7 @@ extension GroupTeamSpecView {
         nextBtn.layoutButtonEdgeInsets(style: .right, space: 2)
         addBtn.layoutButtonEdgeInsets(style: .right, space: 2)
         numBtn.layoutButtonEdgeInsets(style: .right, space: 9)
+        vipBtn.layoutButtonEdgeInsets(style: .left, space: 4)
     }
     
 }

@@ -109,6 +109,40 @@ class GroupTeamViewController: WDBaseViewController {
             }
         }).disposed(by: disposeBag)
         
+        //添加成员
+        specView.sureBtn.rx.tap.subscribe(onNext: { [weak self] in
+            let friendphone = self?.specView.phoneTx.text ?? ""
+            let maincustomernumber = GetSaveLoginInfoConfig.getPhoneNumber()
+            let name = self?.specView.nameTx.text ?? ""
+            if name.isEmpty {
+                ToastViewConfig.showToast(message: "请输入成员姓名")
+                return
+            }
+            let dict = ["friendphone": friendphone,
+                        "maincustomernumber": maincustomernumber,
+                        "name": name.filter { !$0.isWhitespace }]
+            let man = RequestManager()
+            man.requestAPI(params: dict, pageUrl: "/operation/customerinfo/addsubaccount", method: .post) { [weak self] result in
+                switch result {
+                case .success(let success):
+                    if success.code == 200 {
+                        self?.getGroupTeamLeader()
+                        ToastViewConfig.showToast(message: "添加成功")
+                    }else {
+                        ToastViewConfig.showToast(message: success.msg ?? "")
+                    }
+                    break
+                case .failure(_):
+                    break
+                }
+            }
+        }).disposed(by: disposeBag)
+        
+        //跳转续费会员
+        specView.vipBtn.rx.tap.subscribe(onNext: { [weak self] in
+            let memVc = MembershipCenterViewController()
+            self?.navigationController?.pushViewController(memVc, animated: true)
+        }).disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -163,14 +197,14 @@ extension GroupTeamViewController {
             }
         }
     }
-    
-    
+
     func descTextInfo(from model: DataModel) {
         self.specView.headView.mlabel.text = "团体名称: \(model.firmname ?? "")"
         self.specView.headView.clabel.text = "邮箱: \(model.email ?? "")"
         self.specView.viplabel.text = "团体VIP"
         self.specView.timelabel.text = model.endtime ?? ""
-        let peopleNumStr = (model.useaccountcount ?? "") + "/" + (model.accountcount ?? "");
+        let currentNum = (Int(model.useaccountcount ?? "0") ?? 0) + 1
+        let peopleNumStr = (String(currentNum)) + "/" + (model.accountcount ?? "");
         self.specView.currentlabel.text = "当前套餐人数: \(peopleNumStr)"
         self.specView.numBtn.setTitle(model.useaccountcount, for: .normal)
     }
@@ -180,10 +214,12 @@ extension GroupTeamViewController {
 extension GroupTeamViewController: CNContactPickerDelegate {
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+        let fullName = "\(contact.givenName) \(contact.familyName)"
         if let phoneNumber = contact.phoneNumbers.first?.value.stringValue {
             self.specView.phoneTx.text = phoneNumber
             self.specView.sureBtn.isEnabled = true
             self.specView.sureBtn.backgroundColor = UIColor.init(cssStr: "#547AFF")
+            self.specView.nameTx.text = fullName
         } else {
             print("error")
         }

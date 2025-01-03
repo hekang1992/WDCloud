@@ -24,6 +24,18 @@ class GroupListView: BaseView {
         return bgView
     }()
     
+    lazy var vipBtn: UIButton = {
+        let vipBtn = UIButton(type: .custom)
+        vipBtn.setTitle("续费", for: .normal)
+        vipBtn.titleLabel?.font = .semiboldFontOfSize(size: 10)
+        vipBtn.setTitleColor(.init(cssStr: "#333333"), for: .normal)
+        vipBtn.setImage(UIImage(named: "huiyuanimgeteam"), for: .normal)
+        vipBtn.layer.cornerRadius = 10
+        vipBtn.layer.borderWidth = 1
+        vipBtn.layer.borderColor = UIColor.init(cssStr: "#FFD528")?.cgColor
+        return vipBtn
+    }()
+    
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.textAlignment = .left
@@ -130,6 +142,8 @@ class GroupListView: BaseView {
         bgView.addSubview(fiveLabel)
         bgView.addSubview(sixLabel)
         
+        bgView.addSubview(vipBtn)
+        
         bgView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.centerX.equalToSuperview()
@@ -142,6 +156,14 @@ class GroupListView: BaseView {
             make.top.equalToSuperview().offset(13)
             make.height.equalTo(21)
         }
+        
+        vipBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(nameLabel.snp.centerY)
+            make.right.equalToSuperview().offset(-12.5)
+            make.width.equalTo(47)
+            make.height.equalTo(20)
+        }
+        
         oneLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(nameLabel.snp.bottom).offset(15)
@@ -190,7 +212,7 @@ class GroupListView: BaseView {
             make.left.right.equalToSuperview()
             make.bottom.equalTo(nextBtn.snp.top).offset(-2)
         }
-        
+
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
@@ -198,7 +220,7 @@ class GroupListView: BaseView {
             nameLabel.text = oneModel?.firmname ?? ""
             fourLabel.text = oneModel?.comboname ?? ""
             fiveLabel.text = oneModel?.endtime ?? ""
-            sixLabel.text = String("\(oneModel?.accounttype ?? 0)/\(oneModel?.accountcount ?? 0)")
+            sixLabel.text = String("\(model.rows?.count ?? 0)/\(oneModel?.accountcount ?? 0)")
         }).disposed(by: disposeBag)
         
         

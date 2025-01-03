@@ -6,6 +6,7 @@
 //  团队成员列表页面
 
 import UIKit
+import TYAlertController
 
 class GroupListViewController: WDBaseViewController {
     
@@ -19,6 +20,11 @@ class GroupListViewController: WDBaseViewController {
         let listView = GroupListView()
         listView.backgroundColor = .white
         return listView
+    }()
+    
+    lazy var changeView: PopChangePeopleView = {
+        let changeView = PopChangePeopleView(frame: self.view.bounds)
+        return changeView
     }()
 
     override func viewDidLoad() {
@@ -34,8 +40,8 @@ class GroupListViewController: WDBaseViewController {
         
         //转让
         listView.changeBlock = { [weak self] model in
-            ToastViewConfig.showToast(message: model.username ?? "")
-            
+            guard let self = self else { return }
+            self.changePeopleInfo(from: model)
         }
         
         //删除
@@ -47,6 +53,12 @@ class GroupListViewController: WDBaseViewController {
             let addVc = AddGroupPeopleViewController()
             self?.navigationController?.pushViewController(addVc, animated: true)
         }).disposed(by: disposeBag)
+        
+        listView.vipBtn.rx.tap.subscribe(onNext: { [weak self] in
+            let memVc = MembershipCenterViewController()
+            self?.navigationController?.pushViewController(memVc, animated: true)
+        }).disposed(by: disposeBag)
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -103,7 +115,45 @@ extension GroupListViewController {
     }
     
     //转让成员
-    private func changePeopleInfo() {
+    private func changePeopleInfo(from model: rowsModel) {
+        let alertVc = TYAlertController(alert: changeView, preferredStyle: .actionSheet)
+        changeView.model.accept(model)
+        self.present(alertVc!, animated: true)
         
+        changeView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+        
+        changeView.sureBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let man = RequestManager()
+            let name = changeView.nameTx.text ?? ""
+            let friendphone = model.username ?? ""
+            let maincustomernumber = GetSaveLoginInfoConfig.getPhoneNumber()
+            let newfriendphone = changeView.phoneTx.text ?? ""
+            if name.isEmpty {
+                ToastViewConfig.showToast(message: "请输入成员姓名")
+                return
+            }
+            let dict = ["name": name,
+                        "friendphone": friendphone,
+                        "maincustomernumber": maincustomernumber,
+                        "newfriendphone": newfriendphone]
+            man.requestAPI(params: dict, pageUrl: "/operation/customerinfo/updatesubaccount", method: .post) { result in
+                switch result {
+                case .success(let success):
+                    if success.code == 200 {
+                        self.dismiss(animated: true)
+                        self.getListInfo()
+                        ToastViewConfig.showToast(message: "转让成功")
+                    }else {
+                        ToastViewConfig.showToast(message: success.msg ?? "")
+                    }
+                    break
+                case .failure(_):
+                    break
+                }
+            }
+        }).disposed(by: disposeBag)
     }
 }

@@ -115,10 +115,10 @@ class AddGroupPeopleViewController: WDBaseViewController {
         contactPicker.delegate = self
         return contactPicker
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         addHeadView(from: headView)
         
@@ -211,7 +211,7 @@ class AddGroupPeopleViewController: WDBaseViewController {
                     }
                 }
                 
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.addInfo()
@@ -241,6 +241,10 @@ extension AddGroupPeopleViewController {
         let dict = ["friendphone": friendphone,
                     "maincustomernumber": maincustomernumber,
                     "name": name.filter { !$0.isWhitespace }]
+        if name.isEmpty {
+            ToastViewConfig.showToast(message: "请输入成员姓名")
+            return
+        }
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/operation/customerinfo/addsubaccount", method: .post) { [weak self] result in
             switch result {
