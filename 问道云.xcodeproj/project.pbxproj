@@ -73,6 +73,8 @@
 		737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416452D0FD79C00E6CD23 /* AddInvoiceView.swift */; };
 		737416482D0FD94B00E6CD23 /* AddInvoiceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416472D0FD94B00E6CD23 /* AddInvoiceViewCell.swift */; };
 		7374164E2D100BB200E6CD23 /* SearchInvoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374164D2D100BB200E6CD23 /* SearchInvoiceCell.swift */; };
+		738043322D278EED009B25F8 /* GroupListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738043312D278EED009B25F8 /* GroupListViewCell.swift */; };
+		738043382D27A9F5009B25F8 /* AddGroupPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738043372D27A9F5009B25F8 /* AddGroupPeopleViewController.swift */; };
 		739D90BC2D26A72100D9421B /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739D90BB2D26A72100D9421B /* GroupListViewController.swift */; };
 		739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739D90BD2D26AB1B00D9421B /* GroupListView.swift */; };
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
@@ -205,6 +207,8 @@
 		737416452D0FD79C00E6CD23 /* AddInvoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceView.swift; sourceTree = "<group>"; };
 		737416472D0FD94B00E6CD23 /* AddInvoiceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceViewCell.swift; sourceTree = "<group>"; };
 		7374164D2D100BB200E6CD23 /* SearchInvoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInvoiceCell.swift; sourceTree = "<group>"; };
+		738043312D278EED009B25F8 /* GroupListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewCell.swift; sourceTree = "<group>"; };
+		738043372D27A9F5009B25F8 /* AddGroupPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupPeopleViewController.swift; sourceTree = "<group>"; };
 		739D90BB2D26A72100D9421B /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		739D90BD2D26AB1B00D9421B /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -499,6 +503,7 @@
 				7374163D2D0FC4B300E6CD23 /* InviteFriendViewController.swift */,
 				734355E72D2641C400BB4087 /* GroupTeamViewController.swift */,
 				739D90BB2D26A72100D9421B /* GroupListViewController.swift */,
+				738043372D27A9F5009B25F8 /* AddGroupPeopleViewController.swift */,
 			);
 			path = MorePage;
 			sourceTree = "<group>";
@@ -581,6 +586,7 @@
 				734355E92D26431900BB4087 /* GroupTeamNorView.swift */,
 				734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */,
 				739D90BD2D26AB1B00D9421B /* GroupListView.swift */,
+				738043312D278EED009B25F8 /* GroupListViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -768,6 +774,7 @@
 				73C752482D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift in Sources */,
 				7335F6E62D0AD8620074985F /* MyDownloadViewController.swift in Sources */,
 				737416362D0EC37400E6CD23 /* MembershipCenterViewController.swift in Sources */,
+				738043382D27A9F5009B25F8 /* AddGroupPeopleViewController.swift in Sources */,
 				73E306DF2D156C0800D18943 /* MyQRCodeView.swift in Sources */,
 				7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */,
 				73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */,
@@ -794,6 +801,7 @@
 				73F6046A2D1171280061D5D3 /* MyTicketView.swift in Sources */,
 				7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */,
 				7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */,
+				738043322D278EED009B25F8 /* GroupListViewCell.swift in Sources */,
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,

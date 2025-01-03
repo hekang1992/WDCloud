@@ -500,7 +500,7 @@ class InvoiceListView: BaseView {
         nextBtn.backgroundColor = UIColor.init(cssStr: "#547AFF")
         nextBtn.setTitle("添加发票抬头", for: .normal)
         nextBtn.titleLabel?.font = .mediumFontOfSize(size: 15)
-        nextBtn.layer.cornerRadius = 3
+        nextBtn.layer.cornerRadius = 4
         return nextBtn
     }()
     
@@ -540,7 +540,8 @@ class InvoiceListView: BaseView {
         }
         nextBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: 285, height: 50))
+            make.left.equalToSuperview().offset(27.5)
+            make.height.equalTo(50)
             make.bottom.equalToSuperview().offset(-23)
         }
         tableView.snp.makeConstraints { make in

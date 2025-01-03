@@ -142,7 +142,17 @@ class rowsModel {
     var minconsumption: String?
     var combonumber: Int?
     var serviceComboList: [serviceComboListModel]?
+    var endtime: String?
+    var accounttype: Int?
+    var accountcount: Int?
+    var username: String?
+    var customernumber: String?
     init(json: JSON) {
+        self.customernumber = json["customernumber"].stringValue
+        self.username = json["username"].stringValue
+        self.accountcount = json["accountcount"].intValue
+        self.accounttype = json["accounttype"].intValue
+        self.endtime = json["endtime"].stringValue
         self.combonumber = json["combonumber"].intValue
         self.serviceComboList = json["serviceComboList"].arrayValue.map { serviceComboListModel(json: $0) }
         self.minconsumption = json["minconsumption"].stringValue

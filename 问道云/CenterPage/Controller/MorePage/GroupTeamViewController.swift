@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import ContactsUI
 
 class GroupTeamViewController: WDBaseViewController {
     
@@ -32,6 +33,12 @@ class GroupTeamViewController: WDBaseViewController {
         let specView = GroupTeamSpecView()
         specView.isHidden = true
         return specView
+    }()
+    
+    lazy var contactPicker: CNContactPickerViewController = {
+        let contactPicker = CNContactPickerViewController()
+        contactPicker.delegate = self
+        return contactPicker
     }()
     
     override func viewDidLoad() {
@@ -88,6 +95,20 @@ class GroupTeamViewController: WDBaseViewController {
             let listVc = GroupListViewController()
             self?.navigationController?.pushViewController(listVc, animated: true)
         }).disposed(by: disposeBag)
+        
+        specView.phoneImageView.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: {_ in
+            let manager = ContactManager()
+            manager.requestAccess { [weak self] granted, error in
+                guard let self = self else { return }
+                if granted {
+                    self.present(contactPicker, animated: true, completion: nil)
+                }
+            }
+        }).disposed(by: disposeBag)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -156,3 +177,20 @@ extension GroupTeamViewController {
     
 }
 
+extension GroupTeamViewController: CNContactPickerDelegate {
+    
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+        if let phoneNumber = contact.phoneNumbers.first?.value.stringValue {
+            self.specView.phoneTx.text = phoneNumber
+            self.specView.sureBtn.isEnabled = true
+            self.specView.sureBtn.backgroundColor = UIColor.init(cssStr: "#547AFF")
+        } else {
+            print("error")
+        }
+    }
+    
+    func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
+        
+    }
+    
+}

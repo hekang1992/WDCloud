@@ -139,7 +139,7 @@ extension UIImage {
                            size: (CGFloat, CGFloat),
                            bgColor: UIColor = .random(),
                            textColor: UIColor = .white,
-                           cornerRadius: CGFloat = 0) -> UIImage? {
+                           cornerRadius: CGFloat = 3) -> UIImage? {
         // 过滤空""
         if text.isEmpty { return nil }
         // 取第一个字符
@@ -404,8 +404,8 @@ class PhoneNumberFormatter {
     static func formatPhoneNumber(phoneNumber: String) -> String {
         if phoneNumber.count == 11 {
             let start = phoneNumber.prefix(3)
-            let end = phoneNumber.suffix(2)
-            let masked = String(repeating: "*", count: phoneNumber.count - 5)
+            let end = phoneNumber.suffix(3)
+            let masked = String(repeating: "*", count: phoneNumber.count - 6)
             return start + masked + end
         }
         return phoneNumber
@@ -582,7 +582,7 @@ class ShowAlertManager {
     ///   - cancelAction: 点击取消按钮的回调（默认为nil）
     static func showAlert(title: String?,
                           message: String?,
-                          confirmTitle: String = "确定",
+                          confirmTitle: String = "确认",
                           cancelTitle: String? = "取消",
                           confirmAction: (() -> Void)? = nil,
                           cancelAction: (() -> Void)? = nil) {

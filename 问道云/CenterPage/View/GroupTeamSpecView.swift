@@ -6,6 +6,7 @@
 //  添加过后的view
 
 import UIKit
+import RxSwift
 
 class GroupTeamSpecView: BaseView {
     
@@ -151,6 +152,7 @@ class GroupTeamSpecView: BaseView {
     
     lazy var phoneImageView: UIImageView = {
         let phoneImageView = UIImageView()
+        phoneImageView.isUserInteractionEnabled = true
         phoneImageView.image = UIImage(named: "phonimagetonxunlu")
         return phoneImageView
     }()
@@ -355,6 +357,7 @@ class GroupTeamSpecView: BaseView {
             make.right.equalToSuperview().offset(-12.5)
             make.size.equalTo(CGSize(width: 60, height: 20))
         }
+    
     }
     
     @MainActor required init?(coder: NSCoder) {

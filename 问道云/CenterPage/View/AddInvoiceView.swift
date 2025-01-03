@@ -58,7 +58,8 @@ class AddInvoiceView: BaseView {
         }
         nextBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: 285, height: 50))
+            make.left.equalToSuperview().offset(27.5)
+            make.height.equalTo(50)
             make.bottom.equalToSuperview().offset(-43)
         }
         checkButton.snp.makeConstraints { make in

@@ -32,7 +32,8 @@ extension APIService: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .requestAPI(_, _, let method),
+        case
+                .requestAPI(_, _, let method),
                 .uploadImageAPI(_, _, _, let method),
                 .uploadDataAPI(_, _, let method):
             return method
@@ -41,8 +42,9 @@ extension APIService: TargetType {
     
     var task: Moya.Task {
         switch self {
+            
         case .requestAPI(let params, _, let method):
-            if method == .get {
+            if method == .get || method == .delete {
                 return .requestParameters(parameters: params ?? [:], encoding: URLEncoding.default)
             }else {
                 return .requestParameters(parameters: params ?? [:], encoding: JSONEncoding.default)
@@ -140,7 +142,7 @@ class RequestManager: NSObject {
     }
     
     func uploadDataAPI(params: [String: Any]?, pageUrl: String, method: Moya.Method, completion: @escaping (Result<BaseModel, Error>) -> Void) {
-        requestData(target: .requestAPI(params: params, pageUrl: pageUrl, method: method), completion: completion)
+        requestData(target: .uploadDataAPI(params: params, pageUrl: pageUrl, method: method), completion: completion)
     }
     
     func uploadImageAPI(params: [String: Any]?, pageUrl: String, data: Data, method: Moya.Method, completion: @escaping (Result<BaseModel, Error>) -> Void) {
