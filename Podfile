@@ -48,4 +48,6 @@ target '问道云' do
   
   pod 'DYFStore', '~> 2.2.0'
   
+  pod 'SAMKeychain', '~> 1.5.3'
+  
 end

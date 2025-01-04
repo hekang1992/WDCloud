@@ -13,6 +13,10 @@ class MembershipCenterViewController: WDBaseViewController {
     
     var model = BehaviorRelay<DataModel?>(value: nil)
     
+    var currentIndex: Int = 0
+    
+    var payBlock: (() -> Void)?
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "会员中心"
@@ -41,7 +45,11 @@ class MembershipCenterViewController: WDBaseViewController {
         memView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        memView.vipTypeModel.accept(vipTypeModel.value)
+        vipTypeModel.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            memView.vipTypeModel.accept(model)
+        }).disposed(by: disposeBag)
+        
         addHeadView(from: headView)
         headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             let orderListVc = UserAllOrderSController()
@@ -61,6 +69,7 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
     
     //代理方法
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        self.currentIndex = index
         let targetVc = listVCArray[index]
         model.asObservable().subscribe(onNext: { model in
             guard let model = model, let rows = model.rows, !rows.isEmpty else { return  }
@@ -169,6 +178,11 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
                 .subscribe(onNext: { [weak self] _ in
                     self?.pushWebPage(from: membership_agreement)
             }).disposed(by: disposeBag)
+            
+            vc.payBlock = { [weak self] in
+                self?.getBuymoreinfo()
+                ShowAlertManager.showAlert(title: "支付结果", message: "您已经支付成功,感谢您的支持!")
+            }
         }
         
         updateViewControllersLayout()
@@ -197,6 +211,27 @@ extension MembershipCenterViewController {
                 }
                 break
             case .failure(_):
+                break
+            }
+        }
+    }
+    
+    func getBuymoreinfo() {
+        let man = RequestManager()
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let dict = ["customernumber": customernumber]
+        man.requestAPI(params: dict,
+                       pageUrl: buymore_info,
+                       method: .get) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    self.vipTypeModel.accept(model)
+                }
+                break
+            case .failure(_):
+                
                 break
             }
         }

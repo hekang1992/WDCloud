@@ -47,7 +47,11 @@ class DataModel {
     var email: String?
     var useaccountcount: String?//当前人数
     var accountcount: String?//总人数
+    var flag: String?
+    var wechatopenid: String?
     init(json: JSON) {
+        self.flag = json["flag"].stringValue
+        self.wechatopenid = json["wechatopenid"].stringValue
         self.useaccountcount = json["useaccountcount"].stringValue
         self.accountcount = json["accountcount"].stringValue
         self.email = json["email"].stringValue
@@ -80,12 +84,32 @@ class userinfoModel {
     var username: String?
     var createdate: String?
     var userIdentity: String?
+    var access_token: String?
+    var customernumber: String?
+    var userinfo: wxuserinfoModel?
     init(json: JSON) {
+        self.customernumber = json["customernumber"].stringValue
+        self.userinfo = wxuserinfoModel(json: json["userinfo"])
+        self.access_token = json["access_token"].stringValue
         self.token = json["token"].stringValue
         self.userid = json["userid"].stringValue
         self.username = json["username"].stringValue
         self.createdate = json["createdate"].stringValue
         self.userIdentity = json["userIdentity"].stringValue
+    }
+}
+
+class wxuserinfoModel {
+    var sysUser: sysUserModel?
+    init(json: JSON) {
+        self.sysUser = sysUserModel(json: json["sysUser"])
+    }
+}
+
+class sysUserModel {
+    var phonenumber: String?
+    init(json: JSON) {
+        self.phonenumber = json["phonenumber"].stringValue
     }
 }
 

@@ -45,7 +45,52 @@ extension AppDelegate: WXApiDelegate {
     }
     
     func onResp(_ resp: BaseResp) {
-        
+        if let resp = resp as? SendAuthResp, resp.state == GetIDFVConfig.getIDFV() {
+            switch resp.errCode {
+            case 0:
+                if let code = resp.code {
+                    wechatLogin(from: code)
+                }
+            case -4:
+                ToastViewConfig.showToast(message: "拒绝授权")
+            case -2:
+                ToastViewConfig.showToast(message: "已取消")
+            default:
+                break
+            }
+        }
+    }
+    
+    private func wechatLogin(from authorizationCode: String) {
+        let dict = ["code": authorizationCode]
+        let man = RequestManager()
+        man.uploadDataAPI(params: dict, pageUrl: "/auth/wechatlogin", method: .post) { result in
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    let flag = model.flag ?? ""
+                    if model.flag == "0" {
+                        ToastViewConfig.showToast(message: success.msg ?? "")
+                        let currentVc = UIViewController.getCurrentViewController()
+                        let bindVc = BindPhoneViewController()
+                        bindVc.wechatopenid = model.wechatopenid ?? ""
+                        currentVc.navigationController?.pushViewController(bindVc, animated: true)
+                    }else if flag == "1" {
+                        ToastViewConfig.showToast(message: "登录成功!")
+                        if let model = success.data {
+                            let phone = model.userinfo?.userinfo?.sysUser?.phonenumber ?? ""
+                            let token = model.userinfo?.access_token ?? ""
+                            let customernumber = model.userinfo?.customernumber ?? ""
+                            WDLoginConfig.saveLoginInfo(phone, token, customernumber)
+                        }
+                        NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
     private func openWechat() {

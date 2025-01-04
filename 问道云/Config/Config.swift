@@ -8,6 +8,7 @@
 import UIKit
 import Lottie
 import Toaster
+import SAMKeychain
 
 let ROOT_VC = "ROOT_VC"
 
@@ -832,4 +833,30 @@ class CountdownTimer {
     }
 }
 
+class NoCopyTextField: WLUnitField {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        // 如果是复制操作，直接返回false来禁止执行
+        if action == #selector(UIResponder.copy(_:)) {
+            return false
+        }
+        // 对于其他操作，继续执行默认行为
+        return super.canPerformAction(action, withSender: sender)
+    }
+}
 
+//获取IDFV
+let WDY_ONE = "WDY_ONE"
+let WDY_TWO = "WDY_TWO"
+class GetIDFVConfig {
+    static func getIDFV() -> String {
+        if let uuid = SAMKeychain.password(forService: WDY_ONE, account: WDY_TWO), !uuid.isEmpty {
+            return uuid
+        }
+        guard let deviceIDFV = UIDevice.current.identifierForVendor?.uuidString else {
+            return ""
+        }
+        let isSuccess = SAMKeychain.setPassword(deviceIDFV, forService: WDY_ONE, account: WDY_TWO)
+        return isSuccess ? deviceIDFV : ""
+    }
+    
+}

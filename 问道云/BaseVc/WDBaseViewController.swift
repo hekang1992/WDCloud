@@ -259,7 +259,9 @@ extension WDBaseViewController {
                     //唤醒苹果支付
                     let combonumber = String(success.data?.combonumber ?? 0)
                     let orderNumberID = success.data?.ordernumber ?? ""
-                    self?.toApplePay(form: combonumber, orderNumberID: orderNumberID)
+                    self?.toApplePay(form: combonumber, orderNumberID: orderNumberID, complete: {
+                        complete?()
+                    })
                 }else {
                     ToastViewConfig.showToast(message: success.msg ?? "")
                 }
@@ -271,7 +273,9 @@ extension WDBaseViewController {
     }
     
     //支付
-    func toApplePay(form combonumber: String, orderNumberID: String, complete: (() -> Void)? = nil) {
+    func toApplePay(form combonumber: String,
+                    orderNumberID: String,
+                    complete: (() -> Void)? = nil) {
         ApplePayConfig.buy(with: GetStoreIDManager.storeID(with: combonumber)) {
             self.paySuccess(from: orderNumberID) {
                 complete?()
@@ -280,7 +284,8 @@ extension WDBaseViewController {
     }
     
     //支付成功回调
-    private func paySuccess(from orderNumberID: String, complete: (() -> Void)? = nil) {
+    private func paySuccess(from orderNumberID:
+                            String, complete: (() -> Void)? = nil) {
         let man = RequestManager()
         let dict = ["ordernumber": orderNumberID, "payway": "3"]
         man.requestAPI(params: dict, pageUrl: "/operation/customerorder/callback", method: .post) { result in

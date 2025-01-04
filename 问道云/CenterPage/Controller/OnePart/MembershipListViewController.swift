@@ -53,6 +53,9 @@ class MembershipListViewController: WDBaseViewController {
     
     //是否点击了协议
     var isClickPriType: Bool = false
+    
+    //是否支付成功
+    var payBlock: (() -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +97,10 @@ class MembershipListViewController: WDBaseViewController {
             guard let self = self else { return }
             if self.isClickPriType {
                 if ordertype == 1 {
-                    self.payMemberInfo(from: self.combonumber, ordertype: ordertype, friendphone: "", pushmsflag: 0)
+                    self.payMemberInfo(from: self.combonumber, ordertype: ordertype, friendphone: "", pushmsflag: 0) { [weak self] in
+                        //通知页面支付成功了
+                        self?.payBlock?()
+                    }
                 }else {
                     self.payMemberInfo(from: self.combonumber, ordertype: ordertype, friendphone: friendphone, pushmsflag: pushmsflag)
                 }

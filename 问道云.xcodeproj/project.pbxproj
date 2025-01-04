@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		730487F32D292EF40024265C /* BindPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F22D292EF40024265C /* BindPhoneViewController.swift */; };
+		730487F52D2932640024265C /* BindPhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F42D2932640024265C /* BindPhoneView.swift */; };
 		7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD802D01A55900770009 /* OrderListViewCell.swift */; };
 		7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */; };
 		7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */; };
@@ -132,6 +134,8 @@
 
 /* Begin PBXFileReference section */
 		68995903FB3663C128436F79 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		730487F22D292EF40024265C /* BindPhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindPhoneViewController.swift; sourceTree = "<group>"; };
+		730487F42D2932640024265C /* BindPhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindPhoneView.swift; sourceTree = "<group>"; };
 		7314AD802D01A55900770009 /* OrderListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewCell.swift; sourceTree = "<group>"; };
 		7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketViewController.swift; sourceTree = "<group>"; };
 		7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketView.swift; sourceTree = "<group>"; };
@@ -409,6 +413,7 @@
 				7325A7E52D0000040043C196 /* GetCodeViewController.swift */,
 				7325A7DD2CFF0E6A0043C196 /* PasswordLoginViewController.swift */,
 				7325A7DF2CFF14350043C196 /* ForgetPasswordViewController.swift */,
+				730487F22D292EF40024265C /* BindPhoneViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -420,6 +425,7 @@
 				7325A7D92CFF0BE10043C196 /* CodeView.swift */,
 				7325A7DB2CFF0DBE0043C196 /* PasswordLoginView.swift */,
 				7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */,
+				730487F42D2932640024265C /* BindPhoneView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -750,6 +756,7 @@
 				73C752542D1E4B5800C47187 /* HistoryListViewController.swift in Sources */,
 				73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */,
 				7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */,
+				730487F32D292EF40024265C /* BindPhoneViewController.swift in Sources */,
 				73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */,
 				7374164E2D100BB200E6CD23 /* SearchInvoiceCell.swift in Sources */,
 				73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */,
@@ -768,6 +775,7 @@
 				737416482D0FD94B00E6CD23 /* AddInvoiceViewCell.swift in Sources */,
 				73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */,
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
+				730487F52D2932640024265C /* BindPhoneView.swift in Sources */,
 				73C752582D1E728500C47187 /* HistoryListViewCell.swift in Sources */,
 				7374162F2D0EB9E400E6CD23 /* HistoryView.swift in Sources */,
 				73A21DEA2D0C2F2B00FC4C49 /* RiskView.swift in Sources */,

@@ -39,6 +39,18 @@ class WDLoginViewController: WDBaseViewController {
         loginView.block2 = { [weak self] in
             self?.pushWebPage(from: privacy_url)
         }
+        
+        //微信登陆
+        loginView.weiBtn.rx.tap.subscribe(onNext: { [weak self] in
+            let req = SendAuthReq()
+            req.scope = "snsapi_userinfo"
+            req.state = GetIDFVConfig.getIDFV()
+            WXApi.send(req) { result in
+                print("微信result:\(result)")
+            }
+            self?.loginView.phoneTx.resignFirstResponder()
+        }).disposed(by: disposeBag)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,5 +90,11 @@ extension WDLoginViewController {
         codeVc.phoneStr = self.loginView.phoneTx.text ?? ""
         self.navigationController?.pushViewController(codeVc, animated: true)
     }
+    
+}
+
+extension WDLoginViewController: WXApiDelegate {
+    
+    
     
 }
