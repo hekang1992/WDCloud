@@ -42,6 +42,9 @@ PODS:
     - Moya/Core (= 15.0.0)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
+  - NTESBaseComponent (1.9)
+  - NTESQuickPass (3.6.2):
+    - NTESBaseComponent
   - RxCocoa (6.6.0):
     - RxRelay (= 6.6.0)
     - RxSwift (= 6.6.0)
@@ -75,6 +78,7 @@ DEPENDENCIES:
   - lottie-ios (~> 4.3.4)
   - MJRefresh (~> 3.7.9)
   - Moya (~> 15.0.0)
+  - NTESQuickPass (~> 3.6.2)
   - RxCocoa (~> 6.6.0)
   - RxDataSources (~> 5.0.0)
   - RxGesture (~> 4.0.4)
@@ -103,6 +107,8 @@ SPEC REPOS:
     - lottie-ios
     - MJRefresh
     - Moya
+    - NTESBaseComponent
+    - NTESQuickPass
     - RxCocoa
     - RxDataSources
     - RxGesture
@@ -131,6 +137,8 @@ SPEC CHECKSUMS:
   lottie-ios: 3d98679b41fa6fd6aff2352b3953dbd3df8a397e
   MJRefresh: ff9e531227924c84ce459338414550a05d2aea78
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  NTESBaseComponent: 6d1fd6802c2340005d35db9daafe15ee6b9b976c
+  NTESQuickPass: 99bfb528a4dea06b67d28e0e8e249f42d7351bdc
   RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
@@ -144,6 +152,6 @@ SPEC CHECKSUMS:
   TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
   WechatOpenSDK: 290989072e87b79d52225a01bb4e5e58f6f88593
 
-PODFILE CHECKSUM: b2584755417cee5e61267f6d8b01af793c78f40c
+PODFILE CHECKSUM: 78f7653733048cda0cff3774b765cf5b27b0e1b2
 
 COCOAPODS: 1.16.2

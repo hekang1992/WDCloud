@@ -50,4 +50,6 @@ target '问道云' do
   
   pod 'SAMKeychain', '~> 1.5.3'
   
+  pod 'NTESQuickPass', '~> 3.6.2'
+  
 end
