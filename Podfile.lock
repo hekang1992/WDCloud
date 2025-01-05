@@ -34,6 +34,7 @@ PODS:
     - DYFSwiftRuntimeProvider
   - DYFSwiftRuntimeProvider (2.1.1)
   - IQKeyboardManagerSwift (6.5.16)
+  - JXPagingView/Paging (2.1.3)
   - JXSegmentedView (1.4.1)
   - Kingfisher (7.11.0)
   - lottie-ios (4.3.4)
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - DropMenuBar (~> 1.0.4)
   - DYFStore (~> 2.2.0)
   - IQKeyboardManagerSwift (~> 6.5.16)
+  - JXPagingView/Paging (~> 2.1.3)
   - JXSegmentedView (~> 1.4.1)
   - Kingfisher (~> 7.11.0)
   - lottie-ios (~> 4.3.4)
@@ -102,6 +104,7 @@ SPEC REPOS:
     - DYFStore
     - DYFSwiftRuntimeProvider
     - IQKeyboardManagerSwift
+    - JXPagingView
     - JXSegmentedView
     - Kingfisher
     - lottie-ios
@@ -132,6 +135,7 @@ SPEC CHECKSUMS:
   DYFStore: 1036053c5d4c92b97e8fefd64bf36a9b0a49cd0c
   DYFSwiftRuntimeProvider: f90dcb2b8c97ff6b5185cc423daf178c7fbcf251
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
+  JXPagingView: afdd2e9af09c90160dd232b970d603cc6e7ddd0e
   JXSegmentedView: cd73555ce2134d1656db2cb383ba9c2f36fb5078
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
   lottie-ios: 3d98679b41fa6fd6aff2352b3953dbd3df8a397e
@@ -152,6 +156,6 @@ SPEC CHECKSUMS:
   TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
   WechatOpenSDK: 290989072e87b79d52225a01bb4e5e58f6f88593
 
-PODFILE CHECKSUM: 78f7653733048cda0cff3774b765cf5b27b0e1b2
+PODFILE CHECKSUM: a953b668d020faab6d9c5aa2a3c836149ce3ebc9
 
 COCOAPODS: 1.16.2

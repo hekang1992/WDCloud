@@ -32,7 +32,7 @@ class HistoryListViewController: WDBaseViewController {
         }
         
         //添加下拉刷新
-        self.historyView.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [weak self] in
+        self.historyView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             getHistroyListInfo(from: viewType, pageNum: 1)
         })

@@ -18,7 +18,7 @@ class UserCenterView: BaseView {
         bgImageView.image = UIImage(named: "centerbgimage")
         return bgImageView
     }()
-
+    
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .clear
@@ -443,7 +443,7 @@ class UserCenterView: BaseView {
             make.left.equalToSuperview().offset(20)
             make.top.equalTo(whiteView1.snp.bottom).offset(8)
             make.height.equalTo(234.5)
-            make.bottom.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-10)
         }
         morelabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(15.5)
@@ -464,6 +464,17 @@ class UserCenterView: BaseView {
         
         collectionView.rx.setDelegate(self).disposed(by: disposeBag)
         
+//        scrollView.rx.contentOffset
+//            .map { $0.y }
+//            .subscribe(onNext: { [weak self] offsetY in
+//                guard let self = self else { return }
+//                if offsetY > 0 {
+//                    self.scrollView.frame.origin.y = -offsetY
+//                } else {
+//                    self.scrollView.frame.origin.y = 0
+//                }
+//            })
+//            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {

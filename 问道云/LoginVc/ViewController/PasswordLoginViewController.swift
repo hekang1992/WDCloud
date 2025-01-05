@@ -72,14 +72,16 @@ extension PasswordLoginViewController {
             switch result {
             case .success(let success):
                 //保存登录信息和跳转到首页
-                ToastViewConfig.showToast(message: "登录成功!")
-                if let model = success.data {
-                    let phone = model.userinfo?.username ?? ""
-                    let token = model.access_token ?? ""
-                    let customernumber = model.customernumber ?? ""
-                    WDLoginConfig.saveLoginInfo(phone, token, customernumber)
+                if success.code == 200 {
+                    if let model = success.data {
+                        let phone = model.userinfo?.username ?? ""
+                        let token = model.access_token ?? ""
+                        let customernumber = model.customernumber ?? ""
+                        WDLoginConfig.saveLoginInfo(phone, token, customernumber)
+                    }
+                    NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
+                    ToastViewConfig.showToast(message: "登录成功!")
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
                 break
             case .failure(_):
                 break

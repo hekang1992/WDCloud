@@ -228,6 +228,8 @@ class OrderListViewCell: BaseViewCell {
             let payway = model.payway ?? ""
             if payway == "3" {
                 payLabel.text = "Apple支付"
+            }else {
+                payLabel.text = payway
             }
             let price = String(format: "%.2f", model.pirce ?? 0.00)
             moneyLabel.text = "¥\(price)"

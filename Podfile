@@ -52,4 +52,6 @@ target '问道云' do
   
   pod 'NTESQuickPass', '~> 3.6.2'
   
+  pod 'JXPagingView/Paging', '~> 2.1.3'
+  
 end

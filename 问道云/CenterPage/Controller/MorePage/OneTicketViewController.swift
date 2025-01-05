@@ -33,7 +33,7 @@ class OneTicketViewController: WDBaseViewController {
             make.edges.equalToSuperview()
         }
         
-        self.oneTicketView.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [weak self] in
+        self.oneTicketView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.pageNum = 1
             getListInfo()

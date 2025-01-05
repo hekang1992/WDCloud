@@ -48,7 +48,7 @@ class UserAllOrderSController: WDBaseViewController {
             make.top.equalTo(headView.snp.bottom).offset(0.5)
         }
         //添加下拉刷新
-        self.orderView.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [weak self] in
+        self.orderView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate)
         })

@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		730487F32D292EF40024265C /* BindPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F22D292EF40024265C /* BindPhoneViewController.swift */; };
 		730487F52D2932640024265C /* BindPhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F42D2932640024265C /* BindPhoneView.swift */; };
+		730487F72D2A525D0024265C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F62D2A525B0024265C /* HomeView.swift */; };
+		730487FD2D2A5C7D0024265C /* HomeNewsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487FC2D2A5C7D0024265C /* HomeNewsListViewController.swift */; };
+		730487FF2D2A5CBE0024265C /* HomeVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487FE2D2A5CBE0024265C /* HomeVideoListViewController.swift */; };
+		730488012D2A64410024265C /* WDRefreshHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730488002D2A64410024265C /* WDRefreshHeader.swift */; };
+		730488032D2A64B90024265C /* refreshloading.json in Resources */ = {isa = PBXBuildFile; fileRef = 730488022D2A64B90024265C /* refreshloading.json */; };
 		7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD802D01A55900770009 /* OrderListViewCell.swift */; };
 		7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */; };
 		7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */; };
@@ -136,6 +141,11 @@
 		68995903FB3663C128436F79 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		730487F22D292EF40024265C /* BindPhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindPhoneViewController.swift; sourceTree = "<group>"; };
 		730487F42D2932640024265C /* BindPhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindPhoneView.swift; sourceTree = "<group>"; };
+		730487F62D2A525B0024265C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		730487FC2D2A5C7D0024265C /* HomeNewsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsListViewController.swift; sourceTree = "<group>"; };
+		730487FE2D2A5CBE0024265C /* HomeVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVideoListViewController.swift; sourceTree = "<group>"; };
+		730488002D2A64410024265C /* WDRefreshHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDRefreshHeader.swift; sourceTree = "<group>"; };
+		730488022D2A64B90024265C /* refreshloading.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = refreshloading.json; sourceTree = "<group>"; };
 		7314AD802D01A55900770009 /* OrderListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewCell.swift; sourceTree = "<group>"; };
 		7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketViewController.swift; sourceTree = "<group>"; };
 		7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketView.swift; sourceTree = "<group>"; };
@@ -331,7 +341,10 @@
 		7325A7A82CFEE6C30043C196 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				730487F62D2A525B0024265C /* HomeView.swift */,
 				7325A7BF2CFEEE5F0043C196 /* WDHomeViewController.swift */,
+				730487FC2D2A5C7D0024265C /* HomeNewsListViewController.swift */,
+				730487FE2D2A5CBE0024265C /* HomeVideoListViewController.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -383,6 +396,8 @@
 				7325A7C72CFEEF780043C196 /* Config.swift */,
 				7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */,
 				7330CB812D23E65900778D54 /* ContactManager.swift */,
+				730488002D2A64410024265C /* WDRefreshHeader.swift */,
+				730488022D2A64B90024265C /* refreshloading.json */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -689,6 +704,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				730488032D2A64B90024265C /* refreshloading.json in Resources */,
 				73E306D22D154E9E00D18943 /* Launch Screen.storyboard in Resources */,
 				7325A7A42CFEE58D0043C196 /* Assets.xcassets in Resources */,
 				7325A7E42CFFF8EE0043C196 /* loading.json in Resources */,
@@ -795,6 +811,7 @@
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
 				730487F52D2932640024265C /* BindPhoneView.swift in Sources */,
 				73C752582D1E728500C47187 /* HistoryListViewCell.swift in Sources */,
+				730487FF2D2A5CBE0024265C /* HomeVideoListViewController.swift in Sources */,
 				7374162F2D0EB9E400E6CD23 /* HistoryView.swift in Sources */,
 				73A21DEA2D0C2F2B00FC4C49 /* RiskView.swift in Sources */,
 				7335F6EA2D0ADA050074985F /* MyDownloadSearchView.swift in Sources */,
@@ -812,6 +829,7 @@
 				7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */,
 				737416422D0FD0D000E6CD23 /* InvoiceListView.swift in Sources */,
 				7325A7BA2CFEED0F0043C196 /* WDTabBarController.swift in Sources */,
+				730487F72D2A525D0024265C /* HomeView.swift in Sources */,
 				73C752562D1E4DA000C47187 /* HistoryListView.swift in Sources */,
 				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
 				73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */,
@@ -822,6 +840,7 @@
 				7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */,
 				7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */,
 				7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */,
+				730488012D2A64410024265C /* WDRefreshHeader.swift in Sources */,
 				73C7524A2D1D2BD200C47187 /* FocusCompanyEditViewCell.swift in Sources */,
 				737416442D0FD74F00E6CD23 /* AddInvoiceViewController.swift in Sources */,
 				7325A7DC2CFF0DBE0043C196 /* PasswordLoginView.swift in Sources */,
@@ -834,6 +853,7 @@
 				738043322D278EED009B25F8 /* GroupListViewCell.swift in Sources */,
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */,
+				730487FD2D2A5C7D0024265C /* HomeNewsListViewController.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
 				73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */,
 				737416382D0EC54500E6CD23 /* MembershipCenterView.swift in Sources */,

@@ -84,7 +84,7 @@ class MyDownloadViewController: WDBaseViewController {
         }
         
         //添加下拉刷新
-        self.downloadView.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [weak self] in
+        self.downloadView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             pageNum = 1
             getPdfInfo()
