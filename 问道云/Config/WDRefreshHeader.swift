@@ -45,7 +45,7 @@ class WDRefreshHeader: MJRefreshHeader {
         nameLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(headTapView.snp.bottom)
-            make.size.equalTo(CGSize(width: 150, height: 13))
+            make.size.equalTo(CGSize(width: 120, height: 13))
         }
     }
 

@@ -12,7 +12,7 @@ class WDTabBarController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TabBar 设置
+        //TabBar设置
         tabBar.backgroundColor = .white
         tabBar.isTranslucent = false
         
@@ -98,9 +98,3 @@ class WDTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
 }
-
-extension WDTabBarController {
-    
-    
-}
-

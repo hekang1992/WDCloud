@@ -18,8 +18,6 @@ class WDHomeViewController: WDBaseViewController {
         return homeHeadView
     }()
     
-    var pagingView: JXPagingView!
-    
     var segmentedViewDataSource: JXSegmentedTitleDataSource!
     
     var segmentedView: JXSegmentedView!
@@ -29,6 +27,8 @@ class WDHomeViewController: WDBaseViewController {
     var JXTableHeaderViewHeight: Int = 400
     
     var JXheightForHeaderInSection: Int = 36
+    
+    lazy var pagingView: JXPagingView = preferredPagingView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,15 +54,32 @@ class WDHomeViewController: WDBaseViewController {
         lineView.indicatorWidth = 18
         lineView.indicatorHeight = 3
         segmentedView.indicators = [lineView]
-        
-        pagingView = JXPagingView(delegate: self)
+
         view.addSubview(pagingView)
-        pagingView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
         
         segmentedView.listContainer = pagingView.listContainerView
         pagingView.pinSectionHeaderVerticalOffset = Int(StatusHeightManager.navigationBarHeight + 20)
+        
+        //跳转到会员页面
+        homeHeadView.vipImageView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                let memVc = MembershipCenterViewController()
+                self?.navigationController?.pushViewController(memVc, animated: true)
+        }).disposed(by: disposeBag)
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        pagingView.frame = self.view.bounds
+    }
+    
+    //一定要加上这句代码,否则不会下拉刷新
+    func preferredPagingView() -> JXPagingView {
+        return JXPagingListRefreshView(delegate: self)
     }
     
 }
@@ -99,9 +116,17 @@ extension WDHomeViewController: JXPagingViewDelegate {
         }
     }
     
-    func mainTableViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < 0 {
-            scrollView.contentOffset.y = 0
+    func pagingView(_ pagingView: JXPagingView, mainTableViewDidScroll scrollView: UIScrollView) {
+        let contentOffsetY = scrollView.contentOffset.y
+        if contentOffsetY > 140 {
+            UIView.animate(withDuration: 0.3) {
+                
+            }
+        }else {
+            UIView.animate(withDuration: 0.3) {
+                
+            }
         }
     }
+    
 }

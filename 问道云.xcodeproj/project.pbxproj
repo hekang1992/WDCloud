@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		730487F32D292EF40024265C /* BindPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F22D292EF40024265C /* BindPhoneViewController.swift */; };
 		730487F52D2932640024265C /* BindPhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F42D2932640024265C /* BindPhoneView.swift */; };
-		730487F72D2A525D0024265C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F62D2A525B0024265C /* HomeView.swift */; };
+		730487F72D2A525D0024265C /* HomeHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F62D2A525B0024265C /* HomeHeadView.swift */; };
 		730487FD2D2A5C7D0024265C /* HomeNewsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487FC2D2A5C7D0024265C /* HomeNewsListViewController.swift */; };
 		730487FF2D2A5CBE0024265C /* HomeVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487FE2D2A5CBE0024265C /* HomeVideoListViewController.swift */; };
 		730488012D2A64410024265C /* WDRefreshHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730488002D2A64410024265C /* WDRefreshHeader.swift */; };
 		730488032D2A64B90024265C /* refreshloading.json in Resources */ = {isa = PBXBuildFile; fileRef = 730488022D2A64B90024265C /* refreshloading.json */; };
+		730488072D2A72200024265C /* HomeHeadTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730488062D2A72200024265C /* HomeHeadTabView.swift */; };
+		730488092D2A7ACD0024265C /* HomeHeadHotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730488082D2A7ACD0024265C /* HomeHeadHotsView.swift */; };
 		7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD802D01A55900770009 /* OrderListViewCell.swift */; };
 		7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */; };
 		7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */; };
@@ -141,11 +143,13 @@
 		68995903FB3663C128436F79 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		730487F22D292EF40024265C /* BindPhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindPhoneViewController.swift; sourceTree = "<group>"; };
 		730487F42D2932640024265C /* BindPhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindPhoneView.swift; sourceTree = "<group>"; };
-		730487F62D2A525B0024265C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		730487F62D2A525B0024265C /* HomeHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeadView.swift; sourceTree = "<group>"; };
 		730487FC2D2A5C7D0024265C /* HomeNewsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsListViewController.swift; sourceTree = "<group>"; };
 		730487FE2D2A5CBE0024265C /* HomeVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVideoListViewController.swift; sourceTree = "<group>"; };
 		730488002D2A64410024265C /* WDRefreshHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDRefreshHeader.swift; sourceTree = "<group>"; };
 		730488022D2A64B90024265C /* refreshloading.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = refreshloading.json; sourceTree = "<group>"; };
+		730488062D2A72200024265C /* HomeHeadTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeadTabView.swift; sourceTree = "<group>"; };
+		730488082D2A7ACD0024265C /* HomeHeadHotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeadHotsView.swift; sourceTree = "<group>"; };
 		7314AD802D01A55900770009 /* OrderListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewCell.swift; sourceTree = "<group>"; };
 		7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketViewController.swift; sourceTree = "<group>"; };
 		7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketView.swift; sourceTree = "<group>"; };
@@ -341,7 +345,9 @@
 		7325A7A82CFEE6C30043C196 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
-				730487F62D2A525B0024265C /* HomeView.swift */,
+				730487F62D2A525B0024265C /* HomeHeadView.swift */,
+				730488062D2A72200024265C /* HomeHeadTabView.swift */,
+				730488082D2A7ACD0024265C /* HomeHeadHotsView.swift */,
 				7325A7BF2CFEEE5F0043C196 /* WDHomeViewController.swift */,
 				730487FC2D2A5C7D0024265C /* HomeNewsListViewController.swift */,
 				730487FE2D2A5CBE0024265C /* HomeVideoListViewController.swift */,
@@ -829,7 +835,7 @@
 				7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */,
 				737416422D0FD0D000E6CD23 /* InvoiceListView.swift in Sources */,
 				7325A7BA2CFEED0F0043C196 /* WDTabBarController.swift in Sources */,
-				730487F72D2A525D0024265C /* HomeView.swift in Sources */,
+				730487F72D2A525D0024265C /* HomeHeadView.swift in Sources */,
 				73C752562D1E4DA000C47187 /* HistoryListView.swift in Sources */,
 				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
 				73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */,
@@ -838,6 +844,7 @@
 				7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */,
 				73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */,
 				7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */,
+				730488092D2A7ACD0024265C /* HomeHeadHotsView.swift in Sources */,
 				7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */,
 				7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */,
 				730488012D2A64410024265C /* WDRefreshHeader.swift in Sources */,
@@ -853,6 +860,7 @@
 				738043322D278EED009B25F8 /* GroupListViewCell.swift in Sources */,
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */,
+				730488072D2A72200024265C /* HomeHeadTabView.swift in Sources */,
 				730487FD2D2A5C7D0024265C /* HomeNewsListViewController.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
 				73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */,

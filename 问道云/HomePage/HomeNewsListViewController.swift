@@ -7,16 +7,19 @@
 
 import UIKit
 import JXPagingView
+import JXSegmentedView
 
-class HomeNewsListViewController: WDBaseViewController {
+class HomeNewsListViewController: UIViewController {
     
-    var listViewDidScrollCallback: ((UIScrollView) -> ())?
+    var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
@@ -29,29 +32,47 @@ class HomeNewsListViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        view.addSubview(tableView)
+        tableView.mj_header = WDRefreshHeader(refreshingBlock: {
+            
+        })
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
     }
     
 }
 
-extension HomeNewsListViewController: UITableViewDelegate {
+extension HomeNewsListViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        listViewDidScrollCallback?(scrollView)
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        100
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        cell.textLabel?.text = "fda"
+        return cell
     }
     
 }
 
 extension HomeNewsListViewController: JXPagingViewListViewDelegate {
+    
     func listView() -> UIView {
         return view
     }
     
-    func listScrollView() -> UIScrollView {
-        return tableView
-    }
-    
     func listViewDidScrollCallback(callback: @escaping (UIScrollView) -> ()) {
         self.listViewDidScrollCallback = callback
+    }
+    
+    func listScrollView() -> UIScrollView { tableView }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        listViewDidScrollCallback?(scrollView)
     }
     
 }

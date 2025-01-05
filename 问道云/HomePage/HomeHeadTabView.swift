@@ -1,0 +1,141 @@
+//
+//  HomeHeadTabView.swift
+//  问道云
+//
+//  Created by 何康 on 2025/1/5.
+//  首页头部tab切换
+
+import UIKit
+
+class HomeHeadTabView: BaseView {
+
+    lazy var oneBtn: UIButton = {
+        let oneBtn = UIButton(type: .custom)
+        oneBtn.setTitle("查企业", for: .normal)
+        oneBtn.titleLabel?.font = .semiboldFontOfSize(size: 16)
+        oneBtn.setTitleColor(.white, for: .normal)
+        return oneBtn
+    }()
+    
+    lazy var twoBtn: UIButton = {
+        let twoBtn = UIButton(type: .custom)
+        twoBtn.setTitle("查风险", for: .normal)
+        twoBtn.titleLabel?.font = .semiboldFontOfSize(size: 15)
+        twoBtn.setTitleColor(.white.withAlphaComponent(0.7), for: .normal)
+        return twoBtn
+    }()
+    
+    lazy var threeBtn: UIButton = {
+        let threeBtn = UIButton(type: .custom)
+        threeBtn.setTitle("查财产", for: .normal)
+        threeBtn.titleLabel?.font = .semiboldFontOfSize(size: 15)
+        threeBtn.setTitleColor(.white.withAlphaComponent(0.7), for: .normal)
+        return threeBtn
+    }()
+    
+    lazy var lineView: UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = .white
+        lineView.layer.cornerRadius = 1
+        return lineView
+    }()
+    
+    lazy var whiteView: UIView = {
+        let whiteView = UIView()
+        whiteView.backgroundColor = .white
+        whiteView.layer.cornerRadius = 5
+        return whiteView
+    }()
+    
+    lazy var ctImageView: UIImageView = {
+        let ctImageView = UIImageView()
+        ctImageView.image = UIImage(named: "searchiconf")
+        return ctImageView
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(oneBtn)
+        addSubview(twoBtn)
+        addSubview(threeBtn)
+        addSubview(lineView)
+        addSubview(whiteView)
+        whiteView.addSubview(ctImageView)
+        oneBtn.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.size.equalTo(CGSize(width: 48, height: 22.5))
+            make.left.equalToSuperview().offset(60)
+        }
+        twoBtn.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.size.equalTo(CGSize(width: 48, height: 22.5))
+            make.centerX.equalToSuperview()
+        }
+        threeBtn.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.size.equalTo(CGSize(width: 48, height: 22.5))
+            make.right.equalToSuperview().offset(-60)
+        }
+        lineView.snp.makeConstraints { make in
+            make.centerX.equalTo(oneBtn.snp.centerX)
+            make.top.equalTo(oneBtn.snp.bottom).offset(2.5)
+            make.size.equalTo(CGSize(width: 25, height: 2))
+        }
+        whiteView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(10)
+            make.height.equalTo(45)
+            make.top.equalTo(lineView.snp.bottom).offset(12)
+        }
+        ctImageView.snp.makeConstraints { make in
+            make.centerY.equalTo(whiteView)
+            make.left.equalToSuperview().offset(11.5)
+            make.size.equalTo(CGSize(width: 15, height: 15))
+        }
+        oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.oneBtn.setTitleColor(UIColor.white, for: .normal)
+            self.twoBtn.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: .normal)
+            self.threeBtn.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: .normal)
+            self.oneBtn.titleLabel?.font = .semiboldFontOfSize(size: 16)
+            self.twoBtn.titleLabel?.font = .semiboldFontOfSize(size: 15)
+            self.threeBtn.titleLabel?.font = .semiboldFontOfSize(size: 15)
+            UIView.animate(withDuration: 0.25) {
+                self.lineView.center.x = self.oneBtn.center.x
+            }
+        }).disposed(by: disposeBag)
+        
+        twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.oneBtn.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: .normal)
+            self.twoBtn.setTitleColor(UIColor.white, for: .normal)
+            self.threeBtn.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: .normal)
+            self.oneBtn.titleLabel?.font = .semiboldFontOfSize(size: 15)
+            self.twoBtn.titleLabel?.font = .semiboldFontOfSize(size: 16)
+            self.threeBtn.titleLabel?.font = .semiboldFontOfSize(size: 15)
+            UIView.animate(withDuration: 0.25) {
+                self.lineView.center.x = self.twoBtn.center.x
+            }
+        }).disposed(by: disposeBag)
+        
+        threeBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.oneBtn.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: .normal)
+            self.twoBtn.setTitleColor(UIColor.white.withAlphaComponent(0.7), for: .normal)
+            self.threeBtn.setTitleColor(UIColor.white, for: .normal)
+            self.oneBtn.titleLabel?.font = .semiboldFontOfSize(size: 15)
+            self.twoBtn.titleLabel?.font = .semiboldFontOfSize(size: 15)
+            self.threeBtn.titleLabel?.font = .semiboldFontOfSize(size: 16)
+            UIView.animate(withDuration: 0.25) {
+                self.lineView.center.x = self.threeBtn.center.x
+            }
+        }).disposed(by: disposeBag)
+        
+        
+    }
+    
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
