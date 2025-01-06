@@ -13,10 +13,7 @@ extension JXPagingListContainerView: @retroactive JXSegmentedViewListContainer {
 
 class WDHomeViewController: WDBaseViewController {
     
-    lazy var homeHeadView: HomeHeadView = {
-        let homeHeadView = HomeHeadView()
-        return homeHeadView
-    }()
+    lazy var homeHeadView: HomeHeadView = preferredTableHeaderView()
     
     var segmentedViewDataSource: JXSegmentedTitleDataSource!
     
@@ -34,7 +31,7 @@ class WDHomeViewController: WDBaseViewController {
         super.viewDidLoad()
         
         //首页头部view
-        homeHeadView = HomeHeadView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: CGFloat(JXTableHeaderViewHeight)))
+//        homeHeadView = HomeHeadView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: CGFloat(JXTableHeaderViewHeight)))
         
         //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
         segmentedViewDataSource = JXSegmentedTitleDataSource()
@@ -56,6 +53,9 @@ class WDHomeViewController: WDBaseViewController {
         segmentedView.indicators = [lineView]
 
         view.addSubview(pagingView)
+        pagingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         segmentedView.listContainer = pagingView.listContainerView
         pagingView.pinSectionHeaderVerticalOffset = Int(StatusHeightManager.navigationBarHeight + 20)
@@ -71,15 +71,32 @@ class WDHomeViewController: WDBaseViewController {
         }).disposed(by: disposeBag)
         
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        pagingView.frame = self.view.bounds
-    }
-    
+
     //一定要加上这句代码,否则不会下拉刷新
     func preferredPagingView() -> JXPagingView {
         return JXPagingListRefreshView(delegate: self)
+    }
+    
+    func preferredTableHeaderView() -> HomeHeadView {
+        JXTableHeaderViewHeight = 400
+        let header = HomeHeadView()
+//        header.toggleCallback = { (isSelected) in
+//            self.changeTableHeaderViewHeight()
+//        }
+        DispatchQueue.main.asyncAfter(delay: 5) {
+            self.changeTableHeaderViewHeight()
+        }
+        return header
+    }
+    
+    @objc func changeTableHeaderViewHeight() {
+        if JXTableHeaderViewHeight == 400 {
+            JXTableHeaderViewHeight = 300
+            pagingView.resizeTableHeaderViewHeight(animatable: true)
+        }else {
+            JXTableHeaderViewHeight = 250
+            pagingView.resizeTableHeaderViewHeight(animatable: true)
+        }
     }
     
 }

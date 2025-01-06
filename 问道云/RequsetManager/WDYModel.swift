@@ -14,12 +14,14 @@ class BaseModel {
     var data: DataModel?
     var rows: [rowsModel]?
     var datas: [rowsModel]?//搜索的数组
+    var total: Int?
     init(json: JSON) {
         self.code = json["code"].intValue
         self.msg = json["msg"].stringValue
         self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
         self.datas = json["data"].arrayValue.map { rowsModel(json: $0) }
         self.data = DataModel(json: json["data"])
+        self.total = json["total"].intValue
     }
 }
 
@@ -171,7 +173,19 @@ class rowsModel {
     var accountcount: Int?
     var username: String?
     var customernumber: String?
+    var title: String?//标题
+    var summary: String?//描述
+    var pic: String?//图片地址
+    var itemId: String?//新闻ID
+    var videofile: String?//讲堂链接
+    var newstagsobj: [newstagsobjModel]?
     init(json: JSON) {
+        self.newstagsobj = json["newstagsobj"].arrayValue.map { newstagsobjModel(json: $0) }
+        self.videofile = json["videofile"].stringValue
+        self.itemId = json["itemId"].stringValue
+        self.pic = json["pic"].stringValue
+        self.summary = json["summary"].stringValue
+        self.title = json["title"].stringValue
         self.customernumber = json["customernumber"].stringValue
         self.username = json["username"].stringValue
         self.accountcount = json["accountcount"].intValue
@@ -230,6 +244,19 @@ class rowsModel {
         self.createtime = json["createtime"].stringValue
         self.filepathH5 = json["filepathH5"].stringValue
         self.dataid = json["dataid"].stringValue
+    }
+}
+
+class newstagsobjModel {
+    var abbName: String?
+    var name: String?
+    var tag: String?
+    var type: String?
+    init(json: JSON) {
+        self.abbName = json["abbName"].stringValue
+        self.name = json["name"].stringValue
+        self.tag = json["tag"].stringValue
+        self.type = json["type"].stringValue
     }
 }
 
