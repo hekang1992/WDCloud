@@ -104,6 +104,16 @@
 		73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA12D1E973200D93691 /* MembershipListViewController.swift */; };
 		73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA32D1EA73100D93691 /* MembershipListView.swift */; };
 		73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */; };
+		73C36A6C2D2D024C00D6DC46 /* SearchAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A6B2D2D024C00D6DC46 /* SearchAllViewController.swift */; };
+		73C36A712D2D050200D6DC46 /* SearchHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A702D2D050200D6DC46 /* SearchHeadView.swift */; };
+		73C36A732D2D08CB00D6DC46 /* SearchCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A722D2D08CB00D6DC46 /* SearchCompanyViewController.swift */; };
+		73C36A752D2D08DA00D6DC46 /* SearchRiskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A742D2D08DA00D6DC46 /* SearchRiskViewController.swift */; };
+		73C36A772D2D08EB00D6DC46 /* SearchPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A762D2D08EB00D6DC46 /* SearchPeopleViewController.swift */; };
+		73C36A792D2D091100D6DC46 /* SearchPropertyClueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A782D2D091100D6DC46 /* SearchPropertyClueViewController.swift */; };
+		73C36A7B2D2D147400D6DC46 /* CompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A7A2D2D147400D6DC46 /* CompanyView.swift */; };
+		73C36A7D2D2D1B8400D6DC46 /* SearchHistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A7C2D2D1B8400D6DC46 /* SearchHistoryListView.swift */; };
+		73C36A7F2D2D1B9800D6DC46 /* SearchLastSearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A7E2D2D1B9800D6DC46 /* SearchLastSearchListView.swift */; };
+		73C36A812D2D1BAA00D6DC46 /* SearchHotWordsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A802D2D1BAA00D6DC46 /* SearchHotWordsListView.swift */; };
 		73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752312D18F44F00C47187 /* FocusPeopleViewController.swift */; };
 		73C752362D19451400C47187 /* FocusCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752352D19451400C47187 /* FocusCompanyView.swift */; };
 		73C752482D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752472D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift */; };
@@ -253,6 +263,16 @@
 		73BDABA12D1E973200D93691 /* MembershipListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListViewController.swift; sourceTree = "<group>"; };
 		73BDABA32D1EA73100D93691 /* MembershipListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListView.swift; sourceTree = "<group>"; };
 		73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHotWordsCell.swift; sourceTree = "<group>"; };
+		73C36A6B2D2D024C00D6DC46 /* SearchAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllViewController.swift; sourceTree = "<group>"; };
+		73C36A702D2D050200D6DC46 /* SearchHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeadView.swift; sourceTree = "<group>"; };
+		73C36A722D2D08CB00D6DC46 /* SearchCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyViewController.swift; sourceTree = "<group>"; };
+		73C36A742D2D08DA00D6DC46 /* SearchRiskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRiskViewController.swift; sourceTree = "<group>"; };
+		73C36A762D2D08EB00D6DC46 /* SearchPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleViewController.swift; sourceTree = "<group>"; };
+		73C36A782D2D091100D6DC46 /* SearchPropertyClueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPropertyClueViewController.swift; sourceTree = "<group>"; };
+		73C36A7A2D2D147400D6DC46 /* CompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyView.swift; sourceTree = "<group>"; };
+		73C36A7C2D2D1B8400D6DC46 /* SearchHistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryListView.swift; sourceTree = "<group>"; };
+		73C36A7E2D2D1B9800D6DC46 /* SearchLastSearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLastSearchListView.swift; sourceTree = "<group>"; };
+		73C36A802D2D1BAA00D6DC46 /* SearchHotWordsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHotWordsListView.swift; sourceTree = "<group>"; };
 		73C752312D18F44F00C47187 /* FocusPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusPeopleViewController.swift; sourceTree = "<group>"; };
 		73C752352D19451400C47187 /* FocusCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyView.swift; sourceTree = "<group>"; };
 		73C752472D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyViewNormalCell.swift; sourceTree = "<group>"; };
@@ -310,6 +330,11 @@
 				7325A7BF2CFEEE5F0043C196 /* WDHomeViewController.swift */,
 				730487FC2D2A5C7D0024265C /* HomeNewsListViewController.swift */,
 				730487FE2D2A5CBE0024265C /* HomeVideoListViewController.swift */,
+				73C36A6B2D2D024C00D6DC46 /* SearchAllViewController.swift */,
+				73C36A722D2D08CB00D6DC46 /* SearchCompanyViewController.swift */,
+				73C36A762D2D08EB00D6DC46 /* SearchPeopleViewController.swift */,
+				73C36A742D2D08DA00D6DC46 /* SearchRiskViewController.swift */,
+				73C36A782D2D091100D6DC46 /* SearchPropertyClueViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -317,14 +342,8 @@
 		7304880D2D2A97B50024265C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				730487F62D2A525B0024265C /* HomeHeadView.swift */,
-				730488062D2A72200024265C /* HomeHeadTabView.swift */,
-				730488082D2A7ACD0024265C /* HomeHeadHotsView.swift */,
-				7304880E2D2A97E00024265C /* HomeNewsListViewCell.swift */,
-				730488102D2A97F00024265C /* HomeVideoListViewCell.swift */,
-				730488122D2BD2090024265C /* HomeBannerViewCell.swift */,
-				730488142D2BD2380024265C /* HomeItemViewCell.swift */,
-				73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */,
+				73C36A6E2D2D04D800D6DC46 /* HomeView */,
+				73C36A6F2D2D04E900D6DC46 /* SearchView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -602,6 +621,33 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		73C36A6E2D2D04D800D6DC46 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				730487F62D2A525B0024265C /* HomeHeadView.swift */,
+				730488062D2A72200024265C /* HomeHeadTabView.swift */,
+				730488082D2A7ACD0024265C /* HomeHeadHotsView.swift */,
+				7304880E2D2A97E00024265C /* HomeNewsListViewCell.swift */,
+				730488102D2A97F00024265C /* HomeVideoListViewCell.swift */,
+				730488122D2BD2090024265C /* HomeBannerViewCell.swift */,
+				730488142D2BD2380024265C /* HomeItemViewCell.swift */,
+				73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		73C36A6F2D2D04E900D6DC46 /* SearchView */ = {
+			isa = PBXGroup;
+			children = (
+				73C36A702D2D050200D6DC46 /* SearchHeadView.swift */,
+				73C36A7A2D2D147400D6DC46 /* CompanyView.swift */,
+				73C36A7E2D2D1B9800D6DC46 /* SearchLastSearchListView.swift */,
+				73C36A7C2D2D1B8400D6DC46 /* SearchHistoryListView.swift */,
+				73C36A802D2D1BAA00D6DC46 /* SearchHotWordsListView.swift */,
+			);
+			path = SearchView;
+			sourceTree = "<group>";
+		};
 		73CFEB902D0056DD00B2FE1B /* WebPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -819,11 +865,14 @@
 				739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */,
 				7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */,
 				7325A7D12CFEFBE60043C196 /* WDYModel.swift in Sources */,
+				73C36A7D2D2D1B8400D6DC46 /* SearchHistoryListView.swift in Sources */,
 				7325A7EE2D0008D10043C196 /* WLUnitFieldTextPosition.m in Sources */,
 				7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */,
 				73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */,
 				73A21DF22D0C39E000FC4C49 /* RiskListViewController.swift in Sources */,
 				7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */,
+				73C36A772D2D08EB00D6DC46 /* SearchPeopleViewController.swift in Sources */,
+				73C36A792D2D091100D6DC46 /* SearchPropertyClueViewController.swift in Sources */,
 				7374162D2D0EB87F00E6CD23 /* FocusAllViewController.swift in Sources */,
 				73C752542D1E4B5800C47187 /* HistoryListViewController.swift in Sources */,
 				73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */,
@@ -832,6 +881,7 @@
 				730487F32D292EF40024265C /* BindPhoneViewController.swift in Sources */,
 				73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */,
 				7374164E2D100BB200E6CD23 /* SearchInvoiceCell.swift in Sources */,
+				73C36A7B2D2D147400D6DC46 /* CompanyView.swift in Sources */,
 				73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
 				7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */,
@@ -864,6 +914,7 @@
 				73E306DF2D156C0800D18943 /* MyQRCodeView.swift in Sources */,
 				7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */,
 				73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */,
+				73C36A712D2D050200D6DC46 /* SearchHeadView.swift in Sources */,
 				7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */,
 				7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */,
 				737416422D0FD0D000E6CD23 /* InvoiceListView.swift in Sources */,
@@ -881,6 +932,7 @@
 				7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */,
 				7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */,
 				730488012D2A64410024265C /* WDRefreshHeader.swift in Sources */,
+				73C36A7F2D2D1B9800D6DC46 /* SearchLastSearchListView.swift in Sources */,
 				73C7524A2D1D2BD200C47187 /* FocusCompanyEditViewCell.swift in Sources */,
 				737416442D0FD74F00E6CD23 /* AddInvoiceViewController.swift in Sources */,
 				7325A7DC2CFF0DBE0043C196 /* PasswordLoginView.swift in Sources */,
@@ -895,6 +947,7 @@
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				730488112D2A97F00024265C /* HomeVideoListViewCell.swift in Sources */,
 				734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */,
+				73C36A732D2D08CB00D6DC46 /* SearchCompanyViewController.swift in Sources */,
 				730488072D2A72200024265C /* HomeHeadTabView.swift in Sources */,
 				730487FD2D2A5C7D0024265C /* HomeNewsListViewController.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
@@ -904,7 +957,9 @@
 				737416342D0EBCB000E6CD23 /* ContactUsViewController.swift in Sources */,
 				73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */,
 				7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */,
+				73C36A6C2D2D024C00D6DC46 /* SearchAllViewController.swift in Sources */,
 				7330CB822D23E65900778D54 /* ContactManager.swift in Sources */,
+				73C36A752D2D08DA00D6DC46 /* SearchRiskViewController.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
 				73A21DF02D0C39BF00FC4C49 /* DiligenceListViewController.swift in Sources */,
 				73C7524C2D1D555400C47187 /* FocusCompanyPopGroupView.swift in Sources */,
@@ -924,6 +979,7 @@
 				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,
 				7374163A2D0ED72600E6CD23 /* WechatPushViewController.swift in Sources */,
 				7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */,
+				73C36A812D2D1BAA00D6DC46 /* SearchHotWordsListView.swift in Sources */,
 				737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,
 				73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */,

@@ -92,7 +92,7 @@ class HomeVideoListViewCell: BaseViewCell {
             iconImageView.kf.setImage(with: URL(string: model.pic ?? ""))
             titleLabel.text = model.title ?? ""
             descLabel.text = model.summary ?? ""
-            if let tags = model.newstagsobj, tags.count > 0 {
+            if let tags = model.newstagsobj {
                 self.clearExistingTagButtons()
                 var currentX: CGFloat = 10
                 for tag in tags {

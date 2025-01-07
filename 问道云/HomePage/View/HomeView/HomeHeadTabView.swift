@@ -11,6 +11,8 @@ import TXScrollLabelView
 
 class HomeHeadTabView: BaseView {
     
+    var textBlock: ((rowsModel) -> Void)?
+    
     var modelArray = BehaviorRelay<[rowsModel]?>(value: nil)
 
     lazy var oneBtn: UIButton = {
@@ -140,7 +142,7 @@ class HomeHeadTabView: BaseView {
         
         modelArray.compactMap { $0 }.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
-            let titlesArray = modelArray.map { $0.firmname ?? "" }
+            let titlesArray = modelArray.map { $0.name ?? "" }
             //创建文字上下轮博
             self.scrollLabelView?.endScrolling()
             let scrollLabelView = TXScrollLabelView(textArray: titlesArray, type: .flipNoRepeat, velocity: 2.0, options: .curveEaseInOut, inset: .zero)!
@@ -166,7 +168,9 @@ class HomeHeadTabView: BaseView {
 extension HomeHeadTabView: TXScrollLabelViewDelegate {
     
     func scrollLabelView(_ scrollLabelView: TXScrollLabelView!, didClickWithText text: String!, at index: Int) {
-        ToastViewConfig.showToast(message: text)
+        if let model = self.modelArray.value?[index] {
+            self.textBlock?(model)
+        }
     }
     
 }

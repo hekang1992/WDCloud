@@ -14,6 +14,7 @@ class HomeBannerViewCell: UICollectionViewCell {
     
     lazy var ipoImgaView: UIImageView = {
         let ipoImgaView = UIImageView()
+        ipoImgaView.contentMode = .scaleAspectFill
         return ipoImgaView
     }()
     

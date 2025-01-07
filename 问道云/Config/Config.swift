@@ -22,6 +22,8 @@ let SCREEN_HEIGHT = UIScreen.main.bounds.size.height
 
 let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
 
+let SHOW_HOME_LAUNCH = "SHOW_HOME_LAUNCH"
+
 //颜色
 extension UIColor {
     convenience init?(cssStr: String) {

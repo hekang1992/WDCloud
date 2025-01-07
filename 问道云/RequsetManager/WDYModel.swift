@@ -201,7 +201,11 @@ class rowsModel {
     var videofile: String?//讲堂链接
     var newstagsobj: [newstagsobjModel]?
     var banner: String?//banner图片链接
+    var id: String?//ID
+    var type: String?//1企业 2个人
     init(json: JSON) {
+        self.id = json["id"].stringValue
+        self.type = json["type"].stringValue
         self.banner = json["banner"].stringValue
         self.newstagsobj = json["newstagsobj"].arrayValue.map { newstagsobjModel(json: $0) }
         self.videofile = json["videofile"].stringValue

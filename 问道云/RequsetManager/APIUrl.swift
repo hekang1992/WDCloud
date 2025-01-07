@@ -59,4 +59,4 @@ let getCombo_selectmember = "/operation/combo/selectmember"
  */
 let customer_menuTree = "/operation/customermenu/customerMenuTree"//item
 let bannerHome_url = "/operation/configurationoc/selectconfigurationenabledstate2"//banner
-let browser_hotwords = "/operation/clientbrowsecb/qryBrowserHotWords"//热门搜索 1企业 2人员 3both
+let browser_hotwords = "/operation/clientbrowsecb/hot-search"
