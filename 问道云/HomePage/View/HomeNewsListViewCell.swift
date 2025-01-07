@@ -12,6 +12,8 @@ class HomeNewsListViewCell: BaseViewCell {
     
     var model = BehaviorRelay<rowsModel?>(value: nil)
     
+    var block: ((newstagsobjModel) -> Void)?
+    
     lazy var iconImageView: UIImageView = {
         let iconImageView = UIImageView()
         iconImageView.layer.cornerRadius = 4
@@ -93,11 +95,14 @@ class HomeNewsListViewCell: BaseViewCell {
                     button.titleLabel?.font = .regularFontOfSize(size: 11)
                     self.contentView.addSubview(button)
                     button.snp.makeConstraints { make in
-                        make.top.equalTo(self.descLabel.snp.bottom).offset(6)
+                        make.top.equalTo(self.descLabel.snp.bottom).offset(8)
                         make.left.equalTo(self.iconImageView.snp.right).offset(currentX)
                         make.height.equalTo(20)
                         make.width.equalTo(button.intrinsicContentSize.width + 20)
                     }
+                    button.rx.tap.subscribe(onNext: {
+                        self.block?(tag)
+                    }).disposed(by: disposeBag)
                     currentX += button.intrinsicContentSize.width + 25
                 }
             }

@@ -57,6 +57,19 @@ class HomeVideoListViewController: WDBaseViewController {
             cell.model.accept(model)
             cell.backgroundColor = .clear
             cell.selectionStyle = .none
+            cell.block = { [weak self] model in
+                let type = model.type ?? ""
+                if type == "1" {//企业
+                    
+                }else if type == "2" {//法典
+                    let pageUrl = model.value ?? ""
+                    if !pageUrl.isEmpty {
+                        self?.pushWebPage(from: pageUrl)
+                    }
+                }else {
+                    
+                }
+            }
         }.disposed(by: disposeBag)
         
         tableView.rx

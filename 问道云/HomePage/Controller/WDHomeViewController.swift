@@ -13,6 +13,10 @@ extension JXPagingListContainerView: @retroactive JXSegmentedViewListContainer {
 
 class WDHomeViewController: WDBaseViewController {
     
+    //是否点击了顶部三个tab
+    var isClickHeadTab: Bool = false
+    
+    //头部view
     lazy var homeHeadView: HomeHeadView = preferredTableHeaderView()
     
     var segmentedViewDataSource: JXSegmentedTitleDataSource!
@@ -29,10 +33,7 @@ class WDHomeViewController: WDBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //首页头部view
-//        homeHeadView = HomeHeadView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: CGFloat(JXTableHeaderViewHeight)))
-        
+
         //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
         segmentedViewDataSource = JXSegmentedTitleDataSource()
         segmentedViewDataSource.titles = titles
@@ -70,6 +71,47 @@ class WDHomeViewController: WDBaseViewController {
                 self?.navigationController?.pushViewController(memVc, animated: true)
         }).disposed(by: disposeBag)
         
+        //获取banner数据
+        getBannerInfo()
+        //banner点击
+        homeHeadView.bannerBlock = { [weak self] in
+            let memVc = MembershipCenterViewController()
+            self?.navigationController?.pushViewController(memVc, animated: true)
+        }
+        
+        //获取热搜3
+        getHotWords()
+        self.homeHeadView.hotsView.refreshImageView.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                self?.getHotWords()
+                self?.getHotCompanyWords()
+        }).disposed(by: disposeBag)
+        //热搜3点击
+        self.homeHeadView.hotsView.hotWordsBlock = { [weak self] model in
+            ToastViewConfig.showToast(message: model.firmname ?? "")
+        }
+        
+        //获取企业热搜
+        getHotCompanyWords()
+        
+        //点击查企业更新文字轮博
+        homeHeadView.tabView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.isClickHeadTab = true
+            self?.getHotCompanyWords()
+        }).disposed(by: disposeBag)
+        //点击查风险更新文字轮博
+        homeHeadView.tabView.twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.isClickHeadTab = true
+            self?.getHotWords()
+        }).disposed(by: disposeBag)
+        //点击查财产更新文字轮博
+        homeHeadView.tabView.threeBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.isClickHeadTab = true
+            self?.getHotWords()
+        }).disposed(by: disposeBag)
+        
     }
 
     //一定要加上这句代码,否则不会下拉刷新
@@ -78,25 +120,24 @@ class WDHomeViewController: WDBaseViewController {
     }
     
     func preferredTableHeaderView() -> HomeHeadView {
-        JXTableHeaderViewHeight = 400
+        JXTableHeaderViewHeight = 318 + 28
         let header = HomeHeadView()
-//        header.toggleCallback = { (isSelected) in
-//            self.changeTableHeaderViewHeight()
-//        }
-        DispatchQueue.main.asyncAfter(delay: 5) {
-            self.changeTableHeaderViewHeight()
+        //获取首页item
+        getHomeItemInfo { [weak self] model in
+            let items = model.children ?? []
+            var multiplier = items.count / 5
+            if multiplier >= 3 {
+                multiplier = 3
+            }
+            self?.homeHeadView.itemModelArray.accept(items)
+            self?.changeTableHeaderViewHeight(from: multiplier)
         }
         return header
     }
     
-    @objc func changeTableHeaderViewHeight() {
-        if JXTableHeaderViewHeight == 400 {
-            JXTableHeaderViewHeight = 300
-            pagingView.resizeTableHeaderViewHeight(animatable: true)
-        }else {
-            JXTableHeaderViewHeight = 250
-            pagingView.resizeTableHeaderViewHeight(animatable: true)
-        }
+    @objc func changeTableHeaderViewHeight(from multiplier: Int) {
+        JXTableHeaderViewHeight = 62 * multiplier + 318 + 28
+        pagingView.resizeTableHeaderViewHeight(animatable: true)
     }
     
 }
@@ -145,5 +186,91 @@ extension WDHomeViewController: JXPagingViewDelegate {
             }
         }
     }
+    
+}
+
+
+extension WDHomeViewController {
+    
+    //获取首页item
+    private func getHomeItemInfo(complete: @escaping ((childrenModel) -> Void)) {
+        let man = RequestManager()
+        let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+        let dict = ["moduleType": "1", "appleVersion": appleVersion]
+        man.requestAPI(params: dict, pageUrl: customer_menuTree, method: .get) { result in
+            switch result {
+            case .success(let success):
+                if let model = success.data?.items?.first?.children?.last {
+                    complete(model)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //获取banner
+    func getBannerInfo() {
+        let man = RequestManager()
+        let dict = ["binnertype": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: bannerHome_url,
+                       method: .get) { [weak self] reslut in
+            switch reslut {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.homeHeadView.bannerModelArray = success.data?.rows ?? []
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //热搜3
+    func getHotWords() {
+        let man = RequestManager()
+        let dict = ["type": "3"]
+        man.requestAPI(params: dict,
+                       pageUrl: browser_hotwords,
+                       method: .get) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    self.homeHeadView.hotsView.modelArray.accept(model.rows ?? [])
+                    if self.isClickHeadTab {
+                        self.homeHeadView.tabView.modelArray.accept(model.rows ?? [])
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //热搜1 企业热搜
+    func getHotCompanyWords() {
+        let man = RequestManager()
+        let dict = ["type": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: browser_hotwords,
+                       method: .get) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    self.homeHeadView.tabView.modelArray.accept(model.rows ?? [])
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
     
 }

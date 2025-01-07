@@ -3,11 +3,16 @@
 //  问道云
 //
 //  Created by 何康 on 2025/1/5.
-//
+//  首页热词
 
 import UIKit
+import RxRelay
 
 class HomeHeadHotsView: BaseView {
+    
+    var hotWordsBlock: ((rowsModel) -> Void)?
+    
+    var modelArray = BehaviorRelay<[rowsModel]?>(value: nil)
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
@@ -24,7 +29,6 @@ class HomeHeadHotsView: BaseView {
     
     lazy var oneView: UIView = {
         let oneView = UIView()
-        oneView.backgroundColor = .random()
         return oneView
     }()
     
@@ -37,12 +41,29 @@ class HomeHeadHotsView: BaseView {
         return refreshImageView
     }()
     
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .clear
+        collectionView.register(HomeHotWordsCell.self, forCellWithReuseIdentifier: "HomeHotWordsCell")
+        collectionView.delegate = self
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(ctImageView)
         addSubview(lineView)
         addSubview(oneView)
         addSubview(refreshImageView)
+        oneView.addSubview(collectionView)
         ctImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(10)
@@ -61,25 +82,49 @@ class HomeHeadHotsView: BaseView {
         }
         oneView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.top.equalToSuperview()
+            make.top.equalTo(ctImageView.snp.top)
             make.left.equalTo(lineView.snp.right).offset(10)
             make.right.equalTo(refreshImageView.snp.left).offset(-3.5)
+        }
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
         refreshImageView.rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
+                guard let self = self else { return }
                 UIView.animate(withDuration: 0.5, animations: {
-                self.refreshImageView.transform = self.refreshImageView.transform.rotated(by: .pi)
-            })
+                    self.refreshImageView.transform = self.refreshImageView.transform.rotated(by: .pi)
+                })
+            }).disposed(by: disposeBag)
+        
+        modelArray.compactMap { $0 }.asObservable().bind(to: collectionView.rx.items(cellIdentifier: "HomeHotWordsCell", cellType: HomeHotWordsCell.self)) { row, model ,cell in
+            cell.namelabel.text = model.firmname ?? ""
+        }.disposed(by: disposeBag)
+        
+        collectionView.rx
+            .modelSelected(rowsModel.self)
+            .subscribe(onNext: { [weak self] model in
+                self?.hotWordsBlock?(model)
         }).disposed(by: disposeBag)
         
     }
     
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+extension HomeHeadHotsView: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let model = modelArray.value?[indexPath.row]
+        let text = model?.firmname ?? ""
+        let width = text.size(withAttributes: [.font: UIFont.regularFontOfSize(size: 11)]).width
+        return CGSize(width: width + 10, height: 12)
     }
     
 }

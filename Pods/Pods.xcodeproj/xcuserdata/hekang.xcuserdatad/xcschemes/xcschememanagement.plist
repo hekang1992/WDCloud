@@ -242,19 +242,26 @@
 			<key>orderHint</key>
 			<integer>33</integer>
 		</dict>
-		<key>TYAlertController.xcscheme</key>
+		<key>TXScrollLabelView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>36</integer>
 		</dict>
-		<key>TYCyclePagerView.xcscheme</key>
+		<key>TYAlertController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>37</integer>
+		</dict>
+		<key>TYCyclePagerView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>38</integer>
 		</dict>
 		<key>Toaster.xcscheme</key>
 		<dict>
@@ -268,7 +275,7 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>38</integer>
+			<integer>39</integer>
 		</dict>
 		<key>lottie-ios.xcscheme</key>
 		<dict>

@@ -12,6 +12,7 @@ class BaseModel {
     var code: Int?
     var msg: String?
     var data: DataModel?
+    
     var rows: [rowsModel]?
     var datas: [rowsModel]?//搜索的数组
     var total: Int?
@@ -51,7 +52,9 @@ class DataModel {
     var accountcount: String?//总人数
     var flag: String?
     var wechatopenid: String?
+    var items: [itemsModel]?
     init(json: JSON) {
+        self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
         self.flag = json["flag"].stringValue
         self.wechatopenid = json["wechatopenid"].stringValue
         self.useaccountcount = json["useaccountcount"].stringValue
@@ -77,6 +80,24 @@ class DataModel {
         self.total = json["total"].intValue
         self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
         self.data = json["data"].arrayValue.map { rowsModel(json: $0) }
+    }
+}
+
+class itemsModel {
+    var children: [childrenModel]?
+    init(json: JSON) {
+        self.children = json["children"].arrayValue.map { childrenModel(json: $0) }
+    }
+}
+
+class childrenModel {
+    var icon: String?
+    var menuName: String?
+    var children: [childrenModel]?
+    init(json: JSON) {
+        self.children = json["children"].arrayValue.map { childrenModel(json: $0) }
+        self.icon = json["icon"].stringValue
+        self.menuName = json["menuName"].stringValue
     }
 }
 
@@ -179,7 +200,9 @@ class rowsModel {
     var itemId: String?//新闻ID
     var videofile: String?//讲堂链接
     var newstagsobj: [newstagsobjModel]?
+    var banner: String?//banner图片链接
     init(json: JSON) {
+        self.banner = json["banner"].stringValue
         self.newstagsobj = json["newstagsobj"].arrayValue.map { newstagsobjModel(json: $0) }
         self.videofile = json["videofile"].stringValue
         self.itemId = json["itemId"].stringValue
@@ -252,7 +275,9 @@ class newstagsobjModel {
     var name: String?
     var tag: String?
     var type: String?
+    var value: String?
     init(json: JSON) {
+        self.value = json["value"].stringValue
         self.abbName = json["abbName"].stringValue
         self.name = json["name"].stringValue
         self.tag = json["tag"].stringValue

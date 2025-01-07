@@ -11,6 +11,8 @@ import RxRelay
 class HomeVideoListViewCell: BaseViewCell {
 
     var model = BehaviorRelay<rowsModel?>(value: nil)
+    
+    var block: ((newstagsobjModel) -> Void)?
 
     lazy var iconImageView: UIImageView = {
         let iconImageView = UIImageView()
@@ -90,6 +92,31 @@ class HomeVideoListViewCell: BaseViewCell {
             iconImageView.kf.setImage(with: URL(string: model.pic ?? ""))
             titleLabel.text = model.title ?? ""
             descLabel.text = model.summary ?? ""
+            if let tags = model.newstagsobj, tags.count > 0 {
+                self.clearExistingTagButtons()
+                var currentX: CGFloat = 10
+                for tag in tags {
+                    let button = UIButton(type: .custom)
+                    button.layer.cornerRadius = 10
+                    button.layoutButtonEdgeInsets(style: .left, space: 5)
+                    button.setImage(UIImage(named: "jointopicimge"), for: .normal)
+                    button.backgroundColor = .init(cssStr: "#F4F4F6")
+                    button.setTitle(tag.abbName, for: .normal)
+                    button.setTitleColor(.init(cssStr: "#333333"), for: .normal)
+                    button.titleLabel?.font = .regularFontOfSize(size: 11)
+                    self.contentView.addSubview(button)
+                    button.snp.makeConstraints { make in
+                        make.top.equalTo(self.descLabel.snp.bottom).offset(8)
+                        make.left.equalTo(self.iconImageView.snp.right).offset(currentX)
+                        make.height.equalTo(20)
+                        make.width.equalTo(button.intrinsicContentSize.width + 20)
+                    }
+                    button.rx.tap.subscribe(onNext: {
+                        self.block?(tag)
+                    }).disposed(by: disposeBag)
+                    currentX += button.intrinsicContentSize.width + 25
+                }
+            }
         }).disposed(by: disposeBag)
         
     }
@@ -98,4 +125,16 @@ class HomeVideoListViewCell: BaseViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+}
+
+extension HomeVideoListViewCell {
+    
+    private func clearExistingTagButtons() {
+        self.contentView.subviews.forEach { subview in
+            if subview is UIButton {
+                subview.removeFromSuperview()
+            }
+        }
+    }
+    
 }

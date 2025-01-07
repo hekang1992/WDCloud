@@ -6,8 +6,12 @@
 //  首页头部tab切换
 
 import UIKit
+import RxRelay
+import TXScrollLabelView
 
 class HomeHeadTabView: BaseView {
+    
+    var modelArray = BehaviorRelay<[rowsModel]?>(value: nil)
 
     lazy var oneBtn: UIButton = {
         let oneBtn = UIButton(type: .custom)
@@ -53,6 +57,8 @@ class HomeHeadTabView: BaseView {
         return ctImageView
     }()
     
+    var scrollLabelView: TXScrollLabelView?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(oneBtn)
@@ -92,6 +98,7 @@ class HomeHeadTabView: BaseView {
             make.left.equalToSuperview().offset(11.5)
             make.size.equalTo(CGSize(width: 15, height: 15))
         }
+        
         oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.oneBtn.setTitleColor(UIColor.white, for: .normal)
@@ -131,11 +138,35 @@ class HomeHeadTabView: BaseView {
             }
         }).disposed(by: disposeBag)
         
+        modelArray.compactMap { $0 }.asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self else { return }
+            let titlesArray = modelArray.map { $0.firmname ?? "" }
+            //创建文字上下轮博
+            self.scrollLabelView?.endScrolling()
+            let scrollLabelView = TXScrollLabelView(textArray: titlesArray, type: .flipNoRepeat, velocity: 2.0, options: .curveEaseInOut, inset: .zero)!
+            scrollLabelView.backgroundColor = .white
+            scrollLabelView.textAlignment = .left
+            scrollLabelView.font = .regularFontOfSize(size: 13)
+            scrollLabelView.scrollTitleColor = .init(cssStr: "#333333")
+            scrollLabelView.frame = CGRectMake(38, 0, SCREEN_WIDTH - 70, 45)
+            scrollLabelView.scrollLabelViewDelegate = self
+            self.scrollLabelView = scrollLabelView
+            whiteView.addSubview(scrollLabelView)
+            scrollLabelView.beginScrolling()
+        }).disposed(by: disposeBag)
         
     }
     
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+extension HomeHeadTabView: TXScrollLabelViewDelegate {
+    
+    func scrollLabelView(_ scrollLabelView: TXScrollLabelView!, didClickWithText text: String!, at index: Int) {
+        ToastViewConfig.showToast(message: text)
     }
     
 }

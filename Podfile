@@ -54,4 +54,6 @@ target '问道云' do
   
   pod 'JXPagingView/Paging', '~> 2.1.3'
   
+  pod 'TXScrollLabelView', '~> 1.3.2'
+  
 end
