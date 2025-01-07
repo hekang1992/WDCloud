@@ -25,11 +25,18 @@ class WDHomeViewController: WDBaseViewController {
     
     let titles = ["问道头条", "问道讲堂"]
     
-    var JXTableHeaderViewHeight: Int = 400
+    var JXTableHeaderViewHeight: Int = 318 + 28
     
     var JXheightForHeaderInSection: Int = 36
     
     lazy var pagingView: JXPagingView = preferredPagingView()
+    
+    lazy var homeBgImageView: UIImageView = {
+        let homeBgImageView = UIImageView()
+        homeBgImageView.image = UIImage(named: "homelacunchimage")
+        homeBgImageView.contentMode = .scaleAspectFill
+        return homeBgImageView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,7 +118,10 @@ class WDHomeViewController: WDBaseViewController {
             self?.isClickHeadTab = true
             self?.getHotWords()
         }).disposed(by: disposeBag)
-        
+        keyWindow?.addSubview(homeBgImageView)
+        homeBgImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 
     //一定要加上这句代码,否则不会下拉刷新
@@ -138,6 +148,9 @@ class WDHomeViewController: WDBaseViewController {
     @objc func changeTableHeaderViewHeight(from multiplier: Int) {
         JXTableHeaderViewHeight = 62 * multiplier + 318 + 28
         pagingView.resizeTableHeaderViewHeight(animatable: true)
+        DispatchQueue.main.asyncAfter(delay: 0.5) {
+            self.homeBgImageView.removeFromSuperview()
+        }
     }
     
 }
