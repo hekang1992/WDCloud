@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NTESQuickPass
 
 class WDLoginViewController: WDBaseViewController {
     
@@ -13,10 +14,10 @@ class WDLoginViewController: WDBaseViewController {
         let loginView = LoginView()
         return loginView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(loginView)
         loginView.snp.makeConstraints { make in
@@ -51,6 +52,10 @@ class WDLoginViewController: WDBaseViewController {
             self?.loginView.phoneTx.resignFirstResponder()
         }).disposed(by: disposeBag)
         
+        //一键登录
+        loginView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.oneLogin()
+        }).disposed(by: disposeBag)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -93,8 +98,32 @@ extension WDLoginViewController {
     
 }
 
-extension WDLoginViewController: WXApiDelegate {
+extension WDLoginViewController {
     
+    private func oneLogin() {
+        let manager = NTESQuickLoginManager.sharedInstance()
+        manager.register(withBusinessID: "5467cd077ec5425c8779ef27b682bb8e")
+        //是否支持一键登录
+        let isOneLogin = manager.shouldQuickLogin()
+        if !isOneLogin {
+            ToastViewConfig.showToast(message: "您的设备不支持一键登录功能!")
+        }else {
+            self.oneTouchLoginInfo(from: manager)
+        }
+    }
     
+    private func oneTouchLoginInfo(from manager: NTESQuickLoginManager) {
+        manager.getPhoneNumberCompletion { resultDic in
+            if let boolNum = resultDic["success"] as? NSNumber, boolNum.boolValue {
+                let securityPhone = resultDic["securityPhone"]
+                print("securityPhone====\(securityPhone ?? "")")
+            } else {
+                // 预取号失败，建议后续直接走降级方案（例如短信）
+            }
+        }
+        
+    }
     
 }
+
+

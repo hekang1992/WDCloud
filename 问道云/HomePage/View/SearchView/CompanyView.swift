@@ -27,16 +27,6 @@ class CompanyView: BaseView {
         return searchbtn
     }()
     
-    lazy var nearbtn: UIButton = {
-        let nearbtn = UIButton(type: .custom)
-        nearbtn.setTitle("附近企业", for: .normal)
-        nearbtn.backgroundColor = .white
-        nearbtn.layer.cornerRadius = 1.5
-        nearbtn.titleLabel?.font = .regularFontOfSize(size: 13)
-        nearbtn.setTitleColor(UIColor.init(cssStr: "#333333"), for: .normal)
-        return nearbtn
-    }()
-    
     //最近搜索
     lazy var searchView: SearchLastSearchListView = {
         let searchView = SearchLastSearchListView()
@@ -59,7 +49,6 @@ class CompanyView: BaseView {
         super.init(frame: frame)
         addSubview(scrollView)
         scrollView.addSubview(searchbtn)
-        scrollView.addSubview(nearbtn)
         scrollView.addSubview(searchView)
         scrollView.addSubview(historyView)
         scrollView.addSubview(hotWordsView)
@@ -73,12 +62,7 @@ class CompanyView: BaseView {
             make.top.equalToSuperview().offset(8.5)
             make.size.equalTo(CGSize(width: 72, height: 23.5))
         }
-        nearbtn.snp.makeConstraints { make in
-            make.left.equalTo(searchbtn.snp.right).offset(15)
-            make.top.equalToSuperview().offset(8.5)
-            make.size.equalTo(CGSize(width: 72, height: 23.5))
-        }
-        
+    
         searchView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)

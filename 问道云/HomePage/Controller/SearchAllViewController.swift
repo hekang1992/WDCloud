@@ -32,7 +32,7 @@ class SearchAllViewController: WDBaseViewController {
     
     lazy var searchHeadView: SearchHeadView = {
         let searchHeadView = SearchHeadView()
-        searchHeadView.searchTx.placeholder = model.value?.firmname ?? ""
+        searchHeadView.searchTx.placeholder = model.value?.name ?? ""
         searchHeadView.searchTx.delegate = self
         return searchHeadView
     }()
@@ -62,10 +62,15 @@ class SearchAllViewController: WDBaseViewController {
         
         // Do any additional setup after loading the view.
         view.addSubview(searchHeadView)
+        searchHeadView.searchTx.becomeFirstResponder()
         searchHeadView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.height.equalTo(104)
         }
+        searchHeadView.clickBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.navigationController?.popViewController(animated: false)
+        }).disposed(by: disposeBag)
+        
         //添加
         addSegmentedView()
     }

@@ -95,18 +95,17 @@ class WDHomeViewController: WDBaseViewController {
             }
         }
         
-        //获取热搜3
+        //获取热搜
         getHotWords()
         self.homeHeadView.hotsView.refreshImageView.rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
                 self?.getHotWords()
-                self?.getHotCompanyWords()
         }).disposed(by: disposeBag)
         //热搜3点击
         self.homeHeadView.hotsView.hotWordsBlock = { [weak self] model in
-            ToastViewConfig.showToast(message: model.firmname ?? "")
+            ToastViewConfig.showToast(message: model.name ?? "")
         }
         
         //获取企业热搜
@@ -134,7 +133,7 @@ class WDHomeViewController: WDBaseViewController {
         homeHeadView.tabView.textBlock = { [weak self] model in
             let searchAllVc = SearchAllViewController()
             searchAllVc.model.accept(model)
-            self?.navigationController?.pushViewController(searchAllVc, animated: true)
+            self?.navigationController?.pushViewController(searchAllVc, animated: false)
         }
         
         //添加启动页
@@ -296,6 +295,7 @@ extension WDHomeViewController: JXPagingViewDelegate {
     
     func pagingView(_ pagingView: JXPagingView, mainTableViewDidScroll scrollView: UIScrollView) {
         let contentOffsetY = scrollView.contentOffset.y
+        print("contentOffsetY======\(contentOffsetY)")
         if contentOffsetY > 140 {
             UIView.animate(withDuration: 0.3) {
                 

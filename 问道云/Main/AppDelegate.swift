@@ -15,6 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    lazy var tabBarVc: WDTabBarController = {
+        let tabBarVc = WDTabBarController()
+        return tabBarVc
+    }()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         keyBordManager()
@@ -23,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initIAPSDK()
         window = UIWindow()
         window?.frame = UIScreen.main.bounds
-        window?.rootViewController = WDNavigationController(rootViewController: WDTabBarController())
+        window?.rootViewController = WDNavigationController(rootViewController: self.tabBarVc)
         window?.makeKeyAndVisible()
         return true
     }
@@ -110,19 +115,16 @@ extension AppDelegate: WXApiDelegate {
     }
     
     @objc func setUpRootVc(_ notification: Notification) {
-        window?.rootViewController = WDNavigationController(rootViewController: WDTabBarController())
+        window?.rootViewController = WDNavigationController(rootViewController: self.tabBarVc)
     }
     
     @objc func goRiskVc(_ notification: Notification) {
-        let tabBarVc = WDTabBarController()
-        tabBarVc.selectedIndex = 1
-        window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
+        self.tabBarVc.selectedIndex = 1
+        
     }
     
     @objc func goDiliVc(_ notification: Notification) {
-        let tabBarVc = WDTabBarController()
-        tabBarVc.selectedIndex = 2
-        window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
+        self.tabBarVc.selectedIndex = 2
     }
     
 }
