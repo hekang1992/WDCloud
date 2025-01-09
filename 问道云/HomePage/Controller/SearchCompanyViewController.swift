@@ -8,12 +8,24 @@
 import UIKit
 import JXPagingView
 import RxRelay
+import DropMenuBar
 
 class SearchCompanyViewController: WDBaseViewController {
     
+    //城市数据
+    var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
+    
+    //行业数据
+    var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
+    
+    //搜索参数
+    var pageIndex: Int = 1
+    var entityArea: String = ""//地区
+    var entityIndustry: String = ""//行业
+    
     var searchWords: String? {
         didSet {
-            print("searchWords企业======\(searchWords ?? "")")
+            searchListInfo()
         }
     }
     
@@ -25,50 +37,107 @@ class SearchCompanyViewController: WDBaseViewController {
     //搜索文字回调
     var lastSearchTextBlock: ((String) -> Void)?
     
-    lazy var companyView: CompanyView = {
-        let companyView = CompanyView()
+    lazy var companyView: OneCompanyView = {
+        let companyView = OneCompanyView()
+        companyView.isHidden = false
         return companyView
+    }()
+    
+    //搜索list列表页面
+    lazy var companyListView: TwoCompanyView = {
+        let companyListView = TwoCompanyView()
+        companyListView.isHidden = true
+        return companyListView
     }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(companyView)
         companyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        //最近搜索
-        getlastSearch()
-
-        //浏览历史
-        getBrowsingHistory()
         
-        //热搜
-        getHotWords()
+        view.addSubview(companyListView)
+        companyListView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         //删除最近搜索
         self.companyView.searchView.deleteBtn
             .rx
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteSearchInfo()
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         //删除浏览历史
         self.companyView.historyView.deleteBtn
             .rx
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteHistoryInfo()
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         //点击最近搜索
         self.companyView.lastSearchTextBlock = { [weak self] searchStr in
             self?.lastSearchTextBlock?(searchStr)
+            self?.searchWords = searchStr
         }
+        
+        //添加下拉筛选
+        let regionMenu = MenuAction(title: "地区", style: .typeList)!
+        
+        self.regionModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self else { return }
+            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
+            regionMenu.listDataSource = regionArray
+        }).disposed(by: disposeBag)
+        
+        regionMenu.didSelectedMenuResult = { [weak self] index, model, grand in
+            guard let self = self else { return }
+            self.entityArea = model?.currentID ?? ""
+            self.searchListInfo()
+        }
+        
+        let industryMenu = MenuAction(title: "行业", style: .typeList)!
+        
+        self.industryModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self else { return }
+            let industryArray = getThreeRegionInfo(from: modelArray ?? [])
+            industryMenu.listDataSource = industryArray
+        }).disposed(by: disposeBag)
+        
+        industryMenu.didSelectedMenuResult = { [weak self] index, model, grand in
+            guard let self = self else { return }
+            self.entityIndustry = model?.currentID ?? ""
+            self.searchListInfo()
+        }
+        
+        let menuView = DropMenuBar(action: [regionMenu, industryMenu])!
+        menuView.backgroundColor = .white
+        self.companyListView.addSubview(menuView)
+        menuView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(0.5)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(32)
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //最近搜索
+        getlastSearch()
+        
+        //浏览历史
+        getBrowsingHistory()
+        
+        //热搜
+        getHotWords()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,7 +193,8 @@ extension SearchCompanyViewController {
     //浏览历史
     private func getBrowsingHistory() {
         let man = RequestManager()
-        let dict = ["viewrecordtype": "1", "moduleId": "01", "pageNum": "1", "pageSize": "20"]
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let dict = ["customernumber": customernumber, "viewrecordtype": "1", "moduleId": "01", "pageNum": "1", "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
             switch result {
             case .success(let success):
@@ -231,8 +301,8 @@ extension SearchCompanyViewController {
                 case .success(let success):
                     if success.code == 200 {
                         ToastViewConfig.showToast(message: "删除成功!")
-                        self.companyView.searchView.removeFromSuperview()
-                        self.companyView.searchView.snp.makeConstraints({ make in
+                        self.companyView.searchView.isHidden = true
+                        self.companyView.searchView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
                         })
                     }
@@ -248,14 +318,15 @@ extension SearchCompanyViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            let dict = ["searchType": "2", "moduleId": "01", "viewrecordtype": "1"]
+            let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+            let dict = ["customernumber": customernumber, "moduleId": "01", "viewrecordtype": "1"]
             man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord", method: .get) { result in
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
                         ToastViewConfig.showToast(message: "删除成功!")
-                        self.companyView.historyView.removeFromSuperview()
-                        self.companyView.historyView.snp.makeConstraints({ make in
+                        self.companyView.historyView.isHidden = true
+                        self.companyView.historyView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
                         })
                     }
@@ -265,6 +336,34 @@ extension SearchCompanyViewController {
                 }
             }
         })
+    }
+    
+    //搜索企业列表
+    private func searchListInfo() {
+        let dict = ["keywords": searchWords ?? "",
+                    "matchType": 1,
+                    "entityIndustry": entityIndustry,
+                    "entityArea": entityArea,
+                    "pageIndex": pageIndex,
+                    "pageSize": 20] as [String : Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict, pageUrl: "/firminfo/company/search", method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if let self = self,
+                   let model = success.data,
+                   let code = success.code,
+                   code == 200 {
+                    self.getlastSearch()
+                    self.companyView.isHidden = true
+                    self.companyListView.isHidden = false
+                    self.companyListView.dataModel.accept(success.data)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

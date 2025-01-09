@@ -1,5 +1,5 @@
 //
-//  CompanyView.swift
+//  OneCompanyView.swift
 //  问道云
 //
 //  Created by 何康 on 2025/1/7.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CompanyView: BaseView {
+class OneCompanyView: BaseView {
     
     //点击最近搜索返回
     var lastSearchTextBlock: ((String) -> Void)?
@@ -33,6 +33,7 @@ class CompanyView: BaseView {
     //最近搜索
     lazy var searchView: SearchLastSearchListView = {
         let searchView = SearchLastSearchListView()
+        searchView.isHidden = true
         searchView.backgroundColor = .white
         return searchView
     }()
@@ -41,6 +42,7 @@ class CompanyView: BaseView {
     lazy var historyView: SearchHistoryListView = {
         let historyView = SearchHistoryListView()
         historyView.backgroundColor = .white
+        historyView.isHidden = true
         return historyView
     }()
     
@@ -53,18 +55,18 @@ class CompanyView: BaseView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(searchbtn)
+//        addSubview(searchbtn)
         addSubview(scrollView)
         scrollView.addSubview(searchView)
         scrollView.addSubview(historyView)
         scrollView.addSubview(hotWordsView)
-        searchbtn.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(11)
-            make.top.equalToSuperview().offset(8)
-            make.size.equalTo(CGSize(width: 72, height: 23.5))
-        }
+//        searchbtn.snp.makeConstraints { make in
+//            make.left.equalToSuperview().offset(11)
+//            make.top.equalToSuperview().offset(8)
+//            make.size.equalTo(CGSize(width: 72, height: 23.5))
+//        }
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(searchbtn.snp.bottom).offset(6)
+            make.top.equalToSuperview().offset(1)
             make.left.right.bottom.equalToSuperview()
         }
         searchView.snp.makeConstraints { make in

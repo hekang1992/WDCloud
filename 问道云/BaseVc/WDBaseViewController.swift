@@ -124,6 +124,70 @@ extension WDBaseViewController {
         return twoList
     }
     
+    //获取三级地区列表
+    func getThreeRegionInfo(from modelArray: [rowsModel]) -> [ItemModel] {
+        var threeList: [ItemModel] = []
+        let regionModel = ItemModel(text: "全国", currentID: "", isSelect: true)!
+        threeList.append(regionModel)
+        for (_, rowModel) in modelArray.enumerated() {
+            let levelOneModel = ItemModel(text: rowModel.name, currentID: rowModel.code, isSelect: false)!
+            if let secondLevelChildren = rowModel.children {
+                var secondLevelList: [ItemModel] = []
+                let hanyeModel = ItemModel(text: "不限", currentID: "", isSelect: true)!
+                secondLevelList.append(hanyeModel)
+                for (_, secondLevelModel) in secondLevelChildren.enumerated() {
+                    let levelTwoModel = ItemModel(text: secondLevelModel.name, currentID: secondLevelModel.code, isSelect: false)!
+                    if let thirdLevelChildren = secondLevelModel.children {
+                        var thirdLevelList: [ItemModel] = []
+                        let hanyeModelThirdLevel = ItemModel(text: "不限", currentID: "", isSelect: true)!
+                        thirdLevelList.append(hanyeModelThirdLevel)
+                        for (_, thirdLevelModel) in thirdLevelChildren.enumerated() {
+                            let levelThreeModel = ItemModel(text: thirdLevelModel.name, currentID: thirdLevelModel.code, isSelect: false)!
+                            thirdLevelList.append(levelThreeModel)
+                        }
+                        levelTwoModel.dataSource = thirdLevelList
+                    }
+                    secondLevelList.append(levelTwoModel)
+                }
+                levelOneModel.dataSource = secondLevelList
+            }
+            threeList.append(levelOneModel)
+        }
+        return threeList
+    }
+    
+    //获取三级行业列表
+    func getThreeIndustryInfo(from modelArray: [rowsModel]) -> [ItemModel] {
+        var threeList: [ItemModel] = []
+        let regionModel = ItemModel(text: "全部", currentID: "", isSelect: true)!
+        threeList.append(regionModel)
+        for (_, rowModel) in modelArray.enumerated() {
+            let levelOneModel = ItemModel(text: rowModel.name, currentID: rowModel.code, isSelect: false)!
+            if let secondLevelChildren = rowModel.children {
+                var secondLevelList: [ItemModel] = []
+                let hanyeModel = ItemModel(text: "不限", currentID: "", isSelect: true)!
+                secondLevelList.append(hanyeModel)
+                for (_, secondLevelModel) in secondLevelChildren.enumerated() {
+                    let levelTwoModel = ItemModel(text: secondLevelModel.name, currentID: secondLevelModel.code, isSelect: false)!
+                    if let thirdLevelChildren = secondLevelModel.children {
+                        var thirdLevelList: [ItemModel] = []
+                        let hanyeModelThirdLevel = ItemModel(text: "不限", currentID: "", isSelect: true)!
+                        thirdLevelList.append(hanyeModelThirdLevel)
+                        for (_, thirdLevelModel) in thirdLevelChildren.enumerated() {
+                            let levelThreeModel = ItemModel(text: thirdLevelModel.name, currentID: thirdLevelModel.code, isSelect: false)!
+                            thirdLevelList.append(levelThreeModel)
+                        }
+                        levelTwoModel.dataSource = thirdLevelList
+                    }
+                    secondLevelList.append(levelTwoModel)
+                }
+                levelOneModel.dataSource = secondLevelList
+            }
+            threeList.append(levelOneModel)
+        }
+        return threeList
+    }
+    
     //获取行业
     func getIndustryInfo(from modelArray: [rowsModel]) -> [ItemModel] {
         var twoList: [ItemModel] = []

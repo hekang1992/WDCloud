@@ -212,7 +212,7 @@ extension OneTicketView: UITableViewDelegate {
         headView.backgroundColor = .init(cssStr: "#F5F5F5")
         let label = UILabel()
         selectedCount.asObservable().subscribe(onNext: { num in
-            label.text = "共计\(num)个订单，由阿拉丁为您开具电子发票。"
+            label.text = "共计\(num)个订单，由问道云为您开具电子发票。"
         }).disposed(by: disposeBag)
         label.font = .regularFontOfSize(size: 12)
         label.textColor = .init(cssStr: "#9FA4AD")

@@ -115,7 +115,7 @@ extension AppDelegate: WXApiDelegate {
     }
     
     @objc func setUpRootVc(_ notification: Notification) {
-        let tabbarVc = WDTabBarController()
+        let tabBarVc = WDTabBarController()
         window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
     }
     

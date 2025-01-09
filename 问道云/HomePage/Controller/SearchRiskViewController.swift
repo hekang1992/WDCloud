@@ -11,6 +11,12 @@ import RxRelay
 
 class SearchRiskViewController: WDBaseViewController {
     
+    //城市数据
+    var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
+    
+    //行业数据
+    var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
+    
     var searchWords: String? {
         didSet {
             print("searchWords风险======\(searchWords ?? "")")
@@ -25,8 +31,8 @@ class SearchRiskViewController: WDBaseViewController {
     //搜索文字回调
     var lastSearchTextBlock: ((String) -> Void)?
     
-    lazy var riskView: CompanyView = {
-        let riskView = CompanyView()
+    lazy var riskView: OneCompanyView = {
+        let riskView = OneCompanyView()
         return riskView
     }()
     
@@ -51,14 +57,6 @@ class SearchRiskViewController: WDBaseViewController {
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: {
             
         })
-        //最近搜索
-        getlastSearch()
-        
-        //浏览历史
-        getBrowsingHistory()
-        
-        //热搜
-        getHotWords()
         
         //删除最近搜索
         self.riskView.searchView.deleteBtn
@@ -77,6 +75,18 @@ class SearchRiskViewController: WDBaseViewController {
         self.riskView.lastSearchTextBlock = { [weak self] searchStr in
             self?.lastSearchTextBlock?(searchStr)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //最近搜索
+        getlastSearch()
+
+        //浏览历史
+        getBrowsingHistory()
+        
+        //热搜
+        getHotWords()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -132,7 +142,8 @@ extension SearchRiskViewController {
     //浏览历史
     private func getBrowsingHistory() {
         let man = RequestManager()
-        let dict = ["viewrecordtype": "", "moduleId": "05", "pageNum": "1", "pageSize": "20"]
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let dict = ["customernumber":customernumber ,"viewrecordtype": "", "moduleId": "05", "pageNum": "1", "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
             switch result {
             case .success(let success):
@@ -239,8 +250,8 @@ extension SearchRiskViewController {
                 case .success(let success):
                     if success.code == 200 {
                         ToastViewConfig.showToast(message: "删除成功!")
-                        self.riskView.searchView.removeFromSuperview()
-                        self.riskView.searchView.snp.makeConstraints({ make in
+                        self.riskView.searchView.isHidden = true
+                        self.riskView.searchView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
                         })
                     }
@@ -256,14 +267,15 @@ extension SearchRiskViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            let dict = ["searchType": "", "moduleId": "05", "viewrecordtype": ""]
+            let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
+            let dict = ["moduleId": "05", "viewrecordtype": "", "customerNumber": customerNumber]
             man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord", method: .get) { result in
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
                         ToastViewConfig.showToast(message: "删除成功!")
-                        self.riskView.historyView.removeFromSuperview()
-                        self.riskView.historyView.snp.makeConstraints({ make in
+                        self.riskView.historyView.isHidden = true
+                        self.riskView.historyView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
                         })
                     }

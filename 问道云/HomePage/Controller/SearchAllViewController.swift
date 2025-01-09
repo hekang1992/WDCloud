@@ -75,6 +75,12 @@ class SearchAllViewController: WDBaseViewController {
         
         //添加
         addSegmentedView()
+        
+        //获取城市数据
+        getAllRegionInfo()
+        
+        //获取行业数据
+        getAllIndustryInfo()
     }
     
 }
@@ -175,9 +181,54 @@ extension SearchAllViewController: UITextFieldDelegate {
         }else {
             
         }
-        
         textField.resignFirstResponder()
         return true
+    }
+    
+}
+
+extension SearchAllViewController {
+    
+    //获取所有城市数据
+    func getAllRegionInfo() {
+        let man = RequestManager()
+        let emptyDict = [String: Any]()
+        man.requestAPI(params: emptyDict,
+                       pageUrl: "/operation/ajax/areaTree",
+                       method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if let self = self, let modelArray = success.data?.data {
+                    self.companyVc.regionModelArray.accept(modelArray)
+                    self.peopleVc.regionModelArray.accept(modelArray)
+                    self.riskVc.regionModelArray.accept(modelArray)
+                }
+                break
+            case .failure(let failure):
+                break
+            }
+        }
+    }
+    
+    //获取行业数据
+    func getAllIndustryInfo() {
+        let man = RequestManager()
+        let emptyDict = [String: Any]()
+        man.requestAPI(params: emptyDict,
+                       pageUrl: "/operation/ajax/industryTree",
+                       method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if let self = self, let modelArray = success.data?.data {
+                    self.companyVc.industryModelArray.accept(modelArray)
+                    self.peopleVc.industryModelArray.accept(modelArray)
+                    self.riskVc.industryModelArray.accept(modelArray)
+                }
+                break
+            case .failure(let failure):
+                break
+            }
+        }
     }
     
 }

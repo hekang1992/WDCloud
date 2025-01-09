@@ -110,7 +110,7 @@
 		73C36A752D2D08DA00D6DC46 /* SearchRiskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A742D2D08DA00D6DC46 /* SearchRiskViewController.swift */; };
 		73C36A772D2D08EB00D6DC46 /* SearchPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A762D2D08EB00D6DC46 /* SearchPeopleViewController.swift */; };
 		73C36A792D2D091100D6DC46 /* SearchPropertyClueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A782D2D091100D6DC46 /* SearchPropertyClueViewController.swift */; };
-		73C36A7B2D2D147400D6DC46 /* CompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A7A2D2D147400D6DC46 /* CompanyView.swift */; };
+		73C36A7B2D2D147400D6DC46 /* OneCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A7A2D2D147400D6DC46 /* OneCompanyView.swift */; };
 		73C36A7D2D2D1B8400D6DC46 /* SearchHistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A7C2D2D1B8400D6DC46 /* SearchHistoryListView.swift */; };
 		73C36A7F2D2D1B9800D6DC46 /* SearchLastSearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A7E2D2D1B9800D6DC46 /* SearchLastSearchListView.swift */; };
 		73C36A812D2D1BAA00D6DC46 /* SearchHotWordsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A802D2D1BAA00D6DC46 /* SearchHotWordsListView.swift */; };
@@ -133,6 +133,9 @@
 		73E306DF2D156C0800D18943 /* MyQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E306DE2D156C0800D18943 /* MyQRCodeView.swift */; };
 		73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E56BE02D1274630015BF34 /* TwoTicketView.swift */; };
 		73E971302D2E614200F12B15 /* CommonSearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9712F2D2E614200F12B15 /* CommonSearchListView.swift */; };
+		73E971732D2FCD8500F12B15 /* TwoCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */; };
+		73E971752D2FCF0500F12B15 /* TwoCompanyListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971742D2FCF0500F12B15 /* TwoCompanyListCell.swift */; };
+		73E971792D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */; };
 		73F6046A2D1171280061D5D3 /* MyTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604692D1171280061D5D3 /* MyTicketView.swift */; };
@@ -270,7 +273,7 @@
 		73C36A742D2D08DA00D6DC46 /* SearchRiskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRiskViewController.swift; sourceTree = "<group>"; };
 		73C36A762D2D08EB00D6DC46 /* SearchPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleViewController.swift; sourceTree = "<group>"; };
 		73C36A782D2D091100D6DC46 /* SearchPropertyClueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPropertyClueViewController.swift; sourceTree = "<group>"; };
-		73C36A7A2D2D147400D6DC46 /* CompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyView.swift; sourceTree = "<group>"; };
+		73C36A7A2D2D147400D6DC46 /* OneCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneCompanyView.swift; sourceTree = "<group>"; };
 		73C36A7C2D2D1B8400D6DC46 /* SearchHistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryListView.swift; sourceTree = "<group>"; };
 		73C36A7E2D2D1B9800D6DC46 /* SearchLastSearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLastSearchListView.swift; sourceTree = "<group>"; };
 		73C36A802D2D1BAA00D6DC46 /* SearchHotWordsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHotWordsListView.swift; sourceTree = "<group>"; };
@@ -295,6 +298,9 @@
 		73E306DE2D156C0800D18943 /* MyQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyQRCodeView.swift; sourceTree = "<group>"; };
 		73E56BE02D1274630015BF34 /* TwoTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoTicketView.swift; sourceTree = "<group>"; };
 		73E9712F2D2E614200F12B15 /* CommonSearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSearchListView.swift; sourceTree = "<group>"; };
+		73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyView.swift; sourceTree = "<group>"; };
+		73E971742D2FCF0500F12B15 /* TwoCompanyListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyListCell.swift; sourceTree = "<group>"; };
+		73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyHeadPeopleCell.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketViewController.swift; sourceTree = "<group>"; };
 		73F604692D1171280061D5D3 /* MyTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketView.swift; sourceTree = "<group>"; };
@@ -642,11 +648,11 @@
 			isa = PBXGroup;
 			children = (
 				73C36A702D2D050200D6DC46 /* SearchHeadView.swift */,
-				73C36A7A2D2D147400D6DC46 /* CompanyView.swift */,
 				73C36A7E2D2D1B9800D6DC46 /* SearchLastSearchListView.swift */,
 				73C36A7C2D2D1B8400D6DC46 /* SearchHistoryListView.swift */,
 				73C36A802D2D1BAA00D6DC46 /* SearchHotWordsListView.swift */,
 				73E9712F2D2E614200F12B15 /* CommonSearchListView.swift */,
+				73E9717A2D2FCF4600F12B15 /* SearchListView */,
 			);
 			path = SearchView;
 			sourceTree = "<group>";
@@ -710,6 +716,17 @@
 				737416322D0EBC1900E6CD23 /* MorePage */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		73E9717A2D2FCF4600F12B15 /* SearchListView */ = {
+			isa = PBXGroup;
+			children = (
+				73C36A7A2D2D147400D6DC46 /* OneCompanyView.swift */,
+				73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */,
+				73E971742D2FCF0500F12B15 /* TwoCompanyListCell.swift */,
+				73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */,
+			);
+			path = SearchListView;
 			sourceTree = "<group>";
 		};
 		C61455D1CEA19ADD364A1DEF /* Frameworks */ = {
@@ -885,7 +902,7 @@
 				730487F32D292EF40024265C /* BindPhoneViewController.swift in Sources */,
 				73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */,
 				7374164E2D100BB200E6CD23 /* SearchInvoiceCell.swift in Sources */,
-				73C36A7B2D2D147400D6DC46 /* CompanyView.swift in Sources */,
+				73C36A7B2D2D147400D6DC46 /* OneCompanyView.swift in Sources */,
 				73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
 				7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */,
@@ -895,6 +912,7 @@
 				736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */,
 				736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */,
 				736E97812D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift in Sources */,
+				73E971752D2FCF0500F12B15 /* TwoCompanyListCell.swift in Sources */,
 				736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */,
 				736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */,
 				73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */,
@@ -942,7 +960,9 @@
 				7325A7DC2CFF0DBE0043C196 /* PasswordLoginView.swift in Sources */,
 				73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */,
 				73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */,
+				73E971792D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift in Sources */,
 				7325A7B82CFEECF00043C196 /* WDNavigationController.swift in Sources */,
+				73E971732D2FCD8500F12B15 /* TwoCompanyView.swift in Sources */,
 				73F6046A2D1171280061D5D3 /* MyTicketView.swift in Sources */,
 				7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */,
 				7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */,

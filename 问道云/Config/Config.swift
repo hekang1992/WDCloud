@@ -697,6 +697,13 @@ class GetSaveLoginInfoConfig {
     
 }
 
+//获取手机号码
+class GetPhoneNumberManager {
+    static func getPhoneNum() -> String {
+        return UserDefaults.standard.object(forKey: WDY_PHONE) as? String ?? ""
+    }
+}
+
 class PaddedLabel: UILabel {
     var padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
     
@@ -732,13 +739,6 @@ class TypeColorConfig {
             label.layer.cornerRadius = 2
             label.layer.borderColor = UIColor.init(cssStr: "#4DC929")?.cgColor
         }
-    }
-}
-
-//获取手机号码
-class GetPhoneNumberManager {
-    static func getPhoneNum() -> String {
-        return UserDefaults.standard.object(forKey: WDY_PHONE) as? String ?? ""
     }
 }
 

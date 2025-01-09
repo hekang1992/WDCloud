@@ -150,19 +150,19 @@ class SettingView: BaseView {
     
     lazy var sevListView: SettingListView = {
         let sevListView = SettingListView(frame: .zero, type: .image)
-        sevListView.namelabel.text = "阿拉丁用户协议"
+        sevListView.namelabel.text = "问道云用户协议"
         return sevListView
     }()
     
     lazy var eigListView: SettingListView = {
         let eigListView = SettingListView(frame: .zero, type: .image)
-        eigListView.namelabel.text = "阿拉丁隐私政策"
+        eigListView.namelabel.text = "问道云隐私政策"
         return eigListView
     }()
     
     lazy var nineListView: SettingListView = {
         let nineListView = SettingListView(frame: .zero, type: .image)
-        nineListView.namelabel.text = "阿拉丁会员服务协议"
+        nineListView.namelabel.text = "问道云会员服务协议"
         return nineListView
     }()
     

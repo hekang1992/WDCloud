@@ -11,9 +11,21 @@ import RxRelay
 
 class SearchPeopleViewController: WDBaseViewController {
     
+    //城市数据
+    var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
+    
+    //行业数据
+    var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
+    
+    //搜索参数
+    var pageIndex: Int = 1
+    var entityArea: String = ""//地区
+    var entityIndustry: String = ""//行业
+    
     var searchWords: String? {
         didSet {
-            print("searchWords人员======\(searchWords ?? "")")
+            guard let searchWords = searchWords else { return }
+//            searchListInfo(from: searchWords)
         }
     }
     
@@ -25,8 +37,8 @@ class SearchPeopleViewController: WDBaseViewController {
     //搜索文字回调
     var lastSearchTextBlock: ((String) -> Void)?
     
-    lazy var peopleView: CompanyView = {
-        let peopleView = CompanyView()
+    lazy var peopleView: OneCompanyView = {
+        let peopleView = OneCompanyView()
         return peopleView
     }()
     
@@ -51,14 +63,6 @@ class SearchPeopleViewController: WDBaseViewController {
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: {
             
         })
-        //最近搜索
-        getlastSearch()
-        
-        //浏览历史
-        getBrowsingHistory()
-        
-        //热搜
-        getHotWords()
         
         //删除最近搜索
         self.peopleView.searchView.deleteBtn
@@ -77,7 +81,18 @@ class SearchPeopleViewController: WDBaseViewController {
         self.peopleView.lastSearchTextBlock = { [weak self] searchStr in
             self?.lastSearchTextBlock?(searchStr)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //最近搜索
+        getlastSearch()
+
+        //浏览历史
+        getBrowsingHistory()
         
+        //热搜
+        getHotWords()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -133,7 +148,8 @@ extension SearchPeopleViewController {
     //浏览历史
     private func getBrowsingHistory() {
         let man = RequestManager()
-        let dict = ["viewrecordtype": "2", "moduleId": "02", "pageNum": "1", "pageSize": "20"]
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let dict = ["customernumber": customernumber, "viewrecordtype": "2", "moduleId": "02", "pageNum": "1", "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
             switch result {
             case .success(let success):
@@ -240,8 +256,8 @@ extension SearchPeopleViewController {
                 case .success(let success):
                     if success.code == 200 {
                         ToastViewConfig.showToast(message: "删除成功!")
-                        self.peopleView.searchView.removeFromSuperview()
-                        self.peopleView.searchView.snp.makeConstraints({ make in
+                        self.peopleView.searchView.isHidden = true
+                        self.peopleView.searchView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
                         })
                     }
@@ -257,14 +273,15 @@ extension SearchPeopleViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            let dict = ["searchType": "1", "moduleId": "02", "viewrecordtype": "2"]
+            let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+            let dict = ["customernumber": customernumber, "moduleId": "02", "viewrecordtype": "2"]
             man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord", method: .get) { result in
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
                         ToastViewConfig.showToast(message: "删除成功!")
-                        self.peopleView.historyView.removeFromSuperview()
-                        self.peopleView.historyView.snp.makeConstraints({ make in
+                        self.peopleView.historyView.isHidden = true
+                        self.peopleView.historyView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
                         })
                     }
@@ -275,6 +292,25 @@ extension SearchPeopleViewController {
             }
         })
     }
+    
+//    //搜索企业列表
+//    private func searchListInfo(from keywords: String) {
+//        let dict = ["keywords": keywords,
+//                    "matchType": 1,
+//                    "entityIndustry": entityIndustry,
+//                    "entityArea": entityArea,
+//                    "pageIndex": pageIndex,
+//                    "pageSize": 20] as [String : Any]
+//        let man = RequestManager()
+//        man.requestAPI(params: dict, pageUrl: "/firminfo/company/search", method: .get) { result in
+//            switch result {
+//            case .success(let success):
+//                break
+//            case .failure(let failure):
+//                break
+//            }
+//        }
+//    }
     
 }
 
