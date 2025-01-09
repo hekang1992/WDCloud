@@ -150,7 +150,7 @@ extension OpenTicketViewController {
                     "registerphone": registerphone ?? "",
                     "bankfullname": bankfullname ?? "",
                     "bankname": bankname ?? "",
-                    "invoicetype": invoicetype ?? "",
+                    "invType": invoicetype ?? "",
                     "checktakerphone": checktakerphone ?? "",
                     "invoiceamount": model.value?.pirce ?? 0.00,
                     "invoicecontent": model.value?.comboname ?? "",
@@ -161,10 +161,10 @@ extension OpenTicketViewController {
             case .success(let success):
                 if success.code == 200 {
                     self?.navigationController?.popViewController(animated: true)
-                    ToastViewConfig.showToast(message: success.msg ?? "")
                 }
+                ToastViewConfig.showToast(message: success.msg ?? "")
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }

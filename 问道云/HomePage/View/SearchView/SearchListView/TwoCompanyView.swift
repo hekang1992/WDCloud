@@ -85,8 +85,11 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let model = dataModel.value
+        let bossList = model?.bossList ?? []
+        let companyList = dataModelArray.value
         let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyListCell") as? TwoCompanyListCell
-        cell?.textLabel?.text = "fadfad"
+        cell?.textLabel?.text = companyList?[indexPath.row].firmInfo?.entityName
         return cell ?? UITableViewCell()
     }
     
