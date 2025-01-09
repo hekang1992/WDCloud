@@ -132,9 +132,11 @@ class WDHomeViewController: WDBaseViewController {
         //文字轮博点击
         homeHeadView.tabView.textBlock = { [weak self] model in
             if IS_LOGIN {
-                let searchAllVc = SearchAllViewController()
-                searchAllVc.model.accept(model)
-                self?.navigationController?.pushViewController(searchAllVc, animated: false)
+                DispatchQueue.main.async {
+                    let searchAllVc = SearchAllViewController()
+                    searchAllVc.model.accept(model)
+                    self?.navigationController?.pushViewController(searchAllVc, animated: true)
+                }
             }else {
                 self?.popLogin()
             }

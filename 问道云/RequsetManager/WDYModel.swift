@@ -53,7 +53,13 @@ class DataModel {
     var flag: String?
     var wechatopenid: String?
     var items: [itemsModel]?
+    var bossList: [bossListModel]?
+    var pageData: [pageDataModel]?
+    var pageMeta: pageMetaModel?
     init(json: JSON) {
+        self.pageMeta = pageMetaModel(json: json["pageMeta"])
+        self.pageData = json["pageData"].arrayValue.map { pageDataModel(json: $0) }
+        self.bossList = json["bossList"].arrayValue.map { bossListModel(json: $0) }
         self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
         self.flag = json["flag"].stringValue
         self.wechatopenid = json["wechatopenid"].stringValue
@@ -324,5 +330,51 @@ class serviceComboListModel {
         self.price = json["price"].doubleValue
         self.sellprice = json["sellprice"].doubleValue
         self.privilegedpic = json["privilegedpic"].stringValue
+    }
+}
+
+
+class pageDataModel {
+    var firmInfo: firmInfoModel?
+    init(json: JSON) {
+        self.firmInfo = firmInfoModel(json: json["firmInfo"])
+    }
+}
+
+class firmInfoModel {
+    var entityId: String?
+    var entityName: String?
+    var entityStatusLabel: String?
+    var incorporationTime: String?
+    var phone: String?
+    var registerAddress: String?
+    var registerCapital: String?
+    var registerCapitalCurrency: String?
+    var website: String?
+    init(json: JSON) {
+        self.entityId = json["entityId"].stringValue
+        self.entityName = json["entityName"].stringValue
+        self.entityStatusLabel = json["entityStatusLabel"].stringValue
+        self.incorporationTime = json["incorporationTime"].stringValue
+        self.phone = json["phone"].stringValue
+        self.registerAddress = json["registerAddress"].stringValue
+        self.registerCapital = json["registerCapital"].stringValue
+        self.registerCapitalCurrency = json["registerCapitalCurrency"].stringValue
+        self.website = json["website"].stringValue
+    }
+}
+
+
+class pageMetaModel {
+    var totalNum: Int?
+    init(json: JSON) {
+        self.totalNum = json["totalNum"].intValue
+    }
+}
+
+class bossListModel {
+    var name: String?
+    init(json: JSON) {
+        self.name = json["name"].stringValue
     }
 }

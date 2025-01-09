@@ -9,6 +9,8 @@ import UIKit
 import JXPagingView
 import RxRelay
 import DropMenuBar
+import MJRefresh
+import RxSwift
 
 class SearchCompanyViewController: WDBaseViewController {
     
@@ -23,9 +25,14 @@ class SearchCompanyViewController: WDBaseViewController {
     var entityArea: String = ""//地区
     var entityIndustry: String = ""//行业
     
+    var allArray: [pageDataModel] = []//加载更多
+    
+    var searchWordsRelay = BehaviorRelay<String>(value: "")
+    
     var searchWords: String? {
         didSet {
-            searchListInfo()
+            guard let searchWords = searchWords else { return }
+            searchWordsRelay.accept(searchWords)
         }
     }
     
@@ -125,6 +132,45 @@ class SearchCompanyViewController: WDBaseViewController {
             make.left.right.equalToSuperview()
             make.height.equalTo(32)
         }
+        
+        //添加下拉刷新
+        self.companyListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.pageIndex = 1
+            self.searchListInfo()
+        })
+        
+        //添加上拉加载更多
+        self.companyListView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.searchListInfo()
+        })
+        
+        //更新搜索文字
+        self.searchWordsRelay
+            .debounce(.milliseconds(1000),
+                      scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .filter { !$0.isEmpty }
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                self.searchListInfo()
+//                let containsChinese = text.range(of: "[\\u4e00-\\u9fa5]", options: .regularExpression) != nil
+//                let containsEnglish = text.range(of: "[a-zA-Z]", options: .regularExpression) != nil
+//                if containsChinese && containsEnglish {
+//                    // 如果同时包含中文和英文字符
+//                    print("包含中文和英文")
+//                    // 在这里执行您的逻辑
+//                } else if containsChinese {
+//                    // 只包含中文
+//                    print("只包含中文")
+//                    // 在这里执行您的中文逻辑
+//                } else if containsEnglish {
+//                    // 只包含英文
+//                    print("只包含英文")
+//                    // 在这里执行您的英文逻辑
+//                }
+            }).disposed(by: disposeBag)
         
     }
     
@@ -348,16 +394,38 @@ extension SearchCompanyViewController {
                     "pageSize": 20] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/firminfo/company/search", method: .get) { [weak self] result in
+            self?.companyListView.tableView.mj_header?.endRefreshing()
+            self?.companyListView.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
                 if let self = self,
                    let model = success.data,
                    let code = success.code,
-                   code == 200 {
+                   code == 200, let total = model.pageMeta?.totalNum {
                     self.getlastSearch()
                     self.companyView.isHidden = true
                     self.companyListView.isHidden = false
-                    self.companyListView.dataModel.accept(success.data)
+                    if pageIndex == 1 {
+                        pageIndex = 1
+                        self.allArray.removeAll()
+                    }
+                    pageIndex += 1
+                    let pageData = model.pageData ?? []
+                    self.allArray.append(contentsOf: pageData)
+                    if total != 0 {
+                        self.emptyView.removeFromSuperview()
+                        self.noNetView.removeFromSuperview()
+                    }else {
+                        self.addNodataView(from: self.companyListView.whiteView)
+                    }
+                    if self.allArray.count != total {
+                        self.companyListView.tableView.mj_footer?.isHidden = false
+                    }else {
+                        self.companyListView.tableView.mj_footer?.isHidden = true
+                    }
+                    self.companyListView.dataModel.accept(model)
+                    self.companyListView.dataModelArray.accept(self.allArray)
+                    self.companyListView.tableView.reloadData()
                 }
                 break
             case .failure(_):

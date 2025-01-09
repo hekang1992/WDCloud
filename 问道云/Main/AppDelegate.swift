@@ -121,7 +121,6 @@ extension AppDelegate: WXApiDelegate {
     
     @objc func goRiskVc(_ notification: Notification) {
         self.tabBarVc.selectedIndex = 1
-        
     }
     
     @objc func goDiliVc(_ notification: Notification) {

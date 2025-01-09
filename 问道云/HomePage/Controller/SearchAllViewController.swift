@@ -9,6 +9,7 @@ import UIKit
 import RxRelay
 import JXPagingView
 import JXSegmentedView
+import RxSwift
 
 class SearchAllViewController: WDBaseViewController {
     
@@ -64,7 +65,6 @@ class SearchAllViewController: WDBaseViewController {
         
         // Do any additional setup after loading the view.
         view.addSubview(searchHeadView)
-        searchHeadView.searchTx.becomeFirstResponder()
         searchHeadView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.height.equalTo(104)
@@ -81,6 +81,30 @@ class SearchAllViewController: WDBaseViewController {
         
         //获取行业数据
         getAllIndustryInfo()
+        
+        self.searchHeadView.searchTx
+            .rx.controlEvent(.editingChanged)
+            .withLatestFrom(self.searchHeadView.searchTx.rx.text.orEmpty)
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if selectIndex == 0 {
+                    companyVc.searchWords = text
+                }else if selectIndex == 1 {
+                    peopleVc.searchWords = text
+                }else if selectIndex == 2 {
+                    riskVc.searchWords = text
+                }else {
+                    
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.asyncAfter(delay: 0.5) {
+            self.searchHeadView.searchTx.becomeFirstResponder()
+        }
     }
     
 }
@@ -204,7 +228,7 @@ extension SearchAllViewController {
                     self.riskVc.regionModelArray.accept(modelArray)
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }
@@ -225,7 +249,7 @@ extension SearchAllViewController {
                     self.riskVc.industryModelArray.accept(modelArray)
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }
