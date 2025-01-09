@@ -108,12 +108,12 @@ class GroupListViewCell: BaseViewCell {
         }
         deleteBtn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview().offset(-20)
-            make.size.equalTo(CGSize(width: 20, height: 20))
+            make.right.equalToSuperview().offset(-10)
+            make.size.equalTo(CGSize(width: 30, height: 30))
         }
         changeBtn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.right.equalTo(deleteBtn.snp.left).offset(-16)
+            make.right.equalTo(deleteBtn.snp.left).offset(-12)
             make.size.equalTo(CGSize(width: 20, height: 20))
         }
         model.asObservable().subscribe(onNext: { [weak self] model in

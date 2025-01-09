@@ -158,10 +158,8 @@ class WDCenterViewController: WDBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if IS_LOGIN {
-            
             //获取套餐信息
             getBuymoreinfo()
-            
             //获取是否是分销商
             getChanelPartner()
             centerView.huiyuanIcon.isHidden = false

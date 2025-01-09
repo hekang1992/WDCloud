@@ -16,7 +16,7 @@ class SearchAllViewController: WDBaseViewController {
     
     var segmentedView: JXSegmentedView!
     
-    let titles = ["企业", "人员", "风险", "财产"]
+    let titles = ["企业", "人员", "风险"]
     
     var JXTableHeaderViewHeight: Int = 104
     
@@ -145,7 +145,6 @@ extension SearchAllViewController: JXPagingViewDelegate {
             return propertyVc
         }
     }
-    
 }
 
 extension SearchAllViewController: UITextFieldDelegate {

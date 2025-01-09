@@ -201,6 +201,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/TXScrollLabelView/TXScrollLabelView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TYAlertController/TYAlertController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TYCyclePagerView/TYCyclePagerView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TagListView/TagListView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Toaster/Toaster.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework"
 fi
@@ -230,6 +231,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/TXScrollLabelView/TXScrollLabelView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TYAlertController/TYAlertController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TYCyclePagerView/TYCyclePagerView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TagListView/TagListView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Toaster/Toaster.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework"
 fi

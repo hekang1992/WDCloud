@@ -30,18 +30,21 @@ class CompanyView: BaseView {
     //最近搜索
     lazy var searchView: SearchLastSearchListView = {
         let searchView = SearchLastSearchListView()
+        searchView.backgroundColor = .white
         return searchView
     }()
     
     //浏览历史
     lazy var historyView: SearchHistoryListView = {
         let historyView = SearchHistoryListView()
+        historyView.backgroundColor = .white
         return historyView
     }()
     
     //热搜
     lazy var hotWordsView: SearchHotWordsListView = {
         let hotWordsView = SearchHotWordsListView()
+        hotWordsView.backgroundColor = .white
         return hotWordsView
     }()
 
@@ -59,14 +62,13 @@ class CompanyView: BaseView {
         }
         searchbtn.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(11)
-            make.top.equalToSuperview().offset(8.5)
+            make.top.equalToSuperview().offset(8)
             make.size.equalTo(CGSize(width: 72, height: 23.5))
         }
-    
         searchView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
-            make.top.equalToSuperview()
+            make.top.equalTo(searchbtn.snp.bottom).offset(8)
             make.height.equalTo(0)
         }
         historyView.snp.makeConstraints { make in
@@ -79,7 +81,7 @@ class CompanyView: BaseView {
             make.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
             make.top.equalTo(historyView.snp.bottom).offset(5)
-            make.height.equalTo(0)
+            make.height.equalTo(30)
             make.bottom.equalToSuperview().offset(-20)
         }
         

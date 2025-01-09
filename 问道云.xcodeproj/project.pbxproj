@@ -132,6 +132,7 @@
 		73E306D22D154E9E00D18943 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73E306D12D154E9D00D18943 /* Launch Screen.storyboard */; };
 		73E306DF2D156C0800D18943 /* MyQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E306DE2D156C0800D18943 /* MyQRCodeView.swift */; };
 		73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E56BE02D1274630015BF34 /* TwoTicketView.swift */; };
+		73E971302D2E614200F12B15 /* CommonSearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9712F2D2E614200F12B15 /* CommonSearchListView.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */; };
 		73F6046A2D1171280061D5D3 /* MyTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604692D1171280061D5D3 /* MyTicketView.swift */; };
@@ -293,6 +294,7 @@
 		73E306D42D1552FC00D18943 /* WechatOpenSDK-XCFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "WechatOpenSDK-XCFramework.xcframework"; path = "Pods/WechatOpenSDK-XCFramework/WechatOpenSDK-XCFramework.xcframework"; sourceTree = "<group>"; };
 		73E306DE2D156C0800D18943 /* MyQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyQRCodeView.swift; sourceTree = "<group>"; };
 		73E56BE02D1274630015BF34 /* TwoTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoTicketView.swift; sourceTree = "<group>"; };
+		73E9712F2D2E614200F12B15 /* CommonSearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSearchListView.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketViewController.swift; sourceTree = "<group>"; };
 		73F604692D1171280061D5D3 /* MyTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketView.swift; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 				73C36A7E2D2D1B9800D6DC46 /* SearchLastSearchListView.swift */,
 				73C36A7C2D2D1B8400D6DC46 /* SearchHistoryListView.swift */,
 				73C36A802D2D1BAA00D6DC46 /* SearchHotWordsListView.swift */,
+				73E9712F2D2E614200F12B15 /* CommonSearchListView.swift */,
 			);
 			path = SearchView;
 			sourceTree = "<group>";
@@ -869,6 +872,7 @@
 				7325A7EE2D0008D10043C196 /* WLUnitFieldTextPosition.m in Sources */,
 				7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */,
 				73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */,
+				73E971302D2E614200F12B15 /* CommonSearchListView.swift in Sources */,
 				73A21DF22D0C39E000FC4C49 /* RiskListViewController.swift in Sources */,
 				7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */,
 				73C36A772D2D08EB00D6DC46 /* SearchPeopleViewController.swift in Sources */,

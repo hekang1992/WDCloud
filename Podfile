@@ -56,4 +56,6 @@ target '问道云' do
   
   pod 'TXScrollLabelView', '~> 1.3.2'
   
+  pod 'TagListView', '~> 1.4.1'
+  
 end

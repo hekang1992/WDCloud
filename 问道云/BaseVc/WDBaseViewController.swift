@@ -53,9 +53,8 @@ extension WDBaseViewController {
         let rootVc = WDNavigationController(rootViewController: loginVc)
         rootVc.modalPresentationStyle = .overFullScreen
         self.present(rootVc, animated: true)
-        
+        WDLoginConfig.removeLoginInfo()
         loginVc.loginView.backBtn.rx.tap.subscribe(onNext: {
-            WDLoginConfig.removeLoginInfo()
             NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
         }).disposed(by: disposeBag)
     }

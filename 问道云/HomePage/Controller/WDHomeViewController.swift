@@ -131,9 +131,13 @@ class WDHomeViewController: WDBaseViewController {
         
         //文字轮博点击
         homeHeadView.tabView.textBlock = { [weak self] model in
-            let searchAllVc = SearchAllViewController()
-            searchAllVc.model.accept(model)
-            self?.navigationController?.pushViewController(searchAllVc, animated: false)
+            if IS_LOGIN {
+                let searchAllVc = SearchAllViewController()
+                searchAllVc.model.accept(model)
+                self?.navigationController?.pushViewController(searchAllVc, animated: false)
+            }else {
+                self?.popLogin()
+            }
         }
         
         //添加启动页
@@ -216,7 +220,7 @@ extension WDHomeViewController {
         }
     }
     
-    //热搜3
+    //热搜 全部 企业加人员
     func getHotWords() {
         let man = RequestManager()
         let dict = ["moduleId": ""]

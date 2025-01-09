@@ -203,8 +203,10 @@ class rowsModel {
     var banner: String?//banner图片链接
     var id: String?//ID
     var type: String?//1企业 2个人
+    var searchContent: String?
     init(json: JSON) {
         self.id = json["id"].stringValue
+        self.searchContent = json["searchContent"].stringValue
         self.type = json["type"].stringValue
         self.banner = json["banner"].stringValue
         self.newstagsobj = json["newstagsobj"].arrayValue.map { newstagsobjModel(json: $0) }
