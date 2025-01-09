@@ -13,7 +13,7 @@ class SearchPeopleViewController: WDBaseViewController {
     
     var searchWords: String? {
         didSet {
-            print("searchWords======\(searchWords ?? "")")
+            print("searchWords人员======\(searchWords ?? "")")
         }
     }
     
@@ -82,7 +82,7 @@ class SearchPeopleViewController: WDBaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("人员")
+        print("人员===============人员")
     }
 }
 

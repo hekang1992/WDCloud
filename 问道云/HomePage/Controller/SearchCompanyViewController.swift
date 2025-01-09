@@ -13,7 +13,7 @@ class SearchCompanyViewController: WDBaseViewController {
     
     var searchWords: String? {
         didSet {
-            print("searchWords======\(searchWords ?? "")")
+            print("searchWords企业======\(searchWords ?? "")")
         }
     }
     
@@ -73,7 +73,7 @@ class SearchCompanyViewController: WDBaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("公司")
+        print("企业===============企业")
     }
 }
 

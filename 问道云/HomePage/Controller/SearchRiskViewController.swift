@@ -13,7 +13,7 @@ class SearchRiskViewController: WDBaseViewController {
     
     var searchWords: String? {
         didSet {
-            print("searchWords======\(searchWords ?? "")")
+            print("searchWords风险======\(searchWords ?? "")")
         }
     }
     
@@ -77,12 +77,11 @@ class SearchRiskViewController: WDBaseViewController {
         self.riskView.lastSearchTextBlock = { [weak self] searchStr in
             self?.lastSearchTextBlock?(searchStr)
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("风险")
+        print("风险===============风险")
     }
 }
 
