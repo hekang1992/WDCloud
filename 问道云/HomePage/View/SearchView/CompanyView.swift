@@ -8,6 +8,9 @@
 import UIKit
 
 class CompanyView: BaseView {
+    
+    //点击最近搜索返回
+    var lastSearchTextBlock: ((String) -> Void)?
 
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -50,25 +53,24 @@ class CompanyView: BaseView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addSubview(searchbtn)
         addSubview(scrollView)
-        scrollView.addSubview(searchbtn)
         scrollView.addSubview(searchView)
         scrollView.addSubview(historyView)
         scrollView.addSubview(hotWordsView)
-        
-        scrollView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.left.right.bottom.equalToSuperview()
-        }
         searchbtn.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(11)
             make.top.equalToSuperview().offset(8)
             make.size.equalTo(CGSize(width: 72, height: 23.5))
         }
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(searchbtn.snp.bottom).offset(6)
+            make.left.right.bottom.equalToSuperview()
+        }
         searchView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
-            make.top.equalTo(searchbtn.snp.bottom).offset(8)
+            make.top.equalToSuperview()
             make.height.equalTo(0)
         }
         historyView.snp.makeConstraints { make in
@@ -84,7 +86,9 @@ class CompanyView: BaseView {
             make.height.equalTo(30)
             make.bottom.equalToSuperview().offset(-20)
         }
-        
+        searchView.lastSearchTextBlock = { [weak self] searchStr in
+            self?.lastSearchTextBlock?(searchStr)
+        }
     }
     
     @MainActor required init?(coder: NSCoder) {

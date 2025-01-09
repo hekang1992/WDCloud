@@ -22,6 +22,9 @@ class SearchRiskViewController: WDBaseViewController {
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
+    //搜索文字回调
+    var lastSearchTextBlock: ((String) -> Void)?
+    
     lazy var riskView: CompanyView = {
         let riskView = CompanyView()
         return riskView
@@ -69,6 +72,12 @@ class SearchRiskViewController: WDBaseViewController {
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteHistoryInfo()
         }).disposed(by: disposeBag)
+        
+        //点击最近搜索
+        self.riskView.lastSearchTextBlock = { [weak self] searchStr in
+            self?.lastSearchTextBlock?(searchStr)
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

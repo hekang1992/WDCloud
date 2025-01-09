@@ -57,6 +57,8 @@ class SearchAllViewController: WDBaseViewController {
         return propertyVc
     }()
     
+    var selectIndex: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -135,11 +137,21 @@ extension SearchAllViewController: JXPagingViewDelegate {
     }
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
+        selectIndex = index
         if index == 0 {
+            companyVc.lastSearchTextBlock = { [weak self] searchStr in
+                self?.searchHeadView.searchTx.text = searchStr
+            }
             return companyVc
         }else if index == 1 {
+            peopleVc.lastSearchTextBlock = { [weak self] searchStr in
+                self?.searchHeadView.searchTx.text = searchStr
+            }
             return peopleVc
         }else if index == 2 {
+            riskVc.lastSearchTextBlock = { [weak self] searchStr in
+                self?.searchHeadView.searchTx.text = searchStr
+            }
             return riskVc
         }else {
             return propertyVc
@@ -154,7 +166,16 @@ extension SearchAllViewController: UITextFieldDelegate {
         if searchText.isEmpty {
             textField.text = textField.placeholder
         }
-        companyVc.searchWords = textField.text
+        if selectIndex == 0 {
+            companyVc.searchWords = textField.text
+        }else if selectIndex == 1 {
+            peopleVc.searchWords = textField.text
+        }else if selectIndex == 2 {
+            riskVc.searchWords = textField.text
+        }else {
+            
+        }
+        
         textField.resignFirstResponder()
         return true
     }

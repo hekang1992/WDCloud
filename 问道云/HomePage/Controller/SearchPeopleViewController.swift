@@ -22,6 +22,9 @@ class SearchPeopleViewController: WDBaseViewController {
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
+    //搜索文字回调
+    var lastSearchTextBlock: ((String) -> Void)?
+    
     lazy var peopleView: CompanyView = {
         let peopleView = CompanyView()
         return peopleView
@@ -69,6 +72,12 @@ class SearchPeopleViewController: WDBaseViewController {
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteHistoryInfo()
         }).disposed(by: disposeBag)
+        
+        //点击最近搜索
+        self.peopleView.lastSearchTextBlock = { [weak self] searchStr in
+            self?.lastSearchTextBlock?(searchStr)
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

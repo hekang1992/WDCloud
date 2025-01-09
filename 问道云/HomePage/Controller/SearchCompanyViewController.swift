@@ -22,6 +22,9 @@ class SearchCompanyViewController: WDBaseViewController {
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
+    //搜索文字回调
+    var lastSearchTextBlock: ((String) -> Void)?
+    
     lazy var companyView: CompanyView = {
         let companyView = CompanyView()
         return companyView
@@ -37,17 +40,9 @@ class SearchCompanyViewController: WDBaseViewController {
 
         // Do any additional setup after loading the view.
         view.addSubview(companyView)
-        view.addSubview(tableView)
-        tableView.isHidden = true
         companyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        self.tableView.mj_header = WDRefreshHeader(refreshingBlock: {
-            
-        })
         //最近搜索
         getlastSearch()
 
@@ -69,6 +64,11 @@ class SearchCompanyViewController: WDBaseViewController {
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteHistoryInfo()
         }).disposed(by: disposeBag)
+        
+        //点击最近搜索
+        self.companyView.lastSearchTextBlock = { [weak self] searchStr in
+            self?.lastSearchTextBlock?(searchStr)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

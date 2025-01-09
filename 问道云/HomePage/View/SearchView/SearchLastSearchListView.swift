@@ -9,6 +9,9 @@ import UIKit
 import TagListView
 
 class SearchLastSearchListView: BaseView {
+    
+    //点击最近搜索返回
+    var lastSearchTextBlock: ((String) -> Void)?
 
     lazy var descLabel: UILabel = {
         let descLabel = UILabel()
@@ -84,7 +87,7 @@ class SearchLastSearchListView: BaseView {
 extension SearchLastSearchListView: TagListViewDelegate {
     
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
-        ToastViewConfig.showToast(message: title)
+        self.lastSearchTextBlock?(title)
     }
     
 }
