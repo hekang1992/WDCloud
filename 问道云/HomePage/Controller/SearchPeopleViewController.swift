@@ -10,6 +10,7 @@ import JXPagingView
 import RxRelay
 import RxSwift
 import MJRefresh
+import DropMenuBar
 
 class SearchPeopleViewController: WDBaseViewController {
     
@@ -137,6 +138,46 @@ class SearchPeopleViewController: WDBaseViewController {
             guard let self = self else { return }
             self.searchListInfo()
         })
+        
+        //添加下拉筛选
+        let regionMenu = MenuAction(title: "地区", style: .typeList)!
+        
+        self.regionModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self else { return }
+            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
+            regionMenu.listDataSource = regionArray
+        }).disposed(by: disposeBag)
+        
+        regionMenu.didSelectedMenuResult = { [weak self] index, model, grand in
+            guard let self = self else { return }
+            self.entityArea = model?.currentID ?? ""
+            self.pageIndex = 1
+            self.searchListInfo()
+        }
+        
+        let industryMenu = MenuAction(title: "行业", style: .typeList)!
+        
+        self.industryModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self else { return }
+            let industryArray = getThreeIndustryInfo(from: modelArray ?? [])
+            industryMenu.listDataSource = industryArray
+        }).disposed(by: disposeBag)
+        
+        industryMenu.didSelectedMenuResult = { [weak self] index, model, grand in
+            guard let self = self else { return }
+            self.entityIndustry = model?.currentID ?? ""
+            self.pageIndex = 1
+            self.searchListInfo()
+        }
+        
+        let menuView = DropMenuBar(action: [regionMenu, industryMenu])!
+        menuView.backgroundColor = .white
+        self.twoPeopleListView.addSubview(menuView)
+        menuView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(0.5)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(33.5)
+        }
         
     }
     

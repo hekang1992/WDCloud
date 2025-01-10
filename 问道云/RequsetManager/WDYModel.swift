@@ -96,7 +96,8 @@ class itemsModel {
     var personName: String?
     var personId: String?
     var logo: String?
-    var shareholderList: [shareholderListModel]?
+    var shareholderList: [shareholderListModel]?//合作伙伴信息
+    var listCompany: [listCompanyModel]?//自己公司列表数据
     init(json: JSON) {
         self.logo = json["logo"].stringValue
         self.companyCount = json["companyCount"].intValue
@@ -104,6 +105,19 @@ class itemsModel {
         self.children = json["children"].arrayValue.map { childrenModel(json: $0) }
         self.personName = json["personName"].stringValue
         self.personId = json["personId"].stringValue
+        self.listCompany = json["listCompany"].arrayValue.map { listCompanyModel(json: $0) }
+        self.shareholderList = json["shareholderList"].arrayValue.map { shareholderListModel(json: $0) }
+    }
+}
+
+class listCompanyModel {
+    var count: Int?
+    var entityName: String?
+    var province: String?
+    init(json: JSON) {
+        self.entityName = json["entityName"].stringValue
+        self.province = json["province"].stringValue
+        self.count = json["count"].intValue
     }
 }
 

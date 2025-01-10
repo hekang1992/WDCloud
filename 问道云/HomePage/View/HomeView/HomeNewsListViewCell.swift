@@ -121,7 +121,7 @@ extension HomeNewsListViewCell {
     private func clearExistingTagButtons() {
         self.contentView.subviews.forEach { subview in
             if subview is UIButton {
-                subview.removeFromSuperview()
+                subview.removeAllSubviews()
             }
         }
     }

@@ -58,6 +58,13 @@ extension UIColor {
 }
 
 extension UIView {
+    
+    func removeAllSubviews() {
+        while let subview = self.subviews.first {
+            subview.removeFromSuperview()
+        }
+    }
+    
     func setTopCorners(radius: CGFloat) {
         let path = UIBezierPath(
             roundedRect: self.bounds,

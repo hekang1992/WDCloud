@@ -19,14 +19,14 @@ class TwoPeopleListView: BaseView {
     
     lazy var whiteView: UIView = {
         let whiteView = UIView()
-        whiteView.backgroundColor = .white
+        whiteView.backgroundColor = .clear
         return whiteView
     }()
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .init(cssStr: "#F8F8F8")
         tableView.estimatedRowHeight = 60
         tableView.delegate = self
         tableView.dataSource = self
@@ -34,7 +34,8 @@ class TwoPeopleListView: BaseView {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
-        tableView.register(TwoPeopleListCell.self, forCellReuseIdentifier: "TwoPeopleListCell")
+        tableView.register(TwoPeopleSpecListCell.self, forCellReuseIdentifier: "TwoPeopleSpecListCell")
+        tableView.register(TwoPeopleNormalListCell.self, forCellReuseIdentifier: "TwoPeopleNormalListCell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
@@ -57,7 +58,8 @@ class TwoPeopleListView: BaseView {
             make.edges.equalToSuperview()
         }
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview().offset(34)
+            make.left.right.bottom.equalToSuperview()
         }
     }
     
@@ -76,12 +78,22 @@ extension TwoPeopleListView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = dataModelArray.value?[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TwoPeopleListCell") as? TwoPeopleListCell
-        model?.searchStr = self.searchWordsRelay.value ?? ""
-        cell?.backgroundColor = .clear
-        cell?.selectionStyle = .none
-        cell?.model.accept(model)
-        return cell ?? UITableViewCell()
+        let shareholderListCount = model?.shareholderList?.count ?? 0
+        if shareholderListCount != 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TwoPeopleSpecListCell") as? TwoPeopleSpecListCell
+            model?.searchStr = self.searchWordsRelay.value ?? ""
+            cell?.backgroundColor = .clear
+            cell?.selectionStyle = .none
+            cell?.model.accept(model)
+            return cell ?? UITableViewCell()
+        }else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TwoPeopleNormalListCell") as? TwoPeopleNormalListCell
+            model?.searchStr = self.searchWordsRelay.value ?? ""
+            cell?.backgroundColor = .clear
+            cell?.selectionStyle = .none
+            cell?.model.accept(model)
+            return cell ?? UITableViewCell()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
