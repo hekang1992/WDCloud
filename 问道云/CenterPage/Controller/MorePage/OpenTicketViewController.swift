@@ -161,7 +161,7 @@ extension OpenTicketViewController {
             case .success(let success):
                 if success.code == 200 {
                     self?.navigationController?.popViewController(animated: true)
-                }
+                } 
                 ToastViewConfig.showToast(message: success.msg ?? "")
                 break
             case .failure(_):

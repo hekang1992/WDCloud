@@ -336,14 +336,28 @@ class serviceComboListModel {
 
 class pageDataModel {
     var firmInfo: firmInfoModel?
+    var legalPerson: legalPersonModel?
+    var riskInfo: riskInfoModel?
+    var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
     init(json: JSON) {
+        self.searchStr = json["searchStr"].stringValue
         self.firmInfo = firmInfoModel(json: json["firmInfo"])
+        self.legalPerson = legalPersonModel(json: json["legalPerson"])
+        self.riskInfo = riskInfoModel(json: json["riskInfo"])
+    }
+}
+
+class riskInfoModel {
+    var content: String?
+    var riskTime: String?
+    init(json: JSON) {
+        self.content = json["content"].stringValue
+        self.riskTime = json["riskTime"].stringValue
     }
 }
 
 class firmInfoModel {
     var entityId: String?
-    var entityName: String?
     var entityStatusLabel: String?
     var incorporationTime: String?
     var phone: String?
@@ -351,7 +365,10 @@ class firmInfoModel {
     var registerCapital: String?
     var registerCapitalCurrency: String?
     var website: String?
+    var logo: String?//企业logo
+    var entityName: String?//企业名称
     init(json: JSON) {
+        self.logo = json["logo"].stringValue
         self.entityId = json["entityId"].stringValue
         self.entityName = json["entityName"].stringValue
         self.entityStatusLabel = json["entityStatusLabel"].stringValue
@@ -376,5 +393,15 @@ class bossListModel {
     var name: String?
     init(json: JSON) {
         self.name = json["name"].stringValue
+    }
+}
+
+//法定代表人
+class legalPersonModel {
+    var legalName: String?
+    var personNumber: String?
+    init(json: JSON) {
+        self.legalName = json["legalName"].stringValue
+        self.personNumber = json["personNumber"].stringValue
     }
 }

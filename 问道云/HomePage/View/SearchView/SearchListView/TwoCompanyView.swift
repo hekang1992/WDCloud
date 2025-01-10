@@ -14,6 +14,9 @@ class TwoCompanyView: BaseView {
     
     var dataModelArray = BehaviorRelay<[pageDataModel]?>(value: nil)
     
+    //被搜索的文字,根据这个文字,去给cell的namelabel加上颜色
+    var searchWordsRelay = BehaviorRelay<String?>(value: nil)
+    
     lazy var whiteView: UIView = {
         let whiteView = UIView()
         return whiteView
@@ -30,11 +33,12 @@ class TwoCompanyView: BaseView {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
-        tableView.register(TwoCompanyListCell.self, forCellReuseIdentifier: "TwoCompanyListCell")
+        //头部人员cell
         tableView.register(TwoCompanyHeadPeopleCell.self, forCellReuseIdentifier: "TwoCompanyHeadPeopleCell")
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        //公司cell
+        tableView.register(TwoCompanySpecListCell.self, forCellReuseIdentifier: "TwoCompanySpecListCell")
+        tableView.register(TwoCompanyNormalListCell.self, forCellReuseIdentifier: "TwoCompanyNormalListCell")
+        
         return tableView
     }()
     
@@ -87,10 +91,24 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = dataModel.value
         let bossList = model?.bossList ?? []
+        
         let companyList = dataModelArray.value
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyListCell") as? TwoCompanyListCell
-        cell?.textLabel?.text = companyList?[indexPath.row].firmInfo?.entityName
-        return cell ?? UITableViewCell()
+        let pageDataModel = companyList?[indexPath.row]
+        if let riskModel = pageDataModel?.riskInfo, let content = riskModel.content, !content.isEmpty {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanySpecListCell") as? TwoCompanySpecListCell
+            pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
+            cell?.backgroundColor = .clear
+            cell?.selectionStyle = .none
+            cell?.model.accept(pageDataModel)
+            return cell ?? UITableViewCell()
+        }else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
+            pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
+            cell?.backgroundColor = .clear
+            cell?.selectionStyle = .none
+            cell?.model.accept(pageDataModel)
+            return cell ?? UITableViewCell()
+        }
     }
     
 }

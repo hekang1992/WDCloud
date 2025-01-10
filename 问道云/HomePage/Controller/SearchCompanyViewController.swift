@@ -107,6 +107,7 @@ class SearchCompanyViewController: WDBaseViewController {
         regionMenu.didSelectedMenuResult = { [weak self] index, model, grand in
             guard let self = self else { return }
             self.entityArea = model?.currentID ?? ""
+            self.pageIndex = 1
             self.searchListInfo()
         }
         
@@ -121,6 +122,7 @@ class SearchCompanyViewController: WDBaseViewController {
         industryMenu.didSelectedMenuResult = { [weak self] index, model, grand in
             guard let self = self else { return }
             self.entityIndustry = model?.currentID ?? ""
+            self.pageIndex = 1
             self.searchListInfo()
         }
         
@@ -402,11 +404,11 @@ extension SearchCompanyViewController {
                    let model = success.data,
                    let code = success.code,
                    code == 200, let total = model.pageMeta?.totalNum {
-                    self.getlastSearch()
                     self.companyView.isHidden = true
                     self.companyListView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1
+                        self.getlastSearch()
                         self.allArray.removeAll()
                     }
                     pageIndex += 1
@@ -425,6 +427,7 @@ extension SearchCompanyViewController {
                     }
                     self.companyListView.dataModel.accept(model)
                     self.companyListView.dataModelArray.accept(self.allArray)
+                    self.companyListView.searchWordsRelay.accept(self.searchWordsRelay.value)
                     self.companyListView.tableView.reloadData()
                 }
                 break

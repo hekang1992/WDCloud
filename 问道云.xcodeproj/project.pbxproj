@@ -101,6 +101,7 @@
 		73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */; };
 		73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */; };
 		73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */; };
+		73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */; };
 		73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA12D1E973200D93691 /* MembershipListViewController.swift */; };
 		73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA32D1EA73100D93691 /* MembershipListView.swift */; };
 		73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */; };
@@ -134,7 +135,7 @@
 		73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E56BE02D1274630015BF34 /* TwoTicketView.swift */; };
 		73E971302D2E614200F12B15 /* CommonSearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9712F2D2E614200F12B15 /* CommonSearchListView.swift */; };
 		73E971732D2FCD8500F12B15 /* TwoCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */; };
-		73E971752D2FCF0500F12B15 /* TwoCompanyListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971742D2FCF0500F12B15 /* TwoCompanyListCell.swift */; };
+		73E971752D2FCF0500F12B15 /* TwoCompanySpecListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971742D2FCF0500F12B15 /* TwoCompanySpecListCell.swift */; };
 		73E971792D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */; };
@@ -264,6 +265,7 @@
 		73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerViewController.swift; sourceTree = "<group>"; };
 		73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPasswordViewController.swift; sourceTree = "<group>"; };
 		73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAuthorityViewController.swift; sourceTree = "<group>"; };
+		73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyNormalListCell.swift; sourceTree = "<group>"; };
 		73BDABA12D1E973200D93691 /* MembershipListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListViewController.swift; sourceTree = "<group>"; };
 		73BDABA32D1EA73100D93691 /* MembershipListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListView.swift; sourceTree = "<group>"; };
 		73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHotWordsCell.swift; sourceTree = "<group>"; };
@@ -299,7 +301,7 @@
 		73E56BE02D1274630015BF34 /* TwoTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoTicketView.swift; sourceTree = "<group>"; };
 		73E9712F2D2E614200F12B15 /* CommonSearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSearchListView.swift; sourceTree = "<group>"; };
 		73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyView.swift; sourceTree = "<group>"; };
-		73E971742D2FCF0500F12B15 /* TwoCompanyListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyListCell.swift; sourceTree = "<group>"; };
+		73E971742D2FCF0500F12B15 /* TwoCompanySpecListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanySpecListCell.swift; sourceTree = "<group>"; };
 		73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyHeadPeopleCell.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketViewController.swift; sourceTree = "<group>"; };
@@ -723,8 +725,9 @@
 			children = (
 				73C36A7A2D2D147400D6DC46 /* OneCompanyView.swift */,
 				73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */,
-				73E971742D2FCF0500F12B15 /* TwoCompanyListCell.swift */,
 				73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */,
+				73E971742D2FCF0500F12B15 /* TwoCompanySpecListCell.swift */,
+				73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */,
 			);
 			path = SearchListView;
 			sourceTree = "<group>";
@@ -907,12 +910,13 @@
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
 				7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */,
 				73C7524E2D1D5A3100C47187 /* FocusSearchViewController.swift in Sources */,
+				73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */,
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */,
 				736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */,
 				736E97812D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift in Sources */,
-				73E971752D2FCF0500F12B15 /* TwoCompanyListCell.swift in Sources */,
+				73E971752D2FCF0500F12B15 /* TwoCompanySpecListCell.swift in Sources */,
 				736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */,
 				736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */,
 				73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */,
