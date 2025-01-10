@@ -91,8 +91,32 @@ class DataModel {
 
 class itemsModel {
     var children: [childrenModel]?
+    var companyCount: Int?
+    var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
+    var personName: String?
+    var personId: String?
+    var logo: String?
+    var shareholderList: [shareholderListModel]?
     init(json: JSON) {
+        self.logo = json["logo"].stringValue
+        self.companyCount = json["companyCount"].intValue
+        self.searchStr = json["searchStr"].stringValue
         self.children = json["children"].arrayValue.map { childrenModel(json: $0) }
+        self.personName = json["personName"].stringValue
+        self.personId = json["personId"].stringValue
+    }
+}
+
+class shareholderListModel {
+    var count: Int?
+    var entityName: String?
+    var personId: Int?
+    var personName: String?
+    init(json: JSON) {
+        self.count = json["count"].intValue
+        self.entityName = json["entityName"].stringValue
+        self.personId = json["personId"].intValue
+        self.personName = json["personName"].stringValue
     }
 }
 

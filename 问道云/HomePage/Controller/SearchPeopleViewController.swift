@@ -8,6 +8,8 @@
 import UIKit
 import JXPagingView
 import RxRelay
+import RxSwift
+import MJRefresh
 
 class SearchPeopleViewController: WDBaseViewController {
     
@@ -22,10 +24,15 @@ class SearchPeopleViewController: WDBaseViewController {
     var entityArea: String = ""//地区
     var entityIndustry: String = ""//行业
     
+    var allArray: [itemsModel] = []//加载更多
+    
+    //被搜索的关键词
+    var searchWordsRelay = BehaviorRelay<String>(value: "")
+    
     var searchWords: String? {
         didSet {
             guard let searchWords = searchWords else { return }
-//            searchListInfo(from: searchWords)
+            searchWordsRelay.accept(searchWords)
         }
     }
     
@@ -42,6 +49,12 @@ class SearchPeopleViewController: WDBaseViewController {
         return peopleView
     }()
     
+    lazy var twoPeopleListView: TwoPeopleListView = {
+        let twoPeopleListView = TwoPeopleListView()
+        twoPeopleListView.isHidden = true
+        return twoPeopleListView
+    }()
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         return tableView
@@ -52,24 +65,20 @@ class SearchPeopleViewController: WDBaseViewController {
 
         // Do any additional setup after loading the view.
         view.addSubview(peopleView)
-        view.addSubview(tableView)
-        tableView.isHidden = true
+        view.addSubview(twoPeopleListView)
         peopleView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        tableView.snp.makeConstraints { make in
+        twoPeopleListView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        self.tableView.mj_header = WDRefreshHeader(refreshingBlock: {
-            
-        })
-        
         //删除最近搜索
         self.peopleView.searchView.deleteBtn
             .rx
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteSearchInfo()
         }).disposed(by: disposeBag)
+        
         //删除浏览历史
         self.peopleView.historyView.deleteBtn
             .rx
@@ -81,6 +90,54 @@ class SearchPeopleViewController: WDBaseViewController {
         self.peopleView.lastSearchTextBlock = { [weak self] searchStr in
             self?.lastSearchTextBlock?(searchStr)
         }
+        
+        self.searchWordsRelay
+            .debounce(.milliseconds(1000),
+                      scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if !text.isEmpty {
+                    self.pageIndex = 1
+                    self.searchListInfo()
+                }else {
+                    self.pageIndex = 1
+                    self.allArray.removeAll()
+                    self.peopleView.isHidden = false
+                    self.twoPeopleListView.isHidden = true
+                }
+                
+//                let containsChinese = text.range(of: "[\\u4e00-\\u9fa5]", options: .regularExpression) != nil
+//                let containsEnglish = text.range(of: "[a-zA-Z]", options: .regularExpression) != nil
+//                if containsChinese && containsEnglish {
+//                    // 如果同时包含中文和英文字符
+//                    print("包含中文和英文")
+//                    // 在这里执行您的逻辑
+//                } else if containsChinese {
+//                    // 只包含中文
+//                    print("只包含中文")
+//                    // 在这里执行您的中文逻辑
+//                } else if containsEnglish {
+//                    // 只包含英文
+//                    print("只包含英文")
+//                    // 在这里执行您的英文逻辑
+//                }
+            }).disposed(by: disposeBag)
+        
+        
+        //添加下拉刷新
+        self.twoPeopleListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.pageIndex = 1
+            self.searchListInfo()
+        })
+        
+        //添加上拉加载更多
+        self.twoPeopleListView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.searchListInfo()
+        })
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -106,7 +163,7 @@ extension SearchPeopleViewController {
     //最近搜索
     private func getlastSearch() {
         let man = RequestManager()
-        let dict = ["searchType": "1", "moduleId": "02"]
+        let dict = ["searchType": "2", "moduleId": "02"]
         man.requestAPI(params: dict, pageUrl: "/operation/searchRecord/query", method: .post) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -293,24 +350,55 @@ extension SearchPeopleViewController {
         })
     }
     
-//    //搜索企业列表
-//    private func searchListInfo(from keywords: String) {
-//        let dict = ["keywords": keywords,
-//                    "matchType": 1,
-//                    "entityIndustry": entityIndustry,
-//                    "entityArea": entityArea,
-//                    "pageIndex": pageIndex,
-//                    "pageSize": 20] as [String : Any]
-//        let man = RequestManager()
-//        man.requestAPI(params: dict, pageUrl: "/firminfo/company/search", method: .get) { result in
-//            switch result {
-//            case .success(let success):
-//                break
-//            case .failure(let failure):
-//                break
-//            }
-//        }
-//    }
+    //搜索人员列表
+    private func searchListInfo() {
+        let dict = ["keywords": searchWords ?? "",
+                    "entityIndustry": entityIndustry,
+                    "entityArea": entityArea,
+                    "pageNum": pageIndex,
+                    "pageSize": 20] as [String : Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict, pageUrl: "/firminfo/person/search", method: .get) { [weak self] result in
+            self?.twoPeopleListView.tableView.mj_header?.endRefreshing()
+            self?.twoPeopleListView.tableView.mj_footer?.endRefreshing()
+            switch result {
+            case .success(let success):
+                if let self = self,
+                   let model = success.data,
+                   let code = success.code,
+                   code == 200, let total = model.total {
+                    self.peopleView.isHidden = true
+                    self.twoPeopleListView.isHidden = false
+                    if pageIndex == 1 {
+                        pageIndex = 1
+                        self.getlastSearch()
+                        self.allArray.removeAll()
+                    }
+                    pageIndex += 1
+                    let pageData = model.items ?? []
+                    self.allArray.append(contentsOf: pageData)
+                    if total != 0 {
+                        self.emptyView.removeFromSuperview()
+                        self.noNetView.removeFromSuperview()
+                    }else {
+                        self.addNodataView(from: self.twoPeopleListView.whiteView)
+                    }
+                    if self.allArray.count != total {
+                        self.twoPeopleListView.tableView.mj_footer?.isHidden = false
+                    }else {
+                        self.twoPeopleListView.tableView.mj_footer?.isHidden = true
+                    }
+                    self.twoPeopleListView.dataModel.accept(model)
+                    self.twoPeopleListView.dataModelArray.accept(self.allArray)
+                    self.twoPeopleListView.searchWordsRelay.accept(self.searchWordsRelay.value)
+                    self.twoPeopleListView.tableView.reloadData()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
     
 }
 

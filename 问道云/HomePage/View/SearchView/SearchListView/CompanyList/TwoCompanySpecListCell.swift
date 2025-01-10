@@ -239,7 +239,7 @@ class TwoCompanySpecListCell: BaseViewCell {
             self.nameLabel.attributedText = TextStyler.styledText(for: model.firmInfo?.entityName ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
             
             self.nameView.label2.text = model.legalPerson?.legalName ?? ""
-            self.nameView.label2.textColor = .init(cssStr: "#F55B5B")
+            self.nameView.label2.textColor = .init(cssStr: "#547AFF")
            
             self.moneyView.label2.text = "\(model.firmInfo?.registerCapital ?? "--")\(model.firmInfo?.registerCapitalCurrency ?? "")"
             self.moneyView.label2.textColor = .init(cssStr: "#333333")
@@ -305,7 +305,7 @@ class BiaoQianView: BaseView {
         let label2 = UILabel()
         label2.numberOfLines = 0
         label2.font = .mediumFontOfSize(size: 13)
-        label2.textColor = .init(cssStr: "#F55B5B")
+        label2.textColor = .init(cssStr: "#547AFF")
         label2.textAlignment = .center
         return label2
     }()
@@ -316,7 +316,7 @@ class BiaoQianView: BaseView {
         timeLabel.layer.borderWidth = 0.5
         timeLabel.layer.borderColor = UIColor.init(cssStr: "#9FA4AD")?.cgColor
         timeLabel.layer.cornerRadius = 1
-        timeLabel.text = "2020"
+
         return timeLabel
     }()
     

@@ -27,6 +27,7 @@ class SearchCompanyViewController: WDBaseViewController {
     
     var allArray: [pageDataModel] = []//加载更多
     
+    //被搜索的关键词
     var searchWordsRelay = BehaviorRelay<String>(value: "")
     
     var searchWords: String? {
@@ -153,11 +154,18 @@ class SearchCompanyViewController: WDBaseViewController {
             .debounce(.milliseconds(1000),
                       scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .filter { !$0.isEmpty }
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
-                self.pageIndex = 1
-                self.searchListInfo()
+                if !text.isEmpty {
+                    self.pageIndex = 1
+                    self.searchListInfo()
+                }else {
+                    self.pageIndex = 1
+                    self.allArray.removeAll()
+                    self.companyView.isHidden = false
+                    self.companyListView.isHidden = true
+                }
+                
 //                let containsChinese = text.range(of: "[\\u4e00-\\u9fa5]", options: .regularExpression) != nil
 //                let containsEnglish = text.range(of: "[a-zA-Z]", options: .regularExpression) != nil
 //                if containsChinese && containsEnglish {
@@ -220,7 +228,7 @@ extension SearchCompanyViewController {
     //最近搜索
     private func getlastSearch() {
         let man = RequestManager()
-        let dict = ["searchType": "2", "moduleId": "01"]
+        let dict = ["searchType": "1", "moduleId": "01"]
         man.requestAPI(params: dict, pageUrl: "/operation/searchRecord/query", method: .post) { [weak self] result in
             guard let self = self else { return }
             switch result {

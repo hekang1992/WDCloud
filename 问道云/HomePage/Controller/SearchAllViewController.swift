@@ -102,7 +102,7 @@ class SearchAllViewController: WDBaseViewController {
     
 }
 
-extension SearchAllViewController: JXPagingViewDelegate {
+extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate {
     
     private func addSegmentedView() {
         //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
@@ -117,6 +117,7 @@ extension SearchAllViewController: JXPagingViewDelegate {
         //指示器和指示器颜色
         segmentedView = JXSegmentedView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: CGFloat(JXheightForHeaderInSection)))
         segmentedView.backgroundColor = UIColor.white
+        segmentedView.delegate = self
         segmentedView.dataSource = segmentedViewDataSource
         let lineView = JXSegmentedIndicatorLineView()
         lineView.indicatorColor = UIColor.init(cssStr: "#2353F0")!
@@ -160,7 +161,6 @@ extension SearchAllViewController: JXPagingViewDelegate {
     }
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
-        selectIndex = index
         if index == 0 {
             companyVc.lastSearchTextBlock = { [weak self] searchStr in
                 self?.searchHeadView.searchTx.text = searchStr
@@ -180,6 +180,23 @@ extension SearchAllViewController: JXPagingViewDelegate {
             return propertyVc
         }
     }
+    
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        selectIndex = index
+        if index == 0 {
+            self.companyVc.searchWords = self.searchHeadView.searchTx
+                .text ?? ""
+        }else if index == 1 {
+            self.peopleVc.searchWords = self.searchHeadView.searchTx
+                .text ?? ""
+        }else if index == 2 {
+            self.riskVc.searchWords = self.searchHeadView.searchTx
+                .text ?? ""
+        }else {
+           
+        }
+    }
+    
 }
 
 extension SearchAllViewController: UITextFieldDelegate {
