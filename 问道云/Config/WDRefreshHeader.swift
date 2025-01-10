@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import MJRefresh
 import Lottie
+import MJRefresh
 
 class WDRefreshHeader: MJRefreshHeader {
 

@@ -11,6 +11,13 @@ import RxRelay
 
 class TwoCompanySpecListCell: BaseViewCell {
     
+    //地址回调
+    var addressBlock: ((pageDataModel) -> Void)?
+    //官网回调
+    var websiteBlock: ((pageDataModel) -> Void)?
+    //电话回调
+    var phoneBlock: ((pageDataModel) -> Void)?
+    
     var model = BehaviorRelay<pageDataModel?>(value: nil)
     
     lazy var bgView: UIView = {
@@ -240,6 +247,27 @@ class TwoCompanySpecListCell: BaseViewCell {
             
             self.risklabel.text = (model.riskInfo?.riskTime ?? "") + " " + (model.riskInfo?.content ?? "")
             
+        }).disposed(by: disposeBag)
+        
+        //地址点击
+        addressBtn.rx.tap.subscribe(onNext: { [weak self] in
+            if let self = self, let model = self.model.value {
+                self.addressBlock?(model)
+            }
+        }).disposed(by: disposeBag)
+        
+        //官网点击
+        websiteBtn.rx.tap.subscribe(onNext: { [weak self] in
+            if let self = self, let model = self.model.value {
+                self.websiteBlock?(model)
+            }
+        }).disposed(by: disposeBag)
+        
+        //电话点击
+        phoneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            if let self = self, let model = self.model.value {
+                self.phoneBlock?(model)
+            }
         }).disposed(by: disposeBag)
         
     }

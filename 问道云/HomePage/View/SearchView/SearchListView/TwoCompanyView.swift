@@ -3,12 +3,19 @@
 //  问道云
 //
 //  Created by 何康 on 2025/1/9.
-//
+//  企业搜索列表
 
 import UIKit
 import RxRelay
 
 class TwoCompanyView: BaseView {
+    
+    //地址回调
+    var addressBlock: ((pageDataModel) -> Void)?
+    //官网回调
+    var websiteBlock: ((pageDataModel) -> Void)?
+    //电话回调
+    var phoneBlock: ((pageDataModel) -> Void)?
     
     var dataModel = BehaviorRelay<DataModel?>(value: nil)
     
@@ -100,6 +107,15 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             cell?.backgroundColor = .clear
             cell?.selectionStyle = .none
             cell?.model.accept(pageDataModel)
+            cell?.addressBlock = { [weak self] model in
+                self?.addressBlock?(model)
+            }
+            cell?.websiteBlock = { [weak self] model in
+                self?.websiteBlock?(model)
+            }
+            cell?.phoneBlock = { [weak self] model in
+                self?.phoneBlock?(model)
+            }
             return cell ?? UITableViewCell()
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
@@ -107,6 +123,15 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             cell?.backgroundColor = .clear
             cell?.selectionStyle = .none
             cell?.model.accept(pageDataModel)
+            cell?.addressBlock = { [weak self] model in
+                self?.addressBlock?(model)
+            }
+            cell?.websiteBlock = { [weak self] model in
+                self?.websiteBlock?(model)
+            }
+            cell?.phoneBlock = { [weak self] model in
+                self?.phoneBlock?(model)
+            }
             return cell ?? UITableViewCell()
         }
     }

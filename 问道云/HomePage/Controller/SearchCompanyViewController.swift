@@ -174,6 +174,19 @@ class SearchCompanyViewController: WDBaseViewController {
 //                }
             }).disposed(by: disposeBag)
         
+        
+        companyListView.addressBlock = { [weak self] model in
+            
+        }
+        
+        companyListView.websiteBlock = { [weak self] model in
+            let pageUrl = model.firmInfo?.website ?? ""
+            self?.pushWebPage(from: pageUrl)
+        }
+        
+        companyListView.phoneBlock = { [weak self] model in
+            
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

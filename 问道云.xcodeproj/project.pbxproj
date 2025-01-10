@@ -102,6 +102,7 @@
 		73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */; };
 		73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */; };
 		73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */; };
+		73B3329A2D30CF5100934773 /* CompanyLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332992D30CF5100934773 /* CompanyLocationViewController.swift */; };
 		73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA12D1E973200D93691 /* MembershipListViewController.swift */; };
 		73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA32D1EA73100D93691 /* MembershipListView.swift */; };
 		73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */; };
@@ -266,6 +267,7 @@
 		73A21DF52D0C422D00FC4C49 /* SettingPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPasswordViewController.swift; sourceTree = "<group>"; };
 		73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAuthorityViewController.swift; sourceTree = "<group>"; };
 		73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyNormalListCell.swift; sourceTree = "<group>"; };
+		73B332992D30CF5100934773 /* CompanyLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLocationViewController.swift; sourceTree = "<group>"; };
 		73BDABA12D1E973200D93691 /* MembershipListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListViewController.swift; sourceTree = "<group>"; };
 		73BDABA32D1EA73100D93691 /* MembershipListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListView.swift; sourceTree = "<group>"; };
 		73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHotWordsCell.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				73C36A762D2D08EB00D6DC46 /* SearchPeopleViewController.swift */,
 				73C36A742D2D08DA00D6DC46 /* SearchRiskViewController.swift */,
 				73C36A782D2D091100D6DC46 /* SearchPropertyClueViewController.swift */,
+				73B332992D30CF5100934773 /* CompanyLocationViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -987,6 +990,7 @@
 				7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */,
 				73C36A6C2D2D024C00D6DC46 /* SearchAllViewController.swift in Sources */,
 				7330CB822D23E65900778D54 /* ContactManager.swift in Sources */,
+				73B3329A2D30CF5100934773 /* CompanyLocationViewController.swift in Sources */,
 				73C36A752D2D08DA00D6DC46 /* SearchRiskViewController.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
 				73A21DF02D0C39BF00FC4C49 /* DiligenceListViewController.swift in Sources */,

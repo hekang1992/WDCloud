@@ -24,6 +24,9 @@ let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
 
 let SHOW_HOME_LAUNCH = "SHOW_HOME_LAUNCH"
 
+//高德地图key
+let ATUO_MAP_KEY = "be5c7fd08d404c308286ca0ce04629d0"
+
 //颜色
 extension UIColor {
     convenience init?(cssStr: String) {
