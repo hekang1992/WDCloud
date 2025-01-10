@@ -50,6 +50,7 @@ class OneCompanyView: BaseView {
     lazy var hotWordsView: SearchHotWordsListView = {
         let hotWordsView = SearchHotWordsListView()
         hotWordsView.backgroundColor = .white
+        hotWordsView.isHidden = true
         return hotWordsView
     }()
 

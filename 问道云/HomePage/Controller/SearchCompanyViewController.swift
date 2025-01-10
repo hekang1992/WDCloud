@@ -341,6 +341,7 @@ extension SearchCompanyViewController {
     
     //UI刷新
     func hotsWordsUI(data: [rowsModel]) {
+        self.companyView.hotWordsView.isHidden = false
         for (index, model) in data.enumerated() {
             let listView = CommonSearchListView()
             listView.block = {
