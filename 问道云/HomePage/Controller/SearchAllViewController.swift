@@ -100,17 +100,10 @@ class SearchAllViewController: WDBaseViewController {
             .disposed(by: disposeBag)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(delay: 0.5) {
-            self.searchHeadView.searchTx.becomeFirstResponder()
-        }
-    }
-    
 }
 
 extension SearchAllViewController: JXPagingViewDelegate {
-
+    
     private func addSegmentedView() {
         //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
         segmentedViewDataSource = JXSegmentedTitleDataSource()
@@ -130,7 +123,7 @@ extension SearchAllViewController: JXPagingViewDelegate {
         lineView.indicatorWidth = 18
         lineView.indicatorHeight = 3
         segmentedView.indicators = [lineView]
-
+        
         view.addSubview(pagingView)
         pagingView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

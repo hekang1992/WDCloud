@@ -64,7 +64,7 @@ class HomeNewsListViewController: WDBaseViewController {
                 }else if type == "2" {//法典
                     let pageUrl = model.value ?? ""
                     if !pageUrl.isEmpty {
-                        self?.pushWebPage(from: pageUrl)
+                        self?.pushWebPage(from:  base_url + pageUrl)
                     }
                 }else {
                     
@@ -78,7 +78,7 @@ class HomeNewsListViewController: WDBaseViewController {
                 guard let self = self else { return }
                 let itemId = model.itemId ?? ""
                 let pageUrl = "/news-information?itemId=\(itemId)"
-                self.pushWebPage(from: pageUrl)
+                self.pushWebPage(from: base_url + pageUrl)
         }).disposed(by: disposeBag)
         
     }

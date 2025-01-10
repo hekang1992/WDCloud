@@ -32,11 +32,11 @@ class PasswordLoginViewController: WDBaseViewController {
         passView.phoneTx.text = self.phoneStr
         
         passView.block1 = { [weak self] in
-            self?.pushWebPage(from: agreement_url)
+            self?.pushWebPage(from: base_url + agreement_url)
         }
         
         passView.block2 = { [weak self] in
-            self?.pushWebPage(from: privacy_url)
+            self?.pushWebPage(from: base_url + privacy_url)
         }
         
         tapClick()

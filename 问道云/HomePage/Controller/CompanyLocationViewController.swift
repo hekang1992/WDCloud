@@ -14,6 +14,7 @@ class CompanyLocationViewController: WDBaseViewController {
         return headView
     }()
     
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         addHeadView(from: headView)

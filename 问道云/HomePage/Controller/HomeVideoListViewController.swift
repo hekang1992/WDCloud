@@ -64,7 +64,7 @@ class HomeVideoListViewController: WDBaseViewController {
                 }else if type == "2" {//法典
                     let pageUrl = model.value ?? ""
                     if !pageUrl.isEmpty {
-                        self?.pushWebPage(from: pageUrl)
+                        self?.pushWebPage(from: base_url + pageUrl)
                     }
                 }else {
                     
@@ -77,7 +77,7 @@ class HomeVideoListViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] model in
                 guard let self = self else { return }
                 let videofile = model.videofile ?? ""
-                self.pushWebPage(from: videofile)
+                self.pushWebPage(from: base_url + videofile)
         }).disposed(by: disposeBag)
         
     }

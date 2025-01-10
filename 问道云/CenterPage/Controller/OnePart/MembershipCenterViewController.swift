@@ -176,7 +176,7 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
                 .tapGesture()
                 .when(.recognized)
                 .subscribe(onNext: { [weak self] _ in
-                    self?.pushWebPage(from: membership_agreement)
+                    self?.pushWebPage(from: base_url + membership_agreement)
             }).disposed(by: disposeBag)
             
             vc.payBlock = { [weak self] in

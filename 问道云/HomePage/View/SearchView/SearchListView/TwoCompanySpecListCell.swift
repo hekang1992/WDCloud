@@ -53,12 +53,14 @@ class TwoCompanySpecListCell: BaseViewCell {
     
     lazy var nameView: BiaoQianView = {
         let nameView = BiaoQianView(frame: .zero, enmu: .hide)
+        nameView.lineView.isHidden = false
         nameView.label1.text = "法定代表人"
         return nameView
     }()
     
     lazy var moneyView: BiaoQianView = {
         let moneyView = BiaoQianView(frame: .zero, enmu: .hide)
+        moneyView.lineView.isHidden = false
         moneyView.label1.text = "注册资本"
         return moneyView
     }()

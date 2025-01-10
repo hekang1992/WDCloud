@@ -107,7 +107,7 @@ extension SettingViewController {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                self?.pushWebPage(from: information_collection)
+                self?.pushWebPage(from: base_url + information_collection)
             }).disposed(by: disposeBag)
         
         //用户协议
@@ -116,7 +116,7 @@ extension SettingViewController {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                self?.pushWebPage(from: agreement_url)
+                self?.pushWebPage(from: base_url + agreement_url)
             }).disposed(by: disposeBag)
         
         //隐私协议
@@ -125,7 +125,7 @@ extension SettingViewController {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                self?.pushWebPage(from: privacy_url)
+                self?.pushWebPage(from: base_url + privacy_url)
             }).disposed(by: disposeBag)
         
         //会员协议
@@ -134,7 +134,7 @@ extension SettingViewController {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                self?.pushWebPage(from: membership_agreement)
+                self?.pushWebPage(from: base_url + membership_agreement)
             }).disposed(by: disposeBag)
         
         settingView.tenListView.bgView

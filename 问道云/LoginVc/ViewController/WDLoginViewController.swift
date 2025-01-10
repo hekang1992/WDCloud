@@ -34,11 +34,11 @@ class WDLoginViewController: WDBaseViewController {
         }).disposed(by: disposeBag)
         
         loginView.block1 = { [weak self] in
-            self?.pushWebPage(from: agreement_url)
+            self?.pushWebPage(from: base_url + agreement_url)
         }
         
         loginView.block2 = { [weak self] in
-            self?.pushWebPage(from: privacy_url)
+            self?.pushWebPage(from: base_url + privacy_url)
         }
         
         //微信登陆

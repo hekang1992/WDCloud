@@ -29,6 +29,22 @@ class TwoCompanyView: BaseView {
         return whiteView
     }()
 
+    lazy var numLabel: UILabel = {
+        let numLabel = UILabel()
+        numLabel.font = .mediumFontOfSize(size: 12)
+        numLabel.textColor = .init(cssStr: "#666666")
+        numLabel.textAlignment = .left
+        return numLabel
+    }()
+    
+    lazy var pageLabel: UILabel = {
+        let pageLabel = UILabel()
+        pageLabel.font = .mediumFontOfSize(size: 12)
+        pageLabel.textColor = .init(cssStr: "#666666")
+        pageLabel.textAlignment = .right
+        return pageLabel
+    }()
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
@@ -45,7 +61,9 @@ class TwoCompanyView: BaseView {
         //公司cell
         tableView.register(TwoCompanySpecListCell.self, forCellReuseIdentifier: "TwoCompanySpecListCell")
         tableView.register(TwoCompanyNormalListCell.self, forCellReuseIdentifier: "TwoCompanyNormalListCell")
-        
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
         return tableView
     }()
     
@@ -136,4 +154,37 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35.5
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let countModel = dataModel.value?.pageMeta
+        let numStr = countModel?.totalNum ?? 0
+        let headView = UIView()
+        headView.backgroundColor = .init(cssStr: "#F3F3F3")
+        headView.addSubview(numLabel)
+        //搜索的总结果
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: numStr, fullText: "搜索到\(numStr)条结果")
+        numLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.height.equalTo(25)
+            make.left.equalToSuperview().offset(10)
+        }
+        
+        //搜到共多少页
+        let result = Int(ceil(Double(numStr) / Double(20)))
+        headView.addSubview(pageLabel)
+        pageLabel.text = "第\(countModel?.size ?? 0)/\(result)页"
+        pageLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.height.equalTo(25)
+            make.right.equalToSuperview().offset(-10)
+        }
+    
+        return headView
+    }
+    
 }
+
+

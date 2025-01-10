@@ -293,7 +293,7 @@ extension WDCenterViewController {
             }else {
                 url = base_url + "/distribution-service/distribution-add?customernumber=\(customernumber)"
             }
-            self.pushWebPage(from: url)
+            self.pushWebPage(from: base_url + url)
             break
         case "联系我们":
             let connectVc = ContactUsViewController()

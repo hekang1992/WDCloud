@@ -383,9 +383,11 @@ class firmInfoModel {
 
 
 class pageMetaModel {
-    var totalNum: Int?
+    var totalNum: Int?//总共
+    var size: Int?//页数
     init(json: JSON) {
         self.totalNum = json["totalNum"].intValue
+        self.size = json["size"].intValue
     }
 }
 

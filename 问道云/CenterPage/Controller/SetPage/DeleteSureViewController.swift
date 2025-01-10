@@ -204,7 +204,7 @@ class DeleteSureViewController: WDBaseViewController {
         }).disposed(by: disposeBag)
         
         self.block = { [weak self] in
-            self?.pushWebPage(from: agreement_url)
+            self?.pushWebPage(from: base_url + agreement_url)
         }
         
         sendCodeBtn.rx.tap.subscribe(onNext: { [weak self] in

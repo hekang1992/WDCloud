@@ -807,7 +807,7 @@ class CountdownTimer {
         
         // 启动每秒触发的定时器
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {  timer in
-//            guard let self = self else { return }
+            //            guard let self = self else { return }
             
             // 更新剩余时间
             self.remainingTime -= 1
@@ -862,6 +862,30 @@ class GetIDFVConfig {
         }
         let isSuccess = SAMKeychain.setPassword(deviceIDFV, forService: WDY_ONE, account: WDY_TWO)
         return isSuccess ? deviceIDFV : ""
+    }
+    
+}
+
+//红色文字
+class GetRedStrConfig: NSObject {
+    
+    static func getRedStr(from count: Int?, fullText: String) -> NSAttributedString {
+        // 确保 count 有效，默认为 0
+        let countValue = count ?? 0
+        // 创建可变富文本字符串
+        let attributedString = NSMutableAttributedString(string: fullText)
+        
+        // 查找 count 的范围
+        if let range = fullText.range(of: "\(countValue)") {
+            // 转换为 NSRange
+            let nsRange = NSRange(range, in: fullText)
+            // 设置指定范围内的文字颜色
+            attributedString.addAttribute(.foregroundColor,
+                                          value: UIColor(cssStr: "#F55B5B") ?? UIColor.black,
+                                          range: nsRange)
+        }
+        
+        return attributedString
     }
     
 }

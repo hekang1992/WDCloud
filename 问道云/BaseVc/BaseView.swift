@@ -104,6 +104,7 @@ class HeadView: UIView {
         }
         titlelabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
+            make.left.equalTo(backBtn.snp.right).offset(10)
             make.centerY.equalTo(backBtn.snp.centerY)
             make.height.equalTo(17)
         }

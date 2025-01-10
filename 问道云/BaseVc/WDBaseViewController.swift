@@ -62,17 +62,18 @@ extension WDBaseViewController {
     func pushWebPage(from pageUrl: String) {
         let webVc = WebPageViewController()
         var webUrl: String = ""
-        if pageUrl.contains("wintaocloud.com") {
-            if pageUrl.hasPrefix("https://") || pageUrl.hasPrefix("http://") {
-                webUrl = pageUrl
-            }else {
-                webUrl = base_url + pageUrl
-            }
+        if isValidWebURL(pageUrl) {
             webVc.pageUrl.accept(webUrl)
         }else {
-            webVc.pageUrl.accept(pageUrl)
+            webUrl = "http://" + pageUrl
+            webVc.pageUrl.accept(webUrl)
         }
         self.navigationController?.pushViewController(webVc, animated: true)
+    }
+    
+    func isValidWebURL(_ urlString: String) -> Bool {
+        guard let url = URL(string: urlString) else { return false }
+        return url.scheme == "http" || url.scheme == "https"
     }
     
     func addNodataView(from view: UIView) {

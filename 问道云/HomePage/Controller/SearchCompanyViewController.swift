@@ -115,7 +115,7 @@ class SearchCompanyViewController: WDBaseViewController {
         
         self.industryModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
-            let industryArray = getThreeRegionInfo(from: modelArray ?? [])
+            let industryArray = getThreeIndustryInfo(from: modelArray ?? [])
             industryMenu.listDataSource = industryArray
         }).disposed(by: disposeBag)
         
@@ -156,6 +156,7 @@ class SearchCompanyViewController: WDBaseViewController {
             .filter { !$0.isEmpty }
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
+                self.pageIndex = 1
                 self.searchListInfo()
 //                let containsChinese = text.range(of: "[\\u4e00-\\u9fa5]", options: .regularExpression) != nil
 //                let containsEnglish = text.range(of: "[a-zA-Z]", options: .regularExpression) != nil
@@ -176,12 +177,19 @@ class SearchCompanyViewController: WDBaseViewController {
         
         
         companyListView.addressBlock = { [weak self] model in
-            
+            let locationVc = CompanyLocationViewController()
+            locationVc.headView.titlelabel.text = model.firmInfo?.entityName ?? ""
+            self?.navigationController?.pushViewController(locationVc, animated: true)
         }
         
         companyListView.websiteBlock = { [weak self] model in
             let pageUrl = model.firmInfo?.website ?? ""
-            self?.pushWebPage(from: pageUrl)
+            if !pageUrl.isEmpty {
+                self?.pushWebPage(from: pageUrl)
+            }else {
+                ToastViewConfig.showToast(message: "无法跳转,链接非法!")
+            }
+            
         }
         
         companyListView.phoneBlock = { [weak self] model in
