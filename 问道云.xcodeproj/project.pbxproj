@@ -141,6 +141,9 @@
 		73EABF922D320F460052F4AB /* TwoRiskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF912D320F460052F4AB /* TwoRiskListView.swift */; };
 		73EABF942D321B6F0052F4AB /* TwoRiskListPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF932D321B6F0052F4AB /* TwoRiskListPeopleCell.swift */; };
 		73EABF962D321B7E0052F4AB /* TwoRiskListCompanyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF952D321B7E0052F4AB /* TwoRiskListCompanyCell.swift */; };
+		73EABF982D3235FB0052F4AB /* TwoRiskListPeopleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF972D3235FB0052F4AB /* TwoRiskListPeopleCollectionViewCell.swift */; };
+		73EABF9A2D323C460052F4AB /* RiskListPeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF992D323C460052F4AB /* RiskListPeopleView.swift */; };
+		73EABF9C2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF9B2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73EF03CF2D30F84B0070F850 /* TwoPeopleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */; };
 		73EF03D12D30FD000070F850 /* TwoPeopleSpecListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */; };
@@ -315,6 +318,9 @@
 		73EABF912D320F460052F4AB /* TwoRiskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRiskListView.swift; sourceTree = "<group>"; };
 		73EABF932D321B6F0052F4AB /* TwoRiskListPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRiskListPeopleCell.swift; sourceTree = "<group>"; };
 		73EABF952D321B7E0052F4AB /* TwoRiskListCompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRiskListCompanyCell.swift; sourceTree = "<group>"; };
+		73EABF972D3235FB0052F4AB /* TwoRiskListPeopleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRiskListPeopleCollectionViewCell.swift; sourceTree = "<group>"; };
+		73EABF992D323C460052F4AB /* RiskListPeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskListPeopleView.swift; sourceTree = "<group>"; };
+		73EABF9B2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRiskListOnlyPeopleCell.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleListView.swift; sourceTree = "<group>"; };
 		73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleSpecListCell.swift; sourceTree = "<group>"; };
@@ -751,8 +757,11 @@
 			isa = PBXGroup;
 			children = (
 				73EABF912D320F460052F4AB /* TwoRiskListView.swift */,
-				73EABF932D321B6F0052F4AB /* TwoRiskListPeopleCell.swift */,
 				73EABF952D321B7E0052F4AB /* TwoRiskListCompanyCell.swift */,
+				73EABF932D321B6F0052F4AB /* TwoRiskListPeopleCell.swift */,
+				73EABF972D3235FB0052F4AB /* TwoRiskListPeopleCollectionViewCell.swift */,
+				73EABF992D323C460052F4AB /* RiskListPeopleView.swift */,
+				73EABF9B2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift */,
 			);
 			path = RiskList;
 			sourceTree = "<group>";
@@ -1024,6 +1033,7 @@
 				7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */,
 				7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */,
 				73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */,
+				73EABF9C2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift in Sources */,
 				738043322D278EED009B25F8 /* GroupListViewCell.swift in Sources */,
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				730488112D2A97F00024265C /* HomeVideoListViewCell.swift in Sources */,
@@ -1052,8 +1062,10 @@
 				734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */,
 				73C752362D19451400C47187 /* FocusCompanyView.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
+				73EABF9A2D323C460052F4AB /* RiskListPeopleView.swift in Sources */,
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
 				736E97852D22A7A0009CC0DF /* ApplePayConfig.swift in Sources */,
+				73EABF982D3235FB0052F4AB /* TwoRiskListPeopleCollectionViewCell.swift in Sources */,
 				734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */,
 				73EABF942D321B6F0052F4AB /* TwoRiskListPeopleCell.swift in Sources */,
 				73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */,

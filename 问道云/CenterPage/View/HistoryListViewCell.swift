@@ -82,12 +82,7 @@ class HistoryListViewCell: BaseViewCell {
                 namelabel.text = personname
             }
             timelabel.text = model.createhourtime
-            let logo = model.logo ?? ""
-            if !logo.isEmpty, logo != "null" {
-                ctImageView.kf.setImage(with: URL(string: model.logo ?? ""))
-            }else {
-                ctImageView.image = UIImage.imageOfText(namelabel.text ?? "", size: (24, 24), bgColor: .random(), textColor: .white, cornerRadius: 2)
-            }
+            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (24, 24), bgColor: .random(), textColor: .white))
         }).disposed(by: disposeBag)
         
     }

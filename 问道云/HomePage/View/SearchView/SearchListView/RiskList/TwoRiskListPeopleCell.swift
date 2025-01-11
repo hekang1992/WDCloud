@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import RxRelay
 
 class TwoRiskListPeopleCell: BaseViewCell {
+    
+    var modelArray = BehaviorRelay<[itemsModel]?>(value: nil)
 
     lazy var bgView: UIView = {
         let bgView = UIView()
@@ -24,10 +27,10 @@ class TwoRiskListPeopleCell: BaseViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .random()
+        collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(TwoPeopleCoopViewCell.self, forCellWithReuseIdentifier: "TwoPeopleCoopViewCell")
+        collectionView.register(TwoRiskListPeopleCollectionViewCell.self, forCellWithReuseIdentifier: "TwoRiskListPeopleCollectionViewCell")
         return collectionView
     }()
     
@@ -37,15 +40,18 @@ class TwoRiskListPeopleCell: BaseViewCell {
         bgView.addSubview(collectionView)
         bgView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
-            make.height.equalTo(111)
+            make.height.equalTo(110)
             make.bottom.equalToSuperview()
         }
         collectionView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.top.equalToSuperview()
-            make.left.equalToSuperview().offset(10)
-            make.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
+        
+        modelArray.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model, !model.isEmpty else { return }
+            self.collectionView.reloadData()
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -58,26 +64,23 @@ extension TwoRiskListPeopleCell: UICollectionViewDelegateFlowLayout, UICollectio
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 120, height: 69.5)
+        return CGSize(width: 161, height: 88)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        let count = self.model.value?.shareholderList?.count ?? 0
-        return 10
+        return self.modelArray.value?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TwoPeopleCoopViewCell", for: indexPath) as! TwoPeopleCoopViewCell
-//        let model = self.model.value?.shareholderList?[indexPath.row]
-//        cell.model1.accept(model)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TwoRiskListPeopleCollectionViewCell", for: indexPath) as! TwoRiskListPeopleCollectionViewCell
+        let model = self.modelArray.value?[indexPath.row]
+        cell.model.accept(model)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let model = self.model.value?.shareholderList?[indexPath.row]
-//        print("model:\(model?.personId ?? 0)")
-        
+        let model = self.modelArray.value?[indexPath.row]
+        print("model:\(model?.personNumber ?? "0")")
     }
-    
     
 }

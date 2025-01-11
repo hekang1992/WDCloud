@@ -107,19 +107,25 @@ class itemsModel {
     var listCompany: [listCompanyModel]?//自己公司列表数据
     
     //风险数据公司
+    var entityStatus: String?//经营状态
     var entityName: String?//公司名称
     var entityId: String?//公司ID
     var registerCapital: String?//注册资本
     var legalName: String?//法定代表人
     var incorporationTime: String?//成立时间
+    var riskNum1: Int?//成立时间
+    var riskNum2: Int?//成立时间
     
     //风险数据人员
     var name: String?//名称
     var personNumber: String?//人员ID
-    var relevanceCount: String?//企业个数
+    var relevanceCount: Int?//企业个数
     
     init(json: JSON) {
         //风险数据公司
+        self.entityStatus = json["entityStatus"].stringValue
+        self.riskNum1 = json["riskNum1"].intValue
+        self.riskNum2 = json["riskNum2"].intValue
         self.entityName = json["entityName"].stringValue
         self.entityId = json["entityId"].stringValue
         self.registerCapital = json["registerCapital"].stringValue
@@ -128,7 +134,7 @@ class itemsModel {
         //风险数据人员
         self.name = json["name"].stringValue
         self.personNumber = json["personNumber"].stringValue
-        self.relevanceCount = json["relevanceCount"].stringValue
+        self.relevanceCount = json["relevanceCount"].intValue
         
         self.logo = json["logo"].stringValue
         self.companyCount = json["companyCount"].intValue

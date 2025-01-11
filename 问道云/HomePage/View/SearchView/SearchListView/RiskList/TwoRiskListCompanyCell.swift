@@ -33,22 +33,26 @@ class TwoRiskListCompanyCell: BaseViewCell {
         nameLabel.numberOfLines = 0
         return nameLabel
     }()
-    
+
     lazy var tagListView: TagListView = {
         let tagListView = TagListView()
-        tagListView.alignment = .left
         tagListView.cornerRadius = 2
-        tagListView.textFont = .regularFontOfSize(size: 10)
+        tagListView.paddingX = 5
+        tagListView.paddingY = 5
+        tagListView.marginX = 8
+        tagListView.marginY = 8
         tagListView.textColor = UIColor.init(cssStr: "#F55B5B")!
         tagListView.tagBackgroundColor = UIColor.init(cssStr: "#F55B5B")!.withAlphaComponent(0.1)
-        tagListView.backgroundColor = .random()
+        tagListView.textFont = .regularFontOfSize(size: 10)
         return tagListView
     }()
+    
     
     lazy var nameView: BiaoQianView = {
         let nameView = BiaoQianView(frame: .zero, enmu: .hide)
         nameView.label1.text = "法定代表人"
         nameView.label2.textColor = .init(cssStr: "#F55B5B")
+        nameView.lineView.isHidden = false
         return nameView
     }()
     
@@ -56,6 +60,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
         let moneyView = BiaoQianView(frame: .zero, enmu: .hide)
         moneyView.label1.text = "注册资本"
         moneyView.label2.textColor = .init(cssStr: "#333333")
+        moneyView.lineView.isHidden = false
         return moneyView
     }()
     
@@ -72,6 +77,32 @@ class TwoRiskListCompanyCell: BaseViewCell {
         return lineView
     }()
     
+    //自身风险
+    lazy var oneNumLabel: UILabel = {
+        let oneNumLabel = UILabel()
+        oneNumLabel.font = .regularFontOfSize(size: 12)
+        oneNumLabel.textAlignment = .left
+        oneNumLabel.textColor = .init(cssStr: "#333333")
+        return oneNumLabel
+    }()
+    
+    //关联风险
+    lazy var twoNumLabel: UILabel = {
+        let twoNumLabel = UILabel()
+        twoNumLabel.font = .regularFontOfSize(size: 12)
+        twoNumLabel.textAlignment = .left
+        twoNumLabel.textColor = .init(cssStr: "#333333")
+        return twoNumLabel
+    }()
+    
+    lazy var moreLabel: UILabel = {
+        let moreLabel = UILabel()
+        moreLabel.text = "点击查看更多"
+        moreLabel.textAlignment = .right
+        moreLabel.textColor = .init(cssStr: "#3F96FF")
+        moreLabel.font = .mediumFontOfSize(size: 12)
+        return moreLabel
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -83,6 +114,9 @@ class TwoRiskListCompanyCell: BaseViewCell {
         contentView.addSubview(moneyView)
         contentView.addSubview(timeView)
         contentView.addSubview(lineView)
+        contentView.addSubview(oneNumLabel)
+        contentView.addSubview(twoNumLabel)
+        contentView.addSubview(moreLabel)
         
         ctImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
@@ -92,7 +126,6 @@ class TwoRiskListCompanyCell: BaseViewCell {
         
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(ctImageView.snp.top)
-            make.height.equalTo(20)
             make.right.equalToSuperview().offset(-55)
             make.left.equalTo(ctImageView.snp.right).offset(8)
         }
@@ -101,11 +134,12 @@ class TwoRiskListCompanyCell: BaseViewCell {
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(nameLabel.snp.bottom).offset(3)
             make.width.equalTo(SCREEN_WIDTH - 60)
+            make.right.equalToSuperview().offset(-40)
         }
         
         moneyView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(120)
-            make.top.equalTo(ctImageView.snp.bottom).offset(10.5)
+            make.top.equalTo(tagListView.snp.bottom).offset(6.5)
             make.size.equalTo(CGSize(width: 150, height: 36))
         }
         
@@ -136,16 +170,43 @@ class TwoRiskListCompanyCell: BaseViewCell {
             make.height.equalTo(0.5)
         }
         
+        oneNumLabel.snp.makeConstraints { make in
+            make.top.equalTo(lineView.snp.bottom).offset(10)
+            make.left.equalToSuperview().offset(12.5)
+            make.height.equalTo(16.5)
+        }
+        
+        twoNumLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(oneNumLabel.snp.centerY)
+            make.left.equalTo(oneNumLabel.snp.right).offset(5)
+            make.height.equalTo(16.5)
+        }
+        
+        moreLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(oneNumLabel.snp.centerY)
+            make.right.equalToSuperview().offset(-25)
+            make.height.equalTo(16.5)
+        }
+        
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             
             self.ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.entityName ?? "", size: (32, 32), bgColor: .random(), textColor: .white))
             
-            self.nameLabel.text = model.entityName ?? ""
+            //匹配文字
+            self.nameLabel.attributedText = TextStyler.styledText(for: model.entityName ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
             
             self.nameView.label2.text = model.legalName ?? ""
             self.moneyView.label2.text = model.registerCapital ?? ""
             self.timeView.label2.text = model.incorporationTime ?? ""
+            
+            let riskOne = model.riskNum1 ?? 0
+            let riskTwo = model.riskNum1 ?? 0
+            self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskOne, fullText: "共\(riskOne)条自身风险")
+            self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskTwo, fullText: "\(riskOne)条关联风险")
+            
+            self.tagListView.removeAllTags()
+            self.tagListView.addTag(model.entityStatus ?? "")
             
         }).disposed(by: disposeBag)
         

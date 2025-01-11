@@ -10,6 +10,7 @@ import JXPagingView
 import RxRelay
 import MJRefresh
 import RxSwift
+import DropMenuBar
 
 class SearchRiskViewController: WDBaseViewController {
     
@@ -19,13 +20,16 @@ class SearchRiskViewController: WDBaseViewController {
     //行业数据
     var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
     
-    //搜索参数
+    //公司搜索参数
     var pageIndex: Int = 1
-    var entityArea: String = ""//地区
-    var entityIndustry: String = ""//行业
-    var type: String = ""
+    var entityArea: String = ""//公司时候的地区
+    var entityIndustry: String = ""//公司时候的行业
+    var allArray: [itemsModel] = []//公司时候加载更多
     
-    var allArray: [itemsModel] = []//加载更多
+    //人员搜索参数
+    var entityPeopleArea: String = ""//公司时候的地区
+    var entityPeopleIndustry: String = ""//公司时候的行业
+    var allPeopleArray: [itemsModel] = []//公司时候加载更多
     
     //被搜索的关键词
     var searchWordsRelay = BehaviorRelay<String>(value: "")
@@ -50,42 +54,94 @@ class SearchRiskViewController: WDBaseViewController {
         return riskView
     }()
     
+    //企业加人员
     lazy var twoRiskListView: TwoRiskListView = {
         let twoRiskListView = TwoRiskListView()
+        twoRiskListView.backgroundColor = .white
         twoRiskListView.isHidden = true
         return twoRiskListView
+    }()
+    
+    //只有人员
+    lazy var listPeopleView: RiskListPeopleView = {
+        let listPeopleView = RiskListPeopleView()
+        listPeopleView.isHidden = true
+        return listPeopleView
     }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         return tableView
     }()
-
+    
+    lazy var companyBtn: UIButton = {
+        let companyBtn = UIButton()
+        companyBtn.titleLabel?.font = .mediumFontOfSize(size: 12)
+        companyBtn.layer.cornerRadius = 3
+        companyBtn.layer.borderWidth = 1
+        companyBtn.layer.borderColor = UIColor.init(cssStr: "#547AFF")?.cgColor
+        companyBtn.backgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.2)
+        companyBtn.setTitleColor(.init(cssStr: "#547AFF"), for: .normal)
+        companyBtn.setTitle("企业", for: .normal)
+        companyBtn.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+        companyBtn.isHidden = true
+        return companyBtn
+    }()
+    
+    lazy var peopleBtn: UIButton = {
+        let peopleBtn = UIButton()
+        peopleBtn.titleLabel?.font = .mediumFontOfSize(size: 12)
+        peopleBtn.layer.cornerRadius = 3
+        peopleBtn.layer.borderWidth = 1
+        peopleBtn.layer.borderColor = UIColor.init(cssStr: "#CCCCCC")?.cgColor
+        peopleBtn.backgroundColor = .white
+        peopleBtn.setTitleColor(.init(cssStr: "#999999"), for: .normal)
+        peopleBtn.setTitle("人员", for: .normal)
+        peopleBtn.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+        peopleBtn.isHidden = true
+        return peopleBtn
+    }()
+    
+    //选中的按钮标记
+    var selectedButton: UIButton?
+    
+    lazy var lineView: UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = .init(cssStr: "#F5F5F5")
+        return lineView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(riskView)
         view.addSubview(twoRiskListView)
+        view.addSubview(listPeopleView)
         riskView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        //企业加人员
         twoRiskListView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
+        //只有人员
+        listPeopleView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(35.5)
+            make.left.right.bottom.equalToSuperview()
+        }
         //删除最近搜索
         self.riskView.searchView.deleteBtn
             .rx
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteSearchInfo()
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         //删除浏览历史
         self.riskView.historyView.deleteBtn
             .rx
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteHistoryInfo()
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         //点击最近搜索
         self.riskView.lastSearchTextBlock = { [weak self] searchStr in
@@ -101,29 +157,33 @@ class SearchRiskViewController: WDBaseViewController {
                 guard let self = self else { return }
                 if !text.isEmpty {
                     self.pageIndex = 1
-                    self.searchListInfo()
+                    //                    self.searchListInfo()
+                    self.buttonTapped(companyBtn)
                 }else {
                     self.pageIndex = 1
                     self.allArray.removeAll()
                     self.riskView.isHidden = false
                     self.twoRiskListView.isHidden = true
+                    self.listPeopleView.isHidden = true
+                    self.companyBtn.isHidden = true
+                    self.peopleBtn.isHidden = true
                 }
                 
-//                let containsChinese = text.range(of: "[\\u4e00-\\u9fa5]", options: .regularExpression) != nil
-//                let containsEnglish = text.range(of: "[a-zA-Z]", options: .regularExpression) != nil
-//                if containsChinese && containsEnglish {
-//                    // 如果同时包含中文和英文字符
-//                    print("包含中文和英文")
-//                    // 在这里执行您的逻辑
-//                } else if containsChinese {
-//                    // 只包含中文
-//                    print("只包含中文")
-//                    // 在这里执行您的中文逻辑
-//                } else if containsEnglish {
-//                    // 只包含英文
-//                    print("只包含英文")
-//                    // 在这里执行您的英文逻辑
-//                }
+                //                let containsChinese = text.range(of: "[\\u4e00-\\u9fa5]", options: .regularExpression) != nil
+                //                let containsEnglish = text.range(of: "[a-zA-Z]", options: .regularExpression) != nil
+                //                if containsChinese && containsEnglish {
+                //                    // 如果同时包含中文和英文字符
+                //                    print("包含中文和英文")
+                //                    // 在这里执行您的逻辑
+                //                } else if containsChinese {
+                //                    // 只包含中文
+                //                    print("只包含中文")
+                //                    // 在这里执行您的中文逻辑
+                //                } else if containsEnglish {
+                //                    // 只包含英文
+                //                    print("只包含英文")
+                //                    // 在这里执行您的英文逻辑
+                //                }
             }).disposed(by: disposeBag)
         
         //添加下拉刷新
@@ -139,13 +199,40 @@ class SearchRiskViewController: WDBaseViewController {
             self.searchListInfo()
         })
         
+        
+        view.addSubview(companyBtn)
+        view.addSubview(peopleBtn)
+        
+        companyBtn.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(3.5)
+            make.left.equalToSuperview().offset(13)
+            make.size.equalTo(CGSize(width: 170, height: 28.5))
+        }
+        
+        peopleBtn.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(3.5)
+            make.right.equalToSuperview().offset(-13)
+            make.size.equalTo(CGSize(width: 170, height: 28.5))
+        }
+        
+        twoRiskListView.addSubview(lineView)
+        lineView.snp.makeConstraints { make in
+            make.top.equalTo(peopleBtn.snp.bottom).offset(4)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
+        //企业风险搜索添加下拉选择
+        addMenuWithCompanyView()
+        //人员风险搜索添加下拉选择
+        addMenuWithPeopleView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //最近搜索
         getlastSearch()
-
+        
         //浏览历史
         getBrowsingHistory()
         
@@ -157,8 +244,10 @@ class SearchRiskViewController: WDBaseViewController {
         super.viewWillAppear(animated)
         print("风险===============风险")
     }
+    
 }
 
+//数据请求
 extension SearchRiskViewController {
     
     //最近搜索
@@ -351,15 +440,14 @@ extension SearchRiskViewController {
         })
     }
     
-    //风险列表数据
-    //搜索人员列表
+    //风险列表数据 企业加人员
     private func searchListInfo() {
         let dict = ["keywords": searchWords ?? "",
                     "entityIndustry": entityIndustry,
                     "entityArea": entityArea,
                     "pageNum": pageIndex,
-                    "pageSize": "20",
-                    "type": type] as [String : Any]
+                    "pageSize": 20,
+                    "type": ""] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/riskmonitor/cooperation/getRiskData", method: .get) { [weak self] result in
             self?.twoRiskListView.tableView.mj_header?.endRefreshing()
@@ -395,11 +483,197 @@ extension SearchRiskViewController {
                     self.twoRiskListView.dataModelArray.accept(self.allArray)
                     self.twoRiskListView.searchWordsRelay.accept(self.searchWordsRelay.value)
                     self.twoRiskListView.tableView.reloadData()
+                    //根据数据刷新按钮文字
+                    let companyNum = String(model.entityData?.total ?? 0)
+                    let peopleNum = String(model.personData?.total ?? 0)
+                    self.companyBtn.setTitle("企业 \(companyNum)", for: .normal)
+                    self.peopleBtn.setTitle("人员 \(peopleNum)", for: .normal)
+                    self.companyBtn.isHidden = false
+                    self.peopleBtn.isHidden = false
                 }
                 break
             case .failure(_):
                 break
             }
+        }
+    }
+    
+    //只搜索人员
+    func searchPeopleListinfo() {
+        let dict = ["keywords": searchWords ?? "",
+                    "entityIndustry": entityIndustry,
+                    "entityArea": entityArea,
+                    "pageNum": pageIndex,
+                    "pageSize": 20,
+                    "type": "1"] as [String : Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict, pageUrl: "/riskmonitor/cooperation/getRiskData", method: .get) { [weak self] result in
+            self?.listPeopleView.tableView.mj_header?.endRefreshing()
+            self?.listPeopleView.tableView.mj_footer?.endRefreshing()
+            switch result {
+            case .success(let success):
+                if let self = self,
+                   let model = success.data,
+                   let code = success.code,
+                   code == 200, let total = model.personData?.total {
+                    self.riskView.isHidden = true
+                    self.listPeopleView.isHidden = false
+                    if pageIndex == 1 {
+                        pageIndex = 1
+                        self.getlastSearch()
+                        self.allPeopleArray.removeAll()
+                    }
+                    pageIndex += 1
+                    let pageData = model.personData?.items ?? []
+                    self.allPeopleArray.append(contentsOf: pageData)
+                    if total != 0 {
+                        self.emptyView.removeFromSuperview()
+                        self.noNetView.removeFromSuperview()
+                    }else {
+                        self.addNodataView(from: self.listPeopleView.whiteView)
+                    }
+                    if self.allPeopleArray.count != total {
+                        self.listPeopleView.tableView.mj_footer?.isHidden = false
+                    }else {
+                        self.listPeopleView.tableView.mj_footer?.isHidden = true
+                    }
+                    self.listPeopleView.dataModel.accept(model)
+//                    self.listPeopleView.dataModelArray.accept(self.allPeopleArray)
+                    self.listPeopleView.searchWordsRelay.accept(self.searchWordsRelay.value)
+                    self.listPeopleView.tableView.reloadData()
+                    //根据数据刷新按钮文字
+                    let peopleNum = String(model.personData?.total ?? 0)
+                    self.peopleBtn.setTitle("人员 \(peopleNum)", for: .normal)
+                    self.companyBtn.isHidden = false
+                    self.peopleBtn.isHidden = false
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+}
+
+extension SearchRiskViewController {
+    
+    @objc func buttonTapped(_ sender: UIButton) {
+        // 根据当前点击的按钮切换样式
+        if sender == companyBtn {
+            updateButtonStyles(selectedButton: companyBtn, unselectedButton: peopleBtn)
+            self.pageIndex = 1
+            self.searchListInfo()
+            self.listPeopleView.isHidden = true
+            self.twoRiskListView.isHidden = false
+        } else if sender == peopleBtn {
+            updateButtonStyles(selectedButton: peopleBtn, unselectedButton: companyBtn)
+            self.pageIndex = 1
+            self.searchPeopleListinfo()
+            self.listPeopleView.isHidden = false
+            self.twoRiskListView.isHidden = true
+        }
+    }
+    
+    func updateButtonStyles(selectedButton: UIButton, unselectedButton: UIButton) {
+        // 更新选中按钮的样式
+        selectedButton.layer.borderColor = UIColor.init(cssStr: "#547AFF")?.cgColor
+        selectedButton.backgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.2)
+        selectedButton.setTitleColor(.init(cssStr: "#547AFF"), for: .normal)
+        
+        // 更新未选中按钮的样式
+        unselectedButton.layer.borderColor = UIColor.init(cssStr: "#CCCCCC")?.cgColor
+        unselectedButton.backgroundColor = .white
+        unselectedButton.setTitleColor(.init(cssStr: "#999999"), for: .normal)
+        
+        // 更新选中的按钮标记
+        self.selectedButton = selectedButton
+    }
+    
+}
+
+extension SearchRiskViewController {
+    
+    private func addMenuWithCompanyView() {
+        //添加下拉筛选
+        let regionMenu = MenuAction(title: "地区", style: .typeList)!
+        
+        self.regionModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self else { return }
+            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
+            regionMenu.listDataSource = regionArray
+        }).disposed(by: disposeBag)
+        
+        regionMenu.didSelectedMenuResult = { [weak self] index, model, grand in
+            guard let self = self else { return }
+            self.entityArea = model?.currentID ?? ""
+            self.pageIndex = 1
+            self.searchListInfo()
+        }
+        
+        let industryMenu = MenuAction(title: "行业", style: .typeList)!
+        
+        self.industryModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self else { return }
+            let industryArray = getThreeIndustryInfo(from: modelArray ?? [])
+            industryMenu.listDataSource = industryArray
+        }).disposed(by: disposeBag)
+        
+        industryMenu.didSelectedMenuResult = { [weak self] index, model, grand in
+            guard let self = self else { return }
+            self.entityIndustry = model?.currentID ?? ""
+            self.pageIndex = 1
+            self.searchListInfo()
+        }
+        
+        let menuView = DropMenuBar(action: [regionMenu, industryMenu])!
+        menuView.backgroundColor = .white
+        self.twoRiskListView.addSubview(menuView)
+        menuView.snp.makeConstraints { make in
+            make.top.equalTo(lineView.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(32)
+        }
+    }
+    
+    
+    private func addMenuWithPeopleView() {
+        //添加下拉筛选
+        let regionMenu = MenuAction(title: "地区", style: .typeList)!
+        self.regionModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self else { return }
+            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
+            regionMenu.listDataSource = regionArray
+        }).disposed(by: disposeBag)
+        
+        regionMenu.didSelectedMenuResult = { [weak self] index, model, grand in
+            guard let self = self else { return }
+            self.entityPeopleArea = model?.currentID ?? ""
+            self.pageIndex = 1
+            self.searchPeopleListinfo()
+        }
+        
+        let industryMenu = MenuAction(title: "行业", style: .typeList)!
+        self.industryModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self else { return }
+            let industryArray = getThreeIndustryInfo(from: modelArray ?? [])
+            industryMenu.listDataSource = industryArray
+        }).disposed(by: disposeBag)
+        
+        industryMenu.didSelectedMenuResult = { [weak self] index, model, grand in
+            guard let self = self else { return }
+            self.entityPeopleIndustry = model?.currentID ?? ""
+            self.pageIndex = 1
+            self.searchPeopleListinfo()
+        }
+        
+        let menuView = DropMenuBar(action: [regionMenu, industryMenu])!
+        menuView.backgroundColor = .white
+        self.listPeopleView.addSubview(menuView)
+        menuView.snp.makeConstraints { make in
+            make.top.equalTo(lineView.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(32)
         }
     }
     

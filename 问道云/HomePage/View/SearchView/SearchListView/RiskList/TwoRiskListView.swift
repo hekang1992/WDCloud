@@ -3,7 +3,7 @@
 //  问道云
 //
 //  Created by 何康 on 2025/1/11.
-//
+//  企业和人员
 
 import UIKit
 import RxRelay
@@ -92,18 +92,25 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TwoRiskListPeopleCell") as? TwoRiskListPeopleCell
                 cell?.backgroundColor = .clear
                 cell?.selectionStyle = .none
+                let modelArray = dataModel?.personData?.items ?? []
+                cell?.modelArray.accept(modelArray)
                 return cell ?? UITableViewCell()
             }else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TwoRiskListCompanyCell") as? TwoRiskListCompanyCell
                 cell?.backgroundColor = .clear
                 cell?.selectionStyle = .none
-                cell?.model.accept(dataModelArray.value?[indexPath.row])
+                let model = dataModelArray.value?[indexPath.row]
+                model?.searchStr = self.searchWordsRelay.value ?? ""
+                cell?.model.accept(model)
                 return cell ?? UITableViewCell()
             }
         }else {
+            let model = dataModelArray.value?[indexPath.row]
+            model?.searchStr = self.searchWordsRelay.value ?? ""
             let cell = tableView.dequeueReusableCell(withIdentifier: "TwoRiskListCompanyCell") as? TwoRiskListCompanyCell
             cell?.backgroundColor = .clear
             cell?.selectionStyle = .none
+            cell?.model.accept(model)
             return cell ?? UITableViewCell()
         }
     }
@@ -113,27 +120,47 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let numStr: Int
-        if section == 0 {
-            numStr = dataModel.value?.personData?.total ?? 0
-        } else {
-            numStr = dataModel.value?.entityData?.total ?? 0
+        let dataModel = self.dataModel.value
+        if let entityData = dataModel?.entityData, let personData = dataModel?.personData, let enItems = entityData.items, let perItems = personData.items, !enItems.isEmpty, !perItems.isEmpty  {
+            let numStr: Int
+            if section == 0 {
+                numStr = dataModel?.personData?.total ?? 0
+            } else {
+                numStr = dataModel?.entityData?.total ?? 0
+            }
+            let headView = UIView()
+            let numLabel = UILabel()
+            numLabel.font = .mediumFontOfSize(size: 12)
+            numLabel.textColor = .init(cssStr: "#666666")
+            numLabel.textAlignment = .left
+            headView.backgroundColor = .init(cssStr: "#F3F3F3")
+            headView.addSubview(numLabel)
+            // 设置搜索的总结果
+            numLabel.attributedText = GetRedStrConfig.getRedStr(from: numStr, fullText: "搜索到\(numStr)条结果")
+            numLabel.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.height.equalTo(25)
+                make.left.equalToSuperview().offset(10)
+            }
+            return headView
+        }else {
+            let numStr: Int = dataModel?.entityData?.total ?? 0
+            let headView = UIView()
+            let numLabel = UILabel()
+            numLabel.font = .mediumFontOfSize(size: 12)
+            numLabel.textColor = .init(cssStr: "#666666")
+            numLabel.textAlignment = .left
+            headView.backgroundColor = .init(cssStr: "#F3F3F3")
+            headView.addSubview(numLabel)
+            // 设置搜索的总结果
+            numLabel.attributedText = GetRedStrConfig.getRedStr(from: numStr, fullText: "搜索到\(numStr)条结果")
+            numLabel.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.height.equalTo(25)
+                make.left.equalToSuperview().offset(10)
+            }
+            return headView
         }
-        let headView = UIView()
-        let numLabel = UILabel()
-        numLabel.font = .mediumFontOfSize(size: 12)
-        numLabel.textColor = .init(cssStr: "#666666")
-        numLabel.textAlignment = .left
-        headView.backgroundColor = .init(cssStr: "#F3F3F3")
-        headView.addSubview(numLabel)
-        // 设置搜索的总结果
-        numLabel.attributedText = GetRedStrConfig.getRedStr(from: numStr, fullText: "搜索到\(numStr)条结果")
-        numLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.height.equalTo(25)
-            make.left.equalToSuperview().offset(10)
-        }
-        return headView
     }
     
 }
