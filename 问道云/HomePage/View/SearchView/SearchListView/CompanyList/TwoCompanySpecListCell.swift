@@ -347,7 +347,7 @@ class BiaoQianView: BaseView {
             label2.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()
                 make.left.equalToSuperview()
-                make.bottom.equalToSuperview().offset(-2)
+                make.bottom.equalToSuperview()
             }
             lineView.snp.makeConstraints { make in
                 make.centerY.equalToSuperview()
@@ -364,7 +364,7 @@ class BiaoQianView: BaseView {
             label2.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()
                 make.left.equalToSuperview()
-                make.bottom.equalToSuperview().offset(-2)
+                make.bottom.equalToSuperview()
                 make.height.equalTo(18.5)
             }
             lineView.snp.makeConstraints { make in

@@ -163,17 +163,23 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
             companyVc.lastSearchTextBlock = { [weak self] searchStr in
-                self?.searchHeadView.searchTx.text = searchStr
+                guard let self = self else { return }
+                searchHeadView.searchTx.text = searchStr
+                companyVc.searchWords = searchStr
             }
             return companyVc
         }else if index == 1 {
             peopleVc.lastSearchTextBlock = { [weak self] searchStr in
-                self?.searchHeadView.searchTx.text = searchStr
+                guard let self = self else { return }
+                searchHeadView.searchTx.text = searchStr
+                peopleVc.searchWords = searchStr
             }
             return peopleVc
         }else if index == 2 {
             riskVc.lastSearchTextBlock = { [weak self] searchStr in
-                self?.searchHeadView.searchTx.text = searchStr
+                guard let self = self else { return }
+                searchHeadView.searchTx.text = searchStr
+                riskVc.searchWords = searchStr
             }
             return riskVc
         }else {

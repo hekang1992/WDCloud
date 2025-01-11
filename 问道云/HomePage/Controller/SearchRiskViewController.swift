@@ -8,6 +8,8 @@
 import UIKit
 import JXPagingView
 import RxRelay
+import MJRefresh
+import RxSwift
 
 class SearchRiskViewController: WDBaseViewController {
     
@@ -17,9 +19,21 @@ class SearchRiskViewController: WDBaseViewController {
     //行业数据
     var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
     
+    //搜索参数
+    var pageIndex: Int = 1
+    var entityArea: String = ""//地区
+    var entityIndustry: String = ""//行业
+    var type: String = ""
+    
+    var allArray: [itemsModel] = []//加载更多
+    
+    //被搜索的关键词
+    var searchWordsRelay = BehaviorRelay<String>(value: "")
+    
     var searchWords: String? {
         didSet {
-            print("searchWords风险======\(searchWords ?? "")")
+            guard let searchWords = searchWords else { return }
+            searchWordsRelay.accept(searchWords)
         }
     }
     
@@ -36,6 +50,12 @@ class SearchRiskViewController: WDBaseViewController {
         return riskView
     }()
     
+    lazy var twoRiskListView: TwoRiskListView = {
+        let twoRiskListView = TwoRiskListView()
+        twoRiskListView.isHidden = true
+        return twoRiskListView
+    }()
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         return tableView
@@ -46,17 +66,13 @@ class SearchRiskViewController: WDBaseViewController {
 
         // Do any additional setup after loading the view.
         view.addSubview(riskView)
-        view.addSubview(tableView)
-        tableView.isHidden = true
+        view.addSubview(twoRiskListView)
         riskView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        tableView.snp.makeConstraints { make in
+        twoRiskListView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        self.tableView.mj_header = WDRefreshHeader(refreshingBlock: {
-            
-        })
         
         //删除最近搜索
         self.riskView.searchView.deleteBtn
@@ -75,6 +91,54 @@ class SearchRiskViewController: WDBaseViewController {
         self.riskView.lastSearchTextBlock = { [weak self] searchStr in
             self?.lastSearchTextBlock?(searchStr)
         }
+        
+        //搜索
+        self.searchWordsRelay
+            .debounce(.milliseconds(1000),
+                      scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if !text.isEmpty {
+                    self.pageIndex = 1
+                    self.searchListInfo()
+                }else {
+                    self.pageIndex = 1
+                    self.allArray.removeAll()
+                    self.riskView.isHidden = false
+                    self.twoRiskListView.isHidden = true
+                }
+                
+//                let containsChinese = text.range(of: "[\\u4e00-\\u9fa5]", options: .regularExpression) != nil
+//                let containsEnglish = text.range(of: "[a-zA-Z]", options: .regularExpression) != nil
+//                if containsChinese && containsEnglish {
+//                    // 如果同时包含中文和英文字符
+//                    print("包含中文和英文")
+//                    // 在这里执行您的逻辑
+//                } else if containsChinese {
+//                    // 只包含中文
+//                    print("只包含中文")
+//                    // 在这里执行您的中文逻辑
+//                } else if containsEnglish {
+//                    // 只包含英文
+//                    print("只包含英文")
+//                    // 在这里执行您的英文逻辑
+//                }
+            }).disposed(by: disposeBag)
+        
+        //添加下拉刷新
+        self.twoRiskListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.pageIndex = 1
+            self.searchListInfo()
+        })
+        
+        //添加上拉加载更多
+        self.twoRiskListView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.searchListInfo()
+        })
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -285,6 +349,58 @@ extension SearchRiskViewController {
                 }
             }
         })
+    }
+    
+    //风险列表数据
+    //搜索人员列表
+    private func searchListInfo() {
+        let dict = ["keywords": searchWords ?? "",
+                    "entityIndustry": entityIndustry,
+                    "entityArea": entityArea,
+                    "pageNum": pageIndex,
+                    "pageSize": "20",
+                    "type": type] as [String : Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict, pageUrl: "/riskmonitor/cooperation/getRiskData", method: .get) { [weak self] result in
+            self?.twoRiskListView.tableView.mj_header?.endRefreshing()
+            self?.twoRiskListView.tableView.mj_footer?.endRefreshing()
+            switch result {
+            case .success(let success):
+                if let self = self,
+                   let model = success.data,
+                   let code = success.code,
+                   code == 200, let total = model.entityData?.total {
+                    self.riskView.isHidden = true
+                    self.twoRiskListView.isHidden = false
+                    if pageIndex == 1 {
+                        pageIndex = 1
+                        self.getlastSearch()
+                        self.allArray.removeAll()
+                    }
+                    pageIndex += 1
+                    let pageData = model.entityData?.items ?? []
+                    self.allArray.append(contentsOf: pageData)
+                    if total != 0 {
+                        self.emptyView.removeFromSuperview()
+                        self.noNetView.removeFromSuperview()
+                    }else {
+                        self.addNodataView(from: self.twoRiskListView.whiteView)
+                    }
+                    if self.allArray.count != total {
+                        self.twoRiskListView.tableView.mj_footer?.isHidden = false
+                    }else {
+                        self.twoRiskListView.tableView.mj_footer?.isHidden = true
+                    }
+                    self.twoRiskListView.dataModel.accept(model)
+                    self.twoRiskListView.dataModelArray.accept(self.allArray)
+                    self.twoRiskListView.searchWordsRelay.accept(self.searchWordsRelay.value)
+                    self.twoRiskListView.tableView.reloadData()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

@@ -56,7 +56,14 @@ class DataModel {
     var bossList: [bossListModel]?
     var pageData: [pageDataModel]?
     var pageMeta: pageMetaModel?
+    
+    //风险数据模型
+    var entityData: entityDataModel?
+    var personData: personDataModel?
+    
     init(json: JSON) {
+        self.entityData = entityDataModel(json: json["entityData"])
+        self.personData = personDataModel(json: json["personData"])
         self.pageMeta = pageMetaModel(json: json["pageMeta"])
         self.pageData = json["pageData"].arrayValue.map { pageDataModel(json: $0) }
         self.bossList = json["bossList"].arrayValue.map { bossListModel(json: $0) }
@@ -98,7 +105,31 @@ class itemsModel {
     var logo: String?
     var shareholderList: [shareholderListModel]?//合作伙伴信息
     var listCompany: [listCompanyModel]?//自己公司列表数据
+    
+    //风险数据公司
+    var entityName: String?//公司名称
+    var entityId: String?//公司ID
+    var registerCapital: String?//注册资本
+    var legalName: String?//法定代表人
+    var incorporationTime: String?//成立时间
+    
+    //风险数据人员
+    var name: String?//名称
+    var personNumber: String?//人员ID
+    var relevanceCount: String?//企业个数
+    
     init(json: JSON) {
+        //风险数据公司
+        self.entityName = json["entityName"].stringValue
+        self.entityId = json["entityId"].stringValue
+        self.registerCapital = json["registerCapital"].stringValue
+        self.legalName = json["legalName"].stringValue
+        self.incorporationTime = json["incorporationTime"].stringValue
+        //风险数据人员
+        self.name = json["name"].stringValue
+        self.personNumber = json["personNumber"].stringValue
+        self.relevanceCount = json["relevanceCount"].stringValue
+        
         self.logo = json["logo"].stringValue
         self.companyCount = json["companyCount"].intValue
         self.searchStr = json["searchStr"].stringValue
@@ -443,5 +474,25 @@ class legalPersonModel {
     init(json: JSON) {
         self.legalName = json["legalName"].stringValue
         self.personNumber = json["personNumber"].stringValue
+    }
+}
+
+//风险数据模型企业数据
+class entityDataModel {
+    var items: [itemsModel]?
+    var total: Int?
+    init(json: JSON) {
+        self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
+        self.total = json["total"].intValue
+    }
+}
+
+//风险数据模型人员数据
+class personDataModel {
+    var items: [itemsModel]?
+    var total: Int?
+    init(json: JSON) {
+        self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
+        self.total = json["total"].intValue
     }
 }

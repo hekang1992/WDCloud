@@ -138,6 +138,9 @@
 		73E971732D2FCD8500F12B15 /* TwoCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */; };
 		73E971752D2FCF0500F12B15 /* TwoCompanySpecListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971742D2FCF0500F12B15 /* TwoCompanySpecListCell.swift */; };
 		73E971792D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */; };
+		73EABF922D320F460052F4AB /* TwoRiskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF912D320F460052F4AB /* TwoRiskListView.swift */; };
+		73EABF942D321B6F0052F4AB /* TwoRiskListPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF932D321B6F0052F4AB /* TwoRiskListPeopleCell.swift */; };
+		73EABF962D321B7E0052F4AB /* TwoRiskListCompanyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF952D321B7E0052F4AB /* TwoRiskListCompanyCell.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73EF03CF2D30F84B0070F850 /* TwoPeopleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */; };
 		73EF03D12D30FD000070F850 /* TwoPeopleSpecListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */; };
@@ -309,6 +312,9 @@
 		73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyView.swift; sourceTree = "<group>"; };
 		73E971742D2FCF0500F12B15 /* TwoCompanySpecListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanySpecListCell.swift; sourceTree = "<group>"; };
 		73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyHeadPeopleCell.swift; sourceTree = "<group>"; };
+		73EABF912D320F460052F4AB /* TwoRiskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRiskListView.swift; sourceTree = "<group>"; };
+		73EABF932D321B6F0052F4AB /* TwoRiskListPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRiskListPeopleCell.swift; sourceTree = "<group>"; };
+		73EABF952D321B7E0052F4AB /* TwoRiskListCompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRiskListCompanyCell.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleListView.swift; sourceTree = "<group>"; };
 		73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleSpecListCell.swift; sourceTree = "<group>"; };
@@ -734,10 +740,21 @@
 		73E9717A2D2FCF4600F12B15 /* SearchListView */ = {
 			isa = PBXGroup;
 			children = (
-				73EF03CD2D30F4E20070F850 /* PeopleList */,
 				73EF03CC2D30F4D50070F850 /* CompanyList */,
+				73EF03CD2D30F4E20070F850 /* PeopleList */,
+				73EABF902D320F250052F4AB /* RiskList */,
 			);
 			path = SearchListView;
+			sourceTree = "<group>";
+		};
+		73EABF902D320F250052F4AB /* RiskList */ = {
+			isa = PBXGroup;
+			children = (
+				73EABF912D320F460052F4AB /* TwoRiskListView.swift */,
+				73EABF932D321B6F0052F4AB /* TwoRiskListPeopleCell.swift */,
+				73EABF952D321B7E0052F4AB /* TwoRiskListCompanyCell.swift */,
+			);
+			path = RiskList;
 			sourceTree = "<group>";
 		};
 		73EF03CC2D30F4D50070F850 /* CompanyList */ = {
@@ -933,6 +950,7 @@
 				73C752542D1E4B5800C47187 /* HistoryListViewController.swift in Sources */,
 				73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */,
 				7304880F2D2A97E00024265C /* HomeNewsListViewCell.swift in Sources */,
+				73EABF962D321B7E0052F4AB /* TwoRiskListCompanyCell.swift in Sources */,
 				7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */,
 				730487F32D292EF40024265C /* BindPhoneViewController.swift in Sources */,
 				73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */,
@@ -1037,6 +1055,7 @@
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
 				736E97852D22A7A0009CC0DF /* ApplePayConfig.swift in Sources */,
 				734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */,
+				73EABF942D321B6F0052F4AB /* TwoRiskListPeopleCell.swift in Sources */,
 				73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */,
 				7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */,
 				73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */,
@@ -1044,6 +1063,7 @@
 				7374163A2D0ED72600E6CD23 /* WechatPushViewController.swift in Sources */,
 				7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */,
 				73C36A812D2D1BAA00D6DC46 /* SearchHotWordsListView.swift in Sources */,
+				73EABF922D320F460052F4AB /* TwoRiskListView.swift in Sources */,
 				737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,
 				73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */,
