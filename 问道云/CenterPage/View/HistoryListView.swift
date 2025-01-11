@@ -27,7 +27,9 @@ extension SectionModel: SectionModelType {
 class HistoryListView: BaseView {
     
     var modelArray = BehaviorRelay<[rowsModel]?>(value: nil)
+    
     var sectionArray = BehaviorRelay<[SectionModel]?>(value: nil)
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.estimatedRowHeight = 80
@@ -67,7 +69,9 @@ class HistoryListView: BaseView {
         )
         
         modelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
-            guard let self = self, let models = modelArray, !models.isEmpty else { return }
+            guard let self = self,
+                  let models = modelArray,
+                  !models.isEmpty else { return }
             let sections = groupRowsByOrderState(rows: models)
             self.sectionArray.accept(sections)
         }).disposed(by: disposeBag)
