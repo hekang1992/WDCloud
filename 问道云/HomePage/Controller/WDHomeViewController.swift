@@ -16,6 +16,9 @@ class WDHomeViewController: WDBaseViewController {
     //是否点击了顶部三个tab
     var isClickHeadTab: Bool = false
     
+    //当前点击了第几个tab
+    var selectIndex: Int = 0
+    
     //头部view
     lazy var homeHeadView: HomeHeadView = preferredTableHeaderView()
     
@@ -124,12 +127,14 @@ class WDHomeViewController: WDBaseViewController {
         
         //点击查企业更新文字轮博
         homeHeadView.tabView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.selectIndex = 0
             self?.isClickHeadTab = true
             self?.getHotCompanyWords()
         }).disposed(by: disposeBag)
         
         //点击查风险更新文字轮博
         homeHeadView.tabView.twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.selectIndex = 2
             self?.isClickHeadTab = true
             self?.getHotWords()
         }).disposed(by: disposeBag)
@@ -145,6 +150,7 @@ class WDHomeViewController: WDBaseViewController {
             if IS_LOGIN {
                 DispatchQueue.main.async {
                     let searchAllVc = SearchAllViewController()
+                    searchAllVc.selectIndex = self?.selectIndex ?? 0
                     searchAllVc.model.accept(model)
                     self?.navigationController?.pushViewController(searchAllVc, animated: true)
                 }
