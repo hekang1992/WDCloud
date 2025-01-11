@@ -119,6 +119,7 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
         segmentedView.backgroundColor = UIColor.white
         segmentedView.delegate = self
         segmentedView.dataSource = segmentedViewDataSource
+        segmentedView.defaultSelectedIndex = selectIndex
         let lineView = JXSegmentedIndicatorLineView()
         lineView.indicatorColor = UIColor.init(cssStr: "#2353F0")!
         lineView.indicatorWidth = 18

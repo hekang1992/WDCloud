@@ -206,13 +206,15 @@ class SearchRiskViewController: WDBaseViewController {
         companyBtn.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(3.5)
             make.left.equalToSuperview().offset(13)
-            make.size.equalTo(CGSize(width: 170, height: 28.5))
+            make.height.equalTo(28.5)
+            make.width.equalTo((SCREEN_WIDTH - 40) * 0.5)
         }
         
         peopleBtn.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(3.5)
             make.right.equalToSuperview().offset(-13)
-            make.size.equalTo(CGSize(width: 170, height: 28.5))
+            make.height.equalTo(28.5)
+            make.width.equalTo((SCREEN_WIDTH - 40) * 0.5)
         }
         
         twoRiskListView.addSubview(lineView)

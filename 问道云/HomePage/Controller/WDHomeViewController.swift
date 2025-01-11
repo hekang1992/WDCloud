@@ -103,9 +103,20 @@ class WDHomeViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] _ in
                 self?.getHotWords()
         }).disposed(by: disposeBag)
+        
         //热搜3点击
         self.homeHeadView.hotsView.hotWordsBlock = { [weak self] model in
-            ToastViewConfig.showToast(message: model.name ?? "")
+            let searchVc = SearchAllViewController()
+            let type = model.type ?? ""
+            if type == "1" {
+                searchVc.selectIndex = 0
+                searchVc.searchHeadView.searchTx.text = model.name ?? ""
+                self?.navigationController?.pushViewController(searchVc, animated: true)
+            }else {
+                searchVc.selectIndex = 1
+                searchVc.searchHeadView.searchTx.text = model.name ?? ""
+                self?.navigationController?.pushViewController(searchVc, animated: true)
+            }
         }
         
         //获取企业热搜

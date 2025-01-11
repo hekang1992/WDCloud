@@ -43,6 +43,7 @@ class SearchHeadView: BaseView {
         searchTx.textColor = .init(cssStr: "#666666")
         searchTx.clearButtonMode = .whileEditing
         searchTx.returnKeyType = .search
+        searchTx.becomeFirstResponder()
         return searchTx
     }()
     
