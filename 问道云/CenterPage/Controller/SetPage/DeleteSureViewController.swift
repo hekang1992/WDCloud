@@ -302,7 +302,7 @@ extension DeleteSureViewController {
                 }
                 ToastViewConfig.showToast(message: success.msg ?? "")
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }

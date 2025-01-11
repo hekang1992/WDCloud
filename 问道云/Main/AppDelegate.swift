@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initIAPSDK()
         window = UIWindow()
         window?.frame = UIScreen.main.bounds
-        window?.rootViewController = WDNavigationController(rootViewController: self.tabBarVc)
+        window?.rootViewController = LaunchViewController()
         window?.makeKeyAndVisible()
         return true
     }

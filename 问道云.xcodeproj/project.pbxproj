@@ -89,6 +89,8 @@
 		738043322D278EED009B25F8 /* GroupListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738043312D278EED009B25F8 /* GroupListViewCell.swift */; };
 		738043382D27A9F5009B25F8 /* AddGroupPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738043372D27A9F5009B25F8 /* AddGroupPeopleViewController.swift */; };
 		7380433A2D27DA66009B25F8 /* PopChangePeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738043392D27DA66009B25F8 /* PopChangePeopleView.swift */; };
+		73807D472D32C8B200F8B90D /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D462D32C8B200F8B90D /* LaunchViewController.swift */; };
+		73807D492D32C93C00F8B90D /* Networkmanager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D482D32C93C00F8B90D /* Networkmanager.swift */; };
 		739D90BC2D26A72100D9421B /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739D90BB2D26A72100D9421B /* GroupListViewController.swift */; };
 		739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739D90BD2D26AB1B00D9421B /* GroupListView.swift */; };
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
@@ -264,6 +266,8 @@
 		738043312D278EED009B25F8 /* GroupListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewCell.swift; sourceTree = "<group>"; };
 		738043372D27A9F5009B25F8 /* AddGroupPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupPeopleViewController.swift; sourceTree = "<group>"; };
 		738043392D27DA66009B25F8 /* PopChangePeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopChangePeopleView.swift; sourceTree = "<group>"; };
+		73807D462D32C8B200F8B90D /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		73807D482D32C93C00F8B90D /* Networkmanager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networkmanager.swift; sourceTree = "<group>"; };
 		739D90BB2D26A72100D9421B /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		739D90BD2D26AB1B00D9421B /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -472,6 +476,7 @@
 				7325A7B92CFEED0F0043C196 /* WDTabBarController.swift */,
 				7325A7B52CFEECDD0043C196 /* WDBaseViewController.swift */,
 				7325A7B72CFEECF00043C196 /* WDNavigationController.swift */,
+				73807D462D32C8B200F8B90D /* LaunchViewController.swift */,
 			);
 			path = BaseVc;
 			sourceTree = "<group>";
@@ -487,6 +492,7 @@
 				7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */,
 				7330CB812D23E65900778D54 /* ContactManager.swift */,
 				730488002D2A64410024265C /* WDRefreshHeader.swift */,
+				73807D482D32C93C00F8B90D /* Networkmanager.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -974,6 +980,7 @@
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				73EF03DB2D31339A0070F850 /* TwoPeopleCoopViewCell.swift in Sources */,
 				736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */,
+				73807D492D32C93C00F8B90D /* Networkmanager.swift in Sources */,
 				736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */,
 				736E97812D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift in Sources */,
 				73E971752D2FCF0500F12B15 /* TwoCompanySpecListCell.swift in Sources */,
@@ -1011,6 +1018,7 @@
 				73C752562D1E4DA000C47187 /* HistoryListView.swift in Sources */,
 				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
 				73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */,
+				73807D472D32C8B200F8B90D /* LaunchViewController.swift in Sources */,
 				73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */,
 				739D90BC2D26A72100D9421B /* GroupListViewController.swift in Sources */,
 				7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */,
