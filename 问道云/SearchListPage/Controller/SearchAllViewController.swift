@@ -100,6 +100,13 @@ class SearchAllViewController: WDBaseViewController {
             .disposed(by: disposeBag)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.asyncAfter(delay: 0.5) {
+            self.searchHeadView.searchTx.becomeFirstResponder()
+        }
+    }
+    
 }
 
 extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate {

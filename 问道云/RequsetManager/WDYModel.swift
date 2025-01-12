@@ -129,6 +129,14 @@ class itemsModel {
     var menuId: String?
     var path: String?//h5链接
     var status: String?//状态
+    
+    //动态
+    var dynamiccontent: [dynamiccontentModel]?
+    var itemName: String?
+    var createtime: String?
+    var risklevel: String?
+    var riskDetailPath: String?
+    var firmname: String?
     init(json: JSON) {
         //风险数据公司
         self.menuName = json["menuName"].stringValue
@@ -144,6 +152,15 @@ class itemsModel {
         self.name = json["name"].stringValue
         self.personNumber = json["personNumber"].stringValue
         self.relevanceCount = json["relevanceCount"].intValue
+        
+        self.dynamiccontent = json["dynamiccontent"].arrayValue.map {
+            dynamiccontentModel(json: $0)
+        }
+        self.itemName = json["itemName"].stringValue
+        self.createtime = json["createtime"].stringValue
+        self.risklevel = json["risklevel"].stringValue
+        self.riskDetailPath = json["riskDetailPath"].stringValue
+        self.firmname = json["firmname"].stringValue
         
         self.logo = json["logo"].stringValue
         self.companyCount = json["companyCount"].intValue
@@ -509,5 +526,17 @@ class personDataModel {
     init(json: JSON) {
         self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
         self.total = json["total"].intValue
+    }
+}
+
+//动态数据模型
+class dynamiccontentModel {
+    var fieldName: String?
+    var title: String?
+    var fieldValue: String?
+    init(json: JSON) {
+        self.fieldName = json["fieldName"].stringValue
+        self.title = json["title"].stringValue
+        self.fieldValue = json["fieldValue"].stringValue
     }
 }

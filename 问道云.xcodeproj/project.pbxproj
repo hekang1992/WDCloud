@@ -96,6 +96,7 @@
 		73807D522D336A0B00F8B90D /* CompanyActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D512D336A0B00F8B90D /* CompanyActivityViewController.swift */; };
 		73807D592D33808400F8B90D /* CompanyCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D582D33808400F8B90D /* CompanyCollectionCell.swift */; };
 		73807D5B2D3396A100F8B90D /* CompanyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D5A2D3396A100F8B90D /* CompanyDetailView.swift */; };
+		73807D5F2D33B7D100F8B90D /* CompanyActivityViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73807D5E2D33B7D100F8B90D /* CompanyActivityViewCell.swift */; };
 		739D90BC2D26A72100D9421B /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739D90BB2D26A72100D9421B /* GroupListViewController.swift */; };
 		739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739D90BD2D26AB1B00D9421B /* GroupListView.swift */; };
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
@@ -278,6 +279,7 @@
 		73807D512D336A0B00F8B90D /* CompanyActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyActivityViewController.swift; sourceTree = "<group>"; };
 		73807D582D33808400F8B90D /* CompanyCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCollectionCell.swift; sourceTree = "<group>"; };
 		73807D5A2D3396A100F8B90D /* CompanyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailView.swift; sourceTree = "<group>"; };
+		73807D5E2D33B7D100F8B90D /* CompanyActivityViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyActivityViewCell.swift; sourceTree = "<group>"; };
 		739D90BB2D26A72100D9421B /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		739D90BD2D26AB1B00D9421B /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -702,6 +704,7 @@
 			children = (
 				73807D5A2D3396A100F8B90D /* CompanyDetailView.swift */,
 				73807D582D33808400F8B90D /* CompanyCollectionCell.swift */,
+				73807D5E2D33B7D100F8B90D /* CompanyActivityViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1150,6 +1153,7 @@
 				73D50B872D16ACEC00EF081A /* FocusCompanyViewController.swift in Sources */,
 				73460D132D15162500EC9408 /* DeleteSureViewController.swift in Sources */,
 				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
+				73807D5F2D33B7D100F8B90D /* CompanyActivityViewCell.swift in Sources */,
 				730488152D2BD2380024265C /* HomeItemViewCell.swift in Sources */,
 				734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */,
 				73C752362D19451400C47187 /* FocusCompanyView.swift in Sources */,
