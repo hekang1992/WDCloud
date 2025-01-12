@@ -8,6 +8,7 @@
 import UIKit
 import RxRelay
 import TXScrollLabelView
+import SwiftyJSON
 
 class HomeHeadTabView: BaseView {
     
@@ -168,7 +169,12 @@ class HomeHeadTabView: BaseView {
 extension HomeHeadTabView: TXScrollLabelViewDelegate {
     
     func scrollLabelView(_ scrollLabelView: TXScrollLabelView!, didClickWithText text: String!, at index: Int) {
-        if let model = self.modelArray.value?[index] {
+        if let modelArray = self.modelArray.value, !modelArray.isEmpty {
+            let model = modelArray[index]
+            self.textBlock?(model)
+        }else {
+            let json: JSON = ["name": "上海问道云人工智能科技有限公司", "type": "0"]
+            let model = rowsModel(json: json)
             self.textBlock?(model)
         }
     }

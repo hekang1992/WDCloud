@@ -1,0 +1,102 @@
+//
+//  CompanyBothViewController.swift
+//  问道云
+//
+//  Created by 何康 on 2025/1/12.
+//
+
+import UIKit
+import RxRelay
+import JXSegmentedView
+
+class CompanyBothViewController: WDBaseViewController {
+    
+    //企业ID
+    var enityId = BehaviorRelay<String>(value: "")
+    
+    lazy var headView: HeadView = {
+        let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
+        headView.headTitleView.isHidden = false
+        headView.titlelabel.isHidden = true
+        headView.oneBtn.setBackgroundImage(UIImage(named: "headrightoneicon"), for: .normal)
+//        headView.oneBtn.setBackgroundImage(UIImage(named: "moreniacion"), for: .normal)
+//        headView.twoBtn.setBackgroundImage(UIImage(named: "searchiconf"), for: .normal)
+//        headView.threeBtn.setBackgroundImage(UIImage(named: "headrightoneicon"), for: .normal)
+        return headView
+    }()
+    
+    let segmentedView = JXSegmentedView()
+    let segmentedDataSource = JXSegmentedTitleDataSource()
+    let contentScrollView = UIScrollView()
+    
+    lazy var companyDetailVc: CompanyDetailViewController = {
+        let companyDetailVc = CompanyDetailViewController()
+        companyDetailVc.enityId = self.enityId.value
+        return companyDetailVc
+    }()
+    
+    lazy var activityDetailVc: CompanyActivityViewController = {
+        let activityDetailVc = CompanyActivityViewController()
+        activityDetailVc.enityId = self.enityId.value
+        return activityDetailVc
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+        addHeadView(from: headView)
+        
+        setheadUI()
+    }
+    
+
+}
+
+extension CompanyBothViewController: JXSegmentedViewDelegate {
+    
+    private func setheadUI() {
+        segmentedDataSource.titles = ["企业", "动态"]
+        segmentedDataSource.isTitleColorGradientEnabled = true
+        segmentedDataSource.titleSelectedColor = UIColor(cssStr: "#333333")!
+        segmentedDataSource.titleNormalColor = UIColor(cssStr: "#999999")!
+        segmentedDataSource.titleNormalFont = .mediumFontOfSize(size: 15)
+        segmentedDataSource.titleSelectedFont = segmentedDataSource.titleNormalFont
+        segmentedDataSource.isTitleColorGradientEnabled = true
+        segmentedView.dataSource = segmentedDataSource
+        segmentedView.backgroundColor = .white
+        segmentedView.delegate = self
+        // 设置指示器
+        let indicator = JXSegmentedIndicatorLineView()
+        indicator.indicatorWidth = 16
+        indicator.indicatorHeight = 2
+        indicator.indicatorColor = UIColor.init(cssStr: "#3F96FF")!
+        segmentedView.indicators = [indicator]
+        self.headView.headTitleView.addSubview(segmentedView)
+        segmentedView.frame = CGRect(x: 0, y: 0, width: 200, height: 40)
+        setupContentScrollView()
+        segmentedView.contentScrollView = contentScrollView
+    }
+    
+    func setupContentScrollView() {
+        contentScrollView.isPagingEnabled = true
+        contentScrollView.bounces = false
+        view.addSubview(contentScrollView)
+        contentScrollView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.top.equalTo(headView.snp.bottom)
+        }
+        contentScrollView.contentSize = CGSize(width: view.bounds.width * 2, height: contentScrollView.bounds.height)
+        
+        let modules = [companyDetailVc, activityDetailVc]
+        for (index, vc) in modules.enumerated() {
+            vc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
+            contentScrollView.addSubview(vc.view)
+            addChild(vc)
+            vc.didMove(toParent: self)
+        }
+    }
+    
+}

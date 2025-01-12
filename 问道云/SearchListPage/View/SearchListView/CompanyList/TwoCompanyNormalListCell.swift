@@ -17,7 +17,6 @@ class TwoCompanyNormalListCell: BaseViewCell {
     var websiteBlock: ((pageDataModel) -> Void)?
     //电话回调
     var phoneBlock: ((pageDataModel) -> Void)?
-    
 
     var model = BehaviorRelay<pageDataModel?>(value: nil)
     
@@ -55,12 +54,14 @@ class TwoCompanyNormalListCell: BaseViewCell {
     lazy var nameView: BiaoQianView = {
         let nameView = BiaoQianView(frame: .zero, enmu: .hide)
         nameView.label1.text = "法定代表人"
+        nameView.lineView.isHidden = false
         return nameView
     }()
     
     lazy var moneyView: BiaoQianView = {
         let moneyView = BiaoQianView(frame: .zero, enmu: .hide)
         moneyView.label1.text = "注册资本"
+        moneyView.lineView.isHidden = false
         return moneyView
     }()
     
@@ -104,6 +105,9 @@ class TwoCompanyNormalListCell: BaseViewCell {
         contentView.addSubview(moneyView)
         contentView.addSubview(timeView)
         contentView.addSubview(lineView)
+        contentView.addSubview(addressBtn)
+        contentView.addSubview(websiteBtn)
+        contentView.addSubview(phoneBtn)
         
         ctImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
@@ -201,14 +205,14 @@ class TwoCompanyNormalListCell: BaseViewCell {
         //官网点击
         websiteBtn.rx.tap.subscribe(onNext: { [weak self] in
             if let self = self, let model = self.model.value {
-                self.addressBlock?(model)
+                self.websiteBlock?(model)
             }
         }).disposed(by: disposeBag)
         
         //电话点击
         phoneBtn.rx.tap.subscribe(onNext: { [weak self] in
             if let self = self, let model = self.model.value {
-                self.addressBlock?(model)
+                self.phoneBlock?(model)
             }
         }).disposed(by: disposeBag)
         

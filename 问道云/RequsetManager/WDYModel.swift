@@ -121,8 +121,17 @@ class itemsModel {
     var personNumber: String?//人员ID
     var relevanceCount: Int?//企业个数
     
+    //企业详情
+    var menuName: String?//item名称
+    var clickFlag: String?
+    var icon: String?
+    var iconGrey: String?
+    var menuId: String?
+    var path: String?//h5链接
+    var status: String?//状态
     init(json: JSON) {
         //风险数据公司
+        self.menuName = json["menuName"].stringValue
         self.entityStatus = json["entityStatus"].stringValue
         self.riskNum1 = json["riskNum1"].intValue
         self.riskNum2 = json["riskNum2"].intValue

@@ -160,10 +160,10 @@ class WDHomeViewController: WDBaseViewController {
         }
         
         //添加启动页
-        keyWindow?.addSubview(homeBgImageView)
-        homeBgImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+//        keyWindow?.addSubview(homeBgImageView)
+//        homeBgImageView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
     }
 
     //一定要加上这句代码,否则不会下拉刷新

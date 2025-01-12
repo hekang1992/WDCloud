@@ -66,6 +66,12 @@ class HeadView: UIView {
         return threeBtn
     }()
     
+    lazy var headTitleView: UIView = {
+        let headTitleView = UIView()
+        headTitleView.isHidden = true
+        return headTitleView
+    }()
+    
     init(frame: CGRect, typeEnum: NavRightType) {
         super.init(frame: frame)
         addSubview(bgView)
@@ -74,11 +80,11 @@ class HeadView: UIView {
         bgView.addSubview(oneBtn)
         bgView.addSubview(twoBtn)
         bgView.addSubview(threeBtn)
+        bgView.addSubview(headTitleView)
         let hiddenStates: [Bool]
         switch typeEnum {
         case .none:
             hiddenStates = [true, true, true]
-//            oneBtn.setImage(UIImage(named: "launchlogo"), for: .normal)
             break
         case .oneBtn:
             hiddenStates = [false, true, true]
@@ -107,6 +113,12 @@ class HeadView: UIView {
             make.left.equalTo(backBtn.snp.right).offset(10)
             make.centerY.equalTo(backBtn.snp.centerY)
             make.height.equalTo(17)
+        }
+        headTitleView.snp.makeConstraints { make in
+            make.height.equalTo(40)
+            make.bottom.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.width.equalTo(200)
         }
         oneBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)

@@ -16,6 +16,8 @@ class TwoCompanyView: BaseView {
     var websiteBlock: ((pageDataModel) -> Void)?
     //电话回调
     var phoneBlock: ((pageDataModel) -> Void)?
+    //企业ID回调
+    var entityIdBlock: ((String) -> Void)?
     
     var dataModel = BehaviorRelay<DataModel?>(value: nil)
     
@@ -183,6 +185,14 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
         }
     
         return headView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let model = self.dataModelArray.value?[indexPath.row] {
+            print("公司ID=========\(model.firmInfo?.entityId ?? "")")
+            self.entityIdBlock?(model.firmInfo?.entityId ?? "")
+        }
+        
     }
     
 }

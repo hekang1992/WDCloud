@@ -124,7 +124,7 @@ extension WebPageViewController: WKScriptMessageHandler, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         ViewHud.addLoadView()
-        DispatchQueue.main.asyncAfter(delay: 120) {
+        DispatchQueue.main.asyncAfter(delay: 60) {
             ViewHud.hideLoadView()
         }
         print("开始加载======开始加载")

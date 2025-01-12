@@ -199,10 +199,18 @@ class SearchCompanyViewController: WDBaseViewController {
             }
             
         }
+#warning("电话回调")
+//        companyListView.phoneBlock = { [weak self] model in
+//            
+//        }
         
-        companyListView.phoneBlock = { [weak self] model in
-            
+        //企业ID回调
+        companyListView.entityIdBlock = { [weak self] entityId in
+            let companyDetailVc = CompanyBothViewController()
+            companyDetailVc.enityId.accept(entityId)
+            self?.navigationController?.pushViewController(companyDetailVc, animated: true)
         }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
