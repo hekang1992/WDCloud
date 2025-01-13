@@ -11,6 +11,8 @@ class CompanyDetailViewController: WDBaseViewController {
     
     var enityId: String = ""
     
+    var intBlock: ((Double) -> Void)?
+    
     lazy var companyDetailView: CompanyDetailView = {
         let companyDetailView = CompanyDetailView()
         companyDetailView.backgroundColor = .white
@@ -26,28 +28,15 @@ class CompanyDetailViewController: WDBaseViewController {
         companyDetailView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        companyDetailView.intBlock = { [weak self] contentY in
+            self?.intBlock?(contentY)
+        }
         //获取企业详情item菜单
         getCompanyDetailItemInfo()
         //获取角标
         getCompanyRightCountInfo()
-    }
-    
-    @objc func handleButtonTap(_ sender: UIButton) {
-        let sectionIndex = sender.tag
-        
-        // 获取指定 section 的 header 的布局属性
-        if let headerAttributes = companyDetailView.collectionView.layoutAttributesForSupplementaryElement(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: sectionIndex)) {
-            
-            // 计算 header 的顶部位置
-            let headerTop = headerAttributes.frame.minY
-            
-            // 调整 contentOffset，确保 header 完全可见
-            var offset = headerTop - companyDetailView.collectionView.contentInset.top
-            offset = max(offset, 0) // 确保 offset 不小于 0
-            
-            // 滚动到指定位置
-            companyDetailView.collectionView.setContentOffset(CGPoint(x: 0, y: offset), animated: true)
-        }
+        //获取企业详情头部信息
+        getCompanyHeadInfo()
     }
     
 }
@@ -55,6 +44,7 @@ class CompanyDetailViewController: WDBaseViewController {
 
 extension CompanyDetailViewController {
     
+    //获取企业详情item
     private func getCompanyDetailItemInfo() {
         let dict = ["moduleType": "2", "entityId": enityId] as [String: Any]
         let man = RequestManager()
@@ -75,6 +65,7 @@ extension CompanyDetailViewController {
         }
     }
     
+    //获取角标
     private func getCompanyRightCountInfo() {
         let dict = ["entityName": "2", "entityId": enityId] as [String: Any]
         let man = RequestManager()
@@ -94,4 +85,24 @@ extension CompanyDetailViewController {
         }
     }
     
+    //获取企业详情头部信息
+    private func getCompanyHeadInfo() {
+        let man = RequestManager()
+        let dict = ["entityId": enityId]
+        man.requestAPI(params: dict, pageUrl: "/firminfo/company/overview", method: .get) { result in
+            switch result {
+            case .success(let success):
+                if let model = success.data, let code = success.code, code == 200 {
+                    self.companyDetailView.headModel.accept(model)
+                    self.companyDetailView.collectionView.reloadData()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
 }
+
+

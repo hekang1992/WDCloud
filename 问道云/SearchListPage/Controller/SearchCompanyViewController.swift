@@ -205,9 +205,10 @@ class SearchCompanyViewController: WDBaseViewController {
 //        }
         
         //企业ID回调
-        companyListView.entityIdBlock = { [weak self] entityId in
+        companyListView.entityIdBlock = { [weak self] entityId, entityName in
             let companyDetailVc = CompanyBothViewController()
             companyDetailVc.enityId.accept(entityId)
+            companyDetailVc.companyName.accept(entityName)
             self?.navigationController?.pushViewController(companyDetailVc, animated: true)
         }
         

@@ -61,7 +61,14 @@ class DataModel {
     var entityData: entityDataModel?
     var personData: personDataModel?
     
+    //股票模型
+    var stockInfo: stockInfoModel?
+    var firmInfo: firmInfoModel?
+    var warnLabels: [warnLabelsModel]?
     init(json: JSON) {
+        self.warnLabels = json["warnLabels"].arrayValue.map { warnLabelsModel(json: $0) }
+        self.firmInfo = firmInfoModel(json: json["firmInfo"])
+        self.stockInfo = stockInfoModel(json: json["stockInfo"])
         self.entityData = entityDataModel(json: json["entityData"])
         self.personData = personDataModel(json: json["personData"])
         self.pageMeta = pageMetaModel(json: json["pageMeta"])
@@ -468,6 +475,7 @@ class firmInfoModel {
     var website: String?
     var logo: String?//企业logo
     var entityName: String?//企业名称
+    var usCreditCode: String?//统一社会信用代码
     init(json: JSON) {
         self.logo = json["logo"].stringValue
         self.entityId = json["entityId"].stringValue
@@ -479,6 +487,7 @@ class firmInfoModel {
         self.registerCapital = json["registerCapital"].stringValue
         self.registerCapitalCurrency = json["registerCapitalCurrency"].stringValue
         self.website = json["website"].stringValue
+        self.usCreditCode = json["usCreditCode"].stringValue
     }
 }
 
@@ -538,5 +547,70 @@ class dynamiccontentModel {
         self.fieldName = json["fieldName"].stringValue
         self.title = json["title"].stringValue
         self.fieldValue = json["fieldValue"].stringValue
+    }
+}
+
+//股票模型数据
+class stockInfoModel {
+    var key: String?//深a 沪a
+    var value: valueModel?
+    init(json: JSON) {
+        self.key = json["key"].stringValue
+        self.value = valueModel(json: json["value"])
+    }
+}
+
+class valueModel {
+    var marketName: String?
+    var stockName: String?
+    var shareCode: String?
+    var securityType: String?
+    var listedExchange: String?
+    var olPublishTime: String?
+    var listingTime: String?
+    var riseFall: String?
+    var riseFallRatio: String = "0.00"
+    var listingStatus: String?
+    var updateDate: String?
+    var totalMarketValue: String?
+    var volumeOfBusiness: String?
+    var circulatingMarketValue: String?
+    var tradingVolume: String?
+    var yClosePrice: String = ""
+    var netRate: String?
+    var earningsRatio: String?
+    var openPriceToday: String?
+    
+    init(json: JSON) {
+        self.earningsRatio = json["earningsRatio"].stringValue
+        self.netRate = json["netRate"].stringValue
+        self.yClosePrice = json["yClosePrice"].stringValue
+        self.openPriceToday = json["openPriceToday"].stringValue
+        self.tradingVolume = json["tradingVolume"].stringValue
+        self.volumeOfBusiness = json["volumeOfBusiness"].stringValue
+        self.circulatingMarketValue = json["circulatingMarketValue"].stringValue
+        self.totalMarketValue = json["totalMarketValue"].stringValue
+        self.updateDate = json["updateDate"].stringValue
+        self.listingStatus = json["listingStatus"].stringValue
+        self.riseFallRatio = json["riseFallRatio"].stringValue
+        self.riseFall = json["riseFall"].stringValue
+        self.listingTime = json["listingTime"].stringValue
+        self.olPublishTime = json["olPublishTime"].stringValue
+        self.listedExchange = json["listedExchange"].stringValue
+        self.securityType = json["securityType"].stringValue
+        self.shareCode = json["shareCode"].stringValue
+        self.stockName = json["stockName"].stringValue
+        self.marketName = json["marketName"].stringValue
+    }
+}
+
+class warnLabelsModel {
+    var name: String?
+    var url: String?
+    var type: String?
+    init(json: JSON) {
+        self.name = json["name"].stringValue
+        self.url = json["url"].stringValue
+        self.type = json["type"].stringValue
     }
 }

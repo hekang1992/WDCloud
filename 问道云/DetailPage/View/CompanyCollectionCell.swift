@@ -125,6 +125,8 @@ class CompanyCollectionCell: UICollectionViewCell {
 // 自定义头部视图
 class MyCollectionNormalReusableView: UICollectionReusableView {
     
+    let disposeBag = DisposeBag()
+    
     static let identifier = "MyCollectionNormalReusableView"
     
     lazy var bgView: UIView = {
@@ -183,3 +185,4 @@ class MyCollectionNormalReusableView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

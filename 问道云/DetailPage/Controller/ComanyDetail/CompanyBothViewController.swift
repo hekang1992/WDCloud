@@ -14,6 +14,9 @@ class CompanyBothViewController: WDBaseViewController {
     //企业ID
     var enityId = BehaviorRelay<String>(value: "")
     
+    //企业名称
+    var companyName = BehaviorRelay<String>(value: "")
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.headTitleView.isHidden = false
@@ -48,9 +51,18 @@ class CompanyBothViewController: WDBaseViewController {
         addHeadView(from: headView)
         
         setheadUI()
+        companyDetailVc.intBlock = { [weak self] contentY in
+            guard let self = self else { return }
+            if contentY >= 200 {
+                self.headView.headTitleView.isHidden = true
+                self.headView.titlelabel.isHidden = false
+                self.headView.titlelabel.text = companyName.value
+            }else {
+                self.headView.headTitleView.isHidden = false
+                self.headView.titlelabel.isHidden = true
+            }
+        }
     }
-    
-
 }
 
 extension CompanyBothViewController: JXSegmentedViewDelegate {
