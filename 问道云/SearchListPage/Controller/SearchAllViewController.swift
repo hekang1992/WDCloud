@@ -29,8 +29,6 @@ class SearchAllViewController: WDBaseViewController {
     
     let segmentedDataSource = JXSegmentedTitleDataSource()
     
-    let contentScrollView = UIScrollView()
-    
     lazy var searchHeadView: SearchHeadView = {
         let searchHeadView = SearchHeadView()
         searchHeadView.searchTx.placeholder = model.value?.name ?? ""

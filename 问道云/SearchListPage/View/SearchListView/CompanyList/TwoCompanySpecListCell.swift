@@ -249,6 +249,7 @@ class TwoCompanySpecListCell: BaseViewCell {
             
             self.risklabel.text = (model.riskInfo?.riskTime ?? "") + " " + (model.riskInfo?.content ?? "")
             
+            
         }).disposed(by: disposeBag)
         
         //地址点击
@@ -313,7 +314,7 @@ class BiaoQianView: BaseView {
     lazy var timeLabel: PaddedLabel = {
         let timeLabel = PaddedLabel()
         timeLabel.font = .regularFontOfSize(size: 9)
-        timeLabel.layer.borderWidth = 0.5
+        timeLabel.layer.borderWidth = 1
         timeLabel.layer.borderColor = UIColor.init(cssStr: "#9FA4AD")?.cgColor
         timeLabel.layer.cornerRadius = 1
 

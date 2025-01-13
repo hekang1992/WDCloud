@@ -76,16 +76,26 @@ class CompanyDetailView: BaseView {
         return oneBtn
     }()
     
+    lazy var footerView: CompanyDerailFooterView = {
+        let footerView = CompanyDerailFooterView()
+        return footerView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(collectionView)
         addSubview(scrollView)
+        addSubview(footerView)
         scrollView.addSubview(onelineView)
         scrollView.addSubview(twolineView)
         collectionView.snp.makeConstraints { make in
             make.top.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
             make.bottom.equalToSuperview().offset(-90)
+        }
+        footerView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(90)
         }
         scrollView.snp.makeConstraints { make in
             make.left.top.equalToSuperview()
@@ -225,10 +235,11 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
     //头部的title高度
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
-            if let headModel = self.headModel.value, let stockModel = headModel.stockInfo, let key = stockModel.key, !key.isEmpty {
-                return CGSize(width: collectionView.bounds.width, height: 692)
+            let mo = self.headModel.value
+            if let headModel = self.headModel.value, let stockModel = headModel.stockInfo?.first, let key = stockModel.key, !key.isEmpty {
+                return CGSize(width: collectionView.bounds.width, height: 906)
             }else {
-                return CGSize(width: collectionView.bounds.width, height: 476)
+                return CGSize(width: collectionView.bounds.width, height: 686)
             }
         }else {
             return CGSize(width: collectionView.bounds.width, height: 41)

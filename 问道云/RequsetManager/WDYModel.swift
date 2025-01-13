@@ -62,13 +62,30 @@ class DataModel {
     var personData: personDataModel?
     
     //股票模型
-    var stockInfo: stockInfoModel?
+    var stockInfo: [stockInfoModel]?
+    //
     var firmInfo: firmInfoModel?
+    //标签
     var warnLabels: [warnLabelsModel]?
+    //员工
+    var employees: employeesModel?
+    //利润
+    var incomeInfo: incomeInfoModel?
+    //收入
+    var profitInfo: profitInfoModel?
+    //主要股东
+    var shareHolders: [shareHoldersModel]?
+    //主要人员
+    var staffInfos: [staffInfosModel]?
     init(json: JSON) {
+        self.staffInfos = json["staffInfos"].arrayValue.map { staffInfosModel(json: $0) }
+        self.shareHolders = json["shareHolders"].arrayValue.map { shareHoldersModel(json: $0) }
+        self.profitInfo = profitInfoModel(json: json["profitInfo"])
+        self.incomeInfo = incomeInfoModel(json: json["incomeInfo"])
+        self.employees = employeesModel(json: json["employees"])
         self.warnLabels = json["warnLabels"].arrayValue.map { warnLabelsModel(json: $0) }
         self.firmInfo = firmInfoModel(json: json["firmInfo"])
-        self.stockInfo = stockInfoModel(json: json["stockInfo"])
+        self.stockInfo = json["stockInfo"].arrayValue.map { stockInfoModel(json: $0) }
         self.entityData = entityDataModel(json: json["entityData"])
         self.personData = personDataModel(json: json["personData"])
         self.pageMeta = pageMetaModel(json: json["pageMeta"])
@@ -476,7 +493,14 @@ class firmInfoModel {
     var logo: String?//企业logo
     var entityName: String?//企业名称
     var usCreditCode: String?//统一社会信用代码
+    var businessScope: String?//简介
+    var legalPerson: legalPersonModel?
+    var industry: [String]?
+    var scale: String?
     init(json: JSON) {
+        self.scale = json["scale"].stringValue
+        self.legalPerson = legalPersonModel(json: json["legalPerson"])
+        self.businessScope = json["businessScope"].stringValue
         self.logo = json["logo"].stringValue
         self.entityId = json["entityId"].stringValue
         self.entityName = json["entityName"].stringValue
@@ -488,6 +512,9 @@ class firmInfoModel {
         self.registerCapitalCurrency = json["registerCapitalCurrency"].stringValue
         self.website = json["website"].stringValue
         self.usCreditCode = json["usCreditCode"].stringValue
+        self.industry = json["industry"].arrayValue.map({
+            $0.stringValue
+        })
     }
 }
 
@@ -612,5 +639,85 @@ class warnLabelsModel {
         self.name = json["name"].stringValue
         self.url = json["url"].stringValue
         self.type = json["type"].stringValue
+    }
+}
+
+class employeesModel {
+    var lastNumber: Int?
+    var lastYear: String?
+    var annualReports: [annualReportsModel]?
+    init(json: JSON) {
+        self.annualReports = json["annualReports"].arrayValue.map { annualReportsModel(json: $0) }
+        self.lastNumber = json["lastNumber"].intValue
+        self.lastYear = json["lastYear"].stringValue
+    }
+}
+
+class annualReportsModel {
+    var number: Int?//人数
+    var reportYear: String?
+    var amount: Double?//利润
+    init(json: JSON) {
+        self.number = json["number"].intValue
+        self.reportYear = json["reportYear"].stringValue
+        self.amount = json["amount"].doubleValue
+    }
+}
+
+//利润模型
+class incomeInfoModel {
+    var lastAmount: Int?
+    var lastYear: String?
+    var annualReports: [annualReportsModel]?
+    init(json: JSON) {
+        self.annualReports = json["annualReports"].arrayValue.map { annualReportsModel(json: $0) }
+        self.lastAmount = json["lastAmount"].intValue
+        self.lastYear = json["lastYear"].stringValue
+    }
+}
+
+//收益模型
+class profitInfoModel {
+    var lastAmount: Int?
+    var lastYear: String?
+    var annualReports: [annualReportsModel]?
+    init(json: JSON) {
+        self.annualReports = json["annualReports"].arrayValue.map { annualReportsModel(json: $0) }
+        self.lastAmount = json["lastAmount"].intValue
+        self.lastYear = json["lastYear"].stringValue
+    }
+}
+
+//主要股东
+class shareHoldersModel {
+    var id: String?
+    var name: String?
+    var percent: String?
+    var relatedNum: String?
+    var type: String?//类型 2公司 1个人
+    init(json: JSON) {
+        self.id = json["id"].stringValue
+        self.name = json["name"].stringValue
+        self.percent = json["percent"].stringValue
+        self.relatedNum = json["relatedNum"].stringValue
+        self.type = json["type"].stringValue
+    }
+}
+
+//主要人员
+class staffInfosModel {
+    var count: Int?
+    var entityId: String?
+    var id: String?//人员ID
+    var name: String?
+    var positionName: String?
+    var relatedNum: Int?
+    init(json: JSON) {
+        self.count = json["count"].intValue
+        self.entityId = json["entityId"].stringValue
+        self.id = json["id"].stringValue
+        self.name = json["name"].stringValue
+        self.positionName = json["positionName"].stringValue
+        self.relatedNum = json["relatedNum"].intValue
     }
 }

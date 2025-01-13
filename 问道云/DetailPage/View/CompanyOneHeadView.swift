@@ -13,9 +13,9 @@ struct CompanyModel {
     var isOpenTag: Bool
 }
 
-
 class CompanyOneHeadView: BaseView {
 
+    //是否点击了展开是收起
     var companyModel = CompanyModel(isOpenTag: false)
     
     lazy var lineView: UIView = {
@@ -62,10 +62,108 @@ class CompanyOneHeadView: BaseView {
         return tagListView
     }()
     
+    lazy var desLabel: UILabel = {
+        let desLabel = UILabel()
+        desLabel.font = .regularFontOfSize(size: 12)
+        desLabel.textColor = .init(cssStr: "#666666")
+        desLabel.textAlignment = .left
+        desLabel.numberOfLines = 1
+        desLabel.text = "简介"
+        desLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        return desLabel
+    }()
+    
+    lazy var moreButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = .mediumFontOfSize(size: 12)
+        button.setTitleColor(.init(cssStr: "#3F96FF"), for: .normal)
+        button.setTitle("展开", for: .normal)
+        button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        return button
+    }()
+    
+    lazy var nameView: BiaoQianView = {
+        let nameView = BiaoQianView(frame: .zero, enmu: .hide)
+        nameView.lineView.isHidden = false
+        nameView.label1.text = "法定代表人"
+        nameView.label2.textColor = .init(cssStr: "#3F96FF")
+        return nameView
+    }()
+    
+    lazy var moneyView: BiaoQianView = {
+        let moneyView = BiaoQianView(frame: .zero, enmu: .hide)
+        moneyView.lineView.isHidden = false
+        moneyView.label1.text = "注册资本"
+        moneyView.label2.textColor = .init(cssStr: "#333333")
+        return moneyView
+    }()
+    
+    lazy var timeView: BiaoQianView = {
+        let timeView = BiaoQianView(frame: .zero, enmu: .hide)
+        timeView.label1.text = "成立时间"
+        timeView.label2.textColor = .init(cssStr: "#333333")
+        return timeView
+    }()
+    
+    lazy var grayView: UIView = {
+        let grayView = UIView()
+        grayView.backgroundColor = .init(cssStr: "#F8F8F8")
+        return grayView
+    }()
+    
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsHorizontalScrollIndicator = false
+        return scrollView
+    }()
+    
+    lazy var oneView: BiaoQianView = {
+        let oneView = BiaoQianView(frame: .zero, enmu: .hide)
+        oneView.label1.text = "行业"
+        oneView.label2.textColor = .init(cssStr: "#3F96FF")
+        oneView.lineView.isHidden = false
+        return oneView
+    }()
+    
+    lazy var twoView: BiaoQianView = {
+        let twoView = BiaoQianView(frame: .zero, enmu: .hide)
+        twoView.label1.text = "规模"
+        twoView.label2.textColor = .init(cssStr: "#333333")
+        twoView.lineView.isHidden = false
+        return twoView
+    }()
+    
+    lazy var threeView: BiaoQianView = {
+        let threeView = BiaoQianView(frame: .zero, enmu: .show)
+        threeView.label1.text = "员工"
+        threeView.label2.textColor = .init(cssStr: "#333333")
+        threeView.lineView.isHidden = false
+        return threeView
+    }()
+    
+    lazy var fourView: BiaoQianView = {
+        let fourView = BiaoQianView(frame: .zero, enmu: .show)
+        fourView.label1.text = "营业收入"
+        fourView.label2.textColor = .init(cssStr: "#333333")
+        fourView.lineView.isHidden = false
+        return fourView
+    }()
+    
+    lazy var fiveView: BiaoQianView = {
+        let fiveView = BiaoQianView(frame: .zero, enmu: .show)
+        fiveView.label1.text = "利润总额"
+        fiveView.label2.textColor = .init(cssStr: "#333333")
+        fiveView.lineView.isHidden = true
+        return fiveView
+    }()
+    
+    lazy var tlineView: UIView = {
+        let tlineView = UIView()
+        tlineView.backgroundColor = .init(cssStr: "#F5F5F5")
+        return tlineView
+    }()
+    
     var tagArray = BehaviorRelay<[String]>(value: [])
-    
-    
-    var fda = ["5435","fdasf","fdasfadsv","4rtfead","fdaf","fdas","f3r","fda","fadf","fadsf","fadsfdafdaf","fa5435dsf"]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,6 +174,21 @@ class CompanyOneHeadView: BaseView {
         addSubview(numlabel)
         addSubview(invoiceTitleButton)
         addSubview(tagListView)
+        addSubview(desLabel)
+        addSubview(moreButton)
+        
+        addSubview(grayView)
+        grayView.addSubview(nameView)
+        grayView.addSubview(moneyView)
+        grayView.addSubview(timeView)
+        
+        addSubview(scrollView)
+        scrollView.addSubview(oneView)
+        scrollView.addSubview(twoView)
+        scrollView.addSubview(threeView)
+        scrollView.addSubview(fourView)
+        scrollView.addSubview(fiveView)
+        addSubview(tlineView)
         
         lineView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
@@ -112,7 +225,84 @@ class CompanyOneHeadView: BaseView {
             make.width.equalTo(SCREEN_WIDTH - 80)
             make.height.equalTo(15)
         }
-    
+        desLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16.5)
+            make.width.equalTo(SCREEN_WIDTH - 65)
+            make.top.equalTo(tagListView.snp.bottom).offset(6.5)
+        }
+        moreButton.snp.makeConstraints { make in
+            make.centerY.equalTo(desLabel.snp.centerY)
+            make.left.equalTo(desLabel.snp.right).offset(10)
+            make.size.equalTo(CGSize(width: 24, height: 16.5))
+        }
+        grayView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(desLabel.snp.bottom).offset(6.5)
+            make.left.equalToSuperview().offset(11)
+            make.height.equalTo(46.5)
+        }
+        moneyView.snp.makeConstraints { make in
+            make.width.equalTo(150)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(6)
+            make.bottom.equalToSuperview().offset(-6)
+        }
+        nameView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalTo(moneyView.snp.left)
+            make.top.equalToSuperview().offset(6)
+            make.bottom.equalToSuperview().offset(-6)
+        }
+        timeView.snp.makeConstraints { make in
+            make.right.equalToSuperview()
+            make.left.equalTo(moneyView.snp.right)
+            make.top.equalToSuperview().offset(6)
+            make.bottom.equalToSuperview().offset(-6)
+        }
+        
+        scrollView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+            make.top.equalTo(grayView.snp.bottom).offset(11.5)
+            make.height.equalTo(40)
+        }
+        oneView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(40)
+            make.width.equalTo(75)
+        }
+        twoView.snp.makeConstraints { make in
+            make.left.equalTo(oneView.snp.right)
+            make.top.equalToSuperview()
+            make.height.equalTo(40)
+            make.width.equalTo(80)
+        }
+        threeView.snp.makeConstraints { make in
+            make.left.equalTo(twoView.snp.right)
+            make.top.equalToSuperview()
+            make.height.equalTo(40)
+            make.width.equalTo(80)
+        }
+        fourView.snp.makeConstraints { make in
+            make.left.equalTo(threeView.snp.right)
+            make.top.equalToSuperview()
+            make.height.equalTo(40)
+            make.width.equalTo(110)
+        }
+        fiveView.snp.makeConstraints { make in
+            make.left.equalTo(fourView.snp.right)
+            make.top.equalToSuperview()
+            make.height.equalTo(40)
+            make.width.equalTo(80)
+            make.right.equalToSuperview().offset(-30)
+        }
+        tlineView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.height.equalTo(4)
+            make.top.equalTo(scrollView.snp.bottom).offset(5)
+        }
+        
         tagArray.asObservable().subscribe(onNext: { [weak self] texts in
             guard let self = self else { return }
             setupScrollView(tagScrollView: tagListView, tagArray: texts)
