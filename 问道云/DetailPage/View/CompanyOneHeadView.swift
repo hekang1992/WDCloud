@@ -162,7 +162,7 @@ extension CompanyOneHeadView {
         // 计算标签总长度
         var totalLength = lastRight
         for tags in tagArray {
-            let tag = "\(tags)"
+            let tag = "\(tags)   "
             let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 11)])
             var width = titleSize.width
             if tags.contains("展开") {
@@ -177,7 +177,7 @@ extension CompanyOneHeadView {
             var p = 0
             var lastLength = lastRight
             for tags in tagArray {
-                let tag = "\(tags) "
+                let tag = "\(tags)   "
                 let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 11)])
                 var width = titleSize.width
                 if tags.contains("展开") {
@@ -231,7 +231,7 @@ extension CompanyOneHeadView {
                 lab.layer.masksToBounds = true
                 lab.layer.cornerRadius = 2
                 lab.textAlignment = .center
-                lab.text = "\(tags) "
+                lab.text = "\(tags)   "
                 self.nameLabelColor(from: lab)
                 tagScrollView.addSubview(lab)
                 
