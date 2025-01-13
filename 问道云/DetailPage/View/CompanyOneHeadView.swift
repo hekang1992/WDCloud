@@ -64,6 +64,9 @@ class CompanyOneHeadView: BaseView {
     
     var tagArray = BehaviorRelay<[String]>(value: [])
     
+    
+    var fda = ["5435","fdasf","fdasfadsv","4rtfead","fdaf","fdas","f3r","fda","fadf","fadsf","fadsfdafdaf","fa5435dsf"]
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(lineView)
@@ -109,6 +112,7 @@ class CompanyOneHeadView: BaseView {
             make.width.equalTo(SCREEN_WIDTH - 80)
             make.height.equalTo(15)
         }
+    
         tagArray.asObservable().subscribe(onNext: { [weak self] texts in
             guard let self = self else { return }
             setupScrollView(tagScrollView: tagListView, tagArray: texts)
@@ -132,8 +136,8 @@ extension CompanyOneHeadView {
             view.removeFromSuperview()
         }
         
-        let maxWidth = SCREEN_WIDTH - 80
-        let openButtonWidth: CGFloat = 34 // 展开按钮宽度
+        let maxWidth = UIScreen.main.bounds.width - 80 // 标签展示最大宽度（左右各 20 的边距）
+        let openButtonWidth: CGFloat = 35 // 展开按钮宽度
         let buttonHeight: CGFloat = 15 // 标签高度
         let buttonSpacing: CGFloat = 5 // 标签之间的间距
         var numberOfLine: CGFloat = 1 // 标签总行数
@@ -142,18 +146,19 @@ extension CompanyOneHeadView {
         
         // 创建展开/收起按钮
         let openButton = UIButton(type: .custom)
-        openButton.titleLabel?.font = UIFont.regularFontOfSize(size: 10)
-        openButton.backgroundColor = UIColor(cssStr: "#3F96FF")?.withAlphaComponent(0.05)
+        openButton.titleLabel?.font = .regularFontOfSize(size: 10)
+        openButton.backgroundColor = UIColor(cssStr: "#3F96FF")?.withAlphaComponent(0.1)
         openButton.setTitle("展开", for: .normal)
         openButton.setTitleColor(UIColor(cssStr: "#3F96FF"), for: .normal)
         openButton.layer.masksToBounds = true
         openButton.layer.cornerRadius = 2
         openButton.setImage(UIImage(named: "xialaimageicon"), for: .normal)
-        openButton.addTarget(self, action: #selector(didOpenTags(_:)), for: .touchUpInside)
+        openButton.addTarget(self, action: #selector(didOpenTags), for: .touchUpInside)
         if isOpen {
             openButton.setTitle("收起", for: .normal)
-            openButton.setImage(UIImage(named: "shangimageicon"), for: . normal)
+            openButton.setImage(UIImage(named: "shangimageicon"), for: .normal)
         }
+        
         // 计算标签总长度
         var totalLength = lastRight
         for tags in tagArray {
@@ -172,9 +177,9 @@ extension CompanyOneHeadView {
             var p = 0
             var lastLength = lastRight
             for tags in tagArray {
-                let tag = "\(tags)"
+                let tag = "\(tags) "
                 let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 11)])
-                var width = titleSize.width + 5
+                var width = titleSize.width
                 if tags.contains("展开") {
                     width = openButtonWidth
                 }
@@ -219,18 +224,19 @@ extension CompanyOneHeadView {
                 }
                 lastRight += openButtonWidth + buttonSpacing
             } else {
-                let lab = PaddedLabel()
+                let lab = UILabel()
                 lab.font = .regularFontOfSize(size: 11)
                 lab.textColor = UIColor(cssStr: "#ECF2FF")
                 lab.backgroundColor = UIColor(cssStr: "#93B2F5")
                 lab.layer.masksToBounds = true
                 lab.layer.cornerRadius = 2
                 lab.textAlignment = .center
-                lab.text = "\(tags)"
+                lab.text = "\(tags) "
+                self.nameLabelColor(from: lab)
                 tagScrollView.addSubview(lab)
                 
                 let titleSize = (lab.text! as NSString).size(withAttributes: [.font: lab.font!])
-                let width = titleSize.width + 5  // 增加左右 padding
+                let width = titleSize.width  // 增加左右 padding
                 
                 if width + lastRight > maxWidth {
                     numberOfLine += 1
@@ -241,8 +247,9 @@ extension CompanyOneHeadView {
                     make.left.equalTo(lastRight)
                     make.top.equalTo((numberOfLine - 1) * (buttonHeight + buttonSpacing))
                     make.height.equalTo(buttonHeight)
-//                    make.width.equalTo(width)
+                    make.width.equalTo(width)
                 }
+            
                 lastRight += width + buttonSpacing
             }
         }
@@ -258,6 +265,39 @@ extension CompanyOneHeadView {
     @objc func didOpenTags(_ sender: UIButton) {
         companyModel.isOpenTag.toggle() // 切换展开/收起状态
         setupScrollView(tagScrollView: tagListView, tagArray: tagArray.value) // 重新设置标签
+    }
+
+    func nameLabelColor(from tagView: UILabel) {
+        let currentTitle = tagView.text ?? ""
+        if currentTitle.contains("经营异常") || currentTitle.contains("被执行人") || currentTitle.contains("失信被执行人") || currentTitle.contains("限制高消费") || currentTitle.contains("票据违约") || currentTitle.contains("债券违约") {
+            tagView.backgroundColor = .init(cssStr: "#F55B5B")?.withAlphaComponent(0.1)
+            tagView.textColor = .init(cssStr: "#F55B5B")
+            tagView.layer.borderColor = UIColor.clear.cgColor
+        }else if currentTitle.contains("存续") {
+            tagView.backgroundColor = .clear
+            tagView.textColor = .init(cssStr: "#4DC929")
+            tagView.layer.borderColor = tagView.textColor.cgColor
+            tagView.layer.borderWidth = 1
+        }else if currentTitle.contains("注销") {
+            tagView.backgroundColor = .clear
+            tagView.textColor = .init(cssStr: "#FF7D00")
+            tagView.layer.borderColor = tagView.textColor.cgColor
+            tagView.layer.borderWidth = 1
+        }else if currentTitle.contains("吊销")  {
+            tagView.backgroundColor = .clear
+            tagView.textColor = .init(cssStr: "#F55B5B")
+            tagView.layer.borderColor = tagView.textColor.cgColor
+            tagView.layer.borderWidth = 1
+        }else if currentTitle.contains("小微企业") || currentTitle.contains("高新技术企业") || currentTitle.contains("国有控股") || currentTitle.contains("国有独资") || currentTitle.contains("国有全资") || currentTitle.contains("深主板") || currentTitle.contains("沪主板") || currentTitle.contains("港交所") || currentTitle.contains("北交所") || currentTitle.contains("发债"){
+            tagView.backgroundColor = .init(cssStr: "#3F96FF")?.withAlphaComponent(0.05)
+            tagView.textColor = .init(cssStr: "#3F96FF")
+            tagView.layer.borderColor = UIColor.clear.cgColor
+        } else {
+            tagView.backgroundColor = .init(cssStr: "#3F96FF")?.withAlphaComponent(0.05)
+            tagView.textColor = .init(cssStr: "#3F96FF")
+            tagView.layer.borderColor = UIColor.clear.cgColor
+        }
+    
     }
     
 }
