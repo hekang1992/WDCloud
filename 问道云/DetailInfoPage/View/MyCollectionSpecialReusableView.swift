@@ -52,14 +52,27 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             infoView.desLabel.text = "简介: \(descInfo)"
             headView.moreBtnBlock = { [weak self] in
                 guard let self = self else { return }
-                headView.oneHeadView.desLabel.isHidden = true
-                headView.oneHeadView.moreButton.isHidden = true
-                addSubview(infoView)
+                keyWindow?.addSubview(infoView)
                 infoView.snp.makeConstraints { make in
                     make.left.right.equalToSuperview()
                     make.top.equalTo(self.headView.oneHeadView.desLabel.snp.top)
                 }
+                UIView.animate(withDuration: 0.25) {
+                    self.infoView.alpha = 1
+                    self.headView.oneHeadView.desLabel.alpha = 0
+                    self.headView.oneHeadView.moreButton.alpha = 0
+                }
             }
+            infoView.rx.tapGesture()
+                .when(.recognized)
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    UIView.animate(withDuration: 0.25) {
+                        self.infoView.alpha = 0
+                        self.headView.oneHeadView.desLabel.alpha = 1
+                        self.headView.oneHeadView.moreButton.alpha = 1
+                    }
+            }).disposed(by: disposeBag)
             //法定代表人
             headView.oneHeadView.nameView.label2.text = model.firmInfo?.legalPerson?.legalName ?? ""
             //注册资本

@@ -11,14 +11,8 @@ class CompanyDescInfoView: BaseView {
     
     lazy var oneBgView: UIView = {
         let oneBgView = UIView()
-        oneBgView.backgroundColor = .random()
+        oneBgView.backgroundColor = .init(cssStr: "#000000")?.withAlphaComponent(0.25)
         return oneBgView
-    }()
-    
-    lazy var twoBgView: UIView = {
-        let twoBgView = UIView()
-        twoBgView.backgroundColor = .random()
-        return twoBgView
     }()
     
     lazy var whiteView: UIView = {
@@ -55,17 +49,18 @@ class CompanyDescInfoView: BaseView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(oneBgView)
-        addSubview(twoBgView)
         addSubview(whiteView)
         addSubview(desLabel)
         addSubview(icon)
         addSubview(mlabel)
-        
+        oneBgView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         desLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16.5)
             make.right.equalToSuperview().offset(-17)
             make.top.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-60)
+            make.bottom.equalToSuperview().offset(-1000)
         }
         icon.snp.makeConstraints { make in
             make.top.equalTo(desLabel.snp.bottom).offset(18)
@@ -79,7 +74,7 @@ class CompanyDescInfoView: BaseView {
         }
         whiteView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(mlabel.snp.bottom).offset(10)
         }
         
     }

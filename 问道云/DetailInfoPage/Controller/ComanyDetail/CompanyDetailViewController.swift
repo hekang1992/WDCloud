@@ -31,6 +31,14 @@ class CompanyDetailViewController: WDBaseViewController {
         companyDetailView.intBlock = { [weak self] contentY in
             self?.intBlock?(contentY)
         }
+        companyDetailView.cellBlock = { [weak self] model in
+            guard let self = self else { return }
+            var pageUrl: String = ""
+            if let pathUrl = model.path {
+                pageUrl = pathUrl + "?" + "entityId=\(enityId)"
+            }
+            self.pushWebPage(from: pageUrl)
+        }
         //获取企业详情item菜单
         getCompanyDetailItemInfo()
         //获取角标

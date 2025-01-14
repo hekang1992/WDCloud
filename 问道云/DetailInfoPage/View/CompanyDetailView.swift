@@ -10,6 +10,9 @@ import RxRelay
 
 class CompanyDetailView: BaseView {
     
+    //返回cell的点击model
+    var cellBlock: ((childrenModel) -> Void)?
+    
     //item的数据模型
     var model = BehaviorRelay<DataModel?>(value: nil)
     
@@ -200,6 +203,16 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
                 cell.model.accept(model)
             }
             return cell
+        }
+    }
+    
+    //点击cell
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section != 0 {
+            if let items = self.model.value?.items?.first, let item = items.children?[indexPath.section - 1], let model = item.children?[indexPath.row] {
+                print("model=======\(model.menuName ?? "")")
+                self.cellBlock?(model)
+            }
         }
     }
     
