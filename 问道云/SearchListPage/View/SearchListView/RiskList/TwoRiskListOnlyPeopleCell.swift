@@ -139,13 +139,13 @@ class TwoRiskListOnlyPeopleCell: BaseViewCell {
             //匹配文字
             self.nameLabel.attributedText = TextStyler.styledText(for: model.name ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
             
-            let count = model.relevanceCount ?? 0
+            let count = String(model.relevanceCount ?? 0)
             numlabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业")
             
-            let riskOne = model.riskNum1 ?? 0
-            let riskTwo = model.riskNum1 ?? 0
+            let riskOne = String(model.riskNum1 ?? 0)
+            let riskTwo = String(model.riskNum2 ?? 0)
             self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskOne, fullText: "共\(riskOne)条自身风险")
-            self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskTwo, fullText: "\(riskOne)条关联风险")
+            self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskTwo, fullText: "\(riskTwo)条关联风险")
             
         }).disposed(by: disposeBag)
     }

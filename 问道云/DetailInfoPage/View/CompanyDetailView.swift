@@ -68,15 +68,6 @@ class CompanyDetailView: BaseView {
         return twolineView
     }()
     
-    lazy var oneBtn: UIButton = {
-        let oneBtn = UIButton(type: .custom)
-        oneBtn.setTitle("经营信息", for: .normal)
-        oneBtn.setTitleColor(UIColor.init(cssStr: "#FFFFFF"), for: .normal)
-        oneBtn.layer.cornerRadius = 2
-        oneBtn.backgroundColor = UIColor.init(cssStr: "#547AFF")
-        return oneBtn
-    }()
-    
     lazy var footerView: CompanyDerailFooterView = {
         let footerView = CompanyDerailFooterView()
         return footerView
@@ -221,6 +212,8 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MyCollectionSpecialReusableView.identifier, for: indexPath) as! MyCollectionSpecialReusableView
             if let headModel = self.headModel.value {
                 headerView.model.accept(headModel)
+                headerView.headView.threeHeadView.collectionView.reloadData()
+                headerView.headView.threeHeadView.pcollectionView.reloadData()
             }
             return headerView
         }else {
@@ -236,6 +229,8 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
     //头部的title高度
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
+            let fad = self.headModel.value
+            let stockModel = fad?.stockInfo
             if let headModel = self.headModel.value, let stockModel = headModel.stockInfo?.first, let key = stockModel.key, !key.isEmpty {
                 return CGSize(width: collectionView.bounds.width, height: 906)
             }else {

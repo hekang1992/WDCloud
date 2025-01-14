@@ -101,7 +101,7 @@ extension TwoPeopleListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let numStr = dataModel.value?.total ?? 0
+        let numStr = String(dataModel.value?.total ?? 0)
         let headView = UIView()
         headView.backgroundColor = .init(cssStr: "#F3F3F3")
         headView.addSubview(numLabel)

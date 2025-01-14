@@ -96,13 +96,11 @@ class SearchAllViewController: WDBaseViewController {
                 }
             })
             .disposed(by: disposeBag)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(delay: 0.5) {
+        
+        DispatchQueue.main.asyncAfter(delay: 1.0) {
             self.searchHeadView.searchTx.becomeFirstResponder()
         }
+        
     }
     
 }
@@ -205,7 +203,7 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
             self.riskVc.searchWords = self.searchHeadView.searchTx
                 .text ?? ""
         }else {
-           
+            
         }
     }
     

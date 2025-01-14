@@ -79,7 +79,7 @@ extension RiskListPeopleView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let numStr: Int = dataModel.value?.personData?.total ?? 0
+        let numStr = String(dataModel.value?.personData?.total ?? 0)
         let headView = UIView()
         let numLabel = UILabel()
         numLabel.font = .mediumFontOfSize(size: 12)

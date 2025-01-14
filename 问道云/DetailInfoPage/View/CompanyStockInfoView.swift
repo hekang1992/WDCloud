@@ -80,6 +80,8 @@ let model8 = StockViewModel(json: jsonData8)
 
 class CompanyStockInfoView: BaseView {
     
+    var dataModel = BehaviorRelay<DataModel?>(value: nil)
+    
     let modelArray = [model1, model2, model3, model4, model5, model6, model7, model8]
     
     var modelArrayRx = BehaviorRelay<[StockViewModel]>(value: [])
@@ -106,15 +108,9 @@ class CompanyStockInfoView: BaseView {
         return timeLabel
     }()
     
-    lazy var exLabel: PaddedLabel = {
-        let exLabel = PaddedLabel()
-        exLabel.layer.borderWidth = 0.5
-        exLabel.layer.borderColor = UIColor.init(cssStr: "#805BF5")?.cgColor
-        exLabel.font = .regularFontOfSize(size: 11)
-        exLabel.textAlignment = .center
-        exLabel.textColor = .init(cssStr: "#805BF5")
-        exLabel.layer.cornerRadius = 2
-        return exLabel
+    lazy var icon: UIImageView = {
+        let icon = UIImageView()
+        return icon
     }()
     
     lazy var jgLabel: UILabel = {
@@ -128,7 +124,7 @@ class CompanyStockInfoView: BaseView {
     //detail_stock_down
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "detail_stock_up")
+        ctImageView.image = UIImage(named: "detailstockdown")
         return ctImageView
     }()
     
@@ -213,8 +209,7 @@ class CompanyStockInfoView: BaseView {
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: itemWidth, height: 18)
         layout.minimumLineSpacing = 5
-        layout.minimumInteritemSpacing = 0
-        
+        layout.minimumInteritemSpacing = 5
         let collectView = UICollectionView(
             frame: .zero, collectionViewLayout: layout)
         collectView.backgroundColor = .white
@@ -241,7 +236,7 @@ class CompanyStockInfoView: BaseView {
         addSubview(nameLabel)
         addSubview(lineView)
         addSubview(timeLabel)
-        addSubview(exLabel)
+        addSubview(icon)
         addSubview(jgLabel)
         addSubview(ctImageView)
         addSubview(zdLabel)
@@ -273,10 +268,10 @@ class CompanyStockInfoView: BaseView {
             make.height.equalTo(12)
             make.left.equalTo(lineView.snp.right).offset(5)
         }
-        exLabel.snp.makeConstraints { make in
+        icon.snp.makeConstraints { make in
             make.centerY.equalTo(nameLabel.snp.centerY)
             make.right.equalToSuperview().offset(-13)
-            make.height.equalTo(15)
+            make.size.equalTo(CGSize(width: 28, height: 16))
         }
         jgLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(2)
@@ -346,21 +341,74 @@ class CompanyStockInfoView: BaseView {
         collectionView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.top.equalTo(itemView8.snp.bottom).offset(15)
-            make.height.equalTo(44.5)
+            make.top.equalTo(itemView8.snp.bottom).offset(10)
+            make.height.equalTo(45)
         }
-        tlineView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.height.equalTo(4)
-            make.top.equalTo(collectionView.snp.bottom).offset(11.5)
-        }
+//        tlineView.snp.makeConstraints { make in
+//            make.left.right.equalToSuperview()
+//            make.height.equalTo(4)
+//            make.top.equalTo(collectionView.snp.bottom).offset(6.5)
+//        }
         
         modelArrayRx.accept(modelArray)
-        
         
         modelArrayRx.asObservable().bind(to: collectionView.rx.items(cellIdentifier: "DetailStockViewCell", cellType: DetailStockViewCell.self)) { row, model, cell in
             cell.model.accept(model)
         }.disposed(by: disposeBag)
+        
+        dataModel.asObservable().subscribe(onNext: { [weak self] model in
+            if let self = self, let stockModel = model?.stockInfo?.first, let valueModel = stockModel.value {
+                self.icon.image = UIImage(named: stockModel.key ?? "")
+                
+                self.nameLabel.text = valueModel.stockName ?? ""
+                
+                self.timeLabel.text = "\(valueModel.listingTime ?? "")上市"
+                
+                let yClosePrice = Double(valueModel.yClosePrice ?? "") ?? 0.0
+                
+                let riseFall = Double(valueModel.riseFall ?? "") ?? 0.0
+                
+                let jgPrice = String(yClosePrice + riseFall)
+                if riseFall > 0 {
+                    self.ctImageView.isHidden = false
+                    self.ctImageView.image = UIImage(named: "shangshsenicon")
+                    self.jgLabel.textColor = .init(cssStr: "#F55B5B")
+                    self.zdLabel.textColor = .init(cssStr: "#F55B5B")
+                }else if riseFall == 0 {
+                    self.ctImageView.isHidden = true
+                    self.jgLabel.textColor = .init(cssStr: "#4DC929")
+                    self.zdLabel.textColor = .init(cssStr: "#4DC929")
+                }else {
+                    self.ctImageView.isHidden = false
+                    self.ctImageView.image = UIImage(named: "detailstockdown")
+                    self.jgLabel.textColor = .init(cssStr: "#4DC929")
+                    self.zdLabel.textColor = .init(cssStr: "#4DC929")
+                }
+                self.jgLabel.text = jgPrice
+                
+                self.zdLabel.text = "(\(valueModel.riseFallRatio ?? "--")%)"
+                
+                let listingStatus = model?.firmInfo?.listingStatus ?? ""
+                if listingStatus != "1" {
+                    self.typeLabel.text = "退市"
+                    self.typeLabel.textColor = .init(cssStr: "#666666")
+                }else {
+                    self.typeLabel.text = "上市"
+                    self.typeLabel.textColor = .init(cssStr: "#4DC929")
+                }
+                
+                self.updateLabel.text = "\(valueModel.updateDate ?? "")更新"
+                
+                self.itemView1.numLabel.text = valueModel.totalMarketValue ?? ""
+                self.itemView2.numLabel.text = valueModel.netRate ?? ""
+                self.itemView3.numLabel.text = valueModel.earningsRatio ?? ""
+                self.itemView4.numLabel.text = valueModel.openPriceToday ?? ""
+                self.itemView5.numLabel.text = valueModel.circulatingMarketValue ?? ""
+                self.itemView6.numLabel.text = valueModel.tradingVolume ?? ""
+                self.itemView7.numLabel.text = valueModel.volumeOfBusiness ?? ""
+                self.itemView8.numLabel.text = valueModel.yClosePrice
+            }
+        }).disposed(by: disposeBag)
         
     }
     

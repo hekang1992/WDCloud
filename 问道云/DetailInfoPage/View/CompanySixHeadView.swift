@@ -7,7 +7,26 @@
 
 import UIKit
 
+struct Item {
+    let imageResource: String
+    var path: String
+}
+
 class CompanySixHeadView: BaseView {
+    
+    //常用服务
+    var oneItems: [Item]? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
+    //问道图谱
+    var twoItems: [Item]? {
+        didSet {
+            pcollectionView.reloadData()
+        }
+    }
 
     lazy var oneView: UIView = {
         let oneView = UIView()
@@ -17,6 +36,34 @@ class CompanySixHeadView: BaseView {
     lazy var twoView: UIView = {
         let twoView = UIView()
         return twoView
+    }()
+    
+    //常用服务
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 4
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(CompanyDetailCommonServiceCell.self, forCellWithReuseIdentifier: "CompanyDetailCommonServiceCell")
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
+    }()
+    
+    //问道图谱
+    lazy var pcollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 4
+        let pcollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        pcollectionView.delegate = self
+        pcollectionView.dataSource = self
+        pcollectionView.showsVerticalScrollIndicator = false
+        pcollectionView.register(CompanyDetailCommonServiceCell.self, forCellWithReuseIdentifier: "CompanyDetailCommonPicCell")
+        pcollectionView.showsHorizontalScrollIndicator = false
+        return pcollectionView
     }()
     
     lazy var oneImageView: UIImageView = {
@@ -41,9 +88,11 @@ class CompanySixHeadView: BaseView {
         super.init(frame: frame)
         addSubview(oneView)
         oneView.addSubview(oneImageView)
+        oneView.addSubview(collectionView)
         
         addSubview(twoView)
         twoView.addSubview(twoImageView)
+        twoView.addSubview(pcollectionView)
         
         addSubview(lineView)
         
@@ -55,6 +104,12 @@ class CompanySixHeadView: BaseView {
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: 17, height: 61))
             make.left.equalToSuperview().offset(12)
+        }
+        collectionView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(oneImageView.snp.right).offset(4)
+            make.height.equalTo(60)
+            make.right.equalToSuperview().offset(-10)
         }
         
         
@@ -68,6 +123,12 @@ class CompanySixHeadView: BaseView {
             make.size.equalTo(CGSize(width: 17, height: 60))
             make.left.equalToSuperview().offset(12)
         }
+        pcollectionView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(twoImageView.snp.right).offset(4)
+            make.height.equalTo(60)
+            make.right.equalToSuperview().offset(-10)
+        }
         
         lineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
@@ -78,6 +139,33 @@ class CompanySixHeadView: BaseView {
     
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == self.pcollectionView {
+            return twoItems?.count ?? 0
+        }else {
+            return oneItems?.count ?? 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == self.pcollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompanyDetailCommonPicCell", for: indexPath) as? CompanyDetailCommonServiceCell
+            cell?.bgImageView.image = UIImage(named: twoItems?[indexPath.row].imageResource ?? "")
+            return cell ?? UICollectionViewCell()
+        }else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompanyDetailCommonServiceCell", for: indexPath) as? CompanyDetailCommonServiceCell
+            cell?.bgImageView.image = UIImage(named: oneItems?[indexPath.row].imageResource ?? "")
+            return cell ?? UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 80, height: 60)
     }
     
 }

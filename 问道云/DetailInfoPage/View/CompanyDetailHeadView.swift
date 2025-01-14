@@ -9,8 +9,14 @@ import UIKit
 
 class CompanyDetailHeadView: BaseView {
 
+    //展开简介按钮
+    var moreBtnBlock: (() -> Void)?
+    
     lazy var oneHeadView: CompanyOneHeadView = {
         let oneHeadView = CompanyOneHeadView()
+        oneHeadView.moreBtnBlock = { [weak self] in
+            self?.moreBtnBlock?()
+        }
         return oneHeadView
     }()
     
@@ -82,6 +88,7 @@ class CompanyDetailHeadView: BaseView {
             make.top.equalTo(fiveHeadView.snp.bottom)
             make.height.equalTo(150)
         }
+        
         stockView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(sixHeadView.snp.bottom)

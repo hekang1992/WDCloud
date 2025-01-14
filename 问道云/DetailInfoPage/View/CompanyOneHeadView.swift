@@ -13,6 +13,9 @@ class CompanyOneHeadView: BaseView {
     //是否点击了展开是收起
     var companyModel = CompanyModel(isOpenTag: false)
     
+    //展开简介按钮
+    var moreBtnBlock: (() -> Void)?
+    
     lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")
@@ -63,8 +66,6 @@ class CompanyOneHeadView: BaseView {
         desLabel.textColor = .init(cssStr: "#666666")
         desLabel.textAlignment = .left
         desLabel.numberOfLines = 1
-        desLabel.text = "简介"
-        desLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return desLabel
     }()
     
@@ -73,7 +74,6 @@ class CompanyOneHeadView: BaseView {
         button.titleLabel?.font = .mediumFontOfSize(size: 12)
         button.setTitleColor(.init(cssStr: "#3F96FF"), for: .normal)
         button.setTitle("展开", for: .normal)
-        button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         return button
     }()
     
@@ -265,7 +265,7 @@ class CompanyOneHeadView: BaseView {
             make.left.equalToSuperview()
             make.top.equalToSuperview()
             make.height.equalTo(40)
-            make.width.equalTo(75)
+            make.width.equalTo(80)
         }
         twoView.snp.makeConstraints { make in
             make.left.equalTo(oneView.snp.right)
@@ -303,6 +303,11 @@ class CompanyOneHeadView: BaseView {
             setupScrollView(tagScrollView: tagListView, tagArray: texts)
         }).disposed(by: disposeBag)
         
+        //简介点击展开
+        moreButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.moreBtnBlock?()
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {

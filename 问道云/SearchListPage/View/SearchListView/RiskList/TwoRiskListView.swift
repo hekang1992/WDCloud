@@ -122,11 +122,11 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let dataModel = self.dataModel.value
         if let entityData = dataModel?.entityData, let personData = dataModel?.personData, let enItems = entityData.items, let perItems = personData.items, !enItems.isEmpty, !perItems.isEmpty  {
-            let numStr: Int
+            let numStr: String
             if section == 0 {
-                numStr = dataModel?.personData?.total ?? 0
+                numStr = String(dataModel?.personData?.total ?? 0)
             } else {
-                numStr = dataModel?.entityData?.total ?? 0
+                numStr = String(dataModel?.entityData?.total ?? 0)
             }
             let headView = UIView()
             let numLabel = UILabel()
@@ -144,7 +144,7 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
             }
             return headView
         }else {
-            let numStr: Int = dataModel?.entityData?.total ?? 0
+            let numStr = String(dataModel?.entityData?.total ?? 0)
             let headView = UIView()
             let numLabel = UILabel()
             numLabel.font = .mediumFontOfSize(size: 12)

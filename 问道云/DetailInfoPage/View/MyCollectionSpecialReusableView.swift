@@ -10,7 +10,7 @@ import RxSwift
 import RxRelay
 
 class MyCollectionSpecialReusableView: UICollectionReusableView {
-        
+    
     let disposeBag = DisposeBag()
     
     var model = BehaviorRelay<DataModel?>(value: nil)
@@ -20,6 +20,12 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
     lazy var headView: CompanyDetailHeadView = {
         let headView = CompanyDetailHeadView()
         return headView
+    }()
+    
+    //简介
+    lazy var infoView: CompanyDescInfoView = {
+        let infoView = CompanyDescInfoView()
+        return infoView
     }()
     
     override init(frame: CGRect) {
@@ -43,6 +49,17 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             //简介
             let descInfo = model.firmInfo?.businessScope ?? ""
             headView.oneHeadView.desLabel.text = "简介: \(descInfo)"
+            infoView.desLabel.text = "简介: \(descInfo)"
+            headView.moreBtnBlock = { [weak self] in
+                guard let self = self else { return }
+                headView.oneHeadView.desLabel.isHidden = true
+                headView.oneHeadView.moreButton.isHidden = true
+                addSubview(infoView)
+                infoView.snp.makeConstraints { make in
+                    make.left.right.equalToSuperview()
+                    make.top.equalTo(self.headView.oneHeadView.desLabel.snp.top)
+                }
+            }
             //法定代表人
             headView.oneHeadView.nameView.label2.text = model.firmInfo?.legalPerson?.legalName ?? ""
             //注册资本
@@ -64,6 +81,58 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             //收入
             headView.oneHeadView.fiveView.timeLabel.text = model.profitInfo?.lastYear ?? ""
             headView.oneHeadView.fiveView.label2.text = String(model.profitInfo?.lastAmount ?? 0)
+            
+            //主要股东
+            headView.threeHeadView.dataModel.accept(model)
+            
+            //常用服务
+            headView.sixHeadView.oneItems = [
+                .init(imageResource: "itemoneicon",
+                      path: "/business-situation/make-tender"),
+                
+                .init(imageResource: "itemtwoicon",
+                      path: "/litigation-risk/judicial-action"),
+                
+                .init(imageResource: "itemthreeicon",
+                      path: "/basic-information/property-clues"),
+                
+                .init(imageResource: "itemfouricon",
+                      path: ""),
+                
+                .init(imageResource: "itemfiveicon",
+                      path: "")
+            ]
+            //问道图谱
+            headView.sixHeadView.twoItems = [
+                .init(imageResource: "picone",
+                      path: "/enterprise-chart/enterprise-atlas"),
+                
+                .init(imageResource: "pictwo",
+                      path: "/enterprise-chart/equity-chart"),
+                
+                .init(imageResource: "picthree",
+                      path: "/enterprise-chart/relationship-graph"),
+                
+                .init(imageResource: "picfouric",
+                      path: "/enterprise-chart/actual-controller"),
+                
+                .init(imageResource: "picfiveicon",
+                      path: "/enterprise-chart/beneficiary-person"),
+                
+                .init(imageResource: "picsixicon",
+                      path: "/enterprise-chart/external-investment"),
+                
+                .init(imageResource: "picsevicon",
+                      path: "/enterprise-chart/structure-chart")
+            ]
+            
+            //股票信息
+            if let stockInfo = model.stockInfo, !stockInfo.isEmpty {
+                headView.stockView.dataModel.accept(model)
+                headView.stockView.isHidden = false
+            }else {
+                headView.stockView.isHidden = true
+            }
             
         }).disposed(by: disposeBag)
         

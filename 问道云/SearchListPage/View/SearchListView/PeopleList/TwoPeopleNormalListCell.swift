@@ -111,7 +111,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
             
             nameLabel.text = model.personName ?? ""
             
-            let count = model.companyCount ?? 0
+            let count = String(model.companyCount ?? 0)
             self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业")
             
             //关联公司
@@ -140,7 +140,7 @@ extension TwoPeopleNormalListCell {
         for model in data {
             let listView = CompanyListView()
             
-            let companyCountText = model.count ?? 0
+            let companyCountText = String(model.count ?? 0)
             
             let fullText = "\(model.province ?? "") \(companyCountText)"
             

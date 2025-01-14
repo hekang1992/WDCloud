@@ -200,10 +200,10 @@ class TwoRiskListCompanyCell: BaseViewCell {
             self.moneyView.label2.text = model.registerCapital ?? ""
             self.timeView.label2.text = model.incorporationTime ?? ""
             
-            let riskOne = model.riskNum1 ?? 0
-            let riskTwo = model.riskNum1 ?? 0
+            let riskOne = String(model.riskNum1 ?? 0)
+            let riskTwo = String(model.riskNum2 ?? 0)
             self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskOne, fullText: "共\(riskOne)条自身风险")
-            self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskTwo, fullText: "\(riskOne)条关联风险")
+            self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskTwo, fullText: "\(riskTwo)条关联风险")
             
             self.tagListView.removeAllTags()
             self.tagListView.addTag(model.entityStatus ?? "")

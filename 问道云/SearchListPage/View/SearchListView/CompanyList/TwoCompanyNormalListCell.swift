@@ -375,7 +375,7 @@ extension TwoCompanyNormalListCell {
             make.height.equalTo(numberOfLine * (buttonHeight + buttonSpacing))
         }
         self.lineView.snp.updateConstraints { make in
-            make.top.equalTo(tagListView.snp.bottom).offset(58)
+            make.top.equalTo(tagListView.snp.bottom).offset(60)
         }
         openButton.layoutButtonEdgeInsets(style: .right, space: 2)
     }

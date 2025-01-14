@@ -82,8 +82,7 @@ class TwoRiskListPeopleCollectionViewCell: UICollectionViewCell {
             
             namelabel.text = model.name ?? ""
             
-            let count = model.relevanceCount ?? 0
-            
+            let count = String(model.relevanceCount ?? 0)
             numlabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "TA有\(count)家企业")
             
         }).disposed(by: disposeBag)

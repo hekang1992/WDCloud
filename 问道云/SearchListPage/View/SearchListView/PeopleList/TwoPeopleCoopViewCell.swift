@@ -100,7 +100,7 @@ class TwoPeopleCoopViewCell: UICollectionViewCell {
             self.icon.kf.setImage(with: URL(string: ""), placeholder: UIImage.imageOfText(data.personName ?? "", size: (26, 26), bgColor: .random(), textColor: .white))
             self.nameLabel.text = data.personName ?? ""
             
-            let companyCountText = data.count ?? 0
+            let companyCountText = String(data.count ?? 0)
             let fullText = "合作\(companyCountText)次"
             numLabel.attributedText = GetRedStrConfig.getRedStr(from: companyCountText, fullText: fullText)
             companyLabel.text = data.entityName ?? ""

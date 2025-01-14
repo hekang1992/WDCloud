@@ -213,11 +213,13 @@ class shareholderListModel {
     var entityName: String?
     var personId: Int?
     var personName: String?
+    var name: String?
     init(json: JSON) {
         self.count = json["count"].intValue
         self.entityName = json["entityName"].stringValue
         self.personId = json["personId"].intValue
         self.personName = json["personName"].stringValue
+        self.name = json["name"].stringValue
     }
 }
 
@@ -509,7 +511,9 @@ class firmInfoModel {
     var legalPerson: legalPersonModel?
     var industry: [String]?
     var scale: String?
+    var listingStatus: String?
     init(json: JSON) {
+        self.listingStatus = json["listingStatus"].stringValue
         self.scale = json["scale"].stringValue
         self.legalPerson = legalPersonModel(json: json["legalPerson"])
         self.businessScope = json["businessScope"].stringValue
@@ -608,14 +612,14 @@ class valueModel {
     var olPublishTime: String?
     var listingTime: String?
     var riseFall: String?
-    var riseFallRatio: String = "0.00"
+    var riseFallRatio: String?
     var listingStatus: String?
     var updateDate: String?
     var totalMarketValue: String?
     var volumeOfBusiness: String?
     var circulatingMarketValue: String?
     var tradingVolume: String?
-    var yClosePrice: String = ""
+    var yClosePrice: String?
     var netRate: String?
     var earningsRatio: String?
     var openPriceToday: String?
@@ -705,13 +709,13 @@ class shareHoldersModel {
     var id: String?
     var name: String?
     var percent: String?
-    var relatedNum: String?
+    var relatedNum: Int?
     var type: String?//类型 2公司 1个人
     init(json: JSON) {
         self.id = json["id"].stringValue
         self.name = json["name"].stringValue
         self.percent = json["percent"].stringValue
-        self.relatedNum = json["relatedNum"].stringValue
+        self.relatedNum = json["relatedNum"].intValue
         self.type = json["type"].stringValue
     }
 }
@@ -724,7 +728,9 @@ class staffInfosModel {
     var name: String?
     var positionName: String?
     var relatedNum: Int?
+    var logo: String?
     init(json: JSON) {
+        self.logo = json["logo"].stringValue
         self.count = json["count"].intValue
         self.entityId = json["entityId"].stringValue
         self.id = json["id"].stringValue

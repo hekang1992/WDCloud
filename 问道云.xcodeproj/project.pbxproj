@@ -72,6 +72,9 @@
 		7352B22A2D353F2200B5391B /* CompanySixHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2292D353F2200B5391B /* CompanySixHeadView.swift */; };
 		7352B22C2D3544BF00B5391B /* CompanyStockInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B22B2D3544BF00B5391B /* CompanyStockInfoView.swift */; };
 		7352B22E2D3548DF00B5391B /* CompanyDerailFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B22D2D3548DF00B5391B /* CompanyDerailFooterView.swift */; };
+		7352B2342D363CAB00B5391B /* CompanyDetailGDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2332D363CAB00B5391B /* CompanyDetailGDCell.swift */; };
+		7352B2362D366BE400B5391B /* CompanyDetailCommonServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2352D366BE400B5391B /* CompanyDetailCommonServiceCell.swift */; };
+		7352B2382D36736400B5391B /* CompanyDescInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2372D36736400B5391B /* CompanyDescInfoView.swift */; };
 		736A40D92D223AEB0065FD9D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A40D82D223AEB0065FD9D /* StoreKit.framework */; };
 		736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */; };
 		736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97792D22A61E009CC0DF /* SKExtensions.swift */; };
@@ -265,6 +268,9 @@
 		7352B2292D353F2200B5391B /* CompanySixHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanySixHeadView.swift; sourceTree = "<group>"; };
 		7352B22B2D3544BF00B5391B /* CompanyStockInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyStockInfoView.swift; sourceTree = "<group>"; };
 		7352B22D2D3548DF00B5391B /* CompanyDerailFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDerailFooterView.swift; sourceTree = "<group>"; };
+		7352B2332D363CAB00B5391B /* CompanyDetailGDCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailGDCell.swift; sourceTree = "<group>"; };
+		7352B2352D366BE400B5391B /* CompanyDetailCommonServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailCommonServiceCell.swift; sourceTree = "<group>"; };
+		7352B2372D36736400B5391B /* CompanyDescInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDescInfoView.swift; sourceTree = "<group>"; };
 		736A40D82D223AEB0065FD9D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYFStoreReceiptVerifier.swift; sourceTree = "<group>"; };
 		736E97792D22A61E009CC0DF /* SKExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKExtensions.swift; sourceTree = "<group>"; };
@@ -735,6 +741,9 @@
 				7352B2292D353F2200B5391B /* CompanySixHeadView.swift */,
 				7352B22B2D3544BF00B5391B /* CompanyStockInfoView.swift */,
 				7352B22D2D3548DF00B5391B /* CompanyDerailFooterView.swift */,
+				7352B2332D363CAB00B5391B /* CompanyDetailGDCell.swift */,
+				7352B2352D366BE400B5391B /* CompanyDetailCommonServiceCell.swift */,
+				7352B2372D36736400B5391B /* CompanyDescInfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1157,12 +1166,14 @@
 				7325A7DC2CFF0DBE0043C196 /* PasswordLoginView.swift in Sources */,
 				73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */,
 				7352B2262D353C9300B5391B /* CompanyFourHeadView.swift in Sources */,
+				7352B2362D366BE400B5391B /* CompanyDetailCommonServiceCell.swift in Sources */,
 				73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */,
 				73E971792D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift in Sources */,
 				7325A7B82CFEECF00043C196 /* WDNavigationController.swift in Sources */,
 				73E971732D2FCD8500F12B15 /* TwoCompanyView.swift in Sources */,
 				73C6B1B62D3503D400CD3816 /* MyCollectionSpecialReusableView.swift in Sources */,
 				73F6046A2D1171280061D5D3 /* MyTicketView.swift in Sources */,
+				7352B2342D363CAB00B5391B /* CompanyDetailGDCell.swift in Sources */,
 				7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */,
 				7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */,
 				73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */,
@@ -1201,6 +1212,7 @@
 				73C6B1A72D34EC8900CD3816 /* CompanyDetailHeadView.swift in Sources */,
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
 				736E97852D22A7A0009CC0DF /* ApplePayConfig.swift in Sources */,
+				7352B2382D36736400B5391B /* CompanyDescInfoView.swift in Sources */,
 				73EABF982D3235FB0052F4AB /* TwoRiskListPeopleCollectionViewCell.swift in Sources */,
 				734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */,
 				73EABF942D321B6F0052F4AB /* TwoRiskListPeopleCell.swift in Sources */,
