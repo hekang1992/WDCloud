@@ -455,7 +455,7 @@
 				7325A7AA2CFEE6DF0043C196 /* DiligencePage */,
 				7325A7A92CFEE6C70043C196 /* CenterPage */,
 				73807D532D336AC700F8B90D /* SearchListPage */,
-				73807D4A2D33697000F8B90D /* DetailPage */,
+				73807D4A2D33697000F8B90D /* DetailInfoPage */,
 			);
 			path = "问道云";
 			sourceTree = "<group>";
@@ -653,13 +653,13 @@
 			path = MorePage;
 			sourceTree = "<group>";
 		};
-		73807D4A2D33697000F8B90D /* DetailPage */ = {
+		73807D4A2D33697000F8B90D /* DetailInfoPage */ = {
 			isa = PBXGroup;
 			children = (
 				73807D572D33806B00F8B90D /* View */,
 				73807D562D33806300F8B90D /* Controller */,
 			);
-			path = DetailPage;
+			path = DetailInfoPage;
 			sourceTree = "<group>";
 		};
 		73807D4B2D33699100F8B90D /* ComanyDetail */ = {

@@ -458,17 +458,29 @@ class serviceComboListModel {
     }
 }
 
-
 class pageDataModel {
     var firmInfo: firmInfoModel?
     var legalPerson: legalPersonModel?
     var riskInfo: riskInfoModel?
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
+    var labels: [labelsModel]?
     init(json: JSON) {
         self.searchStr = json["searchStr"].stringValue
         self.firmInfo = firmInfoModel(json: json["firmInfo"])
         self.legalPerson = legalPersonModel(json: json["legalPerson"])
         self.riskInfo = riskInfoModel(json: json["riskInfo"])
+        self.labels = json["labels"].arrayValue.map { labelsModel(json: $0) }
+    }
+}
+
+class labelsModel {
+    var name: String?
+    var type: Int?
+    var url: String?
+    init(json: JSON) {
+        self.name = json["name"].stringValue
+        self.type = json["type"].intValue
+        self.url = json["url"].stringValue
     }
 }
 

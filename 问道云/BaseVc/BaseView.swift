@@ -8,13 +8,16 @@
 import UIKit
 import RxSwift
 
+// 公司模型（模拟）
+struct CompanyModel {
+    var isOpenTag: Bool
+}
+
 class BaseView: UIView {
-    
     let disposeBag = DisposeBag()
 }
 
 class BaseViewCell: UITableViewCell {
-    
     let disposeBag = DisposeBag()
 }
 

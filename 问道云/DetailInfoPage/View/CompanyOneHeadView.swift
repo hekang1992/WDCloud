@@ -8,11 +8,6 @@
 import UIKit
 import RxRelay
 
-// 公司模型（模拟）
-struct CompanyModel {
-    var isOpenTag: Bool
-}
-
 class CompanyOneHeadView: BaseView {
 
     //是否点击了展开是收起
