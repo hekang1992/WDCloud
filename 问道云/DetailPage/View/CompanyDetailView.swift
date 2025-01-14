@@ -23,7 +23,9 @@ class CompanyDetailView: BaseView {
     var buttons: [UIButton] = []
     
     //是否点击了按钮
-    var isClickBtn: Bool = false
+    var isClickBtnGrand: Bool = false
+    //点击了哪一个按钮
+    var isClickBtnSelectIndex: Int = 0
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -34,7 +36,6 @@ class CompanyDetailView: BaseView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
-//        collectionView.bounces = false
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         //item
@@ -152,7 +153,7 @@ class CompanyDetailView: BaseView {
     //按钮点击方法
     @objc func buttonTapped(_ sender: UIButton) {
         // 恢复所有按钮的默认样式
-        isClickBtn = true
+        isClickBtnGrand = true
         for button in buttons {
             button.backgroundColor = .init(cssStr: "#C8C8C8")?.withAlphaComponent(0.2)
             button.setTitleColor(.init(cssStr: "#666666"), for: .normal)
@@ -162,7 +163,7 @@ class CompanyDetailView: BaseView {
         sender.setTitleColor(.white, for: .normal)
         // 可以根据 tag 获取点击的按钮索引
         let index = sender.tag
-        print("Button \(index) tapped")
+        self.isClickBtnSelectIndex = index
         scrollToSectionHeader(section: index - 9)
     }
     
@@ -235,7 +236,6 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
     //头部的title高度
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
-            let mo = self.headModel.value
             if let headModel = self.headModel.value, let stockModel = headModel.stockInfo?.first, let key = stockModel.key, !key.isEmpty {
                 return CGSize(width: collectionView.bounds.width, height: 906)
             }else {
@@ -246,30 +246,28 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
         }
     }
     
-//    // 用户拖动结束后调用（手指松开）
-//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        // 如果没有减速过程（即滚动立即停止）
-//        if !decelerate {
-//            handleScrollEnd()
-//        }
-//    }
-//    
-//    // 减速结束后调用（滚动停止）
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        handleScrollEnd()
-//    }
-    
     // 处理滚动结束后的逻辑
     private func handleScrollEnd() {
         let sectionIndex = getTopVisibleSection() ?? 0
-        for button in buttons {
-            button.backgroundColor = .init(cssStr: "#C8C8C8")?.withAlphaComponent(0.2)
-            button.setTitleColor(.init(cssStr: "#666666"), for: .normal)
-        }
-        if let button = self.scrollView.viewWithTag(sectionIndex + 9) as? UIButton {
+        if isClickBtnGrand == true {
+            for button in buttons {
+                button.backgroundColor = .init(cssStr: "#C8C8C8")?.withAlphaComponent(0.2)
+                button.setTitleColor(.init(cssStr: "#666666"), for: .normal)
+            }
+            let button = buttons[self.isClickBtnSelectIndex - 10]
             button.backgroundColor = .init(cssStr: "#547AFF")
             button.setTitleColor(.white, for: .normal)
+        }else {
+            for button in buttons {
+                button.backgroundColor = .init(cssStr: "#C8C8C8")?.withAlphaComponent(0.2)
+                button.setTitleColor(.init(cssStr: "#666666"), for: .normal)
+            }
+            if let button = self.scrollView.viewWithTag(sectionIndex + 9) as? UIButton {
+                button.backgroundColor = .init(cssStr: "#547AFF")
+                button.setTitleColor(.white, for: .normal)
+            }
         }
+        
     }
     
     // 滚动时调用，计算当前最上方的 Section
@@ -288,21 +286,27 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
                 self.scrollView.alpha = 0
             }
         }
-        if isClickBtn == false {
-            handleScrollEnd()
-        }
-        
+        handleScrollEnd()
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.isClickBtnGrand = false
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        self.isClickBtnGrand = false
     }
     
     func getTopVisibleSection() -> Int? {
         // 获取当前 collectionView 的可见区域
-        let visibleRect = CGRect(origin: self.collectionView.contentOffset, size: self.bounds.size)
+        let visibleRect = CGRect(origin: self.collectionView.contentOffset, size: self.collectionView.bounds.size)
         
         // 获取所有可见的 indexPath
         let visibleIndexPaths = self.collectionView.indexPathsForVisibleItems
         
         // 初始化一个变量来存储最顶部的 section
         var topSection: Int?
+        var minY: CGFloat = .greatestFiniteMagnitude
         
         // 遍历可见的 indexPath，找到最顶部的 section
         for indexPath in visibleIndexPaths {
@@ -310,13 +314,15 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
             if let attributes = self.collectionView.layoutAttributesForItem(at: indexPath) {
                 // 判断该 cell 是否在可见区域内
                 if visibleRect.intersects(attributes.frame) {
-                    // 如果当前没有 topSection，或者当前 cell 的 y 值更小（更靠上）
-                    if topSection == nil || attributes.frame.origin.y < self.collectionView.layoutAttributesForItem(at: IndexPath(item: 0, section: topSection!))!.frame.origin.y {
+                    // 如果当前 cell 的 y 值更小（更靠上）
+                    if attributes.frame.origin.y < minY {
+                        minY = attributes.frame.origin.y
                         topSection = indexPath.section
                     }
                 }
             }
         }
+        
         // 返回最顶部的 section
         return topSection
     }
