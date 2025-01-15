@@ -263,8 +263,8 @@ class CompanyOneHeadView: BaseView {
         }
         
         scrollView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.width.equalTo(SCREEN_WIDTH)
+            make.left.equalToSuperview().offset(5)
+            make.width.equalTo(SCREEN_WIDTH - 5)
             make.top.equalTo(grayView.snp.bottom).offset(11.5)
             make.height.equalTo(40)
         }

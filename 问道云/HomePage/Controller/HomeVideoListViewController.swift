@@ -89,7 +89,7 @@ class HomeVideoListViewController: WDBaseViewController {
     
     func getHomeVieoListInfo(from pageNum: Int) {
         let dict = ["pageNum": pageNum,
-                    "pageSize": 5,
+                    "pageSize": 10,
                     "pulishstate": 1,
                     "type": "1"] as [String : Any]
         let man = RequestManager()

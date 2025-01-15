@@ -87,6 +87,8 @@ class PopHistoryNameView: BaseView {
             cell.nameLabel.text = model.entityName ?? ""
             let startTime = model.startTime ?? ""
             let endTime = model.endTime ?? ""
+            cell.backgroundColor = .clear
+            cell.selectionStyle = .none
             cell.timeLabel.text = "(\(startTime)-\(endTime))"
         }.disposed(by: disposeBag)
         
@@ -146,6 +148,7 @@ class HistoryNameCell: BaseViewCell {
             make.left.equalToSuperview().offset(24)
             make.top.equalTo(nameLabel.snp.bottom).offset(2)
             make.height.equalTo(24)
+            make.bottom.equalToSuperview().offset(-5)
         }
     }
     

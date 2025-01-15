@@ -110,15 +110,19 @@ class WDHomeViewController: WDBaseViewController {
         //热搜3点击
         self.homeHeadView.hotsView.hotWordsBlock = { [weak self] model in
             let searchVc = SearchAllViewController()
-            let type = model.type ?? ""
-            if type == "1" {
-                searchVc.selectIndex = 0
-                searchVc.searchHeadView.searchTx.text = model.name ?? ""
-                self?.navigationController?.pushViewController(searchVc, animated: true)
+            if IS_LOGIN {
+                let type = model.type ?? ""
+                if type == "1" {
+                    searchVc.selectIndex = 0
+                    searchVc.searchHeadView.searchTx.text = model.name ?? ""
+                    self?.navigationController?.pushViewController(searchVc, animated: true)
+                }else {
+                    searchVc.selectIndex = 1
+                    searchVc.searchHeadView.searchTx.text = model.name ?? ""
+                    self?.navigationController?.pushViewController(searchVc, animated: true)
+                }
             }else {
-                searchVc.selectIndex = 1
-                searchVc.searchHeadView.searchTx.text = model.name ?? ""
-                self?.navigationController?.pushViewController(searchVc, animated: true)
+                self?.popLogin()
             }
         }
         
