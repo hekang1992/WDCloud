@@ -18,6 +18,15 @@ class CompanyDetailHeadView: BaseView {
     //发票抬头弹窗
     var invoiceBlock: (() -> Void)?
     
+    
+    //股东点击
+    var shareHoldersBlock: ((shareHoldersModel) -> Void)?
+    
+    //人员点击
+    var staffInfosBlock: ((staffInfosModel) -> Void)?
+    
+    
+    
     lazy var oneHeadView: CompanyOneHeadView = {
         let oneHeadView = CompanyOneHeadView()
         oneHeadView.moreBtnBlock = { [weak self] in

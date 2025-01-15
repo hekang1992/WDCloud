@@ -14,6 +14,12 @@ class CompanyThreeHeadView: BaseView {
     
     var shareHolders = BehaviorRelay<[shareHoldersModel]>(value: [])
     
+    //股东点击
+    var shareHoldersBlock: ((shareHoldersModel) -> Void)?
+    
+    //人员点击
+    var staffInfosBlock: ((staffInfosModel) -> Void)?
+    
     //股东
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -193,6 +199,20 @@ extension CompanyThreeHeadView: UICollectionViewDelegateFlowLayout, UICollection
             return CGSize(width: 94, height: 56.5)
         }else {
             return CGSize(width: 94, height: 69.5)
+        }
+    }
+    
+    //点击cell
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = self.dataModel.value
+        if collectionView == self.pcollectionView {
+            if let staffInfosModel = model?.staffInfos?[indexPath.row] {
+                self.staffInfosBlock?(staffInfosModel)
+            }
+        }else {
+            if let shareHolders = model?.shareHolders?[indexPath.row] {
+                self.shareHoldersBlock?(shareHolders)
+            }
         }
     }
     

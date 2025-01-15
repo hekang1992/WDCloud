@@ -14,6 +14,7 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
     
     let disposeBag = DisposeBag()
     
+    //头部数据模型
     var model = BehaviorRelay<DataModel?>(value: nil)
     
     static let identifier = "MyCollectionSpecialReusableView"
@@ -161,6 +162,20 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             
             //主要股东
             headView.threeHeadView.dataModel.accept(model)
+            headView.threeHeadView.shareHoldersBlock = { model in
+                let type = model.type ?? ""
+                let vc = ViewControllerUtils.findViewController(from: self)
+                if type == "2" {
+                    let companyVc = CompanyBothViewController()
+                    companyVc.enityId.accept(model.id ?? "")
+                    vc?.navigationController?.pushViewController(companyVc, animated: true)
+                }else {
+                    ToastViewConfig.showToast(message: "个人详情暂未开发!")
+                }
+            }
+            headView.threeHeadView.staffInfosBlock = { model in
+                ToastViewConfig.showToast(message: model.name ?? "")
+            }
             
             //常用服务
             headView.sixHeadView.oneItems = [

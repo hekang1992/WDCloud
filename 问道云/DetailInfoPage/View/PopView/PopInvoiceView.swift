@@ -251,12 +251,12 @@ class PopInvoiceView: BaseView {
         }
         cancelBtn.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(22)
-            make.top.equalTo(desclabel.snp.bottom).offset(8)
+            make.top.equalTo(desclabel.snp.bottom).offset(10)
             make.size.equalTo(CGSize(width: 130, height: 37))
         }
         saveBtn.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-22)
-            make.top.equalTo(desclabel.snp.bottom).offset(8)
+            make.top.equalTo(desclabel.snp.bottom).offset(10)
             make.size.equalTo(CGSize(width: 130, height: 37))
         }
         
