@@ -31,7 +31,7 @@ class PeopleDetailOneViewController: WDBaseViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
         //item
         collectionView.register(CompanyCollectionCell.self, forCellWithReuseIdentifier: "CompanyCollectionCell")
@@ -44,10 +44,9 @@ class PeopleDetailOneViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        collectionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 38)
         view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        
         //获取个人详情item菜单
         getPeopleDetailItemInfo()
     }
@@ -91,7 +90,9 @@ extension PeopleDetailOneViewController: UICollectionViewDelegateFlowLayout, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompanyCollectionCell", for: indexPath) as! CompanyCollectionCell
         let modelArray = self.model.value?.items?.first?.children ?? []
-        let newArray = Array(modelArray.dropLast())
+        let newArray = Array(modelArray.dropLast())[indexPath.section]
+        let model = newArray.children?[indexPath.row]
+        cell.model.accept(model)
         
         return cell
     }
@@ -112,7 +113,7 @@ extension PeopleDetailOneViewController: UICollectionViewDelegateFlowLayout, UIC
     
     //头部的title高度
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 41)
+        return CGSize(width: SCREEN_WIDTH, height: 41)
     }
     
 }
