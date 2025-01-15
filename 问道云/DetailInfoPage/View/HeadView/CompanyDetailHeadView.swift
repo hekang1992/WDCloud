@@ -11,11 +11,26 @@ class CompanyDetailHeadView: BaseView {
 
     //展开简介按钮
     var moreBtnBlock: (() -> Void)?
+    //点击了曾用名
+    var historyNameBtnBlock: (() -> Void)?
+    //复制企业统一码
+    var companyCodeBlock: (() -> Void)?
+    //发票抬头弹窗
+    var invoiceBlock: (() -> Void)?
     
     lazy var oneHeadView: CompanyOneHeadView = {
         let oneHeadView = CompanyOneHeadView()
         oneHeadView.moreBtnBlock = { [weak self] in
             self?.moreBtnBlock?()
+        }
+        oneHeadView.historyNameBtnBlock = { [weak self] in
+            self?.historyNameBtnBlock?()
+        }
+        oneHeadView.companyCodeBlock = { [weak self] in
+            self?.companyCodeBlock?()
+        }
+        oneHeadView.invoiceBlock = { [weak self] in
+            self?.invoiceBlock?()
         }
         return oneHeadView
     }()

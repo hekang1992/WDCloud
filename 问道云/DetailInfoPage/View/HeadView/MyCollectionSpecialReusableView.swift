@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import TYAlertController
 
 class MyCollectionSpecialReusableView: UICollectionReusableView {
     
@@ -26,6 +27,18 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
     lazy var infoView: CompanyDescInfoView = {
         let infoView = CompanyDescInfoView()
         return infoView
+    }()
+    
+    //曾用名
+    lazy var popNameView: PopHistoryNameView = {
+        let popNameView = PopHistoryNameView(frame: self.bounds)
+        return popNameView
+    }()
+    
+    //发票抬头
+    lazy var popInvoiceView: PopInvoiceView = {
+        let popInvoiceView = PopInvoiceView(frame: self.bounds)
+        return popInvoiceView
     }()
     
     override init(frame: CGRect) {
@@ -73,6 +86,57 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
                         self.headView.oneHeadView.moreButton.alpha = 1
                     }
             }).disposed(by: disposeBag)
+            
+            //曾用名
+            headView.historyNameBtnBlock = { [weak self] in
+                guard let self = self else { return }
+                let alertVc = TYAlertController(alert: popNameView, preferredStyle: .alert)
+                if let modelArray = model.namesUsedBefore {
+                    popNameView.modelArray.accept(modelArray)
+                }
+                //获取控制器
+                let vc = ViewControllerUtils.findViewController(from: self)
+                vc?.present(alertVc!, animated: true)
+                
+                popNameView.closeBtn.rx.tap.subscribe(onNext: {
+                    vc?.dismiss(animated: true)
+                }).disposed(by: disposeBag)
+                
+                popNameView.block = { model in
+                    vc?.dismiss(animated: true, completion: {
+                        let companyVc = CompanyBothViewController()
+                        companyVc.enityId.accept(model.entityId ?? "")
+                        vc?.navigationController?.pushViewController(companyVc, animated: true)
+                    })
+                }
+            }
+            
+            //复制
+            headView.oneHeadView.companyCodeBlock = {
+                let pasteboard = UIPasteboard.general
+                pasteboard.string = model.firmInfo?.usCreditCode ?? ""
+                ToastViewConfig.showToast(message: "复制成功")
+            }
+            
+            //发票弹窗
+            headView.oneHeadView.invoiceBlock = { [weak self] in
+                guard let self = self else { return }
+                let alertVc = TYAlertController(alert: popInvoiceView, preferredStyle: .alert)
+                popInvoiceView.model.accept(model)
+                //获取控制器
+                let vc = ViewControllerUtils.findViewController(from: self)
+                vc?.present(alertVc!, animated: true)
+                popInvoiceView.cancelBtn.rx.tap.subscribe(onNext: {
+                    vc?.dismiss(animated: true)
+                }).disposed(by: disposeBag)
+                //保存fap
+                popInvoiceView.saveBtn.rx.tap.subscribe(onNext: {
+                    if let vc = vc {
+                        self.addInfo(from: vc )
+                    }
+                }).disposed(by: disposeBag)
+            }
+            
             //法定代表人
             headView.oneHeadView.nameView.label2.text = model.firmInfo?.legalPerson?.legalName ?? ""
             //注册资本
@@ -155,5 +219,45 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+}
+
+
+extension MyCollectionSpecialReusableView {
+    
+    //添加发票抬头
+    func addInfo(from vc: UIViewController) {
+        let companyname = popInvoiceView.namelabel.text ?? ""
+        let companynumber = popInvoiceView.label1.text ?? ""
+        let address = popInvoiceView.label2.text ?? ""
+        let contactnumber = popInvoiceView.label3.text ?? ""
+        let bankname = popInvoiceView.label4.text ?? ""
+        let bankfullname = popInvoiceView.label5.text ?? ""
+        let defaultstate = "0"
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let dict = ["companyname": companyname,
+                    "companynumber": companynumber,
+                    "address": address,
+                    "contactnumber": contactnumber,
+                    "bankname": bankname,
+                    "bankfullname": bankfullname,
+                    "defaultstate": defaultstate,
+                    "contact": customernumber] as [String : Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict, pageUrl: "/operation/invoiceriseit/add", method: .post) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    vc.dismiss(animated: true)
+                    ToastViewConfig.showToast(message: "添加成功!")
+                }else {
+                    ToastViewConfig.showToast(message: success.msg ?? "")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
     
 }

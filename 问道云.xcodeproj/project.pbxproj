@@ -121,6 +121,8 @@
 		73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */; };
 		73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */; };
 		73B3329A2D30CF5100934773 /* CompanyLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332992D30CF5100934773 /* CompanyLocationViewController.swift */; };
+		73B3623D2D374222003BD911 /* PopHistoryNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3623C2D374222003BD911 /* PopHistoryNameView.swift */; };
+		73B3623F2D375189003BD911 /* PopInvoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3623E2D375189003BD911 /* PopInvoiceView.swift */; };
 		73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA12D1E973200D93691 /* MembershipListViewController.swift */; };
 		73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA32D1EA73100D93691 /* MembershipListView.swift */; };
 		73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */; };
@@ -317,6 +319,8 @@
 		73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAuthorityViewController.swift; sourceTree = "<group>"; };
 		73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyNormalListCell.swift; sourceTree = "<group>"; };
 		73B332992D30CF5100934773 /* CompanyLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLocationViewController.swift; sourceTree = "<group>"; };
+		73B3623C2D374222003BD911 /* PopHistoryNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopHistoryNameView.swift; sourceTree = "<group>"; };
+		73B3623E2D375189003BD911 /* PopInvoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopInvoiceView.swift; sourceTree = "<group>"; };
 		73BDABA12D1E973200D93691 /* MembershipListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListViewController.swift; sourceTree = "<group>"; };
 		73BDABA32D1EA73100D93691 /* MembershipListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListView.swift; sourceTree = "<group>"; };
 		73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHotWordsCell.swift; sourceTree = "<group>"; };
@@ -728,22 +732,8 @@
 		73807D572D33806B00F8B90D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				73807D5A2D3396A100F8B90D /* CompanyDetailView.swift */,
-				73807D582D33808400F8B90D /* CompanyCollectionCell.swift */,
-				73807D5E2D33B7D100F8B90D /* CompanyActivityViewCell.swift */,
-				73C6B1B52D3503D400CD3816 /* MyCollectionSpecialReusableView.swift */,
-				73C6B1A62D34EC8900CD3816 /* CompanyDetailHeadView.swift */,
-				73C6B1B32D34FAB700CD3816 /* CompanyOneHeadView.swift */,
-				7352B2212D35321C00B5391B /* CompanyTwoHeadView.swift */,
-				7352B2232D353AB700B5391B /* CompanyThreeHeadView.swift */,
-				7352B2252D353C9300B5391B /* CompanyFourHeadView.swift */,
-				7352B2272D353EBE00B5391B /* CompanyFiveHeadView.swift */,
-				7352B2292D353F2200B5391B /* CompanySixHeadView.swift */,
-				7352B22B2D3544BF00B5391B /* CompanyStockInfoView.swift */,
-				7352B22D2D3548DF00B5391B /* CompanyDerailFooterView.swift */,
-				7352B2332D363CAB00B5391B /* CompanyDetailGDCell.swift */,
-				7352B2352D366BE400B5391B /* CompanyDetailCommonServiceCell.swift */,
-				7352B2372D36736400B5391B /* CompanyDescInfoView.swift */,
+				73B3623B2D374209003BD911 /* PopView */,
+				73B3623A2D3741F6003BD911 /* HeadView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -780,6 +770,38 @@
 				73A21DED2D0C32A600FC4C49 /* DiligenceView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		73B3623A2D3741F6003BD911 /* HeadView */ = {
+			isa = PBXGroup;
+			children = (
+				73807D5A2D3396A100F8B90D /* CompanyDetailView.swift */,
+				73807D582D33808400F8B90D /* CompanyCollectionCell.swift */,
+				73807D5E2D33B7D100F8B90D /* CompanyActivityViewCell.swift */,
+				73C6B1B52D3503D400CD3816 /* MyCollectionSpecialReusableView.swift */,
+				73C6B1A62D34EC8900CD3816 /* CompanyDetailHeadView.swift */,
+				73C6B1B32D34FAB700CD3816 /* CompanyOneHeadView.swift */,
+				7352B2212D35321C00B5391B /* CompanyTwoHeadView.swift */,
+				7352B2232D353AB700B5391B /* CompanyThreeHeadView.swift */,
+				7352B2252D353C9300B5391B /* CompanyFourHeadView.swift */,
+				7352B2272D353EBE00B5391B /* CompanyFiveHeadView.swift */,
+				7352B2292D353F2200B5391B /* CompanySixHeadView.swift */,
+				7352B22B2D3544BF00B5391B /* CompanyStockInfoView.swift */,
+				7352B22D2D3548DF00B5391B /* CompanyDerailFooterView.swift */,
+				7352B2332D363CAB00B5391B /* CompanyDetailGDCell.swift */,
+				7352B2352D366BE400B5391B /* CompanyDetailCommonServiceCell.swift */,
+				7352B2372D36736400B5391B /* CompanyDescInfoView.swift */,
+			);
+			path = HeadView;
+			sourceTree = "<group>";
+		};
+		73B3623B2D374209003BD911 /* PopView */ = {
+			isa = PBXGroup;
+			children = (
+				73B3623C2D374222003BD911 /* PopHistoryNameView.swift */,
+				73B3623E2D375189003BD911 /* PopInvoiceView.swift */,
+			);
+			path = PopView;
 			sourceTree = "<group>";
 		};
 		73C36A6E2D2D04D800D6DC46 /* HomeView */ = {
@@ -1122,6 +1144,7 @@
 				73807D502D3369D100F8B90D /* CompanyDetailViewController.swift in Sources */,
 				730487FF2D2A5CBE0024265C /* HomeVideoListViewController.swift in Sources */,
 				7374162F2D0EB9E400E6CD23 /* HistoryView.swift in Sources */,
+				73B3623D2D374222003BD911 /* PopHistoryNameView.swift in Sources */,
 				73A21DEA2D0C2F2B00FC4C49 /* RiskView.swift in Sources */,
 				7335F6EA2D0ADA050074985F /* MyDownloadSearchView.swift in Sources */,
 				73A21DEE2D0C32A600FC4C49 /* DiligenceView.swift in Sources */,
@@ -1196,6 +1219,7 @@
 				7330CB822D23E65900778D54 /* ContactManager.swift in Sources */,
 				73B3329A2D30CF5100934773 /* CompanyLocationViewController.swift in Sources */,
 				73C36A752D2D08DA00D6DC46 /* SearchRiskViewController.swift in Sources */,
+				73B3623F2D375189003BD911 /* PopInvoiceView.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
 				73A21DF02D0C39BF00FC4C49 /* DiligenceListViewController.swift in Sources */,
 				73C7524C2D1D555400C47187 /* FocusCompanyPopGroupView.swift in Sources */,

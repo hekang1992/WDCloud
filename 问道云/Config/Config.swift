@@ -896,3 +896,34 @@ class GetRedStrConfig: NSObject {
     }
     
 }
+
+class ViewControllerUtils {
+    /// 通过当前视图获取所在的控制器
+    static func findViewController(from view: UIView) -> UIViewController? {
+        var responder: UIResponder? = view
+        while let nextResponder = responder?.next {
+            if let viewController = nextResponder as? UIViewController {
+                return viewController
+            }
+            responder = nextResponder
+        }
+        return nil
+    }
+
+    /// 通过当前视图获取导航控制器
+    static func findNavigationController(from view: UIView) -> UINavigationController? {
+        guard let viewController = findViewController(from: view) else {
+            return nil
+        }
+        return viewController.navigationController
+    }
+
+    /// 通过当前视图 Push 到新的控制器
+    static func pushViewController(from view: UIView, to targetViewController: UIViewController, animated: Bool = true) {
+        guard let navigationController = findNavigationController(from: view) else {
+            print("Current view is not embedded in a navigation controller")
+            return
+        }
+        navigationController.pushViewController(targetViewController, animated: animated)
+    }
+}

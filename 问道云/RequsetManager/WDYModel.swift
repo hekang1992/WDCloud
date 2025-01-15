@@ -77,7 +77,13 @@ class DataModel {
     var shareHolders: [shareHoldersModel]?
     //主要人员
     var staffInfos: [staffInfosModel]?
+    //曾用名
+    var namesUsedBefore: [namesUsedBeforeModel]?
+    //税号
+    var taxInfo: taxInfoModel?
     init(json: JSON) {
+        self.taxInfo = taxInfoModel(json: json["taxInfo"])
+        self.namesUsedBefore = json["namesUsedBefore"].arrayValue.map { namesUsedBeforeModel(json: $0) }
         self.staffInfos = json["staffInfos"].arrayValue.map { staffInfosModel(json: $0) }
         self.shareHolders = json["shareHolders"].arrayValue.map { shareHoldersModel(json: $0) }
         self.profitInfo = profitInfoModel(json: json["profitInfo"])
@@ -514,7 +520,9 @@ class firmInfoModel {
     var industry: [String]?
     var scale: String?
     var listingStatus: String?
+    var entityAddress: String?
     init(json: JSON) {
+        self.entityAddress = json["entityAddress"].stringValue
         self.listingStatus = json["listingStatus"].stringValue
         self.scale = json["scale"].stringValue
         self.legalPerson = legalPersonModel(json: json["legalPerson"])
@@ -739,5 +747,33 @@ class staffInfosModel {
         self.name = json["name"].stringValue
         self.positionName = json["positionName"].stringValue
         self.relatedNum = json["relatedNum"].intValue
+    }
+}
+
+//曾用名
+class namesUsedBeforeModel {
+    var endTime: String?
+    var entityId: String?
+    var entityName: String?
+    var startTime: String?
+    init(json: JSON) {
+        self.startTime = json["startTime"].stringValue
+        self.endTime = json["endTime"].stringValue
+        self.entityId = json["entityId"].stringValue
+        self.entityName = json["entityName"].stringValue
+    }
+}
+
+//税号
+class taxInfoModel {
+    var entityId: String?
+    var phone: String?
+    var registerAddress: String?
+    var taxpayerId: String?
+    init(json: JSON) {
+        self.phone = json["phone"].stringValue
+        self.registerAddress = json["registerAddress"].stringValue
+        self.entityId = json["entityId"].stringValue
+        self.taxpayerId = json["taxpayerId"].stringValue
     }
 }

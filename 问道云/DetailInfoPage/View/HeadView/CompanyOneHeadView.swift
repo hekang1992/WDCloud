@@ -15,6 +15,12 @@ class CompanyOneHeadView: BaseView {
     
     //展开简介按钮
     var moreBtnBlock: (() -> Void)?
+    //点击了曾用名
+    var historyNameBtnBlock: (() -> Void)?
+    //复制企业统一码
+    var companyCodeBlock: (() -> Void)?
+    //发票抬头弹窗
+    var invoiceBlock: (() -> Void)?
     
     lazy var lineView: UIView = {
         let lineView = UIView()
@@ -46,6 +52,7 @@ class CompanyOneHeadView: BaseView {
         numlabel.textColor = UIColor.init(cssStr: "#666666")
         numlabel.textAlignment = .left
         numlabel.font = .regularFontOfSize(size: 12)
+        numlabel.isUserInteractionEnabled = true
         return numlabel
     }()
     
@@ -307,6 +314,21 @@ class CompanyOneHeadView: BaseView {
         moreButton.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.moreBtnBlock?()
+        }).disposed(by: disposeBag)
+        //点击了曾用名
+        historyNamesButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.historyNameBtnBlock?()
+        }).disposed(by: disposeBag)
+        //企业码
+        numlabel.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            self.companyCodeBlock?()
+        }).disposed(by: disposeBag)
+        //发票抬头
+        invoiceTitleButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.invoiceBlock?()
         }).disposed(by: disposeBag)
     }
     
