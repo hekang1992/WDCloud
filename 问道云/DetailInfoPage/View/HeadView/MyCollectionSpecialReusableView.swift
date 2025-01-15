@@ -30,17 +30,8 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
         return infoView
     }()
     
-    //曾用名
-    lazy var popNameView: PopHistoryNameView = {
-        let popNameView = PopHistoryNameView(frame: self.bounds)
-        return popNameView
-    }()
-    
-    //发票抬头
-    lazy var popInvoiceView: PopInvoiceView = {
-        let popInvoiceView = PopInvoiceView(frame: self.bounds)
-        return popInvoiceView
-    }()
+    //发票
+    var popInvoiceView: PopInvoiceView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,6 +43,7 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             //icon
+            headView.oneHeadView.model.accept(model)
             headView.oneHeadView.iconImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(model.firmInfo?.entityName ?? "", size: (40, 40)))
             //名字
             headView.oneHeadView.namelabel.text = model.firmInfo?.entityName ?? ""
@@ -91,6 +83,7 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             //曾用名
             headView.historyNameBtnBlock = { [weak self] in
                 guard let self = self else { return }
+                let popNameView = PopHistoryNameView(frame: self.bounds)
                 let alertVc = TYAlertController(alert: popNameView, preferredStyle: .alert)
                 if let modelArray = model.namesUsedBefore {
                     popNameView.modelArray.accept(modelArray)
@@ -122,16 +115,17 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             //发票弹窗
             headView.oneHeadView.invoiceBlock = { [weak self] in
                 guard let self = self else { return }
+                self.popInvoiceView = PopInvoiceView(frame: self.bounds)
                 let alertVc = TYAlertController(alert: popInvoiceView, preferredStyle: .alert)
-                popInvoiceView.model.accept(model)
+                popInvoiceView?.model.accept(model)
                 //获取控制器
                 let vc = ViewControllerUtils.findViewController(from: self)
                 vc?.present(alertVc!, animated: true)
-                popInvoiceView.cancelBtn.rx.tap.subscribe(onNext: {
+                popInvoiceView?.cancelBtn.rx.tap.subscribe(onNext: {
                     vc?.dismiss(animated: true)
                 }).disposed(by: disposeBag)
                 //保存fap
-                popInvoiceView.saveBtn.rx.tap.subscribe(onNext: {
+                popInvoiceView?.saveBtn.rx.tap.subscribe(onNext: {
                     if let vc = vc {
                         self.addInfo(from: vc )
                     }
@@ -159,6 +153,9 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             //收入
             headView.oneHeadView.fiveView.timeLabel.text = model.profitInfo?.lastYear ?? ""
             headView.oneHeadView.fiveView.label2.text = String(model.profitInfo?.lastAmount ?? 0)
+            //总资产
+            headView.oneHeadView.sixView.timeLabel.text = model.assetInfo?.lastYear ?? ""
+            headView.oneHeadView.sixView.label2.text = String(model.assetInfo?.lastAmount ?? 0)
             
             //主要股东
             headView.threeHeadView.dataModel.accept(model)
@@ -242,12 +239,12 @@ extension MyCollectionSpecialReusableView {
     
     //添加发票抬头
     func addInfo(from vc: UIViewController) {
-        let companyname = popInvoiceView.namelabel.text ?? ""
-        let companynumber = popInvoiceView.label1.text ?? ""
-        let address = popInvoiceView.label2.text ?? ""
-        let contactnumber = popInvoiceView.label3.text ?? ""
-        let bankname = popInvoiceView.label4.text ?? ""
-        let bankfullname = popInvoiceView.label5.text ?? ""
+        let companyname = popInvoiceView?.namelabel.text ?? ""
+        let companynumber = popInvoiceView?.label1.text ?? ""
+        let address = popInvoiceView?.label2.text ?? ""
+        let contactnumber = popInvoiceView?.label3.text ?? ""
+        let bankname = popInvoiceView?.label4.text ?? ""
+        let bankfullname = popInvoiceView?.label5.text ?? ""
         let defaultstate = "0"
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["companyname": companyname,

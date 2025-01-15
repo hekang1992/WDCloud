@@ -715,7 +715,7 @@ class GetPhoneNumberManager {
 }
 
 class PaddedLabel: UILabel {
-    var padding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
+    var padding = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
     
     override func drawText(in rect: CGRect) {
         let paddedRect = rect.inset(by: padding)

@@ -368,7 +368,8 @@ class CompanyStockInfoView: BaseView {
                 
                 let riseFall = Double(valueModel.riseFall ?? "") ?? 0.0
                 
-                let jgPrice = String(yClosePrice + riseFall)
+                let jgPrice = String(format: "%.2f", yClosePrice + riseFall)
+                
                 if riseFall > 0 {
                     self.ctImageView.isHidden = false
                     self.ctImageView.image = UIImage(named: "shangshsenicon")

@@ -17,6 +17,8 @@ class TwoCompanyNormalListCell: BaseViewCell {
     var websiteBlock: ((pageDataModel) -> Void)?
     //电话回调
     var phoneBlock: ((pageDataModel) -> Void)?
+    //人物点击
+    var peopleBlock: ((pageDataModel) -> Void)?
 
     var model = BehaviorRelay<pageDataModel?>(value: nil)
     
@@ -232,6 +234,15 @@ class TwoCompanyNormalListCell: BaseViewCell {
             .subscribe(onNext: { [weak self] _ in
             if let self = self, let model = self.model.value {
                 self.phoneBlock?(model)
+            }
+        }).disposed(by: disposeBag)
+        
+        nameView.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+            if let self = self, let model = self.model.value {
+                self.peopleBlock?(model)
             }
         }).disposed(by: disposeBag)
         

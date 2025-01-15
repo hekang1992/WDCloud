@@ -81,7 +81,10 @@ class DataModel {
     var namesUsedBefore: [namesUsedBeforeModel]?
     //税号
     var taxInfo: taxInfoModel?
+    //总资产
+    var assetInfo: assetInfoModel?
     init(json: JSON) {
+        self.assetInfo = assetInfoModel(json: json["assetInfo"])
         self.taxInfo = taxInfoModel(json: json["taxInfo"])
         self.namesUsedBefore = json["namesUsedBefore"].arrayValue.map { namesUsedBeforeModel(json: $0) }
         self.staffInfos = json["staffInfos"].arrayValue.map { staffInfosModel(json: $0) }
@@ -775,5 +778,17 @@ class taxInfoModel {
         self.registerAddress = json["registerAddress"].stringValue
         self.entityId = json["entityId"].stringValue
         self.taxpayerId = json["taxpayerId"].stringValue
+    }
+}
+
+//总资产
+class assetInfoModel {
+    var lastAmount: Double?
+    var lastYear: String?
+    var annualReports: [annualReportsModel]?
+    init(json: JSON) {
+        self.lastAmount = json["lastAmount"].doubleValue
+        self.lastYear = json["lastYear"].stringValue
+        self.annualReports = json["annualReports"].arrayValue.map { annualReportsModel(json: $0) }
     }
 }

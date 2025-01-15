@@ -7,8 +7,11 @@
 
 import UIKit
 import RxRelay
+import TYAlertController
 
 class CompanyOneHeadView: BaseView {
+    
+    var model = BehaviorRelay<DataModel?>(value: nil)
 
     //是否点击了展开是收起
     var companyModel = CompanyModel(isOpenTag: false)
@@ -124,6 +127,7 @@ class CompanyOneHeadView: BaseView {
         oneView.label1.text = "行业"
         oneView.label2.textColor = .init(cssStr: "#3F96FF")
         oneView.lineView.isHidden = false
+        oneView.isUserInteractionEnabled = true
         return oneView
     }()
     
@@ -132,6 +136,7 @@ class CompanyOneHeadView: BaseView {
         twoView.label1.text = "规模"
         twoView.label2.textColor = .init(cssStr: "#333333")
         twoView.lineView.isHidden = false
+        twoView.isUserInteractionEnabled = true
         return twoView
     }()
     
@@ -140,6 +145,7 @@ class CompanyOneHeadView: BaseView {
         threeView.label1.text = "员工"
         threeView.label2.textColor = .init(cssStr: "#333333")
         threeView.lineView.isHidden = false
+        threeView.isUserInteractionEnabled = true
         return threeView
     }()
     
@@ -148,6 +154,7 @@ class CompanyOneHeadView: BaseView {
         fourView.label1.text = "营业收入"
         fourView.label2.textColor = .init(cssStr: "#333333")
         fourView.lineView.isHidden = false
+        fourView.isUserInteractionEnabled = true
         return fourView
     }()
     
@@ -155,8 +162,18 @@ class CompanyOneHeadView: BaseView {
         let fiveView = BiaoQianView(frame: .zero, enmu: .show)
         fiveView.label1.text = "利润总额"
         fiveView.label2.textColor = .init(cssStr: "#333333")
-        fiveView.lineView.isHidden = true
+        fiveView.lineView.isHidden = false
+        fiveView.isUserInteractionEnabled = true
         return fiveView
+    }()
+    
+    lazy var sixView: BiaoQianView = {
+        let sixView = BiaoQianView(frame: .zero, enmu: .show)
+        sixView.label1.text = "总资产"
+        sixView.label2.textColor = .init(cssStr: "#333333")
+        sixView.lineView.isHidden = true
+        sixView.isUserInteractionEnabled = true
+        return sixView
     }()
     
     lazy var tlineView: UIView = {
@@ -190,6 +207,7 @@ class CompanyOneHeadView: BaseView {
         scrollView.addSubview(threeView)
         scrollView.addSubview(fourView)
         scrollView.addSubview(fiveView)
+        scrollView.addSubview(sixView)
         addSubview(tlineView)
         
         lineView.snp.makeConstraints { make in
@@ -296,8 +314,14 @@ class CompanyOneHeadView: BaseView {
             make.left.equalTo(fourView.snp.right)
             make.top.equalToSuperview()
             make.height.equalTo(40)
-            make.width.equalTo(80)
-            make.right.equalToSuperview().offset(-30)
+            make.width.equalTo(110)
+        }
+        sixView.snp.makeConstraints { make in
+            make.left.equalTo(fiveView.snp.right)
+            make.top.equalToSuperview()
+            make.height.equalTo(40)
+            make.width.equalTo(110)
+            make.right.equalToSuperview().offset(-20)
         }
         tlineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
@@ -330,6 +354,91 @@ class CompanyOneHeadView: BaseView {
             guard let self = self else { return }
             self.invoiceBlock?()
         }).disposed(by: disposeBag)
+        
+        oneView.rx.tapGesture().when(.recognized).subscribe(onNext: { [self]_ in
+            ToastViewConfig.showToast(message: model.value?.firmInfo?.industry?.first ?? "")
+        }).disposed(by: self.disposeBag)
+        
+        //员工
+        threeView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            let employeeView = PopEmployeeNumView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+            employeeView.ctImageView.image = UIImage(named: "员工人数")
+            let alertVc = TYAlertController(alert: employeeView, preferredStyle: .alert)
+            
+            if let model = model.value {
+                employeeView.model.accept(model)
+            }
+            
+            let vc = ViewControllerUtils.findViewController(from: self)
+            vc?.present(alertVc!, animated: true)
+            
+            employeeView.cancelBtn.rx.tap.subscribe(onNext: {
+                vc?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+            
+        }).disposed(by: disposeBag)
+        
+        //收入
+        fourView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            let employeeView = PopRateMoneyView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), type: "0")
+            employeeView.ctImageView.image = UIImage(named: "营业收入")
+            let alertVc = TYAlertController(alert: employeeView, preferredStyle: .alert)
+            
+            if let model = model.value {
+                employeeView.model.accept(model)
+            }
+            
+            let vc = ViewControllerUtils.findViewController(from: self)
+            vc?.present(alertVc!, animated: true)
+            
+            employeeView.cancelBtn.rx.tap.subscribe(onNext: {
+                vc?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+            
+        }).disposed(by: disposeBag)
+        
+        //利润
+        fiveView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            let employeeView = PopRateMoneyView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), type: "1")
+            employeeView.ctImageView.image = UIImage(named: "利润总额")
+            let alertVc = TYAlertController(alert: employeeView, preferredStyle: .alert)
+            
+            if let model = model.value {
+                employeeView.model.accept(model)
+            }
+            
+            let vc = ViewControllerUtils.findViewController(from: self)
+            vc?.present(alertVc!, animated: true)
+            
+            employeeView.cancelBtn.rx.tap.subscribe(onNext: {
+                vc?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+            
+        }).disposed(by: disposeBag)
+        
+        //总资产
+        sixView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            let employeeView = PopRateMoneyView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), type: "2")
+            employeeView.ctImageView.image = UIImage(named: "利润总额")
+            let alertVc = TYAlertController(alert: employeeView, preferredStyle: .alert)
+            
+            if let model = model.value {
+                employeeView.model.accept(model)
+            }
+            
+            let vc = ViewControllerUtils.findViewController(from: self)
+            vc?.present(alertVc!, animated: true)
+            
+            employeeView.cancelBtn.rx.tap.subscribe(onNext: {
+                vc?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+            
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {

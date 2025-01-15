@@ -17,6 +17,8 @@ class TwoCompanySpecListCell: BaseViewCell {
     var websiteBlock: ((pageDataModel) -> Void)?
     //电话回调
     var phoneBlock: ((pageDataModel) -> Void)?
+    //人物点击
+    var peopleBlock: ((pageDataModel) -> Void)?
     
     var model = BehaviorRelay<pageDataModel?>(value: nil)
     
@@ -54,6 +56,7 @@ class TwoCompanySpecListCell: BaseViewCell {
         let nameView = BiaoQianView(frame: .zero, enmu: .hide)
         nameView.lineView.isHidden = false
         nameView.label1.text = "法定代表人"
+        nameView.isUserInteractionEnabled = true
         return nameView
     }()
     
@@ -291,6 +294,17 @@ class TwoCompanySpecListCell: BaseViewCell {
             }
         }).disposed(by: disposeBag)
         
+        //人物点击
+        nameView.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+            if let self = self, let model = self.model.value {
+                self.peopleBlock?(model)
+            }
+        }).disposed(by: disposeBag)
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -335,7 +349,7 @@ class BiaoQianView: BaseView {
         timeLabel.layer.borderWidth = 1
         timeLabel.layer.borderColor = UIColor.init(cssStr: "#9FA4AD")?.cgColor
         timeLabel.layer.cornerRadius = 1
-
+        
         return timeLabel
     }()
     

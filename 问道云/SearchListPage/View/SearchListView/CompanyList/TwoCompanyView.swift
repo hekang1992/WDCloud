@@ -16,6 +16,8 @@ class TwoCompanyView: BaseView {
     var websiteBlock: ((pageDataModel) -> Void)?
     //电话回调
     var phoneBlock: ((pageDataModel) -> Void)?
+    //人物回调
+    var peopleBlock: ((pageDataModel) -> Void)?
     //企业ID回调
     var entityIdBlock: ((String, String) -> Void)?
     
@@ -136,6 +138,9 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             cell?.phoneBlock = { [weak self] model in
                 self?.phoneBlock?(model)
             }
+            cell?.peopleBlock = { [weak self] model in
+                self?.peopleBlock?(model)
+            }
             return cell ?? UITableViewCell()
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
@@ -151,6 +156,9 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             }
             cell?.phoneBlock = { [weak self] model in
                 self?.phoneBlock?(model)
+            }
+            cell?.peopleBlock = { [weak self] model in
+                self?.peopleBlock?(model)
             }
             return cell ?? UITableViewCell()
         }

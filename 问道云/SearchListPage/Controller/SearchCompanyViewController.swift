@@ -199,6 +199,10 @@ class SearchCompanyViewController: WDBaseViewController {
             }
             
         }
+        
+        companyListView.peopleBlock = { [weak self] model in
+            ToastViewConfig.showToast(message: model.legalPerson?.legalName ?? "")
+        }
 #warning("电话回调")
 //        companyListView.phoneBlock = { [weak self] model in
 //            

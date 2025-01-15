@@ -123,6 +123,8 @@
 		73B3329A2D30CF5100934773 /* CompanyLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332992D30CF5100934773 /* CompanyLocationViewController.swift */; };
 		73B3623D2D374222003BD911 /* PopHistoryNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3623C2D374222003BD911 /* PopHistoryNameView.swift */; };
 		73B3623F2D375189003BD911 /* PopInvoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3623E2D375189003BD911 /* PopInvoiceView.swift */; };
+		73B362412D377C28003BD911 /* PopEmployeeNumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362402D377C28003BD911 /* PopEmployeeNumView.swift */; };
+		73B362432D3793F9003BD911 /* PopRateMoneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362422D3793F9003BD911 /* PopRateMoneyView.swift */; };
 		73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA12D1E973200D93691 /* MembershipListViewController.swift */; };
 		73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA32D1EA73100D93691 /* MembershipListView.swift */; };
 		73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */; };
@@ -321,6 +323,8 @@
 		73B332992D30CF5100934773 /* CompanyLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLocationViewController.swift; sourceTree = "<group>"; };
 		73B3623C2D374222003BD911 /* PopHistoryNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopHistoryNameView.swift; sourceTree = "<group>"; };
 		73B3623E2D375189003BD911 /* PopInvoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopInvoiceView.swift; sourceTree = "<group>"; };
+		73B362402D377C28003BD911 /* PopEmployeeNumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopEmployeeNumView.swift; sourceTree = "<group>"; };
+		73B362422D3793F9003BD911 /* PopRateMoneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopRateMoneyView.swift; sourceTree = "<group>"; };
 		73BDABA12D1E973200D93691 /* MembershipListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListViewController.swift; sourceTree = "<group>"; };
 		73BDABA32D1EA73100D93691 /* MembershipListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListView.swift; sourceTree = "<group>"; };
 		73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHotWordsCell.swift; sourceTree = "<group>"; };
@@ -800,6 +804,8 @@
 			children = (
 				73B3623C2D374222003BD911 /* PopHistoryNameView.swift */,
 				73B3623E2D375189003BD911 /* PopInvoiceView.swift */,
+				73B362402D377C28003BD911 /* PopEmployeeNumView.swift */,
+				73B362422D3793F9003BD911 /* PopRateMoneyView.swift */,
 			);
 			path = PopView;
 			sourceTree = "<group>";
@@ -1191,6 +1197,7 @@
 				7352B2262D353C9300B5391B /* CompanyFourHeadView.swift in Sources */,
 				7352B2362D366BE400B5391B /* CompanyDetailCommonServiceCell.swift in Sources */,
 				73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */,
+				73B362412D377C28003BD911 /* PopEmployeeNumView.swift in Sources */,
 				73E971792D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift in Sources */,
 				7325A7B82CFEECF00043C196 /* WDNavigationController.swift in Sources */,
 				73E971732D2FCD8500F12B15 /* TwoCompanyView.swift in Sources */,
@@ -1225,6 +1232,7 @@
 				73C7524C2D1D555400C47187 /* FocusCompanyPopGroupView.swift in Sources */,
 				73D50B872D16ACEC00EF081A /* FocusCompanyViewController.swift in Sources */,
 				73460D132D15162500EC9408 /* DeleteSureViewController.swift in Sources */,
+				73B362432D3793F9003BD911 /* PopRateMoneyView.swift in Sources */,
 				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
 				73807D5F2D33B7D100F8B90D /* CompanyActivityViewCell.swift in Sources */,
 				730488152D2BD2380024265C /* HomeItemViewCell.swift in Sources */,
