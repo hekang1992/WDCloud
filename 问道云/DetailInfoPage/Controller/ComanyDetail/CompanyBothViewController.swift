@@ -91,7 +91,7 @@ extension CompanyBothViewController: JXSegmentedViewDelegate {
         contentScrollView.isPagingEnabled = true
         contentScrollView.bounces = false
         contentScrollView.showsVerticalScrollIndicator = false
-        contentScrollView.showsVerticalScrollIndicator = false
+        contentScrollView.showsHorizontalScrollIndicator = false
         view.addSubview(contentScrollView)
         contentScrollView.snp.makeConstraints { make in
             make.left.equalToSuperview()

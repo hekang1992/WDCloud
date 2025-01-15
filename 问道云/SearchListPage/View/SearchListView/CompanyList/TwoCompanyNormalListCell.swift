@@ -429,5 +429,4 @@ extension TwoCompanyNormalListCell {
         }
     
     }
-    
 }

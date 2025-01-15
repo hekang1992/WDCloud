@@ -21,6 +21,12 @@ class PeopleDetailViewController: WDBaseViewController {
         return companyDetailView
     }()
     
+    //简介
+    lazy var infoView: CompanyDescInfoView = {
+        let infoView = CompanyDescInfoView()
+        return infoView
+    }()
+    
     //头部view
     lazy var homeHeadView: PeopleDetailHeadView = preferredTableHeaderView()
     
@@ -30,7 +36,7 @@ class PeopleDetailViewController: WDBaseViewController {
     
     let titles = ["个人详情", "关联企业", "历史信息"]
     
-    var JXTableHeaderViewHeight: Int = 400
+    var JXTableHeaderViewHeight: Int = 385
     
     var JXheightForHeaderInSection: Int = 36
     
@@ -76,8 +82,10 @@ class PeopleDetailViewController: WDBaseViewController {
     
     //头部
     func preferredTableHeaderView() -> PeopleDetailHeadView {
-        JXTableHeaderViewHeight = 400
+        JXTableHeaderViewHeight = 385
         let header = PeopleDetailHeadView()
+        //获取个人详情头部信息
+        getPeopleHeadInfo()
         return header
     }
     
@@ -88,8 +96,6 @@ extension PeopleDetailViewController {
     private func getAllInfo() {
         //获取个人详情item菜单
         getPeopleDetailItemInfo()
-        //获取个人详情头部信息
-        getPeopleHeadInfo()
     }
     
     private func getPeopleDetailItemInfo() {
@@ -118,17 +124,55 @@ extension PeopleDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: pageUrl,
                        method: .get) { [weak self] result in
-            guard let self = self else { return }
             switch result {
             case .success(let success):
                 if let model = success.data {
-                    
+                    self?.refreshHeadUI(from: model)
                 }
                 break
             case .failure(_):
                 break
             }
         }
+    }
+    
+    //刷新个人详情头部UI
+    private func refreshHeadUI(from model: DataModel) {
+        //头像
+        self.homeHeadView.iconImageView.image = UIImage.imageOfText(model.personName ?? "", size: (40, 40))
+        //名字
+        self.homeHeadView.namelabel.text = model.personName ?? ""
+        //tags
+        self.homeHeadView.tagArray.accept(["model.tags ?? ", "model.tags ?? ", "model.tags ?? ", "model.tags ?? ", "model.tags ?? "])
+        //desc
+        let descInfo = model.resume ?? ""
+        self.homeHeadView.desLabel.text = "简介: \(descInfo)"
+        
+        infoView.desLabel.text = "简介: \(descInfo)"
+        self.homeHeadView.moreBtnBlock = { [weak self] in
+            guard let self = self else { return }
+            keyWindow?.addSubview(infoView)
+            infoView.snp.makeConstraints { make in
+                make.left.right.equalToSuperview()
+                make.top.equalTo(self.homeHeadView.desLabel.snp.top)
+            }
+            UIView.animate(withDuration: 0.25) {
+                self.infoView.alpha = 1
+                self.homeHeadView.desLabel.alpha = 0
+                self.homeHeadView.moreButton.alpha = 0
+            }
+        }
+        infoView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                UIView.animate(withDuration: 0.25) {
+                    self.infoView.alpha = 0
+                    self.homeHeadView.desLabel.alpha = 1
+                    self.homeHeadView.moreButton.alpha = 1
+                }
+        }).disposed(by: disposeBag)
+
     }
     
 }
