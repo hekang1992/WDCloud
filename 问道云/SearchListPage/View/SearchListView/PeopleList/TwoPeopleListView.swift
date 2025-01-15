@@ -17,6 +17,8 @@ class TwoPeopleListView: BaseView {
     //被搜索的文字,根据这个文字,去给cell的namelabel加上颜色
     var searchWordsRelay = BehaviorRelay<String?>(value: nil)
     
+    var peopleBlock: ((itemsModel) -> Void)?
+    
     lazy var whiteView: UIView = {
         let whiteView = UIView()
         whiteView.backgroundColor = .clear
@@ -112,8 +114,18 @@ extension TwoPeopleListView: UITableViewDelegate, UITableViewDataSource {
             make.height.equalTo(25)
             make.left.equalToSuperview().offset(10)
         }
-        
         return headView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let model = dataModelArray.value?[indexPath.row] {
+            let shareholderListCount = model.shareholderList?.count ?? 0
+            if shareholderListCount != 0 {//有合作伙伴
+                self.peopleBlock?(model)
+            }else {
+                self.peopleBlock?(model)
+            }
+        }
     }
     
 }

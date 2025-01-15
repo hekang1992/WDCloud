@@ -1,0 +1,176 @@
+//
+//  PeopleDetailViewController.swift
+//  问道云
+//
+//  Created by 何康 on 2025/1/12.
+//  企业详情
+
+import UIKit
+import JXSegmentedView
+import JXPagingView
+
+class PeopleDetailViewController: WDBaseViewController {
+    
+    var enityId: String = ""
+    
+    var intBlock: ((Double) -> Void)?
+    
+    lazy var companyDetailView: PeopleDetailView = {
+        let companyDetailView = PeopleDetailView()
+        companyDetailView.backgroundColor = .white
+        return companyDetailView
+    }()
+    
+    //头部view
+    lazy var homeHeadView: PeopleDetailHeadView = preferredTableHeaderView()
+    
+    var segmentedViewDataSource: JXSegmentedTitleDataSource!
+    
+    var segmentedView: JXSegmentedView!
+    
+    let titles = ["个人详情", "关联企业", "历史信息"]
+    
+    var JXTableHeaderViewHeight: Int = 400
+    
+    var JXheightForHeaderInSection: Int = 36
+    
+    lazy var pagingView: JXPagingView = preferredPagingView()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
+        segmentedViewDataSource = JXSegmentedTitleDataSource()
+        segmentedViewDataSource.titles = titles
+        segmentedViewDataSource.isTitleColorGradientEnabled = true
+        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#333333")!
+        segmentedViewDataSource.titleNormalColor = UIColor.init(cssStr: "#9FA4AD")!
+        segmentedViewDataSource.titleNormalFont = UIFont.mediumFontOfSize(size: 15)
+        segmentedViewDataSource.titleSelectedFont = UIFont.mediumFontOfSize(size: 15)
+        
+        //指示器和指示器颜色
+        segmentedView = JXSegmentedView(frame: CGRectMake(0, 0, SCREEN_WIDTH, CGFloat(JXheightForHeaderInSection)))
+        segmentedView.backgroundColor = UIColor.white
+        segmentedView.dataSource = segmentedViewDataSource
+        let lineView = JXSegmentedIndicatorLineView()
+        lineView.indicatorColor = UIColor.init(cssStr: "#2353F0")!
+        lineView.indicatorWidth = 18
+        lineView.indicatorHeight = 3
+        segmentedView.indicators = [lineView]
+        
+        view.addSubview(pagingView)
+        pagingView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+        
+        segmentedView.listContainer = pagingView.listContainerView
+        //距离高度禁止
+        pagingView.pinSectionHeaderVerticalOffset = 0
+        
+        //数据请求
+        getAllInfo()
+    }
+    
+    //一定要加上这句代码,否则不会下拉刷新
+    func preferredPagingView() -> JXPagingView {
+        return JXPagingListRefreshView(delegate: self)
+    }
+    
+    //头部
+    func preferredTableHeaderView() -> PeopleDetailHeadView {
+        JXTableHeaderViewHeight = 400
+        let header = PeopleDetailHeadView()
+        return header
+    }
+    
+}
+
+extension PeopleDetailViewController {
+    
+    private func getAllInfo() {
+        //获取个人详情item菜单
+        getPeopleDetailItemInfo()
+        //获取个人详情头部信息
+        getPeopleHeadInfo()
+    }
+    
+    private func getPeopleDetailItemInfo() {
+        let dict = ["moduleType": "3", "entityId": enityId] as [String: Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/customermenu/customerMenuTree",
+                       method: .get) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    private func getPeopleHeadInfo() {
+        let dict = [String: Any]()
+        let man = RequestManager()
+        let pageUrl = "/firminfo/person/search/\(enityId)"
+        man.requestAPI(params: dict,
+                       pageUrl: pageUrl,
+                       method: .get) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+}
+
+extension PeopleDetailViewController: JXPagingViewDelegate {
+    
+    func tableHeaderViewHeight(in pagingView: JXPagingView) -> Int {
+        return JXTableHeaderViewHeight
+    }
+    
+    func tableHeaderView(in pagingView: JXPagingView) -> UIView {
+        return homeHeadView
+    }
+    
+    func heightForPinSectionHeader(in pagingView: JXPagingView) -> Int {
+        return JXheightForHeaderInSection
+    }
+    
+    func viewForPinSectionHeader(in pagingView: JXPagingView) -> UIView {
+        return segmentedView
+    }
+    
+    func numberOfLists(in pagingView: JXPagingView) -> Int {
+        return titles.count
+    }
+    
+    func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
+        if index == 0 {
+            let oneVc = PeopleDetailOneViewController()
+            return oneVc
+        }else if index == 1 {
+            let twoVc = PeopleDetailTwoViewController()
+            return twoVc
+        }else {
+            let threeVc = PeopleDetailThreeViewController()
+            return threeVc
+        }
+    }
+    
+    func pagingView(_ pagingView: JXPagingView, mainTableViewDidScroll scrollView: UIScrollView) {
+        let contentOffsetY = scrollView.contentOffset.y
+        print("contentOffsetY======\(contentOffsetY)")
+        self.intBlock?(contentOffsetY)
+    }
+}

@@ -50,8 +50,9 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             //代码
             headView.oneHeadView.numlabel.text = model.firmInfo?.usCreditCode ?? ""
             //标签
+            let promptLabels = model.promptLabels?.compactMap { $0.name } ?? []
             let riskLabels = model.warnLabels?.compactMap{ $0.name } ?? []
-            headView.oneHeadView.tagArray.accept(riskLabels)
+            headView.oneHeadView.tagArray.accept(promptLabels + riskLabels)
             //简介
             let descInfo = model.firmInfo?.businessScope ?? ""
             headView.oneHeadView.desLabel.text = "简介: \(descInfo)"

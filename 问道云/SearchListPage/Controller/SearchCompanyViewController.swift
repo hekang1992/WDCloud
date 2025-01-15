@@ -218,8 +218,9 @@ class SearchCompanyViewController: WDBaseViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("企业===============企业")
         //最近搜索
         getlastSearch()
         
@@ -228,11 +229,6 @@ class SearchCompanyViewController: WDBaseViewController {
         
         //热搜
         getHotWords()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("企业===============企业")
     }
 }
 

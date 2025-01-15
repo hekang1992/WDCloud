@@ -1,21 +1,21 @@
 //
-//  CompanyBothViewController.swift
+//  PeopleBothViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2025/1/12.
-//
+//  Created by 何康 on 2025/1/15.
+//  个人总详情
 
 import UIKit
 import RxRelay
 import JXSegmentedView
 
-class CompanyBothViewController: WDBaseViewController {
+class PeopleBothViewController: WDBaseViewController {
     
-    //企业ID
+    //个人ID
     var enityId = BehaviorRelay<String>(value: "")
     
-    //企业名称
-    var companyName = BehaviorRelay<String>(value: "")
+    //个人名称
+    var peopleName = BehaviorRelay<String>(value: "")
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
@@ -29,14 +29,14 @@ class CompanyBothViewController: WDBaseViewController {
     let segmentedDataSource = JXSegmentedTitleDataSource()
     let contentScrollView = UIScrollView()
     
-    lazy var companyDetailVc: CompanyDetailViewController = {
-        let companyDetailVc = CompanyDetailViewController()
-        companyDetailVc.enityId = self.enityId.value
-        return companyDetailVc
+    lazy var peopleDetailVc: PeopleDetailViewController = {
+        let peopleDetailVc = PeopleDetailViewController()
+        peopleDetailVc.enityId = self.enityId.value
+        return peopleDetailVc
     }()
     
-    lazy var activityDetailVc: CompanyActivityViewController = {
-        let activityDetailVc = CompanyActivityViewController()
+    lazy var activityDetailVc: PeopleActivityViewController = {
+        let activityDetailVc = PeopleActivityViewController()
         activityDetailVc.enityId = self.enityId.value
         return activityDetailVc
     }()
@@ -48,12 +48,13 @@ class CompanyBothViewController: WDBaseViewController {
         addHeadView(from: headView)
         
         setheadUI()
-        companyDetailVc.intBlock = { [weak self] contentY in
-            guard let self = self else { return }
+        
+        peopleDetailVc.intBlock = { [weak self] contentY in
+            guard let self = self else { return  }
             if contentY >= 200 {
                 self.headView.headTitleView.isHidden = true
                 self.headView.titlelabel.isHidden = false
-                self.headView.titlelabel.text = companyName.value
+                self.headView.titlelabel.text = peopleName.value
             }else {
                 self.headView.headTitleView.isHidden = false
                 self.headView.titlelabel.isHidden = true
@@ -62,10 +63,10 @@ class CompanyBothViewController: WDBaseViewController {
     }
 }
 
-extension CompanyBothViewController: JXSegmentedViewDelegate {
+extension PeopleBothViewController: JXSegmentedViewDelegate {
     
     private func setheadUI() {
-        segmentedDataSource.titles = ["企业", "动态"]
+        segmentedDataSource.titles = ["个人", "动态"]
         segmentedDataSource.isTitleColorGradientEnabled = true
         segmentedDataSource.titleSelectedColor = UIColor(cssStr: "#333333")!
         segmentedDataSource.titleNormalColor = UIColor(cssStr: "#999999")!
@@ -90,7 +91,7 @@ extension CompanyBothViewController: JXSegmentedViewDelegate {
     func setupContentScrollView() {
         contentScrollView.isPagingEnabled = true
         contentScrollView.bounces = false
-        contentScrollView.showsVerticalScrollIndicator = false
+        contentScrollView.showsHorizontalScrollIndicator = false
         contentScrollView.showsVerticalScrollIndicator = false
         view.addSubview(contentScrollView)
         contentScrollView.snp.makeConstraints { make in
@@ -99,11 +100,11 @@ extension CompanyBothViewController: JXSegmentedViewDelegate {
             make.bottom.equalToSuperview()
             make.top.equalTo(headView.snp.bottom)
         }
-        contentScrollView.contentSize = CGSize(width: view.bounds.width * 2, height: contentScrollView.bounds.height)
+        contentScrollView.contentSize = CGSize(width: SCREEN_WIDTH * 2, height: contentScrollView.bounds.height)
         
-        let modules = [companyDetailVc, activityDetailVc]
+        let modules = [peopleDetailVc, activityDetailVc]
         for (index, vc) in modules.enumerated() {
-            vc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
+            vc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: SCREEN_WIDTH, height: contentScrollView.bounds.height)
             contentScrollView.addSubview(vc.view)
             addChild(vc)
             vc.didMove(toParent: self)

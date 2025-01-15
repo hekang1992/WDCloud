@@ -329,6 +329,7 @@ class CompanyOneHeadView: BaseView {
             make.top.equalTo(scrollView.snp.bottom).offset(5)
         }
         
+        //标签
         tagArray.asObservable().subscribe(onNext: { [weak self] texts in
             guard let self = self else { return }
             setupScrollView(tagScrollView: tagListView, tagArray: texts)

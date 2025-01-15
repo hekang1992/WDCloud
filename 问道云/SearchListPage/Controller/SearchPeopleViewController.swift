@@ -179,10 +179,18 @@ class SearchPeopleViewController: WDBaseViewController {
             make.height.equalTo(33.5)
         }
         
+        twoPeopleListView.peopleBlock = { model in
+            let peopleDetailVc = PeopleBothViewController()
+            peopleDetailVc.enityId.accept(model.personId ?? "")
+            peopleDetailVc.peopleName.accept(model.personName ?? "")
+            self.navigationController?.pushViewController(peopleDetailVc, animated: true)
+        }
+        
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
+
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("人员===============人员")
         //最近搜索
         getlastSearch()
 
@@ -191,11 +199,6 @@ class SearchPeopleViewController: WDBaseViewController {
         
         //热搜
         getHotWords()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("人员===============人员")
     }
 }
 

@@ -60,7 +60,9 @@ class DataModel {
     //风险数据模型
     var entityData: entityDataModel?
     var personData: personDataModel?
-    
+/**
+ 公司详情数据模型
+ */
     //股票模型
     var stockInfo: [stockInfoModel]?
     //
@@ -83,7 +85,25 @@ class DataModel {
     var taxInfo: taxInfoModel?
     //总资产
     var assetInfo: assetInfoModel?
+    //标签
+    var promptLabels: [promptLabelsModel]?
+/**
+ 个人详情数据模型
+ */
+    var personId: String?//个人ID
+    var personName: String?//个人名字
+    var resume: String?//个人描述
+    var shareholderList: [shareholderListModel]?//合作伙伴
+    var tags: [String]?
     init(json: JSON) {
+        self.tags = json["tags"].arrayValue.map({
+            $0.stringValue
+        })
+        self.shareholderList = json["shareholderList"].arrayValue.map { shareholderListModel(json: $0) }
+        self.personId = json["personId"].stringValue
+        self.personName = json["personName"].stringValue
+        self.resume = json["resume"].stringValue
+        self.promptLabels = json["promptLabels"].arrayValue.map { promptLabelsModel(json: $0) }
         self.assetInfo = assetInfoModel(json: json["assetInfo"])
         self.taxInfo = taxInfoModel(json: json["taxInfo"])
         self.namesUsedBefore = json["namesUsedBefore"].arrayValue.map { namesUsedBeforeModel(json: $0) }
@@ -547,7 +567,6 @@ class firmInfoModel {
     }
 }
 
-
 class pageMetaModel {
     var totalNum: Int?//总共
     var size: Int?//页数
@@ -790,5 +809,17 @@ class assetInfoModel {
         self.lastAmount = json["lastAmount"].doubleValue
         self.lastYear = json["lastYear"].stringValue
         self.annualReports = json["annualReports"].arrayValue.map { annualReportsModel(json: $0) }
+    }
+}
+
+//标签
+class promptLabelsModel {
+    var name: String?
+    var type: String?
+    var url: String?
+    init(json: JSON) {
+        self.name = json["name"].stringValue
+        self.type = json["type"].stringValue
+        self.url = json["url"].stringValue
     }
 }

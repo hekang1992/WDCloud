@@ -6,8 +6,8 @@
 //
 
 import UIKit
-@preconcurrency import WebKit
 import RxRelay
+@preconcurrency import WebKit
 
 class WebPageViewController: WDBaseViewController {
     
@@ -17,9 +17,21 @@ class WebPageViewController: WDBaseViewController {
     }()
     
     lazy var webView: WKWebView = {
+        // 1. 创建 WKWebView 配置
         let config = WKWebViewConfiguration()
-        let usercc = WKUserContentController()
-        config.userContentController = usercc
+        
+        // 2. 注入 JavaScript 代码
+        let scriptStr = "window.ALDClient = {};ALDClient.callNative = function(method, arg) { return prompt(method, arg)};"
+        
+        let cookieScript = WKUserScript(
+            source: scriptStr,
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: false
+        )
+        config.userContentController.addUserScript(cookieScript)
+        // 3. 注册消息处理器
+        
+        
         let webView = WKWebView(frame: .zero, configuration: config)
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.scrollView.bounces = false
@@ -28,6 +40,7 @@ class WebPageViewController: WDBaseViewController {
         webView.scrollView.showsVerticalScrollIndicator = false
         webView.scrollView.showsHorizontalScrollIndicator = false
         webView.navigationDelegate = self
+        webView.uiDelegate = self
         return webView
     }()
     
@@ -105,10 +118,15 @@ class WebPageViewController: WDBaseViewController {
     
 }
 
-extension WebPageViewController: WKScriptMessageHandler, WKNavigationDelegate {
+extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigationDelegate {
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         print("message:\(message.name)")
+    }
+    
+    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+        print("prompt==js交互方法===\(prompt)")
+        completionHandler(callByWeb(method: prompt, arg: defaultText))
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -138,6 +156,16 @@ extension WebPageViewController: WKScriptMessageHandler, WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         ViewHud.hideLoadView()
         print("加载失败======加载失败")
+    }
+    
+    func callByWeb(method: String?, arg: String?) -> String? {
+        if method == "set_title" {
+            self.headView.titlelabel.text = arg
+        }else if method == "get_token" {
+            let token = GetSaveLoginInfoConfig.getSessionID()
+            return token
+        }
+        return ""
     }
     
 }
