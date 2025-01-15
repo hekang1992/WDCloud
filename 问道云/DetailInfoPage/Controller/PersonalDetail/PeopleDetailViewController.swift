@@ -71,8 +71,6 @@ class PeopleDetailViewController: WDBaseViewController {
         //距离高度禁止
         pagingView.pinSectionHeaderVerticalOffset = 0
         
-        //数据请求
-        getAllInfo()
     }
     
     //一定要加上这句代码,否则不会下拉刷新
@@ -92,30 +90,6 @@ class PeopleDetailViewController: WDBaseViewController {
 }
 
 extension PeopleDetailViewController {
-    
-    private func getAllInfo() {
-        //获取个人详情item菜单
-        getPeopleDetailItemInfo()
-    }
-    
-    private func getPeopleDetailItemInfo() {
-        let dict = ["moduleType": "3", "entityId": enityId] as [String: Any]
-        let man = RequestManager()
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/customermenu/customerMenuTree",
-                       method: .get) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                if let model = success.data {
-                    
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
     
     private func getPeopleHeadInfo() {
         let dict = [String: Any]()
@@ -173,6 +147,9 @@ extension PeopleDetailViewController {
                 }
         }).disposed(by: disposeBag)
 
+        //合作伙伴
+        self.homeHeadView.model.accept(model)
+        self.homeHeadView.pcollectionView.reloadData()
     }
     
 }
@@ -202,12 +179,15 @@ extension PeopleDetailViewController: JXPagingViewDelegate {
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
             let oneVc = PeopleDetailOneViewController()
+            oneVc.enityId = enityId
             return oneVc
         }else if index == 1 {
             let twoVc = PeopleDetailTwoViewController()
+            twoVc.enityId = enityId
             return twoVc
         }else {
             let threeVc = PeopleDetailThreeViewController()
+            threeVc.enityId = enityId
             return threeVc
         }
     }

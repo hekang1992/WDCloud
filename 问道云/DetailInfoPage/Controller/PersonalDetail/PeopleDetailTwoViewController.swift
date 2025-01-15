@@ -10,6 +10,8 @@ import JXPagingView
 
 class PeopleDetailTwoViewController: WDBaseViewController {
     
+    var enityId: String = ""
+    
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
     lazy var tableView: UITableView = {

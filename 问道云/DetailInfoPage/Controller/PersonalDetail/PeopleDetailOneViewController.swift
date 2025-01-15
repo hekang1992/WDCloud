@@ -7,8 +7,11 @@
 
 import UIKit
 import JXPagingView
+import RxRelay
 
 class PeopleDetailOneViewController: WDBaseViewController {
+    
+    var enityId: String = ""
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
@@ -16,25 +19,102 @@ class PeopleDetailOneViewController: WDBaseViewController {
         let tableView = UITableView(frame: .zero, style: .grouped)
         return tableView
     }()
+    
+    var model = BehaviorRelay<DataModel?>(value: nil)
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.itemSize = CGSize(width: SCREEN_WIDTH * 0.25, height: 80)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        //item
+        collectionView.register(CompanyCollectionCell.self, forCellWithReuseIdentifier: "CompanyCollectionCell")
+        //注册title标题样式
+        collectionView.register(MyCollectionNormalReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MyCollectionNormalReusableView.identifier)
+        return collectionView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.backgroundColor = .random()
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        //获取个人详情item菜单
+        getPeopleDetailItemInfo()
+    }
+   
+    private func getPeopleDetailItemInfo() {
+        let dict = ["moduleType": "3", "entityId": enityId] as [String: Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/customermenu/customerMenuTree",
+                       method: .get) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    self.model.accept(model)
+                    self.collectionView.reloadData()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+
+}
+
+extension PeopleDetailOneViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        let modelArray = self.model.value?.items?.first?.children ?? []
+        let newArray = Array(modelArray.dropLast())
+        return newArray.count
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let modelArray = self.model.value?.items?.first?.children ?? []
+        let newArray = Array(modelArray.dropLast())
+        return newArray[section].children?.count ?? 0
     }
-    */
-
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompanyCollectionCell", for: indexPath) as! CompanyCollectionCell
+        let modelArray = self.model.value?.items?.first?.children ?? []
+        let newArray = Array(modelArray.dropLast())
+        
+        return cell
+    }
+    
+    
+    //返回头部
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader else {
+            fatalError("Unexpected element kind")
+        }
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MyCollectionNormalReusableView.identifier, for: indexPath) as! MyCollectionNormalReusableView
+        if let items = self.model.value?.items?.first {
+            let item = items.children?[indexPath.section]
+            headerView.namelabel.text = "\(item?.menuName ?? "")"
+        }
+        return headerView
+    }
+    
+    //头部的title高度
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 41)
+    }
+    
 }
 
 extension PeopleDetailOneViewController: JXPagingViewListViewDelegate {

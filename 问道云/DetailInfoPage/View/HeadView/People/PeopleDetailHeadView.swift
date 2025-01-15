@@ -16,6 +16,8 @@ class PeopleDetailHeadView: BaseView {
     var tagArray = BehaviorRelay<[String]>(value: [])
     
     var moreBtnBlock: (() -> Void)?
+    
+    var model = BehaviorRelay<DataModel?>(value: nil)
 
     lazy var lineView: UIView = {
         let lineView = UIView()
@@ -66,6 +68,7 @@ class PeopleDetailHeadView: BaseView {
         return onelineView
     }()
     
+    //风险
     lazy var riskView: UIView = {
         let riskView = UIView()
         return riskView
@@ -83,6 +86,7 @@ class PeopleDetailHeadView: BaseView {
         return twolineView
     }()
     
+    //动态
     lazy var activityView: UIView = {
         let activityView = UIView()
         return activityView
@@ -100,10 +104,16 @@ class PeopleDetailHeadView: BaseView {
         return threelineView
     }()
     
+    //合作伙伴
     lazy var partnerView: UIView = {
         let partnerView = UIView()
-        partnerView.backgroundColor = .random()
         return partnerView
+    }()
+    
+    lazy var parImageView: UIImageView = {
+        let parImageView = UIImageView()
+        parImageView.image = UIImage(named: "wenpuicon")
+        return parImageView
     }()
     
     lazy var fourlineView: UIView = {
@@ -112,6 +122,7 @@ class PeopleDetailHeadView: BaseView {
         return fourlineView
     }()
     
+    //图谱
     lazy var atlasView: UIView = {
         let atlasView = UIView()
         return atlasView
@@ -129,6 +140,22 @@ class PeopleDetailHeadView: BaseView {
         return fivelineView
     }()
     
+    lazy var pcollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 5
+        let pcollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        pcollectionView.delegate = self
+        pcollectionView.dataSource = self
+        pcollectionView.translatesAutoresizingMaskIntoConstraints = false
+        pcollectionView.backgroundColor = .white
+        pcollectionView.showsHorizontalScrollIndicator = false
+        pcollectionView.showsVerticalScrollIndicator = false
+        pcollectionView.register(TwoPeopleCoopViewCell.self, forCellWithReuseIdentifier: "TwoPeopleCoopViewCell")
+        return pcollectionView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(lineView)
@@ -137,20 +164,21 @@ class PeopleDetailHeadView: BaseView {
         addSubview(tagListView)
         addSubview(desLabel)
         addSubview(moreButton)
-        
         addSubview(onelineView)
+        
         addSubview(riskView)
         riskView.addSubview(riskImageView)
-        
         addSubview(twolineView)
+        
         addSubview(activityView)
         activityView.addSubview(activityImageView)
-        
         addSubview(threelineView)
+        //合作伙伴
         addSubview(partnerView)
-        
-        
+        partnerView.addSubview(parImageView)
+        partnerView.addSubview(pcollectionView)
         addSubview(fourlineView)
+        
         addSubview(atlasView)
         atlasView.addSubview(atlasImageView)
         addSubview(fivelineView)
@@ -201,13 +229,13 @@ class PeopleDetailHeadView: BaseView {
             make.left.equalToSuperview().offset(12)
             make.size.equalTo(CGSize(width: 17, height: 60))
         }
-        
-        
         twolineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.height.equalTo(4)
             make.top.equalTo(riskView.snp.bottom)
         }
+        
+        
         activityView.snp.makeConstraints { make in
             make.height.equalTo(43)
             make.left.right.equalToSuperview()
@@ -219,12 +247,12 @@ class PeopleDetailHeadView: BaseView {
             make.left.equalToSuperview().offset(12)
         }
         
-        
         threelineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.height.equalTo(4)
             make.top.equalTo(activityView.snp.bottom)
         }
+        
         partnerView.snp.makeConstraints { make in
             make.height.equalTo(81)
             make.left.right.equalToSuperview()
@@ -235,6 +263,19 @@ class PeopleDetailHeadView: BaseView {
             make.height.equalTo(4)
             make.top.equalTo(partnerView.snp.bottom)
         }
+        parImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview().offset(12)
+            make.size.equalTo(CGSize(width: 17, height: 60))
+        }
+        pcollectionView.snp.makeConstraints { make in
+            make.left.equalTo(parImageView.snp.right).offset(5)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(65)
+            make.right.equalToSuperview().offset(-5)
+        }
+        
+        
         atlasView.snp.makeConstraints { make in
             make.height.equalTo(73)
             make.left.right.equalToSuperview()
@@ -245,7 +286,6 @@ class PeopleDetailHeadView: BaseView {
             make.left.equalToSuperview().offset(12)
             make.size.equalTo(CGSize(width: 17, height: 60))
         }
-        
         fivelineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.height.equalTo(4)
@@ -270,6 +310,34 @@ class PeopleDetailHeadView: BaseView {
 
 }
 
+extension PeopleDetailHeadView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 120, height: 65)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let model = self.model.value
+        if collectionView == self.pcollectionView {
+            return model?.shareholderList?.count ?? 0
+        }
+//        let count = self.model.value?.shareholderList?.count ?? 0
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TwoPeopleCoopViewCell", for: indexPath) as! TwoPeopleCoopViewCell
+        let model = self.model.value?.shareholderList?[indexPath.row]
+        cell.model1.accept(model)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = self.model.value?.shareholderList?[indexPath.row]
+        print("model:\(model?.personId ?? 0)")
+    }
+    
+}
 extension PeopleDetailHeadView {
     
     func setupScrollView(tagScrollView: UIScrollView, tagArray: [String]) {
@@ -446,3 +514,4 @@ extension PeopleDetailHeadView {
     }
     
 }
+

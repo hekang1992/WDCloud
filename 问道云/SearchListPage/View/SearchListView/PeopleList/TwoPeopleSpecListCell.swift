@@ -209,8 +209,6 @@ extension TwoPeopleSpecListCell: UICollectionViewDelegate, UICollectionViewDataS
 }
 
 
-
-
 class CompanyListView: UIView {
     
     lazy var numLabel: UILabel = {

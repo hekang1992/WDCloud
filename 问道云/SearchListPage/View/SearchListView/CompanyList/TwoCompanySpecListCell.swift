@@ -314,7 +314,6 @@ class TwoCompanySpecListCell: BaseViewCell {
 }
 
 
-
 enum ShowTimeType {
     case show
     case hide
