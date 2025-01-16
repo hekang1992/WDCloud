@@ -33,6 +33,8 @@ class CompanyDetailView: BaseView {
     //点击了哪一个按钮
     var isClickBtnSelectIndex: Int = 0
     
+    var headHeight: Double = 906
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -144,7 +146,7 @@ class CompanyDetailView: BaseView {
                 }
             }
         }).disposed(by: disposeBag)
-
+        
     }
     
     //按钮点击方法
@@ -228,7 +230,14 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MyCollectionSpecialReusableView.identifier, for: indexPath) as! MyCollectionSpecialReusableView
 #warning("待定======点击小标签刷新头部高度")
             headerView.headView.moreClickBlcok = { model in
-                
+                if model.isOpenTag {
+                    self.headHeight = 921
+                }else {
+                    self.headHeight = 906
+                }
+                if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                    layout.invalidateLayout() // 使布局失效，重新计算
+                }
             }
             if let headModel = self.headModel.value {
                 headerView.model.accept(headModel)
@@ -253,9 +262,9 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
             if let headModel = self.headModel.value, let stockModel = headModel.stockInfo?.first, let key = stockModel.key, !key.isEmpty {
-                return CGSize(width: collectionView.bounds.width, height: 906)
+                return CGSize(width: collectionView.bounds.width, height: headHeight)
             }else {
-                return CGSize(width: collectionView.bounds.width, height: 686)
+                return CGSize(width: collectionView.bounds.width, height: headHeight - 220)
             }
         }else {
             return CGSize(width: collectionView.bounds.width, height: 41)

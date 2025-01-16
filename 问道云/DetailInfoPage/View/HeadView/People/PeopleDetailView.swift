@@ -6,12 +6,12 @@
 //
 
 import UIKit
+import RxRelay
 
 class PeopleDetailView: BaseView {
 
     lazy var headView: PeopleDetailHeadView = {
         let headView = PeopleDetailHeadView()
-        headView.backgroundColor = .random()
         return headView
     }()
     

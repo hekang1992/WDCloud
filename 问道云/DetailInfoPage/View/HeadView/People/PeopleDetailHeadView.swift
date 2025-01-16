@@ -87,6 +87,32 @@ class PeopleDetailHeadView: BaseView {
         return riskImageView
     }()
     
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsHorizontalScrollIndicator = false
+        return scrollView
+    }()
+    
+    lazy var oneRiskView: DetailRiskItemView = {
+        let oneRiskView = DetailRiskItemView()
+        return oneRiskView
+    }()
+    
+    lazy var twoRiskView: DetailRiskItemView = {
+        let twoRiskView = DetailRiskItemView()
+        return twoRiskView
+    }()
+    
+    lazy var threeRiskView: DetailRiskItemView = {
+        let threeRiskView = DetailRiskItemView()
+        return threeRiskView
+    }()
+    
+    lazy var fourRiskView: DetailRiskItemView = {
+        let fourRiskView = DetailRiskItemView()
+        return fourRiskView
+    }()
+    
     lazy var twolineView: UIView = {
         let twolineView = UIView()
         twolineView.backgroundColor = .init(cssStr: "#F5F5F5")
@@ -103,6 +129,22 @@ class PeopleDetailHeadView: BaseView {
         let activityImageView = UIImageView()
         activityImageView.image = UIImage(named: "detaildongicon")
         return activityImageView
+    }()
+    
+    lazy var timelabel: UILabel = {
+        let timelabel = UILabel()
+        timelabel.textColor = UIColor.init(cssStr: "#9FA4AD")
+        timelabel.textAlignment = .left
+        timelabel.font = .regularFontOfSize(size: 10)
+        return timelabel
+    }()
+    
+    lazy var desclabel: UILabel = {
+        let desclabel = UILabel()
+        desclabel.textColor = UIColor.init(cssStr: "#333333")
+        desclabel.textAlignment = .left
+        desclabel.font = .mediumFontOfSize(size: 12)
+        return desclabel
     }()
     
     lazy var threelineView: UIView = {
@@ -197,6 +239,38 @@ class PeopleDetailHeadView: BaseView {
         
         addSubview(riskView)
         riskView.addSubview(riskImageView)
+        riskView.addSubview(scrollView)
+        scrollView.addSubview(oneRiskView)
+        scrollView.addSubview(twoRiskView)
+        scrollView.addSubview(threeRiskView)
+        scrollView.addSubview(fourRiskView)
+
+        scrollView.snp.makeConstraints { make in
+            make.left.equalTo(riskImageView.snp.right).offset(4)
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().offset(-4)
+            make.height.equalTo(60)
+        }
+        oneRiskView.snp.makeConstraints { make in
+            make.left.top.bottom.equalToSuperview()
+            make.width.equalTo(105)
+        }
+        twoRiskView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.left.equalTo(oneRiskView.snp.right).offset(6)
+            make.width.equalTo(105)
+        }
+        threeRiskView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.left.equalTo(twoRiskView.snp.right).offset(6)
+            make.width.equalTo(105)
+        }
+        fourRiskView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.left.equalTo(threeRiskView.snp.right).offset(6)
+            make.width.equalTo(105)
+            make.right.equalToSuperview().offset(-5)
+        }
         addSubview(twolineView)
         
         addSubview(activityView)
@@ -275,6 +349,19 @@ class PeopleDetailHeadView: BaseView {
             make.size.equalTo(CGSize(width: 18, height: 33))
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(12)
+        }
+        activityView.addSubview(timelabel)
+        activityView.addSubview(desclabel)
+        timelabel.snp.makeConstraints { make in
+            make.left.equalTo(activityImageView.snp.right).offset(6.5)
+            make.top.equalToSuperview().offset(6.5)
+            make.height.equalTo(14)
+        }
+        
+        desclabel.snp.makeConstraints { make in
+            make.left.equalTo(activityImageView.snp.right).offset(6.5)
+            make.top.equalTo(timelabel.snp.bottom).offset(4)
+            make.height.equalTo(16.5)
         }
         
         threelineView.snp.makeConstraints { make in

@@ -15,10 +15,10 @@ class PeopleDetailViewController: WDBaseViewController {
     
     var intBlock: ((Double) -> Void)?
     
-    lazy var companyDetailView: PeopleDetailView = {
-        let companyDetailView = PeopleDetailView()
-        companyDetailView.backgroundColor = .white
-        return companyDetailView
+    lazy var peopleDetailView: PeopleDetailView = {
+        let peopleDetailView = PeopleDetailView()
+        peopleDetailView.backgroundColor = .white
+        return peopleDetailView
     }()
     
     //简介
@@ -96,14 +96,52 @@ extension PeopleDetailViewController {
     private func getPeopleRiskInfo() {
         let man = RequestManager()
         let dict = ["personNumber": enityId]
-        man.requestAPI(params: dict, pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew", method: .get) { result in
+        man.requestAPI(params:
+                        dict, pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew",
+                       method: .get) { [weak self] result in
             switch result {
             case .success(let success):
+                if let model = success.data, let code = success.code, code == 200 {
+                    self?.refreshRiskUI(from: model)
+                }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }
+    }
+    
+    //刷新风险数据
+    private func refreshRiskUI(from model: DataModel) {
+        homeHeadView.oneRiskView.namelabel.text = model.map1?.name ?? ""
+        homeHeadView.oneRiskView.numLabel.text = model.map1?.sumTotal ?? "0"
+        let oneStr = model.map1?.itemname?.isEmpty ?? true ? "暂无数据" : model.map1!.itemname!
+        homeHeadView.oneRiskView.descLabel.text = oneStr
+        homeHeadView.oneRiskView.timeLabel.text = model.map1?.risktime ?? ""
+        
+        
+        homeHeadView.twoRiskView.namelabel.text = model.map2?.name ?? ""
+        homeHeadView.twoRiskView.numLabel.text = model.map2?.sumTotal ?? "0"
+        let twoStr = model.map2?.itemname?.isEmpty ?? true ? "暂无数据" : model.map2!.itemname!
+        homeHeadView.twoRiskView.descLabel.text = twoStr
+        homeHeadView.twoRiskView.timeLabel.text = model.map2?.risktime ?? ""
+        
+        homeHeadView.threeRiskView.namelabel.text = model.map3?.name ?? ""
+        homeHeadView.threeRiskView.numLabel.text = model.map3?.sumTotal ?? "0"
+        let threeStr = model.map3?.itemname?.isEmpty ?? true ? "暂无数据" : model.map3!.itemname!
+        homeHeadView.threeRiskView.descLabel.text = threeStr
+        homeHeadView.threeRiskView.timeLabel.text = model.map3?.risktime ?? ""
+        
+        homeHeadView.fourRiskView.namelabel.text = model.map4?.name ?? ""
+        homeHeadView.fourRiskView.numLabel.text = model.map4?.sumTotal ?? "0"
+        let fourStr = model.map4?.itemname?.isEmpty ?? true ? "暂无数据" : model.map4!.itemname!
+        homeHeadView.fourRiskView.descLabel.text = fourStr
+        homeHeadView.fourRiskView.timeLabel.text = model.map4?.risktime ?? ""
+
+        //动态
+        let timeStr = model.entityRiskEventInfo?.riskTime?.isEmpty ?? true ? "暂无数据" : model.entityRiskEventInfo!.riskTime!
+        homeHeadView.timelabel.text = timeStr
+        homeHeadView.desclabel.text = model.entityRiskEventInfo?.dynamiccontent ?? ""
     }
     
     private func getPeopleHeadInfo() {
