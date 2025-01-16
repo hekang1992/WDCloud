@@ -99,7 +99,18 @@ class DataModel {
     var resume: String?//个人描述
     var shareholderList: [shareholderListModel]?//合作伙伴
     var tags: [String]?
+    //风险
+    var entityRiskEventInfo: entityRiskEventInfoModel?
+    var map1: map1Model?
+    var map2: map1Model?
+    var map3: map1Model?
+    var map4: map1Model?
     init(json: JSON) {
+        self.entityRiskEventInfo = entityRiskEventInfoModel(json: json["entityRiskEventInfo"])
+        self.map1 = map1Model(json: json["map1"])
+        self.map2 = map1Model(json: json["map2"])
+        self.map3 = map1Model(json: json["map3"])
+        self.map4 = map1Model(json: json["map4"])
         self.all = json["all"].intValue
         self.legal = json["legal"].intValue
         self.staff = json["staff"].intValue
@@ -836,5 +847,27 @@ class promptLabelsModel {
         self.name = json["name"].stringValue
         self.type = json["type"].stringValue
         self.url = json["url"].stringValue
+    }
+}
+
+class entityRiskEventInfoModel {
+    var dynamiccontent: String?
+    var riskTime: String?
+    init(json: JSON) {
+        self.dynamiccontent = json["dynamiccontent"].stringValue
+        self.riskTime = json["riskTime"].stringValue
+    }
+}
+
+class map1Model {
+    var itemname: String?
+    var risktime: String?
+    var name: String?
+    var sumTotal: String?
+    init(json: JSON) {
+        self.itemname = json["itemname"].stringValue
+        self.risktime = json["risktime"].stringValue
+        self.name = json["name"].stringValue
+        self.sumTotal = json["sumTotal"].stringValue
     }
 }

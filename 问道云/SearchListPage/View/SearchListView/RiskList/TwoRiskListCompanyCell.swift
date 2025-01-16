@@ -95,14 +95,12 @@ class TwoRiskListCompanyCell: BaseViewCell {
         return twoNumLabel
     }()
     
-    lazy var moreLabel: UILabel = {
-        let moreLabel = UILabel()
-        moreLabel.text = "点击查看更多"
-        moreLabel.textAlignment = .right
-        moreLabel.textColor = .init(cssStr: "#3F96FF")
-        moreLabel.font = .mediumFontOfSize(size: 12)
-        return moreLabel
+    lazy var moreImageView: UIImageView = {
+        let moreImageView = UIImageView()
+        moreImageView.image = UIImage(named: "riskmoreicona")
+        return moreImageView
     }()
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -116,7 +114,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
         contentView.addSubview(lineView)
         contentView.addSubview(oneNumLabel)
         contentView.addSubview(twoNumLabel)
-        contentView.addSubview(moreLabel)
+        contentView.addSubview(moreImageView)
         
         ctImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
@@ -182,10 +180,11 @@ class TwoRiskListCompanyCell: BaseViewCell {
             make.height.equalTo(16.5)
         }
         
-        moreLabel.snp.makeConstraints { make in
+        moreImageView.snp.makeConstraints { make in
             make.centerY.equalTo(oneNumLabel.snp.centerY)
-            make.right.equalToSuperview().offset(-25)
+            make.right.equalToSuperview().offset(-15)
             make.height.equalTo(16.5)
+            make.width.equalTo(85.5)
         }
         
         model.asObservable().subscribe(onNext: { [weak self] model in

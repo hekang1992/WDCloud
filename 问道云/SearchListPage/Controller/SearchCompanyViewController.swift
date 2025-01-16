@@ -230,10 +230,8 @@ class SearchCompanyViewController: WDBaseViewController {
         print("企业===============企业")
         //最近搜索
         getlastSearch()
-        
         //浏览历史
         getBrowsingHistory()
-        
         //热搜
         getHotWords()
     }

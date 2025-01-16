@@ -20,11 +20,30 @@ class CompanyFiveHeadView: BaseView {
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")
         return lineView
     }()
-
+    
+    lazy var timelabel: UILabel = {
+        let timelabel = UILabel()
+        timelabel.textColor = UIColor.init(cssStr: "#9FA4AD")
+        timelabel.textAlignment = .left
+        timelabel.font = .regularFontOfSize(size: 10)
+        return timelabel
+    }()
+    
+    lazy var desclabel: UILabel = {
+        let desclabel = UILabel()
+        desclabel.textColor = UIColor.init(cssStr: "#333333")
+        desclabel.textAlignment = .left
+        desclabel.font = .mediumFontOfSize(size: 12)
+        return desclabel
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(ctImageView)
         addSubview(lineView)
+        addSubview(timelabel)
+        addSubview(desclabel)
+        
         ctImageView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 18, height: 33))
             make.centerY.equalToSuperview()
@@ -34,6 +53,18 @@ class CompanyFiveHeadView: BaseView {
             make.left.right.equalToSuperview()
             make.top.equalTo(ctImageView.snp.bottom).offset(4)
             make.height.equalTo(4)
+        }
+        
+        timelabel.snp.makeConstraints { make in
+            make.left.equalTo(ctImageView.snp.right).offset(6.5)
+            make.top.equalToSuperview().offset(6.5)
+            make.height.equalTo(14)
+        }
+        
+        desclabel.snp.makeConstraints { make in
+            make.left.equalTo(ctImageView.snp.right).offset(6.5)
+            make.top.equalTo(timelabel.snp.bottom).offset(4)
+            make.height.equalTo(16.5)
         }
     }
     

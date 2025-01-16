@@ -61,6 +61,7 @@
 		7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */; };
 		7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */; };
 		734056A92D38E34C009C9C96 /* CorrelationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */; };
+		734056AB2D38FE53009C9C96 /* DetailRiskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734056AA2D38FE53009C9C96 /* DetailRiskItemView.swift */; };
 		734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E72D2641C400BB4087 /* GroupTeamViewController.swift */; };
 		734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E92D26431900BB4087 /* GroupTeamNorView.swift */; };
 		734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */; };
@@ -266,6 +267,7 @@
 		7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewEditCell.swift; sourceTree = "<group>"; };
 		7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBtnPopView.swift; sourceTree = "<group>"; };
 		734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrelationViewCell.swift; sourceTree = "<group>"; };
+		734056AA2D38FE53009C9C96 /* DetailRiskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRiskItemView.swift; sourceTree = "<group>"; };
 		734355E72D2641C400BB4087 /* GroupTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamViewController.swift; sourceTree = "<group>"; };
 		734355E92D26431900BB4087 /* GroupTeamNorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamNorView.swift; sourceTree = "<group>"; };
 		734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamSpecView.swift; sourceTree = "<group>"; };
@@ -839,6 +841,7 @@
 				7352B2332D363CAB00B5391B /* CompanyDetailGDCell.swift */,
 				7352B2352D366BE400B5391B /* CompanyDetailCommonServiceCell.swift */,
 				7352B2372D36736400B5391B /* CompanyDescInfoView.swift */,
+				734056AA2D38FE53009C9C96 /* DetailRiskItemView.swift */,
 			);
 			path = Company;
 			sourceTree = "<group>";
@@ -1163,6 +1166,7 @@
 				7304880F2D2A97E00024265C /* HomeNewsListViewCell.swift in Sources */,
 				7352B2242D353AB700B5391B /* CompanyThreeHeadView.swift in Sources */,
 				73B362512D37A7FB003BD911 /* PeopleDetailView.swift in Sources */,
+				734056AB2D38FE53009C9C96 /* DetailRiskItemView.swift in Sources */,
 				73EABF962D321B7E0052F4AB /* TwoRiskListCompanyCell.swift in Sources */,
 				7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */,
 				730487F32D292EF40024265C /* BindPhoneViewController.swift in Sources */,

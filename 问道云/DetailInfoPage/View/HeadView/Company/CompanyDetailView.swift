@@ -19,6 +19,9 @@ class CompanyDetailView: BaseView {
     //头部的数据模型
     var headModel = BehaviorRelay<DataModel?>(value: nil)
     
+    //风险模型
+    var riskModel = BehaviorRelay<DataModel?>(value: nil)
+    
     //返回当前在第几个section
     var intBlock: ((Double) -> Void)?
     
@@ -141,7 +144,7 @@ class CompanyDetailView: BaseView {
                 }
             }
         }).disposed(by: disposeBag)
-        
+
     }
     
     //按钮点击方法
@@ -228,6 +231,9 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
                 headerView.headView.threeHeadView.collectionView.reloadData()
                 headerView.headView.threeHeadView.pcollectionView.reloadData()
             }
+            if let riskModel = self.riskModel.value {
+                headerView.riskModel.accept(riskModel)
+            }
             return headerView
         }else {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MyCollectionNormalReusableView.identifier, for: indexPath) as! MyCollectionNormalReusableView
@@ -242,8 +248,6 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
     //头部的title高度
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
-            let fad = self.headModel.value
-            let stockModel = fad?.stockInfo
             if let headModel = self.headModel.value, let stockModel = headModel.stockInfo?.first, let key = stockModel.key, !key.isEmpty {
                 return CGSize(width: collectionView.bounds.width, height: 906)
             }else {

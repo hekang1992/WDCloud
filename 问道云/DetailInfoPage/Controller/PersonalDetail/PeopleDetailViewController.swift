@@ -70,7 +70,8 @@ class PeopleDetailViewController: WDBaseViewController {
         segmentedView.listContainer = pagingView.listContainerView
         //距离高度禁止
         pagingView.pinSectionHeaderVerticalOffset = 0
-        
+        //获取风险数据
+        getPeopleRiskInfo()
     }
     
     //一定要加上这句代码,否则不会下拉刷新
@@ -90,6 +91,20 @@ class PeopleDetailViewController: WDBaseViewController {
 }
 
 extension PeopleDetailViewController {
+    
+    //获取风险详情数据
+    private func getPeopleRiskInfo() {
+        let man = RequestManager()
+        let dict = ["personNumber": enityId]
+        man.requestAPI(params: dict, pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew", method: .get) { result in
+            switch result {
+            case .success(let success):
+                break
+            case .failure(let failure):
+                break
+            }
+        }
+    }
     
     private func getPeopleHeadInfo() {
         let dict = [String: Any]()

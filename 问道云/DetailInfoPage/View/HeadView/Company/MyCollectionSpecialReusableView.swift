@@ -17,6 +17,9 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
     //头部数据模型
     var model = BehaviorRelay<DataModel?>(value: nil)
     
+    //风险模型
+    var riskModel = BehaviorRelay<DataModel?>(value: nil)
+    
     static let identifier = "MyCollectionSpecialReusableView"
     
     lazy var headView: CompanyDetailHeadView = {
@@ -234,6 +237,36 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             }else {
                 headView.stockView.isHidden = true
             }
+            
+        }).disposed(by: disposeBag)
+        
+        //风险模型
+        riskModel.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            //风险数据
+            headView.fourHeadView.oneRiskView.namelabel.text = model.map1?.name ?? ""
+            headView.fourHeadView.oneRiskView.numLabel.text = model.map1?.sumTotal ?? "0"
+            headView.fourHeadView.oneRiskView.descLabel.text = model.map1?.itemname ?? ""
+            headView.fourHeadView.oneRiskView.timeLabel.text = model.map1?.risktime ?? ""
+            
+            headView.fourHeadView.twoRiskView.namelabel.text = model.map2?.name ?? ""
+            headView.fourHeadView.twoRiskView.numLabel.text = model.map2?.sumTotal ?? "0"
+            headView.fourHeadView.twoRiskView.descLabel.text = model.map2?.itemname ?? ""
+            headView.fourHeadView.twoRiskView.timeLabel.text = model.map2?.risktime ?? ""
+            
+            headView.fourHeadView.threeRiskView.namelabel.text = model.map3?.name ?? ""
+            headView.fourHeadView.threeRiskView.numLabel.text = model.map3?.sumTotal ?? "0"
+            headView.fourHeadView.threeRiskView.descLabel.text = model.map3?.itemname ?? ""
+            headView.fourHeadView.threeRiskView.timeLabel.text = model.map3?.risktime ?? ""
+            
+            headView.fourHeadView.fourRiskView.namelabel.text = model.map4?.name ?? ""
+            headView.fourHeadView.fourRiskView.numLabel.text = model.map4?.sumTotal ?? "0"
+            headView.fourHeadView.fourRiskView.descLabel.text = model.map4?.itemname ?? ""
+            headView.fourHeadView.fourRiskView.timeLabel.text = model.map4?.risktime ?? ""
+
+            //动态
+            headView.fiveHeadView.timelabel.text = model.entityRiskEventInfo?.riskTime ?? ""
+            headView.fiveHeadView.desclabel.text = model.entityRiskEventInfo?.dynamiccontent ?? ""
             
         }).disposed(by: disposeBag)
         

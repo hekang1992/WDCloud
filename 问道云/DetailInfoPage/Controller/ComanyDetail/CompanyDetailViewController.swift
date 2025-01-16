@@ -45,6 +45,8 @@ class CompanyDetailViewController: WDBaseViewController {
         getCompanyRightCountInfo()
         //获取企业详情头部信息
         getCompanyHeadInfo()
+        //获取风险动态
+        getCompanyRiskInfo()
     }
     
 }
@@ -102,6 +104,24 @@ extension CompanyDetailViewController {
             case .success(let success):
                 if let model = success.data, let code = success.code, code == 200 {
                     self.companyDetailView.headModel.accept(model)
+                    self.companyDetailView.collectionView.reloadData()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //获取风险详情数据
+    private func getCompanyRiskInfo() {
+        let man = RequestManager()
+        let dict = ["entityId": enityId]
+        man.requestAPI(params: dict, pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew", method: .get) { result in
+            switch result {
+            case .success(let success):
+                if let model = success.data, let code = success.code, code == 200 {
+                    self.companyDetailView.riskModel.accept(model)
                     self.companyDetailView.collectionView.reloadData()
                 }
                 break
