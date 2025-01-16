@@ -535,7 +535,8 @@ extension TwoCompanySpecListCell {
                 lab.layer.cornerRadius = 2
                 lab.textAlignment = .center
                 lab.text = "\(tags)   "
-                self.nameLabelColor(from: lab)
+//                self.nameLabelColor(from: lab)
+                TagsLabelColorConfig.nameLabelColor(from: lab)
                 tagScrollView.addSubview(lab)
                 
                 let titleSize = (lab.text! as NSString).size(withAttributes: [.font: lab.font!])
@@ -573,7 +574,13 @@ extension TwoCompanySpecListCell {
         setupScrollView(tagScrollView: tagListView, tagArray: tagArray) // 重新设置标签
     }
 
-    func nameLabelColor(from tagView: UILabel) {
+    
+}
+
+
+class TagsLabelColorConfig {
+    
+    static func nameLabelColor(from tagView: UILabel) {
         let currentTitle = tagView.text ?? ""
         if currentTitle.contains("经营异常") || currentTitle.contains("被执行人") || currentTitle.contains("失信被执行人") || currentTitle.contains("限制高消费") || currentTitle.contains("票据违约") || currentTitle.contains("债券违约") {
             tagView.backgroundColor = .init(cssStr: "#F55B5B")?.withAlphaComponent(0.1)

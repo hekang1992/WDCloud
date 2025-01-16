@@ -359,7 +359,7 @@ extension TwoCompanyNormalListCell {
                 lab.layer.cornerRadius = 2
                 lab.textAlignment = .center
                 lab.text = "\(tags)   "
-                self.nameLabelColor(from: lab)
+                TagsLabelColorConfig.nameLabelColor(from: lab)
                 tagScrollView.addSubview(lab)
                 
                 let titleSize = (lab.text! as NSString).size(withAttributes: [.font: lab.font!])
@@ -397,36 +397,4 @@ extension TwoCompanyNormalListCell {
         setupScrollView(tagScrollView: tagListView, tagArray: tagArray) // 重新设置标签
     }
 
-    func nameLabelColor(from tagView: UILabel) {
-        let currentTitle = tagView.text ?? ""
-        if currentTitle.contains("经营异常") || currentTitle.contains("被执行人") || currentTitle.contains("失信被执行人") || currentTitle.contains("限制高消费") || currentTitle.contains("票据违约") || currentTitle.contains("债券违约") {
-            tagView.backgroundColor = .init(cssStr: "#F55B5B")?.withAlphaComponent(0.1)
-            tagView.textColor = .init(cssStr: "#F55B5B")
-            tagView.layer.borderColor = UIColor.clear.cgColor
-        }else if currentTitle.contains("存续") {
-            tagView.backgroundColor = .clear
-            tagView.textColor = .init(cssStr: "#4DC929")
-            tagView.layer.borderColor = tagView.textColor.cgColor
-            tagView.layer.borderWidth = 1
-        }else if currentTitle.contains("注销") {
-            tagView.backgroundColor = .clear
-            tagView.textColor = .init(cssStr: "#FF7D00")
-            tagView.layer.borderColor = tagView.textColor.cgColor
-            tagView.layer.borderWidth = 1
-        }else if currentTitle.contains("吊销")  {
-            tagView.backgroundColor = .clear
-            tagView.textColor = .init(cssStr: "#F55B5B")
-            tagView.layer.borderColor = tagView.textColor.cgColor
-            tagView.layer.borderWidth = 1
-        }else if currentTitle.contains("小微企业") || currentTitle.contains("高新技术企业") || currentTitle.contains("国有控股") || currentTitle.contains("国有独资") || currentTitle.contains("国有全资") || currentTitle.contains("深主板") || currentTitle.contains("沪主板") || currentTitle.contains("港交所") || currentTitle.contains("北交所") || currentTitle.contains("发债"){
-            tagView.backgroundColor = .init(cssStr: "#3F96FF")?.withAlphaComponent(0.05)
-            tagView.textColor = .init(cssStr: "#3F96FF")
-            tagView.layer.borderColor = UIColor.clear.cgColor
-        } else {
-            tagView.backgroundColor = .init(cssStr: "#3F96FF")?.withAlphaComponent(0.05)
-            tagView.textColor = .init(cssStr: "#3F96FF")
-            tagView.layer.borderColor = UIColor.clear.cgColor
-        }
-    
-    }
 }

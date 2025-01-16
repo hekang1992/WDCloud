@@ -60,6 +60,7 @@
 		7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */; };
 		7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */; };
 		7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */; };
+		734056A92D38E34C009C9C96 /* CorrelationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */; };
 		734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E72D2641C400BB4087 /* GroupTeamViewController.swift */; };
 		734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E92D26431900BB4087 /* GroupTeamNorView.swift */; };
 		734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */; };
@@ -264,6 +265,7 @@
 		7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewNormalCell.swift; sourceTree = "<group>"; };
 		7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewEditCell.swift; sourceTree = "<group>"; };
 		7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBtnPopView.swift; sourceTree = "<group>"; };
+		734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrelationViewCell.swift; sourceTree = "<group>"; };
 		734355E72D2641C400BB4087 /* GroupTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamViewController.swift; sourceTree = "<group>"; };
 		734355E92D26431900BB4087 /* GroupTeamNorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamNorView.swift; sourceTree = "<group>"; };
 		734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamSpecView.swift; sourceTree = "<group>"; };
@@ -846,6 +848,7 @@
 			children = (
 				73B362502D37A7FB003BD911 /* PeopleDetailView.swift */,
 				73B362522D37B704003BD911 /* PeopleDetailHeadView.swift */,
+				734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */,
 			);
 			path = People;
 			sourceTree = "<group>";
@@ -1306,6 +1309,7 @@
 				73EABF922D320F460052F4AB /* TwoRiskListView.swift in Sources */,
 				737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,
+				734056A92D38E34C009C9C96 /* CorrelationViewCell.swift in Sources */,
 				73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */,
 				7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */,
 				73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */,

@@ -58,6 +58,7 @@ class PeopleDetailViewController: WDBaseViewController {
         segmentedView = JXSegmentedView(frame: CGRectMake(0, 0, SCREEN_WIDTH, CGFloat(JXheightForHeaderInSection)))
         segmentedView.backgroundColor = UIColor.white
         segmentedView.dataSource = segmentedViewDataSource
+        segmentedView.defaultSelectedIndex = 1
         let lineView = JXSegmentedIndicatorLineView()
         lineView.indicatorColor = UIColor.init(cssStr: "#2353F0")!
         lineView.indicatorWidth = 18
@@ -66,7 +67,6 @@ class PeopleDetailViewController: WDBaseViewController {
         
         view.addSubview(pagingView)
         pagingView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
-        
         segmentedView.listContainer = pagingView.listContainerView
         //距离高度禁止
         pagingView.pinSectionHeaderVerticalOffset = 0

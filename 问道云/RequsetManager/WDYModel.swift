@@ -27,6 +27,10 @@ class BaseModel {
 }
 
 class DataModel {
+    var all: Int?
+    var legal: Int?
+    var staff: Int?
+    var shareholder: Int?
     var access_token: String?//token
     var customernumber: String?
     var user_id: String?
@@ -96,6 +100,11 @@ class DataModel {
     var shareholderList: [shareholderListModel]?//合作伙伴
     var tags: [String]?
     init(json: JSON) {
+        self.all = json["all"].intValue
+        self.legal = json["legal"].intValue
+        self.staff = json["staff"].intValue
+        self.shareholder = json["shareholder"].intValue
+        
         self.tags = json["tags"].arrayValue.map({
             $0.stringValue
         })
@@ -368,7 +377,13 @@ class rowsModel {
     var id: String?//ID
     var type: String?//1企业 2个人
     var searchContent: String?
+    var relateEntityName: String?
+    var workAs: String?
+    var entityStatus: String?
     init(json: JSON) {
+        self.entityStatus = json["entityStatus"].stringValue
+        self.workAs = json["workAs"].stringValue
+        self.relateEntityName = json["relateEntityName"].stringValue
         self.id = json["id"].stringValue
         self.searchContent = json["searchContent"].stringValue
         self.type = json["type"].stringValue
