@@ -12,10 +12,9 @@ import TYAlertController
 class CompanyOneHeadView: BaseView {
     
     var model = BehaviorRelay<DataModel?>(value: nil)
-
     //是否点击了展开是收起
     var companyModel = CompanyModel(isOpenTag: false)
-    
+    var moreClickBlcok: ((CompanyModel) -> Void)?
     //展开简介按钮
     var moreBtnBlock: (() -> Void)?
     //点击了曾用名
@@ -587,6 +586,7 @@ extension CompanyOneHeadView {
     @objc func didOpenTags(_ sender: UIButton) {
         companyModel.isOpenTag.toggle() // 切换展开/收起状态
         setupScrollView(tagScrollView: tagListView, tagArray: tagArray.value) // 重新设置标签
+        self.moreClickBlcok?(companyModel)
     }
     
 }

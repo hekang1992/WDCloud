@@ -17,7 +17,8 @@ class CompanyDetailHeadView: BaseView {
     var companyCodeBlock: (() -> Void)?
     //发票抬头弹窗
     var invoiceBlock: (() -> Void)?
-    
+    //点击了小标签的展开和收起
+    var moreClickBlcok: ((CompanyModel) -> Void)?
     
     //股东点击
     var shareHoldersBlock: ((shareHoldersModel) -> Void)?
@@ -118,6 +119,22 @@ class CompanyDetailHeadView: BaseView {
             make.top.equalTo(sixHeadView.snp.bottom)
             make.height.equalTo(220)
         }
+        
+        //点击了小标签的展开收起 更改头部高度
+        oneHeadView.moreClickBlcok = { [weak self] model in
+            guard let self = self else { return }
+            self.moreClickBlcok?(model)
+            if model.isOpenTag {
+                oneHeadView.snp.updateConstraints { make in
+                    make.height.equalTo(230)
+                }
+            }else {
+                oneHeadView.snp.updateConstraints { make in
+                    make.height.equalTo(210)
+                }
+            }
+        }
+        
     }
     
     @MainActor required init?(coder: NSCoder) {

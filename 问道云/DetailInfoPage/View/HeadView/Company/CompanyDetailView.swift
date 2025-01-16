@@ -226,6 +226,10 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
         }
         if indexPath.section == 0 {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MyCollectionSpecialReusableView.identifier, for: indexPath) as! MyCollectionSpecialReusableView
+#warning("待定======点击小标签刷新头部高度")
+            headerView.headView.moreClickBlcok = { model in
+                
+            }
             if let headModel = self.headModel.value {
                 headerView.model.accept(headModel)
                 headerView.headView.threeHeadView.collectionView.reloadData()

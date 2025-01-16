@@ -20,10 +20,17 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
     //风险模型
     var riskModel = BehaviorRelay<DataModel?>(value: nil)
     
+    //点击了小标签的展开和收起
+    var moreClickBlcok: ((CompanyModel) -> Void)?
+    
     static let identifier = "MyCollectionSpecialReusableView"
     
     lazy var headView: CompanyDetailHeadView = {
         let headView = CompanyDetailHeadView()
+        headView.moreClickBlcok = { [weak self] model in
+            guard let self = self else { return }
+            self.moreClickBlcok?(model)
+        }
         return headView
     }()
     
