@@ -905,10 +905,10 @@ class GetRedStrConfig: NSObject {
 
 class ViewControllerUtils {
     /// 通过当前视图获取所在的控制器
-    static func findViewController(from view: UIView) -> UIViewController? {
+    static func findViewController(from view: UIView) -> WDBaseViewController? {
         var responder: UIResponder? = view
         while let nextResponder = responder?.next {
-            if let viewController = nextResponder as? UIViewController {
+            if let viewController = nextResponder as? WDBaseViewController {
                 return viewController
             }
             responder = nextResponder

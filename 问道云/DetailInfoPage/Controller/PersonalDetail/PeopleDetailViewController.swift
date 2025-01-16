@@ -117,7 +117,7 @@ extension PeopleDetailViewController {
         //名字
         self.homeHeadView.namelabel.text = model.personName ?? ""
         //tags
-        self.homeHeadView.tagArray.accept(["model.tags ?? ", "model.tags ?? ", "model.tags ?? ", "model.tags ?? ", "model.tags ?? "])
+        self.homeHeadView.tagArray.accept(model.tags ?? [])
         //desc
         let descInfo = model.resume ?? ""
         self.homeHeadView.desLabel.text = "简介: \(descInfo)"
@@ -148,8 +148,26 @@ extension PeopleDetailViewController {
         }).disposed(by: disposeBag)
 
         //合作伙伴
+        self.homeHeadView.onenumlabel.text = String(model.shareholderList?.count ?? 0)
         self.homeHeadView.model.accept(model)
         self.homeHeadView.pcollectionView.reloadData()
+        
+        //常用服务
+        let firmname = model.firmname ?? ""
+        let personname = model.personName ?? ""
+        self.homeHeadView.oneItems = [
+            .init(imageResource: "peopleicon",
+                  path: "/personal-chart/equity-penetration?firmname=\(firmname)&shareholderName=\(personname)"),
+            
+            .init(imageResource: "gerenguanxitu",
+                  path: "/personal-chart/relationship-graph?firmname=\(firmname)&shareholderName=\(personname)"),
+            
+            .init(imageResource: "shijiguanquna",
+                  path: "/personal-chart/actual-controller?firmname=\(firmname)&legalname=\(personname)"),
+            
+            .init(imageResource: "shouyisuoyouqian",
+                  path: "/personal-chart/beneficial-owner?firmname=\(firmname)&legalname=\(personname)"),
+        ]
     }
     
 }

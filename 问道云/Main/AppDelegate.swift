@@ -15,6 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    static let shared: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    var isLandscape = false {
+        didSet {
+            if isLandscape {
+                _ = self.application(UIApplication.shared, supportedInterfaceOrientationsFor: nil)
+            }
+        }
+    }
+    
     lazy var tabBarVc: WDTabBarController = {
         let tabBarVc = WDTabBarController()
         return tabBarVc
@@ -144,4 +154,14 @@ extension AppDelegate: DYFStoreAppStorePaymentDelegate {
         DYFStore.default.delegate = self
     }
     
+}
+
+extension AppDelegate {
+    @objc(application:supportedInterfaceOrientationsForWindow:) func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        if isLandscape {
+            return .all //允许所有模式，手机转动会跟随转动
+        } else {
+            return .portrait
+        }
+    }
 }

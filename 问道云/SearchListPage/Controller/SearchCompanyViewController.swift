@@ -166,21 +166,21 @@ class SearchCompanyViewController: WDBaseViewController {
                     self.companyListView.isHidden = true
                 }
                 
-//                let containsChinese = text.range(of: "[\\u4e00-\\u9fa5]", options: .regularExpression) != nil
-//                let containsEnglish = text.range(of: "[a-zA-Z]", options: .regularExpression) != nil
-//                if containsChinese && containsEnglish {
-//                    // 如果同时包含中文和英文字符
-//                    print("包含中文和英文")
-//                    // 在这里执行您的逻辑
-//                } else if containsChinese {
-//                    // 只包含中文
-//                    print("只包含中文")
-//                    // 在这里执行您的中文逻辑
-//                } else if containsEnglish {
-//                    // 只包含英文
-//                    print("只包含英文")
-//                    // 在这里执行您的英文逻辑
-//                }
+                //                let containsChinese = text.range(of: "[\\u4e00-\\u9fa5]", options: .regularExpression) != nil
+                //                let containsEnglish = text.range(of: "[a-zA-Z]", options: .regularExpression) != nil
+                //                if containsChinese && containsEnglish {
+                //                    // 如果同时包含中文和英文字符
+                //                    print("包含中文和英文")
+                //                    // 在这里执行您的逻辑
+                //                } else if containsChinese {
+                //                    // 只包含中文
+                //                    print("只包含中文")
+                //                    // 在这里执行您的中文逻辑
+                //                } else if containsEnglish {
+                //                    // 只包含英文
+                //                    print("只包含英文")
+                //                    // 在这里执行您的英文逻辑
+                //                }
             }).disposed(by: disposeBag)
         
         
@@ -201,12 +201,19 @@ class SearchCompanyViewController: WDBaseViewController {
         }
         
         companyListView.peopleBlock = { [weak self] model in
-            ToastViewConfig.showToast(message: model.legalPerson?.legalName ?? "")
+            guard let self = self else { return }
+            let legalName = model.legalPerson?.legalName ?? ""
+            let personNumber = model.legalPerson?.personNumber ?? ""
+            let peopleDetailVc = PeopleBothViewController()
+            peopleDetailVc.enityId.accept(personNumber)
+            peopleDetailVc.peopleName.accept(legalName)
+            self.navigationController?.pushViewController(peopleDetailVc, animated: true)
         }
-#warning("电话回调")
-//        companyListView.phoneBlock = { [weak self] model in
-//            
-//        }
+        
+        //点击电话回调
+        companyListView.phoneBlock = { [weak self] model in
+            
+        }
         
         //企业ID回调
         companyListView.entityIdBlock = { [weak self] entityId, entityName in

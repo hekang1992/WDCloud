@@ -44,7 +44,7 @@ class PeopleDetailOneViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        collectionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 38)
+        collectionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 40)
         view.addSubview(collectionView)
         
         //获取个人详情item菜单
@@ -93,10 +93,16 @@ extension PeopleDetailOneViewController: UICollectionViewDelegateFlowLayout, UIC
         let newArray = Array(modelArray.dropLast())[indexPath.section]
         let model = newArray.children?[indexPath.row]
         cell.model.accept(model)
-        
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let modelArray = self.model.value?.items?.first?.children ?? []
+        let newArray = Array(modelArray.dropLast())[indexPath.section]
+        let model = newArray.children?[indexPath.row]
+        print("model====\(model?.menuName ?? "")")
+        self.pushWebPage(from: model?.path ?? "")
+    }
     
     //返回头部
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

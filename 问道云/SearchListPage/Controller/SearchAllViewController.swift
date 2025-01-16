@@ -97,7 +97,7 @@ class SearchAllViewController: WDBaseViewController {
             })
             .disposed(by: disposeBag)
         
-        DispatchQueue.main.asyncAfter(delay: 1.0) {
+        DispatchQueue.main.asyncAfter(delay: 0.5) {
             self.searchHeadView.searchTx.becomeFirstResponder()
         }
         

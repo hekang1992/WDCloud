@@ -168,11 +168,22 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
                     companyVc.enityId.accept(model.id ?? "")
                     vc?.navigationController?.pushViewController(companyVc, animated: true)
                 }else {
-                    ToastViewConfig.showToast(message: "个人详情暂未开发!")
+                    let legalName = model.name ?? ""
+                    let personNumber = model.id ?? ""
+                    let peopleDetailVc = PeopleBothViewController()
+                    peopleDetailVc.enityId.accept(personNumber)
+                    peopleDetailVc.peopleName.accept(legalName)
+                    vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
                 }
             }
             headView.threeHeadView.staffInfosBlock = { model in
-                ToastViewConfig.showToast(message: model.name ?? "")
+                let vc = ViewControllerUtils.findViewController(from: self)
+                let legalName = model.name ?? ""
+                let personNumber = model.id ?? ""
+                let peopleDetailVc = PeopleBothViewController()
+                peopleDetailVc.enityId.accept(personNumber)
+                peopleDetailVc.peopleName.accept(legalName)
+                vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }
             
             //常用服务

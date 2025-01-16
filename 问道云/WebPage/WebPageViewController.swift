@@ -116,6 +116,13 @@ class WebPageViewController: WDBaseViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if AppDelegate.shared.isLandscape == true {
+            disableLandscape()
+        }
+    }
+    
 }
 
 extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigationDelegate {
@@ -164,8 +171,47 @@ extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigat
         }else if method == "get_token" {
             let token = GetSaveLoginInfoConfig.getSessionID()
             return token
+        }else if method == "close" {
+            self.navigationController?.popViewController(animated: true)
+        }else if method == "enable_landscape" {
+            enableLandscape()
         }
         return ""
     }
     
+    //横屏
+    func enableLandscape() {
+        AppDelegate.shared.isLandscape = true
+        DispatchQueue.main.asyncAfter(delay: 1.0) {
+            let windowScene = UIApplication.shared.connectedScenes.first
+            if #available(iOS 16.0, *) {
+                self.navigationController?.tabBarController?.setNeedsUpdateOfSupportedInterfaceOrientations()
+                self.navigationController?.setNeedsUpdateOfSupportedInterfaceOrientations()
+                self.setNeedsUpdateOfSupportedInterfaceOrientations()
+                let preferences = UIWindowScene.GeometryPreferences.iOS(interfaceOrientations: .landscapeRight)
+                (windowScene as? UIWindowScene)?.requestGeometryUpdate(preferences, errorHandler: { error in
+                    print(error)
+                })
+            } else {
+                let value = UIInterfaceOrientation.landscapeLeft.rawValue
+                UIDevice.current.setValue(value, forKey: "orientation")
+            }
+        }
+    }
+    
+    //取消横屏
+    func disableLandscape() {
+        AppDelegate.shared.isLandscape = false
+        let windowScene = UIApplication.shared.connectedScenes.first
+        if #available(iOS 16.0, *) {
+            self.navigationController?.setNeedsUpdateOfSupportedInterfaceOrientations()
+            self.setNeedsUpdateOfSupportedInterfaceOrientations()
+            let preferences = UIWindowScene.GeometryPreferences.iOS(interfaceOrientations: .portrait)
+            (windowScene as? UIWindowScene)?.requestGeometryUpdate(preferences, errorHandler: { error in
+            })
+        } else {
+            let value = UIInterfaceOrientation.portrait.rawValue
+            UIDevice.current.setValue(value, forKey: "orientation")
+        }
+    }
 }

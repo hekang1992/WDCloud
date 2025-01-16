@@ -119,6 +119,16 @@ extension PeopleDetailThreeViewController: UICollectionViewDelegateFlowLayout, U
         return CGSize(width: collectionView.bounds.width, height: 41)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var pageUrl: String = ""
+        let modelArray = self.model.value?.items?.first?.children ?? []
+        let newArray = Array(modelArray.suffix(1))[indexPath.section]
+        let model = newArray.children?[indexPath.row]
+        let oneUrl = model?.path ?? ""
+        pageUrl = oneUrl + "?" + "personNumber=\(enityId)"
+        self.pushWebPage(from: pageUrl)
+    }
+    
 }
 
 extension PeopleDetailThreeViewController: JXPagingViewListViewDelegate {

@@ -18,6 +18,13 @@ class PeopleDetailHeadView: BaseView {
     var moreBtnBlock: (() -> Void)?
     
     var model = BehaviorRelay<DataModel?>(value: nil)
+    
+    //问道图谱
+    var oneItems: [Item]? {
+        didSet {
+            altascollectionView.reloadData()
+        }
+    }
 
     lazy var lineView: UIView = {
         let lineView = UIView()
@@ -112,8 +119,16 @@ class PeopleDetailHeadView: BaseView {
     
     lazy var parImageView: UIImageView = {
         let parImageView = UIImageView()
-        parImageView.image = UIImage(named: "wenpuicon")
+        parImageView.image = UIImage(named: "hezuohuobanimage")
         return parImageView
+    }()
+    
+    lazy var onenumlabel: UILabel = {
+        let onenumlabel = UILabel()
+        onenumlabel.textColor = UIColor.init(cssStr: "#58408B")
+        onenumlabel.textAlignment = .center
+        onenumlabel.font = .mediumFontOfSize(size: 12)
+        return onenumlabel
     }()
     
     lazy var fourlineView: UIView = {
@@ -156,6 +171,20 @@ class PeopleDetailHeadView: BaseView {
         return pcollectionView
     }()
     
+    //问道图谱
+    lazy var altascollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 4
+        let altascollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        altascollectionView.delegate = self
+        altascollectionView.dataSource = self
+        altascollectionView.showsVerticalScrollIndicator = false
+        altascollectionView.register(CompanyDetailCommonServiceCell.self, forCellWithReuseIdentifier: "CompanyDetailCommonServiceCell")
+        altascollectionView.showsHorizontalScrollIndicator = false
+        return altascollectionView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(lineView)
@@ -181,6 +210,7 @@ class PeopleDetailHeadView: BaseView {
         
         addSubview(atlasView)
         atlasView.addSubview(atlasImageView)
+        atlasView.addSubview(altascollectionView)
         addSubview(fivelineView)
         
         lineView.snp.makeConstraints { make in
@@ -235,7 +265,7 @@ class PeopleDetailHeadView: BaseView {
             make.top.equalTo(riskView.snp.bottom)
         }
         
-        
+        //动态
         activityView.snp.makeConstraints { make in
             make.height.equalTo(43)
             make.left.right.equalToSuperview()
@@ -253,6 +283,7 @@ class PeopleDetailHeadView: BaseView {
             make.top.equalTo(activityView.snp.bottom)
         }
         
+        //合作伙伴
         partnerView.snp.makeConstraints { make in
             make.height.equalTo(81)
             make.left.right.equalToSuperview()
@@ -268,6 +299,12 @@ class PeopleDetailHeadView: BaseView {
             make.left.equalToSuperview().offset(12)
             make.size.equalTo(CGSize(width: 17, height: 60))
         }
+        parImageView.addSubview(onenumlabel)
+        onenumlabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: 17, height: 14))
+            make.bottom.equalToSuperview().offset(-1)
+        }
         pcollectionView.snp.makeConstraints { make in
             make.left.equalTo(parImageView.snp.right).offset(5)
             make.centerY.equalToSuperview()
@@ -275,7 +312,7 @@ class PeopleDetailHeadView: BaseView {
             make.right.equalToSuperview().offset(-5)
         }
         
-        
+        //图谱
         atlasView.snp.makeConstraints { make in
             make.height.equalTo(73)
             make.left.right.equalToSuperview()
@@ -285,6 +322,12 @@ class PeopleDetailHeadView: BaseView {
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(12)
             make.size.equalTo(CGSize(width: 17, height: 60))
+        }
+        altascollectionView.snp.makeConstraints { make in
+            make.left.equalTo(atlasImageView.snp.right).offset(5)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(60)
+            make.right.equalToSuperview().offset(-5)
         }
         fivelineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
@@ -313,28 +356,51 @@ class PeopleDetailHeadView: BaseView {
 extension PeopleDetailHeadView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 120, height: 65)
+        if collectionView == self.pcollectionView {
+            return CGSize(width: 120, height: 65)
+        }else {
+            return CGSize(width: 80, height: 60)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let model = self.model.value
         if collectionView == self.pcollectionView {
+            let model = self.model.value
             return model?.shareholderList?.count ?? 0
+        }else {
+            return oneItems?.count ?? 0
         }
-//        let count = self.model.value?.shareholderList?.count ?? 0
-        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TwoPeopleCoopViewCell", for: indexPath) as! TwoPeopleCoopViewCell
-        let model = self.model.value?.shareholderList?[indexPath.row]
-        cell.model1.accept(model)
-        return cell
+        if collectionView == self.pcollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TwoPeopleCoopViewCell", for: indexPath) as! TwoPeopleCoopViewCell
+            let model = self.model.value?.shareholderList?[indexPath.row]
+            cell.model1.accept(model)
+            return cell
+        }else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompanyDetailCommonServiceCell", for: indexPath) as! CompanyDetailCommonServiceCell
+            cell.bgImageView.image = UIImage(named: oneItems?[indexPath.row].imageResource ?? "")
+            return cell
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let model = self.model.value?.shareholderList?[indexPath.row]
-        print("model:\(model?.personId ?? 0)")
+        let vc = ViewControllerUtils.findViewController(from: self)
+        if collectionView == self.pcollectionView {
+            let model = self.model.value?.shareholderList?[indexPath.row]
+            let vc = ViewControllerUtils.findViewController(from: self)
+            let peopleDetailVc = PeopleBothViewController()
+            peopleDetailVc.enityId.accept(String(model?.personId ?? 0))
+            peopleDetailVc.peopleName.accept(model?.personName ?? "")
+            vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
+        }else {
+            let model = self.oneItems?[indexPath.row]
+            let pageUrl = model?.path ?? ""
+            vc?.pushWebPage(from: pageUrl)
+        }
     }
     
 }

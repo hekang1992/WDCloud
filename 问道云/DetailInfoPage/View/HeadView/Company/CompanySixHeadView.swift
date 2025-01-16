@@ -168,4 +168,17 @@ extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelega
         return CGSize(width: 80, height: 60)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ViewControllerUtils.findViewController(from: self)
+        if collectionView == self.pcollectionView {
+            let model = self.twoItems?[indexPath.row]
+            let pageUrl = model?.path ?? ""
+            vc?.pushWebPage(from: pageUrl)
+        }else {
+            let model = self.oneItems?[indexPath.row]
+            let pageUrl = model?.path ?? ""
+            vc?.pushWebPage(from: pageUrl)
+        }
+    }
+    
 }

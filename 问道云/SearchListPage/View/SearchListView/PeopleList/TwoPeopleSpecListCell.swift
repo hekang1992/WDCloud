@@ -202,8 +202,11 @@ extension TwoPeopleSpecListCell: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = self.model.value?.shareholderList?[indexPath.row]
-        print("model:\(model?.personId ?? 0)")
-        
+        let vc = ViewControllerUtils.findViewController(from: self)
+        let peopleDetailVc = PeopleBothViewController()
+        peopleDetailVc.enityId.accept(String(model?.personId ?? 0))
+        peopleDetailVc.peopleName.accept(model?.personName ?? "")
+        vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
     }
     
 }
