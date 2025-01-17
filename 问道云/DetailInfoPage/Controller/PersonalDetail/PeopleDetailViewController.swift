@@ -15,11 +15,11 @@ class PeopleDetailViewController: WDBaseViewController {
     
     var intBlock: ((Double) -> Void)?
     
-    lazy var peopleDetailView: PeopleDetailView = {
-        let peopleDetailView = PeopleDetailView()
-        peopleDetailView.backgroundColor = .white
-        return peopleDetailView
-    }()
+//    lazy var peopleDetailView: PeopleDetailView = {
+//        let peopleDetailView = PeopleDetailView()
+//        peopleDetailView.backgroundColor = .white
+//        return peopleDetailView
+//    }()
     
     //简介
     lazy var infoView: CompanyDescInfoView = {

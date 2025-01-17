@@ -105,7 +105,14 @@ class DataModel {
     var map2: map1Model?
     var map3: map1Model?
     var map4: map1Model?
+    
+    var riskGrade: riskGradeModel?
+    var sumTotal: Int?
+    var rimRisk: [rimRiskModel]?
     init(json: JSON) {
+        self.rimRisk = json["rimRisk"].arrayValue.map { rimRiskModel(json: $0) }
+        self.sumTotal = json["sumTotal"].intValue
+        self.riskGrade = riskGradeModel(json: json["riskGrade"])
         self.entityRiskEventInfo = entityRiskEventInfoModel(json: json["entityRiskEventInfo"])
         self.map1 = map1Model(json: json["map1"])
         self.map2 = map1Model(json: json["map2"])
@@ -210,8 +217,14 @@ class itemsModel {
     var risklevel: String?
     var riskDetailPath: String?
     var firmname: String?
+    var itemname: String?
+    var size: Int?
+    var itemnumber: Int?
     init(json: JSON) {
         //风险数据公司
+        self.itemnumber = json["itemnumber"].intValue
+        self.size = json["size"].intValue
+        self.itemname = json["itemname"].stringValue
         self.menuName = json["menuName"].stringValue
         self.entityStatus = json["entityStatus"].stringValue
         self.riskNum1 = json["riskNum1"].intValue
@@ -869,5 +882,46 @@ class map1Model {
         self.risktime = json["risktime"].stringValue
         self.name = json["name"].stringValue
         self.sumTotal = json["sumTotal"].stringValue
+    }
+}
+
+class riskGradeModel {
+    var highRiskSum: String?
+    var hintRiskSum: String?
+    var lowRiskSum: String?
+    var publicRiskSum: String?
+    init(json: JSON) {
+        self.highRiskSum = json["highRiskSum"].stringValue
+        self.hintRiskSum = json["hintRiskSum"].stringValue
+        self.lowRiskSum = json["lowRiskSum"].stringValue
+        self.publicRiskSum = json["publicRiskSum"].stringValue
+    }
+}
+
+class rimRiskModel {
+    var entityid: String?
+    var entityname: String?
+    var firmtype: String?
+    var relate: String?
+    var relatedEntitySize: Int?
+    var itemType: [itemTypeModel]?
+    init(json: JSON) {
+        self.entityid = json["entityid"].stringValue
+        self.entityname = json["entityname"].stringValue
+        self.firmtype = json["firmtype"].stringValue
+        self.relate = json["relate"].stringValue
+        self.relatedEntitySize = json["relatedEntitySize"].intValue
+        self.itemType = json["itemType"].arrayValue.map { itemTypeModel(json: $0) }
+    }
+}
+
+class itemTypeModel {
+    var count: Int?
+    var typeName: String?
+    var typeNumber: String?
+    init(json: JSON) {
+        self.count = json["count"].intValue
+        self.typeName = json["typeName"].stringValue
+        self.typeNumber = json["typeNumber"].stringValue
     }
 }

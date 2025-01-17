@@ -68,8 +68,9 @@ extension WDBaseViewController {
 //            webUrl = "http://" + pageUrl
 //            webVc.pageUrl.accept(webUrl)
 //        }
-        if isValidWebURL(pageUrl) {
-            webVc.pageUrl.accept(pageUrl)
+        if pageUrl.hasPrefix("www") {
+            webUrl = "http://" + pageUrl
+            webVc.pageUrl.accept(webUrl)
         }else {
             webUrl = base_url + pageUrl
             webVc.pageUrl.accept(webUrl)

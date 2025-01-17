@@ -79,8 +79,12 @@ extension TwoRiskListPeopleCell: UICollectionViewDelegateFlowLayout, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ViewControllerUtils.findViewController(from: self)
         let model = self.modelArray.value?[indexPath.row]
-        print("model:\(model?.personNumber ?? "0")")
+        let riskDetailVc = PeopleRiskDetailViewController()
+        riskDetailVc.name = model?.name ?? ""
+        riskDetailVc.enityId = model?.personNumber ?? ""
+        vc?.navigationController?.pushViewController(riskDetailVc, animated: true)
     }
     
 }

@@ -540,7 +540,7 @@ extension SearchRiskViewController {
                         self.listPeopleView.tableView.mj_footer?.isHidden = true
                     }
                     self.listPeopleView.dataModel.accept(model)
-//                    self.listPeopleView.dataModelArray.accept(self.allPeopleArray)
+                    //                    self.listPeopleView.dataModelArray.accept(self.allPeopleArray)
                     self.listPeopleView.searchWordsRelay.accept(self.searchWordsRelay.value)
                     self.listPeopleView.tableView.reloadData()
                     //根据数据刷新按钮文字

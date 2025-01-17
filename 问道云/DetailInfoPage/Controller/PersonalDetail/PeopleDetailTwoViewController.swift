@@ -185,6 +185,7 @@ class PeopleDetailTwoViewController: WDBaseViewController {
                 self?.getCorrelationInfo()
             })
             .disposed(by: disposeBag)
+        
         whiteView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(lineView.snp.bottom)

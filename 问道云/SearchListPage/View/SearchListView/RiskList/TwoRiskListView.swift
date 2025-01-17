@@ -163,4 +163,28 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = ViewControllerUtils.findViewController(from: self)
+        let dataModel = self.dataModel.value
+        if let entityData = dataModel?.entityData, let personData = dataModel?.personData, let enItems = entityData.items, let perItems = personData.items, !enItems.isEmpty, !perItems.isEmpty  {
+            if indexPath.section == 0 {
+                return
+            }else {
+                let model = dataModelArray.value?[indexPath.row]
+                let riskDetailVc = CompanyRiskDetailViewController()
+                riskDetailVc.name = model?.entityName ?? ""
+                riskDetailVc.enityId = model?.entityId ?? ""
+                riskDetailVc.logo = model?.logo ?? ""
+                vc?.navigationController?.pushViewController(riskDetailVc, animated: true)
+            }
+        }else {
+            let model = dataModelArray.value?[indexPath.row]
+            let riskDetailVc = CompanyRiskDetailViewController()
+            riskDetailVc.name = model?.entityName ?? ""
+            riskDetailVc.enityId = model?.entityId ?? ""
+            riskDetailVc.logo = model?.logo ?? ""
+            vc?.navigationController?.pushViewController(riskDetailVc, animated: true)
+        }
+    }
+    
 }

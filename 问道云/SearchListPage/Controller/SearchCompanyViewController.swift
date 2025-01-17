@@ -228,30 +228,60 @@ class SearchCompanyViewController: WDBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("企业===============企业")
+        let group = DispatchGroup()
+        var lastSearchSuccess = false
+        var browsingHistorySuccess = false
+        var hotWordsSuccess = false
         //最近搜索
-        getlastSearch()
+        group.enter()
+        getlastSearch { success in
+            lastSearchSuccess = success
+            group.leave()
+        }
         //浏览历史
-        getBrowsingHistory()
+        group.enter()
+        getBrowsingHistory { success in
+            browsingHistorySuccess = success
+            group.leave()
+        }
         //热搜
-        getHotWords()
+        group.enter()
+        getHotWords { success in
+            hotWordsSuccess = success
+            group.leave()
+        }
+        
+        // 所有任务完成后的通知
+        group.notify(queue: .main) {
+            print("所有数据加载完成，通知你！")
+            if lastSearchSuccess && browsingHistorySuccess && hotWordsSuccess {
+                print("所有接口请求成功！")
+            } else {
+                print("部分接口请求失败。")
+            }
+        }
     }
 }
 
 extension SearchCompanyViewController {
     
     //最近搜索
-    private func getlastSearch() {
+    private func getlastSearch(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
         let dict = ["searchType": "1", "moduleId": "01"]
         man.requestAPI(params: dict, pageUrl: "/operation/searchRecord/query", method: .post) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let success):
-                if let rows = success.data?.data {
+                if let rows = success.data?.data, let code = success.code, code == 200  {
                     reloadSearchUI(data: rows)
+                    completion(true)
+                }else {
+                    completion(false)
                 }
                 break
             case .failure(_):
+                completion(false)
                 break
             }
         }
@@ -282,7 +312,7 @@ extension SearchCompanyViewController {
     }
     
     //浏览历史
-    private func getBrowsingHistory() {
+    private func getBrowsingHistory(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber, "viewrecordtype": "1", "moduleId": "01", "pageNum": "1", "pageSize": "20"]
@@ -290,12 +320,15 @@ extension SearchCompanyViewController {
             switch result {
             case .success(let success):
                 guard let self = self else { return }
-                if let rows = success.data?.rows {
+                if let rows = success.data?.rows, let code = success.code, code == 200 {
                     readHistoryUI(data: rows)
+                    completion(true)
+                }else {
+                    completion(false)
                 }
                 break
             case .failure(_):
-                
+                completion(false)
                 break
             }
         }
@@ -333,7 +366,7 @@ extension SearchCompanyViewController {
     }
     
     //热搜
-    private func getHotWords() {
+    private func getHotWords(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
         let dict = ["moduleId": "01"]
         man.requestAPI(params: dict,
@@ -342,12 +375,16 @@ extension SearchCompanyViewController {
             guard let self = self else { return }
             switch result {
             case .success(let success):
-                if let model = success.data {
+                if let model = success.data, let code = success.code, code == 200 {
                     self.hotWordsArray.accept(model.data ?? [])
                     hotsWordsUI(data: model.data ?? [])
+                    completion(true)
+                }else {
+                    completion(false)
                 }
                 break
             case .failure(_):
+                completion(false)
                 break
             }
         }
@@ -452,7 +489,9 @@ extension SearchCompanyViewController {
                     self.companyListView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1
-                        self.getlastSearch()
+                        self.getlastSearch { success in
+                            
+                        }
                         self.allArray.removeAll()
                     }
                     pageIndex += 1
