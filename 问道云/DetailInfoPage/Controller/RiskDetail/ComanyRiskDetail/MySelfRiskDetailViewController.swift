@@ -504,20 +504,17 @@ extension MySelfRiskDetailViewController {
         self.twoItemView.numLabel.text = model.riskGrade?.lowRiskSum ?? "0"
         self.threeItemView.numLabel.text = model.riskGrade?.hintRiskSum ?? "0"
         if self.itemtype == "2" {
-            var modelArray = model.items ?? []
-            modelArray = modelArray.enumerated().filter { index, _ in
+            let modelArray = model.items ?? []
+            let arrayWithoutFirst = modelArray.enumerated().filter { index, _ in
                 index != 0
             }.map { $0.element }
-            self.lawView.oneModelArray.accept(modelArray)
-            self.lawView.modelArray.accept(modelArray)
-            self.lawView.numLabel.text = "案件信息(\(count))"
-        }
-        if self.itemtype == "2" {
-            var modelArray = model.items ?? []
-            modelArray = modelArray.enumerated().filter { index, _ in
+            self.lawView.oneModelArray.accept(arrayWithoutFirst)
+            self.lawView.modelArray.accept(arrayWithoutFirst)
+            
+            let arrayWithoutSecond = modelArray.enumerated().filter { index, _ in
                 index != 1
             }.map { $0.element }
-            self.lawView.twoModelArray.accept(modelArray)
+            self.lawView.twoModelArray.accept(arrayWithoutSecond)
             self.lawView.numLabel.text = "案件信息(\(count))"
         }
         self.lawView.tableView.reloadData()
