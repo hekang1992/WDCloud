@@ -50,11 +50,28 @@ class UnioRiskDetailViewController: WDBaseViewController {
 extension UnioRiskDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.01
+        return 126.5
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return nil
+        let headView = RiskUnioHeadView()
+        if let model = self.model {
+            let oneCount = model.rimRiskSize ?? 0
+            let twoCount = model.sumCount ?? 0
+            let descStr = "关联企业总共\(oneCount),累计风险\(twoCount)条"
+            let attributedText = NSMutableAttributedString(string: descStr)
+            let regex = try! NSRegularExpression(pattern: "\\d+")
+            let matches = regex.matches(in: descStr, range: NSRange(descStr.startIndex..., in: descStr))
+            for match in matches {
+                attributedText.addAttribute(.foregroundColor, value: UIColor.init(cssStr: "#FF0000") as Any, range: match.range)
+            }
+            headView.descLabel.attributedText = attributedText
+            headView.oneView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(model.parentCompanyfiliale ?? 0)", fullText: "\(model.parentCompanyfiliale ?? 0)家", colorStr: "#1677FF")
+            headView.twoView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(model.investmentsAbroad ?? 0)", fullText: "\(model.investmentsAbroad ?? 0)家", colorStr: "#1677FF")
+            headView.threeView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(model.keyPersonnel ?? 0)", fullText: "\(model.keyPersonnel ?? 0)家", colorStr: "#1677FF")
+            headView.fourView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(model.shareholderCompany ?? 0)", fullText: "\(model.shareholderCompany ?? 0)家", colorStr: "#1677FF")
+        }
+        return headView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -64,6 +64,12 @@ class DataModel {
     //风险数据模型
     var entityData: entityDataModel?
     var personData: personDataModel?
+    var rimRiskSize: Int?//企业个数
+    var sumCount: Int?//风险个数
+    var parentCompanyfiliale: Int?//子公司
+    var investmentsAbroad: Int?//对外投资
+    var keyPersonnel: Int?//董监高投资
+    var shareholderCompany: Int?//股东
 /**
  公司详情数据模型
  */
@@ -170,7 +176,13 @@ class DataModel {
         self.comboname = json["comboname"].stringValue
         self.combotypenumber = json["combotypenumber"].stringValue
         self.combonumber = json["combonumber"].intValue
+        self.rimRiskSize = json["rimRiskSize"].intValue
+        self.sumCount = json["sumCount"].intValue
         self.total = json["total"].intValue
+        self.investmentsAbroad = json["investmentsAbroad"].intValue
+        self.keyPersonnel = json["keyPersonnel"].intValue
+        self.parentCompanyfiliale = json["parentCompanyfiliale"].intValue
+        self.shareholderCompany = json["shareholderCompany"].intValue
         self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
         self.data = json["data"].arrayValue.map { rowsModel(json: $0) }
     }

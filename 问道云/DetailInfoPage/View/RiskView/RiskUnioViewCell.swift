@@ -39,11 +39,35 @@ class RiskUnioViewCell: BaseViewCell {
         return numLabel
     }()
     
-    lazy var grayView: UIView = {
-        let grayView = UIView()
-        grayView.layer.cornerRadius = 2
-        grayView.backgroundColor = .init(cssStr: "#F8F9FB")
-        return grayView
+    lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.layer.cornerRadius = 2
+        stackView.backgroundColor = .init(cssStr: "#F8F9FB")
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.spacing = 10
+        stackView.distribution = .fillProportionally
+        return stackView
+    }()
+    
+    lazy var oneView: RiskNumView = {
+        let oneView = RiskNumView()
+        return oneView
+    }()
+    
+    lazy var twoView: RiskNumView = {
+        let twoView = RiskNumView()
+        return twoView
+    }()
+    
+    lazy var threeView: RiskNumView = {
+        let threeView = RiskNumView()
+        return threeView
+    }()
+    
+    lazy var fourView: RiskNumView = {
+        let fourView = RiskNumView()
+        return fourView
     }()
     
     lazy var lineView: UIView = {
@@ -57,7 +81,11 @@ class RiskUnioViewCell: BaseViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(descLabel)
         contentView.addSubview(numLabel)
-        contentView.addSubview(grayView)
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubview(oneView)
+        stackView.addArrangedSubview(twoView)
+        stackView.addArrangedSubview(threeView)
+        stackView.addArrangedSubview(fourView)
         contentView.addSubview(lineView)
         nameLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(15)
@@ -75,7 +103,7 @@ class RiskUnioViewCell: BaseViewCell {
             make.height.equalTo(15)
             make.right.equalToSuperview().offset(-18)
         }
-        grayView.snp.makeConstraints { make in
+        stackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset(15)
             make.height.equalTo(63)
@@ -90,6 +118,26 @@ class RiskUnioViewCell: BaseViewCell {
             nameLabel.text = model.entityname ?? ""
             descLabel.text = model.relate ?? ""
             numLabel.text = "累计风险: \(model.relatedEntitySize ?? 0)条"
+            if let itemType = model.itemType, itemType.count > 0 {
+                oneView.nameLabel.text = itemType[0].typeName ?? ""
+                twoView.nameLabel.text = itemType[1].typeName ?? ""
+                threeView.nameLabel.text = itemType[2].typeName ?? ""
+                fourView.nameLabel.text = itemType[3].typeName ?? ""
+                
+                oneView.numLabel.text = "\(itemType[0].count ?? 0)"
+                twoView.numLabel.text = "\(itemType[1].count ?? 0)"
+                threeView.numLabel.text = "\(itemType[2].count ?? 0)"
+                fourView.numLabel.text = "\(itemType[3].count ?? 0)"
+                
+                oneView.numLabel.textColor = UIColor.init(cssStr: "#333333")
+                twoView.numLabel.textColor = UIColor.init(cssStr: "#333333")
+                threeView.numLabel.textColor = UIColor.init(cssStr: "#333333")
+                fourView.numLabel.textColor = UIColor.init(cssStr: "#333333")
+                oneView.numLabel.font = .mediumFontOfSize(size: 14)
+                twoView.numLabel.font = .mediumFontOfSize(size: 14)
+                threeView.numLabel.font = .mediumFontOfSize(size: 14)
+                fourView.numLabel.font = .mediumFontOfSize(size: 14)
+            }
         }).disposed(by: disposeBag)
     }
     

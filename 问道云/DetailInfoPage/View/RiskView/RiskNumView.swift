@@ -20,8 +20,8 @@ class RiskNumView: BaseView {
     lazy var numLabel: UILabel = {
         let numLabel = UILabel()
         numLabel.textAlignment = .center
-        numLabel.font = .mediumFontOfSize(size: 14)
-        numLabel.textColor = .init(cssStr: "#FF0000")
+        numLabel.font = .mediumFontOfSize(size: 10)
+        numLabel.textColor = UIColor.init(cssStr: "#FF0000")
         return numLabel
     }()
     
@@ -34,11 +34,13 @@ class RiskNumView: BaseView {
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(10)
             make.height.equalTo(16.5)
+            make.left.equalToSuperview()
         }
         numLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(nameLabel.snp.bottom).offset(5.5)
             make.height.equalTo(20)
+            make.left.equalToSuperview()
         }
         
     }

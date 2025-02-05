@@ -887,7 +887,6 @@ class GetRedStrConfig: NSObject {
         let countValue = count ?? ""
         // 创建可变富文本字符串
         let attributedString = NSMutableAttributedString(string: fullText)
-        
         // 查找 count 的范围
         if let range = fullText.range(of: "\(countValue)") {
             // 转换为 NSRange
@@ -895,6 +894,9 @@ class GetRedStrConfig: NSObject {
             // 设置指定范围内的文字颜色
             attributedString.addAttribute(.foregroundColor,
                                           value: UIColor(cssStr: colorStr ?? "") ?? UIColor.black,
+                                          range: nsRange)
+            attributedString.addAttribute(.font,
+                                          value: UIFont.regularFontOfSize(size: 14),
                                           range: nsRange)
         }
         
