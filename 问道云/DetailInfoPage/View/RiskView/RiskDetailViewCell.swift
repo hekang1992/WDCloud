@@ -43,6 +43,36 @@ class RiskDetailViewCell: BaseViewCell {
         return numlabel
     }()
     
+    lazy var highLabel: PaddedLabel = {
+        let highLabel = PaddedLabel()
+        highLabel.backgroundColor = UIColor.init(cssStr: "#FEF0EF")
+        highLabel.textColor = UIColor.init(cssStr: "#F55B5B")
+        highLabel.layer.cornerRadius = 2
+        highLabel.layer.masksToBounds = true
+        highLabel.font = .regularFontOfSize(size: 9)
+        return highLabel
+    }()
+    
+    lazy var lowLabel: PaddedLabel = {
+        let lowLabel = PaddedLabel()
+        lowLabel.backgroundColor = UIColor.init(cssStr: "#FFEEDE")
+        lowLabel.textColor = UIColor.init(cssStr: "#FF7D00")
+        lowLabel.layer.cornerRadius = 2
+        lowLabel.layer.masksToBounds = true
+        lowLabel.font = .regularFontOfSize(size: 9)
+        return lowLabel
+    }()
+    
+    lazy var hitLabel: PaddedLabel = {
+        let hitLabel = PaddedLabel()
+        hitLabel.backgroundColor = UIColor.init(cssStr: "#3F96FF")?.withAlphaComponent(0.05)
+        hitLabel.textColor = UIColor.init(cssStr: "#3F96FF")
+        hitLabel.layer.cornerRadius = 2
+        hitLabel.layer.masksToBounds = true
+        hitLabel.font = .regularFontOfSize(size: 9)
+        return hitLabel
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(grayView)
@@ -50,6 +80,9 @@ class RiskDetailViewCell: BaseViewCell {
         whiteView.addSubview(namelabel)
         whiteView.addSubview(rightImageView)
         whiteView.addSubview(numlabel)
+        whiteView.addSubview(highLabel)
+        whiteView.addSubview(lowLabel)
+        whiteView.addSubview(hitLabel)
         grayView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(42)
@@ -71,6 +104,21 @@ class RiskDetailViewCell: BaseViewCell {
         numlabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalTo(rightImageView.snp.left).offset(-4)
+            make.height.equalTo(15)
+        }
+        highLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(namelabel.snp.centerY)
+            make.left.equalTo(namelabel.snp.right).offset(4.5)
+            make.height.equalTo(15)
+        }
+        lowLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(namelabel.snp.centerY)
+            make.left.equalTo(highLabel.snp.right).offset(4.5)
+            make.height.equalTo(15)
+        }
+        hitLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(namelabel.snp.centerY)
+            make.left.equalTo(lowLabel.snp.right).offset(4.5)
             make.height.equalTo(15)
         }
     }

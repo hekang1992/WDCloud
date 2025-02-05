@@ -99,7 +99,7 @@ class RiskUnioViewCell: BaseViewCell {
             make.height.equalTo(14)
         }
         numLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(29)
+            make.top.equalTo(nameLabel.snp.bottom).offset(2)
             make.height.equalTo(15)
             make.right.equalToSuperview().offset(-18)
         }

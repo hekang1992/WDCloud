@@ -241,8 +241,10 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             if let stockInfo = model.stockInfo, !stockInfo.isEmpty {
                 headView.stockView.dataModel.accept(model)
                 headView.stockView.isHidden = false
+                headView.threeHeadView.oneImageView.image = UIImage(named: "maingudongicon")
             }else {
                 headView.stockView.isHidden = true
+                headView.threeHeadView.oneImageView.image = UIImage(named: "gudongicon")
             }
             
         }).disposed(by: disposeBag)

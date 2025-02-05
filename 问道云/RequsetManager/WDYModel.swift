@@ -232,8 +232,17 @@ class itemsModel {
     var itemname: String?
     var size: Int?
     var itemnumber: Int?
+    var highCount: Int?
+    var hintCount: Int?
+    var lowCount: Int?
+    var caseproperty: String?
+    var subitems: [subitemsModel]?
     init(json: JSON) {
         //风险数据公司
+        self.caseproperty = json["caseproperty"].stringValue
+        self.highCount = json["highCount"].intValue
+        self.hintCount = json["hintCount"].intValue
+        self.lowCount = json["lowCount"].intValue
         self.itemnumber = json["itemnumber"].intValue
         self.size = json["size"].intValue
         self.itemname = json["itemname"].stringValue
@@ -268,6 +277,7 @@ class itemsModel {
         self.personId = json["personId"].stringValue
         self.listCompany = json["listCompany"].arrayValue.map { listCompanyModel(json: $0) }
         self.shareholderList = json["shareholderList"].arrayValue.map { shareholderListModel(json: $0) }
+        self.subitems = json["subitems"].arrayValue.map { subitemsModel(json: $0) }
     }
 }
 
@@ -935,5 +945,30 @@ class itemTypeModel {
         self.count = json["count"].intValue
         self.typeName = json["typeName"].stringValue
         self.typeNumber = json["typeNumber"].stringValue
+    }
+}
+
+class subitemsModel {
+    var casetype: Int?
+    var subitemname: String?
+    var isExpanded: Bool  // 用于控制展开状态
+    var threelevelitems: [threelevelitemsModel]?
+    init(json: JSON) {
+        self.isExpanded = json["isExpanded"].boolValue
+        self.casetype = json["casetype"].intValue
+        self.subitemname = json["subitemname"].stringValue
+        self.threelevelitems = json["threelevelitems"].arrayValue.map { threelevelitemsModel(json: $0) }
+    }
+    
+}
+
+class threelevelitemsModel {
+    var caseproperty: String?
+    var size: Int?
+    var threelevelitemname: String?
+    init(json: JSON) {
+        self.caseproperty = json["caseproperty"].stringValue
+        self.size = json["size"].intValue
+        self.threelevelitemname = json["threelevelitemname"].stringValue
     }
 }

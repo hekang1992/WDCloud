@@ -172,7 +172,7 @@ class MyDownloadViewController: WDBaseViewController {
 
 extension MyDownloadViewController {
     
-    //添加下拉筛选
+    //添加时间下拉筛选
     func addDownList() {
         let leixing1 = MenuAction(title: "类型", style: .typeList)!
         self.downloadModel.asObservable().subscribe(onNext: { [weak self] modelArray in

@@ -60,6 +60,7 @@ class TimeDownView: BaseView, UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.textColor = model.seleceted ? UIColor.init(cssStr: "#547AFF") : UIColor.init(cssStr: "#666666")
         cell.accessoryType = model.seleceted ? .checkmark : .none;
         cell.backgroundColor = model.seleceted ? UIColor.init(cssStr: "#F3F3F3") : .clear
+        cell.selectionStyle = .none
         return cell
     }
     

@@ -7,6 +7,8 @@
 
 import UIKit
 import JXPagingView
+import DropMenuBar
+import RxRelay
 
 class MySelfRiskDetailViewController: WDBaseViewController {
     
@@ -16,7 +18,6 @@ class MySelfRiskDetailViewController: WDBaseViewController {
     
     var functionType: String = "1"// 1-自身风险，2-历史风险，3-日报，4-全部
     var dateType: String = ""
-    var date: String = ""
     var itemtype: String = "1"
     var allArray: [itemsModel]?
     
@@ -41,6 +42,13 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(RiskDetailViewCell.self, forCellReuseIdentifier: "RiskDetailViewCell")
         return tableView
+    }()
+    
+    //法律风险view
+    lazy var lawView: CompanyLawListView = {
+        let lawView = CompanyLawListView()
+        lawView.isHidden = true
+        return lawView
     }()
     
     lazy var onelabel: PaddedLabel = {
@@ -115,6 +123,15 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         return numLabel
     }()
     
+    lazy var timeLabel: UILabel = {
+        let timeLabel = UILabel()
+        timeLabel.text = "时间筛选"
+        timeLabel.font = .regularFontOfSize(size: 12)
+        timeLabel.textColor = .init(cssStr: "#9FA4AD")
+        timeLabel.textAlignment = .left
+        return timeLabel
+    }()
+    
     lazy var maskView: UIView = {
         let maskView = UIView()
         maskView.layer.borderWidth = 1
@@ -147,12 +164,21 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         return threeItemView
     }()
 
+    var startDateRelay = BehaviorRelay<String?>(value: nil)//开始时间
+    
+    var endDateRelay = BehaviorRelay<String?>(value: nil)//结束时间
+    
+    var startTime: String = ""//开始时间
+    
+    var endTime: String = ""//结束时间
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         view.addSubview(numLabel)
+        view.addSubview(timeLabel)
         view.addSubview(whiteView)
         whiteView.addSubview(onelabel)
         whiteView.addSubview(twolabel)
@@ -163,13 +189,18 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         maskView.addSubview(twoItemView)
         maskView.addSubview(threeItemView)
         view.addSubview(tableView)
+        view.addSubview(lawView)
         
         numLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)
             make.left.equalToSuperview().offset(22)
             make.height.equalTo(25)
         }
-        
+        timeLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(2)
+            make.right.equalToSuperview().offset(-66)
+            make.height.equalTo(25)
+        }
         whiteView.snp.makeConstraints { make in
             make.top.equalTo(numLabel.snp.bottom)
             make.left.right.equalToSuperview()
@@ -226,13 +257,16 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(maskView.snp.bottom)
         }
-        
+        lawView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(maskView.snp.bottom)
+        }
         // 绑定 onelabel 的点击事件
         onelabel.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.hideLawOrTableView(form: "")
                 self?.updateSelectedLabel(self?.onelabel)
-                
                 self?.itemtype = "1"
                 self?.getRiskDetailInfo()
             })
@@ -242,6 +276,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         twolabel.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.hideLawOrTableView(form: "2")
                 self?.updateSelectedLabel(self?.twolabel)
                 self?.itemtype = "2"
                 self?.getRiskLowDetailInfo()
@@ -252,6 +287,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         threelabel.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.hideLawOrTableView(form: "")
                 self?.updateSelectedLabel(self?.threelabel)
                 self?.itemtype = "3"
                 self?.getRiskDetailInfo()
@@ -262,11 +298,105 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         fourlabel.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.hideLawOrTableView(form: "")
                 self?.updateSelectedLabel(self?.fourlabel)
                 self?.itemtype = "4"
                 self?.getRiskDetailInfo()
             })
             .disposed(by: disposeBag)
+        
+        
+        let timeMenu = MenuAction(title: "全部", style: .typeCustom)!
+        var modelArray = getListTime(from: true)
+        let menuView = DropMenuBar(action: [timeMenu])!
+        view.addSubview(menuView)
+        menuView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(2)
+            make.right.equalToSuperview().offset(-2)
+            make.size.equalTo(CGSize(width: 60, height: 25))
+        }
+        timeMenu.displayCustomWithMenu = { [weak self] in
+            let timeView = TimeDownView()
+            if ((self?.startDateRelay.value?.isEmpty) != nil) && ((self?.endDateRelay.value?.isEmpty) != nil) {
+                timeView.startDateRelay.accept(self?.startDateRelay.value)
+                timeView.endDateRelay.accept(self?.endDateRelay.value)
+            }
+            timeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 315)
+            
+            timeView.block = { model in
+                self?.dateType = model.currentID ?? ""
+                self?.startTime = ""
+                self?.endTime = ""
+                self?.startDateRelay.accept("")
+                self?.endDateRelay.accept("")
+                //根据时间去筛选
+                if self?.itemtype == "2" {
+                    self?.getRiskLowDetailInfo()
+                }else {
+                    self?.getRiskDetailInfo()
+                }
+                if model.displayText != "全部" {
+                    timeMenu.adjustTitle(model.displayText ?? "", textColor: UIColor.init(cssStr: "#547AFF"))
+                }else {
+                    timeMenu.adjustTitle("全部", textColor: UIColor.init(cssStr: "#666666"))
+                }
+            }
+            //点击开始时间
+            timeView.startTimeBlock = { [weak self] btn in
+                self?.getPopTimeDatePicker(completion: { time in
+                    self?.startTime = time ?? ""
+                    btn.setTitle(time, for: .normal)
+                    btn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
+                    if ((self?.startTime.isEmpty) != nil) && ((self?.endTime.isEmpty) != nil) {
+                        timeView.btn?.isEnabled = true
+                        timeView.btn?.backgroundColor = UIColor.init(cssStr: "#307CFF")
+                    }
+                })
+            }
+            //点击结束时间
+            timeView.endTimeBlock = { [weak self] btn in
+                self?.getPopTimeDatePicker(completion: { time in
+                    self?.endTime = time ?? ""
+                    btn.setTitle(time, for: .normal)
+                    btn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
+                    if ((self?.startTime.isEmpty) != nil) && ((self?.endTime.isEmpty) != nil) {
+                        timeView.btn?.isEnabled = true
+                        timeView.btn?.backgroundColor = UIColor.init(cssStr: "#307CFF")
+                    }
+                })
+            }
+            //点击确认
+            timeView.sureTimeBlock = { [weak self] btn in
+                let startTime = self?.startTime ?? ""
+                let endTime = self?.endTime ?? ""
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                if let startDate = dateFormatter.date(from: startTime),
+                   let endDate = dateFormatter.date(from: endTime) {
+                    if startDate > endDate {
+                        ToastViewConfig.showToast(message: "时间格式不正确!")
+                        return
+                    }
+                } else {
+                    ToastViewConfig.showToast(message: "时间格式不正确!")
+                    return
+                }
+                self?.startDateRelay.accept(self?.startTime)
+                self?.endDateRelay.accept(self?.endTime)
+                self?.dateType = startTime + "|" + endTime
+                timeMenu.adjustTitle(startTime + "|" + endTime, textColor: UIColor.init(cssStr: "#547AFF"))
+                modelArray = self?.getListTime(from: false) ?? []
+                //根据时间去筛选
+                if self?.itemtype == "2" {
+                    self?.getRiskLowDetailInfo()
+                }else {
+                    self?.getRiskDetailInfo()
+                }
+            }
+            timeView.modelArray = modelArray
+            timeView.tableView.reloadData()
+            return timeView
+        }
         
         
         getRiskDetailInfo()
@@ -290,10 +420,21 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             label.layer.borderColor = UIColor.init(cssStr: "#547AFF")?.cgColor
         }
     }
-
+    
 }
 
 extension MySelfRiskDetailViewController {
+    
+    //显示和隐藏
+    private func hideLawOrTableView(form type: String) {
+        if type == "2" {
+            self.lawView.isHidden = false
+            self.tableView.isHidden = true
+        }else {
+            self.lawView.isHidden = true
+            self.tableView.isHidden = false
+        }
+    }
     
     //获取风险信息
     private func getRiskDetailInfo() {
@@ -301,8 +442,7 @@ extension MySelfRiskDetailViewController {
         let dict = ["entityid": enityId,
                     "functionType": functionType,
                     "itemtype": itemtype,
-                    "dateType": dateType,
-                    "date": date]
+                    "dateType": dateType]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskDynamicslow",
                        method: .get) { [weak self] result in
@@ -333,8 +473,7 @@ extension MySelfRiskDetailViewController {
         let dict = ["entityid": enityId,
                     "functionType": functionType,
                     "itemtype": itemtype,
-                    "dateType": dateType,
-                    "date": date]
+                    "dateType": dateType]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskDynamicsbereLegalRisk",
                        method: .get) { [weak self] result in
@@ -343,30 +482,30 @@ extension MySelfRiskDetailViewController {
             case .success(let success):
                 if let model = success.data {
                     let rows = model.items ?? []
-                    self.allArray = rows
-                    self.tableView.reloadData()
                     self.refreshUI(from: model)
                     self.emptyView.removeFromSuperview()
                     if rows.isEmpty {
-                        self.addNodataView(from: self.tableView)
+                        self.addNodataView(from: self.lawView)
                     }
                 }
                 break
             case .failure(_):
-                self.addNodataView(from: self.tableView)
+                self.addNodataView(from: self.lawView)
                 break
             }
         }
     }
     
-    
     //数据刷新
     func refreshUI(from model: DataModel) {
+        self.lawView.dataModel = model
+        self.lawView.tableView.reloadData()
         let count = String(model.sumTotal ?? 0)
-        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险:  \(count)条", colorStr: "#FF0000")
+        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险:\(count)条", colorStr: "#FF0000")
         self.oneItemView.numLabel.text = model.riskGrade?.highRiskSum ?? "0"
         self.twoItemView.numLabel.text = model.riskGrade?.lowRiskSum ?? "0"
         self.threeItemView.numLabel.text = model.riskGrade?.hintRiskSum ?? "0"
+        self.lawView.numLabel.text = "案件信息(\(count))"
     }
     
 }
@@ -386,13 +525,44 @@ extension MySelfRiskDetailViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RiskDetailViewCell", for: indexPath) as? RiskDetailViewCell else { return UITableViewCell() }
         let model = self.allArray?[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RiskDetailViewCell", for: indexPath) as? RiskDetailViewCell
-        cell?.backgroundColor = .clear
-        cell?.selectionStyle = .none
-        cell?.namelabel.text = model?.itemname ?? ""
-        cell?.numlabel.text = "共\(model?.size ?? 0)条"
-        return cell ?? UITableViewCell()
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        cell.namelabel.text = model?.itemname ?? ""
+        cell.numlabel.text = "共\(model?.size ?? 0)条"
+        if let model = model {
+            cell.highLabel.text = "高风险(\(model.highCount ?? 0))"
+            if model.highCount == 0 {
+                cell.highLabel.snp.makeConstraints({ make in
+                    make.width.equalTo(0)
+                    make.left.equalTo(cell.namelabel.snp.right)
+                })
+            }
+            cell.lowLabel.text = "低风险(\(model.lowCount ?? 0))"
+            if model.lowCount == 0 {
+                cell.lowLabel.snp.makeConstraints({ make in
+                    make.width.equalTo(0)
+                    make.left.equalTo(cell.highLabel.snp.right)
+                })
+            }
+            cell.hitLabel.text = "提示(\(model.hintCount ?? 0))"
+            if model.hintCount == 0 {
+                cell.hitLabel.snp.makeConstraints({ make in
+                    make.width.equalTo(0)
+                })
+            }
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let model = self.allArray?[indexPath.row] else { return }
+        let riskSecondVc = ComanyRiskMoreDetailViewController()
+        riskSecondVc.itemsModel.accept(model)
+        riskSecondVc.dateType = self.dateType
+        riskSecondVc.itemtype = self.itemtype
+        self.navigationController?.pushViewController(riskSecondVc, animated: true)
     }
     
 }
