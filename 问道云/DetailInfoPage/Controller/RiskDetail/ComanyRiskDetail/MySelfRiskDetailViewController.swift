@@ -498,14 +498,29 @@ extension MySelfRiskDetailViewController {
     
     //数据刷新
     func refreshUI(from model: DataModel) {
-        self.lawView.dataModel = model
-        self.lawView.tableView.reloadData()
         let count = String(model.sumTotal ?? 0)
         self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险:\(count)条", colorStr: "#FF0000")
         self.oneItemView.numLabel.text = model.riskGrade?.highRiskSum ?? "0"
         self.twoItemView.numLabel.text = model.riskGrade?.lowRiskSum ?? "0"
         self.threeItemView.numLabel.text = model.riskGrade?.hintRiskSum ?? "0"
-        self.lawView.numLabel.text = "案件信息(\(count))"
+        if self.itemtype == "2" {
+            var modelArray = model.items ?? []
+            modelArray = modelArray.enumerated().filter { index, _ in
+                index != 0
+            }.map { $0.element }
+            self.lawView.oneModelArray.accept(modelArray)
+            self.lawView.modelArray.accept(modelArray)
+            self.lawView.numLabel.text = "案件信息(\(count))"
+        }
+        if self.itemtype == "2" {
+            var modelArray = model.items ?? []
+            modelArray = modelArray.enumerated().filter { index, _ in
+                index != 1
+            }.map { $0.element }
+            self.lawView.twoModelArray.accept(modelArray)
+            self.lawView.numLabel.text = "案件信息(\(count))"
+        }
+        self.lawView.tableView.reloadData()
     }
     
 }
