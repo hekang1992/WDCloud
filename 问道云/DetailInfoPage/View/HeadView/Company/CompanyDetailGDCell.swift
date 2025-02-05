@@ -24,9 +24,9 @@ class CompanyDetailGDCell: UICollectionViewCell {
     
     lazy var mlabel: UILabel = {
         let mlabel = UILabel()
-        mlabel.text = "fadf"
         mlabel.textColor = UIColor.init(cssStr: "#333333")
         mlabel.textAlignment = .left
+        mlabel.numberOfLines = 2
         mlabel.font = .mediumFontOfSize(size: 12)
         return mlabel
     }()
@@ -60,10 +60,9 @@ class CompanyDetailGDCell: UICollectionViewCell {
             make.top.equalToSuperview().offset(5)
             make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset(2)
-            make.height.equalTo(16.5)
         }
         mlabel1.snp.makeConstraints { make in
-            make.top.equalTo(mlabel.snp.bottom).offset(14)
+            make.bottom.equalToSuperview().offset(-16.5)
             make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset(2)
             make.height.equalTo(16.5)
@@ -81,9 +80,11 @@ class CompanyDetailGDCell: UICollectionViewCell {
             
             let percent = model.percent ?? ""
             mlabel1.attributedText = GetRedStrConfig.getRedStr(from: percent, fullText: "持股比例\(percent)", colorStr: "#333333")
+            mlabel1.font = .regularFontOfSize(size: 11)
             
             let count = String(model.relatedNum ?? 0)
             mlabel2.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "投资\(count)家公司", colorStr: "#333333")
+            mlabel2.font = .regularFontOfSize(size: 11)
         }).disposed(by: disposeBag)
         
     }

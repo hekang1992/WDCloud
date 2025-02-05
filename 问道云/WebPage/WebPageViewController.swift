@@ -19,19 +19,14 @@ class WebPageViewController: WDBaseViewController {
     lazy var webView: WKWebView = {
         // 1. 创建 WKWebView 配置
         let config = WKWebViewConfiguration()
-        
         // 2. 注入 JavaScript 代码
         let scriptStr = "window.ALDClient = {};ALDClient.callNative = function(method, arg) { return prompt(method, arg)};"
-        
         let cookieScript = WKUserScript(
             source: scriptStr,
             injectionTime: .atDocumentStart,
             forMainFrameOnly: false
         )
         config.userContentController.addUserScript(cookieScript)
-        // 3. 注册消息处理器
-        
-        
         let webView = WKWebView(frame: .zero, configuration: config)
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.scrollView.bounces = false

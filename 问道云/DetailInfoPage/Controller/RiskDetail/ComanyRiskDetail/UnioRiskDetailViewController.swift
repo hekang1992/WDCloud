@@ -87,6 +87,19 @@ extension UnioRiskDetailViewController: UITableViewDelegate, UITableViewDataSour
         return cell ?? UITableViewCell()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.model?.rimRisk?[indexPath.row]
+        let firmtype = model?.firmtype ?? ""
+        if firmtype == "1" {
+            let entityId = model?.entityid ?? ""
+            let entityName = model?.entityname ?? ""
+            let companyDetailVc = CompanyBothViewController()
+            companyDetailVc.enityId.accept(entityId)
+            companyDetailVc.companyName.accept(entityName)
+            self.navigationController?.pushViewController(companyDetailVc, animated: true)
+        }
+    }
+    
 }
 
 extension UnioRiskDetailViewController {
