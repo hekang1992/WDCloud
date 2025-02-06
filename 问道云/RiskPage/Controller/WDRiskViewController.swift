@@ -50,6 +50,11 @@ class WDRiskViewController: WDBaseViewController {
         addsentMentView()
         //添加子控制器
         setupViewControllers()
+        headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let searchVc = SearchMonitoringViewController()
+            self.navigationController?.pushViewController(searchVc, animated: true)
+        }).disposed(by: disposeBag)
     }
 
 }
@@ -93,15 +98,31 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
         if index == 0 {
             let oneVc = self.listVCArray[0]
             oneVc.getMonitoringCompanyInfo()
+            oneVc.backBlock = { [weak self] in
+                let searchVc = SearchMonitoringViewController()
+                self?.navigationController?.pushViewController(searchVc, animated: true)
+            }
         }else if index == 1 {
             let twoVc = self.listVCArray[1]
             twoVc.getMonitoringCompanyInfo()
+            twoVc.backBlock = { [weak self] in
+                let searchVc = SearchMonitoringViewController()
+                self?.navigationController?.pushViewController(searchVc, animated: true)
+            }
         }else if index == 2 {
             let threeVc = self.listVCArray[2]
             threeVc.getMonitoringCompanyInfo()
+            threeVc.backBlock = { [weak self] in
+                let searchVc = SearchMonitoringViewController()
+                self?.navigationController?.pushViewController(searchVc, animated: true)
+            }
         }else {
             let fourVc = self.listVCArray[3]
             fourVc.getMonitoringCompanyInfo()
+            fourVc.backBlock = { [weak self] in
+                let searchVc = SearchMonitoringViewController()
+                self?.navigationController?.pushViewController(searchVc, animated: true)
+            }
         }
     }
     

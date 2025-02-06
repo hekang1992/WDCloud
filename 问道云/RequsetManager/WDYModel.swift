@@ -201,6 +201,7 @@ class itemsModel {
     //风险数据公司
     var entityStatus: String?//经营状态
     var entityName: String?//公司名称
+    var entity_name: String?//公司名称
     var entityId: String?//公司ID
     var registerCapital: String?//注册资本
     var legalName: String?//法定代表人
@@ -239,10 +240,15 @@ class itemsModel {
     var risktime: String?
     var riskdynamicid: String?
     var subitems: [subitemsModel]?
+    var personnel: [personnelModel]?//搜索监控企业
+    var seniorexecutive: [seniorexecutiveModel]?//搜索监控企业
     init(json: JSON) {
         //风险数据公司
+        self.personnel = json["personnel"].arrayValue.map { personnelModel(json: $0) }
+        self.seniorexecutive = json["seniorexecutive"].arrayValue.map { seniorexecutiveModel(json: $0) }
         self.riskdynamicid = json["riskdynamicid"].stringValue
         self.risktime = json["risktime"].stringValue
+        self.entity_name = json["entity_name"].stringValue
         self.caseproperty = json["caseproperty"].stringValue
         self.highCount = json["highCount"].intValue
         self.hintCount = json["hintCount"].intValue
@@ -282,6 +288,24 @@ class itemsModel {
         self.listCompany = json["listCompany"].arrayValue.map { listCompanyModel(json: $0) }
         self.shareholderList = json["shareholderList"].arrayValue.map { shareholderListModel(json: $0) }
         self.subitems = json["subitems"].arrayValue.map { subitemsModel(json: $0) }
+    }
+}
+
+class personnelModel {
+    var name: String?
+    var type: String?
+    init(json: JSON) {
+        self.name = json["name"].stringValue
+        self.type = json["type"].stringValue
+    }
+}
+
+class seniorexecutiveModel {
+    var name: String?
+    var type: String?
+    init(json: JSON) {
+        self.name = json["name"].stringValue
+        self.type = json["type"].stringValue
     }
 }
 

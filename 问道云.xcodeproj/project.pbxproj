@@ -26,6 +26,8 @@
 		730CEDFA2D5446C8002DE9DF /* CompanyLawCellHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDF92D5446C8002DE9DF /* CompanyLawCellHeadView.swift */; };
 		730CEDFC2D544EF6002DE9DF /* CompanyLawCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDFB2D544EF6002DE9DF /* CompanyLawCell.swift */; };
 		730CEDFE2D546080002DE9DF /* CompanyLawDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDFD2D546080002DE9DF /* CompanyLawDetailCell.swift */; };
+		730CEE002D54AE2C002DE9DF /* SearchMonitoringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDFF2D54AE2C002DE9DF /* SearchMonitoringViewController.swift */; };
+		730CEE022D54BE83002DE9DF /* SearchMonitoringViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEE012D54BE83002DE9DF /* SearchMonitoringViewCell.swift */; };
 		7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD802D01A55900770009 /* OrderListViewCell.swift */; };
 		7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */; };
 		7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */; };
@@ -242,6 +244,8 @@
 		730CEDF92D5446C8002DE9DF /* CompanyLawCellHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLawCellHeadView.swift; sourceTree = "<group>"; };
 		730CEDFB2D544EF6002DE9DF /* CompanyLawCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLawCell.swift; sourceTree = "<group>"; };
 		730CEDFD2D546080002DE9DF /* CompanyLawDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLawDetailCell.swift; sourceTree = "<group>"; };
+		730CEDFF2D54AE2C002DE9DF /* SearchMonitoringViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMonitoringViewController.swift; sourceTree = "<group>"; };
+		730CEE012D54BE83002DE9DF /* SearchMonitoringViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMonitoringViewCell.swift; sourceTree = "<group>"; };
 		7314AD802D01A55900770009 /* OrderListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewCell.swift; sourceTree = "<group>"; };
 		7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketViewController.swift; sourceTree = "<group>"; };
 		7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketView.swift; sourceTree = "<group>"; };
@@ -853,6 +857,7 @@
 			children = (
 				7325A7C12CFEEE6E0043C196 /* WDRiskViewController.swift */,
 				73A21DF12D0C39E000FC4C49 /* RiskListViewController.swift */,
+				730CEDFF2D54AE2C002DE9DF /* SearchMonitoringViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -861,6 +866,7 @@
 			isa = PBXGroup;
 			children = (
 				73A21DE92D0C2F2B00FC4C49 /* RiskView.swift */,
+				730CEE012D54BE83002DE9DF /* SearchMonitoringViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1274,6 +1280,7 @@
 				73B362552D37B9BC003BD911 /* PeopleDetailOneViewController.swift in Sources */,
 				730CEDF82D53590B002DE9DF /* CompanyLawListView.swift in Sources */,
 				736E97812D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift in Sources */,
+				730CEE002D54AE2C002DE9DF /* SearchMonitoringViewController.swift in Sources */,
 				73E971752D2FCF0500F12B15 /* TwoCompanySpecListCell.swift in Sources */,
 				736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */,
 				736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */,
@@ -1396,6 +1403,7 @@
 				7352B2382D36736400B5391B /* CompanyDescInfoView.swift in Sources */,
 				73EABF982D3235FB0052F4AB /* TwoRiskListPeopleCollectionViewCell.swift in Sources */,
 				734896E82D3A329E00B028FE /* RiskDetailViewCell.swift in Sources */,
+				730CEE022D54BE83002DE9DF /* SearchMonitoringViewCell.swift in Sources */,
 				734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */,
 				73EABF942D321B6F0052F4AB /* TwoRiskListPeopleCell.swift in Sources */,
 				73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */,

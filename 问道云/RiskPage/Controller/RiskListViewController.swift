@@ -11,6 +11,8 @@ class RiskListViewController: WDBaseViewController {
     
     var time: String = ""//today week month ""
     
+    var backBlock: (() -> Void)?
+    
     lazy var iconImageView1: UIImageView = {
         let iconImageView1 = UIImageView()
         iconImageView1.image = UIImage(named: "wendaoimage1")
@@ -142,7 +144,7 @@ extension RiskListViewController {
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                
+                self.backBlock?()
             }).disposed(by: disposeBag)
     }
     
