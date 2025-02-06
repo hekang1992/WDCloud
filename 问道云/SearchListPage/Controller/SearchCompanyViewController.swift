@@ -338,8 +338,14 @@ extension SearchCompanyViewController {
     func readHistoryUI(data: [rowsModel]) {
         for (index, model) in data.enumerated() {
             let listView = CommonSearchListView()
-            listView.block = {
-                
+            listView.block = { [weak self] in
+                guard let self = self else { return }
+                let companyDetailVc = CompanyBothViewController()
+                let enityId = model.firmnumber ?? ""
+                let companyName = model.firmname ?? ""
+                companyDetailVc.enityId.accept(enityId)
+                companyDetailVc.companyName.accept(companyName)
+                self.navigationController?.pushViewController(companyDetailVc, animated: true)
             }
             listView.nameLabel.text = model.firmname ?? ""
             listView.timeLabel.text = model.createhourtime ?? ""
@@ -395,8 +401,14 @@ extension SearchCompanyViewController {
         self.companyView.hotWordsView.isHidden = false
         for (index, model) in data.enumerated() {
             let listView = CommonSearchListView()
-            listView.block = {
-                
+            listView.block = { [weak self] in
+                guard let self = self else { return }
+                let companyDetailVc = CompanyBothViewController()
+                let enityId = model.eid ?? ""
+                let companyName = model.name ?? ""
+                companyDetailVc.enityId.accept(enityId)
+                companyDetailVc.companyName.accept(companyName)
+                self.navigationController?.pushViewController(companyDetailVc, animated: true)
             }
             listView.nameLabel.text = model.name ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: .random(), textColor: .white))

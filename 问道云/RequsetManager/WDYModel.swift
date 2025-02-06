@@ -408,6 +408,7 @@ class rowsModel {
     var customerFollowList: [customerFollowListModel]?
     var createhourtime: String?
     var personname: String?
+    var personnumber: String?
     var sellprice: Double?
     var minconsumption: String?
     var combonumber: Int?
@@ -424,17 +425,20 @@ class rowsModel {
     var videofile: String?//讲堂链接
     var newstagsobj: [newstagsobjModel]?
     var banner: String?//banner图片链接
-    var id: String?//ID
+    var eid: String?//ID
     var type: String?//1企业 2个人
     var searchContent: String?
     var relateEntityName: String?
     var workAs: String?
     var entityStatus: String?
+    var firmnumber: String?
     init(json: JSON) {
+        self.personname = json["personname"].stringValue
+        self.firmnumber = json["firmnumber"].stringValue
         self.entityStatus = json["entityStatus"].stringValue
         self.workAs = json["workAs"].stringValue
         self.relateEntityName = json["relateEntityName"].stringValue
-        self.id = json["id"].stringValue
+        self.eid = json["id"].stringValue
         self.searchContent = json["searchContent"].stringValue
         self.type = json["type"].stringValue
         self.banner = json["banner"].stringValue

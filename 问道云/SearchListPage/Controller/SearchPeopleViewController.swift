@@ -270,10 +270,16 @@ extension SearchPeopleViewController {
     func readHistoryUI(data: [rowsModel]) {
         for (index, model) in data.enumerated() {
             let listView = CommonSearchListView()
-            listView.block = {
-                
+            listView.block = { [weak self] in
+                guard let self = self else { return }
+                let peopleDetailVc = PeopleBothViewController()
+                let peopleID = model.personnumber ?? ""
+                let peopleName = model.personname ?? ""
+                peopleDetailVc.enityId.accept(peopleID)
+                peopleDetailVc.peopleName.accept(peopleName)
+                self.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }
-            listView.nameLabel.text = model.firmname ?? ""
+            listView.nameLabel.text = model.personname ?? ""
             listView.timeLabel.text = model.createhourtime ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
             self.peopleView.historyView.addSubview(listView)
@@ -322,8 +328,14 @@ extension SearchPeopleViewController {
     func hotsWordsUI(data: [rowsModel]) {
         for (index, model) in data.enumerated() {
             let listView = CommonSearchListView()
-            listView.block = {
-                
+            listView.block = { [weak self] in
+                guard let self = self else { return }
+                let peopleDetailVc = PeopleBothViewController()
+                let peopleID = model.eid ?? ""
+                let peopleName = model.name ?? ""
+                peopleDetailVc.enityId.accept(peopleID)
+                peopleDetailVc.peopleName.accept(peopleName)
+                self.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }
             listView.nameLabel.text = model.name ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: .random(), textColor: .white))

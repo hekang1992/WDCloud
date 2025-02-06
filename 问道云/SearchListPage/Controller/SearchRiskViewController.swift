@@ -318,8 +318,16 @@ extension SearchRiskViewController {
     func readHistoryUI(data: [rowsModel]) {
         for (index, model) in data.enumerated() {
             let listView = CommonSearchListView()
-            listView.block = {
-                
+            listView.block = { [weak self] in
+                guard let self = self else { return }
+                let riskDetailVc = CompanyRiskDetailViewController()
+                let enityId = model.firmnumber ?? ""
+                let logo = model.logo ?? ""
+                let name = model.firmname ?? ""
+                riskDetailVc.enityId = enityId
+                riskDetailVc.logo = logo
+                riskDetailVc.name = name
+                self.navigationController?.pushViewController(riskDetailVc, animated: true)
             }
             listView.nameLabel.text = model.firmname ?? ""
             listView.timeLabel.text = model.createhourtime ?? ""
@@ -370,8 +378,16 @@ extension SearchRiskViewController {
     func hotsWordsUI(data: [rowsModel]) {
         for (index, model) in data.enumerated() {
             let listView = CommonSearchListView()
-            listView.block = {
-                
+            listView.block = { [weak self] in
+                guard let self = self else { return }
+                let riskDetailVc = CompanyRiskDetailViewController()
+                let enityId = model.eid ?? ""
+                let logo = model.logo ?? ""
+                let name = model.name ?? ""
+                riskDetailVc.enityId = enityId
+                riskDetailVc.logo = logo
+                riskDetailVc.name = name
+                self.navigationController?.pushViewController(riskDetailVc, animated: true)
             }
             listView.nameLabel.text = model.name ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
