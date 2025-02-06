@@ -10,9 +10,16 @@ import RxRelay
 
 class CompanyLawListView: BaseView {
     
+    var index: Int = 0
+    
     var modelArray = BehaviorRelay<[itemsModel]?>(value: [])
-    var oneModelArray = BehaviorRelay<[itemsModel]?>(value: [])
-    var twoModelArray = BehaviorRelay<[itemsModel]?>(value: [])
+    
+    // 保存每个 section 是否展开的状态
+    var expandedSections: [Bool] = [false, false]
+    
+    var block: ((itemsModel) -> Void)?
+    
+    var oneBlock: ((itemsModel, threelevelitemsModel) -> Void)?
     
     lazy var oneBtn: UIButton = {
         let oneBtn = UIButton(type: .custom)
@@ -55,11 +62,9 @@ class CompanyLawListView: BaseView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.register(RiskDetailViewCell.self, forCellReuseIdentifier: "RiskDetailViewCell")
-        tableView.estimatedRowHeight = 80
+        tableView.register(CompanyLawCell.self, forCellReuseIdentifier: "CompanyLawCell")
         tableView.showsVerticalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
-        tableView.rowHeight = UITableView.automaticDimension
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -113,7 +118,7 @@ class CompanyLawListView: BaseView {
             rlineView.isHidden = true
             oneBtn.isEnabled = false
             twoBtn.isEnabled = true
-            modelArray.accept(self.oneModelArray.value)
+            index = 0
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
         
@@ -125,7 +130,7 @@ class CompanyLawListView: BaseView {
             rlineView.isHidden = false
             oneBtn.isEnabled = true
             twoBtn.isEnabled = false
-            modelArray.accept(self.twoModelArray.value)
+            index = 1
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
         
@@ -140,32 +145,143 @@ class CompanyLawListView: BaseView {
 
 extension CompanyLawListView: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 36
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 42
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headView = UIView()
-        headView.backgroundColor = .random()
+        let headView = CompanyLawCellHeadView()
+        if section == 0 || section == 1 {
+            headView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                expandedSections[section].toggle()
+                tableView.reloadSections([section], with: .automatic)
+            }).disposed(by: disposeBag)
+        }
+        if section == 0 {
+            let model = self.modelArray.value?[index]
+            headView.highLabel.isHidden = true
+            headView.lowLabel.isHidden = true
+            headView.hitLabel.isHidden = true
+            headView.namelabel.text = model?.subitems?.first?.subitemname ?? ""
+        }else if section == 1 {
+            let model = self.modelArray.value?[index]
+            headView.highLabel.isHidden = true
+            headView.lowLabel.isHidden = true
+            headView.hitLabel.isHidden = true
+            headView.namelabel.text = model?.subitems?.last?.subitemname ?? ""
+        }else {
+            let model = self.modelArray.value?[section]
+            headView.highLabel.isHidden = false
+            headView.lowLabel.isHidden = false
+            headView.hitLabel.isHidden = false
+            headView.namelabel.text = model?.itemname ?? ""
+            headView.numlabel.text = "共\(model?.size ?? 0)条"
+            headView.highLabel.text = "高风险(\(model?.highCount ?? 0))"
+            headView.lowLabel.text = "低风险(\(model?.lowCount ?? 0))"
+            headView.hitLabel.text = "提示(\(model?.hintCount ?? 0))"
+            if model?.highCount == 0 {
+                headView.highLabel.snp.makeConstraints({ make in
+                    make.width.equalTo(0)
+                    make.left.equalTo(headView.namelabel.snp.right)
+                })
+            }
+            headView.lowLabel.text = "低风险(\(model?.lowCount ?? 0))"
+            if model?.lowCount == 0 {
+                headView.lowLabel.snp.makeConstraints({ make in
+                    make.width.equalTo(0)
+                    make.left.equalTo(headView.highLabel.snp.right)
+                })
+            }
+            headView.hitLabel.text = "提示(\(model?.hintCount ?? 0))"
+            if model?.hintCount == 0 {
+                headView.hitLabel.snp.makeConstraints({ make in
+                    make.width.equalTo(0)
+                })
+            }
+            
+            headView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                if let model = model {
+                    self.block?(model)
+                }
+            }).disposed(by: disposeBag)
+            
+        }
         return headView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.modelArray.value?.count ?? 0
+        guard let count = self.modelArray.value?.count else { return 0 }
+        return count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 5
+            let model = self.modelArray.value?[section]
+            return expandedSections[section] ? (model?.subitems?.first?.threelevelitems?.count ?? 0) : 0
+        }else if section == 1 {
+            let model = self.modelArray.value?[section]
+            return expandedSections[section] ? (model?.subitems?.last?.threelevelitems?.count ?? 0) : 0
         }else {
-            return 1
+            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RiskDetailViewCell", for: indexPath) as! RiskDetailViewCell
-        cell.namelabel.text = "fadfad"
+        let section = indexPath.section
+        let model = self.modelArray.value?[index]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CompanyLawCell", for: indexPath) as! CompanyLawCell
+        cell.selectionStyle = .none
+        cell.backgroundColor = .clear
+        if section == 0 {
+            let model = model?.subitems?.first?.threelevelitems?[indexPath.row]
+            let nameStr = model?.threelevelitemname ?? ""
+            cell.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: nameStr, fullText: "该公司 \(nameStr) 信息", colorStr: "#547AFF")
+            cell.numlabel.text = "共\(model?.size ?? 0)条"
+        }else if section == 1 {
+            let model = model?.subitems?.last?.threelevelitems?[indexPath.row]
+            let nameStr = model?.threelevelitemname ?? ""
+            cell.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: nameStr, fullText: "该公司 \(nameStr) 信息", colorStr: "#547AFF")
+            cell.numlabel.text = "共\(model?.size ?? 0)条"
+        }else {
+            
+        }
         return cell
+    }
+    
+    //点击cell
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = indexPath.section
+        let model = self.modelArray.value?[index]
+        if section == 0 {
+            let onemodel = model?.subitems?.first?.threelevelitems?[indexPath.row]
+            if let model = model, let onemodel = onemodel {
+                self.oneBlock?(model, onemodel)
+            }
+        }else if section == 1 {
+            let twoModel = model?.subitems?.last?.threelevelitems?[indexPath.row]
+            if let model = model, let twoModel = twoModel {
+                self.oneBlock?(model, twoModel)
+            }
+        }else {
+//            let model = self.modelArray.value?[section]
+//            if let model = model {
+//                self.block?(model)
+//            }
+        }
     }
     
 }

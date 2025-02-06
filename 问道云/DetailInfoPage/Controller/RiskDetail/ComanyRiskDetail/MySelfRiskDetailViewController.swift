@@ -16,6 +16,8 @@ class MySelfRiskDetailViewController: WDBaseViewController {
     
     var name: String = ""
     
+    var logo: String = ""
+    
     var functionType: String = "1"// 1-自身风险，2-历史风险，3-日报，4-全部
     var dateType: String = ""
     var itemtype: String = "1"
@@ -47,7 +49,30 @@ class MySelfRiskDetailViewController: WDBaseViewController {
     //法律风险view
     lazy var lawView: CompanyLawListView = {
         let lawView = CompanyLawListView()
+        lawView.backgroundColor = .white
         lawView.isHidden = true
+        lawView.oneBlock = { model1, model2 in
+            let riskSecondVc = ComanyRiskMoreDetailViewController()
+            riskSecondVc.itemsModel.accept(model1)
+            riskSecondVc.listmodel.accept(model2)
+            riskSecondVc.dateType = self.dateType
+            riskSecondVc.itemtype = self.itemtype
+            riskSecondVc.logo = self.logo
+            riskSecondVc.name = self.name
+            riskSecondVc.entityid = self.enityId
+            self.navigationController?.pushViewController(riskSecondVc, animated: true)
+        }
+        
+        lawView.block = { model in
+            let riskSecondVc = ComanyRiskMoreDetailViewController()
+            riskSecondVc.itemsModel.accept(model)
+            riskSecondVc.dateType = self.dateType
+            riskSecondVc.itemtype = self.itemtype
+            riskSecondVc.logo = self.logo
+            riskSecondVc.name = self.name
+            riskSecondVc.entityid = self.enityId
+            self.navigationController?.pushViewController(riskSecondVc, animated: true)
+        }
         return lawView
     }()
     
@@ -503,18 +528,10 @@ extension MySelfRiskDetailViewController {
         self.oneItemView.numLabel.text = model.riskGrade?.highRiskSum ?? "0"
         self.twoItemView.numLabel.text = model.riskGrade?.lowRiskSum ?? "0"
         self.threeItemView.numLabel.text = model.riskGrade?.hintRiskSum ?? "0"
+        //法律风险数据
         if self.itemtype == "2" {
             let modelArray = model.items ?? []
-            let arrayWithoutFirst = modelArray.enumerated().filter { index, _ in
-                index != 0
-            }.map { $0.element }
-            self.lawView.oneModelArray.accept(arrayWithoutFirst)
-            self.lawView.modelArray.accept(arrayWithoutFirst)
-            
-            let arrayWithoutSecond = modelArray.enumerated().filter { index, _ in
-                index != 1
-            }.map { $0.element }
-            self.lawView.twoModelArray.accept(arrayWithoutSecond)
+            self.lawView.modelArray.accept(modelArray)
             self.lawView.numLabel.text = "案件信息(\(count))"
         }
         self.lawView.tableView.reloadData()
@@ -574,6 +591,9 @@ extension MySelfRiskDetailViewController: UITableViewDelegate, UITableViewDataSo
         riskSecondVc.itemsModel.accept(model)
         riskSecondVc.dateType = self.dateType
         riskSecondVc.itemtype = self.itemtype
+        riskSecondVc.logo = self.logo
+        riskSecondVc.name = self.name
+        riskSecondVc.entityid = self.enityId
         self.navigationController?.pushViewController(riskSecondVc, animated: true)
     }
     

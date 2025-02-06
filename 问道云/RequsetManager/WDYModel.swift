@@ -231,19 +231,23 @@ class itemsModel {
     var firmname: String?
     var itemname: String?
     var size: Int?
-    var itemnumber: Int?
+    var itemnumber: String?
     var highCount: Int?
     var hintCount: Int?
     var lowCount: Int?
     var caseproperty: String?
+    var risktime: String?
+    var riskdynamicid: String?
     var subitems: [subitemsModel]?
     init(json: JSON) {
         //风险数据公司
+        self.riskdynamicid = json["riskdynamicid"].stringValue
+        self.risktime = json["risktime"].stringValue
         self.caseproperty = json["caseproperty"].stringValue
         self.highCount = json["highCount"].intValue
         self.hintCount = json["hintCount"].intValue
         self.lowCount = json["lowCount"].intValue
-        self.itemnumber = json["itemnumber"].intValue
+        self.itemnumber = json["itemnumber"].stringValue
         self.size = json["size"].intValue
         self.itemname = json["itemname"].stringValue
         self.menuName = json["menuName"].stringValue

@@ -125,16 +125,19 @@ extension CompanyRiskDetailViewController: JXPagingViewDelegate {
             let oneRiskVc = MySelfRiskDetailViewController()
             oneRiskVc.enityId = enityId
             oneRiskVc.name = name
+            oneRiskVc.logo = logo
             return oneRiskVc
         }else if index == 1 {
             let twoRiskVc = UnioRiskDetailViewController()
             twoRiskVc.enityId = enityId
             twoRiskVc.name = name
+            twoRiskVc.logo = logo
             return twoRiskVc
         }else {
             let threeRiskVc = HistoryRiskDetailViewController()
             threeRiskVc.enityId = enityId
             threeRiskVc.name = name
+            threeRiskVc.logo = logo
             return threeRiskVc
         }
     }

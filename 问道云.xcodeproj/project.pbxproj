@@ -23,6 +23,9 @@
 		730CEDF32D530924002DE9DF /* RiskUnioHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDF22D530924002DE9DF /* RiskUnioHeadView.swift */; };
 		730CEDF52D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDF42D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift */; };
 		730CEDF82D53590B002DE9DF /* CompanyLawListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDF72D53590B002DE9DF /* CompanyLawListView.swift */; };
+		730CEDFA2D5446C8002DE9DF /* CompanyLawCellHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDF92D5446C8002DE9DF /* CompanyLawCellHeadView.swift */; };
+		730CEDFC2D544EF6002DE9DF /* CompanyLawCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDFB2D544EF6002DE9DF /* CompanyLawCell.swift */; };
+		730CEDFE2D546080002DE9DF /* CompanyLawDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDFD2D546080002DE9DF /* CompanyLawDetailCell.swift */; };
 		7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD802D01A55900770009 /* OrderListViewCell.swift */; };
 		7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */; };
 		7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */; };
@@ -236,6 +239,9 @@
 		730CEDF22D530924002DE9DF /* RiskUnioHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskUnioHeadView.swift; sourceTree = "<group>"; };
 		730CEDF42D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComanyRiskMoreDetailViewController.swift; sourceTree = "<group>"; };
 		730CEDF72D53590B002DE9DF /* CompanyLawListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLawListView.swift; sourceTree = "<group>"; };
+		730CEDF92D5446C8002DE9DF /* CompanyLawCellHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLawCellHeadView.swift; sourceTree = "<group>"; };
+		730CEDFB2D544EF6002DE9DF /* CompanyLawCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLawCell.swift; sourceTree = "<group>"; };
+		730CEDFD2D546080002DE9DF /* CompanyLawDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLawDetailCell.swift; sourceTree = "<group>"; };
 		7314AD802D01A55900770009 /* OrderListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewCell.swift; sourceTree = "<group>"; };
 		7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketViewController.swift; sourceTree = "<group>"; };
 		7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketView.swift; sourceTree = "<group>"; };
@@ -668,6 +674,9 @@
 				734896E92D3A429500B028FE /* RiskUnioViewCell.swift */,
 				730CEDF22D530924002DE9DF /* RiskUnioHeadView.swift */,
 				730CEDF72D53590B002DE9DF /* CompanyLawListView.swift */,
+				730CEDF92D5446C8002DE9DF /* CompanyLawCellHeadView.swift */,
+				730CEDFB2D544EF6002DE9DF /* CompanyLawCell.swift */,
+				730CEDFD2D546080002DE9DF /* CompanyLawDetailCell.swift */,
 			);
 			path = RiskView;
 			sourceTree = "<group>";
@@ -1215,8 +1224,10 @@
 				73B3624D2D37A665003BD911 /* PeopleActivityViewController.swift in Sources */,
 				7325A7E62D0000040043C196 /* GetCodeViewController.swift in Sources */,
 				730488132D2BD2090024265C /* HomeBannerViewCell.swift in Sources */,
+				730CEDFE2D546080002DE9DF /* CompanyLawDetailCell.swift in Sources */,
 				739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */,
 				7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */,
+				730CEDFC2D544EF6002DE9DF /* CompanyLawCell.swift in Sources */,
 				73B3624B2D37A653003BD911 /* PeopleDetailViewController.swift in Sources */,
 				7325A7D12CFEFBE60043C196 /* WDYModel.swift in Sources */,
 				73C36A7D2D2D1B8400D6DC46 /* SearchHistoryListView.swift in Sources */,
@@ -1255,6 +1266,7 @@
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				73B362572D37B9CB003BD911 /* PeopleDetailTwoViewController.swift in Sources */,
+				730CEDFA2D5446C8002DE9DF /* CompanyLawCellHeadView.swift in Sources */,
 				73EF03DB2D31339A0070F850 /* TwoPeopleCoopViewCell.swift in Sources */,
 				736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */,
 				73807D492D32C93C00F8B90D /* Networkmanager.swift in Sources */,

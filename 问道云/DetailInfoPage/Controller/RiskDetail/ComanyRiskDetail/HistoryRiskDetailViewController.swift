@@ -7,6 +7,8 @@
 
 import UIKit
 import JXPagingView
+import DropMenuBar
+import RxRelay
 
 class HistoryRiskDetailViewController: WDBaseViewController {
     
@@ -14,9 +16,10 @@ class HistoryRiskDetailViewController: WDBaseViewController {
     
     var name: String = ""
     
+    var logo: String = ""
+    
     var functionType: String = "2"// 1-自身风险，2-历史风险，3-日报，4-全部
     var dateType: String = ""
-    var date: String = ""
     var itemtype: String = "1"
     var allArray: [itemsModel]?
     
@@ -41,6 +44,36 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(RiskDetailViewCell.self, forCellReuseIdentifier: "RiskDetailViewCell")
         return tableView
+    }()
+    
+    //法律风险view
+    lazy var lawView: CompanyLawListView = {
+        let lawView = CompanyLawListView()
+        lawView.backgroundColor = .white
+        lawView.isHidden = true
+        lawView.oneBlock = { model1, model2 in
+            let riskSecondVc = ComanyRiskMoreDetailViewController()
+            riskSecondVc.itemsModel.accept(model1)
+            riskSecondVc.listmodel.accept(model2)
+            riskSecondVc.dateType = self.dateType
+            riskSecondVc.itemtype = self.itemtype
+            riskSecondVc.logo = self.logo
+            riskSecondVc.name = self.name
+            riskSecondVc.entityid = self.enityId
+            self.navigationController?.pushViewController(riskSecondVc, animated: true)
+        }
+        
+        lawView.block = { model in
+            let riskSecondVc = ComanyRiskMoreDetailViewController()
+            riskSecondVc.itemsModel.accept(model)
+            riskSecondVc.dateType = self.dateType
+            riskSecondVc.itemtype = self.itemtype
+            riskSecondVc.logo = self.logo
+            riskSecondVc.name = self.name
+            riskSecondVc.entityid = self.enityId
+            self.navigationController?.pushViewController(riskSecondVc, animated: true)
+        }
+        return lawView
     }()
     
     lazy var onelabel: PaddedLabel = {
@@ -147,9 +180,17 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         return threeItemView
     }()
 
+    var startDateRelay = BehaviorRelay<String?>(value: nil)//开始时间
+    
+    var endDateRelay = BehaviorRelay<String?>(value: nil)//结束时间
+    
+    var startTime: String = ""//开始时间
+    
+    var endTime: String = ""//结束时间
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         view.addSubview(numLabel)
@@ -163,13 +204,13 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         maskView.addSubview(twoItemView)
         maskView.addSubview(threeItemView)
         view.addSubview(tableView)
+        view.addSubview(lawView)
         
         numLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)
             make.left.equalToSuperview().offset(22)
             make.height.equalTo(25)
         }
-        
         whiteView.snp.makeConstraints { make in
             make.top.equalTo(numLabel.snp.bottom)
             make.left.right.equalToSuperview()
@@ -226,13 +267,16 @@ class HistoryRiskDetailViewController: WDBaseViewController {
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(maskView.snp.bottom)
         }
-        
+        lawView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(maskView.snp.bottom)
+        }
         // 绑定 onelabel 的点击事件
         onelabel.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.hideLawOrTableView(form: "")
                 self?.updateSelectedLabel(self?.onelabel)
-                
                 self?.itemtype = "1"
                 self?.getRiskDetailInfo()
             })
@@ -242,6 +286,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         twolabel.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.hideLawOrTableView(form: "2")
                 self?.updateSelectedLabel(self?.twolabel)
                 self?.itemtype = "2"
                 self?.getRiskLowDetailInfo()
@@ -252,6 +297,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         threelabel.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.hideLawOrTableView(form: "")
                 self?.updateSelectedLabel(self?.threelabel)
                 self?.itemtype = "3"
                 self?.getRiskDetailInfo()
@@ -262,12 +308,12 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         fourlabel.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.hideLawOrTableView(form: "")
                 self?.updateSelectedLabel(self?.fourlabel)
                 self?.itemtype = "4"
                 self?.getRiskDetailInfo()
             })
             .disposed(by: disposeBag)
-        
         
         getRiskDetailInfo()
     }
@@ -290,10 +336,21 @@ class HistoryRiskDetailViewController: WDBaseViewController {
             label.layer.borderColor = UIColor.init(cssStr: "#547AFF")?.cgColor
         }
     }
-
+    
 }
 
 extension HistoryRiskDetailViewController {
+    
+    //显示和隐藏
+    private func hideLawOrTableView(form type: String) {
+        if type == "2" {
+            self.lawView.isHidden = false
+            self.tableView.isHidden = true
+        }else {
+            self.lawView.isHidden = true
+            self.tableView.isHidden = false
+        }
+    }
     
     //获取风险信息
     private func getRiskDetailInfo() {
@@ -301,8 +358,7 @@ extension HistoryRiskDetailViewController {
         let dict = ["entityid": enityId,
                     "functionType": functionType,
                     "itemtype": itemtype,
-                    "dateType": dateType,
-                    "date": date]
+                    "dateType": dateType]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskDynamicslow",
                        method: .get) { [weak self] result in
@@ -333,8 +389,7 @@ extension HistoryRiskDetailViewController {
         let dict = ["entityid": enityId,
                     "functionType": functionType,
                     "itemtype": itemtype,
-                    "dateType": dateType,
-                    "date": date]
+                    "dateType": dateType]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskDynamicsbereLegalRisk",
                        method: .get) { [weak self] result in
@@ -343,22 +398,19 @@ extension HistoryRiskDetailViewController {
             case .success(let success):
                 if let model = success.data {
                     let rows = model.items ?? []
-                    self.allArray = rows
-                    self.tableView.reloadData()
                     self.refreshUI(from: model)
                     self.emptyView.removeFromSuperview()
                     if rows.isEmpty {
-                        self.addNodataView(from: self.tableView)
+                        self.addNodataView(from: self.lawView)
                     }
                 }
                 break
             case .failure(_):
-                self.addNodataView(from: self.tableView)
+                self.addNodataView(from: self.lawView)
                 break
             }
         }
     }
-    
     
     //数据刷新
     func refreshUI(from model: DataModel) {
@@ -367,6 +419,13 @@ extension HistoryRiskDetailViewController {
         self.oneItemView.numLabel.text = model.riskGrade?.highRiskSum ?? "0"
         self.twoItemView.numLabel.text = model.riskGrade?.lowRiskSum ?? "0"
         self.threeItemView.numLabel.text = model.riskGrade?.hintRiskSum ?? "0"
+        //法律风险数据
+        if self.itemtype == "2" {
+            let modelArray = model.items ?? []
+            self.lawView.modelArray.accept(modelArray)
+            self.lawView.numLabel.text = "案件信息(\(count))"
+        }
+        self.lawView.tableView.reloadData()
     }
     
 }
@@ -415,6 +474,18 @@ extension HistoryRiskDetailViewController: UITableViewDelegate, UITableViewDataS
             }
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let model = self.allArray?[indexPath.row] else { return }
+        let riskSecondVc = ComanyRiskMoreDetailViewController()
+        riskSecondVc.itemsModel.accept(model)
+        riskSecondVc.dateType = self.dateType
+        riskSecondVc.itemtype = self.itemtype
+        riskSecondVc.logo = self.logo
+        riskSecondVc.name = self.name
+        riskSecondVc.entityid = self.enityId
+        self.navigationController?.pushViewController(riskSecondVc, animated: true)
     }
     
 }

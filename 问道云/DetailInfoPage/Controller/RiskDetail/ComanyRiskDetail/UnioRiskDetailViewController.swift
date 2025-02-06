@@ -14,6 +14,8 @@ class UnioRiskDetailViewController: WDBaseViewController {
     
     var name: String = ""
     
+    var logo: String = ""
+    
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
     //数据模型
