@@ -13,7 +13,7 @@ class DiligenceListViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.backgroundColor = .random()
+        
     }
     
 

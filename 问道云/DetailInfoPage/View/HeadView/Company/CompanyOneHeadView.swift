@@ -397,6 +397,17 @@ class CompanyOneHeadView: BaseView {
                 vc?.dismiss(animated: true)
             }).disposed(by: disposeBag)
             
+            //更多财务数据
+            employeeView.block = { model in
+                vc?.dismiss(animated: true, completion: {
+                    let firmname = model.firmInfo?.entityName ?? ""
+                    let entityId = model.firmInfo?.entityId ?? ""
+                    let url = base_url + "/basic-information/financial-data"
+                    let pageUrl = URLQueryAppender.appendQueryParameters(to: url, parameters: ["firmname": firmname, "entityId": entityId])
+                    vc?.pushWebPage(from: pageUrl ?? "")
+                })
+            }
+            
         }).disposed(by: disposeBag)
         
         //利润
@@ -417,6 +428,17 @@ class CompanyOneHeadView: BaseView {
                 vc?.dismiss(animated: true)
             }).disposed(by: disposeBag)
             
+            //更多财务数据
+            employeeView.block = { model in
+                vc?.dismiss(animated: true, completion: {
+                    let firmname = model.firmInfo?.entityName ?? ""
+                    let entityId = model.firmInfo?.entityId ?? ""
+                    let url = base_url + "/basic-information/financial-data"
+                    let pageUrl = URLQueryAppender.appendQueryParameters(to: url, parameters: ["firmname": firmname, "entityId": entityId])
+                    vc?.pushWebPage(from: pageUrl ?? "")
+                })
+            }
+            
         }).disposed(by: disposeBag)
         
         //总资产
@@ -436,6 +458,17 @@ class CompanyOneHeadView: BaseView {
             employeeView.cancelBtn.rx.tap.subscribe(onNext: {
                 vc?.dismiss(animated: true)
             }).disposed(by: disposeBag)
+            
+            //更多财务数据
+            employeeView.block = { model in
+                vc?.dismiss(animated: true, completion: {
+                    let firmname = model.firmInfo?.entityName ?? ""
+                    let entityId = model.firmInfo?.entityId ?? ""
+                    let url = base_url + "/basic-information/financial-data"
+                    let pageUrl = URLQueryAppender.appendQueryParameters(to: url, parameters: ["firmname": firmname, "entityId": entityId])
+                    vc?.pushWebPage(from: pageUrl ?? "")
+                })
+            }
             
         }).disposed(by: disposeBag)
         

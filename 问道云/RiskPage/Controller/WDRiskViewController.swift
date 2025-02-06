@@ -26,6 +26,8 @@ class WDRiskViewController: WDBaseViewController {
         return riskView
     }()
     
+    var timeArray = ["today", "week", "month", ""]
+    
     private lazy var segmentedView: JXSegmentedView = createSegmentedView()
     private lazy var cocsciew: UIScrollView = createCocsciew()
     private var segmurce: JXSegmentedTitleDataSource!
@@ -49,17 +51,6 @@ class WDRiskViewController: WDBaseViewController {
         //添加子控制器
         setupViewControllers()
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -82,12 +73,12 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
     func setupViewControllers() {
         listVCArray.forEach { $0.view.removeFromSuperview() }
         listVCArray.removeAll()
-        for _ in 0..<4 {
+        for i in 0..<4 {
             let vc = RiskListViewController()
+            vc.time = timeArray[i]
             cocsciew.addSubview(vc.view)
             listVCArray.append(vc)
         }
-        
         updateViewControllersLayout()
         segmentedView(segmentedView, didSelectedItemAt: 0)
     }
@@ -99,7 +90,19 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
     }
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
-        
+        if index == 0 {
+            let oneVc = self.listVCArray[0]
+            oneVc.getMonitoringCompanyInfo()
+        }else if index == 1 {
+            let twoVc = self.listVCArray[1]
+            twoVc.getMonitoringCompanyInfo()
+        }else if index == 2 {
+            let threeVc = self.listVCArray[2]
+            threeVc.getMonitoringCompanyInfo()
+        }else {
+            let fourVc = self.listVCArray[3]
+            fourVc.getMonitoringCompanyInfo()
+        }
     }
     
     private func createSegmentedView() -> JXSegmentedView {
@@ -107,7 +110,7 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
         segmentedView.delegate = self
         segmentedView.backgroundColor = .clear
         segmurce = JXSegmentedTitleDataSource()
-        segmurce.titles = ["监控企业", "日报", "周报", "全部"]
+        segmurce.titles = ["日报", "周报", "月报", "全部"]
         segmurce.isTitleColorGradientEnabled = true
         segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
         segmurce.titleNormalFont = .regularFontOfSize(size: 14)

@@ -35,7 +35,7 @@ class CompanyDetailViewController: WDBaseViewController {
             guard let self = self else { return }
             var pageUrl: String = ""
             if let pathUrl = model.path {
-                pageUrl = pathUrl + "?" + "entityId=\(enityId)"
+                pageUrl = base_url + pathUrl + "?" + "entityId=\(enityId)"
             }
             self.pushWebPage(from: pageUrl)
         }

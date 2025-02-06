@@ -97,11 +97,13 @@ extension PeopleDetailOneViewController: UICollectionViewDelegateFlowLayout, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var pageUrl: String = ""
         let modelArray = self.model.value?.items?.first?.children ?? []
         let newArray = Array(modelArray.dropLast())[indexPath.section]
         let model = newArray.children?[indexPath.row]
-        print("model====\(model?.menuName ?? "")")
-        self.pushWebPage(from: model?.path ?? "")
+        let oneUrl = base_url + (model?.path ?? "")
+        pageUrl = oneUrl + "?" + "personNumber=\(enityId)"
+        self.pushWebPage(from: pageUrl)
     }
     
     //返回头部

@@ -12,6 +12,8 @@ class PopRateMoneyView: BaseView {
     
     var model = BehaviorRelay<DataModel?>(value: nil)
     
+    var block: ((DataModel) -> Void)?
+    
     lazy var bgViwe: UIView = {
         let bgViwe = UIView()
         bgViwe.backgroundColor = .white
@@ -33,6 +35,16 @@ class PopRateMoneyView: BaseView {
         cancelBtn.titleLabel?.font = .regularFontOfSize(size: 14)
         cancelBtn.layer.cornerRadius = 3
         return cancelBtn
+    }()
+    
+    lazy var moreBtn: UIButton = {
+        let moreBtn = UIButton(type: .custom)
+        moreBtn.backgroundColor = UIColor.init(cssStr: "#547AFF")
+        moreBtn.setTitle("更多财务数据", for: .normal)
+        moreBtn.setTitleColor(.init(cssStr: "#FFFFFF"), for: .normal)
+        moreBtn.titleLabel?.font = .regularFontOfSize(size: 14)
+        moreBtn.layer.cornerRadius = 3
+        return moreBtn
     }()
     
     lazy var tableView: UITableView = {
@@ -58,6 +70,7 @@ class PopRateMoneyView: BaseView {
         bgViwe.addSubview(ctImageView)
         bgViwe.addSubview(tableView)
         bgViwe.addSubview(cancelBtn)
+        bgViwe.addSubview(moreBtn)
         
         bgViwe.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -77,12 +90,20 @@ class PopRateMoneyView: BaseView {
         }
         
         cancelBtn.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(20)
+            make.bottom.equalToSuperview().offset(-15)
+            make.size.equalTo(CGSize(width: 130, height: 37))
+        }
+        moreBtn.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-20)
             make.bottom.equalToSuperview().offset(-15)
             make.size.equalTo(CGSize(width: 130, height: 37))
         }
         
-        
+        moreBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = model.value else { return }
+            self.block?(model)
+        }).disposed(by: disposeBag)
         
         if type == "0" {
             model.compactMap { $0?.incomeInfo?.annualReports ?? [] }.bind(to: tableView.rx.items(cellIdentifier: "EmployeeMoneyNumViewCell", cellType: EmployeeMoneyNumViewCell.self)) { row, model, cell in
