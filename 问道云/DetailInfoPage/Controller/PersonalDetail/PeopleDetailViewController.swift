@@ -210,16 +210,16 @@ extension PeopleDetailViewController {
         let personname = model.personName ?? ""
         self.homeHeadView.oneItems = [
             .init(imageResource: "peopleicon",
-                  path: "/personal-chart/equity-penetration?firmname=\(firmname)&shareholderName=\(personname)"),
+                  path: "\(base_url)/personal-chart/equity-penetration?firmname=\(firmname)&shareholderName=\(personname)"),
             
             .init(imageResource: "gerenguanxitu",
-                  path: "/personal-chart/relationship-graph?firmname=\(firmname)&shareholderName=\(personname)"),
+                  path: "\(base_url)/personal-chart/relationship-graph?firmname=\(firmname)&shareholderName=\(personname)"),
             
             .init(imageResource: "shijiguanquna",
-                  path: "/personal-chart/actual-controller?firmname=\(firmname)&legalname=\(personname)"),
+                  path: "\(base_url)/personal-chart/actual-controller?firmname=\(firmname)&legalname=\(personname)"),
             
             .init(imageResource: "shouyisuoyouqian",
-                  path: "/personal-chart/beneficial-owner?firmname=\(firmname)&legalname=\(personname)"),
+                  path: "\(base_url)/personal-chart/beneficial-owner?firmname=\(firmname)&legalname=\(personname)"),
         ]
     }
     

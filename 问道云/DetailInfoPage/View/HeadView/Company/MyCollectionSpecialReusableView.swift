@@ -199,13 +199,13 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             //常用服务
             headView.sixHeadView.oneItems = [
                 .init(imageResource: "itemoneicon",
-                      path: "/business-situation/make-tender"),
+                      path: "\(base_url)/business-situation/make-tender"),
                 
                 .init(imageResource: "itemtwoicon",
-                      path: "/litigation-risk/judicial-action"),
+                      path: "\(base_url)/litigation-risk/judicial-action"),
                 
                 .init(imageResource: "itemthreeicon",
-                      path: "/basic-information/property-clues"),
+                      path: "\(base_url)/basic-information/property-clues"),
                 
                 .init(imageResource: "itemfouricon",
                       path: ""),
@@ -216,25 +216,25 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             //问道图谱
             headView.sixHeadView.twoItems = [
                 .init(imageResource: "picone",
-                      path: "/enterprise-chart/enterprise-atlas"),
+                      path: "\(base_url)/enterprise-chart/enterprise-atlas"),
                 
                 .init(imageResource: "pictwo",
-                      path: "/enterprise-chart/equity-chart"),
+                      path: "\(base_url)/enterprise-chart/equity-chart"),
                 
                 .init(imageResource: "picthree",
-                      path: "/enterprise-chart/relationship-graph"),
+                      path: "\(base_url)/enterprise-chart/relationship-graph"),
                 
                 .init(imageResource: "picfouric",
-                      path: "/enterprise-chart/actual-controller"),
+                      path: "\(base_url)/enterprise-chart/actual-controller"),
                 
                 .init(imageResource: "picfiveicon",
-                      path: "/enterprise-chart/beneficiary-person"),
+                      path: "\(base_url)/enterprise-chart/beneficiary-person"),
                 
                 .init(imageResource: "picsixicon",
-                      path: "/enterprise-chart/external-investment"),
+                      path: "\(base_url)/enterprise-chart/external-investment"),
                 
                 .init(imageResource: "picsevicon",
-                      path: "/enterprise-chart/structure-chart")
+                      path: "\(base_url)/enterprise-chart/structure-chart")
             ]
             
             //股票信息
