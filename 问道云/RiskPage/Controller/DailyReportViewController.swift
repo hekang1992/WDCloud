@@ -11,8 +11,11 @@ import MJRefresh
 
 class DailyReportViewController: WDBaseViewController {
     
-    var pageNum = 1
-    var pageSize = 20
+    var allArray: [itemsModel] = []
+    //企业
+    var companyArray: [itemsModel] = []
+    //个人
+    var peopleArray: [itemsModel] = []
     
     lazy var iconImageView1: UIImageView = {
         let iconImageView1 = UIImageView()
@@ -92,26 +95,31 @@ class DailyReportViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if !IS_LOGIN {
+            self.noLoginUI()
+        }
+//        self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+//            guard let self = self else { return }
+//            getMonitoringCompanyInfo()
+//            getMonitoringPeopleInfo()
+//        })
+//        
+//        //添加上拉加载更多
+//        self.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+//            guard let self = self else { return }
+//            getMonitoringCompanyInfo()
+//            getMonitoringPeopleInfo()
+//        })
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if IS_LOGIN {
             //获取监控企业列表
             getMonitoringCompanyInfo()
             //获取监控人员列表
             getMonitoringPeopleInfo()
-        }else {
-            self.noLoginUI()
         }
-        self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
-            guard let self = self else { return }
-            getMonitoringCompanyInfo()
-            getMonitoringPeopleInfo()
-        })
-        
-        //添加上拉加载更多
-        self.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
-            guard let self = self else { return }
-            getMonitoringCompanyInfo()
-            getMonitoringPeopleInfo()
-        })
     }
     
 }
@@ -121,9 +129,7 @@ extension DailyReportViewController {
     //获取监控企业列表
     func getMonitoringCompanyInfo() {
         ViewHud.addLoadView()
-        let dict = ["time": "today",
-                    "pageNum": pageNum,
-                    "pageSize": pageSize] as [String : Any]
+        let dict = ["time": "today"]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/monitoringEnterprises",
@@ -141,6 +147,11 @@ extension DailyReportViewController {
                     }else {
                         //存在监控列表
                         addExistListUI()
+                        self.peopleArray = model.items ?? []
+                        self.allArray = self.peopleArray
+                        //刷新头部数字
+                        let count = self.peopleArray.count
+                        self.companyBtn.setTitle("企业 \(count)", for: .normal)
                     }
                 }
                 break
@@ -153,9 +164,7 @@ extension DailyReportViewController {
     //获取监控人员列表
     func getMonitoringPeopleInfo() {
         ViewHud.addLoadView()
-        let dict = ["time": "today",
-                    "pageNum": pageNum,
-                    "pageSize": pageSize] as [String : Any]
+        let dict = ["time": "today"]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/monitorPerson",
@@ -165,6 +174,12 @@ extension DailyReportViewController {
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
+                if let self = self, let model = success.data {
+                    self.peopleArray = model.items ?? []
+                    //刷新头部数字
+                    let count = self.peopleArray.count
+                    self.peopleBtn.setTitle("个人 \(count)", for: .normal)
+                }
                 break
             case .failure(_):
                 break
@@ -210,7 +225,7 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.allArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -312,8 +327,9 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
             make.bottom.equalToSuperview()
         }
         tableView.snp.makeConstraints { make in
-            make.left.bottom.equalToSuperview()
+            make.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-StatusHeightManager.tabBarHeight)
             make.top.equalTo(coverView.snp.bottom)
         }
         companyBtn.rx.tap.subscribe(onNext: { [weak self] in
