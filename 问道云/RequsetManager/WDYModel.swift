@@ -241,11 +241,13 @@ class itemsModel {
     var riskdynamicid: String?
     var subitems: [subitemsModel]?
     var personnel: [personnelModel]?//搜索监控企业
-    var seniorexecutive: [seniorexecutiveModel]?//搜索监控企业
+    var seniorexecutive: [personnelModel]?//搜索监控企业
+    var entity_id: String?
     init(json: JSON) {
         //风险数据公司
+        self.entity_id = json["entity_id"].stringValue
         self.personnel = json["personnel"].arrayValue.map { personnelModel(json: $0) }
-        self.seniorexecutive = json["seniorexecutive"].arrayValue.map { seniorexecutiveModel(json: $0) }
+        self.seniorexecutive = json["seniorexecutive"].arrayValue.map { personnelModel(json: $0) }
         self.riskdynamicid = json["riskdynamicid"].stringValue
         self.risktime = json["risktime"].stringValue
         self.entity_name = json["entity_name"].stringValue
@@ -294,18 +296,11 @@ class itemsModel {
 class personnelModel {
     var name: String?
     var type: String?
+    var isClickMonitoring: Bool//自定义,是否点击了☑️按钮
     init(json: JSON) {
         self.name = json["name"].stringValue
         self.type = json["type"].stringValue
-    }
-}
-
-class seniorexecutiveModel {
-    var name: String?
-    var type: String?
-    init(json: JSON) {
-        self.name = json["name"].stringValue
-        self.type = json["type"].stringValue
+        self.isClickMonitoring = json["isClickMonitoring"].boolValue
     }
 }
 
@@ -456,6 +451,7 @@ class rowsModel {
     var workAs: String?
     var entityStatus: String?
     var firmnumber: String?
+    
     init(json: JSON) {
         self.personname = json["personname"].stringValue
         self.firmnumber = json["firmnumber"].stringValue

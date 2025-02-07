@@ -25,10 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    lazy var tabBarVc: WDTabBarController = {
-        let tabBarVc = WDTabBarController()
-        return tabBarVc
-    }()
+//    lazy var tabBarVc: WDTabBarController = {
+//        let tabBarVc = WDTabBarController()
+//        return tabBarVc
+//    }()
+    var tabBarVc: WDTabBarController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -76,6 +77,7 @@ extension AppDelegate: WXApiDelegate {
         }
     }
     
+    //微信登录
     private func wechatLogin(from authorizationCode: String) {
         let dict = ["code": authorizationCode]
         let man = RequestManager()
@@ -126,15 +128,16 @@ extension AppDelegate: WXApiDelegate {
     
     @objc func setUpRootVc(_ notification: Notification) {
         let tabBarVc = WDTabBarController()
+        self.tabBarVc = tabBarVc
         window?.rootViewController = WDNavigationController(rootViewController: tabBarVc)
     }
     
     @objc func goRiskVc(_ notification: Notification) {
-        self.tabBarVc.selectedIndex = 1
+        self.tabBarVc?.selectedIndex = 1
     }
     
     @objc func goDiliVc(_ notification: Notification) {
-        self.tabBarVc.selectedIndex = 2
+        self.tabBarVc?.selectedIndex = 2
     }
     
 }

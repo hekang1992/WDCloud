@@ -23,6 +23,9 @@ class WDLoginViewController: WDBaseViewController {
         loginView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        loginView.backBtn.rx.tap.subscribe(onNext: {
+            NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
+        }).disposed(by: disposeBag)
         
         loginView.mimaBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.tapClick()

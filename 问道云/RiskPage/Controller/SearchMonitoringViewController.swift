@@ -8,12 +8,26 @@
 import UIKit
 import SnapKit
 import MJRefresh
+import TYAlertController
 
 class SearchMonitoringViewController: WDBaseViewController {
     
     var pageNum: Int = 1
     var pageSize: Int = 20
     var allArray: [itemsModel] = []
+    //企业分组group
+    var groupArray: [rowsModel]?
+    //企业分组ID
+    var groupnumber: String?
+    //企业还是个人 1企业 2个人
+    var targettype: String = "1"
+    //个人数组
+    var persons: [String] = []
+    
+    lazy var groupView: PopMonitoringGroupView = {
+        let groupView = PopMonitoringGroupView(frame: self.view.bounds)
+        return groupView
+    }()
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
@@ -122,7 +136,8 @@ class SearchMonitoringViewController: WDBaseViewController {
             guard let self = self else { return }
             getSearchListInfo(from: self.searchTx.text ?? "")
         })
-        
+        //查询监控分组
+        getMonitoringGroupInfo()
     }
 
 }
@@ -175,11 +190,34 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
                     self.tableView.reloadData()
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }
     }
+    
+    //查询监控分组
+    func getMonitoringGroupInfo() {
+        ViewHud.addLoadView()
+        let man = RequestManager()
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let dict = ["customernumber": customernumber]
+        man.requestAPI(params: dict,
+                       pageUrl: "/riskmonitor/monitorgroup/selectmonitorgroup",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    self?.groupArray = model.rows ?? []
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
 }
 
 extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSource {
@@ -192,17 +230,81 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
         return nil
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 6
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let headView = UIView()
+        headView.backgroundColor = .init(cssStr: "#F6F6F6")
+        return headView
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return self.allArray.count
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = self.allArray[indexPath.row]
+        let model = self.allArray[indexPath.section]
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchMonitoringViewCell", for: indexPath) as! SearchMonitoringViewCell
         cell.selectionStyle = .none
-        cell.ctImageView.image = UIImage.imageOfText(model.entity_name ?? "", size: (24, 24), cornerRadius: 2)
-        cell.namelabel.text = model.entity_name ?? ""
+        cell.model = model
+        cell.menuBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.popGroupView(from: cell.menuBtn)
+        }).disposed(by: disposeBag)
+        //添加监控企业
+        cell.addBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.addMonitoringCompanyInfo(from: model)
+        }).disposed(by: disposeBag)
         return cell
     }
 
+    private func popGroupView(from menuBtn: UIButton) {
+        let alertVc = TYAlertController(alert: groupView, preferredStyle: .actionSheet)!
+        groupView.groupArray = self.groupArray ?? []
+        groupView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+        groupView.block = { [weak self] model in
+            self?.dismiss(animated: true, completion: {
+                self?.groupnumber = model.groupnumber ?? ""
+                menuBtn.setTitle(model.groupname ?? "", for: .normal)
+            })
+        }
+        self.present(alertVc, animated: true)
+    }
+    
+    //添加监控企业
+    private func addMonitoringCompanyInfo(from model: itemsModel) {
+        ViewHud.addLoadView()
+        let persons = (model.personnel?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? []) +
+        (model.seniorexecutive?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? [])
+        let entityid = model.entity_id ?? ""
+        let firmname = model.entity_name ?? ""
+        let groupnumber = self.groupnumber ?? ""
+        let targettype = self.targettype
+        let dict = ["persons": persons,
+                    "entityid": entityid,
+                    "firmname": firmname,
+                    "groupnumber": groupnumber,
+                    "targettype": targettype] as [String : Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/riskmonitor/monitortarget/addmonitortarget",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                break
+            case .failure(let failure):
+                break
+            }
+        }
+    }
+    
 }
+

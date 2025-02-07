@@ -174,7 +174,7 @@ extension ComanyRiskMoreDetailViewController {
                     self.tableView.reloadData()
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }

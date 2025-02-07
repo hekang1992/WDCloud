@@ -20,7 +20,7 @@ class RiskView: BaseView {
         addSubview(ctImageView)
         ctImageView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
-            make.height.equalTo(233)
+            make.height.equalTo(StatusHeightManager.navigationBarHeight + 36)
         }
     }
     

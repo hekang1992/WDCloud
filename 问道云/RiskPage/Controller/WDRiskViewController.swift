@@ -7,6 +7,7 @@
 
 import UIKit
 import JXSegmentedView
+import JXPagingView
 
 class WDRiskViewController: WDBaseViewController {
     
@@ -18,149 +19,115 @@ class WDRiskViewController: WDBaseViewController {
         headView.oneBtn.setImage(UIImage(named: "pluscircleimage"), for: .normal)
         headView.twoBtn.setImage(UIImage(named: "shezhianniuimage"), for: .normal)
         headView.backBtn.isHidden = true
-        return headView
-    }()
-    
-    lazy var riskView: RiskView = {
-        let riskView = RiskView()
-        return riskView
-    }()
-    
-    var timeArray = ["today", "week", "month", ""]
-    
-    private lazy var segmentedView: JXSegmentedView = createSegmentedView()
-    private lazy var cocsciew: UIScrollView = createCocsciew()
-    private var segmurce: JXSegmentedTitleDataSource!
-    private var listVCArray = [RiskListViewController]()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        view.addSubview(riskView)
-        riskView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        riskView.addSubview(headView)
-        headView.snp.makeConstraints { make in
-            make.left.right.top.equalToSuperview()
-            make.height.equalTo(StatusHeightManager.navigationBarHeight)
-        }
-        //添加切换
-        addsentMentView()
-        //添加子控制器
-        setupViewControllers()
         headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             let searchVc = SearchMonitoringViewController()
             self.navigationController?.pushViewController(searchVc, animated: true)
         }).disposed(by: disposeBag)
+        return headView
+    }()
+    
+    //头部view
+    lazy var homeHeadView: RiskView = preferredTableHeaderView()
+    
+    var segmentedViewDataSource: JXSegmentedTitleDataSource!
+    
+    var segmentedView: JXSegmentedView!
+    
+    let titles = ["日报", "周报", "月报", "全部"]
+    
+    var JXTableHeaderViewHeight: Int = Int(StatusHeightManager.navigationBarHeight)
+    
+    var JXheightForHeaderInSection: Int = 36
+    
+    lazy var pagingView: JXPagingView = preferredPagingView()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+        segmentedViewDataSource = JXSegmentedTitleDataSource()
+        segmentedViewDataSource.titles = titles
+        segmentedViewDataSource.isTitleColorGradientEnabled = true
+        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#FFFFFF")!
+        segmentedViewDataSource.titleNormalColor = (UIColor.init(cssStr: "#FFFFFF")?.withAlphaComponent(0.6))!
+        segmentedViewDataSource.titleNormalFont = UIFont.regularFontOfSize(size: 15)
+        segmentedViewDataSource.titleSelectedFont = UIFont.mediumFontOfSize(size: 15)
+        
+        //指示器和指示器颜色
+        segmentedView = JXSegmentedView(frame: CGRectMake(0, 0, SCREEN_WIDTH, CGFloat(JXheightForHeaderInSection)))
+        segmentedView.backgroundColor = UIColor.clear
+        segmentedView.dataSource = segmentedViewDataSource
+        let lineView = JXSegmentedIndicatorLineView()
+        lineView.indicatorColor = UIColor.init(cssStr: "#FFFFFF")!
+        lineView.indicatorWidth = 18
+        lineView.indicatorHeight = 3
+        segmentedView.indicators = [lineView]
+        
+        view.addSubview(pagingView)
+        pagingView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+        segmentedView.listContainer = pagingView.listContainerView
+        //距离高度禁止
+        pagingView.pinSectionHeaderVerticalOffset = Int(StatusHeightManager.navigationBarHeight)
+        headView.titlelabel.text = "风险监控"
+        addHeadView(from: headView)
     }
 
 }
 
-extension WDRiskViewController: JXSegmentedViewDelegate {
-    
-    func addsentMentView() {
-        riskView.addSubview(segmentedView)
-        riskView.addSubview(cocsciew)
-        segmentedView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(18)
-            make.height.equalTo(32)
-        }
-        cocsciew.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(segmentedView.snp.bottom)
-        }
+extension WDRiskViewController {
+    //一定要加上这句代码,否则不会下拉刷新
+    func preferredPagingView() -> JXPagingView {
+        return JXPagingListRefreshView(delegate: self)
     }
     
-    func setupViewControllers() {
-        listVCArray.forEach { $0.view.removeFromSuperview() }
-        listVCArray.removeAll()
-        for i in 0..<4 {
-            let vc = RiskListViewController()
-            vc.time = timeArray[i]
-            cocsciew.addSubview(vc.view)
-            listVCArray.append(vc)
-        }
-        updateViewControllersLayout()
-        segmentedView(segmentedView, didSelectedItemAt: 0)
+    func preferredTableHeaderView() -> RiskView {
+        let riskView = RiskView()
+        return riskView
     }
     
-    private func updateViewControllersLayout() {
-        for (index, vc) in listVCArray.enumerated() {
-            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - segmentedView.frame.maxY)
-        }
+}
+    
+extension WDRiskViewController: JXPagingViewDelegate {
+    
+    func tableHeaderViewHeight(in pagingView: JXPagingView) -> Int {
+        return JXTableHeaderViewHeight
     }
     
-    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
-        if index == 0 {
-            let oneVc = self.listVCArray[0]
-            oneVc.getMonitoringCompanyInfo()
-            oneVc.backBlock = { [weak self] in
-                let searchVc = SearchMonitoringViewController()
-                self?.navigationController?.pushViewController(searchVc, animated: true)
-            }
-        }else if index == 1 {
-            let twoVc = self.listVCArray[1]
-            twoVc.getMonitoringCompanyInfo()
-            twoVc.backBlock = { [weak self] in
-                let searchVc = SearchMonitoringViewController()
-                self?.navigationController?.pushViewController(searchVc, animated: true)
-            }
-        }else if index == 2 {
-            let threeVc = self.listVCArray[2]
-            threeVc.getMonitoringCompanyInfo()
-            threeVc.backBlock = { [weak self] in
-                let searchVc = SearchMonitoringViewController()
-                self?.navigationController?.pushViewController(searchVc, animated: true)
-            }
-        }else {
-            let fourVc = self.listVCArray[3]
-            fourVc.getMonitoringCompanyInfo()
-            fourVc.backBlock = { [weak self] in
-                let searchVc = SearchMonitoringViewController()
-                self?.navigationController?.pushViewController(searchVc, animated: true)
-            }
-        }
+    func tableHeaderView(in pagingView: JXPagingView) -> UIView {
+        return homeHeadView
     }
     
-    private func createSegmentedView() -> JXSegmentedView {
-        let segmentedView = JXSegmentedView()
-        segmentedView.delegate = self
-        segmentedView.backgroundColor = .clear
-        segmurce = JXSegmentedTitleDataSource()
-        segmurce.titles = ["日报", "周报", "月报", "全部"]
-        segmurce.isTitleColorGradientEnabled = true
-        segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
-        segmurce.titleNormalFont = .regularFontOfSize(size: 14)
-        segmurce.titleNormalColor = .white
-        segmurce.titleSelectedColor = .white
-        segmentedView.dataSource = segmurce
-        let indicator = createSegmentedIndicator()
-        segmentedView.indicators = [indicator]
-        segmentedView.contentScrollView = cocsciew
+    func heightForPinSectionHeader(in pagingView: JXPagingView) -> Int {
+        return JXheightForHeaderInSection
+    }
+    
+    func viewForPinSectionHeader(in pagingView: JXPagingView) -> UIView {
         return segmentedView
     }
     
-    private func createCocsciew() -> UIScrollView {
-        let scrollView = UIScrollView()
-        scrollView.backgroundColor = .white
-        scrollView.isPagingEnabled = true
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 4, height: 0)
-        return scrollView
+    func numberOfLists(in pagingView: JXPagingView) -> Int {
+        return titles.count
     }
     
-    private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
-        let indicator = JXSegmentedIndicatorLineView()
-        indicator.indicatorWidth = JXSegmentedViewAutomaticDimension
-        indicator.indicatorHeight = 2
-        indicator.lineStyle = .lengthen
-        indicator.indicatorColor = .white
-        return indicator
+    func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
+        if index == 0 {
+            let dailyVc = DailyReportViewController()
+            return dailyVc
+        }else if index == 1 {
+            let weekVc = WeekReportViewController()
+            return weekVc
+        }else if index == 2 {
+            let monthVc = MonthReportViewController()
+            return monthVc
+        }else {
+            let bothVc = BothReportViewController()
+            return bothVc
+        }
     }
     
+    func pagingView(_ pagingView: JXPagingView, mainTableViewDidScroll scrollView: UIScrollView) {
+        let contentOffsetY = scrollView.contentOffset.y
+        print("contentOffsetY======\(contentOffsetY)")
+    }
 }
