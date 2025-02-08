@@ -41,6 +41,13 @@ class WDHomeViewController: WDBaseViewController {
         return homeBgImageView
     }()
     
+    lazy var homeScroView: HomeNavSearchView = {
+        let homeScroView = HomeNavSearchView()
+        homeScroView.alpha = 0
+        homeScroView.backgroundColor = UIColor.init(cssStr: "#2668FC")
+        return homeScroView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -71,6 +78,11 @@ class WDHomeViewController: WDBaseViewController {
         segmentedView.listContainer = pagingView.listContainerView
         //距离高度禁止
         pagingView.pinSectionHeaderVerticalOffset = Int(StatusHeightManager.navigationBarHeight + 20)
+        view.addSubview(homeScroView)
+        homeScroView.snp.makeConstraints { make in
+            make.left.right.top.equalToSuperview()
+            make.height.equalTo(Int(StatusHeightManager.navigationBarHeight + 20))
+        }
         
         //跳转到会员页面
         homeHeadView.vipImageView
@@ -151,6 +163,19 @@ class WDHomeViewController: WDBaseViewController {
         
         //文字轮博点击
         homeHeadView.tabView.textBlock = { [weak self] model in
+            if IS_LOGIN {
+                DispatchQueue.main.async {
+                    let searchAllVc = SearchAllViewController()
+                    searchAllVc.selectIndex = self?.selectIndex ?? 0
+                    searchAllVc.model.accept(model)
+                    self?.navigationController?.pushViewController(searchAllVc, animated: true)
+                }
+            }else {
+                self?.popLogin()
+            }
+        }
+        
+        homeScroView.textBlock = { [weak self] model in
             if IS_LOGIN {
                 DispatchQueue.main.async {
                     let searchAllVc = SearchAllViewController()
@@ -266,6 +291,7 @@ extension WDHomeViewController {
                     self.homeHeadView.hotsView.modelArray.accept(model.data ?? [])
                     if self.isClickHeadTab {
                         self.homeHeadView.tabView.modelArray.accept(model.data ?? [])
+                        self.homeScroView.modelArray.accept(model.data ?? [])
                     }
                 }
                 break
@@ -289,6 +315,7 @@ extension WDHomeViewController {
             case .success(let success):
                 if let model = success.data {
                     self.homeHeadView.tabView.modelArray.accept(model.data ?? [])
+                    self.homeScroView.modelArray.accept(model.data ?? [])
                 }
                 break
             case .failure(_):
@@ -333,14 +360,13 @@ extension WDHomeViewController: JXPagingViewDelegate {
     
     func pagingView(_ pagingView: JXPagingView, mainTableViewDidScroll scrollView: UIScrollView) {
         let contentOffsetY = scrollView.contentOffset.y
-        print("contentOffsetY======\(contentOffsetY)")
-        if contentOffsetY > 140 {
-            UIView.animate(withDuration: 0.3) {
-                
+        if contentOffsetY > 200 {
+            UIView.animate(withDuration: 0.25) {
+                self.homeScroView.alpha = 1
             }
         }else {
-            UIView.animate(withDuration: 0.3) {
-                
+            UIView.animate(withDuration: 0.25) {
+                self.homeScroView.alpha = 0
             }
         }
     }

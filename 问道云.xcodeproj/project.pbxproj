@@ -71,6 +71,7 @@
 		733B5FF62D57230A00ADE7C5 /* PopCancelMonitoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FF52D57230A00ADE7C5 /* PopCancelMonitoringView.swift */; };
 		733B5FFA2D573BFF00ADE7C5 /* RiskNoMonitoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */; };
 		733B5FFC2D573CAA00ADE7C5 /* RiskNoLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */; };
+		733B5FFE2D574D3D00ADE7C5 /* HomeNavSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FFD2D574D3D00ADE7C5 /* HomeNavSearchView.swift */; };
 		734056A92D38E34C009C9C96 /* CorrelationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */; };
 		734056AB2D38FE53009C9C96 /* DetailRiskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734056AA2D38FE53009C9C96 /* DetailRiskItemView.swift */; };
 		734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E72D2641C400BB4087 /* GroupTeamViewController.swift */; };
@@ -304,6 +305,7 @@
 		733B5FF52D57230A00ADE7C5 /* PopCancelMonitoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopCancelMonitoringView.swift; sourceTree = "<group>"; };
 		733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskNoMonitoringView.swift; sourceTree = "<group>"; };
 		733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskNoLoginView.swift; sourceTree = "<group>"; };
+		733B5FFD2D574D3D00ADE7C5 /* HomeNavSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavSearchView.swift; sourceTree = "<group>"; };
 		734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrelationViewCell.swift; sourceTree = "<group>"; };
 		734056AA2D38FE53009C9C96 /* DetailRiskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRiskItemView.swift; sourceTree = "<group>"; };
 		734355E72D2641C400BB4087 /* GroupTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamViewController.swift; sourceTree = "<group>"; };
@@ -980,6 +982,7 @@
 				730488122D2BD2090024265C /* HomeBannerViewCell.swift */,
 				730488142D2BD2380024265C /* HomeItemViewCell.swift */,
 				73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */,
+				733B5FFD2D574D3D00ADE7C5 /* HomeNavSearchView.swift */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -1443,6 +1446,7 @@
 				73EABF942D321B6F0052F4AB /* TwoRiskListPeopleCell.swift in Sources */,
 				73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */,
 				7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */,
+				733B5FFE2D574D3D00ADE7C5 /* HomeNavSearchView.swift in Sources */,
 				73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */,
 				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,
 				7374163A2D0ED72600E6CD23 /* WechatPushViewController.swift in Sources */,
