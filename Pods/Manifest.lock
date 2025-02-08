@@ -1,5 +1,4 @@
 PODS:
-  - ActiveLabel (1.1.0)
   - Alamofire (5.10.2)
   - BRPickerView (2.9.1):
     - BRPickerView/All (= 2.9.1)
@@ -70,7 +69,6 @@ PODS:
   - WechatOpenSDK (2.0.4)
 
 DEPENDENCIES:
-  - ActiveLabel (~> 1.1.0)
   - BRPickerView (~> 2.9.1)
   - DeviceKit (~> 5.2.2)
   - DropMenuBar (~> 1.0.4)
@@ -99,7 +97,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - ActiveLabel
     - Alamofire
     - BRPickerView
     - DeviceKit
@@ -132,7 +129,6 @@ SPEC REPOS:
     - WechatOpenSDK
 
 SPEC CHECKSUMS:
-  ActiveLabel: 5e3f4de79a1952d4604b845a0610d4776e4b82b3
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
   BRPickerView: 6dd69ea2c48e0a0abf1d197a705050e13143ee63
   DeviceKit: 4504e64df8f8ad1c42aae68f30ece5b51d56022a
@@ -164,6 +160,6 @@ SPEC CHECKSUMS:
   TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
   WechatOpenSDK: 290989072e87b79d52225a01bb4e5e58f6f88593
 
-PODFILE CHECKSUM: 4ecd28eb4c22ea59102e3f62ebb97a99f7a37dd0
+PODFILE CHECKSUM: c7212b77d5e761f3606ba4037a40e990842c2f91
 
 COCOAPODS: 1.16.2

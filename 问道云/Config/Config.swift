@@ -96,7 +96,32 @@ extension UIFont {
     class func semiboldFontOfSize(size: CGFloat) -> UIFont {
         return UIFont.systemFont(ofSize: size, weight: .semibold)
     }
-    
+}
+
+extension UITapGestureRecognizer {
+    func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
+        guard let attributedText = label.attributedText else { return false }
+        
+        let textStorage = NSTextStorage(attributedString: attributedText)
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: label.bounds.size)
+        textContainer.lineFragmentPadding = 0
+        textContainer.lineBreakMode = label.lineBreakMode
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+        
+        let location = self.location(in: label)
+        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+        let offset = CGPoint(
+            x: (label.bounds.size.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
+            y: (label.bounds.size.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y
+        )
+        let adjustedLocation = CGPoint(x: location.x - offset.x, y: location.y - offset.y)
+        
+        let index = layoutManager.characterIndex(for: adjustedLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        return NSLocationInRange(index, targetRange)
+    }
 }
 
 //按钮图片和文字的位置
@@ -628,33 +653,35 @@ class GetCacheConfig {
     
     /// 获取缓存大小，单位为 MB
     static func getCacheSizeInMB() -> String {
-        let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-        do {
-            let files = try FileManager.default.contentsOfDirectory(at: cachePath, includingPropertiesForKeys: [.fileSizeKey], options: .skipsHiddenFiles)
-            let totalSize = files.reduce(0) { total, fileURL in
-                let fileSize = (try? fileURL.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0
-                return total + fileSize
+        let cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        var totalSize: UInt64 = 0
+        
+        if let enumerator = FileManager.default.enumerator(at: cacheURL, includingPropertiesForKeys: [.totalFileAllocatedSizeKey], options: [], errorHandler: nil) {
+            for case let fileURL as URL in enumerator {
+                do {
+                    let resourceValues = try fileURL.resourceValues(forKeys: [.totalFileAllocatedSizeKey])
+                    if let fileSize = resourceValues.totalFileAllocatedSize {
+                        totalSize += UInt64(fileSize)
+                    }
+                } catch {
+                    print("Error getting file size: \(error)")
+                }
             }
-            return String(format: "%.2fMB", convertBytesToMB(totalSize))
-        } catch {
-            print("Error calculating cache size: \(error)")
-            return "Error calculating size"
         }
-    }
-    
-    /// 将字节转换为 MB
-    static func convertBytesToMB(_ bytes: Int) -> Double {
-        return Double(bytes) / 1024.0 / 1024.0
+        
+        // 将字节转换为 MB
+        let sizeInMB = Double(totalSize) / (1024 * 1024)
+        return String(format: "%.2f MB", sizeInMB)
     }
     
     static func clearCache() {
-        let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        let cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
         do {
-            let files = try FileManager.default.contentsOfDirectory(at: cachePath, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-            for file in files {
-                try FileManager.default.removeItem(at: file)
+            let contents = try FileManager.default.contentsOfDirectory(at: cacheURL, includingPropertiesForKeys: nil, options: [])
+            for fileURL in contents {
+                try FileManager.default.removeItem(at: fileURL)
             }
-            print("Cache cleared")
+            print("Cache cleared successfully.")
         } catch {
             print("Error clearing cache: \(error)")
         }
@@ -917,7 +944,7 @@ class ViewControllerUtils {
         }
         return nil
     }
-
+    
     /// 通过当前视图获取导航控制器
     static func findNavigationController(from view: UIView) -> UINavigationController? {
         guard let viewController = findViewController(from: view) else {
@@ -925,7 +952,7 @@ class ViewControllerUtils {
         }
         return viewController.navigationController
     }
-
+    
     /// 通过当前视图 Push 到新的控制器
     static func pushViewController(from view: UIView, to targetViewController: UIViewController, animated: Bool = true) {
         guard let navigationController = findNavigationController(from: view) else {

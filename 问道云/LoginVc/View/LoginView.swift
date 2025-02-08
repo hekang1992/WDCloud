@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import ActiveLabel
 import RxSwift
 import RxCocoa
 
@@ -74,27 +73,20 @@ class LoginView: BaseView {
         return clickBtn
     }()
     
-    lazy var yinsiLabel: ActiveLabel = {
-        let yinsiLabel = ActiveLabel()
-        yinsiLabel.font = .regularFontOfSize(size: 12)
-        yinsiLabel.numberOfLines = 0
+    lazy var yinsiLabel: UILabel = {
+        let fullText = "我已阅读并同意《问道云用户协议》和《问道云隐私政策》"
+        let linkText1 = "《问道云用户协议》"
+        let linkText2 = "《问道云隐私政策》"
+        let attributedString = NSMutableAttributedString(string: fullText)
+        let range1 = (fullText as NSString).range(of: linkText1)
+        let range2 = (fullText as NSString).range(of: linkText2)
+        let linkColor = UIColor.init(cssStr: "#547AFF")
+        let yinsiLabel = UILabel()
+        yinsiLabel.isUserInteractionEnabled = true
         yinsiLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
-        yinsiLabel.text = "我已阅读并同意《问道云协议》和《问道云隐私政策》条款"
-        let customType1 = ActiveType.custom(pattern: "\\b《问道云协议》\\b")
-        let customType2 = ActiveType.custom(pattern: "\\b《问道云隐私政策》\\b")
-        yinsiLabel.enabledTypes.append(customType1)
-        yinsiLabel.enabledTypes.append(customType2)
-        yinsiLabel.customColor[customType1] = UIColor.init(cssStr: "#547AFF")
-        yinsiLabel.customColor[customType2] = UIColor.init(cssStr: "#547AFF")
-        yinsiLabel.customSelectedColor[customType1] = UIColor.init(cssStr: "#547AFF")
-        yinsiLabel.customSelectedColor[customType2] = UIColor.init(cssStr: "#547AFF")
-        yinsiLabel.handleCustomTap(for: customType1) { [weak self] element in
-            self?.block1?()
-        }
-        yinsiLabel.handleCustomTap(for: customType2) { [weak self] element in
-            self?.block2?()
-        }
-        let attributedString = NSMutableAttributedString(string: yinsiLabel.text!)
+        yinsiLabel.font = .regularFontOfSize(size: 12)
+        attributedString.addAttributes([.foregroundColor: linkColor], range: range1)
+        attributedString.addAttributes([.foregroundColor: linkColor], range: range2)
         yinsiLabel.attributedText = attributedString
         return yinsiLabel
     }()
@@ -232,7 +224,22 @@ class LoginView: BaseView {
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(51.5)
         }
-        
+        yinsiLabel.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] gesture in
+                guard let self = self else { return }
+                let text = yinsiLabel.text ?? ""
+                let range1 = (text as NSString).range(of: "《问道云用户协议》")
+                let range2 = (text as NSString).range(of: "《问道云隐私政策》")
+                if gesture.didTapAttributedTextInLabel(label: yinsiLabel, inRange: range1) {
+                    self.block1?()
+                    // 这里可以打开用户协议的链接
+                } else if gesture.didTapAttributedTextInLabel(label: yinsiLabel, inRange: range2) {
+                    self.block2?()
+                    // 这里可以打开隐私政策的链接
+                }
+            }).disposed(by: disposeBag)
         clickTap()
         
     }

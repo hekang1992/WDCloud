@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import ActiveLabel
 
 class DeleteAccountViewController: WDBaseViewController {
     
@@ -49,21 +48,18 @@ class DeleteAccountViewController: WDBaseViewController {
         return eyeBtn
     }()
     
-    lazy var yinsiLabel: ActiveLabel = {
-        let yinsiLabel = ActiveLabel()
+    lazy var yinsiLabel: UILabel = {
+        let yinsiLabel = UILabel()
+        let fullText = "我已阅读并同意《问道云用户协议》"
+        let linkText = "《问道云用户协议》"
         yinsiLabel.font = .regularFontOfSize(size: 12)
         yinsiLabel.numberOfLines = 0
         yinsiLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
-        yinsiLabel.text = "我已阅读并同意《问道云用户协议》条款"
-        let customType1 = ActiveType.custom(pattern: "\\b《问道云用户协议》\\b")
-        yinsiLabel.enabledTypes.append(customType1)
-        yinsiLabel.customColor[customType1] = UIColor.init(cssStr: "#547AFF")
-        yinsiLabel.customSelectedColor[customType1] = UIColor.init(cssStr: "#547AFF")
-        yinsiLabel.handleCustomTap(for: customType1) { [weak self] element in
-            self?.block?()
-        }
-        let attributedString = NSMutableAttributedString(string: yinsiLabel.text!)
+        let attributedString = NSMutableAttributedString(string: fullText)
+                let range = (fullText as NSString).range(of: linkText)
+        attributedString.addAttribute(.foregroundColor, value: UIColor.init(cssStr: "#547AFF"), range: range)
         yinsiLabel.attributedText = attributedString
+        yinsiLabel.isUserInteractionEnabled = true
         return yinsiLabel
     }()
     
@@ -116,6 +112,13 @@ class DeleteAccountViewController: WDBaseViewController {
         nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             let delVc = DeleteSureViewController()
             self?.navigationController?.pushViewController(delVc, animated: true)
+        }).disposed(by: disposeBag)
+        
+        yinsiLabel.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+            self?.block?()
         }).disposed(by: disposeBag)
         
         self.block = { [weak self] in

@@ -71,13 +71,22 @@ class SettingAuthorityViewController: WDBaseViewController {
         self.modelArray.accept(array)
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
         
-        modelArray.asObservable().bind(to: tableView.rx.items(cellIdentifier: "AuthViewCell", cellType: AuthViewCell.self)) { row, model, cell in
+        modelArray.asObservable().bind(to: tableView.rx.items(cellIdentifier: "AuthViewCell", cellType: AuthViewCell.self)) { [weak self] row, model, cell in
+            guard let self = self else { return }
             cell.backgroundColor = .white
             cell.selectionStyle = .none
             cell.model.accept(model)
+            cell.btn
+                .rx
+                .tap
+                .subscribe(onNext: { [weak self] in
+                self?.openSettings()
+            }).disposed(by: disposeBag)
         }.disposed(by: disposeBag)
         
-        tableView.rx.modelSelected(DescModel.self).subscribe(onNext: { [weak self] _ in
+        tableView.rx
+            .modelSelected(DescModel.self)
+            .subscribe(onNext: { [weak self] _ in
             self?.openSettings()
         }).disposed(by: disposeBag)
         

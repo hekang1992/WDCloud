@@ -7,7 +7,6 @@
 
 import UIKit
 import RxRelay
-import ActiveLabel
 
 class BindPhoneView: BaseView {
     
