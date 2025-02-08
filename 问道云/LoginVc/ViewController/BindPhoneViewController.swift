@@ -100,7 +100,7 @@ extension BindPhoneViewController {
             ViewHud.hideLoadView()
             switch result {
             case .success(let success):
-                ToastViewConfig.showToast(message: "登录成功!")
+                ToastViewConfig.showToast(message: "登录成功")
                 if let model = success.data {
                     let phone = model.userinfo?.userinfo?.sysUser?.phonenumber ?? ""
                     let token = model.userinfo?.access_token ?? ""

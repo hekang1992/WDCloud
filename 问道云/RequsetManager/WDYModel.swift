@@ -257,8 +257,10 @@ class itemsModel {
     var low_risk_sum: Int?
     var riskData: riskDataModel?
     var relate: [String]?
+    var datanumber: String?//风险ID
     init(json: JSON) {
         //风险数据公司
+        self.datanumber = json["datanumber"].stringValue
         self.relate = json["relate"].arrayValue.map({
             $0.stringValue
         })

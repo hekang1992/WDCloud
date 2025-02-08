@@ -84,7 +84,7 @@ extension PasswordLoginViewController {
                         WDLoginConfig.saveLoginInfo(phone, token, customernumber)
                     }
                     NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
-                    ToastViewConfig.showToast(message: "登录成功!")
+                    ToastViewConfig.showToast(message: "登录成功")
                 }
                 break
             case .failure(_):

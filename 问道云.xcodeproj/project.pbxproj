@@ -68,6 +68,9 @@
 		7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */; };
 		7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */; };
 		7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */; };
+		733B5FF62D57230A00ADE7C5 /* PopCancelMonitoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FF52D57230A00ADE7C5 /* PopCancelMonitoringView.swift */; };
+		733B5FFA2D573BFF00ADE7C5 /* RiskNoMonitoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */; };
+		733B5FFC2D573CAA00ADE7C5 /* RiskNoLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */; };
 		734056A92D38E34C009C9C96 /* CorrelationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */; };
 		734056AB2D38FE53009C9C96 /* DetailRiskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734056AA2D38FE53009C9C96 /* DetailRiskItemView.swift */; };
 		734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E72D2641C400BB4087 /* GroupTeamViewController.swift */; };
@@ -298,6 +301,9 @@
 		7335F6ED2D0AE24E0074985F /* MyDownloadViewNormalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewNormalCell.swift; sourceTree = "<group>"; };
 		7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewEditCell.swift; sourceTree = "<group>"; };
 		7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBtnPopView.swift; sourceTree = "<group>"; };
+		733B5FF52D57230A00ADE7C5 /* PopCancelMonitoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopCancelMonitoringView.swift; sourceTree = "<group>"; };
+		733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskNoMonitoringView.swift; sourceTree = "<group>"; };
+		733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskNoLoginView.swift; sourceTree = "<group>"; };
 		734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrelationViewCell.swift; sourceTree = "<group>"; };
 		734056AA2D38FE53009C9C96 /* DetailRiskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRiskItemView.swift; sourceTree = "<group>"; };
 		734355E72D2641C400BB4087 /* GroupTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamViewController.swift; sourceTree = "<group>"; };
@@ -885,6 +891,9 @@
 				73950F722D55A93A005AD034 /* PopMonitoringGroupView.swift */,
 				73950F742D55B3E7005AD034 /* AddMonitoringListView.swift */,
 				73950F762D55EE2B005AD034 /* MonitoringCell.swift */,
+				733B5FF52D57230A00ADE7C5 /* PopCancelMonitoringView.swift */,
+				733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */,
+				733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1247,6 +1256,7 @@
 			files = (
 				73B3624D2D37A665003BD911 /* PeopleActivityViewController.swift in Sources */,
 				7325A7E62D0000040043C196 /* GetCodeViewController.swift in Sources */,
+				733B5FFC2D573CAA00ADE7C5 /* RiskNoLoginView.swift in Sources */,
 				730488132D2BD2090024265C /* HomeBannerViewCell.swift in Sources */,
 				730CEDFE2D546080002DE9DF /* CompanyLawDetailCell.swift in Sources */,
 				739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */,
@@ -1261,6 +1271,7 @@
 				73E971302D2E614200F12B15 /* CommonSearchListView.swift in Sources */,
 				73807D592D33808400F8B90D /* CompanyCollectionCell.swift in Sources */,
 				7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */,
+				733B5FF62D57230A00ADE7C5 /* PopCancelMonitoringView.swift in Sources */,
 				73C36A772D2D08EB00D6DC46 /* SearchPeopleViewController.swift in Sources */,
 				734896E62D3A2FE300B028FE /* RiskNumView.swift in Sources */,
 				73EF03D12D30FD000070F850 /* TwoPeopleSpecListCell.swift in Sources */,
@@ -1344,6 +1355,7 @@
 				730487F72D2A525D0024265C /* HomeHeadView.swift in Sources */,
 				73C752562D1E4DA000C47187 /* HistoryListView.swift in Sources */,
 				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
+				733B5FFA2D573BFF00ADE7C5 /* RiskNoMonitoringView.swift in Sources */,
 				73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */,
 				73807D472D32C8B200F8B90D /* LaunchViewController.swift in Sources */,
 				73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */,

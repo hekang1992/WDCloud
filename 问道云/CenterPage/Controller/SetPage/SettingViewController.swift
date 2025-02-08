@@ -178,7 +178,7 @@ extension SettingViewController {
             switch result {
             case .success(_):
                 WDLoginConfig.removeLoginInfo()
-                ToastViewConfig.showToast(message: "退出成功!")
+                ToastViewConfig.showToast(message: "退出成功")
                 NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
                 break
             case .failure(_):

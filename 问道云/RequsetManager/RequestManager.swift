@@ -132,8 +132,12 @@ class RequestManager: NSObject {
                 let error = NSError()
                 completion(.failure(error))
             }else if code == 500 {
-                ToastViewConfig.showToast(message: msg)
                 completion(.success(baseModel))
+                ToastViewConfig.showToast(message: msg)
+            }else {
+                let error = NSError()
+                completion(.failure(error))
+                ToastViewConfig.showToast(message: msg)
             }
         }
     }

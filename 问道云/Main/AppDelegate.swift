@@ -97,7 +97,7 @@ extension AppDelegate: WXApiDelegate {
                         bindVc.wechatopenid = model.wechatopenid ?? ""
                         currentVc.navigationController?.pushViewController(bindVc, animated: true)
                     }else if flag == "1" {
-                        ToastViewConfig.showToast(message: "登录成功!")
+                        ToastViewConfig.showToast(message: "登录成功")
                         if let model = success.data {
                             let phone = model.userinfo?.userinfo?.sysUser?.phonenumber ?? ""
                             let token = model.userinfo?.access_token ?? ""

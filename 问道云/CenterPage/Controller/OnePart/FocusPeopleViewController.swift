@@ -397,7 +397,6 @@ extension FocusPeopleViewController: UITableViewDelegate {
         }
     }
     
-    
     //接口调用
     func moveFocusInfo(from model: rowsModel, ids: [String]) {
         let man = RequestManager()
