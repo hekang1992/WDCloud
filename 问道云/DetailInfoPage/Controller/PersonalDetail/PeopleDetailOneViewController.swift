@@ -52,11 +52,14 @@ class PeopleDetailOneViewController: WDBaseViewController {
     }
    
     private func getPeopleDetailItemInfo() {
-        let dict = ["moduleType": "3", "entityId": enityId] as [String: Any]
+        let dict = ["moduleType": "3",
+                    "entityId": enityId] as [String: Any]
         let man = RequestManager()
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customermenu/customerMenuTree",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):

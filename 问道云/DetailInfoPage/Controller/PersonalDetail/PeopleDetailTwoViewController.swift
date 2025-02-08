@@ -240,8 +240,15 @@ extension PeopleDetailTwoViewController {
     
     private func getCorrelationInfo() {
         let man = RequestManager()
-        let dict = ["personId": enityId, "holdType": holdType, "pageNum": pageNum, "pageSize": 20] as [String : Any]
-        man.requestAPI(params: dict, pageUrl: "/firminfo/person/relatedEntity", method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        let dict = ["personId": enityId,
+                    "holdType": holdType,
+                    "pageNum": pageNum,
+                    "pageSize": 20] as [String : Any]
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/person/relatedEntity",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             self.tableView.mj_header?.endRefreshing()
             self.tableView.mj_footer?.endRefreshing()
@@ -282,10 +289,12 @@ extension PeopleDetailTwoViewController {
     
     private func getNumInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["personId": enityId]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/person/relatedEntityCount",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {

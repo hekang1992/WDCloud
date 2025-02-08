@@ -252,8 +252,12 @@ extension DeleteSureViewController {
     
     func getCodeInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["phone": self.numLabel.text ?? ""]
-        man.requestAPI(params: dict, pageUrl: get_code, method: .post) { [weak self] result in
+        man.requestAPI(params: dict,
+                       pageUrl: get_code,
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -289,11 +293,15 @@ extension DeleteSureViewController {
         let phone = self.numLabel.text ?? ""
         let code = self.codeTx.text ?? ""
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["customernumber": customernumber,
                     "phone": phone,
                     "code": code,
                     "state": "2"]
-        man.requestAPI(params: dict, pageUrl: "/operation/customerinfo/updatecustomerInfoisCustomertype", method: .post) { result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/customerinfo/updatecustomerInfoisCustomertype",
+                       method: .post) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

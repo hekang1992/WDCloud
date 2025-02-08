@@ -104,7 +104,11 @@ extension InvoiceListViewController {
         let customernumber = model.value?.customernumber ?? ""
         let dict = ["customernumber": customernumber]
         let man = RequestManager()
-        man.requestAPI(params: dict, pageUrl: invoiceriseit_selecinvoicerise, method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: invoiceriseit_selecinvoicerise,
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -126,7 +130,11 @@ extension InvoiceListViewController {
     func deleteInfo(from model: rowsModel) {
         let dict = ["dataid": model.dataid ?? ""]
         let man = RequestManager()
-        man.requestAPI(params: dict, pageUrl: "/operation/invoiceriseit/deleteinvoicerise", method: .post) { [weak self] result in
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/invoiceriseit/deleteinvoicerise",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

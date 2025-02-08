@@ -255,8 +255,13 @@ extension SearchRiskViewController {
     //最近搜索
     private func getlastSearch() {
         let man = RequestManager()
-        let dict = ["searchType": "", "moduleId": "05"]
-        man.requestAPI(params: dict, pageUrl: "/operation/searchRecord/query", method: .post) { [weak self] result in
+        ViewHud.addLoadView()
+        let dict = ["searchType": "",
+                    "moduleId": "05"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/searchRecord/query",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -297,9 +302,17 @@ extension SearchRiskViewController {
     //浏览历史
     private func getBrowsingHistory() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
-        let dict = ["customernumber":customernumber ,"viewrecordtype": "", "moduleId": "05", "pageNum": "1", "pageSize": "20"]
-        man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
+        let dict = ["customernumber":customernumber,
+                    "viewrecordtype": "",
+                    "moduleId": "05",
+                    "pageNum": "1",
+                    "pageSize": "20"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/clientbrowsecb/selectBrowserecord",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -356,10 +369,12 @@ extension SearchRiskViewController {
     //热搜
     private func getHotWords() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["moduleId": "05"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -415,8 +430,13 @@ extension SearchRiskViewController {
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-            let dict = ["searchType": "", "moduleId": "05"]
-            man.requestAPI(params: dict, pageUrl: "/operation/searchRecord/clear", method: .post) { result in
+        ViewHud.addLoadView()
+            let dict = ["searchType": "",
+                        "moduleId": "05"]
+            man.requestAPI(params: dict,
+                           pageUrl: "/operation/searchRecord/clear",
+                           method: .post) { result in
+                ViewHud.hideLoadView()
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -438,9 +458,15 @@ extension SearchRiskViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
+        ViewHud.addLoadView()
             let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
-            let dict = ["moduleId": "05", "viewrecordtype": "", "customerNumber": customerNumber]
-            man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord", method: .get) { result in
+            let dict = ["moduleId": "05",
+                        "viewrecordtype": "",
+                        "customerNumber": customerNumber]
+            man.requestAPI(params: dict,
+                           pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
+                           method: .get) { result in
+                ViewHud.hideLoadView()
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -467,7 +493,11 @@ extension SearchRiskViewController {
                     "pageSize": 20,
                     "type": ""] as [String : Any]
         let man = RequestManager()
-        man.requestAPI(params: dict, pageUrl: "/riskmonitor/cooperation/getRiskData", method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/riskmonitor/cooperation/getRiskData",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             self?.twoRiskListView.tableView.mj_header?.endRefreshing()
             self?.twoRiskListView.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -525,7 +555,11 @@ extension SearchRiskViewController {
                     "pageSize": 20,
                     "type": "1"] as [String : Any]
         let man = RequestManager()
-        man.requestAPI(params: dict, pageUrl: "/riskmonitor/cooperation/getRiskData", method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/riskmonitor/cooperation/getRiskData",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             self?.listPeopleView.tableView.mj_header?.endRefreshing()
             self?.listPeopleView.tableView.mj_footer?.endRefreshing()
             switch result {

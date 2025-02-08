@@ -314,6 +314,7 @@ extension WDBaseViewController {
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let phonenumber = GetSaveLoginInfoConfig.getPhoneNumber()
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["customernumber": customernumber,
                     "combonumber": combonumber,
                     "phonenumber": phonenumber,
@@ -323,7 +324,10 @@ extension WDBaseViewController {
                     "usertype": 1,
                     "accountcount": 1,
                     "quantity": 1] as [String : Any]
-        man.requestAPI(params: dict, pageUrl: "/operation/customerorder/addorder", method: .post) { [weak self] result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/customerorder/addorder",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -358,8 +362,11 @@ extension WDBaseViewController {
     private func paySuccess(from orderNumberID:
                             String, complete: (() -> Void)? = nil) {
         let man = RequestManager()
-        let dict = ["ordernumber": orderNumberID, "payway": "3"]
-        man.requestAPI(params: dict, pageUrl: "/operation/customerorder/callback", method: .post) { result in
+        let dict = ["ordernumber": orderNumberID,
+                    "payway": "3"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/customerorder/callback",
+                       method: .post) { result in
             complete?()
         }
     }

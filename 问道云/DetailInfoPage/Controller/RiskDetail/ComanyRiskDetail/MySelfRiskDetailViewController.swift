@@ -464,6 +464,7 @@ extension MySelfRiskDetailViewController {
     //获取风险信息
     private func getRiskDetailInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["entityid": enityId,
                     "functionType": functionType,
                     "itemtype": itemtype,
@@ -471,6 +472,7 @@ extension MySelfRiskDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskDynamicslow",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -495,6 +497,7 @@ extension MySelfRiskDetailViewController {
     //获取法律风险数据信息
     private func getRiskLowDetailInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["entityid": enityId,
                     "functionType": functionType,
                     "itemtype": itemtype,
@@ -502,6 +505,7 @@ extension MySelfRiskDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskDynamicsbereLegalRisk",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):

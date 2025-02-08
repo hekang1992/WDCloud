@@ -223,8 +223,12 @@ extension FocusCompanyViewController {
     //获取所有分组
     func getAllGroup() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["followTargetType": "1"]
-        man.requestAPI(params: dict, pageUrl: "/operation/followGroup/list", method: .get) { result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/followGroup/list",
+                       method: .get) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -240,8 +244,12 @@ extension FocusCompanyViewController {
     //获取地区
     func getRegion() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = [String: Any]()
-        man.requestAPI(params: dict, pageUrl: "/operation/follow/areaTree/1", method: .get) { result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/areaTree/1",
+                       method: .get) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -257,8 +265,12 @@ extension FocusCompanyViewController {
     //获取行业
     func getIndustry() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = [String: Any]()
-        man.requestAPI(params: dict, pageUrl: "/operation/follow/industryTree/1", method: .get) { result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/industryTree/1",
+                       method: .get) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -284,7 +296,11 @@ extension FocusCompanyViewController {
                     "secondIndustryCode": secondIndustryCode] as [String : Any]
         
         let man = RequestManager()
-        man.requestAPI(params: dict, pageUrl: "/operation/follow/list", method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/list",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -326,9 +342,13 @@ extension FocusCompanyViewController: UITableViewDelegate {
     
     private func addNewInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["groupName": self.cmmView.tf.text ?? "".removingEmojis,
                     "followTargetType": "1"]
-        man.requestAPI(params: dict, pageUrl: "/operation/followGroup", method: .post) { [weak self] result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/followGroup",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -346,8 +366,13 @@ extension FocusCompanyViewController: UITableViewDelegate {
     //取消关注
     func cancelFocusInfo(from dataIds: [String]) {
         let man = RequestManager()
-        let dict = ["ids": dataIds, "followTargetType": "1"] as [String : Any]
-        man.requestAPI(params: dict, pageUrl: "/operation/follow/batchCancel", method: .post) { result in
+        ViewHud.addLoadView()
+        let dict = ["ids": dataIds,
+                    "followTargetType": "1"] as [String : Any]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/batchCancel",
+                       method: .post) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -377,8 +402,14 @@ extension FocusCompanyViewController: UITableViewDelegate {
     
     func moveFocusInfo(from model: rowsModel, ids: [String]) {
         let man = RequestManager()
-        let dict = ["groupNumber": model.groupnumber ?? "", "ids": ids, "followTargetType": "1"] as [String : Any]
-        man.requestAPI(params: dict, pageUrl: "/operation/follow/moveGroup", method: .post) { [weak self] result in
+        ViewHud.addLoadView()
+        let dict = ["groupNumber": model.groupnumber ?? "",
+                    "ids": ids,
+                    "followTargetType": "1"] as [String : Any]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/moveGroup",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

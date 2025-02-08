@@ -209,9 +209,14 @@ extension WDHomeViewController {
     //获取首页item
     private func getHomeItemInfo(complete: @escaping ((childrenModel) -> Void)) {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
-        let dict = ["moduleType": "1", "appleVersion": appleVersion]
-        man.requestAPI(params: dict, pageUrl: customer_menuTree, method: .get) { result in
+        let dict = ["moduleType": "1",
+                    "appleVersion": appleVersion]
+        man.requestAPI(params: dict,
+                       pageUrl: customer_menuTree,
+                       method: .get) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data?.items?.first?.children?.last {
@@ -227,10 +232,12 @@ extension WDHomeViewController {
     //获取banner
     func getBannerInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["binnertype": "1"]
         man.requestAPI(params: dict,
                        pageUrl: bannerHome_url,
                        method: .get) { [weak self] reslut in
+            ViewHud.hideLoadView()
             switch reslut {
             case .success(let success):
                 if success.code == 200 {
@@ -246,10 +253,12 @@ extension WDHomeViewController {
     //热搜 全部 企业加人员
     func getHotWords() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["moduleId": ""]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -269,10 +278,12 @@ extension WDHomeViewController {
     //热搜1 企业热搜
     func getHotCompanyWords() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["moduleId": "01"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):

@@ -115,9 +115,11 @@ class DataModel {
     var riskGrade: riskGradeModel?
     var sumTotal: Int?
     var rimRisk: [rimRiskModel]?
+    var recentNews: Int?
     init(json: JSON) {
         self.rimRisk = json["rimRisk"].arrayValue.map { rimRiskModel(json: $0) }
         self.sumTotal = json["sumTotal"].intValue
+        self.recentNews = json["recentNews"].intValue
         self.riskGrade = riskGradeModel(json: json["riskGrade"])
         self.entityRiskEventInfo = entityRiskEventInfoModel(json: json["entityRiskEventInfo"])
         self.map1 = map1Model(json: json["map1"])
@@ -192,7 +194,8 @@ class itemsModel {
     var children: [childrenModel]?
     var companyCount: Int?
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
-    var personName: String?
+    var personName: String?//个人名字
+    var personname: String?//个人名字
     var personId: String?
     var logo: String?
     var shareholderList: [shareholderListModel]?//合作伙伴信息
@@ -202,7 +205,10 @@ class itemsModel {
     var entityStatus: String?//经营状态
     var entityName: String?//公司名称
     var entity_name: String?//公司名称
+    var firmname: String?//公司名称
     var entityId: String?//公司ID
+    var entity_id: String?//公司ID
+    var entityid: String?//公司ID
     var registerCapital: String?//注册资本
     var legalName: String?//法定代表人
     var incorporationTime: String?//成立时间
@@ -229,7 +235,6 @@ class itemsModel {
     var createtime: String?
     var risklevel: String?
     var riskDetailPath: String?
-    var firmname: String?
     var itemname: String?
     var size: Int?
     var itemnumber: String?
@@ -242,9 +247,32 @@ class itemsModel {
     var subitems: [subitemsModel]?
     var personnel: [personnelModel]?//搜索监控企业
     var seniorexecutive: [personnelModel]?//搜索监控企业
-    var entity_id: String?
+    var firstate: String?
+    var riskSumup: Int?
+    var high_risk: Int?
+    var high_risk_sum: Int?
+    var hint: Int?
+    var hint_sum: Int?
+    var low_risk: Int?
+    var low_risk_sum: Int?
+    var riskData: riskDataModel?
+    var relate: [String]?
     init(json: JSON) {
         //风险数据公司
+        self.relate = json["relate"].arrayValue.map({
+            $0.stringValue
+        })
+        self.entityid = json["entityid"].stringValue
+        self.personname = json["personname"].stringValue
+        self.riskData = riskDataModel(json: json["riskData"])
+        self.high_risk = json["high_risk"].intValue
+        self.high_risk_sum = json["high_risk_sum"].intValue
+        self.hint = json["hint"].intValue
+        self.hint_sum = json["hint_sum"].intValue
+        self.low_risk = json["low_risk"].intValue
+        self.low_risk_sum = json["low_risk_sum"].intValue
+        self.riskSumup = json["riskSumup"].intValue
+        self.firstate = json["firstate"].stringValue
         self.entity_id = json["entity_id"].stringValue
         self.personnel = json["personnel"].arrayValue.map { personnelModel(json: $0) }
         self.seniorexecutive = json["seniorexecutive"].arrayValue.map { personnelModel(json: $0) }
@@ -290,6 +318,15 @@ class itemsModel {
         self.listCompany = json["listCompany"].arrayValue.map { listCompanyModel(json: $0) }
         self.shareholderList = json["shareholderList"].arrayValue.map { shareholderListModel(json: $0) }
         self.subitems = json["subitems"].arrayValue.map { subitemsModel(json: $0) }
+    }
+}
+
+class riskDataModel {
+    var risktime: String?
+    var itemname: String?
+    init(json: JSON) {
+        self.risktime = json["risktime"].stringValue
+        self.itemname = json["itemname"].stringValue
     }
 }
 

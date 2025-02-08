@@ -113,9 +113,17 @@ extension UserAllOrderSController {
     //数据请求
     func getOrderInfo(form combotypenumber: Int, pageNum: Int, orderstate: String) {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let customernumber = model.value?.customernumber ?? ""
-        let dict = ["customernumber": customernumber, "combotypenumber": combotypenumber, "orderstate": orderstate, "pageNum": pageNum, "pageSize": 20] as [String : Any]
-        man.requestAPI(params: dict, pageUrl: myorder_info, method: .get) { [weak self] result in
+        let dict = ["customernumber": customernumber,
+                    "combotypenumber": combotypenumber,
+                    "orderstate": orderstate,
+                    "pageNum": pageNum,
+                    "pageSize": 20] as [String : Any]
+        man.requestAPI(params: dict,
+                       pageUrl: myorder_info,
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             self.orderView.tableView.mj_header?.endRefreshing()
             self.orderView.tableView.mj_footer?.endRefreshing()
@@ -163,7 +171,11 @@ extension UserAllOrderSController {
     func getCombotype() {
         let dict = [String: Any]()
         let man = RequestManager()
-        man.requestAPI(params: dict, pageUrl: combotype_list, method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: combotype_list,
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 guard let self = self else { return }

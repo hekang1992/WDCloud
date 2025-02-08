@@ -94,7 +94,11 @@ class HomeNewsListViewController: WDBaseViewController {
                     "pulishstate": 1,
                     "type": "1"] as [String : Any]
         let man = RequestManager()
-        man.requestAPI(params: dict, pageUrl: "/operation/webnews/list", method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/webnews/list",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             self.tableView.mj_header?.endRefreshing()
             self.tableView.mj_footer?.endRefreshing()

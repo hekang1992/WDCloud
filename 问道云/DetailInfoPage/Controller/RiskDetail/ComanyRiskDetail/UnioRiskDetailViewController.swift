@@ -109,11 +109,14 @@ extension UnioRiskDetailViewController {
     //获取关联风险
     private func getUnioRiskInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
-        let dict = ["entityid": enityId, "customernumber": customernumber]
+        let dict = ["entityid": enityId,
+                    "customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/rimRisk",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):

@@ -55,8 +55,12 @@ extension ForgetPasswordViewController {
     
     func getCodeInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["phone": self.forgetView.phoneTx.text ?? ""]
-        man.requestAPI(params: dict, pageUrl: get_code, method: .post) { [weak self] result in
+        man.requestAPI(params: dict,
+                       pageUrl: get_code,
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -88,10 +92,14 @@ extension ForgetPasswordViewController {
     
     func submitPasswordInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["phone": self.forgetView.phoneTx.text ?? "",
                     "code": self.forgetView.codeTx.text ?? "",
                     "password": self.forgetView.passTx.text ?? ""]
-        man.requestAPI(params: dict, pageUrl: rest_password, method: .post) { [weak self] result in
+        man.requestAPI(params: dict,
+                       pageUrl: rest_password,
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 ToastViewConfig.showToast(message: success.msg ?? "")

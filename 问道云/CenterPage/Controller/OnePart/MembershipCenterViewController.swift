@@ -202,8 +202,12 @@ extension MembershipCenterViewController {
     //获取套餐信息
     func getPriceInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let emptyDict = [String: Any]()
-        man.requestAPI(params: emptyDict, pageUrl: getCombo_selectmember, method: .get) { [weak self] result in
+        man.requestAPI(params: emptyDict,
+                       pageUrl: getCombo_selectmember,
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -218,11 +222,13 @@ extension MembershipCenterViewController {
     
     func getBuymoreinfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: buymore_info,
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):

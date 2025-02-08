@@ -236,10 +236,12 @@ extension SearchAllViewController {
     //获取所有城市数据
     func getAllRegionInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let emptyDict = [String: Any]()
         man.requestAPI(params: emptyDict,
                        pageUrl: "/operation/ajax/areaTree",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let self = self, let modelArray = success.data?.data {
@@ -257,10 +259,12 @@ extension SearchAllViewController {
     //获取行业数据
     func getAllIndustryInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let emptyDict = [String: Any]()
         man.requestAPI(params: emptyDict,
                        pageUrl: "/operation/ajax/industryTree",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let self = self, let modelArray = success.data?.data {

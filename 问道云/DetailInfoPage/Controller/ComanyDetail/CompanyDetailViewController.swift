@@ -56,11 +56,14 @@ extension CompanyDetailViewController {
     
     //获取企业详情item
     private func getCompanyDetailItemInfo() {
-        let dict = ["moduleType": "2", "entityId": enityId] as [String: Any]
+        let dict = ["moduleType": "2",
+                    "entityId": enityId] as [String: Any]
         let man = RequestManager()
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customermenu/customerMenuTree",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -77,11 +80,14 @@ extension CompanyDetailViewController {
     
     //获取角标
     private func getCompanyRightCountInfo() {
-        let dict = ["entityName": "2", "entityId": enityId] as [String: Any]
+        let dict = ["entityName": "2",
+                    "entityId": enityId] as [String: Any]
         let man = RequestManager()
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/operatingstate/getprestatistics",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -98,8 +104,12 @@ extension CompanyDetailViewController {
     //获取企业详情头部信息
     private func getCompanyHeadInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["entityId": enityId]
-        man.requestAPI(params: dict, pageUrl: "/firminfo/company/overview", method: .get) { result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/company/overview",
+                       method: .get) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data, let code = success.code, code == 200 {
@@ -116,8 +126,12 @@ extension CompanyDetailViewController {
     //获取风险详情数据
     private func getCompanyRiskInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["entityId": enityId]
-        man.requestAPI(params: dict, pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew", method: .get) { result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew",
+                       method: .get) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data, let code = success.code, code == 200 {

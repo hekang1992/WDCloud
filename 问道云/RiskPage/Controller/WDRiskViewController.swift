@@ -41,6 +41,26 @@ class WDRiskViewController: WDBaseViewController {
     var JXheightForHeaderInSection: Int = 36
     
     lazy var pagingView: JXPagingView = preferredPagingView()
+    
+    lazy var dailyVc: DailyReportViewController = {
+        let dailyVc = DailyReportViewController()
+        return dailyVc
+    }()
+    
+    lazy var weekVc: WeekReportViewController = {
+        let weekVc = WeekReportViewController()
+        return weekVc
+    }()
+    
+    lazy var monthVc: MonthReportViewController = {
+        let monthVc = MonthReportViewController()
+        return monthVc
+    }()
+    
+    lazy var bothVc: BothReportViewController = {
+        let bothVc = BothReportViewController()
+        return bothVc
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,14 +83,15 @@ class WDRiskViewController: WDBaseViewController {
         lineView.indicatorWidth = 18
         lineView.indicatorHeight = 3
         segmentedView.indicators = [lineView]
-        
         view.addSubview(pagingView)
         pagingView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
         segmentedView.listContainer = pagingView.listContainerView
+        pagingView.isListHorizontalScrollEnabled = IS_LOGIN
         //距离高度禁止
         pagingView.pinSectionHeaderVerticalOffset = Int(StatusHeightManager.navigationBarHeight)
         headView.titlelabel.text = "风险监控"
         addHeadView(from: headView)
+        
     }
 
 }
@@ -112,16 +133,12 @@ extension WDRiskViewController: JXPagingViewDelegate {
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
-            let dailyVc = DailyReportViewController()
             return dailyVc
         }else if index == 1 {
-            let weekVc = WeekReportViewController()
             return weekVc
         }else if index == 2 {
-            let monthVc = MonthReportViewController()
             return monthVc
         }else {
-            let bothVc = BothReportViewController()
             return bothVc
         }
     }

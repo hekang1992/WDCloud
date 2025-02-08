@@ -54,10 +54,14 @@ extension HistoryListViewController {
     func getHistroyListInfo(from viewType: String, pageNum: Int) {
         self.viewType = viewType
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["viewrecordtype": viewType,
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
-        man.requestAPI(params: dict, pageUrl: browsing_History, method: .get) { [weak self] result in
+        man.requestAPI(params: dict,
+                       pageUrl: browsing_History,
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             self.historyView.tableView.mj_header?.endRefreshing()
             self.historyView.tableView.mj_footer?.endRefreshing()

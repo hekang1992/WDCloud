@@ -50,8 +50,12 @@ extension BindPhoneViewController {
     //获取验证码
     func getCodeInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["phone": self.bindView.phoneTx.text ?? ""]
-        man.requestAPI(params: dict, pageUrl: get_code, method: .post) { [weak self] result in
+        man.requestAPI(params: dict,
+                       pageUrl: get_code,
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -86,10 +90,14 @@ extension BindPhoneViewController {
         let phone = self.bindView.phoneTx.text ?? ""
         let code = self.bindView.codeTx.text ?? ""
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["code": code,
                     "phone": phone,
                     "wechatopenid": wechatopenid]
-        man.requestAPI(params: dict, pageUrl: "/auth/wechatBinding", method: .post) { result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/auth/wechatBinding",
+                       method: .post) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 ToastViewConfig.showToast(message: "登录成功!")

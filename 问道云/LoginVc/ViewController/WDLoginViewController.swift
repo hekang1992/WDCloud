@@ -80,8 +80,12 @@ extension WDLoginViewController {
     //获取验证码
     func getCodeInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["phone": self.loginView.phoneTx.text ?? ""]
-        man.requestAPI(params: dict, pageUrl: get_code, method: .post) { [weak self] result in
+        man.requestAPI(params: dict,
+                       pageUrl: get_code,
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 self?.pushCodeVc()

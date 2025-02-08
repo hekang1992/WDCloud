@@ -152,11 +152,11 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
     }
     
     private func getSearchListInfo(from targetStr: String) {
-        ViewHud.addLoadView()
         let dict = ["firmname": targetStr,
                     "pageNum": pageNum,
                     "pageSize": pageSize] as [String : Any]
         let man = RequestManager()
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "riskmonitor/monitortarget/riskInquiryEnterprise",
                        method: .get) { [weak self] result in
@@ -198,8 +198,8 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
     
     //查询监控分组
     func getMonitoringGroupInfo() {
-        ViewHud.addLoadView()
         let man = RequestManager()
+        ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
@@ -277,10 +277,9 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
         }
         self.present(alertVc, animated: true)
     }
-    
+#warning("添加监控企业服务端报错=====无法调试")
     //添加监控企业
     private func addMonitoringCompanyInfo(from model: itemsModel) {
-        ViewHud.addLoadView()
         let persons = (model.personnel?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? []) +
         (model.seniorexecutive?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? [])
         let entityid = model.entity_id ?? ""
@@ -293,6 +292,7 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
                     "groupnumber": groupnumber,
                     "targettype": targettype] as [String : Any]
         let man = RequestManager()
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/monitortarget/addmonitortarget",
                        method: .post) { [weak self] result in

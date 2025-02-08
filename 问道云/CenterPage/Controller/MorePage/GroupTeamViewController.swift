@@ -122,7 +122,11 @@ class GroupTeamViewController: WDBaseViewController {
                         "maincustomernumber": maincustomernumber,
                         "name": name.filter { !$0.isWhitespace }]
             let man = RequestManager()
-            man.requestAPI(params: dict, pageUrl: "/operation/customerinfo/addsubaccount", method: .post) { [weak self] result in
+        ViewHud.addLoadView()
+            man.requestAPI(params: dict,
+                           pageUrl: "/operation/customerinfo/addsubaccount",
+                           method: .post) { [weak self] result in
+                ViewHud.hideLoadView()
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -156,10 +160,12 @@ class GroupTeamViewController: WDBaseViewController {
 extension GroupTeamViewController {
     func getGroupTeamLeader() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = [String: Any]()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/enterpriseclientbm/bycustomernumber",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -181,8 +187,12 @@ extension GroupTeamViewController {
     
     func createGroupInfo(from name: String, email: String) {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["firmname": name, "email": email]
-        man.requestAPI(params: dict, pageUrl: "/operation/enterpriseclientbm", method: .post) { [weak self] result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/enterpriseclientbm",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

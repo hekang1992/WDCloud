@@ -99,10 +99,11 @@ class PeopleRiskDetailViewController: WDBaseViewController {
 }
 
 extension PeopleRiskDetailViewController {
-    
+#warning("获取人寰风险详情======数据不支持未开发")
     //获取风险详情
     private func getRiskDetailInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["entityid": enityId,
                     "functionType": functionType,
                     "dateType": dateType,

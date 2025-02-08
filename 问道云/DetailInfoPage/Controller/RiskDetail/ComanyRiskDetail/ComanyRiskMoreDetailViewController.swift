@@ -133,6 +133,7 @@ extension ComanyRiskMoreDetailViewController {
     
     private func getDetailInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["entityid": entityid,
                     "itemnumber": itemnumber,
                     "itemtype": itemtype,
@@ -144,6 +145,7 @@ extension ComanyRiskMoreDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "riskmonitor/riskmonitoring/riskDynamicsberefining",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

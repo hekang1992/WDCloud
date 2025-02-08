@@ -275,7 +275,11 @@ extension MyDownloadViewController {
     //获取下拉筛选列表
     func getDownloadTypeList() {
         let man = RequestManager()
-        man.requestAPI(params: ["param": "downloadFileType"], pageUrl: "/operation/ajax/querySelect", method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        man.requestAPI(params: ["param": "downloadFileType"],
+                       pageUrl: "/operation/ajax/querySelect",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 let model = success.data
@@ -290,8 +294,16 @@ extension MyDownloadViewController {
     //获取下载文件
     func getPdfInfo() {
         let man = RequestManager()
-        let dict = ["downloadtype": downloadtype, "downloadfilename": downloadfilename, "isChoiceDate": isChoiceDate, "pageNum": pageNum, "pageSize": 10] as [String : Any]
-        man.requestAPI(params: dict, pageUrl: customerDownload_list, method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        let dict = ["downloadtype": downloadtype,
+                    "downloadfilename": downloadfilename,
+                    "isChoiceDate": isChoiceDate,
+                    "pageNum": pageNum,
+                    "pageSize": 10] as [String : Any]
+        man.requestAPI(params: dict,
+                       pageUrl: customerDownload_list,
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             self.downloadView.tableView.mj_header?.endRefreshing()
             self.downloadView.tableView.mj_footer?.endRefreshing()
@@ -338,7 +350,11 @@ extension MyDownloadViewController {
     func deletePdf(from dataid: [String]) {
         let dict = ["ids": dataid]
         let man = RequestManager()
-        man.requestAPI(params: dict, pageUrl: "/operation/mydownload/customerDownload", method: .put) { [weak self] result in
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/mydownload/customerDownload",
+                       method: .put) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -357,8 +373,13 @@ extension MyDownloadViewController {
     //重命名
     func changeName(form model: rowsModel) {
         let man = RequestManager()
-        let dict = ["dataId": model.dataid ?? "", "downLoadFileName": self.cmmView.tf.text ?? ""]
-        man.requestAPI(params: dict, pageUrl: "/operation/mydownload/updateCustomerDownload", method: .put) { [weak self] result in
+        ViewHud.addLoadView()
+        let dict = ["dataId": model.dataid ?? "",
+                    "downLoadFileName": self.cmmView.tf.text ?? ""]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/mydownload/updateCustomerDownload",
+                       method: .put) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -377,8 +398,14 @@ extension MyDownloadViewController {
     //发送邮箱
     func sendEmailInfo(form model: rowsModel) {
         let man = RequestManager()
-        let dict = ["dataid": model.dataid ?? "", "emailnumber": self.sendView.tf.text ?? "", "type": "1"]
-        man.requestAPI(params: dict, pageUrl: "/operation/mydownload/sendingMailbox", method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        let dict = ["dataid": model.dataid ?? "",
+                    "emailnumber": self.sendView.tf.text ?? "",
+                    "type": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/mydownload/sendingMailbox",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

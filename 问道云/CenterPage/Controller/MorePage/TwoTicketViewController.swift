@@ -56,9 +56,14 @@ extension TwoTicketViewController {
     //获取列表信息
     func getListInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
-        let dict = ["customernumber": customernumber, "pageNum": pageNum] as [String : Any]
-        man.requestAPI(params: dict, pageUrl: "/operation/invoiceRecord/selecinvoiceriseRecord", method: .get) { [weak self] result in
+        let dict = ["customernumber": customernumber,
+                    "pageNum": pageNum] as [String : Any]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/invoiceRecord/selecinvoiceriseRecord",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             self.twoTicketView.tableView.mj_header?.endRefreshing()
             self.twoTicketView.tableView.mj_footer?.endRefreshing()

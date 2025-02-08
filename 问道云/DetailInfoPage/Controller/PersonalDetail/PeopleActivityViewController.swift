@@ -143,12 +143,14 @@ extension PeopleActivityViewController {
     
     private func getActivityInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["personNumber": enityId,
                     "pageNum": pageIndex,
                     "pageSize": "20"] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/generate/dynamicRiskData",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
