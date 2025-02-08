@@ -18,6 +18,16 @@ class MonthReportViewController: WDBaseViewController {
     //个人
     var peopleArray: [itemsModel] = []
     
+    lazy var monitorView: PopCancelMonitoringView = {
+        let monitorView = PopCancelMonitoringView(frame: self.view.bounds)
+        return monitorView
+    }()
+    
+    lazy var noMonitoringView: RiskNoMonitoringView = {
+        let noMonitoringView = RiskNoMonitoringView()
+        return noMonitoringView
+    }()
+    
     var model: DataModel?
     //用来标记是否点击了个人
     var isClick: String = "0"
@@ -198,9 +208,16 @@ extension MonthReportViewController {
                     let total = model.total ?? 0
                     if total == 0 {
                         //去添加
-                        goAddMonitoringCompanyUI()
+                        self.allArray.removeAll()
+                        self.tableView.reloadData()
+                        if self.groupnumber == "" {
+                            goAddMonitoringCompanyUI()
+                        }else {
+                            self.addNodataView(from: self.tableView)
+                        }
                     }else {
                         //存在监控列表
+                        self.emptyView.removeFromSuperview()
                         addExistListUI()
                         self.model = model
                         self.peopleArray = model.items ?? []
@@ -317,6 +334,26 @@ extension MonthReportViewController: UITableViewDelegate, UITableViewDataSource 
         let cell = tableView.dequeueReusableCell(withIdentifier: "MonitoringCell", for: indexPath) as! MonitoringCell
         cell.selectionStyle = .none
         cell.model = model
+        //弹窗设置分组或者取消监控
+        cell.moreBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let alertVc = TYAlertController(alert: monitorView, preferredStyle: .actionSheet)!
+            monitorView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+                self?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+            //取消监控
+            monitorView.cancelMonBtn.rx.tap.subscribe(onNext: { [weak self] in
+                self?.cancelMonitoringInfo(from: model)
+            }).disposed(by: disposeBag)
+            //移动分组
+            monitorView.setBtn.rx.tap.subscribe(onNext: { [weak self] in
+                self?.dismiss(animated: true, completion: {
+                    self?.moveGroupInfo(from: self?.groupArray ?? [], itemModel: model)
+                })
+            }).disposed(by: disposeBag)
+            
+            self.present(alertVc, animated: true)
+        }).disposed(by: disposeBag)
         return cell
     }
     
@@ -336,27 +373,11 @@ extension MonthReportViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     private func goAddMonitoringCompanyUI() {
-        iconImageView3.image = UIImage(named: "tianjiajianonmgqiye")
-        view.addSubview(iconImageView1)
-        view.addSubview(iconImageView2)
-        view.addSubview(iconImageView3)
-        self.iconImageView3 = iconImageView3
-        iconImageView1.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset((SCREEN_WIDTH - 341) * 0.5)
-            make.top.equalToSuperview().offset(18.5)
-            make.size.equalTo(CGSize(width: 341, height: 108))
+        view.addSubview(noMonitoringView)
+        noMonitoringView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        iconImageView2.snp.makeConstraints { make in
-            make.centerX.equalTo(iconImageView1.snp.centerX)
-            make.top.equalTo(iconImageView1.snp.bottom).offset(18.5)
-            make.size.equalTo(CGSize(width: 355, height: 276))
-        }
-        iconImageView3.snp.makeConstraints { make in
-            make.centerX.equalTo(iconImageView1.snp.centerX)
-            make.top.equalTo(iconImageView2.snp.bottom).offset(111)
-            make.size.equalTo(CGSize(width: 147, height: 46))
-        }
-        iconImageView3.rx
+        noMonitoringView.iconImageView3.rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
@@ -448,6 +469,83 @@ extension MonthReportViewController: UITableViewDelegate, UITableViewDataSource 
             }
         }).disposed(by: disposeBag)
         
+    }
+    
+}
+
+extension MonthReportViewController {
+    
+    //取消监控
+    private func cancelMonitoringInfo(from model: itemsModel) {
+        ViewHud.addLoadView()
+        let datanumber = model.datanumber ?? ""
+        let man = RequestManager()
+        let dict = ["datanumber": datanumber]
+        man.requestAPI(params: dict,
+                       pageUrl: "/riskmonitor/monitortarget/dalectmonitortarget",
+                       method: .delete) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if let self = self, let model = success.data {
+                    self.dismiss(animated: true) {
+                        if self.isClick == "0" {
+                            ViewHud.addLoadView()
+                            self.getMonitoringCompanyInfo {
+                                ViewHud.hideLoadView()
+                            }
+                        }else {
+                            ViewHud.addLoadView()
+                            self.getMonitoringPeopleInfo {
+                                ViewHud.hideLoadView()
+                            }
+                        }
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    //移动分组
+    private func moveGroupInfo(from model: [rowsModel], itemModel: itemsModel) {
+        let groupView = FocusCompanyPopGroupView(frame: self.view.bounds)
+        groupView.model.accept(model)
+        let alertVc = TYAlertController(alert: groupView, preferredStyle: .alert)!
+        self.present(alertVc, animated: true)
+        groupView.cblock = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+        groupView.sblock = { [weak self] imodel in
+            let man = RequestManager()
+            let dict = ["dataNumber": itemModel.datanumber ?? "",
+                        "groupNumber": imodel.groupnumber ?? ""]
+            man.requestAPI(params: dict,
+                           pageUrl: "/riskmonitor/monitortarget/updatemonitortarget",
+                           method: .post) { result in
+                switch result {
+                case .success(_):
+                    self?.dismiss(animated: true, completion: {
+                        if self?.isClick == "0" {
+                            ViewHud.addLoadView()
+                            self?.getMonitoringCompanyInfo {
+                                ViewHud.hideLoadView()
+                            }
+                        }else {
+                            ViewHud.addLoadView()
+                            self?.getMonitoringPeopleInfo {
+                                ViewHud.hideLoadView()
+                            }
+                        }
+                    })
+                    break
+                case .failure(_):
+                    self?.dismiss(animated: true)
+                    break
+                }
+            }
+        }
     }
     
 }
