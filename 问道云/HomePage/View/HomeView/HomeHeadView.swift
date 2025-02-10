@@ -23,6 +23,7 @@ class HomeHeadView: BaseView {
     var itemModelArray = BehaviorRelay<[childrenModel]?>(value: nil)
     
     var bannerBlock: (() -> Void)?
+    var itemBlock: ((childrenModel) -> Void)?
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
@@ -182,7 +183,7 @@ class HomeHeadView: BaseView {
         }.disposed(by: disposeBag)
         
         collectionView.rx.modelSelected(childrenModel.self).subscribe(onNext: { [weak self] model in
-            
+            self?.itemBlock?(model)
         }).disposed(by: disposeBag)
     }
     

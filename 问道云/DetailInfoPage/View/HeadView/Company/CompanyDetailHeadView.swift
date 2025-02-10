@@ -117,7 +117,7 @@ class CompanyDetailHeadView: BaseView {
         stockView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(sixHeadView.snp.bottom)
-            make.height.equalTo(220)
+            make.height.equalTo(200)
         }
         
         //点击了小标签的展开收起 更改头部高度

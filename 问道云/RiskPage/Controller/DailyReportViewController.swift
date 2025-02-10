@@ -271,7 +271,11 @@ extension DailyReportViewController {
 extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        if self.isClick == "0" {
+            return 30
+        }else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -319,9 +323,7 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
             groupBtn.layoutButtonEdgeInsets(style: .right, space: 2)
             return headView
         }else {
-            let headView = UIView()
-            headView.backgroundColor = .random()
-            return headView
+            return nil
         }
         
     }

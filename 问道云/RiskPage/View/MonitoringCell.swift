@@ -151,7 +151,7 @@ class MonitoringCell: BaseViewCell {
     
     lazy var dImageView: UIImageView = {
         let dImageView = UIImageView()
-        dImageView.backgroundColor = .random()
+        dImageView.image = UIImage(named: "lastnewsimage")
         return dImageView
     }()
     
@@ -245,7 +245,7 @@ class MonitoringCell: BaseViewCell {
         dImageView.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(7)
             make.left.equalToSuperview().offset(15)
-            make.size.equalTo(CGSize(width: 46, height: 13.5))
+            make.size.equalTo(CGSize(width: 46, height: 11))
         }
         riskLabel.snp.makeConstraints { make in
             make.centerY.equalTo(dImageView.snp.centerY)

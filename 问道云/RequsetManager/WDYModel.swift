@@ -373,12 +373,14 @@ class childrenModel {
     var icon: String?
     var menuName: String?
     var path: String?//请求地址
+    var menuId: String?
     var children: [childrenModel]?
     init(json: JSON) {
         self.children = json["children"].arrayValue.map { childrenModel(json: $0) }
         self.icon = json["icon"].stringValue
         self.menuName = json["menuName"].stringValue
         self.path = json["path"].stringValue
+        self.menuId = json["menuId"].stringValue
     }
 }
 

@@ -964,15 +964,12 @@ class ViewControllerUtils {
 }
 
 final class URLQueryAppender {
-    
     static func appendQueryParameters(to url: String, parameters: [String: String]) -> String? {
         guard var urlComponents = URLComponents(string: url) else {
             return nil
         }
-        
         let queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
         urlComponents.queryItems = (urlComponents.queryItems ?? []) + queryItems
-        
         return urlComponents.url?.absoluteString
     }
 }

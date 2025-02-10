@@ -109,7 +109,14 @@ class WDHomeViewController: WDBaseViewController {
                 self?.popLogin()
             }
         }
-        
+        //点击item
+        homeHeadView.itemBlock = { [weak self] model in
+            if IS_LOGIN {
+                self?.toSearchListPageWithModel(from: model)
+            }else {
+                self?.popLogin()
+            }
+        }
         //获取热搜
         getHotWords()
         self.homeHeadView.hotsView.refreshImageView.rx
@@ -323,6 +330,26 @@ extension WDHomeViewController {
             }
         }
     }
+}
+
+extension WDHomeViewController {
+    
+    private func toSearchListPageWithModel(from model: childrenModel) {
+        let menuID = model.menuId ?? ""
+        ToastViewConfig.showToast(message: menuID)
+        if menuID == "10200" {
+            let searchVc = SearchAllViewController()
+            searchVc.selectIndex = 1
+            searchVc.searchHeadView.searchTx.placeholder = "请输入老板,股东,高管姓名"
+            self.navigationController?.pushViewController(searchVc, animated: true)
+        }else if menuID == "10800" {
+            ToastViewConfig.showToast(message: "敬请期待")
+        }else if menuID == "11200" {//公告大全
+            let noticeVc = NoticeAllViewController()
+            self.navigationController?.pushViewController(noticeVc, animated: true)
+        }
+    }
+    
 }
 
 

@@ -207,9 +207,9 @@ class CompanyStockInfoView: BaseView {
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: itemWidth, height: 18)
+        layout.itemSize = CGSize(width: itemWidth, height: 22)
         layout.minimumLineSpacing = 5
-        layout.minimumInteritemSpacing = 5
+        layout.minimumInteritemSpacing = 0
         let collectView = UICollectionView(
             frame: .zero, collectionViewLayout: layout)
         collectView.backgroundColor = .white
@@ -342,7 +342,7 @@ class CompanyStockInfoView: BaseView {
             make.left.equalToSuperview()
             make.centerX.equalToSuperview()
             make.top.equalTo(itemView8.snp.bottom).offset(10)
-            make.height.equalTo(45)
+            make.height.equalTo(55)
         }
 //        tlineView.snp.makeConstraints { make in
 //            make.left.right.equalToSuperview()
