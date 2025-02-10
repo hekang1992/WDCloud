@@ -22,8 +22,9 @@ class HomeLawsViewCell: BaseViewCell {
             }else {
                 rlabel.text = entryIntoForceTime
             }
-            tlabel.text = model.lawCategory ?? ""
+            tlabel.text = model.timeliness ?? ""
             let timeliness = model.timeliness ?? ""
+            taglabel.text = timeliness
             if timeliness.contains("有效") {
                 taglabel.backgroundColor = .init(cssStr: "#4DC929")?.withAlphaComponent(0.1)
                 taglabel.textColor = .init(cssStr: "#4DC929")

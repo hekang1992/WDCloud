@@ -27,6 +27,8 @@ class CompanySixHeadView: BaseView {
             pcollectionView.reloadData()
         }
     }
+    
+    var dataModel: DataModel?
 
     lazy var oneView: UIView = {
         let oneView = UIView()
@@ -173,11 +175,17 @@ extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelega
         if collectionView == self.pcollectionView {
             let model = self.twoItems?[indexPath.row]
             let pageUrl = model?.path ?? ""
-            vc?.pushWebPage(from: pageUrl)
+            let dict = ["firmname": dataModel?.firmInfo?.entityName ?? "",
+                        "entityId": dataModel?.firmInfo?.entityId ?? ""]
+            let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+            vc?.pushWebPage(from: webUrl)
         }else {
             let model = self.oneItems?[indexPath.row]
             let pageUrl = model?.path ?? ""
-            vc?.pushWebPage(from: pageUrl)
+            let dict = ["firmname": dataModel?.firmInfo?.entityName ?? "",
+                        "entityId": dataModel?.firmInfo?.entityId ?? ""]
+            let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+            vc?.pushWebPage(from: webUrl)
         }
     }
     

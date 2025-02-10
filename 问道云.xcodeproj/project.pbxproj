@@ -213,6 +213,8 @@
 		73EDE9E62D59D0CB00A0A7E3 /* HomeLawsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9E52D59D0CB00A0A7E3 /* HomeLawsViewController.swift */; };
 		73EDE9E82D59DD8900A0A7E3 /* HomeLawsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9E72D59DD8900A0A7E3 /* HomeLawsViewCell.swift */; };
 		73EDE9EC2D59E6D500A0A7E3 /* HomeSanctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9EB2D59E6D500A0A7E3 /* HomeSanctionViewController.swift */; };
+		73EDE9EE2D59E81F00A0A7E3 /* HomeCompanySanctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9ED2D59E81F00A0A7E3 /* HomeCompanySanctionViewController.swift */; };
+		73EDE9F02D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9EF2D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73EF03CF2D30F84B0070F850 /* TwoPeopleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */; };
 		73EF03D12D30FD000070F850 /* TwoPeopleSpecListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */; };
@@ -459,6 +461,8 @@
 		73EDE9E52D59D0CB00A0A7E3 /* HomeLawsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLawsViewController.swift; sourceTree = "<group>"; };
 		73EDE9E72D59DD8900A0A7E3 /* HomeLawsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLawsViewCell.swift; sourceTree = "<group>"; };
 		73EDE9EB2D59E6D500A0A7E3 /* HomeSanctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSanctionViewController.swift; sourceTree = "<group>"; };
+		73EDE9ED2D59E81F00A0A7E3 /* HomeCompanySanctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCompanySanctionViewController.swift; sourceTree = "<group>"; };
+		73EDE9EF2D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePeopleSanctionViewController.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleListView.swift; sourceTree = "<group>"; };
 		73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleSpecListCell.swift; sourceTree = "<group>"; };
@@ -503,6 +507,8 @@
 				73EDE9DE2D599F8400A0A7E3 /* NoticeAllViewController.swift */,
 				73EDE9E52D59D0CB00A0A7E3 /* HomeLawsViewController.swift */,
 				73EDE9EB2D59E6D500A0A7E3 /* HomeSanctionViewController.swift */,
+				73EDE9ED2D59E81F00A0A7E3 /* HomeCompanySanctionViewController.swift */,
+				73EDE9EF2D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1423,6 +1429,7 @@
 				7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */,
 				7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */,
 				73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */,
+				73EDE9EE2D59E81F00A0A7E3 /* HomeCompanySanctionViewController.swift in Sources */,
 				73EABF9C2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift in Sources */,
 				73B362592D37B9D4003BD911 /* PeopleDetailThreeViewController.swift in Sources */,
 				734896DE2D39F20700B028FE /* HistoryRiskDetailViewController.swift in Sources */,
@@ -1491,6 +1498,7 @@
 				73868A452D55F55A00CE107D /* MonthReportViewController.swift in Sources */,
 				734056A92D38E34C009C9C96 /* CorrelationViewCell.swift in Sources */,
 				73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */,
+				73EDE9F02D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift in Sources */,
 				7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */,
 				73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */,
 			);

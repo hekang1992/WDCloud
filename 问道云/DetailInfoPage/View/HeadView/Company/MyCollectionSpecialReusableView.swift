@@ -197,6 +197,7 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             }
             
             //常用服务
+            headView.sixHeadView.dataModel = model
             headView.sixHeadView.oneItems = [
                 .init(imageResource: "itemoneicon",
                       path: "\(base_url)/business-situation/make-tender"),
