@@ -262,9 +262,19 @@ class itemsModel {
     var shareCode: String?
     var publishTime: String?
     var pdfUrl: String?
+    var ossUrl: String?
     var title: String?
+    var formulatingAuthority: String?
+    var lawCategory: String?
+    var entryIntoForceTime: String?
+    var timeliness: String?
     init(json: JSON) {
         //风险数据公司
+        self.ossUrl = json["ossUrl"].stringValue
+        self.timeliness = json["timeliness"].stringValue
+        self.entryIntoForceTime = json["entryIntoForceTime"].stringValue
+        self.lawCategory = json["lawCategory"].stringValue
+        self.formulatingAuthority = json["formulatingAuthority"].stringValue
         self.title = json["title"].stringValue
         self.pdfUrl = json["pdfUrl"].stringValue
         self.publishTime = json["publishTime"].stringValue

@@ -210,6 +210,9 @@
 		73EDE9DF2D599F8400A0A7E3 /* NoticeAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9DE2D599F8400A0A7E3 /* NoticeAllViewController.swift */; };
 		73EDE9E12D59A1A000A0A7E3 /* HomeItemSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9E02D59A1A000A0A7E3 /* HomeItemSearchView.swift */; };
 		73EDE9E42D59C2B500A0A7E3 /* HomeNoticeListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9E32D59C2B500A0A7E3 /* HomeNoticeListCell.swift */; };
+		73EDE9E62D59D0CB00A0A7E3 /* HomeLawsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9E52D59D0CB00A0A7E3 /* HomeLawsViewController.swift */; };
+		73EDE9E82D59DD8900A0A7E3 /* HomeLawsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9E72D59DD8900A0A7E3 /* HomeLawsViewCell.swift */; };
+		73EDE9EC2D59E6D500A0A7E3 /* HomeSanctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9EB2D59E6D500A0A7E3 /* HomeSanctionViewController.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73EF03CF2D30F84B0070F850 /* TwoPeopleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */; };
 		73EF03D12D30FD000070F850 /* TwoPeopleSpecListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */; };
@@ -453,6 +456,9 @@
 		73EDE9DE2D599F8400A0A7E3 /* NoticeAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeAllViewController.swift; sourceTree = "<group>"; };
 		73EDE9E02D59A1A000A0A7E3 /* HomeItemSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItemSearchView.swift; sourceTree = "<group>"; };
 		73EDE9E32D59C2B500A0A7E3 /* HomeNoticeListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeListCell.swift; sourceTree = "<group>"; };
+		73EDE9E52D59D0CB00A0A7E3 /* HomeLawsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLawsViewController.swift; sourceTree = "<group>"; };
+		73EDE9E72D59DD8900A0A7E3 /* HomeLawsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLawsViewCell.swift; sourceTree = "<group>"; };
+		73EDE9EB2D59E6D500A0A7E3 /* HomeSanctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSanctionViewController.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleListView.swift; sourceTree = "<group>"; };
 		73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleSpecListCell.swift; sourceTree = "<group>"; };
@@ -495,6 +501,8 @@
 				730487FC2D2A5C7D0024265C /* HomeNewsListViewController.swift */,
 				730487FE2D2A5CBE0024265C /* HomeVideoListViewController.swift */,
 				73EDE9DE2D599F8400A0A7E3 /* NoticeAllViewController.swift */,
+				73EDE9E52D59D0CB00A0A7E3 /* HomeLawsViewController.swift */,
+				73EDE9EB2D59E6D500A0A7E3 /* HomeSanctionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1096,6 +1104,7 @@
 			isa = PBXGroup;
 			children = (
 				73EDE9E32D59C2B500A0A7E3 /* HomeNoticeListCell.swift */,
+				73EDE9E72D59DD8900A0A7E3 /* HomeLawsViewCell.swift */,
 			);
 			path = HomeItemView;
 			sourceTree = "<group>";
@@ -1355,6 +1364,7 @@
 				73C752482D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift in Sources */,
 				7335F6E62D0AD8620074985F /* MyDownloadViewController.swift in Sources */,
 				7352B22C2D3544BF00B5391B /* CompanyStockInfoView.swift in Sources */,
+				73EDE9E82D59DD8900A0A7E3 /* HomeLawsViewCell.swift in Sources */,
 				7380433A2D27DA66009B25F8 /* PopChangePeopleView.swift in Sources */,
 				734896D52D39ED9300B028FE /* CompanyRiskDetailViewController.swift in Sources */,
 				737416362D0EC37400E6CD23 /* MembershipCenterViewController.swift in Sources */,
@@ -1389,6 +1399,7 @@
 				7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */,
 				730488012D2A64410024265C /* WDRefreshHeader.swift in Sources */,
 				7352B22A2D353F2200B5391B /* CompanySixHeadView.swift in Sources */,
+				73EDE9EC2D59E6D500A0A7E3 /* HomeSanctionViewController.swift in Sources */,
 				734896DC2D39F1EC00B028FE /* UnioRiskDetailViewController.swift in Sources */,
 				73C36A7F2D2D1B9800D6DC46 /* SearchLastSearchListView.swift in Sources */,
 				7352B2282D353EBE00B5391B /* CompanyFiveHeadView.swift in Sources */,
@@ -1440,6 +1451,7 @@
 				73EDE9DF2D599F8400A0A7E3 /* NoticeAllViewController.swift in Sources */,
 				73B3623F2D375189003BD911 /* PopInvoiceView.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
+				73EDE9E62D59D0CB00A0A7E3 /* HomeLawsViewController.swift in Sources */,
 				73A21DF02D0C39BF00FC4C49 /* DiligenceListViewController.swift in Sources */,
 				73C7524C2D1D555400C47187 /* FocusCompanyPopGroupView.swift in Sources */,
 				73D50B872D16ACEC00EF081A /* FocusCompanyViewController.swift in Sources */,

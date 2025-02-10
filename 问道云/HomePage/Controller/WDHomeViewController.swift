@@ -344,9 +344,17 @@ extension WDHomeViewController {
             self.navigationController?.pushViewController(searchVc, animated: true)
         }else if menuID == "10800" {
             ToastViewConfig.showToast(message: "敬请期待")
+        }else if menuID == "11000" {//行政处罚
+            let sanctionVc = HomeSanctionViewController()
+            self.navigationController?.pushViewController(sanctionVc, animated: true)
         }else if menuID == "11200" {//公告大全
             let noticeVc = NoticeAllViewController()
             self.navigationController?.pushViewController(noticeVc, animated: true)
+        }else if menuID == "11300" {//法律法规
+            let lawVc = HomeLawsViewController()
+            self.navigationController?.pushViewController(lawVc, animated: true)
+        }else if menuID == "11400" {//风险监控
+            NotificationCenter.default.post(name: NSNotification.Name(RISK_VC), object: nil)
         }
     }
     
