@@ -233,6 +233,7 @@ class SearchCompanyViewController: WDBaseViewController {
         var browsingHistorySuccess = false
         var hotWordsSuccess = false
         //最近搜索
+        ViewHud.addLoadView()
         group.enter()
         getlastSearch { success in
             lastSearchSuccess = success
@@ -253,6 +254,7 @@ class SearchCompanyViewController: WDBaseViewController {
         
         // 所有任务完成后的通知
         group.notify(queue: .main) {
+            ViewHud.hideLoadView()
             print("所有数据加载完成，通知你！")
             if lastSearchSuccess && browsingHistorySuccess && hotWordsSuccess {
                 print("所有接口请求成功！")
@@ -268,13 +270,11 @@ extension SearchCompanyViewController {
     //最近搜索
     private func getlastSearch(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
-        ViewHud.addLoadView()
         let dict = ["searchType": "1",
                     "moduleId": "01"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -319,7 +319,6 @@ extension SearchCompanyViewController {
     //浏览历史
     private func getBrowsingHistory(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
-        ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "1",
@@ -329,7 +328,6 @@ extension SearchCompanyViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/clientbrowsecb/selectBrowserecord",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -387,12 +385,10 @@ extension SearchCompanyViewController {
     //热搜
     private func getHotWords(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
-        ViewHud.addLoadView()
         let dict = ["moduleId": "01"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -451,7 +447,7 @@ extension SearchCompanyViewController {
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-        ViewHud.addLoadView()
+            ViewHud.addLoadView()
             let dict = ["searchType": "2", "moduleId": "01"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
@@ -478,7 +474,7 @@ extension SearchCompanyViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-        ViewHud.addLoadView()
+            ViewHud.addLoadView()
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
                         "moduleId": "01",

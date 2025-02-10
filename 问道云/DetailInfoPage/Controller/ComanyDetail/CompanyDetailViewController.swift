@@ -6,12 +6,16 @@
 //  企业详情
 
 import UIKit
+import RxRelay
 
 class CompanyDetailViewController: WDBaseViewController {
     
     var enityId: String = ""
     
     var intBlock: ((Double) -> Void)?
+    
+    //头部的数据模型
+    var headModel = BehaviorRelay<DataModel?>(value: nil)
     
     lazy var companyDetailView: CompanyDetailView = {
         let companyDetailView = CompanyDetailView()
@@ -39,6 +43,22 @@ class CompanyDetailViewController: WDBaseViewController {
             }
             self.pushWebPage(from: pageUrl)
         }
+        //回到首页
+        companyDetailView.footerView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.navigationController?.popToRootViewController(animated: true)
+        }).disposed(by: disposeBag)
+        //一键报告
+        companyDetailView.footerView.backBtn1.rx.tap.subscribe(onNext: { [weak self] in
+            let oneRpVc = OneReportViewController()
+            if let headModel = self?.headModel.value {
+                oneRpVc.dataModel = headModel
+            }
+            self?.navigationController?.pushViewController(oneRpVc, animated: true)
+        }).disposed(by: disposeBag)
+        //添加监控
+        
+        //关注
+        
         //获取企业详情item菜单
         getCompanyDetailItemInfo()
         //获取角标
@@ -113,6 +133,7 @@ extension CompanyDetailViewController {
             switch result {
             case .success(let success):
                 if let model = success.data, let code = success.code, code == 200 {
+                    self.headModel.accept(model)
                     self.companyDetailView.headModel.accept(model)
                     self.companyDetailView.collectionView.reloadData()
                 }

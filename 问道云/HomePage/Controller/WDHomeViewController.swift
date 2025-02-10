@@ -50,7 +50,7 @@ class WDHomeViewController: WDBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
         segmentedViewDataSource = JXSegmentedTitleDataSource()
         segmentedViewDataSource.titles = titles
@@ -69,7 +69,7 @@ class WDHomeViewController: WDBaseViewController {
         lineView.indicatorWidth = 18
         lineView.indicatorHeight = 3
         segmentedView.indicators = [lineView]
-
+        
         view.addSubview(pagingView)
         pagingView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -96,7 +96,7 @@ class WDHomeViewController: WDBaseViewController {
                 }else {
                     self?.popLogin()
                 }
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         //获取banner数据
         getBannerInfo()
@@ -124,7 +124,7 @@ class WDHomeViewController: WDBaseViewController {
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
                 self?.getHotWords()
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         //热搜3点击
         self.homeHeadView.hotsView.hotWordsBlock = { [weak self] model in
@@ -201,7 +201,7 @@ class WDHomeViewController: WDBaseViewController {
             make.edges.equalToSuperview()
         }
     }
-
+    
     //一定要加上这句代码,否则不会下拉刷新
     func preferredPagingView() -> JXPagingView {
         return JXPagingListRefreshView(delegate: self)
@@ -355,6 +355,9 @@ extension WDHomeViewController {
             self.navigationController?.pushViewController(lawVc, animated: true)
         }else if menuID == "11400" {//风险监控
             NotificationCenter.default.post(name: NSNotification.Name(RISK_VC), object: nil)
+        }else if menuID == "11600" {//一键报告
+            let oneRpVc = HomeOneReportViewController()
+            self.navigationController?.pushViewController(oneRpVc, animated: true)
         }
     }
     

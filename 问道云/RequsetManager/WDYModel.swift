@@ -512,7 +512,6 @@ class rowsModel {
     var workAs: String?
     var entityStatus: String?
     var firmnumber: String?
-    
     init(json: JSON) {
         self.personname = json["personname"].stringValue
         self.firmnumber = json["firmnumber"].stringValue

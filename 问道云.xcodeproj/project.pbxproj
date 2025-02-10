@@ -215,6 +215,9 @@
 		73EDE9EC2D59E6D500A0A7E3 /* HomeSanctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9EB2D59E6D500A0A7E3 /* HomeSanctionViewController.swift */; };
 		73EDE9EE2D59E81F00A0A7E3 /* HomeCompanySanctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9ED2D59E81F00A0A7E3 /* HomeCompanySanctionViewController.swift */; };
 		73EDE9F02D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9EF2D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift */; };
+		73EDE9F22D59F0A900A0A7E3 /* OneReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9F12D59F0A900A0A7E3 /* OneReportViewController.swift */; };
+		73EDE9F42D59F82200A0A7E3 /* HomeOneReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9F32D59F82200A0A7E3 /* HomeOneReportViewController.swift */; };
+		73EDE9F62D59F9AA00A0A7E3 /* HomeOneReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9F52D59F9AA00A0A7E3 /* HomeOneReportCell.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73EF03CF2D30F84B0070F850 /* TwoPeopleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */; };
 		73EF03D12D30FD000070F850 /* TwoPeopleSpecListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */; };
@@ -463,6 +466,9 @@
 		73EDE9EB2D59E6D500A0A7E3 /* HomeSanctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSanctionViewController.swift; sourceTree = "<group>"; };
 		73EDE9ED2D59E81F00A0A7E3 /* HomeCompanySanctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCompanySanctionViewController.swift; sourceTree = "<group>"; };
 		73EDE9EF2D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePeopleSanctionViewController.swift; sourceTree = "<group>"; };
+		73EDE9F12D59F0A900A0A7E3 /* OneReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneReportViewController.swift; sourceTree = "<group>"; };
+		73EDE9F32D59F82200A0A7E3 /* HomeOneReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeOneReportViewController.swift; sourceTree = "<group>"; };
+		73EDE9F52D59F9AA00A0A7E3 /* HomeOneReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeOneReportCell.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleListView.swift; sourceTree = "<group>"; };
 		73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleSpecListCell.swift; sourceTree = "<group>"; };
@@ -509,6 +515,8 @@
 				73EDE9EB2D59E6D500A0A7E3 /* HomeSanctionViewController.swift */,
 				73EDE9ED2D59E81F00A0A7E3 /* HomeCompanySanctionViewController.swift */,
 				73EDE9EF2D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift */,
+				73EDE9F32D59F82200A0A7E3 /* HomeOneReportViewController.swift */,
+				73EDE9F12D59F0A900A0A7E3 /* OneReportViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1111,6 +1119,7 @@
 			children = (
 				73EDE9E32D59C2B500A0A7E3 /* HomeNoticeListCell.swift */,
 				73EDE9E72D59DD8900A0A7E3 /* HomeLawsViewCell.swift */,
+				73EDE9F52D59F9AA00A0A7E3 /* HomeOneReportCell.swift */,
 			);
 			path = HomeItemView;
 			sourceTree = "<group>";
@@ -1304,6 +1313,7 @@
 				7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */,
 				73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */,
 				73E971302D2E614200F12B15 /* CommonSearchListView.swift in Sources */,
+				73EDE9F22D59F0A900A0A7E3 /* OneReportViewController.swift in Sources */,
 				73807D592D33808400F8B90D /* CompanyCollectionCell.swift in Sources */,
 				7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */,
 				733B5FF62D57230A00ADE7C5 /* PopCancelMonitoringView.swift in Sources */,
@@ -1393,6 +1403,7 @@
 				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
 				733B5FFA2D573BFF00ADE7C5 /* RiskNoMonitoringView.swift in Sources */,
 				73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */,
+				73EDE9F62D59F9AA00A0A7E3 /* HomeOneReportCell.swift in Sources */,
 				73807D472D32C8B200F8B90D /* LaunchViewController.swift in Sources */,
 				73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */,
 				734896DA2D39F1AC00B028FE /* MySelfRiskDetailViewController.swift in Sources */,
@@ -1500,6 +1511,7 @@
 				73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */,
 				73EDE9F02D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift in Sources */,
 				7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */,
+				73EDE9F42D59F82200A0A7E3 /* HomeOneReportViewController.swift in Sources */,
 				73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
