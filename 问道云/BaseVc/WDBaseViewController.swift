@@ -64,6 +64,8 @@ extension WDBaseViewController {
         var webUrl: String = pageUrl
         if pageUrl.contains("wintaocloud.com") {
             webVc.pageUrl.accept(webUrl)
+        }else if pageUrl.hasPrefix("http") {
+            webVc.pageUrl.accept(webUrl)
         }else {
             webUrl = "http://" + pageUrl
             webVc.pageUrl.accept(webUrl)

@@ -258,8 +258,18 @@ class itemsModel {
     var riskData: riskDataModel?
     var relate: [String]?
     var datanumber: String?//风险ID
+    var shareShortCode: String?
+    var shareCode: String?
+    var publishTime: String?
+    var pdfUrl: String?
+    var title: String?
     init(json: JSON) {
         //风险数据公司
+        self.title = json["title"].stringValue
+        self.pdfUrl = json["pdfUrl"].stringValue
+        self.publishTime = json["publishTime"].stringValue
+        self.shareCode = json["shareCode"].stringValue
+        self.shareShortCode = json["shareShortCode"].stringValue
         self.datanumber = json["datanumber"].stringValue
         self.relate = json["relate"].arrayValue.map({
             $0.stringValue

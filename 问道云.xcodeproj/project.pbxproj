@@ -209,6 +209,7 @@
 		73EABF9C2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF9B2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift */; };
 		73EDE9DF2D599F8400A0A7E3 /* NoticeAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9DE2D599F8400A0A7E3 /* NoticeAllViewController.swift */; };
 		73EDE9E12D59A1A000A0A7E3 /* HomeItemSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9E02D59A1A000A0A7E3 /* HomeItemSearchView.swift */; };
+		73EDE9E42D59C2B500A0A7E3 /* HomeNoticeListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDE9E32D59C2B500A0A7E3 /* HomeNoticeListCell.swift */; };
 		73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EEE7B62D0BC08500001E22 /* TimeDownView.swift */; };
 		73EF03CF2D30F84B0070F850 /* TwoPeopleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */; };
 		73EF03D12D30FD000070F850 /* TwoPeopleSpecListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */; };
@@ -451,6 +452,7 @@
 		73EABF9B2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRiskListOnlyPeopleCell.swift; sourceTree = "<group>"; };
 		73EDE9DE2D599F8400A0A7E3 /* NoticeAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeAllViewController.swift; sourceTree = "<group>"; };
 		73EDE9E02D59A1A000A0A7E3 /* HomeItemSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItemSearchView.swift; sourceTree = "<group>"; };
+		73EDE9E32D59C2B500A0A7E3 /* HomeNoticeListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeListCell.swift; sourceTree = "<group>"; };
 		73EEE7B62D0BC08500001E22 /* TimeDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDownView.swift; sourceTree = "<group>"; };
 		73EF03CE2D30F84B0070F850 /* TwoPeopleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleListView.swift; sourceTree = "<group>"; };
 		73EF03D02D30FD000070F850 /* TwoPeopleSpecListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleSpecListCell.swift; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 			isa = PBXGroup;
 			children = (
 				73C36A6E2D2D04D800D6DC46 /* HomeView */,
+				73EDE9E22D59C28F00A0A7E3 /* HomeItemView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1089,6 +1092,14 @@
 			path = RiskList;
 			sourceTree = "<group>";
 		};
+		73EDE9E22D59C28F00A0A7E3 /* HomeItemView */ = {
+			isa = PBXGroup;
+			children = (
+				73EDE9E32D59C2B500A0A7E3 /* HomeNoticeListCell.swift */,
+			);
+			path = HomeItemView;
+			sourceTree = "<group>";
+		};
 		73EF03CC2D30F4D50070F850 /* CompanyList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1392,6 +1403,7 @@
 				73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */,
 				73B362412D377C28003BD911 /* PopEmployeeNumView.swift in Sources */,
 				73E971792D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift in Sources */,
+				73EDE9E42D59C2B500A0A7E3 /* HomeNoticeListCell.swift in Sources */,
 				7325A7B82CFEECF00043C196 /* WDNavigationController.swift in Sources */,
 				73E971732D2FCD8500F12B15 /* TwoCompanyView.swift in Sources */,
 				73C6B1B62D3503D400CD3816 /* MyCollectionSpecialReusableView.swift in Sources */,
