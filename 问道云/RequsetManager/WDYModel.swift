@@ -269,8 +269,14 @@ class itemsModel {
     var lawCategory: String?
     var entryIntoForceTime: String?
     var timeliness: String?
+    var forshort: String?
+    var descprtion: String?
+    var templatepath: String?
     init(json: JSON) {
         //风险数据公司
+        self.templatepath = json["templatepath"].stringValue
+        self.descprtion = json["descprtion"].stringValue
+        self.forshort = json["forshort"].stringValue
         self.count = json["count"].intValue
         self.ossUrl = json["ossUrl"].stringValue
         self.timeliness = json["timeliness"].stringValue

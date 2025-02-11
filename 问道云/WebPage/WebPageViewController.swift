@@ -102,12 +102,11 @@ class WebPageViewController: WDBaseViewController {
             }
         }).disposed(by: disposeBag)
         
-        if let url = URL(string: pageUrl.value) {
-            print("pageurl=====\(url)")
+        let webUrl = pageUrl.value.replacingOccurrences(of: " ", with: "%20")
+        if let url = URL(string: webUrl) {
             webView.load(URLRequest(url: url))
-        }else {
-            print("Invalid URL")
         }
+        print("pageurl=====\(webUrl)")
         
     }
     

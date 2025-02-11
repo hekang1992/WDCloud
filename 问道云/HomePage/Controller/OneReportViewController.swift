@@ -10,13 +10,15 @@ import UIKit
 class OneReportViewController: WDBaseViewController {
     
     var dataModel: DataModel?
+    
+    var modelArray: [rowsModel]?
 
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "一键报告"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "myreportimage"), for: .normal)
         return headView
     }()
     
@@ -47,6 +49,13 @@ class OneReportViewController: WDBaseViewController {
             make.left.bottom.right.equalToSuperview()
             make.top.equalTo(headView.snp.bottom).offset(5)
         }
+        
+        headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let downVc = MyDownloadViewController()
+            self.navigationController?.pushViewController(downVc, animated: true)
+        }).disposed(by: disposeBag)
+        
     }
     
     
@@ -55,18 +64,27 @@ class OneReportViewController: WDBaseViewController {
 extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let lineView = UIView()
+        lineView.backgroundColor = .init(cssStr: "#F5F5F5")
+        let model = self.modelArray?[section]
         let headView = UIView()
-        headView.backgroundColor = .random()
+        headView.backgroundColor = .white
         let nameLabel = UILabel()
         nameLabel.textColor = .black
         nameLabel.textAlignment = .left
         nameLabel.font = .mediumFontOfSize(size: 15)
         headView.addSubview(nameLabel)
+        headView.addSubview(lineView)
         nameLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(15)
             make.height.equalTo(21)
         }
+        lineView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        nameLabel.text = model?.name ?? ""
         return headView
     }
     
@@ -75,16 +93,25 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return self.modelArray?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.modelArray?[section].items?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let name = self.modelArray?[indexPath.section].name ?? ""
+        let model = self.modelArray?[indexPath.section].items?[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeOneReportCell", for: indexPath) as! HomeOneReportCell
-        cell.textLabel?.text = "fdaf"
+        cell.selectionStyle = .none
+        cell.model.accept(model)
+        cell.name = name
+        cell.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let pageUrl = model?.templatepath ?? ""
+            self.pushWebPage(from: pageUrl)
+        }).disposed(by: disposeBag)
         return cell
     }
 }
@@ -107,11 +134,12 @@ extension OneReportViewController {
             ViewHud.hideLoadView()
             switch result {
             case .success(let success):
-                if let self = self, let data = success.datas {
-                    
+                if let self = self, let datas = success.datas {
+                    self.modelArray = datas
+                    self.tableView.reloadData()
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }
