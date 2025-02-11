@@ -132,7 +132,9 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
                         print("无效的电话号码")
                     }
             } else if name == "生成报告" {
-                
+                if let model = model {
+                    self?.getReportInfo(from: model)
+                }
             }
         }
         return cell
@@ -140,6 +142,32 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension OneReportViewController {
+    
+    private func getReportInfo(from model: itemsModel) {
+        ViewHud.addLoadView()
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let reportnumber = model.reportnumber ?? ""
+        let entityid = dataModel?.firmInfo?.entityId ?? ""
+        let firmname = dataModel?.firmInfo?.entityName ?? ""
+        let man = RequestManager()
+        let dict = ["customernumber": customernumber,
+                    "reportnumber": reportnumber,
+                    "entityid": entityid,
+                    "firmname": firmname]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/reportinfo/getTestFive",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(_):
+                let downVc = MyDownloadViewController()
+                self?.navigationController?.pushViewController(downVc, animated: true)
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

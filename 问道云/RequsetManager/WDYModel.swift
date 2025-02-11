@@ -274,8 +274,10 @@ class itemsModel {
     var templatepath: String?
     var authflag: Int?
     var reporttype: Int?
+    var reportnumber: String?
     init(json: JSON) {
         //风险数据公司
+        self.reportnumber = json["reportnumber"].stringValue
         self.authflag = json["authflag"].intValue
         self.reporttype = json["reporttype"].intValue
         self.templatepath = json["templatepath"].stringValue

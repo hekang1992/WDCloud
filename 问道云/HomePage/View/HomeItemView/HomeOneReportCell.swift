@@ -143,6 +143,8 @@ class HomeOneReportCell: BaseViewCell {
                 twoBtn.setTitle("联系客服", for: .normal)
             }else {
                 if authflag == 0 {
+                    twoBtn.setTitle("生成报告", for: .normal)
+                }else {
                     if reporttype == 1 {
                         twoBtn.setTitle("购买VIP", for: .normal)
                     } else if reporttype == 2 {
@@ -150,8 +152,6 @@ class HomeOneReportCell: BaseViewCell {
                     } else if reporttype == 3 {
                         twoBtn.setTitle("联系客服", for: .normal)
                     }
-                }else {
-                    twoBtn.setTitle("生成报告", for: .normal)
                 }
             }
         }).disposed(by: disposeBag)

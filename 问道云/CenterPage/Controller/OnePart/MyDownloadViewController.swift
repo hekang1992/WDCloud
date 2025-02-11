@@ -96,7 +96,8 @@ class MyDownloadViewController: WDBaseViewController {
         })
         //点击cell
         self.downloadView.selectBlock = { [weak self] model in
-            self?.pushWebPage(from: model.filepathH5 ?? "")
+            let filepathH5 = model.filepathH5 ?? ""
+            self?.pushWebPage(from: filepathH5)
         }
         //点击更多按钮
         self.downloadView.moreBtnBlock = { [weak self] model in
