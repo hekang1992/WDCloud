@@ -46,7 +46,8 @@ class OneReportViewController: WDBaseViewController {
         addHeadView(from: headView)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
             make.top.equalTo(headView.snp.bottom).offset(5)
         }
         
@@ -107,11 +108,33 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.model.accept(model)
         cell.name = name
-        cell.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+        cell.block = { [weak self] model in
             guard let self = self else { return }
-            let pageUrl = model?.templatepath ?? ""
-            self.pushWebPage(from: pageUrl)
-        }).disposed(by: disposeBag)
+            let pageUrl = model.templatepath ?? ""
+            if !pageUrl.isEmpty {
+                self.pushWebPage(from: pageUrl)
+            }else {
+                return
+            }
+        }
+        cell.twoblock = { [weak self] name in
+            if name.contains("购买") {
+                let memVc = MembershipCenterViewController()
+                self?.navigationController?.pushViewController(memVc, animated: true)
+            } else if name == "联系客服" {
+                if let phoneURL = URL(string: "tel://\(4006326699)") {
+                        if UIApplication.shared.canOpenURL(phoneURL) {
+                            UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
+                        } else {
+                            print("无法拨打电话")
+                        }
+                    } else {
+                        print("无效的电话号码")
+                    }
+            } else if name == "生成报告" {
+                
+            }
+        }
         return cell
     }
 }

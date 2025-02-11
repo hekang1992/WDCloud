@@ -12,6 +12,10 @@ class HomeOneReportCell: BaseViewCell {
     
     var model = BehaviorRelay<itemsModel?>(value: nil)
     
+    var block: ((itemsModel) -> Void)?
+    
+    var twoblock: ((String) -> Void)?
+    
     var name: String? {
         didSet {
             guard let name = name else { return }
@@ -132,6 +136,36 @@ class HomeOneReportCell: BaseViewCell {
             guard let self = self, let model = model else { return }
             namelabel.text = model.forshort ?? ""
             desclabel.text = model.descprtion ?? ""
+            let templatepath = model.templatepath ?? ""
+            let authflag = model.authflag ?? 0
+            let reporttype = model.reporttype ?? 0
+            if templatepath.isEmpty {
+                twoBtn.setTitle("联系客服", for: .normal)
+            }else {
+                if authflag == 0 {
+                    if reporttype == 1 {
+                        twoBtn.setTitle("购买VIP", for: .normal)
+                    } else if reporttype == 2 {
+                        twoBtn.setTitle("购买SVIP", for: .normal)
+                    } else if reporttype == 3 {
+                        twoBtn.setTitle("联系客服", for: .normal)
+                    }
+                }else {
+                    twoBtn.setTitle("生成报告", for: .normal)
+                }
+            }
+        }).disposed(by: disposeBag)
+        
+        oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            if let self = self, let model = self.model.value {
+                self.block?(model)
+            }
+        }).disposed(by: disposeBag)
+        
+        twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            if let self = self {
+                self.twoblock?(self.twoBtn.titleLabel?.text ?? "")
+            }
         }).disposed(by: disposeBag)
     }
     

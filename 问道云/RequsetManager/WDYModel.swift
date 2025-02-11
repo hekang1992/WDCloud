@@ -272,8 +272,12 @@ class itemsModel {
     var forshort: String?
     var descprtion: String?
     var templatepath: String?
+    var authflag: Int?
+    var reporttype: Int?
     init(json: JSON) {
         //风险数据公司
+        self.authflag = json["authflag"].intValue
+        self.reporttype = json["reporttype"].intValue
         self.templatepath = json["templatepath"].stringValue
         self.descprtion = json["descprtion"].stringValue
         self.forshort = json["forshort"].stringValue
