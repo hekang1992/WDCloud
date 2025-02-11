@@ -228,6 +228,7 @@
 		73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */; };
 		73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046D2D1172B90061D5D3 /* TwoTicketViewController.swift */; };
 		73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */; };
+		73FC5E372D5B2AED001D0DEF /* SanctionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -479,6 +480,7 @@
 		73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTicketViewController.swift; sourceTree = "<group>"; };
 		73F6046D2D1172B90061D5D3 /* TwoTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoTicketViewController.swift; sourceTree = "<group>"; };
 		73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTicketView.swift; sourceTree = "<group>"; };
+		73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanctionTableViewCell.swift; sourceTree = "<group>"; };
 		845B2366B1013718573E8C55 /* Pods-问道云.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.debug.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.debug.xcconfig"; sourceTree = "<group>"; };
 		BF2EE8A0497D8E69CF0E16AE /* Pods-问道云.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.release.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1120,6 +1122,7 @@
 				73EDE9E32D59C2B500A0A7E3 /* HomeNoticeListCell.swift */,
 				73EDE9E72D59DD8900A0A7E3 /* HomeLawsViewCell.swift */,
 				73EDE9F52D59F9AA00A0A7E3 /* HomeOneReportCell.swift */,
+				73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */,
 			);
 			path = HomeItemView;
 			sourceTree = "<group>";
@@ -1338,6 +1341,7 @@
 				73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
 				7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */,
+				73FC5E372D5B2AED001D0DEF /* SanctionTableViewCell.swift in Sources */,
 				73C7524E2D1D5A3100C47187 /* FocusSearchViewController.swift in Sources */,
 				73807D4E2D3369C500F8B90D /* CompanyBothViewController.swift in Sources */,
 				73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */,

@@ -212,6 +212,7 @@ class itemsModel {
     var registerCapital: String?//注册资本
     var legalName: String?//法定代表人
     var incorporationTime: String?//成立时间
+    var count: Int?
     var riskNum1: Int?//成立时间
     var riskNum2: Int?//成立时间
     
@@ -270,6 +271,7 @@ class itemsModel {
     var timeliness: String?
     init(json: JSON) {
         //风险数据公司
+        self.count = json["count"].intValue
         self.ossUrl = json["ossUrl"].stringValue
         self.timeliness = json["timeliness"].stringValue
         self.entryIntoForceTime = json["entryIntoForceTime"].stringValue
@@ -512,7 +514,9 @@ class rowsModel {
     var workAs: String?
     var entityStatus: String?
     var firmnumber: String?
+    var items: [itemsModel]?
     init(json: JSON) {
+        self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
         self.personname = json["personname"].stringValue
         self.firmnumber = json["firmnumber"].stringValue
         self.entityStatus = json["entityStatus"].stringValue

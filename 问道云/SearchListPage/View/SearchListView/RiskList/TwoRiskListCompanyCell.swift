@@ -97,10 +97,9 @@ class TwoRiskListCompanyCell: BaseViewCell {
     
     lazy var moreImageView: UIImageView = {
         let moreImageView = UIImageView()
-        moreImageView.image = UIImage(named: "riskmoreicona")
+        moreImageView.image = UIImage(named: "moreidanjiimage")
         return moreImageView
     }()
-    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -32,11 +32,17 @@ PODS:
   - DYFStore (2.2.0):
     - DYFSwiftRuntimeProvider
   - DYFSwiftRuntimeProvider (2.1.1)
+  - HGCategoryView (1.1.9):
+    - Masonry (~> 1.1.0)
+  - HGSegmentedPageViewController (1.2.2):
+    - HGCategoryView (~> 1.1.9)
+    - Masonry (~> 1.1.0)
   - IQKeyboardManagerSwift (6.5.16)
   - JXPagingView/Paging (2.1.3)
   - JXSegmentedView (1.4.1)
   - Kingfisher (7.11.0)
   - lottie-ios (4.3.4)
+  - Masonry (1.1.0)
   - MJRefresh (3.7.9)
   - Moya (15.0.0):
     - Moya/Core (= 15.0.0)
@@ -73,6 +79,7 @@ DEPENDENCIES:
   - DeviceKit (~> 5.2.2)
   - DropMenuBar (~> 1.0.4)
   - DYFStore (~> 2.2.0)
+  - HGSegmentedPageViewController (~> 1.2.2)
   - IQKeyboardManagerSwift (~> 6.5.16)
   - JXPagingView/Paging (~> 2.1.3)
   - JXSegmentedView (~> 1.4.1)
@@ -104,11 +111,14 @@ SPEC REPOS:
     - DropMenuBar
     - DYFStore
     - DYFSwiftRuntimeProvider
+    - HGCategoryView
+    - HGSegmentedPageViewController
     - IQKeyboardManagerSwift
     - JXPagingView
     - JXSegmentedView
     - Kingfisher
     - lottie-ios
+    - Masonry
     - MJRefresh
     - Moya
     - NTESBaseComponent
@@ -136,11 +146,14 @@ SPEC CHECKSUMS:
   DropMenuBar: cc34985e8a5b5796209bf4fe57cc1cd589b68efc
   DYFStore: 1036053c5d4c92b97e8fefd64bf36a9b0a49cd0c
   DYFSwiftRuntimeProvider: f90dcb2b8c97ff6b5185cc423daf178c7fbcf251
+  HGCategoryView: 95b236c273ac63d77ccdb5a29811db545f72d4cd
+  HGSegmentedPageViewController: f35a7c328a98cb0eb686b1dffbac933df8989049
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
   JXPagingView: afdd2e9af09c90160dd232b970d603cc6e7ddd0e
   JXSegmentedView: cd73555ce2134d1656db2cb383ba9c2f36fb5078
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
   lottie-ios: 3d98679b41fa6fd6aff2352b3953dbd3df8a397e
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJRefresh: ff9e531227924c84ce459338414550a05d2aea78
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   NTESBaseComponent: 6d1fd6802c2340005d35db9daafe15ee6b9b976c
@@ -160,6 +173,6 @@ SPEC CHECKSUMS:
   TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
   WechatOpenSDK: 290989072e87b79d52225a01bb4e5e58f6f88593
 
-PODFILE CHECKSUM: c7212b77d5e761f3606ba4037a40e990842c2f91
+PODFILE CHECKSUM: 2f9e44695e5b92e41185ad006fa557f10c8cd2c2
 
 COCOAPODS: 1.16.2

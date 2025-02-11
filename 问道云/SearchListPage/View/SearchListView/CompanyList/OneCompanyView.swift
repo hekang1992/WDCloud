@@ -17,6 +17,8 @@ class OneCompanyView: BaseView {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.delegate = self
+        scrollView.backgroundColor = .white
         return scrollView
     }()
     
@@ -96,6 +98,17 @@ class OneCompanyView: BaseView {
     
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+extension OneCompanyView: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y <= 0 {
+            scrollView.contentOffset.y = 0
+            return
+        }
     }
     
 }

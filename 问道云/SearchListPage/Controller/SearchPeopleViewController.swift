@@ -193,10 +193,8 @@ class SearchPeopleViewController: WDBaseViewController {
         print("人员===============人员")
         //最近搜索
         getlastSearch()
-
         //浏览历史
         getBrowsingHistory()
-        
         //热搜
         getHotWords()
     }

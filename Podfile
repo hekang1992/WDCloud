@@ -56,4 +56,6 @@ target '问道云' do
   
   pod 'TagListView', '~> 1.4.1'
   
+  pod 'HGSegmentedPageViewController', '~> 1.2.2'
+  
 end

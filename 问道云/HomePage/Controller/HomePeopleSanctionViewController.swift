@@ -6,24 +6,32 @@
 //  个人行政处罚
 
 import UIKit
+import RxRelay
 
 class HomePeopleSanctionViewController: WDBaseViewController {
+    //城市数据
+    var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
+    
+    //行业数据
+    var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
+    
+    var keyWords = BehaviorRelay<String>(value: "")
+    var pageNum: Int = 1
+    var pageSize: Int = 20
+    var type: String = "1"
+    var model: DataModel?
+    var allArray: [itemsModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+extension HomePeopleSanctionViewController {
+    
+    
+    
 }
