@@ -350,6 +350,9 @@ extension WDHomeViewController {
             self.navigationController?.pushViewController(beatVc, animated: true)
         }else if menuID == "10800" {
             ToastViewConfig.showToast(message: "敬请期待")
+        }else if menuID == "10900" {//司法sus
+            let lawSuitVc = SearchLawSuitViewController()
+            self.navigationController?.pushViewController(lawSuitVc, animated: true)
         }else if menuID == "11000" {//行政处罚
             let sanctionVc = HomeSanctionViewController()
             self.navigationController?.pushViewController(sanctionVc, animated: true)
@@ -364,6 +367,8 @@ extension WDHomeViewController {
             self.navigationController?.pushViewController(lawVc, animated: true)
         }else if menuID == "11400" {//风险监控
             NotificationCenter.default.post(name: NSNotification.Name(RISK_VC), object: nil)
+        }else if menuID == "11500" {//尽职调查
+            NotificationCenter.default.post(name: NSNotification.Name(DILI_VC), object: nil)
         }else if menuID == "11600" {//一键报告
             let oneRpVc = HomeOneReportViewController()
             self.navigationController?.pushViewController(oneRpVc, animated: true)

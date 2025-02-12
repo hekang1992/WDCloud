@@ -245,6 +245,9 @@
 		73FC5E632D5CAA63001D0DEF /* SearchDondDefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E622D5CAA63001D0DEF /* SearchDondDefaultViewController.swift */; };
 		73FC5E652D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E642D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift */; };
 		73FC5E672D5CAB2F001D0DEF /* SearchPeopleDondDefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E662D5CAB2F001D0DEF /* SearchPeopleDondDefaultViewController.swift */; };
+		73FC5E6A2D5CADFC001D0DEF /* SearchLawSuitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E692D5CADFC001D0DEF /* SearchLawSuitViewController.swift */; };
+		73FC5E6C2D5CAE0D001D0DEF /* SearchCompanyLawSuitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E6B2D5CAE0D001D0DEF /* SearchCompanyLawSuitViewController.swift */; };
+		73FC5E6E2D5CAE19001D0DEF /* SearchPeopleLawSuitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E6D2D5CAE19001D0DEF /* SearchPeopleLawSuitViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -513,6 +516,9 @@
 		73FC5E622D5CAA63001D0DEF /* SearchDondDefaultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDondDefaultViewController.swift; sourceTree = "<group>"; };
 		73FC5E642D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyDondDefaultViewController.swift; sourceTree = "<group>"; };
 		73FC5E662D5CAB2F001D0DEF /* SearchPeopleDondDefaultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleDondDefaultViewController.swift; sourceTree = "<group>"; };
+		73FC5E692D5CADFC001D0DEF /* SearchLawSuitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLawSuitViewController.swift; sourceTree = "<group>"; };
+		73FC5E6B2D5CAE0D001D0DEF /* SearchCompanyLawSuitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyLawSuitViewController.swift; sourceTree = "<group>"; };
+		73FC5E6D2D5CAE19001D0DEF /* SearchPeopleLawSuitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleLawSuitViewController.swift; sourceTree = "<group>"; };
 		845B2366B1013718573E8C55 /* Pods-问道云.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.debug.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.debug.xcconfig"; sourceTree = "<group>"; };
 		BF2EE8A0497D8E69CF0E16AE /* Pods-问道云.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.release.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1176,6 +1182,7 @@
 		73FC5E392D5C32E6001D0DEF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				73FC5E682D5CADA4001D0DEF /* 查诉讼 */,
 				73FC5E612D5CA9A4001D0DEF /* 债券违约 */,
 				73FC5E482D5C3C70001D0DEF /* 一键报告 */,
 				73FC5E452D5C3C44001D0DEF /* 公告大全 */,
@@ -1316,6 +1323,16 @@
 				73FC5E662D5CAB2F001D0DEF /* SearchPeopleDondDefaultViewController.swift */,
 			);
 			path = "债券违约";
+			sourceTree = "<group>";
+		};
+		73FC5E682D5CADA4001D0DEF /* 查诉讼 */ = {
+			isa = PBXGroup;
+			children = (
+				73FC5E692D5CADFC001D0DEF /* SearchLawSuitViewController.swift */,
+				73FC5E6D2D5CAE19001D0DEF /* SearchPeopleLawSuitViewController.swift */,
+				73FC5E6B2D5CAE0D001D0DEF /* SearchCompanyLawSuitViewController.swift */,
+			);
+			path = "查诉讼";
 			sourceTree = "<group>";
 		};
 		C61455D1CEA19ADD364A1DEF /* Frameworks */ = {
@@ -1534,6 +1551,7 @@
 				73E971752D2FCF0500F12B15 /* TwoCompanySpecListCell.swift in Sources */,
 				736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */,
 				736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */,
+				73FC5E6E2D5CAE19001D0DEF /* SearchPeopleLawSuitViewController.swift in Sources */,
 				73EF03CF2D30F84B0070F850 /* TwoPeopleListView.swift in Sources */,
 				73FC5E522D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift in Sources */,
 				734896E42D3A094800B028FE /* PeopleRiskDetailViewController.swift in Sources */,
@@ -1547,6 +1565,7 @@
 				730487F52D2932640024265C /* BindPhoneView.swift in Sources */,
 				73C752582D1E728500C47187 /* HistoryListViewCell.swift in Sources */,
 				73807D502D3369D100F8B90D /* CompanyDetailViewController.swift in Sources */,
+				73FC5E6C2D5CAE0D001D0DEF /* SearchCompanyLawSuitViewController.swift in Sources */,
 				730487FF2D2A5CBE0024265C /* HomeVideoListViewController.swift in Sources */,
 				7374162F2D0EB9E400E6CD23 /* HistoryView.swift in Sources */,
 				73B3623D2D374222003BD911 /* PopHistoryNameView.swift in Sources */,
@@ -1590,6 +1609,7 @@
 				739D90BC2D26A72100D9421B /* GroupListViewController.swift in Sources */,
 				7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */,
 				73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */,
+				73FC5E6A2D5CADFC001D0DEF /* SearchLawSuitViewController.swift in Sources */,
 				7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */,
 				730488092D2A7ACD0024265C /* HomeHeadHotsView.swift in Sources */,
 				7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */,
