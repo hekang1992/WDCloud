@@ -80,6 +80,9 @@
 		7340E1712D5CC6B8008FD5C7 /* SearchEnvironmentalPenaltyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1702D5CC6B7008FD5C7 /* SearchEnvironmentalPenaltyViewController.swift */; };
 		7340E1732D5CC6C5008FD5C7 /* SearchCompanyEnvironmentalPenaltyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1722D5CC6C5008FD5C7 /* SearchCompanyEnvironmentalPenaltyViewController.swift */; };
 		7340E1752D5CC6D2008FD5C7 /* SearchPeopleEnvironmentalPenaltyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1742D5CC6D2008FD5C7 /* SearchPeopleEnvironmentalPenaltyViewController.swift */; };
+		7340E1782D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1772D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift */; };
+		7340E17A2D5CCFDE008FD5C7 /* SearchCompanyTaxViolationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1792D5CCFDE008FD5C7 /* SearchCompanyTaxViolationViewController.swift */; };
+		7340E17C2D5CCFEE008FD5C7 /* SearchPeopleTaxViolationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E17B2D5CCFEE008FD5C7 /* SearchPeopleTaxViolationViewController.swift */; };
 		734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E72D2641C400BB4087 /* GroupTeamViewController.swift */; };
 		734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E92D26431900BB4087 /* GroupTeamNorView.swift */; };
 		734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */; };
@@ -351,6 +354,9 @@
 		7340E1702D5CC6B7008FD5C7 /* SearchEnvironmentalPenaltyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEnvironmentalPenaltyViewController.swift; sourceTree = "<group>"; };
 		7340E1722D5CC6C5008FD5C7 /* SearchCompanyEnvironmentalPenaltyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyEnvironmentalPenaltyViewController.swift; sourceTree = "<group>"; };
 		7340E1742D5CC6D2008FD5C7 /* SearchPeopleEnvironmentalPenaltyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleEnvironmentalPenaltyViewController.swift; sourceTree = "<group>"; };
+		7340E1772D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTaxViolationViewController.swift; sourceTree = "<group>"; };
+		7340E1792D5CCFDE008FD5C7 /* SearchCompanyTaxViolationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyTaxViolationViewController.swift; sourceTree = "<group>"; };
+		7340E17B2D5CCFEE008FD5C7 /* SearchPeopleTaxViolationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleTaxViolationViewController.swift; sourceTree = "<group>"; };
 		734355E72D2641C400BB4087 /* GroupTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamViewController.swift; sourceTree = "<group>"; };
 		734355E92D26431900BB4087 /* GroupTeamNorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamNorView.swift; sourceTree = "<group>"; };
 		734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamSpecView.swift; sourceTree = "<group>"; };
@@ -786,6 +792,16 @@
 				7340E1742D5CC6D2008FD5C7 /* SearchPeopleEnvironmentalPenaltyViewController.swift */,
 			);
 			path = "环保处罚";
+			sourceTree = "<group>";
+		};
+		7340E1762D5CCF85008FD5C7 /* 税收违法 */ = {
+			isa = PBXGroup;
+			children = (
+				7340E1772D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift */,
+				7340E1792D5CCFDE008FD5C7 /* SearchCompanyTaxViolationViewController.swift */,
+				7340E17B2D5CCFEE008FD5C7 /* SearchPeopleTaxViolationViewController.swift */,
+			);
+			path = "税收违法";
 			sourceTree = "<group>";
 		};
 		734896D32D39ED7600B028FE /* RiskDetail */ = {
@@ -1228,6 +1244,7 @@
 		73FC5E392D5C32E6001D0DEF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7340E1762D5CCF85008FD5C7 /* 税收违法 */,
 				7340E16F2D5CC660008FD5C7 /* 环保处罚 */,
 				7340E16E2D5CC651008FD5C7 /* 被执行人 */,
 				7340E16D2D5CC643008FD5C7 /* 最终受益人 */,
@@ -1554,6 +1571,7 @@
 				7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */,
 				73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */,
 				73E971302D2E614200F12B15 /* CommonSearchListView.swift in Sources */,
+				7340E1782D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift in Sources */,
 				73EDE9F22D59F0A900A0A7E3 /* OneReportViewController.swift in Sources */,
 				73807D592D33808400F8B90D /* CompanyCollectionCell.swift in Sources */,
 				7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */,
@@ -1566,6 +1584,7 @@
 				73C36A792D2D091100D6DC46 /* SearchPropertyClueViewController.swift in Sources */,
 				7374162D2D0EB87F00E6CD23 /* FocusAllViewController.swift in Sources */,
 				73C752542D1E4B5800C47187 /* HistoryListViewController.swift in Sources */,
+				7340E17A2D5CCFDE008FD5C7 /* SearchCompanyTaxViolationViewController.swift in Sources */,
 				73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */,
 				7304880F2D2A97E00024265C /* HomeNewsListViewCell.swift in Sources */,
 				7352B2242D353AB700B5391B /* CompanyThreeHeadView.swift in Sources */,
@@ -1709,6 +1728,7 @@
 				73C36A732D2D08CB00D6DC46 /* SearchCompanyViewController.swift in Sources */,
 				730488072D2A72200024265C /* HomeHeadTabView.swift in Sources */,
 				730487FD2D2A5C7D0024265C /* HomeNewsListViewController.swift in Sources */,
+				7340E17C2D5CCFEE008FD5C7 /* SearchPeopleTaxViolationViewController.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
 				73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */,
 				737416382D0EC54500E6CD23 /* MembershipCenterView.swift in Sources */,

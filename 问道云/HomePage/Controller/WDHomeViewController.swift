@@ -375,6 +375,9 @@ extension WDHomeViewController {
         }else if menuID == "11900" {//实际控制人
             let controllVc = SearchControllingPersonViewController()
             self.navigationController?.pushViewController(controllVc, animated: true)
+        }else if menuID == "12600" {//税收违法
+            let taxVc = SearchTaxViolationViewController()
+            self.navigationController?.pushViewController(taxVc, animated: true)
         }else if menuID == "12700" {//环保处罚
             let environmentalVc = SearchEnvironmentalPenaltyViewController()
             self.navigationController?.pushViewController(environmentalVc, animated: true)
