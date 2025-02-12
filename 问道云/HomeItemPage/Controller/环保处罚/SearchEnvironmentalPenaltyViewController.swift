@@ -1,5 +1,5 @@
 //
-//  SearchDeadbeatViewController.swift
+//  SearchEnvironmentalPenaltyViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/2/10.
@@ -9,9 +9,8 @@ import UIKit
 import HGSegmentedPageViewController
 import RxRelay
 import RxSwift
-import SwiftyJSON
 
-class SearchDeadbeatViewController: WDBaseViewController {
+class SearchEnvironmentalPenaltyViewController: WDBaseViewController {
     
     //参数
     var searchKey = BehaviorRelay<String>(value: "")
@@ -22,6 +21,9 @@ class SearchDeadbeatViewController: WDBaseViewController {
     //城市数据
     var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
     
+    //行业数据
+    var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
+    
     lazy var oneView: OneCompanyView = {
         let oneView = OneCompanyView()
         return oneView
@@ -29,7 +31,7 @@ class SearchDeadbeatViewController: WDBaseViewController {
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
-        headView.titlelabel.text = "查老赖"
+        headView.titlelabel.text = "环保处罚"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
         headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
@@ -38,7 +40,7 @@ class SearchDeadbeatViewController: WDBaseViewController {
     
     lazy var searchView: HomeItemSearchView = {
         let searchView = HomeItemSearchView()
-        let attrString = NSMutableAttributedString(string: "请输入企业名、人名、证件号", attributes: [
+        let attrString = NSMutableAttributedString(string: "请输入法院、公告名称", attributes: [
             .foregroundColor: UIColor.init(cssStr: "#999999") as Any,
             .font: UIFont.mediumFontOfSize(size: 14)
         ])
@@ -59,18 +61,7 @@ class SearchDeadbeatViewController: WDBaseViewController {
         segmentedPageViewController.categoryView.titleNormalColor = .init(cssStr: "#9FA4AD")
         segmentedPageViewController.categoryView.titleSelectedColor = .init(cssStr: "#333333")
         segmentedPageViewController.categoryView.vernier.backgroundColor = .init(cssStr: "#547AFF")
-        segmentedPageViewController.delegate = self
         return segmentedPageViewController
-    }()
-    
-    lazy var companyVc: SearchCompanyDeadbeatViewController = {
-        let companyVc = SearchCompanyDeadbeatViewController()
-        return companyVc
-    }()
-    
-    lazy var peopleVc: SearchPeopleDeadbeatViewController = {
-        let peopleVc = SearchPeopleDeadbeatViewController()
-        return peopleVc
     }()
     
     override func viewDidLoad() {
@@ -134,11 +125,16 @@ class SearchDeadbeatViewController: WDBaseViewController {
                 }
                 self?.searchKey.accept(keywords)
             }).disposed(by: disposeBag)
-    
+        
         //获取城市数据
         getAllRegionInfo()
-        
+        //获取行业数据
+        getAllIndustryInfo()
     }
+    
+}
+
+extension SearchEnvironmentalPenaltyViewController {
     
     //获取所有城市数据
     func getAllRegionInfo() {
@@ -161,9 +157,27 @@ class SearchDeadbeatViewController: WDBaseViewController {
         }
     }
     
-}
-
-extension SearchDeadbeatViewController: HGSegmentedPageViewControllerDelegate {
+    //获取行业数据
+    func getAllIndustryInfo() {
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        let emptyDict = [String: Any]()
+        man.requestAPI(params: emptyDict,
+                       pageUrl: "/operation/ajax/industryTree",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if let self = self, let modelArray = success.data?.data {
+                    self.industryModelArray.accept(modelArray)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
     
     private func addSegmentedPageViewController() {
         self.addChild(self.segmentedPageViewController)
@@ -176,36 +190,32 @@ extension SearchDeadbeatViewController: HGSegmentedPageViewControllerDelegate {
     }
     
     private func setupPageViewControllers() {
-        let titles: [String] = ["失信自然人", "失信企业"]
-        segmentedPageViewController.pageViewControllers = [peopleVc, companyVc]
+        var titles: [String] = []
+        let companyVc = HomeCompanySanctionViewController()
+        let peopleVc = HomePeopleSanctionViewController()
+        self.searchKey.asObservable().subscribe(onNext: { searchStr in
+            companyVc.keyWords.accept(searchStr)
+            peopleVc.keyWords.accept(searchStr)
+        }).disposed(by: disposeBag)
+        
+        self.regionModelArray.asObservable().subscribe(onNext: { modelArray in
+            guard let modelArray = modelArray else { return }
+            companyVc.regionModelArray.accept(modelArray)
+            peopleVc.regionModelArray.accept(modelArray)
+        }).disposed(by: disposeBag)
+        
+        self.industryModelArray.asObservable().subscribe(onNext: { modelArray in
+            guard let modelArray = modelArray else { return }
+            companyVc.industryModelArray.accept(modelArray)
+            peopleVc.industryModelArray.accept(modelArray)
+        }).disposed(by: disposeBag)
+        
+        segmentedPageViewController.pageViewControllers = [companyVc, peopleVc]
         segmentedPageViewController.selectedPage = 0
-        self.segmentedPageViewController.categoryView.titles = titles
-        self.segmentedPageViewController.view.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(self.searchView.snp.bottom)
+        companyVc.block = { [weak self] model in
+            titles = ["企业\(model.total ?? 0)", "个人"]
+            self?.segmentedPageViewController.categoryView.titles = titles
         }
-    }
-    
-    func segmentedPageViewControllerWillTransition(toPage page: Int) {
-        self.searchKey.asObservable()
-            .subscribe(onNext: { [weak self] keyWords in
-            guard let self = self else { return }
-            if page == 0 {
-                peopleVc.keyWords.accept(keyWords)
-            }else {
-                companyVc.keyWords.accept(keyWords)
-            }
-        }).disposed(by: disposeBag)
-        
-        self.regionModelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
-            guard let self = self, let modelArray = modelArray else { return }
-            if page == 0 {
-                peopleVc.regionModelArray.accept(modelArray)
-            }else {
-                companyVc.regionModelArray.accept(modelArray)
-            }
-        }).disposed(by: disposeBag)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -223,7 +233,7 @@ extension SearchDeadbeatViewController: HGSegmentedPageViewControllerDelegate {
         let man = RequestManager()
         ViewHud.addLoadView()
         let dict = ["searchType": "",
-                    "moduleId": "07"]
+                    "moduleId": "19"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
@@ -272,7 +282,7 @@ extension SearchDeadbeatViewController: HGSegmentedPageViewControllerDelegate {
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "",
-                    "moduleId": "07",
+                    "moduleId": "19",
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
@@ -297,22 +307,11 @@ extension SearchDeadbeatViewController: HGSegmentedPageViewControllerDelegate {
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let type = model.viewrecordtype ?? ""
-                if type == "1" {//企业
-                    let entityId = model.firmnumber ?? ""
-                    let json: JSON = ["personId": entityId]
-                    let itemModel: itemsModel = itemsModel(json: json)
-                    let detailVc = SearchCompanyDeadbeatDetailViewController()
-                    detailVc.model = itemModel
-                    self.navigationController?.pushViewController(detailVc, animated: true)
-                }else {//个人
-                    let personId = model.eid ?? ""
-                    let json: JSON = ["personId": personId]
-                    let itemModel: itemsModel = itemsModel(json: json)
-                    let detailVc = SearchPeopleDeadbeatDetailViewController()
-                    detailVc.model = itemModel
-                    self.navigationController?.pushViewController(detailVc, animated: true)
-                }
+                let pageUrl = "\(base_url)/litigation-risk/administrative-penalty"
+                let dict = ["firmname": model.firmname ?? "",
+                            "entityId": model.firmnumber ?? ""]
+                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                self.pushWebPage(from: webUrl)
             }
             listView.nameLabel.text = model.firmname ?? ""
             listView.timeLabel.text = model.createhourtime ?? ""
@@ -342,7 +341,7 @@ extension SearchDeadbeatViewController: HGSegmentedPageViewControllerDelegate {
     private func getHotWords() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["moduleId": "07"]
+        let dict = ["moduleId": "19"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
                        method: .get) { [weak self] result in
@@ -366,34 +365,11 @@ extension SearchDeadbeatViewController: HGSegmentedPageViewControllerDelegate {
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let type = model.type ?? ""
-                if type == "1" {//企业
-                    let entityId = model.eid ?? ""
-                    let json: JSON = ["personId": entityId]
-                    let itemModel: itemsModel = itemsModel(json: json)
-                    let detailVc = SearchCompanyDeadbeatDetailViewController()
-                    detailVc.model = itemModel
-                    self.navigationController?.pushViewController(detailVc, animated: true)
-                }else {//个人
-                    let personId = model.eid ?? ""
-                    let json: JSON = ["personId": personId]
-                    let itemModel: itemsModel = itemsModel(json: json)
-                    let detailVc = SearchPeopleDeadbeatDetailViewController()
-                    detailVc.model = itemModel
-                    self.navigationController?.pushViewController(detailVc, animated: true)
-                }
-//                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
-//                var dict: [String: String]
-//                let type = model.type ?? ""
-//                if type == "1" {
-//                    dict = ["firmname": model.name ?? "",
-//                            "entityId": model.eid ?? ""]
-//                }else {
-//                    dict = ["personName": model.name ?? "",
-//                            "personNumber": model.eid ?? ""]
-//                }
-//                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-//                self.pushWebPage(from: webUrl)
+                let pageUrl = "\(base_url)/litigation-risk/administrative-penalty"
+                let dict = ["firmname": model.name ?? "",
+                            "entityId": model.eid ?? ""]
+                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                self.pushWebPage(from: webUrl)
             }
             listView.nameLabel.text = model.name ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
@@ -423,7 +399,7 @@ extension SearchDeadbeatViewController: HGSegmentedPageViewControllerDelegate {
             let man = RequestManager()
             ViewHud.addLoadView()
             let dict = ["searchType": "",
-                        "moduleId": "07"]
+                        "moduleId": "19"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
@@ -452,7 +428,7 @@ extension SearchDeadbeatViewController: HGSegmentedPageViewControllerDelegate {
             ViewHud.addLoadView()
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
-                        "moduleId": "07",
+                        "moduleId": "19",
                         "viewrecordtype": ""]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",

@@ -191,19 +191,47 @@ class SearchPeopleViewController: WDBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("人员===============人员")
+        let group = DispatchGroup()
+        var lastSearchSuccess = false
+        var browsingHistorySuccess = false
+        var hotWordsSuccess = false
         //最近搜索
-        getlastSearch()
+        ViewHud.addLoadView()
+        group.enter()
+        getlastSearch { success in
+            lastSearchSuccess = success
+            group.leave()
+        }
         //浏览历史
-        getBrowsingHistory()
+        group.enter()
+        getBrowsingHistory { success in
+            browsingHistorySuccess = success
+            group.leave()
+        }
         //热搜
-        getHotWords()
+        group.enter()
+        getHotWords { success in
+            hotWordsSuccess = success
+            group.leave()
+        }
+        
+        // 所有任务完成后的通知
+        group.notify(queue: .main) {
+            ViewHud.hideLoadView()
+            print("所有数据加载完成，通知你！")
+            if lastSearchSuccess && browsingHistorySuccess && hotWordsSuccess {
+                print("所有接口请求成功！")
+            } else {
+                print("部分接口请求失败。")
+            }
+        }
     }
 }
 
 extension SearchPeopleViewController {
     
     //最近搜索
-    private func getlastSearch() {
+    private func getlastSearch(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
         ViewHud.addLoadView()
         let dict = ["searchType": "2",
@@ -218,8 +246,10 @@ extension SearchPeopleViewController {
                 if let rows = success.data?.data {
                     reloadSearchUI(data: rows)
                 }
+                completion(true)
                 break
             case .failure(_):
+                completion(false)
                 break
             }
         }
@@ -250,7 +280,7 @@ extension SearchPeopleViewController {
     }
     
     //浏览历史
-    private func getBrowsingHistory() {
+    private func getBrowsingHistory(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
         ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
@@ -267,9 +297,10 @@ extension SearchPeopleViewController {
                 if let rows = success.data?.rows {
                     readHistoryUI(data: rows)
                 }
+                completion(true)
                 break
             case .failure(_):
-                
+                completion(false)
                 break
             }
         }
@@ -313,7 +344,7 @@ extension SearchPeopleViewController {
     }
     
     //热搜
-    private func getHotWords() {
+    private func getHotWords(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
         ViewHud.addLoadView()
         let dict = ["moduleId": "02"]
@@ -327,8 +358,10 @@ extension SearchPeopleViewController {
                     self.hotWordsArray.accept(model.data ?? [])
                     hotsWordsUI(data: model.data ?? [])
                 }
+                completion(true)
                 break
             case .failure(_):
+                completion(false)
                 break
             }
         }
@@ -452,7 +485,9 @@ extension SearchPeopleViewController {
                     self.twoPeopleListView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1
-                        self.getlastSearch()
+                        self.getlastSearch { success in
+                            
+                        }
                         self.allArray.removeAll()
                     }
                     pageIndex += 1

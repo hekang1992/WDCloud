@@ -588,7 +588,9 @@ class rowsModel {
     var incorporationTime: String?
     var relatedEntity: [relatedEntityModel]?
     var tags: [newstagsobjModel]?
+    var viewrecordtype: String?
     init(json: JSON) {
+        self.viewrecordtype = json["viewrecordtype"].stringValue
         self.tags = json["tags"].arrayValue.map {
             newstagsobjModel(json: $0)
         }

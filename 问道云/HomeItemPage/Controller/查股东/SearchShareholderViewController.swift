@@ -261,10 +261,10 @@ extension SearchShareholderViewController: HGSegmentedPageViewControllerDelegate
                 guard let self = self else { return }
                 let pageUrl = "\(base_url)/personal-information/shareholder-situation"
                 var dict: [String: String]
-                let type = model.type ?? ""
+                let type = model.viewrecordtype ?? ""
                 if type == "1" {
-                    dict = ["firmname": model.name ?? "",
-                            "entityId": model.eid ?? "",
+                    dict = ["firmname": model.firmname ?? "",
+                            "entityId": model.firmnumber ?? "",
                             "isPerson": "0"]
                 }else {
                     dict = ["personName": model.name ?? "",
