@@ -27,7 +27,7 @@ class SearchPeopleDeadbeatViewController: WDBaseViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .init(cssStr: "#F5F5F5")
-        tableView.register(SearchPeopleShareholderCell.self, forCellReuseIdentifier: "SearchPeopleShareholderCell")
+        tableView.register(SearchPeopleDeadbeatCell.self, forCellReuseIdentifier: "SearchPeopleDeadbeatCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
@@ -102,6 +102,7 @@ class SearchPeopleDeadbeatViewController: WDBaseViewController {
 extension SearchPeopleDeadbeatViewController {
     
     private func getSearchPeopleInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["keywords": self.keyWords.value,
                     "type": "1",
@@ -175,7 +176,8 @@ extension SearchPeopleDeadbeatViewController: UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = self.allArray[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchPeopleShareholderCell", for: indexPath) as! SearchPeopleShareholderCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchPeopleDeadbeatCell", for: indexPath) as! SearchPeopleDeadbeatCell
+        model.searchStr = self.keyWords.value
         cell.model.accept(model)
         cell.selectionStyle = .none
         return cell
@@ -183,12 +185,9 @@ extension SearchPeopleDeadbeatViewController: UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        let pageUrl = "\(base_url)/personal-information/shareholder-situation"
-        let dict = ["personName": model.personName ?? "",
-                    "personNumber": model.personId ?? "",
-                    "isPerson": "1"]
-        let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-        self.pushWebPage(from: webUrl)
+        let detailVc = SearchPeopleDeadbeatDetailViewController()
+        detailVc.model = model
+        self.navigationController?.pushViewController(detailVc, animated: true)
     }
     
 }

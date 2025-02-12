@@ -13,6 +13,7 @@ class DetailRiskItemView: BaseView {
         let bgView = UIView()
         bgView.backgroundColor = .init(cssStr: "#FFF7F6")
         bgView.layer.cornerRadius = 2
+        bgView.layer.masksToBounds = true
         return bgView
     }()
     

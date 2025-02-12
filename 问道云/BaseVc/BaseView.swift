@@ -75,6 +75,12 @@ class HeadView: UIView {
         return headTitleView
     }()
     
+    lazy var lineView: UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = .init(cssStr: "#F5F5F5")
+        return lineView
+    }()
+    
     init(frame: CGRect, typeEnum: NavRightType) {
         super.init(frame: frame)
         addSubview(bgView)
@@ -84,6 +90,7 @@ class HeadView: UIView {
         bgView.addSubview(twoBtn)
         bgView.addSubview(threeBtn)
         bgView.addSubview(headTitleView)
+        bgView.addSubview(lineView)
         let hiddenStates: [Bool]
         switch typeEnum {
         case .none:
@@ -137,6 +144,10 @@ class HeadView: UIView {
             make.centerY.equalTo(backBtn.snp.centerY)
             make.right.equalTo(twoBtn.snp.left).offset(-5)
             make.height.equalTo(25)
+        }
+        lineView.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(1)
         }
     }
     

@@ -926,7 +926,7 @@ class GetIDFVConfig {
 //红色文字
 class GetRedStrConfig: NSObject {
     
-    static func getRedStr(from count: String?, fullText: String, colorStr: String? = "#F55B5B") -> NSAttributedString {
+    static func getRedStr(from count: String?, fullText: String, colorStr: String? = "#F55B5B", font: UIFont? = UIFont.mediumFontOfSize(size: 15)) -> NSAttributedString {
         // 确保 count 有效，默认为 0
         let countValue = count ?? ""
         // 创建可变富文本字符串
@@ -940,7 +940,7 @@ class GetRedStrConfig: NSObject {
                                           value: UIColor(cssStr: colorStr ?? "") ?? UIColor.black,
                                           range: nsRange)
             attributedString.addAttribute(.font,
-                                          value: UIFont.regularFontOfSize(size: 14),
+                                          value: font as Any,
                                           range: nsRange)
         }
         

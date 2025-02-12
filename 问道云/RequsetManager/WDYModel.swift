@@ -118,7 +118,13 @@ class DataModel {
     var sumTotal: Int?
     var rimRisk: [rimRiskModel]?
     var recentNews: Int?
+    var name: String?
+    var riskList: riskListModel?
+    var minutesList: [minutesListModel]?
     init(json: JSON) {
+        self.minutesList = json["minutesList"].arrayValue.map { minutesListModel(json: $0) }
+        self.riskList = riskListModel(json: json["riskList"])
+        self.name = json["name"].stringValue
         self.followInfo = followInfoModel(json: json["followInfo"])
         self.rimRisk = json["rimRisk"].arrayValue.map { rimRiskModel(json: $0) }
         self.sumTotal = json["sumTotal"].intValue
@@ -193,12 +199,38 @@ class DataModel {
     }
 }
 
+class riskListModel {
+    var map1: map1Model?
+    var map2: map1Model?
+    var map3: map1Model?
+    var map4: map1Model?
+    init(json: JSON) {
+        self.map1 = map1Model(json: json["map1"])
+        self.map2 = map1Model(json: json["map2"])
+        self.map3 = map1Model(json: json["map3"])
+        self.map4 = map1Model(json: json["map4"])
+    }
+}
+
 class followInfoModel {
     var followStatus: Int?//1 未关注；2 已关注；3 已取关
     var followId: String?
     init(json: JSON) {
         self.followStatus = json["followStatus"].intValue
         self.followId = json["followId"].stringValue
+    }
+}
+
+class minutesListModel {
+    var caseId: String?
+    var caseTitle: String?
+    var dataId: String?
+    var caseNumber: String?
+    init(json: JSON) {
+        self.caseId = json["caseId"].stringValue
+        self.caseTitle = json["caseTitle"].stringValue
+        self.dataId = json["dataId"].stringValue
+        self.caseNumber = json["caseNumber"].stringValue
     }
 }
 
@@ -224,6 +256,7 @@ class itemsModel {
     var registerCapital: String?//注册资本
     var legalName: String?//法定代表人
     var incorporationTime: String?//成立时间
+    var organizationNumber: String?//组织代码
     var count: Int?
     var riskNum1: Int?//成立时间
     var riskNum2: Int?//成立时间
@@ -287,8 +320,15 @@ class itemsModel {
     var authflag: Int?
     var reporttype: Int?
     var reportnumber: String?
+    var riskCount: Int?
+    var idCardNumber: String?//身份证
+    var resume: String?//简介
     init(json: JSON) {
         //风险数据公司
+        self.organizationNumber = json["organizationNumber"].stringValue
+        self.resume = json["resume"].stringValue
+        self.idCardNumber = json["idCardNumber"].stringValue
+        self.riskCount = json["riskCount"].intValue
         self.reportnumber = json["reportnumber"].stringValue
         self.authflag = json["authflag"].intValue
         self.reporttype = json["reporttype"].intValue
