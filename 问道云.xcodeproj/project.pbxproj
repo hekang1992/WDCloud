@@ -83,6 +83,27 @@
 		7340E1782D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1772D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift */; };
 		7340E17A2D5CCFDE008FD5C7 /* SearchCompanyTaxViolationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1792D5CCFDE008FD5C7 /* SearchCompanyTaxViolationViewController.swift */; };
 		7340E17C2D5CCFEE008FD5C7 /* SearchPeopleTaxViolationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E17B2D5CCFEE008FD5C7 /* SearchPeopleTaxViolationViewController.swift */; };
+		7340E17F2D5CD308008FD5C7 /* SearchAssetFreezeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E17E2D5CD308008FD5C7 /* SearchAssetFreezeViewController.swift */; };
+		7340E1812D5CD31A008FD5C7 /* SearchCompanyAssetFreezeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1802D5CD31A008FD5C7 /* SearchCompanyAssetFreezeViewController.swift */; };
+		7340E1832D5CD326008FD5C7 /* SearchPeopleAssetFreezeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1822D5CD326008FD5C7 /* SearchPeopleAssetFreezeViewController.swift */; };
+		7340E1862D5CD367008FD5C7 /* SearchAssetSeizureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1852D5CD367008FD5C7 /* SearchAssetSeizureViewController.swift */; };
+		7340E1882D5CD374008FD5C7 /* SearchCompanyAssetSeizureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1872D5CD374008FD5C7 /* SearchCompanyAssetSeizureViewController.swift */; };
+		7340E18A2D5CD381008FD5C7 /* SearchPeopleAssetSeizureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1892D5CD381008FD5C7 /* SearchPeopleAssetSeizureViewController.swift */; };
+		7340E18D2D5CD404008FD5C7 /* SearchExternalGuaranteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E18C2D5CD404008FD5C7 /* SearchExternalGuaranteeViewController.swift */; };
+		7340E18F2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E18E2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift */; };
+		7340E1912D5CD420008FD5C7 /* SearchPeopleExternalGuaranteeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1902D5CD420008FD5C7 /* SearchPeopleExternalGuaranteeViewController.swift */; };
+		7340E1942D5CD46C008FD5C7 /* SearchHighConsumptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1932D5CD46C008FD5C7 /* SearchHighConsumptionViewController.swift */; };
+		7340E1962D5CD47A008FD5C7 /* SearchCompanyHighConsumptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1952D5CD47A008FD5C7 /* SearchCompanyHighConsumptionViewController.swift */; };
+		7340E1982D5CD485008FD5C7 /* SearchPeopleHighConsumptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1972D5CD485008FD5C7 /* SearchPeopleHighConsumptionViewController.swift */; };
+		7340E19B2D5CD4D0008FD5C7 /* SearchCourtNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E19A2D5CD4D0008FD5C7 /* SearchCourtNoticeViewController.swift */; };
+		7340E19D2D5CD52A008FD5C7 /* SearchCompanyCourtNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E19C2D5CD52A008FD5C7 /* SearchCompanyCourtNoticeViewController.swift */; };
+		7340E19F2D5CD538008FD5C7 /* SearchPeopleCourtNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E19E2D5CD538008FD5C7 /* SearchPeopleCourtNoticeViewController.swift */; };
+		7340E1A22D5CD58D008FD5C7 /* SearchStartCourtNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1A12D5CD58D008FD5C7 /* SearchStartCourtNoticeViewController.swift */; };
+		7340E1A42D5CD59D008FD5C7 /* SearchCompanyStartCourtNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1A32D5CD59D008FD5C7 /* SearchCompanyStartCourtNoticeViewController.swift */; };
+		7340E1A62D5CD5A9008FD5C7 /* SearchPeopleStartCourtNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1A52D5CD5A9008FD5C7 /* SearchPeopleStartCourtNoticeViewController.swift */; };
+		7340E1A92D5CD604008FD5C7 /* SearchJudicialAuctioniewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1A82D5CD604008FD5C7 /* SearchJudicialAuctioniewViewController.swift */; };
+		7340E1AB2D5CD60F008FD5C7 /* SearchCompanyJudicialAuctioniewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1AA2D5CD60F008FD5C7 /* SearchCompanyJudicialAuctioniewViewController.swift */; };
+		7340E1AD2D5CD619008FD5C7 /* SearchPeopleJudicialAuctioniewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1AC2D5CD619008FD5C7 /* SearchPeopleJudicialAuctioniewViewController.swift */; };
 		734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E72D2641C400BB4087 /* GroupTeamViewController.swift */; };
 		734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E92D26431900BB4087 /* GroupTeamNorView.swift */; };
 		734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */; };
@@ -357,6 +378,27 @@
 		7340E1772D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTaxViolationViewController.swift; sourceTree = "<group>"; };
 		7340E1792D5CCFDE008FD5C7 /* SearchCompanyTaxViolationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyTaxViolationViewController.swift; sourceTree = "<group>"; };
 		7340E17B2D5CCFEE008FD5C7 /* SearchPeopleTaxViolationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleTaxViolationViewController.swift; sourceTree = "<group>"; };
+		7340E17E2D5CD308008FD5C7 /* SearchAssetFreezeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAssetFreezeViewController.swift; sourceTree = "<group>"; };
+		7340E1802D5CD31A008FD5C7 /* SearchCompanyAssetFreezeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyAssetFreezeViewController.swift; sourceTree = "<group>"; };
+		7340E1822D5CD326008FD5C7 /* SearchPeopleAssetFreezeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleAssetFreezeViewController.swift; sourceTree = "<group>"; };
+		7340E1852D5CD367008FD5C7 /* SearchAssetSeizureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAssetSeizureViewController.swift; sourceTree = "<group>"; };
+		7340E1872D5CD374008FD5C7 /* SearchCompanyAssetSeizureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyAssetSeizureViewController.swift; sourceTree = "<group>"; };
+		7340E1892D5CD381008FD5C7 /* SearchPeopleAssetSeizureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleAssetSeizureViewController.swift; sourceTree = "<group>"; };
+		7340E18C2D5CD404008FD5C7 /* SearchExternalGuaranteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchExternalGuaranteeViewController.swift; sourceTree = "<group>"; };
+		7340E18E2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyExternalGuaranteeViewController.swift; sourceTree = "<group>"; };
+		7340E1902D5CD420008FD5C7 /* SearchPeopleExternalGuaranteeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleExternalGuaranteeViewController.swift; sourceTree = "<group>"; };
+		7340E1932D5CD46C008FD5C7 /* SearchHighConsumptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHighConsumptionViewController.swift; sourceTree = "<group>"; };
+		7340E1952D5CD47A008FD5C7 /* SearchCompanyHighConsumptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyHighConsumptionViewController.swift; sourceTree = "<group>"; };
+		7340E1972D5CD485008FD5C7 /* SearchPeopleHighConsumptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleHighConsumptionViewController.swift; sourceTree = "<group>"; };
+		7340E19A2D5CD4D0008FD5C7 /* SearchCourtNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCourtNoticeViewController.swift; sourceTree = "<group>"; };
+		7340E19C2D5CD52A008FD5C7 /* SearchCompanyCourtNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyCourtNoticeViewController.swift; sourceTree = "<group>"; };
+		7340E19E2D5CD538008FD5C7 /* SearchPeopleCourtNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleCourtNoticeViewController.swift; sourceTree = "<group>"; };
+		7340E1A12D5CD58D008FD5C7 /* SearchStartCourtNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStartCourtNoticeViewController.swift; sourceTree = "<group>"; };
+		7340E1A32D5CD59D008FD5C7 /* SearchCompanyStartCourtNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyStartCourtNoticeViewController.swift; sourceTree = "<group>"; };
+		7340E1A52D5CD5A9008FD5C7 /* SearchPeopleStartCourtNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleStartCourtNoticeViewController.swift; sourceTree = "<group>"; };
+		7340E1A82D5CD604008FD5C7 /* SearchJudicialAuctioniewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchJudicialAuctioniewViewController.swift; sourceTree = "<group>"; };
+		7340E1AA2D5CD60F008FD5C7 /* SearchCompanyJudicialAuctioniewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyJudicialAuctioniewViewController.swift; sourceTree = "<group>"; };
+		7340E1AC2D5CD619008FD5C7 /* SearchPeopleJudicialAuctioniewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleJudicialAuctioniewViewController.swift; sourceTree = "<group>"; };
 		734355E72D2641C400BB4087 /* GroupTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamViewController.swift; sourceTree = "<group>"; };
 		734355E92D26431900BB4087 /* GroupTeamNorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamNorView.swift; sourceTree = "<group>"; };
 		734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamSpecView.swift; sourceTree = "<group>"; };
@@ -804,6 +846,83 @@
 			path = "税收违法";
 			sourceTree = "<group>";
 		};
+		7340E17D2D5CD209008FD5C7 /* 资产冻结 */ = {
+			isa = PBXGroup;
+			children = (
+				7340E17E2D5CD308008FD5C7 /* SearchAssetFreezeViewController.swift */,
+				7340E1802D5CD31A008FD5C7 /* SearchCompanyAssetFreezeViewController.swift */,
+				7340E1822D5CD326008FD5C7 /* SearchPeopleAssetFreezeViewController.swift */,
+			);
+			path = "资产冻结";
+			sourceTree = "<group>";
+		};
+		7340E1842D5CD32B008FD5C7 /* 资产查封 */ = {
+			isa = PBXGroup;
+			children = (
+				7340E1852D5CD367008FD5C7 /* SearchAssetSeizureViewController.swift */,
+				7340E1872D5CD374008FD5C7 /* SearchCompanyAssetSeizureViewController.swift */,
+				7340E1892D5CD381008FD5C7 /* SearchPeopleAssetSeizureViewController.swift */,
+			);
+			path = "资产查封";
+			sourceTree = "<group>";
+		};
+		7340E18B2D5CD3D2008FD5C7 /* 对外担保 */ = {
+			isa = PBXGroup;
+			children = (
+				7340E18C2D5CD404008FD5C7 /* SearchExternalGuaranteeViewController.swift */,
+				7340E18E2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift */,
+				7340E1902D5CD420008FD5C7 /* SearchPeopleExternalGuaranteeViewController.swift */,
+			);
+			path = "对外担保";
+			sourceTree = "<group>";
+		};
+		7340E1922D5CD437008FD5C7 /* 限制高消费 */ = {
+			isa = PBXGroup;
+			children = (
+				7340E1932D5CD46C008FD5C7 /* SearchHighConsumptionViewController.swift */,
+				7340E1952D5CD47A008FD5C7 /* SearchCompanyHighConsumptionViewController.swift */,
+				7340E1972D5CD485008FD5C7 /* SearchPeopleHighConsumptionViewController.swift */,
+			);
+			path = "限制高消费";
+			sourceTree = "<group>";
+		};
+		7340E1992D5CD491008FD5C7 /* 法院公告 */ = {
+			isa = PBXGroup;
+			children = (
+				7340E19A2D5CD4D0008FD5C7 /* SearchCourtNoticeViewController.swift */,
+				7340E19C2D5CD52A008FD5C7 /* SearchCompanyCourtNoticeViewController.swift */,
+				7340E19E2D5CD538008FD5C7 /* SearchPeopleCourtNoticeViewController.swift */,
+			);
+			path = "法院公告";
+			sourceTree = "<group>";
+		};
+		7340E1A02D5CD53B008FD5C7 /* 开庭公告 */ = {
+			isa = PBXGroup;
+			children = (
+				7340E1A12D5CD58D008FD5C7 /* SearchStartCourtNoticeViewController.swift */,
+				7340E1A32D5CD59D008FD5C7 /* SearchCompanyStartCourtNoticeViewController.swift */,
+				7340E1A52D5CD5A9008FD5C7 /* SearchPeopleStartCourtNoticeViewController.swift */,
+			);
+			path = "开庭公告";
+			sourceTree = "<group>";
+		};
+		7340E1A72D5CD5B1008FD5C7 /* 司法拍卖 */ = {
+			isa = PBXGroup;
+			children = (
+				7340E1A82D5CD604008FD5C7 /* SearchJudicialAuctioniewViewController.swift */,
+				7340E1AA2D5CD60F008FD5C7 /* SearchCompanyJudicialAuctioniewViewController.swift */,
+				7340E1AC2D5CD619008FD5C7 /* SearchPeopleJudicialAuctioniewViewController.swift */,
+			);
+			path = "司法拍卖";
+			sourceTree = "<group>";
+		};
+		7340E1AE2D5CD61D008FD5C7 /* 贷款逾期 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "贷款逾期";
+			sourceTree = "<group>";
+		};
 		734896D32D39ED7600B028FE /* RiskDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -1244,6 +1363,14 @@
 		73FC5E392D5C32E6001D0DEF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7340E1AE2D5CD61D008FD5C7 /* 贷款逾期 */,
+				7340E1A72D5CD5B1008FD5C7 /* 司法拍卖 */,
+				7340E1A02D5CD53B008FD5C7 /* 开庭公告 */,
+				7340E1992D5CD491008FD5C7 /* 法院公告 */,
+				7340E1922D5CD437008FD5C7 /* 限制高消费 */,
+				7340E18B2D5CD3D2008FD5C7 /* 对外担保 */,
+				7340E1842D5CD32B008FD5C7 /* 资产查封 */,
+				7340E17D2D5CD209008FD5C7 /* 资产冻结 */,
 				7340E1762D5CCF85008FD5C7 /* 税收违法 */,
 				7340E16F2D5CC660008FD5C7 /* 环保处罚 */,
 				7340E16E2D5CC651008FD5C7 /* 被执行人 */,
@@ -1556,6 +1683,7 @@
 				73B3624D2D37A665003BD911 /* PeopleActivityViewController.swift in Sources */,
 				7325A7E62D0000040043C196 /* GetCodeViewController.swift in Sources */,
 				733B5FFC2D573CAA00ADE7C5 /* RiskNoLoginView.swift in Sources */,
+				7340E1962D5CD47A008FD5C7 /* SearchCompanyHighConsumptionViewController.swift in Sources */,
 				7340E1752D5CC6D2008FD5C7 /* SearchPeopleEnvironmentalPenaltyViewController.swift in Sources */,
 				73FC5E442D5C3C25001D0DEF /* SearchCompanyShareholderCell.swift in Sources */,
 				730488132D2BD2090024265C /* HomeBannerViewCell.swift in Sources */,
@@ -1571,6 +1699,7 @@
 				7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */,
 				73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */,
 				73E971302D2E614200F12B15 /* CommonSearchListView.swift in Sources */,
+				7340E1A22D5CD58D008FD5C7 /* SearchStartCourtNoticeViewController.swift in Sources */,
 				7340E1782D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift in Sources */,
 				73EDE9F22D59F0A900A0A7E3 /* OneReportViewController.swift in Sources */,
 				73807D592D33808400F8B90D /* CompanyCollectionCell.swift in Sources */,
@@ -1580,12 +1709,14 @@
 				7340E16A2D5CBB4D008FD5C7 /* SearchPeopleControllingPersonViewController.swift in Sources */,
 				734896E62D3A2FE300B028FE /* RiskNumView.swift in Sources */,
 				73EF03D12D30FD000070F850 /* TwoPeopleSpecListCell.swift in Sources */,
+				7340E17F2D5CD308008FD5C7 /* SearchAssetFreezeViewController.swift in Sources */,
 				73807D5B2D3396A100F8B90D /* CompanyDetailView.swift in Sources */,
 				73C36A792D2D091100D6DC46 /* SearchPropertyClueViewController.swift in Sources */,
 				7374162D2D0EB87F00E6CD23 /* FocusAllViewController.swift in Sources */,
 				73C752542D1E4B5800C47187 /* HistoryListViewController.swift in Sources */,
 				7340E17A2D5CCFDE008FD5C7 /* SearchCompanyTaxViolationViewController.swift in Sources */,
 				73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */,
+				7340E1982D5CD485008FD5C7 /* SearchPeopleHighConsumptionViewController.swift in Sources */,
 				7304880F2D2A97E00024265C /* HomeNewsListViewCell.swift in Sources */,
 				7352B2242D353AB700B5391B /* CompanyThreeHeadView.swift in Sources */,
 				73B362512D37A7FB003BD911 /* PeopleDetailView.swift in Sources */,
@@ -1604,7 +1735,9 @@
 				73C7524E2D1D5A3100C47187 /* FocusSearchViewController.swift in Sources */,
 				73807D4E2D3369C500F8B90D /* CompanyBothViewController.swift in Sources */,
 				73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */,
+				7340E18F2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift in Sources */,
 				734896D82D39EDDF00B028FE /* RiskDetailView.swift in Sources */,
+				7340E1A92D5CD604008FD5C7 /* SearchJudicialAuctioniewViewController.swift in Sources */,
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
 				73950F732D55A93A005AD034 /* PopMonitoringGroupView.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
@@ -1653,6 +1786,8 @@
 				7380433A2D27DA66009B25F8 /* PopChangePeopleView.swift in Sources */,
 				734896D52D39ED9300B028FE /* CompanyRiskDetailViewController.swift in Sources */,
 				737416362D0EC37400E6CD23 /* MembershipCenterViewController.swift in Sources */,
+				7340E1A42D5CD59D008FD5C7 /* SearchCompanyStartCourtNoticeViewController.swift in Sources */,
+				7340E1862D5CD367008FD5C7 /* SearchAssetSeizureViewController.swift in Sources */,
 				738043382D27A9F5009B25F8 /* AddGroupPeopleViewController.swift in Sources */,
 				73807D522D336A0B00F8B90D /* CompanyActivityViewController.swift in Sources */,
 				73E306DF2D156C0800D18943 /* MyQRCodeView.swift in Sources */,
@@ -1721,9 +1856,11 @@
 				73B362592D37B9D4003BD911 /* PeopleDetailThreeViewController.swift in Sources */,
 				734896DE2D39F20700B028FE /* HistoryRiskDetailViewController.swift in Sources */,
 				738043322D278EED009B25F8 /* GroupListViewCell.swift in Sources */,
+				7340E1832D5CD326008FD5C7 /* SearchPeopleAssetFreezeViewController.swift in Sources */,
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				7340E1712D5CC6B8008FD5C7 /* SearchEnvironmentalPenaltyViewController.swift in Sources */,
 				730488112D2A97F00024265C /* HomeVideoListViewCell.swift in Sources */,
+				7340E19B2D5CD4D0008FD5C7 /* SearchCourtNoticeViewController.swift in Sources */,
 				734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */,
 				73C36A732D2D08CB00D6DC46 /* SearchCompanyViewController.swift in Sources */,
 				730488072D2A72200024265C /* HomeHeadTabView.swift in Sources */,
@@ -1739,14 +1876,18 @@
 				73B362532D37B704003BD911 /* PeopleDetailHeadView.swift in Sources */,
 				73868A412D55F53700CE107D /* DailyReportViewController.swift in Sources */,
 				730CEDF52D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift in Sources */,
+				7340E19F2D5CD538008FD5C7 /* SearchPeopleCourtNoticeViewController.swift in Sources */,
 				73C36A6C2D2D024C00D6DC46 /* SearchAllViewController.swift in Sources */,
 				73FC5E602D5C995D001D0DEF /* SearchPeopleDeadbeatDetailTableViewCell.swift in Sources */,
+				7340E1AB2D5CD60F008FD5C7 /* SearchCompanyJudicialAuctioniewViewController.swift in Sources */,
 				73FC5E3C2D5C3403001D0DEF /* SearchShareholderViewController.swift in Sources */,
 				73868A472D55F56600CE107D /* BothReportViewController.swift in Sources */,
 				7330CB822D23E65900778D54 /* ContactManager.swift in Sources */,
+				7340E19D2D5CD52A008FD5C7 /* SearchCompanyCourtNoticeViewController.swift in Sources */,
 				73B3329A2D30CF5100934773 /* CompanyLocationViewController.swift in Sources */,
 				73C36A752D2D08DA00D6DC46 /* SearchRiskViewController.swift in Sources */,
 				73EDE9DF2D599F8400A0A7E3 /* NoticeAllViewController.swift in Sources */,
+				7340E1AD2D5CD619008FD5C7 /* SearchPeopleJudicialAuctioniewViewController.swift in Sources */,
 				73B3623F2D375189003BD911 /* PopInvoiceView.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
 				73EDE9E62D59D0CB00A0A7E3 /* HomeLawsViewController.swift in Sources */,
@@ -1754,19 +1895,26 @@
 				73C7524C2D1D555400C47187 /* FocusCompanyPopGroupView.swift in Sources */,
 				73D50B872D16ACEC00EF081A /* FocusCompanyViewController.swift in Sources */,
 				73460D132D15162500EC9408 /* DeleteSureViewController.swift in Sources */,
+				7340E18A2D5CD381008FD5C7 /* SearchPeopleAssetSeizureViewController.swift in Sources */,
+				7340E1812D5CD31A008FD5C7 /* SearchCompanyAssetFreezeViewController.swift in Sources */,
 				73B362432D3793F9003BD911 /* PopRateMoneyView.swift in Sources */,
+				7340E18D2D5CD404008FD5C7 /* SearchExternalGuaranteeViewController.swift in Sources */,
 				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
 				73807D5F2D33B7D100F8B90D /* CompanyActivityViewCell.swift in Sources */,
 				730488152D2BD2380024265C /* HomeItemViewCell.swift in Sources */,
 				734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */,
 				73C752362D19451400C47187 /* FocusCompanyView.swift in Sources */,
+				7340E1942D5CD46C008FD5C7 /* SearchHighConsumptionViewController.swift in Sources */,
 				7352B2222D35321C00B5391B /* CompanyTwoHeadView.swift in Sources */,
 				734896E02D39F30C00B028FE /* RiskDetailHeadView.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
+				7340E1912D5CD420008FD5C7 /* SearchPeopleExternalGuaranteeViewController.swift in Sources */,
+				7340E1A62D5CD5A9008FD5C7 /* SearchPeopleStartCourtNoticeViewController.swift in Sources */,
 				73FC5E4E2D5C78E2001D0DEF /* SearchCompanyDeadbeatViewController.swift in Sources */,
 				73EABF9A2D323C460052F4AB /* RiskListPeopleView.swift in Sources */,
 				73C6B1A72D34EC8900CD3816 /* CompanyDetailHeadView.swift in Sources */,
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
+				7340E1882D5CD374008FD5C7 /* SearchCompanyAssetSeizureViewController.swift in Sources */,
 				736E97852D22A7A0009CC0DF /* ApplePayConfig.swift in Sources */,
 				7352B2382D36736400B5391B /* CompanyDescInfoView.swift in Sources */,
 				73868A432D55F54E00CE107D /* WeekReportViewController.swift in Sources */,
