@@ -13,6 +13,7 @@ class WDDiligenceViewController: WDBaseViewController {
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "尽职调查"
+        headView.lineView.isHidden = true
         headView.titlelabel.textColor = .white
         headView.bgView.backgroundColor = .clear
         headView.oneBtn.setImage(UIImage(named: "shezhianniuimage"), for: .normal)

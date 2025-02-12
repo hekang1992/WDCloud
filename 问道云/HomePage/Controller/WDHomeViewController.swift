@@ -353,6 +353,9 @@ extension WDHomeViewController {
         }else if menuID == "11000" {//行政处罚
             let sanctionVc = HomeSanctionViewController()
             self.navigationController?.pushViewController(sanctionVc, animated: true)
+        }else if menuID == "11100" {//债券违约
+            let bondVc = SearchDondDefaultViewController()
+            self.navigationController?.pushViewController(bondVc, animated: true)
         }else if menuID == "11200" {//公告大全
             let noticeVc = NoticeAllViewController()
             self.navigationController?.pushViewController(noticeVc, animated: true)

@@ -14,6 +14,7 @@ class WDRiskViewController: WDBaseViewController {
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .twoBtn)
         headView.titlelabel.text = "风险监控"
+        headView.lineView.isHidden = true
         headView.titlelabel.textColor = .white
         headView.bgView.backgroundColor = .clear
         headView.oneBtn.setImage(UIImage(named: "pluscircleimage"), for: .normal)
@@ -90,6 +91,7 @@ class WDRiskViewController: WDBaseViewController {
         //距离高度禁止
         pagingView.pinSectionHeaderVerticalOffset = Int(StatusHeightManager.navigationBarHeight)
         headView.titlelabel.text = "风险监控"
+        headView.lineView.isHidden = true
         addHeadView(from: headView)
         
     }
