@@ -121,7 +121,9 @@ class DataModel {
     var name: String?
     var riskList: riskListModel?
     var minutesList: [minutesListModel]?
+    var entityName: String?
     init(json: JSON) {
+        self.entityName = json["entityName"].stringValue
         self.minutesList = json["minutesList"].arrayValue.map { minutesListModel(json: $0) }
         self.riskList = riskListModel(json: json["riskList"])
         self.name = json["name"].stringValue

@@ -300,8 +300,9 @@ extension SearchPeopleDeadbeatDetailViewController: UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.modelArray[indexPath.row]
         let dict = ["dataId": model.dataId ?? "",
-                    "caseNumber": model.caseNumber ?? ""]
-        let pageUrl = "\(base_url)/litigation-risk/lose-trust-detail"
+                    "caseNumber": model.caseNumber ?? "",
+                    "personId": self.model?.personId ?? ""]
+        let pageUrl = "\(base_url)/litigation-risk/lose-trust-detail-person"
         let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
         self.pushWebPage(from: webUrl)
     }

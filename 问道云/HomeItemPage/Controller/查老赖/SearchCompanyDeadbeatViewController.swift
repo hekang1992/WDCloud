@@ -185,9 +185,8 @@ extension SearchCompanyDeadbeatViewController: UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        let entityId = model.entityId ?? ""
         let detailVc = SearchCompanyDeadbeatDetailViewController()
-        detailVc.entityId = entityId
+        detailVc.model = model
         self.navigationController?.pushViewController(detailVc, animated: true)
     }
     
