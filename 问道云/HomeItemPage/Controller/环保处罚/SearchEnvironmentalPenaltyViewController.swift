@@ -233,7 +233,7 @@ extension SearchEnvironmentalPenaltyViewController {
         let man = RequestManager()
         ViewHud.addLoadView()
         let dict = ["searchType": "",
-                    "moduleId": "19"]
+                    "moduleId": "18"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
@@ -282,7 +282,7 @@ extension SearchEnvironmentalPenaltyViewController {
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "",
-                    "moduleId": "19",
+                    "moduleId": "18",
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
@@ -341,7 +341,7 @@ extension SearchEnvironmentalPenaltyViewController {
     private func getHotWords() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["moduleId": "19"]
+        let dict = ["moduleId": "18"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
                        method: .get) { [weak self] result in
@@ -399,7 +399,7 @@ extension SearchEnvironmentalPenaltyViewController {
             let man = RequestManager()
             ViewHud.addLoadView()
             let dict = ["searchType": "",
-                        "moduleId": "19"]
+                        "moduleId": "18"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
@@ -428,7 +428,7 @@ extension SearchEnvironmentalPenaltyViewController {
             ViewHud.addLoadView()
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
-                        "moduleId": "19",
+                        "moduleId": "18",
                         "viewrecordtype": ""]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",

@@ -190,7 +190,7 @@ extension SearchPeopleEnvironmentalPenaltyViewController {
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/illegalPunish/getAdministrativePunish",
+                       pageUrl: "/riskmonitor/illegalPunish/getEnvironmentPenalty",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.tableView.mj_header?.endRefreshing()

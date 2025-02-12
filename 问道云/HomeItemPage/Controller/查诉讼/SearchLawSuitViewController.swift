@@ -9,12 +9,13 @@ import UIKit
 import HGSegmentedPageViewController
 import RxRelay
 import RxSwift
+import SwiftyJSON
 
 class SearchLawSuitViewController: WDBaseViewController {
     
     //参数
     var searchKey = BehaviorRelay<String>(value: "")
-
+    
     //热搜
     var hotWordsArray = BehaviorRelay<[rowsModel]?>(value: nil)
     
@@ -133,7 +134,7 @@ class SearchLawSuitViewController: WDBaseViewController {
                 }
                 self?.searchKey.accept(keywords)
             }).disposed(by: disposeBag)
-    
+        
         //获取城市数据
         getAllRegionInfo()
         
@@ -188,13 +189,13 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
     func segmentedPageViewControllerWillTransition(toPage page: Int) {
         self.searchKey.asObservable()
             .subscribe(onNext: { [weak self] keyWords in
-            guard let self = self else { return }
-            if page == 0 {
-                peopleVc.keyWords.accept(keyWords)
-            }else {
-                companyVc.keyWords.accept(keyWords)
-            }
-        }).disposed(by: disposeBag)
+                guard let self = self else { return }
+                if page == 0 {
+                    peopleVc.keyWords.accept(keyWords)
+                }else {
+                    companyVc.keyWords.accept(keyWords)
+                }
+            }).disposed(by: disposeBag)
         
         self.regionModelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self, let modelArray = modelArray else { return }
@@ -296,20 +297,22 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
-                var dict: [String: String]
                 let type = model.viewrecordtype ?? ""
-                if type == "1" {
-                    dict = ["firmname": model.firmname ?? "",
-                            "entityId": model.firmnumber ?? "",
-                            "isPerson": "0"]
-                }else {
-                    dict = ["personName": model.name ?? "",
-                            "personNumber": model.eid ?? "",
-                            "isPerson": "1"]
+                if type == "1" {//企业
+                    let entityId = model.firmnumber ?? ""
+                    let json: JSON = ["entityId": entityId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchCompanyDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    self.navigationController?.pushViewController(detailVc, animated: true)
+                }else {//个人
+                    let personId = model.eid ?? ""
+                    let json: JSON = ["personId": personId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchPeopleDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    self.navigationController?.pushViewController(detailVc, animated: true)
                 }
-                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-                self.pushWebPage(from: webUrl)
             }
             listView.nameLabel.text = model.firmname ?? ""
             listView.timeLabel.text = model.createhourtime ?? ""
@@ -363,20 +366,22 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
-                var dict: [String: String]
-                let type = model.type ?? ""
-                if type == "1" {
-                    dict = ["firmname": model.name ?? "",
-                            "entityId": model.eid ?? "",
-                            "isPerson": "0"]
-                }else {
-                    dict = ["personName": model.name ?? "",
-                            "personNumber": model.eid ?? "",
-                            "isPerson": "1"]
+                let type = model.viewrecordtype ?? ""
+                if type == "1" {//企业
+                    let entityId = model.firmnumber ?? ""
+                    let json: JSON = ["entityId": entityId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchCompanyDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    self.navigationController?.pushViewController(detailVc, animated: true)
+                }else {//个人
+                    let personId = model.eid ?? ""
+                    let json: JSON = ["personId": personId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchPeopleDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    self.navigationController?.pushViewController(detailVc, animated: true)
                 }
-                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-                self.pushWebPage(from: webUrl)
             }
             listView.nameLabel.text = model.name ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
@@ -457,5 +462,5 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
             }
         })
     }
-
+    
 }

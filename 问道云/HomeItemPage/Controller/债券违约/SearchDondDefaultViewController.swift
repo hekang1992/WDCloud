@@ -296,20 +296,7 @@ extension SearchDondDefaultViewController: HGSegmentedPageViewControllerDelegate
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
-                var dict: [String: String]
-                let type = model.viewrecordtype ?? ""
-                if type == "1" {
-                    dict = ["firmname": model.firmname ?? "",
-                            "entityId": model.firmnumber ?? "",
-                            "isPerson": "0"]
-                }else {
-                    dict = ["personName": model.name ?? "",
-                            "personNumber": model.eid ?? "",
-                            "isPerson": "1"]
-                }
-                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-                self.pushWebPage(from: webUrl)
+                ToastViewConfig.showToast(message: "暂未开发")
             }
             listView.nameLabel.text = model.firmname ?? ""
             listView.timeLabel.text = model.createhourtime ?? ""
@@ -363,20 +350,7 @@ extension SearchDondDefaultViewController: HGSegmentedPageViewControllerDelegate
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
-                var dict: [String: String]
-                let type = model.type ?? ""
-                if type == "1" {
-                    dict = ["firmname": model.name ?? "",
-                            "entityId": model.eid ?? "",
-                            "isPerson": "0"]
-                }else {
-                    dict = ["personName": model.name ?? "",
-                            "personNumber": model.eid ?? "",
-                            "isPerson": "1"]
-                }
-                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-                self.pushWebPage(from: webUrl)
+                ToastViewConfig.showToast(message: "暂未开发")
             }
             listView.nameLabel.text = model.name ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
