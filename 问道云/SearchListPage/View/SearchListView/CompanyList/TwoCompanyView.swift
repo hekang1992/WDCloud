@@ -32,7 +32,7 @@ class TwoCompanyView: BaseView {
         let whiteView = UIView()
         return whiteView
     }()
-
+    
     lazy var numLabel: UILabel = {
         let numLabel = UILabel()
         numLabel.font = .mediumFontOfSize(size: 12)
@@ -141,6 +141,11 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             cell?.peopleBlock = { [weak self] model in
                 self?.peopleBlock?(model)
             }
+            cell?.focusBlock = { [weak self] model in
+                if let cell = cell {
+                    self?.focusInfo(from: model, cell: cell)
+                }
+            }
             return cell ?? UITableViewCell()
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
@@ -159,6 +164,11 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             }
             cell?.peopleBlock = { [weak self] model in
                 self?.peopleBlock?(model)
+            }
+            cell?.focusBlock = { [weak self] model in
+                if let cell = cell {
+                    self?.focusInfo(from: model, cell: cell)
+                }
             }
             return cell ?? UITableViewCell()
         }
@@ -192,7 +202,7 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             make.height.equalTo(25)
             make.right.equalToSuperview().offset(-10)
         }
-    
+        
         return headView
     }
     
@@ -206,4 +216,79 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-
+extension TwoCompanyView {
+    
+    private func focusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        if let specificCell = cell as? TwoCompanyNormalListCell {
+            let followStatus = model.followStatus ?? ""
+            if followStatus == "1" {
+                addFocusInfo(from: model, cell: cell)
+            }else {
+                deleteFocusInfo(from: model, cell: cell)
+            }
+        } else if let otherCell = cell as? TwoCompanySpecListCell {
+            let followStatus = model.followStatus ?? ""
+            if followStatus == "1" {
+                addFocusInfo(from: model, cell: cell)
+            }else {
+                deleteFocusInfo(from: model, cell: cell)
+            }
+        }
+    }
+    
+    private func addFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        let dict = ["entityId": model.firmInfo?.entityId ?? "",
+                    "followTargetType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/save",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.followStatus = "2"
+                    if let specificCell = cell as? TwoCompanyNormalListCell {
+                        specificCell.focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+                    }else if let otherCell = cell as? TwoCompanySpecListCell {
+                        otherCell.focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+                    }
+                    ToastViewConfig.showToast(message: "关注成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    private func deleteFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        var dataIds = [model.firmInfo?.entityId ?? ""]
+        let dict = ["ids": dataIds,
+                    "followTargetType": "1"] as [String : Any]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/batchCancel",
+                       method: .post) { result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.followStatus = "1"
+                    if let specificCell = cell as? TwoCompanyNormalListCell {
+                        specificCell.focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+                    }else if let otherCell = cell as? TwoCompanySpecListCell {
+                        otherCell.focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+                    }
+                    ToastViewConfig.showToast(message: "取消关注成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+}

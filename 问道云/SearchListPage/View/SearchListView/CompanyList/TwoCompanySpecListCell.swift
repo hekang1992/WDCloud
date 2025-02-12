@@ -25,6 +25,8 @@ class TwoCompanySpecListCell: BaseViewCell {
     //是否点击了展开是收起
     var companyModel = CompanyModel(isOpenTag: false)
     
+    var focusBlock: ((pageDataModel) -> Void)?
+    
     var tagArray: [String] = []
     
     lazy var bgView: UIView = {
@@ -130,6 +132,13 @@ class TwoCompanySpecListCell: BaseViewCell {
         return phoneimageView
     }()
     
+    lazy var focusBtn: UIButton = {
+        let focusBtn = UIButton(type: .custom)
+        focusBtn.adjustsImageWhenHighlighted = false
+        focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+        return focusBtn
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(bgView)
@@ -147,7 +156,7 @@ class TwoCompanySpecListCell: BaseViewCell {
         contentView.addSubview(addressimageView)
         contentView.addSubview(websiteimageView)
         contentView.addSubview(phoneimageView)
-        
+        contentView.addSubview(focusBtn)
         ctImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(11)
             make.left.equalToSuperview().offset(10)
@@ -240,7 +249,11 @@ class TwoCompanySpecListCell: BaseViewCell {
             make.size.equalTo(CGSize(width: 47, height: 21))
             make.right.equalTo(websiteimageView.snp.left).offset(-8)
         }
-        
+        focusBtn.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-15.5)
+            make.top.equalToSuperview().offset(13)
+            make.height.equalTo(14)
+        }
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             self.ctImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(model.firmInfo?.entityName ?? "", size: (32, 32), bgColor: .random(), textColor: .white))
@@ -262,6 +275,12 @@ class TwoCompanySpecListCell: BaseViewCell {
             self.tagArray = model.labels?.compactMap { $0.name ?? "" } ?? []
             setupScrollView(tagScrollView: tagListView, tagArray: tagArray)
             
+            let followStatus = model.followStatus ?? ""
+            if followStatus == "1" {
+                focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+            }else {
+                focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+            }
         }).disposed(by: disposeBag)
         
         //地址点击
@@ -304,7 +323,10 @@ class TwoCompanySpecListCell: BaseViewCell {
             }
         }).disposed(by: disposeBag)
         
-        
+        focusBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = self.model.value else { return }
+            self.focusBlock?(model)
+        }).disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
@@ -527,7 +549,7 @@ extension TwoCompanySpecListCell {
                 }
                 lastRight += openButtonWidth + buttonSpacing
             } else {
-                let lab = UILabel()
+                let lab = PaddedLabel()
                 lab.font = .regularFontOfSize(size: 11)
                 lab.textColor = UIColor(cssStr: "#ECF2FF")
                 lab.backgroundColor = UIColor(cssStr: "#93B2F5")

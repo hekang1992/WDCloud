@@ -97,6 +97,8 @@ class DataModel {
     var assetInfo: assetInfoModel?
     //标签
     var promptLabels: [promptLabelsModel]?
+    //是否被关注
+    var followInfo: followInfoModel?
 /**
  个人详情数据模型
  */
@@ -117,6 +119,7 @@ class DataModel {
     var rimRisk: [rimRiskModel]?
     var recentNews: Int?
     init(json: JSON) {
+        self.followInfo = followInfoModel(json: json["followInfo"])
         self.rimRisk = json["rimRisk"].arrayValue.map { rimRiskModel(json: $0) }
         self.sumTotal = json["sumTotal"].intValue
         self.recentNews = json["recentNews"].intValue
@@ -187,6 +190,15 @@ class DataModel {
         self.shareholderCompany = json["shareholderCompany"].intValue
         self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
         self.data = json["data"].arrayValue.map { rowsModel(json: $0) }
+    }
+}
+
+class followInfoModel {
+    var followStatus: Int?//1 未关注；2 已关注；3 已取关
+    var followId: String?
+    init(json: JSON) {
+        self.followStatus = json["followStatus"].intValue
+        self.followId = json["followId"].stringValue
     }
 }
 
@@ -381,10 +393,12 @@ class listCompanyModel {
     var count: Int?
     var entityName: String?
     var province: String?
+    var percent: Double?
     init(json: JSON) {
         self.entityName = json["entityName"].stringValue
         self.province = json["province"].stringValue
         self.count = json["count"].intValue
+        self.percent = json["percent"].doubleValue
     }
 }
 
@@ -527,7 +541,21 @@ class rowsModel {
     var entityStatus: String?
     var firmnumber: String?
     var items: [itemsModel]?
+    var legalName: String?
+    var registerCapital: String?
+    var incorporationTime: String?
+    var relatedEntity: [relatedEntityModel]?
+    var tags: [newstagsobjModel]?
     init(json: JSON) {
+        self.tags = json["tags"].arrayValue.map {
+            newstagsobjModel(json: $0)
+        }
+        self.relatedEntity = json["relatedEntity"].arrayValue.map {
+            relatedEntityModel(json: $0)
+        }
+        self.incorporationTime = json["incorporationTime"].stringValue
+        self.registerCapital = json["registerCapital"].stringValue
+        self.legalName = json["legalName"].stringValue
         self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
         self.personname = json["personname"].stringValue
         self.firmnumber = json["firmnumber"].stringValue
@@ -620,6 +648,17 @@ class newstagsobjModel {
     }
 }
 
+class relatedEntityModel {
+    var entityId: String?
+    var entityName: String?
+    var percent: Double?
+    init(json: JSON) {
+        self.entityId = json["entityId"].stringValue
+        self.entityName = json["entityName"].stringValue
+        self.percent = json["percent"].doubleValue
+    }
+}
+
 class customerFollowListModel {
     var followtargetname: String?
     var createTime: String?
@@ -662,7 +701,9 @@ class pageDataModel {
     var riskInfo: riskInfoModel?
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
     var labels: [labelsModel]?
+    var followStatus: String?//是否被关注
     init(json: JSON) {
+        self.followStatus = json["followStatus"].stringValue
         self.searchStr = json["searchStr"].stringValue
         self.firmInfo = firmInfoModel(json: json["firmInfo"])
         self.legalPerson = legalPersonModel(json: json["legalPerson"])

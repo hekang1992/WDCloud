@@ -203,7 +203,7 @@ extension UIImage {
         
         let attr = [
             NSAttributedString.Key.foregroundColor : textColor,
-            NSAttributedString.Key.font : UIFont.boldFontOfSize(size: minSide * 0.5),
+            NSAttributedString.Key.font : UIFont.boldFontOfSize(size: minSide * 0.52),
             NSAttributedString.Key.paragraphStyle: style,
             NSAttributedString.Key.kern: 0
         ] as [NSAttributedString.Key : Any]
@@ -447,6 +447,23 @@ class PhoneNumberFormatter {
             return start + masked + end
         }
         return phoneNumber
+    }
+}
+
+class PercentageConfig {
+    static func formatToPercentage(value: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent // 设置为百分比样式
+        // 检查小数部分是否为 0
+        if value.truncatingRemainder(dividingBy: 1) == 0 {
+            formatter.minimumFractionDigits = 0 // 如果是整数，不显示小数部分
+            formatter.maximumFractionDigits = 0
+        } else {
+            formatter.minimumFractionDigits = 1 // 否则显示 1 位小数
+            formatter.maximumFractionDigits = 1
+        }
+        
+        return formatter.string(from: NSNumber(value: value)) ?? "\(value * 100)%"
     }
 }
 
@@ -748,7 +765,7 @@ class GetPhoneNumberManager {
 }
 
 class PaddedLabel: UILabel {
-    var padding = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
+    var padding = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
     
     override func drawText(in rect: CGRect) {
         let paddedRect = rect.inset(by: padding)

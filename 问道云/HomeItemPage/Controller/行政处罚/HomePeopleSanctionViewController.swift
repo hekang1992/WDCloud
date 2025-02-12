@@ -1,5 +1,5 @@
 //
-//  HomeCompanySanctionViewController.swift
+//  HomePeopleSanctionViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/2/10.
@@ -10,7 +10,7 @@ import RxRelay
 import MJRefresh
 import DropMenuBar
 
-class HomeCompanySanctionViewController: WDBaseViewController {
+class HomePeopleSanctionViewController: WDBaseViewController {
     
     var entityArea: String = ""//公司时候的地区
     var entityIndustry: String = ""//公司时候的行业
@@ -24,7 +24,7 @@ class HomeCompanySanctionViewController: WDBaseViewController {
     var keyWords = BehaviorRelay<String>(value: "")
     var pageNum: Int = 1
     var pageSize: Int = 20
-    var type: String = "2"
+    var type: String = "1"
     var model: DataModel?
     var allArray: [itemsModel] = []
     var block: ((DataModel) -> Void)?
@@ -53,6 +53,7 @@ class HomeCompanySanctionViewController: WDBaseViewController {
         self.keyWords.asObservable().subscribe(onNext: { [weak self] keyWords in
             guard let self = self else { return }
             if !keyWords.isEmpty {
+                pageNum = 1
                 getSanctionInfo()
             }else {
                 self.allArray.removeAll()
@@ -76,7 +77,7 @@ class HomeCompanySanctionViewController: WDBaseViewController {
     
 }
 
-extension HomeCompanySanctionViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomePeopleSanctionViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25
@@ -120,15 +121,15 @@ extension HomeCompanySanctionViewController: UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
         let pageUrl = "\(base_url)/litigation-risk/administrative-penalty"
-        let dict = ["firmname": model.entityName ?? "",
-                    "entityId": model.entityId ?? ""]
+        let dict = ["personName": model.entityName ?? "",
+                    "personNumber": model.entityId ?? ""]
         let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
         self.pushWebPage(from: webUrl)
     }
     
 }
 
-extension HomeCompanySanctionViewController {
+extension HomePeopleSanctionViewController {
     
     private func addMenuWithCompanyView() {
         //添加下拉筛选
@@ -170,7 +171,7 @@ extension HomeCompanySanctionViewController {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.top.equalTo(menuView.snp.bottom)
-            make.left.right.bottom.equalToSuperview()   
+            make.left.right.bottom.equalToSuperview()
         }
         
     }

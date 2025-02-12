@@ -229,6 +229,16 @@
 		73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046D2D1172B90061D5D3 /* TwoTicketViewController.swift */; };
 		73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */; };
 		73FC5E372D5B2AED001D0DEF /* SanctionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */; };
+		73FC5E3C2D5C3403001D0DEF /* SearchShareholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E3B2D5C3403001D0DEF /* SearchShareholderViewController.swift */; };
+		73FC5E3E2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E3D2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift */; };
+		73FC5E402D5C342F001D0DEF /* SearchPeopleShareholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E3F2D5C342F001D0DEF /* SearchPeopleShareholderViewController.swift */; };
+		73FC5E422D5C3C07001D0DEF /* SearchPeopleShareholderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E412D5C3C07001D0DEF /* SearchPeopleShareholderCell.swift */; };
+		73FC5E442D5C3C25001D0DEF /* SearchCompanyShareholderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E432D5C3C25001D0DEF /* SearchCompanyShareholderCell.swift */; };
+		73FC5E4C2D5C7881001D0DEF /* SearchDeadbeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E4B2D5C7881001D0DEF /* SearchDeadbeatViewController.swift */; };
+		73FC5E4E2D5C78E2001D0DEF /* SearchCompanyDeadbeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E4D2D5C78E2001D0DEF /* SearchCompanyDeadbeatViewController.swift */; };
+		73FC5E502D5C78EF001D0DEF /* SearchPeopleDeadbeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E4F2D5C78EF001D0DEF /* SearchPeopleDeadbeatViewController.swift */; };
+		73FC5E522D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E512D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift */; };
+		73FC5E542D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E532D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -481,6 +491,16 @@
 		73F6046D2D1172B90061D5D3 /* TwoTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoTicketViewController.swift; sourceTree = "<group>"; };
 		73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTicketView.swift; sourceTree = "<group>"; };
 		73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanctionTableViewCell.swift; sourceTree = "<group>"; };
+		73FC5E3B2D5C3403001D0DEF /* SearchShareholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShareholderViewController.swift; sourceTree = "<group>"; };
+		73FC5E3D2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyShareholderViewController.swift; sourceTree = "<group>"; };
+		73FC5E3F2D5C342F001D0DEF /* SearchPeopleShareholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleShareholderViewController.swift; sourceTree = "<group>"; };
+		73FC5E412D5C3C07001D0DEF /* SearchPeopleShareholderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleShareholderCell.swift; sourceTree = "<group>"; };
+		73FC5E432D5C3C25001D0DEF /* SearchCompanyShareholderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyShareholderCell.swift; sourceTree = "<group>"; };
+		73FC5E4B2D5C7881001D0DEF /* SearchDeadbeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDeadbeatViewController.swift; sourceTree = "<group>"; };
+		73FC5E4D2D5C78E2001D0DEF /* SearchCompanyDeadbeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyDeadbeatViewController.swift; sourceTree = "<group>"; };
+		73FC5E4F2D5C78EF001D0DEF /* SearchPeopleDeadbeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleDeadbeatViewController.swift; sourceTree = "<group>"; };
+		73FC5E512D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleDeadbeatCell.swift; sourceTree = "<group>"; };
+		73FC5E532D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyDeadbeatCell.swift; sourceTree = "<group>"; };
 		845B2366B1013718573E8C55 /* Pods-问道云.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.debug.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.debug.xcconfig"; sourceTree = "<group>"; };
 		BF2EE8A0497D8E69CF0E16AE /* Pods-问道云.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-问道云.release.xcconfig"; path = "Target Support Files/Pods-问道云/Pods-问道云.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -512,13 +532,6 @@
 				7325A7BF2CFEEE5F0043C196 /* WDHomeViewController.swift */,
 				730487FC2D2A5C7D0024265C /* HomeNewsListViewController.swift */,
 				730487FE2D2A5CBE0024265C /* HomeVideoListViewController.swift */,
-				73EDE9DE2D599F8400A0A7E3 /* NoticeAllViewController.swift */,
-				73EDE9E52D59D0CB00A0A7E3 /* HomeLawsViewController.swift */,
-				73EDE9EB2D59E6D500A0A7E3 /* HomeSanctionViewController.swift */,
-				73EDE9ED2D59E81F00A0A7E3 /* HomeCompanySanctionViewController.swift */,
-				73EDE9EF2D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift */,
-				73EDE9F32D59F82200A0A7E3 /* HomeOneReportViewController.swift */,
-				73EDE9F12D59F0A900A0A7E3 /* OneReportViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -527,7 +540,6 @@
 			isa = PBXGroup;
 			children = (
 				73C36A6E2D2D04D800D6DC46 /* HomeView */,
-				73EDE9E22D59C28F00A0A7E3 /* HomeItemView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -573,6 +585,7 @@
 				73CFEB902D0056DD00B2FE1B /* WebPage */,
 				7325A7C92CFEF1F20043C196 /* LoginVc */,
 				7325A7A82CFEE6C30043C196 /* HomePage */,
+				73FC5E382D5C32CE001D0DEF /* HomeItemPage */,
 				7325A7AB2CFEE6E20043C196 /* RiskPage */,
 				7325A7AA2CFEE6DF0043C196 /* DiligencePage */,
 				7325A7A92CFEE6C70043C196 /* CenterPage */,
@@ -1116,17 +1129,6 @@
 			path = RiskList;
 			sourceTree = "<group>";
 		};
-		73EDE9E22D59C28F00A0A7E3 /* HomeItemView */ = {
-			isa = PBXGroup;
-			children = (
-				73EDE9E32D59C2B500A0A7E3 /* HomeNoticeListCell.swift */,
-				73EDE9E72D59DD8900A0A7E3 /* HomeLawsViewCell.swift */,
-				73EDE9F52D59F9AA00A0A7E3 /* HomeOneReportCell.swift */,
-				73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */,
-			);
-			path = HomeItemView;
-			sourceTree = "<group>";
-		};
 		73EF03CC2D30F4D50070F850 /* CompanyList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1148,6 +1150,146 @@
 				73EF03DA2D31339A0070F850 /* TwoPeopleCoopViewCell.swift */,
 			);
 			path = PeopleList;
+			sourceTree = "<group>";
+		};
+		73FC5E382D5C32CE001D0DEF /* HomeItemPage */ = {
+			isa = PBXGroup;
+			children = (
+				73FC5E3A2D5C32EE001D0DEF /* View */,
+				73FC5E392D5C32E6001D0DEF /* Controller */,
+			);
+			path = HomeItemPage;
+			sourceTree = "<group>";
+		};
+		73FC5E392D5C32E6001D0DEF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				73FC5E482D5C3C70001D0DEF /* 一键报告 */,
+				73FC5E452D5C3C44001D0DEF /* 公告大全 */,
+				73FC5E462D5C3C53001D0DEF /* 法律法规 */,
+				73FC5E472D5C3C66001D0DEF /* 行政处罚 */,
+				73FC5E492D5C3C80001D0DEF /* 查股东 */,
+				73FC5E4A2D5C784E001D0DEF /* 查老赖 */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		73FC5E3A2D5C32EE001D0DEF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				73FC5E5A2D5C811F001D0DEF /* 查老赖View */,
+				73FC5E592D5C8111001D0DEF /* 查股东View */,
+				73FC5E582D5C80EC001D0DEF /* 行政处罚View */,
+				73FC5E572D5C80E1001D0DEF /* 一键报告View */,
+				73FC5E562D5C80D5001D0DEF /* 法律法规View */,
+				73FC5E552D5C80B4001D0DEF /* 公告大全View */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		73FC5E452D5C3C44001D0DEF /* 公告大全 */ = {
+			isa = PBXGroup;
+			children = (
+				73EDE9DE2D599F8400A0A7E3 /* NoticeAllViewController.swift */,
+			);
+			path = "公告大全";
+			sourceTree = "<group>";
+		};
+		73FC5E462D5C3C53001D0DEF /* 法律法规 */ = {
+			isa = PBXGroup;
+			children = (
+				73EDE9E52D59D0CB00A0A7E3 /* HomeLawsViewController.swift */,
+			);
+			path = "法律法规";
+			sourceTree = "<group>";
+		};
+		73FC5E472D5C3C66001D0DEF /* 行政处罚 */ = {
+			isa = PBXGroup;
+			children = (
+				73EDE9EB2D59E6D500A0A7E3 /* HomeSanctionViewController.swift */,
+				73EDE9ED2D59E81F00A0A7E3 /* HomeCompanySanctionViewController.swift */,
+				73EDE9EF2D59E82C00A0A7E3 /* HomePeopleSanctionViewController.swift */,
+			);
+			path = "行政处罚";
+			sourceTree = "<group>";
+		};
+		73FC5E482D5C3C70001D0DEF /* 一键报告 */ = {
+			isa = PBXGroup;
+			children = (
+				73EDE9F32D59F82200A0A7E3 /* HomeOneReportViewController.swift */,
+				73EDE9F12D59F0A900A0A7E3 /* OneReportViewController.swift */,
+			);
+			path = "一键报告";
+			sourceTree = "<group>";
+		};
+		73FC5E492D5C3C80001D0DEF /* 查股东 */ = {
+			isa = PBXGroup;
+			children = (
+				73FC5E3B2D5C3403001D0DEF /* SearchShareholderViewController.swift */,
+				73FC5E3F2D5C342F001D0DEF /* SearchPeopleShareholderViewController.swift */,
+				73FC5E3D2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift */,
+			);
+			path = "查股东";
+			sourceTree = "<group>";
+		};
+		73FC5E4A2D5C784E001D0DEF /* 查老赖 */ = {
+			isa = PBXGroup;
+			children = (
+				73FC5E4B2D5C7881001D0DEF /* SearchDeadbeatViewController.swift */,
+				73FC5E4F2D5C78EF001D0DEF /* SearchPeopleDeadbeatViewController.swift */,
+				73FC5E4D2D5C78E2001D0DEF /* SearchCompanyDeadbeatViewController.swift */,
+			);
+			path = "查老赖";
+			sourceTree = "<group>";
+		};
+		73FC5E552D5C80B4001D0DEF /* 公告大全View */ = {
+			isa = PBXGroup;
+			children = (
+				73EDE9E32D59C2B500A0A7E3 /* HomeNoticeListCell.swift */,
+			);
+			path = "公告大全View";
+			sourceTree = "<group>";
+		};
+		73FC5E562D5C80D5001D0DEF /* 法律法规View */ = {
+			isa = PBXGroup;
+			children = (
+				73EDE9E72D59DD8900A0A7E3 /* HomeLawsViewCell.swift */,
+			);
+			path = "法律法规View";
+			sourceTree = "<group>";
+		};
+		73FC5E572D5C80E1001D0DEF /* 一键报告View */ = {
+			isa = PBXGroup;
+			children = (
+				73EDE9F52D59F9AA00A0A7E3 /* HomeOneReportCell.swift */,
+			);
+			path = "一键报告View";
+			sourceTree = "<group>";
+		};
+		73FC5E582D5C80EC001D0DEF /* 行政处罚View */ = {
+			isa = PBXGroup;
+			children = (
+				73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */,
+			);
+			path = "行政处罚View";
+			sourceTree = "<group>";
+		};
+		73FC5E592D5C8111001D0DEF /* 查股东View */ = {
+			isa = PBXGroup;
+			children = (
+				73FC5E432D5C3C25001D0DEF /* SearchCompanyShareholderCell.swift */,
+				73FC5E412D5C3C07001D0DEF /* SearchPeopleShareholderCell.swift */,
+			);
+			path = "查股东View";
+			sourceTree = "<group>";
+		};
+		73FC5E5A2D5C811F001D0DEF /* 查老赖View */ = {
+			isa = PBXGroup;
+			children = (
+				73FC5E512D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift */,
+				73FC5E532D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift */,
+			);
+			path = "查老赖View";
 			sourceTree = "<group>";
 		};
 		C61455D1CEA19ADD364A1DEF /* Frameworks */ = {
@@ -1304,6 +1446,7 @@
 				73B3624D2D37A665003BD911 /* PeopleActivityViewController.swift in Sources */,
 				7325A7E62D0000040043C196 /* GetCodeViewController.swift in Sources */,
 				733B5FFC2D573CAA00ADE7C5 /* RiskNoLoginView.swift in Sources */,
+				73FC5E442D5C3C25001D0DEF /* SearchCompanyShareholderCell.swift in Sources */,
 				730488132D2BD2090024265C /* HomeBannerViewCell.swift in Sources */,
 				730CEDFE2D546080002DE9DF /* CompanyLawDetailCell.swift in Sources */,
 				739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */,
@@ -1331,6 +1474,7 @@
 				7304880F2D2A97E00024265C /* HomeNewsListViewCell.swift in Sources */,
 				7352B2242D353AB700B5391B /* CompanyThreeHeadView.swift in Sources */,
 				73B362512D37A7FB003BD911 /* PeopleDetailView.swift in Sources */,
+				73FC5E3E2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift in Sources */,
 				734056AB2D38FE53009C9C96 /* DetailRiskItemView.swift in Sources */,
 				73EABF962D321B7E0052F4AB /* TwoRiskListCompanyCell.swift in Sources */,
 				7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */,
@@ -1363,12 +1507,15 @@
 				736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */,
 				736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */,
 				73EF03CF2D30F84B0070F850 /* TwoPeopleListView.swift in Sources */,
+				73FC5E522D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift in Sources */,
 				734896E42D3A094800B028FE /* PeopleRiskDetailViewController.swift in Sources */,
+				73FC5E422D5C3C07001D0DEF /* SearchPeopleShareholderCell.swift in Sources */,
 				73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
 				737416482D0FD94B00E6CD23 /* AddInvoiceViewCell.swift in Sources */,
 				73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */,
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
+				73FC5E502D5C78EF001D0DEF /* SearchPeopleDeadbeatViewController.swift in Sources */,
 				730487F52D2932640024265C /* BindPhoneView.swift in Sources */,
 				73C752582D1E728500C47187 /* HistoryListViewCell.swift in Sources */,
 				73807D502D3369D100F8B90D /* CompanyDetailViewController.swift in Sources */,
@@ -1411,6 +1558,7 @@
 				73807D472D32C8B200F8B90D /* LaunchViewController.swift in Sources */,
 				73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */,
 				734896DA2D39F1AC00B028FE /* MySelfRiskDetailViewController.swift in Sources */,
+				73FC5E542D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift in Sources */,
 				739D90BC2D26A72100D9421B /* GroupListViewController.swift in Sources */,
 				7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */,
 				73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */,
@@ -1418,6 +1566,7 @@
 				730488092D2A7ACD0024265C /* HomeHeadHotsView.swift in Sources */,
 				7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */,
 				7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */,
+				73FC5E402D5C342F001D0DEF /* SearchPeopleShareholderViewController.swift in Sources */,
 				730488012D2A64410024265C /* WDRefreshHeader.swift in Sources */,
 				7352B22A2D353F2200B5391B /* CompanySixHeadView.swift in Sources */,
 				73EDE9EC2D59E6D500A0A7E3 /* HomeSanctionViewController.swift in Sources */,
@@ -1433,6 +1582,7 @@
 				7352B2262D353C9300B5391B /* CompanyFourHeadView.swift in Sources */,
 				7352B2362D366BE400B5391B /* CompanyDetailCommonServiceCell.swift in Sources */,
 				73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */,
+				73FC5E4C2D5C7881001D0DEF /* SearchDeadbeatViewController.swift in Sources */,
 				73B362412D377C28003BD911 /* PopEmployeeNumView.swift in Sources */,
 				73E971792D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift in Sources */,
 				73EDE9E42D59C2B500A0A7E3 /* HomeNoticeListCell.swift in Sources */,
@@ -1466,6 +1616,7 @@
 				73868A412D55F53700CE107D /* DailyReportViewController.swift in Sources */,
 				730CEDF52D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift in Sources */,
 				73C36A6C2D2D024C00D6DC46 /* SearchAllViewController.swift in Sources */,
+				73FC5E3C2D5C3403001D0DEF /* SearchShareholderViewController.swift in Sources */,
 				73868A472D55F56600CE107D /* BothReportViewController.swift in Sources */,
 				7330CB822D23E65900778D54 /* ContactManager.swift in Sources */,
 				73B3329A2D30CF5100934773 /* CompanyLocationViewController.swift in Sources */,
@@ -1487,6 +1638,7 @@
 				7352B2222D35321C00B5391B /* CompanyTwoHeadView.swift in Sources */,
 				734896E02D39F30C00B028FE /* RiskDetailHeadView.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
+				73FC5E4E2D5C78E2001D0DEF /* SearchCompanyDeadbeatViewController.swift in Sources */,
 				73EABF9A2D323C460052F4AB /* RiskListPeopleView.swift in Sources */,
 				73C6B1A72D34EC8900CD3816 /* CompanyDetailHeadView.swift in Sources */,
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  HomePeopleSanctionViewController.swift
+//  HomeCompanySanctionViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/2/10.
@@ -10,7 +10,7 @@ import RxRelay
 import MJRefresh
 import DropMenuBar
 
-class HomePeopleSanctionViewController: WDBaseViewController {
+class HomeCompanySanctionViewController: WDBaseViewController {
     
     var entityArea: String = ""//公司时候的地区
     var entityIndustry: String = ""//公司时候的行业
@@ -24,7 +24,7 @@ class HomePeopleSanctionViewController: WDBaseViewController {
     var keyWords = BehaviorRelay<String>(value: "")
     var pageNum: Int = 1
     var pageSize: Int = 20
-    var type: String = "1"
+    var type: String = "2"
     var model: DataModel?
     var allArray: [itemsModel] = []
     var block: ((DataModel) -> Void)?
@@ -53,6 +53,7 @@ class HomePeopleSanctionViewController: WDBaseViewController {
         self.keyWords.asObservable().subscribe(onNext: { [weak self] keyWords in
             guard let self = self else { return }
             if !keyWords.isEmpty {
+                pageNum = 1
                 getSanctionInfo()
             }else {
                 self.allArray.removeAll()
@@ -70,13 +71,13 @@ class HomePeopleSanctionViewController: WDBaseViewController {
             guard let self = self else { return }
             getSanctionInfo()
         })
-        getSanctionInfo()
+        
         addMenuWithCompanyView()
     }
     
 }
 
-extension HomePeopleSanctionViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomeCompanySanctionViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25
@@ -128,7 +129,7 @@ extension HomePeopleSanctionViewController: UITableViewDelegate, UITableViewData
     
 }
 
-extension HomePeopleSanctionViewController {
+extension HomeCompanySanctionViewController {
     
     private func addMenuWithCompanyView() {
         //添加下拉筛选
@@ -170,7 +171,7 @@ extension HomePeopleSanctionViewController {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.top.equalTo(menuView.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
+            make.left.right.bottom.equalToSuperview()   
         }
         
     }

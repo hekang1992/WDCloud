@@ -46,7 +46,7 @@ class CompanyDerailFooterView: BaseView {
         let backBtn3 = UIButton(type: .custom)
         backBtn3.setTitle("关注", for: .normal)
         backBtn3.setImage(UIImage(named: "添加关注"), for: .normal)
-        backBtn3.titleLabel?.font = .mediumFontOfSize(size: 14)
+        backBtn3.titleLabel?.font = .mediumFontOfSize(size: 15)
         backBtn3.setTitleColor(UIColor.init(cssStr: "#FFFFFF"), for: .normal)
         backBtn3.backgroundColor = UIColor.init(cssStr: "#3F96FF")
         backBtn3.layer.cornerRadius = 4

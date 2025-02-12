@@ -1,57 +1,46 @@
 //
-//  TwoCompanyNormalListCell.swift
+//  SearchCompanyShareholderCell.swift
 //  问道云
 //
-//  Created by 何康 on 2025/1/10.
-//  不带风险扫描的cell
+//  Created by 何康 on 2025/2/12.
+//
 
 import UIKit
 import RxRelay
-import TagListView
 
-class TwoCompanyNormalListCell: BaseViewCell {
-    
-    //地址回调
-    var addressBlock: ((pageDataModel) -> Void)?
-    //官网回调
-    var websiteBlock: ((pageDataModel) -> Void)?
-    //电话回调
-    var phoneBlock: ((pageDataModel) -> Void)?
-    //人物点击
-    var peopleBlock: ((pageDataModel) -> Void)?
-
-    var model = BehaviorRelay<pageDataModel?>(value: nil)
+class SearchCompanyShareholderCell: BaseViewCell {
     
     //是否点击了展开是收起
     var companyModel = CompanyModel(isOpenTag: false)
     
-    var focusBlock: ((pageDataModel) -> Void)?
-    
     var tagArray: [String] = []
     
-    lazy var bgView: UIView = {
-        let bgView = UIView()
-        bgView.backgroundColor = .white
-        return bgView
-    }()
-    
+    var model = BehaviorRelay<rowsModel?>(value: nil)
+
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
-        ctImageView.layer.cornerRadius = 3
         return ctImageView
     }()
-    
+
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.font = .mediumFontOfSize(size: 14)
-        nameLabel.textColor = .init(cssStr: "#333333")
+        nameLabel.textColor = UIColor.init(cssStr: "#333333")
         nameLabel.textAlignment = .left
+        nameLabel.font = .mediumFontOfSize(size: 15)
         return nameLabel
     }()
     
+    //标签
     lazy var tagListView: UIScrollView = {
         let tagListView = UIScrollView()
         return tagListView
+    }()
+    
+    lazy var grayView: UIView = {
+        let grayView = UIView()
+        grayView.layer.cornerRadius = 3
+        grayView.backgroundColor = .init(cssStr: "#F8F8F8")
+        return grayView
     }()
     
     lazy var nameView: BiaoQianView = {
@@ -72,12 +61,6 @@ class TwoCompanyNormalListCell: BaseViewCell {
         let timeView = BiaoQianView(frame: .zero, enmu: .hide)
         timeView.label1.text = "成立时间"
         return timeView
-    }()
-    
-    lazy var lineView: UIView = {
-        let lineView = UIView()
-        lineView.backgroundColor = .init(cssStr: "#EBEBEB")
-        return lineView
     }()
     
     lazy var addressimageView: UIImageView = {
@@ -111,24 +94,74 @@ class TwoCompanyNormalListCell: BaseViewCell {
         return focusBtn
     }()
     
+    lazy var lineView: UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = .init(cssStr: "#EBEBEB")
+        return lineView
+    }()
+    
+    lazy var numLabel: UILabel = {
+        let numLabel = UILabel()
+        numLabel.textColor = .init(cssStr: "#999999")
+        numLabel.font = .regularFontOfSize(size: 13)
+        numLabel.textAlignment = .left
+        return numLabel
+    }()
+    
+    lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.backgroundColor = .clear
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.spacing = 4
+        stackView.distribution = .fillProportionally
+        return stackView
+    }()
+    
+    lazy var websiteLabel: UILabel = {
+        let websiteLabel = UILabel()
+        websiteLabel.textColor = .init(cssStr: "#999999")
+        websiteLabel.font = .regularFontOfSize(size: 13)
+        websiteLabel.textAlignment = .left
+        return websiteLabel
+    }()
+    
+    lazy var footerView: UIView = {
+        let footerView = UIView()
+        footerView.backgroundColor = .init(cssStr: "#F8F9FB")
+        return footerView
+    }()
+    
+    lazy var tImageView: UIImageView = {
+        let tImageView = UIImageView()
+        tImageView.image = UIImage(named: "xiangqingyembtmimage")
+        return tImageView
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(bgView)
         contentView.addSubview(ctImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(tagListView)
-        contentView.addSubview(nameView)
-        contentView.addSubview(moneyView)
-        contentView.addSubview(timeView)
+        contentView.addSubview(grayView)
+        grayView.addSubview(nameView)
+        grayView.addSubview(moneyView)
+        grayView.addSubview(timeView)
+        contentView.addSubview(numLabel)
+        contentView.addSubview(stackView)
+        
         contentView.addSubview(lineView)
         contentView.addSubview(addressimageView)
         contentView.addSubview(websiteimageView)
         contentView.addSubview(phoneimageView)
         contentView.addSubview(focusBtn)
+        contentView.addSubview(websiteLabel)
+        contentView.addSubview(footerView)
+        contentView.addSubview(tImageView)
         ctImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(11)
-            make.left.equalToSuperview().offset(10)
-            make.size.equalTo(CGSize(width: 32, height: 32))
+            make.top.equalToSuperview().offset(14)
+            make.left.equalToSuperview().offset(11)
+            make.size.equalTo(CGSize(width: 40, height: 40))
         }
         
         nameLabel.snp.makeConstraints { make in
@@ -143,40 +176,50 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.width.equalTo(SCREEN_WIDTH - 80)
             make.height.equalTo(15)
         }
+        grayView.snp.makeConstraints { make in
+            make.top.equalTo(tagListView.snp.bottom).offset(6)
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(12)
+            make.height.equalTo(43.5)
+        }
         
         moneyView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(120)
-            make.top.equalTo(tagListView.snp.bottom).offset(6.5)
+            make.top.equalToSuperview().offset(5.5)
             make.size.equalTo(CGSize(width: 150, height: 36))
         }
         
         nameView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalTo(moneyView.snp.left)
-            make.top.equalTo(tagListView.snp.bottom).offset(6.5)
+            make.top.equalToSuperview().offset(5.5)
             make.height.equalTo(36)
         }
         
         timeView.snp.makeConstraints { make in
             make.left.equalTo(moneyView.snp.right)
-            make.top.equalTo(tagListView.snp.bottom).offset(6.5)
+            make.top.equalToSuperview().offset(5.5)
             make.height.equalTo(36)
             make.right.equalToSuperview()
         }
         
-        bgView.snp.makeConstraints { make in
-            make.left.right.top.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-5)
+        numLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(12)
+            make.top.equalTo(grayView.snp.bottom).offset(6)
+            make.height.equalTo(18.5)
         }
-        
+        stackView.snp.makeConstraints { make in
+            make.left.equalTo(numLabel.snp.left)
+            make.width.equalTo(SCREEN_WIDTH - 43.5)
+            make.top.equalTo(numLabel.snp.bottom).offset(8)
+            make.bottom.equalToSuperview().offset(-48)
+        }
         lineView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.left.equalToSuperview()
-            make.top.equalTo(tagListView.snp.bottom).offset(49.5)
-            make.height.equalTo(0.5)
-            make.bottom.equalToSuperview().offset(-38)
+            make.top.equalTo(stackView.snp.bottom).offset(8)
+            make.height.equalTo(1)
         }
-        
         addressimageView.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(6)
             make.size.equalTo(CGSize(width: 47, height: 21))
@@ -199,87 +242,76 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.top.equalToSuperview().offset(13)
             make.height.equalTo(14)
         }
-        
+        websiteLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(phoneimageView.snp.centerY)
+            make.left.equalToSuperview().offset(12)
+            make.height.equalTo(15)
+            make.right.equalTo(phoneimageView.snp.left).offset(-5)
+        }
+        footerView.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(5)
+        }
+        tImageView.snp.makeConstraints { make in
+            make.centerY.equalTo(numLabel.snp.centerY)
+            make.size.equalTo(CGSize(width: 30, height: 15))
+            make.right.equalToSuperview().offset(-12)
+        }
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            self.ctImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(model.firmInfo?.entityName ?? "", size: (32, 32), bgColor: .random(), textColor: .white))
-           
-            self.nameLabel.attributedText = TextStyler.styledText(for: model.firmInfo?.entityName ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
-            
-            self.nameView.label2.text = model.legalPerson?.legalName ?? ""
-            self.nameView.label2.textColor = .init(cssStr: "#F55B5B")
-           
-            self.moneyView.label2.text = "\(model.firmInfo?.registerCapital ?? "--")\(model.firmInfo?.registerCapitalCurrency ?? "")"
-            self.moneyView.label2.textColor = .init(cssStr: "#333333")
-            
-            self.timeView.label2.text = model.firmInfo?.incorporationTime ?? ""
-            self.timeView.label2.textColor = .init(cssStr: "#333333")
+            let name = model.entityName ?? ""
+            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (40, 40)))
+            nameLabel.text = name
             
             //小标签
-            self.tagArray = model.labels?.compactMap { $0.name ?? "" } ?? []
+            self.tagArray = model.tags?.compactMap { $0.name ?? "" } ?? []
             setupScrollView(tagScrollView: tagListView, tagArray: tagArray)
-            let followStatus = model.followStatus ?? ""
-            if followStatus == "1" {
-                focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
-            }else {
-                focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+            
+            nameView.label2.text = model.legalName ?? ""
+            nameView.label2.textColor = .init(cssStr: "#3849F7")
+            
+            moneyView.label2.text = model.registerCapital ?? ""
+            moneyView.label2.textColor = .init(cssStr: "#333333")
+            
+            timeView.label2.text = model.incorporationTime ?? ""
+            timeView.label2.textColor = .init(cssStr: "#333333")
+            
+            websiteLabel.text = "网站名称: \(name)"
+            
+            let count = model.relatedEntity?.count ?? 0
+            if count != 0 {
+                numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(count)", fullText: "共担任\(count)家企业股东,详情如下:")
+            } else {
+                numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(count)", fullText: "共担任\(count)家企业股东,详情如下: 暂无信息")
             }
+            configure(with: model.relatedEntity ?? [])
         }).disposed(by: disposeBag)
-        
-        //地址点击
-        addressimageView.rx
-            .tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.addressBlock?(model)
-            }
-        }).disposed(by: disposeBag)
-        
-        //官网点击
-        websiteimageView.rx
-            .tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.websiteBlock?(model)
-            }
-        }).disposed(by: disposeBag)
-        
-        //电话点击
-        phoneimageView.rx
-            .tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.phoneBlock?(model)
-            }
-        }).disposed(by: disposeBag)
-        
-        nameView.rx
-            .tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.peopleBlock?(model)
-            }
-        }).disposed(by: disposeBag)
-        
-        focusBtn.rx.tap.subscribe(onNext: { [weak self] in
-            guard let self = self, let model = self.model.value else { return }
-            self.focusBlock?(model)
-        }).disposed(by: disposeBag)
-        
     }
     
-    required init?(coder: NSCoder) {
+    @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }
 
-
-extension TwoCompanyNormalListCell {
+extension SearchCompanyShareholderCell {
+    
+    func configure(with dynamiccontent: [relatedEntityModel]) {
+        // 清空之前的 labels
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        // 创建新的 labels
+        for model in dynamiccontent {
+            let label = UILabel()
+            label.textColor = .init(cssStr: "#333333")
+            label.textAlignment = .left
+            label.font = .regularFontOfSize(size: 13)
+            let name = model.entityName ?? ""
+            let persent = PercentageConfig.formatToPercentage(value: model.percent ?? 0.0)
+            label.attributedText = GetRedStrConfig.getRedStr(from: "\(persent)", fullText: "\(name) (\(persent))")
+            label.setContentHuggingPriority(.defaultLow, for: .vertical)
+            stackView.addArrangedSubview(label)
+        }
+    }
     
     func setupScrollView(tagScrollView: UIScrollView, tagArray: [String]) {
         // 清理子视图
@@ -289,10 +321,10 @@ extension TwoCompanyNormalListCell {
         
         let maxWidth = UIScreen.main.bounds.width - 80 // 标签展示最大宽度（左右各 20 的边距）
         let openButtonWidth: CGFloat = 35 // 展开按钮宽度
-        let buttonHeight: CGFloat = 15 // 标签高度
-        let buttonSpacing: CGFloat = 2 // 标签之间的间距
+        let buttonHeight: CGFloat = 16 // 标签高度
+        let buttonSpacing: CGFloat = 5 // 标签之间的间距
         var numberOfLine: CGFloat = 1 // 标签总行数
-        var lastRight: CGFloat = 0 // 标签的左边距
+        var lastRight: CGFloat = 2 // 标签的左边距
         let isOpen = companyModel.isOpenTag // 标签展开或者收起
         
         // 创建展开/收起按钮
@@ -409,9 +441,9 @@ extension TwoCompanyNormalListCell {
         tagScrollView.snp.updateConstraints { make in
             make.height.equalTo(numberOfLine * (buttonHeight + buttonSpacing))
         }
-        self.lineView.snp.updateConstraints { make in
-            make.top.equalTo(tagListView.snp.bottom).offset(60)
-        }
+//        self.lineView.snp.updateConstraints { make in
+//            make.top.equalTo(tagListView.snp.bottom).offset(60)
+//        }
         openButton.layoutButtonEdgeInsets(style: .right, space: 2)
     }
     

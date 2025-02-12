@@ -126,7 +126,6 @@ class CompanyActivityViewCell: BaseViewCell {
             make.bottom.equalTo(cycleView.snp.top)
         }
         
-        
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             nameLabel.text = model.itemName ?? ""
