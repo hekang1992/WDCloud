@@ -384,9 +384,11 @@ extension WDHomeViewController {
             let highVc = SearchHighConsumptionViewController()
             self.navigationController?.pushViewController(highVc, animated: true)
         }else if menuID == "12300" {//法院公告
-            
+            let courtVc = SearchCourtNoticeViewController()
+            self.navigationController?.pushViewController(courtVc, animated: true)
         }else if menuID == "12400" {//开庭公告
-            
+            let startVc = SearchStartCourtNoticeViewController()
+            self.navigationController?.pushViewController(startVc, animated: true)
         }else if menuID == "12500" {//司法拍卖
             
         }else if menuID == "12600" {//税收违法
