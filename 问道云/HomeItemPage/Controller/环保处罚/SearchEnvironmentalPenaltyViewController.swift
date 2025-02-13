@@ -413,14 +413,14 @@ extension SearchEnvironmentalPenaltyViewController: HGSegmentedPageViewControlle
                 let type = model.type ?? ""
                 if type == "1" {//企业
                     let pageUrl = "\(base_url)/business-risk/environmental-penalties"
-                    let dict = ["firmname": model.firmname ?? "",
-                                "entityId": model.firmnumber ?? ""]
+                    let dict = ["firmname": model.name ?? "",
+                                "entityId": model.eid ?? ""]
                     let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
                     self.pushWebPage(from: webUrl)
                 }else {//个人
                     let pageUrl = "\(base_url)/business-risk/environmental-penalties"
-                    let dict = ["personName": model.personname ?? "",
-                                "personNumber": model.personnumber ?? ""]
+                    let dict = ["personName": model.name ?? "",
+                                "personNumber": model.eid ?? ""]
                     let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
                     self.pushWebPage(from: webUrl)
                 }

@@ -385,7 +385,7 @@ extension SearchDeadbeatViewController: HGSegmentedPageViewControllerDelegate {
                 let type = model.type ?? ""
                 if type == "1" {//企业
                     let entityId = model.eid ?? ""
-                    let json: JSON = ["personId": entityId]
+                    let json: JSON = ["entityId": entityId]
                     let itemModel: itemsModel = itemsModel(json: json)
                     let detailVc = SearchCompanyDeadbeatDetailViewController()
                     detailVc.model = itemModel
