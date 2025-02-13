@@ -180,6 +180,7 @@ extension SearchCompanyLawSuitViewController: UITableViewDelegate, UITableViewDa
         model.searchStr = self.keyWords.value
         cell.model.accept(model)
         cell.selectionStyle = .none
+        cell.cImageView.isHidden = true
         return cell
     }
     
@@ -187,6 +188,8 @@ extension SearchCompanyLawSuitViewController: UITableViewDelegate, UITableViewDa
         let model = self.allArray[indexPath.row]
         let detailVc = SearchCompanyDeadbeatDetailViewController()
         detailVc.model = model
+        detailVc.nameTitle = "诉讼记录列表"
+        detailVc.pageUrl = "/riskmonitor/cooperation/getLawsuitDataDetail"
         self.navigationController?.pushViewController(detailVc, animated: true)
     }
     

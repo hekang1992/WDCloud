@@ -1,5 +1,5 @@
 //
-//  SearchPeopleDondDefaultViewController.swift
+//  SearchCompanyBeneficialOwnerViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/2/12.
@@ -8,26 +8,21 @@
 import UIKit
 import RxRelay
 import MJRefresh
-import DropMenuBar
 
-class SearchPeopleDondDefaultViewController: WDBaseViewController {
-    
-    //城市数据
-    var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
-    var entityArea: String = ""//公司时候的地区
+class SearchCompanyBeneficialOwnerViewController: WDBaseViewController {
     
     var keyWords = BehaviorRelay<String>(value: "")
     var pageNum: Int = 1
     var pageSize: Int = 20
     var model: DataModel?
-    var allArray: [itemsModel] = []
+    var allArray: [rowsModel] = []
     var numBlock: ((DataModel) -> Void)?
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .init(cssStr: "#F5F5F5")
-        tableView.register(SearchPeopleDeadbeatCell.self, forCellReuseIdentifier: "SearchPeopleDeadbeatCell")
+        tableView.register(SearchCompanyShareholderCell.self, forCellReuseIdentifier: "SearchCompanyShareholderCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
@@ -42,35 +37,23 @@ class SearchPeopleDondDefaultViewController: WDBaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
-        let regionMenu = MenuAction(title: "地区", style: .typeList)!
-        self.regionModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
-            guard let self = self else { return }
-            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
-            regionMenu.listDataSource = regionArray
-        }).disposed(by: disposeBag)
-        regionMenu.didSelectedMenuResult = { [weak self] index, model, grand in
-            guard let self = self else { return }
-            self.pageNum = 1
-            self.entityArea = model?.currentID ?? ""
-            self.getSearchPeopleInfo()
-        }
-        let menuView = DropMenuBar(action: [regionMenu])!
-        menuView.backgroundColor = .white
-        view.addSubview(menuView)
-        menuView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.left.right.equalToSuperview()
-            make.height.equalTo(32)
-        }
-        
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalToSuperview().offset(32)
+            make.edges.equalToSuperview()
         }
+
+        self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            pageNum = 1
+            getSearchCompanyInfo()
+        })
+        
+        //添加上拉加载更多
+        self.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            getSearchCompanyInfo()
+        })
+        
         self.keyWords
             .asObservable()
             .distinctUntilChanged()
@@ -78,37 +61,28 @@ class SearchPeopleDondDefaultViewController: WDBaseViewController {
             guard let self = self else { return }
             if !keyWords.isEmpty {
                 pageNum = 1
-                getSearchPeopleInfo()
+                getSearchCompanyInfo()
             }else {
                 self.allArray.removeAll()
                 self.tableView.reloadData()
             }
         }).disposed(by: disposeBag)
         
-        self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
-            guard let self = self else { return }
-            pageNum = 1
-            getSearchPeopleInfo()
-        })
-        
-        //添加上拉加载更多
-        self.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
-            guard let self = self else { return }
-            getSearchPeopleInfo()
-        })
     }
+
 }
 
-extension SearchPeopleDondDefaultViewController {
+extension SearchCompanyBeneficialOwnerViewController {
     
-    private func getSearchPeopleInfo() {
+    //搜索股东===公司
+    private func getSearchCompanyInfo() {
         ViewHud.addLoadView()
         let man = RequestManager()
-        let dict = ["keywords": self.keyWords.value,
-                    "type": "1",
-                    "entityArea": entityArea]
+        let dict = ["firmname": self.keyWords.value,
+                    "pageNum": pageNum,
+                    "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/illegalPunish/getBondDefault",
+                       pageUrl: "/firminfo/basicinformation/getactualcontroller",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.tableView.mj_header?.endRefreshing()
@@ -119,12 +93,13 @@ extension SearchPeopleDondDefaultViewController {
                     let model = success.data,
                     let total = model.total {
                     self.model = model
+                    self.numBlock?(model)
                     if pageNum == 1 {
                         pageNum = 1
                         self.allArray.removeAll()
                     }
                     pageNum += 1
-                    let pageData = model.items ?? []
+                    let pageData = model.data ?? []
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
@@ -146,7 +121,7 @@ extension SearchPeopleDondDefaultViewController {
     }
 }
 
-extension SearchPeopleDondDefaultViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchCompanyBeneficialOwnerViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25
@@ -158,7 +133,7 @@ extension SearchPeopleDondDefaultViewController: UITableViewDelegate, UITableVie
         let numLabel = UILabel()
         headView.backgroundColor = .init(cssStr: "#F8F9FB")
         numLabel.textColor = .init(cssStr: "#666666")
-        numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(count)", fullText: "为你模糊匹配到\(count)条结果,请结合实际情况进行甄别", colorStr: "#FF0000")
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(count)", fullText: "搜到到\(count)条结果", colorStr: "#FF0000")
         numLabel.textAlignment = .left
         numLabel.font = .regularFontOfSize(size: 12)
         headView.addSubview(numLabel)
@@ -176,21 +151,21 @@ extension SearchPeopleDondDefaultViewController: UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = self.allArray[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchPeopleDeadbeatCell", for: indexPath) as! SearchPeopleDeadbeatCell
-        model.searchStr = self.keyWords.value
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCompanyShareholderCell", for: indexPath) as! SearchCompanyShareholderCell
+        cell.backgroundColor = .white
         cell.model.accept(model)
         cell.selectionStyle = .none
-        cell.cImageView.isHidden = true
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        let detailVc = SearchPeopleDeadbeatDetailViewController()
-        detailVc.model = model
-        detailVc.nameTitle = "债券违约记录列表"
-        detailVc.pageUrl = "/riskmonitor/illegalPunish/getBondDefaultDetail"
-        self.navigationController?.pushViewController(detailVc, animated: true)
+        let pageUrl = "\(base_url)/personal-information/shareholder-situation"
+        let dict = ["firmname": model.entityName ?? "",
+                    "entityId": model.entityId ?? "",
+                    "isPerson": "0"]
+        let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+        self.pushWebPage(from: webUrl)
     }
     
 }

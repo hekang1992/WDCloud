@@ -1,5 +1,5 @@
 //
-//  SearchPeopleEnvironmentalPenaltyViewController.swift
+//  SearchPeopleLoanDefaultViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/2/10.
@@ -10,7 +10,7 @@ import RxRelay
 import MJRefresh
 import DropMenuBar
 
-class SearchPeopleEnvironmentalPenaltyViewController: WDBaseViewController {
+class SearchPeopleLoanDefaultViewController: WDBaseViewController {
     
     var entityArea: String = ""//公司时候的地区
     var entityIndustry: String = ""//公司时候的行业
@@ -77,7 +77,7 @@ class SearchPeopleEnvironmentalPenaltyViewController: WDBaseViewController {
     
 }
 
-extension SearchPeopleEnvironmentalPenaltyViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchPeopleLoanDefaultViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25
@@ -120,7 +120,7 @@ extension SearchPeopleEnvironmentalPenaltyViewController: UITableViewDelegate, U
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        let pageUrl = "\(base_url)/business-risk/environmental-penalties"
+        let pageUrl = "\(base_url)/business-risk/tax-violations-person"
         let dict = ["personName": model.entityName ?? "",
                     "personNumber": model.entityId ?? ""]
         let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
@@ -129,7 +129,7 @@ extension SearchPeopleEnvironmentalPenaltyViewController: UITableViewDelegate, U
     
 }
 
-extension SearchPeopleEnvironmentalPenaltyViewController {
+extension SearchPeopleLoanDefaultViewController {
     
     private func addMenuWithCompanyView() {
         //添加下拉筛选
@@ -190,7 +190,7 @@ extension SearchPeopleEnvironmentalPenaltyViewController {
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/illegalPunish/getEnvironmentPenalty",
+                       pageUrl: "/riskmonitor/illegalPunish/getLoanOverdue",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.tableView.mj_header?.endRefreshing()

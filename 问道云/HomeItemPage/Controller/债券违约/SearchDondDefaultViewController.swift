@@ -9,6 +9,7 @@ import UIKit
 import HGSegmentedPageViewController
 import RxRelay
 import RxSwift
+import SwiftyJSON
 
 class SearchDondDefaultViewController: WDBaseViewController {
     
@@ -113,6 +114,12 @@ class SearchDondDefaultViewController: WDBaseViewController {
             self?.searchKey.accept(keywords)
             if keywords.isEmpty {
                 self?.oneView.isHidden = false
+                //最近搜索
+                self?.getlastSearch()
+                //浏览历史
+                self?.getBrowsingHistory()
+                //热搜
+                self?.getHotWords()
             }else {
                 self?.oneView.isHidden = true
             }
@@ -128,6 +135,12 @@ class SearchDondDefaultViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] keywords in
                 if keywords.isEmpty {
                     self?.oneView.isHidden = false
+                    //最近搜索
+                    self?.getlastSearch()
+                    //浏览历史
+                    self?.getBrowsingHistory()
+                    //热搜
+                    self?.getHotWords()
                 }else {
                     self?.oneView.isHidden = true
                 }
@@ -136,7 +149,12 @@ class SearchDondDefaultViewController: WDBaseViewController {
     
         //获取城市数据
         getAllRegionInfo()
-        
+        //最近搜索
+        self.getlastSearch()
+        //浏览历史
+        self.getBrowsingHistory()
+        //热搜
+        self.getHotWords()
     }
     
     //获取所有城市数据
@@ -176,7 +194,7 @@ extension SearchDondDefaultViewController: HGSegmentedPageViewControllerDelegate
     
     private func setupPageViewControllers() {
         let titles: [String] = ["企业", "人员"]
-        segmentedPageViewController.pageViewControllers = [peopleVc, companyVc]
+        segmentedPageViewController.pageViewControllers = [companyVc, peopleVc]
         segmentedPageViewController.selectedPage = 0
         self.segmentedPageViewController.categoryView.titles = titles
         self.segmentedPageViewController.view.snp.makeConstraints { make in
@@ -189,7 +207,7 @@ extension SearchDondDefaultViewController: HGSegmentedPageViewControllerDelegate
         self.searchKey.asObservable()
             .subscribe(onNext: { [weak self] keyWords in
             guard let self = self else { return }
-            if page == 0 {
+            if page == 1 {
                 peopleVc.keyWords.accept(keyWords)
             }else {
                 companyVc.keyWords.accept(keyWords)
@@ -198,23 +216,13 @@ extension SearchDondDefaultViewController: HGSegmentedPageViewControllerDelegate
         
         self.regionModelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self, let modelArray = modelArray else { return }
-            if page == 0 {
+            if page == 1 {
                 peopleVc.regionModelArray.accept(modelArray)
             }else {
                 companyVc.regionModelArray.accept(modelArray)
             }
         }).disposed(by: disposeBag)
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //最近搜索
-        getlastSearch()
-        //浏览历史
-        getBrowsingHistory()
-        //热搜
-        getHotWords()
     }
     
     //最近搜索
@@ -296,9 +304,33 @@ extension SearchDondDefaultViewController: HGSegmentedPageViewControllerDelegate
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                ToastViewConfig.showToast(message: "暂未开发")
+                let type = model.viewrecordtype ?? ""
+                if type == "1" {//企业
+                    let entityId = model.firmnumber ?? ""
+                    let json: JSON = ["entityId": entityId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchCompanyDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    detailVc.nameTitle = "债券违约记录列表"
+                    detailVc.pageUrl = "/riskmonitor/illegalPunish/getBondDefaultDetail"
+                    self.navigationController?.pushViewController(detailVc, animated: true)
+                }else {//个人
+                    let personId = model.personnumber ?? ""
+                    let json: JSON = ["personId": personId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchPeopleDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    detailVc.nameTitle = "债券违约记录列表"
+                    detailVc.pageUrl = "/riskmonitor/illegalPunish/getBondDefaultDetail"
+                    self.navigationController?.pushViewController(detailVc, animated: true)
+                }
             }
-            listView.nameLabel.text = model.firmname ?? ""
+            let type = model.viewrecordtype ?? ""
+            if type == "1" {
+                listView.nameLabel.text = model.firmname ?? ""
+            }else {
+                listView.nameLabel.text = model.personname ?? ""
+            }
             listView.timeLabel.text = model.createhourtime ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
             self.oneView.historyView.addSubview(listView)
@@ -350,7 +382,26 @@ extension SearchDondDefaultViewController: HGSegmentedPageViewControllerDelegate
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                ToastViewConfig.showToast(message: "暂未开发")
+                let type = model.viewrecordtype ?? ""
+                if type == "1" {//企业
+                    let entityId = model.firmnumber ?? ""
+                    let json: JSON = ["entityId": entityId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchCompanyDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    detailVc.nameTitle = "债券违约记录列表"
+                    detailVc.pageUrl = "/riskmonitor/illegalPunish/getBondDefaultDetail"
+                    self.navigationController?.pushViewController(detailVc, animated: true)
+                }else {//个人
+                    let personId = model.personnumber ?? ""
+                    let json: JSON = ["personId": personId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchPeopleDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    detailVc.nameTitle = "债券违约记录列表"
+                    detailVc.pageUrl = "/riskmonitor/illegalPunish/getBondDefaultDetail"
+                    self.navigationController?.pushViewController(detailVc, animated: true)
+                }
             }
             listView.nameLabel.text = model.name ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: .random(), textColor: .white))

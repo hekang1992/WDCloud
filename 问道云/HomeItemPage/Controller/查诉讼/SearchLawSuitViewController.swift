@@ -114,6 +114,12 @@ class SearchLawSuitViewController: WDBaseViewController {
             self?.searchKey.accept(keywords)
             if keywords.isEmpty {
                 self?.oneView.isHidden = false
+                //最近搜索
+                self?.getlastSearch()
+                //浏览历史
+                self?.getBrowsingHistory()
+                //热搜
+                self?.getHotWords()
             }else {
                 self?.oneView.isHidden = true
             }
@@ -129,6 +135,12 @@ class SearchLawSuitViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] keywords in
                 if keywords.isEmpty {
                     self?.oneView.isHidden = false
+                    //最近搜索
+                    self?.getlastSearch()
+                    //浏览历史
+                    self?.getBrowsingHistory()
+                    //热搜
+                    self?.getHotWords()
                 }else {
                     self?.oneView.isHidden = true
                 }
@@ -137,7 +149,12 @@ class SearchLawSuitViewController: WDBaseViewController {
         
         //获取城市数据
         getAllRegionInfo()
-        
+        //最近搜索
+        self.getlastSearch()
+        //浏览历史
+        self.getBrowsingHistory()
+        //热搜
+        self.getHotWords()
     }
     
     //获取所有城市数据
@@ -206,16 +223,6 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
             }
         }).disposed(by: disposeBag)
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //最近搜索
-        getlastSearch()
-        //浏览历史
-        getBrowsingHistory()
-        //热搜
-        getHotWords()
     }
     
     //最近搜索
@@ -304,17 +311,26 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
                     let itemModel: itemsModel = itemsModel(json: json)
                     let detailVc = SearchCompanyDeadbeatDetailViewController()
                     detailVc.model = itemModel
+                    detailVc.nameTitle = "诉讼记录列表"
+                    detailVc.pageUrl = "/riskmonitor/cooperation/getLawsuitDataDetail"
                     self.navigationController?.pushViewController(detailVc, animated: true)
                 }else {//个人
-                    let personId = model.eid ?? ""
+                    let personId = model.personnumber ?? ""
                     let json: JSON = ["personId": personId]
                     let itemModel: itemsModel = itemsModel(json: json)
                     let detailVc = SearchPeopleDeadbeatDetailViewController()
                     detailVc.model = itemModel
+                    detailVc.nameTitle = "诉讼记录列表"
+                    detailVc.pageUrl = "/riskmonitor/cooperation/getLawsuitDataDetail"
                     self.navigationController?.pushViewController(detailVc, animated: true)
                 }
             }
-            listView.nameLabel.text = model.firmname ?? ""
+            let type = model.viewrecordtype ?? ""
+            if type == "1" {
+                listView.nameLabel.text = model.firmname ?? ""
+            }else {
+                listView.nameLabel.text = model.personname ?? ""
+            }
             listView.timeLabel.text = model.createhourtime ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
             self.oneView.historyView.addSubview(listView)
@@ -366,13 +382,15 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let type = model.viewrecordtype ?? ""
+                let type = model.type ?? ""
                 if type == "1" {//企业
-                    let entityId = model.firmnumber ?? ""
+                    let entityId = model.eid ?? ""
                     let json: JSON = ["entityId": entityId]
                     let itemModel: itemsModel = itemsModel(json: json)
                     let detailVc = SearchCompanyDeadbeatDetailViewController()
                     detailVc.model = itemModel
+                    detailVc.nameTitle = "诉讼记录列表"
+                    detailVc.pageUrl = "/riskmonitor/cooperation/getLawsuitDataDetail"
                     self.navigationController?.pushViewController(detailVc, animated: true)
                 }else {//个人
                     let personId = model.eid ?? ""
@@ -380,6 +398,8 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
                     let itemModel: itemsModel = itemsModel(json: json)
                     let detailVc = SearchPeopleDeadbeatDetailViewController()
                     detailVc.model = itemModel
+                    detailVc.nameTitle = "诉讼记录列表"
+                    detailVc.pageUrl = "/riskmonitor/cooperation/getLawsuitDataDetail"
                     self.navigationController?.pushViewController(detailVc, animated: true)
                 }
             }

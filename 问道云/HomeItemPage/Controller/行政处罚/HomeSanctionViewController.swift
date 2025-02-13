@@ -105,6 +105,12 @@ class HomeSanctionViewController: WDBaseViewController {
             self?.searchKey.accept(keywords)
             if keywords.isEmpty {
                 self?.oneView.isHidden = false
+                //最近搜索
+                self?.getlastSearch()
+                //浏览历史
+                self?.getBrowsingHistory()
+                //热搜
+                self?.getHotWords()
             }else {
                 self?.oneView.isHidden = true
             }
@@ -120,6 +126,12 @@ class HomeSanctionViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] keywords in
                 if keywords.isEmpty {
                     self?.oneView.isHidden = false
+                    //最近搜索
+                    self?.getlastSearch()
+                    //浏览历史
+                    self?.getBrowsingHistory()
+                    //热搜
+                    self?.getHotWords()
                 }else {
                     self?.oneView.isHidden = true
                 }
@@ -130,6 +142,12 @@ class HomeSanctionViewController: WDBaseViewController {
         getAllRegionInfo()
         //获取行业数据
         getAllIndustryInfo()
+        //最近搜索
+        self.getlastSearch()
+        //浏览历史
+        self.getBrowsingHistory()
+        //热搜
+        self.getHotWords()
     }
     
 }
@@ -218,16 +236,6 @@ extension HomeSanctionViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //最近搜索
-        getlastSearch()
-        //浏览历史
-        getBrowsingHistory()
-        //热搜
-        getHotWords()
-    }
-    
     //最近搜索
     private func getlastSearch() {
         let man = RequestManager()
@@ -313,7 +321,12 @@ extension HomeSanctionViewController {
                 let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
                 self.pushWebPage(from: webUrl)
             }
-            listView.nameLabel.text = model.firmname ?? ""
+            let type = model.viewrecordtype ?? ""
+            if type == "1" {
+                listView.nameLabel.text = model.firmname ?? ""
+            }else {
+                listView.nameLabel.text = model.personname ?? ""
+            }
             listView.timeLabel.text = model.createhourtime ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
             self.oneView.historyView.addSubview(listView)

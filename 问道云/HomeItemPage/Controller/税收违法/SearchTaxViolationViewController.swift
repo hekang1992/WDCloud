@@ -49,6 +49,16 @@ class SearchTaxViolationViewController: WDBaseViewController {
         return searchView
     }()
     
+    lazy var companyVc: SearchCompanyTaxViolationViewController = {
+        let companyVc = SearchCompanyTaxViolationViewController()
+        return companyVc
+    }()
+    
+    lazy var peopleVc: SearchPeopleTaxViolationViewController = {
+        let peopleVc = SearchPeopleTaxViolationViewController()
+        return peopleVc
+    }()
+    
     lazy var segmentedPageViewController: HGSegmentedPageViewController = {
         let segmentedPageViewController = HGSegmentedPageViewController()
         segmentedPageViewController.categoryView.alignment = .center
@@ -61,6 +71,7 @@ class SearchTaxViolationViewController: WDBaseViewController {
         segmentedPageViewController.categoryView.titleNormalColor = .init(cssStr: "#9FA4AD")
         segmentedPageViewController.categoryView.titleSelectedColor = .init(cssStr: "#333333")
         segmentedPageViewController.categoryView.vernier.backgroundColor = .init(cssStr: "#547AFF")
+        segmentedPageViewController.delegate = self
         return segmentedPageViewController
     }()
     
@@ -101,12 +112,19 @@ class SearchTaxViolationViewController: WDBaseViewController {
         
         //点击最近搜索
         self.oneView.lastSearchTextBlock = { [weak self] keywords in
-            self?.searchView.searchTx.text = keywords
-            self?.searchKey.accept(keywords)
+            guard let self = self else { return }
+            searchView.searchTx.text = keywords
+            searchKey.accept(keywords)
             if keywords.isEmpty {
-                self?.oneView.isHidden = false
+                oneView.isHidden = false
+                //最近搜索
+                getlastSearch()
+                //浏览历史
+                getBrowsingHistory()
+                //热搜
+                getHotWords()
             }else {
-                self?.oneView.isHidden = true
+                oneView.isHidden = true
             }
         }
         
@@ -118,12 +136,19 @@ class SearchTaxViolationViewController: WDBaseViewController {
             .distinctUntilChanged()
             .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] keywords in
+                guard let self = self else { return }
                 if keywords.isEmpty {
-                    self?.oneView.isHidden = false
+                    oneView.isHidden = false
+                    //最近搜索
+                    getlastSearch()
+                    //浏览历史
+                    getBrowsingHistory()
+                    //热搜
+                    getHotWords()
                 }else {
-                    self?.oneView.isHidden = true
+                    oneView.isHidden = true
                 }
-                self?.searchKey.accept(keywords)
+                searchKey.accept(keywords)
             }).disposed(by: disposeBag)
         
         //获取城市数据
@@ -134,7 +159,7 @@ class SearchTaxViolationViewController: WDBaseViewController {
     
 }
 
-extension SearchTaxViolationViewController {
+extension SearchTaxViolationViewController: HGSegmentedPageViewControllerDelegate {
     
     //获取所有城市数据
     func getAllRegionInfo() {
@@ -190,42 +215,44 @@ extension SearchTaxViolationViewController {
     }
     
     private func setupPageViewControllers() {
-        var titles: [String] = []
-        let companyVc = HomeCompanySanctionViewController()
-        let peopleVc = HomePeopleSanctionViewController()
-        self.searchKey.asObservable().subscribe(onNext: { searchStr in
-            companyVc.keyWords.accept(searchStr)
-            peopleVc.keyWords.accept(searchStr)
-        }).disposed(by: disposeBag)
-        
-        self.regionModelArray.asObservable().subscribe(onNext: { modelArray in
-            guard let modelArray = modelArray else { return }
-            companyVc.regionModelArray.accept(modelArray)
-            peopleVc.regionModelArray.accept(modelArray)
-        }).disposed(by: disposeBag)
-        
-        self.industryModelArray.asObservable().subscribe(onNext: { modelArray in
-            guard let modelArray = modelArray else { return }
-            companyVc.industryModelArray.accept(modelArray)
-            peopleVc.industryModelArray.accept(modelArray)
-        }).disposed(by: disposeBag)
-        
-        segmentedPageViewController.pageViewControllers = [companyVc, peopleVc]
+        let titles: [String] = ["企业", "人员"]
+        segmentedPageViewController.pageViewControllers = [peopleVc, companyVc]
         segmentedPageViewController.selectedPage = 0
-        companyVc.block = { [weak self] model in
-            titles = ["企业\(model.total ?? 0)", "个人"]
-            self?.segmentedPageViewController.categoryView.titles = titles
+        self.segmentedPageViewController.categoryView.titles = titles
+        self.segmentedPageViewController.view.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(self.searchView.snp.bottom)
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //最近搜索
-        getlastSearch()
-        //浏览历史
-        getBrowsingHistory()
-        //热搜
-        getHotWords()
+    func segmentedPageViewControllerWillTransition(toPage page: Int) {
+        self.searchKey.asObservable()
+            .subscribe(onNext: { [weak self] keyWords in
+            guard let self = self else { return }
+            if page == 1 {
+                peopleVc.keyWords.accept(keyWords)
+            }else {
+                companyVc.keyWords.accept(keyWords)
+            }
+        }).disposed(by: disposeBag)
+        
+        self.regionModelArray.asObservable().subscribe(onNext: { [weak self] regionModelArray in
+            guard let self = self else { return }
+            if page == 1 {
+                peopleVc.regionModelArray.accept(regionModelArray)
+            }else {
+                companyVc.regionModelArray.accept(regionModelArray)
+            }
+        }).disposed(by: disposeBag)
+        
+        self.industryModelArray.asObservable().subscribe(onNext: { [weak self] industryModelArray in
+            guard let self = self else { return }
+            if page == 1 {
+                peopleVc.industryModelArray.accept(industryModelArray)
+            }else {
+                companyVc.industryModelArray.accept(industryModelArray)
+            }
+        }).disposed(by: disposeBag)
     }
     
     //最近搜索
@@ -307,13 +334,29 @@ extension SearchTaxViolationViewController {
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let pageUrl = "\(base_url)/litigation-risk/administrative-penalty"
-                let dict = ["firmname": model.firmname ?? "",
-                            "entityId": model.firmnumber ?? ""]
-                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-                self.pushWebPage(from: webUrl)
+                let type = model.viewrecordtype ?? ""
+                if type == "1" {//企业
+                    let pageUrl = "\(base_url)/business-risk/tax-violations"
+                    let dict = ["firmname": model.firmname ?? "",
+                                "entityId": model.firmnumber ?? "",
+                                "isPerson": "0"]
+                    let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                    self.pushWebPage(from: webUrl)
+                }else {//个人
+                    let pageUrl = "\(base_url)/business-risk/tax-violations-person"
+                    let dict = ["persoNname": model.personname ?? "",
+                                "personNumber": model.personnumber ?? "",
+                                "isPerson": "1"]
+                    let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                    self.pushWebPage(from: webUrl)
+                }
             }
-            listView.nameLabel.text = model.firmname ?? ""
+            let type = model.viewrecordtype ?? ""
+            if type == "1" {
+                listView.nameLabel.text = model.firmname ?? ""
+            }else {
+                listView.nameLabel.text = model.personname ?? ""
+            }
             listView.timeLabel.text = model.createhourtime ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
             self.oneView.historyView.addSubview(listView)
@@ -365,11 +408,22 @@ extension SearchTaxViolationViewController {
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let pageUrl = "\(base_url)/litigation-risk/administrative-penalty"
-                let dict = ["firmname": model.name ?? "",
-                            "entityId": model.eid ?? ""]
-                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-                self.pushWebPage(from: webUrl)
+                let type = model.type ?? ""
+                if type == "1" {//企业
+                    let pageUrl = "\(base_url)/business-risk/tax-violations"
+                    let dict = ["firmname": model.name ?? "",
+                                "entityId": model.eid ?? "",
+                                "isPerson": "0"]
+                    let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                    self.pushWebPage(from: webUrl)
+                }else {//个人
+                    let pageUrl = "\(base_url)/business-risk/tax-violations-person"
+                    let dict = ["personName": model.name ?? "",
+                                "personNumber": model.eid ?? "",
+                                "isPerson": "1"]
+                    let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                    self.pushWebPage(from: webUrl)
+                }
             }
             listView.nameLabel.text = model.name ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: .random(), textColor: .white))

@@ -120,7 +120,7 @@ extension SearchCompanyEnvironmentalPenaltyViewController: UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        let pageUrl = "\(base_url)/litigation-risk/administrative-penalty"
+        let pageUrl = "\(base_url)/business-risk/environmental-penalties"
         let dict = ["firmname": model.entityName ?? "",
                     "entityId": model.entityId ?? ""]
         let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""

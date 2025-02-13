@@ -15,11 +15,14 @@ class SearchCompanyDeadbeatDetailViewController: WDBaseViewController {
         }
     }
     
+    var nameTitle: String = ""
+    var pageUrl: String = ""
+    
     var modelArray: [minutesListModel] = []
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
-        headView.titlelabel.text = "失信记录列表"
+        headView.titlelabel.text = nameTitle
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
         headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
@@ -209,7 +212,7 @@ extension SearchCompanyDeadbeatDetailViewController {
         let dict = ["entityId": self.model?.entityId ?? "",
                     "type": "2"]
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/cooperation/getDeadBeatDetail",
+                       pageUrl: pageUrl,
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {

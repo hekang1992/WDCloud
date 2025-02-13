@@ -110,6 +110,12 @@ class SearchControllingPersonViewController: WDBaseViewController {
             self?.searchKey.accept(keywords)
             if keywords.isEmpty {
                 self?.oneView.isHidden = false
+                //最近搜索
+                self?.getlastSearch()
+                //浏览历史
+                self?.getBrowsingHistory()
+                //热搜
+                self?.getHotWords()
             }else {
                 self?.oneView.isHidden = true
             }
@@ -125,12 +131,25 @@ class SearchControllingPersonViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] keywords in
                 if keywords.isEmpty {
                     self?.oneView.isHidden = false
+                    //最近搜索
+                    self?.getlastSearch()
+                    //浏览历史
+                    self?.getBrowsingHistory()
+                    //热搜
+                    self?.getHotWords()
                 }else {
                     self?.oneView.isHidden = true
                 }
                 self?.searchKey.accept(keywords)
             }).disposed(by: disposeBag)
     
+        //最近搜索
+        self.getlastSearch()
+        //浏览历史
+        self.getBrowsingHistory()
+        //热搜
+        self.getHotWords()
+        
     }
     
 }
@@ -148,7 +167,7 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
     }
     
     private func setupPageViewControllers() {
-        var titles: [String] = ["自然人", "企业"]
+        let titles: [String] = ["自然人", "企业"]
         segmentedPageViewController.pageViewControllers = [peopleVc, companyVc]
         segmentedPageViewController.selectedPage = 0
         self.segmentedPageViewController.categoryView.titles = titles
@@ -168,16 +187,6 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
                 companyVc.keyWords.accept(keyWords)
             }
         }).disposed(by: disposeBag)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //最近搜索
-        getlastSearch()
-        //浏览历史
-        getBrowsingHistory()
-        //热搜
-        getHotWords()
     }
     
     //最近搜索

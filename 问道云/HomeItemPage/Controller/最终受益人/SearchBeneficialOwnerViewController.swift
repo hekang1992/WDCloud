@@ -1,5 +1,5 @@
 //
-//  SearchShareholderViewController.swift
+//  SearchBeneficialOwnerViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/2/10.
@@ -10,7 +10,7 @@ import HGSegmentedPageViewController
 import RxRelay
 import RxSwift
 
-class SearchShareholderViewController: WDBaseViewController {
+class SearchBeneficialOwnerViewController: WDBaseViewController {
     
     //参数
     var searchKey = BehaviorRelay<String>(value: "")
@@ -25,7 +25,7 @@ class SearchShareholderViewController: WDBaseViewController {
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
-        headView.titlelabel.text = "查股东"
+        headView.titlelabel.text = "实际控制人"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
         headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
@@ -59,13 +59,13 @@ class SearchShareholderViewController: WDBaseViewController {
         return segmentedPageViewController
     }()
     
-    lazy var companyVc: SearchCompanyShareholderViewController = {
-        let companyVc = SearchCompanyShareholderViewController()
+    lazy var companyVc: SearchCompanyControllingPersonViewController = {
+        let companyVc = SearchCompanyControllingPersonViewController()
         return companyVc
     }()
     
-    lazy var peopleVc: SearchPeopleShareholderViewController = {
-        let peopleVc = SearchPeopleShareholderViewController()
+    lazy var peopleVc: SearchPeopleControllingPersonViewController = {
+        let peopleVc = SearchPeopleControllingPersonViewController()
         return peopleVc
     }()
     
@@ -142,19 +142,19 @@ class SearchShareholderViewController: WDBaseViewController {
                 }
                 self?.searchKey.accept(keywords)
             }).disposed(by: disposeBag)
-        
+    
         //最近搜索
         self.getlastSearch()
         //浏览历史
         self.getBrowsingHistory()
         //热搜
         self.getHotWords()
-    
+        
     }
     
 }
 
-extension SearchShareholderViewController: HGSegmentedPageViewControllerDelegate {
+extension SearchBeneficialOwnerViewController: HGSegmentedPageViewControllerDelegate {
     
     private func addSegmentedPageViewController() {
         self.addChild(self.segmentedPageViewController)
@@ -283,12 +283,7 @@ extension SearchShareholderViewController: HGSegmentedPageViewControllerDelegate
                 let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
                 self.pushWebPage(from: webUrl)
             }
-            let type = model.viewrecordtype ?? ""
-            if type == "1" {
-                listView.nameLabel.text = model.firmname ?? ""
-            }else {
-                listView.nameLabel.text = model.personname ?? ""
-            }
+            listView.nameLabel.text = model.firmname ?? ""
             listView.timeLabel.text = model.createhourtime ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
             self.oneView.historyView.addSubview(listView)

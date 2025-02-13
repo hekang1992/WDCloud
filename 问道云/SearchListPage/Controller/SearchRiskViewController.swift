@@ -342,7 +342,12 @@ extension SearchRiskViewController {
                 riskDetailVc.name = name
                 self.navigationController?.pushViewController(riskDetailVc, animated: true)
             }
-            listView.nameLabel.text = model.firmname ?? ""
+            let type = model.viewrecordtype ?? ""
+            if type == "1" {
+                listView.nameLabel.text = model.firmname ?? ""
+            }else {
+                listView.nameLabel.text = model.personname ?? ""
+            }
             listView.timeLabel.text = model.createhourtime ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
             self.riskView.historyView.addSubview(listView)

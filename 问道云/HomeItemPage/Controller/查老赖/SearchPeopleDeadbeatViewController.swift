@@ -187,6 +187,8 @@ extension SearchPeopleDeadbeatViewController: UITableViewDelegate, UITableViewDa
         let model = self.allArray[indexPath.row]
         let detailVc = SearchPeopleDeadbeatDetailViewController()
         detailVc.model = model
+        detailVc.nameTitle = "失信记录列表"
+        detailVc.pageUrl = "/riskmonitor/cooperation/getDeadBeatDetail"
         self.navigationController?.pushViewController(detailVc, animated: true)
     }
     

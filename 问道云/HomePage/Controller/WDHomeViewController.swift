@@ -375,12 +375,44 @@ extension WDHomeViewController {
         }else if menuID == "11900" {//实际控制人
             let controllVc = SearchControllingPersonViewController()
             self.navigationController?.pushViewController(controllVc, animated: true)
+        }else if menuID == "12000" {//最终受益人
+            let beneficialVc = SearchBeneficialOwnerViewController()
+            self.navigationController?.pushViewController(beneficialVc, animated: true)
+        }else if menuID == "12100" {//被执行人
+            
+        }else if menuID == "12200" {//限制高消费
+            let highVc = SearchHighConsumptionViewController()
+            self.navigationController?.pushViewController(highVc, animated: true)
+        }else if menuID == "12300" {//法院公告
+            
+        }else if menuID == "12400" {//开庭公告
+            
+        }else if menuID == "12500" {//司法拍卖
+            
         }else if menuID == "12600" {//税收违法
             let taxVc = SearchTaxViolationViewController()
             self.navigationController?.pushViewController(taxVc, animated: true)
         }else if menuID == "12700" {//环保处罚
             let environmentalVc = SearchEnvironmentalPenaltyViewController()
             self.navigationController?.pushViewController(environmentalVc, animated: true)
+        }else if menuID == "12800" {//贷款逾期
+            let loanDefaultVc = SearchLoanDefaultViewController()
+            self.navigationController?.pushViewController(loanDefaultVc, animated: true)
+        }else if menuID == "12900" {//资产冻结
+            let freezeVc = SearchAssetFreezeViewController()
+            self.navigationController?.pushViewController(freezeVc, animated: true)
+        }else if menuID == "13000" {//资产查封
+            let seizureVc = SearchAssetSeizureViewController()
+            self.navigationController?.pushViewController(seizureVc, animated: true)
+        }else if menuID == "13100" {//资产抵押
+            let backLendingVc = SearchBackedLendingViewController()
+            self.navigationController?.pushViewController(backLendingVc, animated: true)
+        }else if menuID == "13200" {//对外担保
+            let guaranteeVc = SearchExternalGuaranteeViewController()
+            self.navigationController?.pushViewController(guaranteeVc, animated: true)
+        }else if menuID == "13300" {//对外投资
+            let investmentVc = SearchOverseasInvestmentViewController()
+            self.navigationController?.pushViewController(investmentVc, animated: true)
         }
     }
     

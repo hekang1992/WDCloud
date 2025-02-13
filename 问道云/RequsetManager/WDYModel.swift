@@ -590,6 +590,7 @@ class rowsModel {
     var tags: [newstagsobjModel]?
     var viewrecordtype: String?
     init(json: JSON) {
+        self.personnumber = json["personnumber"].stringValue
         self.viewrecordtype = json["viewrecordtype"].stringValue
         self.tags = json["tags"].arrayValue.map {
             newstagsobjModel(json: $0)
