@@ -336,7 +336,6 @@ extension WDHomeViewController {
     
     private func toSearchListPageWithModel(from model: childrenModel) {
         let menuID = model.menuId ?? ""
-        ToastViewConfig.showToast(message: menuID)
         if menuID == "10200" {
             let searchVc = SearchAllViewController()
             searchVc.selectIndex = 1
@@ -390,7 +389,8 @@ extension WDHomeViewController {
             let startVc = SearchStartCourtNoticeViewController()
             self.navigationController?.pushViewController(startVc, animated: true)
         }else if menuID == "12500" {//司法拍卖
-            
+            let buyVc = SearchJudicialAuctioniewViewController()
+            self.navigationController?.pushViewController(buyVc, animated: true)
         }else if menuID == "12600" {//税收违法
             let taxVc = SearchTaxViolationViewController()
             self.navigationController?.pushViewController(taxVc, animated: true)
