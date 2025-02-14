@@ -25,6 +25,11 @@ class WDRiskViewController: WDBaseViewController {
             let searchVc = SearchMonitoringViewController()
             self.navigationController?.pushViewController(searchVc, animated: true)
         }).disposed(by: disposeBag)
+        headView.twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let settingVc = RiskSettingViewController()
+            self.navigationController?.pushViewController(settingVc, animated: true)
+        }).disposed(by: disposeBag)
         return headView
     }()
     

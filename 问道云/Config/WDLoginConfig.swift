@@ -38,3 +38,23 @@ class WDLoginConfig: NSObject {
     }
     
 }
+
+//获取登录数据
+class GetSaveLoginInfoConfig {
+    
+    static func getCustomerNumber() -> String {
+        let customernumber = UserDefaults.standard.object(forKey: WDY_CUSTOMERNUMBER) as? String ?? ""
+        return customernumber
+    }
+    
+    static func getPhoneNumber() -> String {
+        let phoneNum = UserDefaults.standard.object(forKey: WDY_PHONE) as? String ?? ""
+        return phoneNum
+    }
+    
+    static func getSessionID() -> String {
+        let token = UserDefaults.standard.object(forKey: WDY_SESSIONID) as? String ?? ""
+        return token
+    }
+    
+}

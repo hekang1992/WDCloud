@@ -28,17 +28,41 @@ class HomeOneReportViewController: WDBaseViewController {
         searchView.backgroundColor = .white
         return searchView
     }()
+    
+    lazy var ctImageView: UIImageView = {
+        let ctImageView = UIImageView()
+        ctImageView.image = UIImage(named: "plageimagebaogao")
+        return ctImageView
+    }()
+    
+    lazy var footerView: LoginFootView = {
+        let footerView = LoginFootView()
+        return footerView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        view.backgroundColor = .white
         addHeadView(from: headView)
         view.addSubview(searchView)
+        view.addSubview(ctImageView)
+        view.addSubview(footerView)
         searchView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(headView.snp.bottom).offset(1)
             make.height.equalTo(50)
+        }
+        ctImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(searchView.snp.bottom).offset(5)
+            make.size.equalTo(CGSize(width: 337, height: 524))
+        }
+        footerView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.height.equalTo(51.5)
         }
     }
 

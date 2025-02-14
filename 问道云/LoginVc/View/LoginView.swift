@@ -85,8 +85,8 @@ class LoginView: BaseView {
         yinsiLabel.isUserInteractionEnabled = true
         yinsiLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
         yinsiLabel.font = .regularFontOfSize(size: 12)
-        attributedString.addAttributes([.foregroundColor: linkColor], range: range1)
-        attributedString.addAttributes([.foregroundColor: linkColor], range: range2)
+        attributedString.addAttributes([.foregroundColor: linkColor!], range: range1)
+        attributedString.addAttributes([.foregroundColor: linkColor!], range: range2)
         yinsiLabel.attributedText = attributedString
         return yinsiLabel
     }()
