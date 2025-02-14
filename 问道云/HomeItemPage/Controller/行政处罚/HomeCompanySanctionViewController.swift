@@ -110,6 +110,7 @@ extension HomeCompanySanctionViewController: UITableViewDelegate, UITableViewDat
             let model = self.allArray[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "SanctionTableViewCell", for: indexPath) as! SanctionTableViewCell
             model.searchStr = self.keyWords.value
+            model.navHeadTitleStr = "行政处罚"
             cell.model.accept(model)
             cell.selectionStyle = .none
             return cell

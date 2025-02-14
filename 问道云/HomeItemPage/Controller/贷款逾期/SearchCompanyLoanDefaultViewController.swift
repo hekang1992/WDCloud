@@ -109,6 +109,7 @@ extension SearchCompanyLoanDefaultViewController: UITableViewDelegate, UITableVi
         if !self.allArray.isEmpty {
             let model = self.allArray[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "SanctionTableViewCell", for: indexPath) as! SanctionTableViewCell
+            model.navHeadTitleStr = "贷款逾期"
             model.searchStr = self.keyWords.value
             cell.model.accept(model)
             cell.selectionStyle = .none

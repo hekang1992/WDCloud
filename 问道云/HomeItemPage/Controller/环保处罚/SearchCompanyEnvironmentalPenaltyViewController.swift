@@ -109,6 +109,7 @@ extension SearchCompanyEnvironmentalPenaltyViewController: UITableViewDelegate, 
         if !self.allArray.isEmpty {
             let model = self.allArray[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "SanctionTableViewCell", for: indexPath) as! SanctionTableViewCell
+            model.navHeadTitleStr = "环保处罚"
             model.searchStr = self.keyWords.value
             cell.model.accept(model)
             cell.selectionStyle = .none

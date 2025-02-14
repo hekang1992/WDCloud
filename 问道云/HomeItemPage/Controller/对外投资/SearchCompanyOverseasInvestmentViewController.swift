@@ -109,6 +109,7 @@ extension SearchCompanyOverseasInvestmentViewController: UITableViewDelegate, UI
         if !self.allArray.isEmpty {
             let model = self.allArray[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "SanctionTableViewCell", for: indexPath) as! SanctionTableViewCell
+            model.navHeadTitleStr = "对外投资"
             model.searchStr = self.keyWords.value
             cell.model.accept(model)
             cell.selectionStyle = .none

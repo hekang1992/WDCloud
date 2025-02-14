@@ -378,7 +378,8 @@ extension WDHomeViewController {
             let beneficialVc = SearchBeneficialOwnerViewController()
             self.navigationController?.pushViewController(beneficialVc, animated: true)
         }else if menuID == "12100" {//被执行人
-            
+            let debtorVc = SearchJudgmentDebtorViewController()
+            self.navigationController?.pushViewController(debtorVc, animated: true)
         }else if menuID == "12200" {//限制高消费
             let highVc = SearchHighConsumptionViewController()
             self.navigationController?.pushViewController(highVc, animated: true)

@@ -177,6 +177,7 @@ extension SearchCompanyDondDefaultViewController: UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = self.allArray[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCompanyDeadbeatCell", for: indexPath) as! SearchCompanyDeadbeatCell
+        model.navHeadTitleStr = "债券违约"
         model.searchStr = self.keyWords.value
         cell.model.accept(model)
         cell.selectionStyle = .none

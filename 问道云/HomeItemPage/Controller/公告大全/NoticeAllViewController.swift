@@ -166,6 +166,7 @@ class NoticeAllViewController: WDBaseViewController {
             timeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 315)
             //点击全部,今天,近一周等
             timeView.block = { model in
+                self?.pageNum = 1
                 self?.isChoiceDate = model.currentID ?? ""
                 self?.getNoticeListInfo()
                 self?.startTime = ""
@@ -223,6 +224,7 @@ class NoticeAllViewController: WDBaseViewController {
                 self?.isChoiceDate = startTime + "|" + endTime
                 timeMenu.adjustTitle(startTime + "|" + endTime, textColor: UIColor.init(cssStr: "#547AFF"))
                 modelArray = self?.getListTime(from: false) ?? []
+                self?.pageNum = 1
                 self?.getNoticeListInfo()
             }
             timeView.modelArray = modelArray

@@ -240,6 +240,7 @@ class itemsModel {
     var children: [childrenModel]?
     var companyCount: Int?
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
+    var navHeadTitleStr: String?// == 自己添加的。标题
     var personName: String?//个人名字
     var personname: String?//个人名字
     var personId: String?
@@ -327,6 +328,7 @@ class itemsModel {
     var resume: String?//简介
     init(json: JSON) {
         //风险数据公司
+        self.navHeadTitleStr = json["navHeadTitleStr"].stringValue
         self.organizationNumber = json["organizationNumber"].stringValue
         self.resume = json["resume"].stringValue
         self.idCardNumber = json["idCardNumber"].stringValue
