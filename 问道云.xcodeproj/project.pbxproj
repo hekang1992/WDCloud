@@ -275,6 +275,8 @@
 		73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */; };
 		73FB9C842D5EEC3700554CAD /* RiskSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C832D5EEC3700554CAD /* RiskSettingViewController.swift */; };
 		73FB9C862D5EF33E00554CAD /* RiskSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C852D5EF33E00554CAD /* RiskSettingView.swift */; };
+		73FB9C882D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C872D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift */; };
+		73FB9C8A2D5F0EC200554CAD /* RiskPopGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C892D5F0EC200554CAD /* RiskPopGroupView.swift */; };
 		73FC5E372D5B2AED001D0DEF /* SanctionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */; };
 		73FC5E3C2D5C3403001D0DEF /* SearchShareholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E3B2D5C3403001D0DEF /* SearchShareholderViewController.swift */; };
 		73FC5E3E2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E3D2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift */; };
@@ -593,6 +595,8 @@
 		73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTicketView.swift; sourceTree = "<group>"; };
 		73FB9C832D5EEC3700554CAD /* RiskSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskSettingViewController.swift; sourceTree = "<group>"; };
 		73FB9C852D5EF33E00554CAD /* RiskSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskSettingView.swift; sourceTree = "<group>"; };
+		73FB9C872D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskAddRiskGroupViewViewController.swift; sourceTree = "<group>"; };
+		73FB9C892D5F0EC200554CAD /* RiskPopGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskPopGroupView.swift; sourceTree = "<group>"; };
 		73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanctionTableViewCell.swift; sourceTree = "<group>"; };
 		73FC5E3B2D5C3403001D0DEF /* SearchShareholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShareholderViewController.swift; sourceTree = "<group>"; };
 		73FC5E3D2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyShareholderViewController.swift; sourceTree = "<group>"; };
@@ -1189,6 +1193,7 @@
 				73868A442D55F55A00CE107D /* MonthReportViewController.swift */,
 				73868A462D55F56600CE107D /* BothReportViewController.swift */,
 				73FB9C832D5EEC3700554CAD /* RiskSettingViewController.swift */,
+				73FB9C872D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1205,6 +1210,7 @@
 				733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */,
 				733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */,
 				73FB9C852D5EF33E00554CAD /* RiskSettingView.swift */,
+				73FB9C892D5F0EC200554CAD /* RiskPopGroupView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1812,6 +1818,7 @@
 				73807D4E2D3369C500F8B90D /* CompanyBothViewController.swift in Sources */,
 				73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */,
 				7340E18F2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift in Sources */,
+				73FB9C8A2D5F0EC200554CAD /* RiskPopGroupView.swift in Sources */,
 				734896D82D39EDDF00B028FE /* RiskDetailView.swift in Sources */,
 				7340E1A92D5CD604008FD5C7 /* SearchJudicialAuctioniewViewController.swift in Sources */,
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
@@ -1851,6 +1858,7 @@
 				7374162F2D0EB9E400E6CD23 /* HistoryView.swift in Sources */,
 				73B3623D2D374222003BD911 /* PopHistoryNameView.swift in Sources */,
 				73950F772D55EE2B005AD034 /* MonitoringCell.swift in Sources */,
+				73FB9C882D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift in Sources */,
 				73A21DEA2D0C2F2B00FC4C49 /* RiskView.swift in Sources */,
 				73B362492D37A642003BD911 /* PeopleBothViewController.swift in Sources */,
 				7335F6EA2D0ADA050074985F /* MyDownloadSearchView.swift in Sources */,

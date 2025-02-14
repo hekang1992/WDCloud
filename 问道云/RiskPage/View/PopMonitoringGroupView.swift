@@ -52,11 +52,11 @@ class PopMonitoringGroupView: BaseView {
         bgView.addSubview(cancelBtn)
         bgView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
-            make.height.equalTo(300)
+            make.height.equalTo(250)
         }
         tableView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
-            make.height.equalTo(250)
+            make.height.equalTo(200)
         }
         cancelBtn.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()

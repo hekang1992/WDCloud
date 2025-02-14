@@ -46,14 +46,14 @@ class RiskSettingViewController: WDBaseViewController {
     
     lazy var oneView: RiskSettingView = {
         let oneView = RiskSettingView()
-        oneView.namelabel.text = "监控方案"
+        oneView.namelabel.text = "监控分组"
         oneView.leftImageView.image = UIImage(named: "jiankongganganiamge")
         return oneView
     }()
 
     lazy var twoView: RiskSettingView = {
         let twoView = RiskSettingView()
-        twoView.namelabel.text = "监控分组"
+        twoView.namelabel.text = "消息通知"
         twoView.leftImageView.image = UIImage(named: "fenzuxingimage")
         return twoView
     }()
@@ -95,7 +95,7 @@ class RiskSettingViewController: WDBaseViewController {
         }
         lineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.height.equalTo(8)
+            make.height.equalTo(5)
             make.top.equalTo(ctImageView.snp.bottom).offset(12)
         }
         oneView.snp.makeConstraints { make in
@@ -113,6 +113,15 @@ class RiskSettingViewController: WDBaseViewController {
             make.height.equalTo(50)
             make.top.equalTo(twoView.snp.bottom)
         }
+        
+        oneView.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                let addVc = RiskAddRiskGroupViewViewController()
+                self?.navigationController?.pushViewController(addVc, animated: true)
+        }).disposed(by: disposeBag)
+        
         //获取会员等级信息
         getVipInfo()
     }
