@@ -164,7 +164,6 @@ extension RiskAddRiskGroupViewViewController: UITableViewDelegate, UITableViewDa
                 self.deleteInfo(form: model)
             }
         }
-        
     }
 }
 

@@ -275,6 +275,8 @@ extension WDCenterViewController {
             self.navigationController?.pushViewController(tickVc, animated: true)
             break
         case "客服中心":
+            let serviceVc = ServiceCenterViewController()
+            self.navigationController?.pushViewController(serviceVc, animated: true)
             break
         case "微信通知":
             let wechatVc = WechatPushViewController()
@@ -306,6 +308,8 @@ extension WDCenterViewController {
             self.navigationController?.pushViewController(connectVc, animated: true)
             break
         case "意见反馈":
+            let OpinionVc = OpinionCenterViewController()
+            self.navigationController?.pushViewController(OpinionVc, animated: true)
             break
         case "团体中心":
             let groupVc = GroupTeamViewController()

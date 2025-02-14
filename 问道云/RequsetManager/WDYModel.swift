@@ -30,6 +30,7 @@ class DataModel {
     var all: Int?
     var legal: Int?
     var staff: Int?
+    var url: String?
     var shareholder: Int?
     var access_token: String?//token
     var customernumber: String?
@@ -123,6 +124,7 @@ class DataModel {
     var minutesList: [minutesListModel]?
     var entityName: String?
     init(json: JSON) {
+        self.url = json["url"].stringValue
         self.entityName = json["entityName"].stringValue
         self.minutesList = json["minutesList"].arrayValue.map { minutesListModel(json: $0) }
         self.riskList = riskListModel(json: json["riskList"])

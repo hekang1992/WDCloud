@@ -277,6 +277,11 @@
 		73FB9C862D5EF33E00554CAD /* RiskSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C852D5EF33E00554CAD /* RiskSettingView.swift */; };
 		73FB9C882D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C872D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift */; };
 		73FB9C8A2D5F0EC200554CAD /* RiskPopGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C892D5F0EC200554CAD /* RiskPopGroupView.swift */; };
+		73FB9C8C2D5F173500554CAD /* ServiceCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C8B2D5F173500554CAD /* ServiceCenterViewController.swift */; };
+		73FB9C8E2D5F17BF00554CAD /* OpinionCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C8D2D5F17BF00554CAD /* OpinionCenterViewController.swift */; };
+		73FB9C902D5F1C3D00554CAD /* OpinionListCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C8F2D5F1C3D00554CAD /* OpinionListCenterViewController.swift */; };
+		73FB9C922D5F20C000554CAD /* OpinioUpLoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C912D5F20C000554CAD /* OpinioUpLoadViewController.swift */; };
+		73FB9C942D5F22A800554CAD /* MyOpinioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C932D5F22A800554CAD /* MyOpinioViewController.swift */; };
 		73FC5E372D5B2AED001D0DEF /* SanctionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */; };
 		73FC5E3C2D5C3403001D0DEF /* SearchShareholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E3B2D5C3403001D0DEF /* SearchShareholderViewController.swift */; };
 		73FC5E3E2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E3D2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift */; };
@@ -597,6 +602,11 @@
 		73FB9C852D5EF33E00554CAD /* RiskSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskSettingView.swift; sourceTree = "<group>"; };
 		73FB9C872D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskAddRiskGroupViewViewController.swift; sourceTree = "<group>"; };
 		73FB9C892D5F0EC200554CAD /* RiskPopGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskPopGroupView.swift; sourceTree = "<group>"; };
+		73FB9C8B2D5F173500554CAD /* ServiceCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCenterViewController.swift; sourceTree = "<group>"; };
+		73FB9C8D2D5F17BF00554CAD /* OpinionCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpinionCenterViewController.swift; sourceTree = "<group>"; };
+		73FB9C8F2D5F1C3D00554CAD /* OpinionListCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpinionListCenterViewController.swift; sourceTree = "<group>"; };
+		73FB9C912D5F20C000554CAD /* OpinioUpLoadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpinioUpLoadViewController.swift; sourceTree = "<group>"; };
+		73FB9C932D5F22A800554CAD /* MyOpinioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOpinioViewController.swift; sourceTree = "<group>"; };
 		73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanctionTableViewCell.swift; sourceTree = "<group>"; };
 		73FC5E3B2D5C3403001D0DEF /* SearchShareholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShareholderViewController.swift; sourceTree = "<group>"; };
 		73FC5E3D2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyShareholderViewController.swift; sourceTree = "<group>"; };
@@ -1096,6 +1106,11 @@
 				734355E72D2641C400BB4087 /* GroupTeamViewController.swift */,
 				739D90BB2D26A72100D9421B /* GroupListViewController.swift */,
 				738043372D27A9F5009B25F8 /* AddGroupPeopleViewController.swift */,
+				73FB9C8B2D5F173500554CAD /* ServiceCenterViewController.swift */,
+				73FB9C8D2D5F17BF00554CAD /* OpinionCenterViewController.swift */,
+				73FB9C8F2D5F1C3D00554CAD /* OpinionListCenterViewController.swift */,
+				73FB9C912D5F20C000554CAD /* OpinioUpLoadViewController.swift */,
+				73FB9C932D5F22A800554CAD /* MyOpinioViewController.swift */,
 			);
 			path = MorePage;
 			sourceTree = "<group>";
@@ -1761,6 +1776,7 @@
 				7340E1752D5CC6D2008FD5C7 /* SearchPeopleEnvironmentalPenaltyViewController.swift in Sources */,
 				73FC5E442D5C3C25001D0DEF /* SearchCompanyShareholderCell.swift in Sources */,
 				730488132D2BD2090024265C /* HomeBannerViewCell.swift in Sources */,
+				73FB9C942D5F22A800554CAD /* MyOpinioViewController.swift in Sources */,
 				730CEDFE2D546080002DE9DF /* CompanyLawDetailCell.swift in Sources */,
 				739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */,
 				7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */,
@@ -1779,6 +1795,7 @@
 				7340E1782D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift in Sources */,
 				73EDE9F22D59F0A900A0A7E3 /* OneReportViewController.swift in Sources */,
 				73807D592D33808400F8B90D /* CompanyCollectionCell.swift in Sources */,
+				73FB9C922D5F20C000554CAD /* OpinioUpLoadViewController.swift in Sources */,
 				7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */,
 				733B5FF62D57230A00ADE7C5 /* PopCancelMonitoringView.swift in Sources */,
 				73C36A772D2D08EB00D6DC46 /* SearchPeopleViewController.swift in Sources */,
@@ -1819,6 +1836,7 @@
 				73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */,
 				7340E18F2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift in Sources */,
 				73FB9C8A2D5F0EC200554CAD /* RiskPopGroupView.swift in Sources */,
+				73FB9C8E2D5F17BF00554CAD /* OpinionCenterViewController.swift in Sources */,
 				734896D82D39EDDF00B028FE /* RiskDetailView.swift in Sources */,
 				7340E1A92D5CD604008FD5C7 /* SearchJudicialAuctioniewViewController.swift in Sources */,
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
@@ -1847,6 +1865,7 @@
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
 				737416482D0FD94B00E6CD23 /* AddInvoiceViewCell.swift in Sources */,
 				73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */,
+				73FB9C8C2D5F173500554CAD /* ServiceCenterViewController.swift in Sources */,
 				7340E1B02D5DC535008FD5C7 /* SearchLoanDefaultViewController.swift in Sources */,
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
 				73FC5E502D5C78EF001D0DEF /* SearchPeopleDeadbeatViewController.swift in Sources */,
@@ -1969,6 +1988,7 @@
 				7340E19F2D5CD538008FD5C7 /* SearchPeopleCourtNoticeViewController.swift in Sources */,
 				73C36A6C2D2D024C00D6DC46 /* SearchAllViewController.swift in Sources */,
 				73FC5E602D5C995D001D0DEF /* SearchPeopleDeadbeatDetailTableViewCell.swift in Sources */,
+				73FB9C902D5F1C3D00554CAD /* OpinionListCenterViewController.swift in Sources */,
 				7340E1AB2D5CD60F008FD5C7 /* SearchCompanyJudicialAuctioniewViewController.swift in Sources */,
 				73FC5E3C2D5C3403001D0DEF /* SearchShareholderViewController.swift in Sources */,
 				73868A472D55F56600CE107D /* BothReportViewController.swift in Sources */,
@@ -2060,6 +2080,7 @@
 				INFOPLIST_FILE = "问道云/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "问道云-测试版";
 				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "我们希望访问您的相册以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相册，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -2103,6 +2124,7 @@
 				INFOPLIST_FILE = "问道云/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "问道云-测试版";
 				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "我们希望访问您的相册以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相册，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

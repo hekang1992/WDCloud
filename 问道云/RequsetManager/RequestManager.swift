@@ -52,7 +52,7 @@ extension APIService: TargetType {
             
         case .uploadImageAPI(let params, _, let data, _):
             var formData = [MultipartFormData]()
-            formData.append(MultipartFormData(provider: .data(data), name: "shock", fileName: "shock.png", mimeType: "image/png"))
+            formData.append(MultipartFormData(provider: .data(data), name: "file", fileName: "file.png", mimeType: "image/png"))
             if let params = params {
                 for (key, value) in params {
                     if let value = value as? String, let data = value.data(using: .utf8) {
