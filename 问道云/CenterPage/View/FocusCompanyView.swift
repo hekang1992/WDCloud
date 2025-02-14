@@ -369,7 +369,12 @@ extension FocusCompanyView: UITableViewDelegate, UITableViewDataSource {
                 self.footerView.allBtn.setImage(UIImage(named: "Checkb_sel"), for: .normal)
             }
         }else {
-            print("没有编辑状态下点击")
+            let vc = ViewControllerUtils.findViewController(from: self)
+            let model = self.modelArray.value[indexPath.section].customerFollowList?[indexPath.row]
+            let detailVc = CompanyBothViewController()
+            detailVc.enityId.accept(model?.entityid ?? "")
+            detailVc.companyName.accept(model?.followtargetname ?? "")
+            vc?.navigationController?.pushViewController(detailVc, animated: true)
         }
     }
     

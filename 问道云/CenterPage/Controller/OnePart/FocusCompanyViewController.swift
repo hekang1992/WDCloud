@@ -215,8 +215,15 @@ class FocusCompanyViewController: WDBaseViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getAllGroup()
+        getRegion()
+        getIndustry()
+        getFocusCompanyList()
+    }
+    
 }
-
 
 extension FocusCompanyViewController {
     
