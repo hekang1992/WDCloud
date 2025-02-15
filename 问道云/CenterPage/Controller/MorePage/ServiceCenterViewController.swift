@@ -218,11 +218,6 @@ class ServiceCenterViewController: WDBaseViewController {
                 let opinionVc = OpinionCenterViewController()
                 self?.navigationController?.pushViewController(opinionVc, animated: true)
             }).disposed(by: disposeBag)
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         getMessageInfo()
     }
     
