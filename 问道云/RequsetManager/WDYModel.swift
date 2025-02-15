@@ -326,8 +326,14 @@ class itemsModel {
     var riskCount: Int?
     var idCardNumber: String?//身份证
     var resume: String?//简介
+    var total: Int?
+    var items: [itemsModel]
+    var content: String?
     init(json: JSON) {
         //风险数据公司
+        self.content = json["content"].stringValue
+        self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
+        self.total = json["total"].intValue
         self.navHeadTitleStr = json["navHeadTitleStr"].stringValue
         self.organizationNumber = json["organizationNumber"].stringValue
         self.resume = json["resume"].stringValue

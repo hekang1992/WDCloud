@@ -286,6 +286,20 @@ extension String {
     var removingEmojis: String {
         return self.filter { !$0.isEmoji }
     }
+    
+    var htmlToAttributedString: NSAttributedString? {
+        do {
+            let data = Data(self.utf8)
+            return try NSAttributedString(data: data, options: [
+                .documentType: NSAttributedString.DocumentType.html,
+                .characterEncoding: String.Encoding.utf8.rawValue
+            ], documentAttributes: nil)
+        } catch {
+            print("Error converting HTML to attributed string: \(error)")
+            return nil
+        }
+    }
+    
 }
 
 extension Character {

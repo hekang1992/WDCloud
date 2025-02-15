@@ -78,12 +78,16 @@ extension MyOpinioViewController {
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    if let modelArray = success.data?.rows {
+                    if let modelArray = success.data?.rows, !modelArray.isEmpty {
+                        self.emptyView.removeFromSuperview()
                         self.modelArray.accept(modelArray)
+                    }else {
+                        self.addNodataView(from: self.tableView)
                     }
                 }
                 break
             case .failure(_):
+                self.addNodataView(from: self.tableView)
                 break
             }
         }

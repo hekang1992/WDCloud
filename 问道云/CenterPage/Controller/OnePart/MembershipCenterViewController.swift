@@ -20,6 +20,7 @@ class MembershipCenterViewController: WDBaseViewController {
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "会员中心"
+        headView.lineView.isHidden = true
         headView.bgView.backgroundColor = .clear
         headView.oneBtn.setImage(UIImage(named: "wodediingdan"), for: .normal)
         return headView

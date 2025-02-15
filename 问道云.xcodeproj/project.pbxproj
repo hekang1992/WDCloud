@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		730384482D606572008AA7C3 /* MyOpinionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730384472D606572008AA7C3 /* MyOpinionViewCell.swift */; };
 		7303844A2D60731C008AA7C3 /* MyOpinioDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730384492D60731C008AA7C3 /* MyOpinioDetailViewController.swift */; };
+		7303844C2D609006008AA7C3 /* ServiceCenterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303844B2D609006008AA7C3 /* ServiceCenterViewCell.swift */; };
+		7303844E2D60961A008AA7C3 /* ServiceCenterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303844D2D60961A008AA7C3 /* ServiceCenterDetailViewController.swift */; };
 		730487F32D292EF40024265C /* BindPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F22D292EF40024265C /* BindPhoneViewController.swift */; };
 		730487F52D2932640024265C /* BindPhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F42D2932640024265C /* BindPhoneView.swift */; };
 		730487F72D2A525D0024265C /* HomeHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730487F62D2A525B0024265C /* HomeHeadView.swift */; };
@@ -324,6 +326,8 @@
 		68995903FB3663C128436F79 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		730384472D606572008AA7C3 /* MyOpinionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOpinionViewCell.swift; sourceTree = "<group>"; };
 		730384492D60731C008AA7C3 /* MyOpinioDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOpinioDetailViewController.swift; sourceTree = "<group>"; };
+		7303844B2D609006008AA7C3 /* ServiceCenterViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCenterViewCell.swift; sourceTree = "<group>"; };
+		7303844D2D60961A008AA7C3 /* ServiceCenterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCenterDetailViewController.swift; sourceTree = "<group>"; };
 		730487F22D292EF40024265C /* BindPhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindPhoneViewController.swift; sourceTree = "<group>"; };
 		730487F42D2932640024265C /* BindPhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindPhoneView.swift; sourceTree = "<group>"; };
 		730487F62D2A525B0024265C /* HomeHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeadView.swift; sourceTree = "<group>"; };
@@ -1111,6 +1115,7 @@
 				739D90BB2D26A72100D9421B /* GroupListViewController.swift */,
 				738043372D27A9F5009B25F8 /* AddGroupPeopleViewController.swift */,
 				73FB9C8B2D5F173500554CAD /* ServiceCenterViewController.swift */,
+				7303844D2D60961A008AA7C3 /* ServiceCenterDetailViewController.swift */,
 				73FB9C8D2D5F17BF00554CAD /* OpinionCenterViewController.swift */,
 				73FB9C8F2D5F1C3D00554CAD /* OpinionListCenterViewController.swift */,
 				73FB9C912D5F20C000554CAD /* OpinioUpLoadViewController.swift */,
@@ -1382,6 +1387,7 @@
 				738043312D278EED009B25F8 /* GroupListViewCell.swift */,
 				738043392D27DA66009B25F8 /* PopChangePeopleView.swift */,
 				730384472D606572008AA7C3 /* MyOpinionViewCell.swift */,
+				7303844B2D609006008AA7C3 /* ServiceCenterViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1885,6 +1891,7 @@
 				73950F772D55EE2B005AD034 /* MonitoringCell.swift in Sources */,
 				73FB9C882D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift in Sources */,
 				73A21DEA2D0C2F2B00FC4C49 /* RiskView.swift in Sources */,
+				7303844C2D609006008AA7C3 /* ServiceCenterViewCell.swift in Sources */,
 				73B362492D37A642003BD911 /* PeopleBothViewController.swift in Sources */,
 				7335F6EA2D0ADA050074985F /* MyDownloadSearchView.swift in Sources */,
 				73A21DEE2D0C32A600FC4C49 /* DiligenceView.swift in Sources */,
@@ -1983,6 +1990,7 @@
 				7340E17C2D5CCFEE008FD5C7 /* SearchPeopleTaxViolationViewController.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
 				73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */,
+				7303844E2D60961A008AA7C3 /* ServiceCenterDetailViewController.swift in Sources */,
 				7340E1C32D5DD576008FD5C7 /* SearchPeopleBackedLendingViewController.swift in Sources */,
 				737416382D0EC54500E6CD23 /* MembershipCenterView.swift in Sources */,
 				7374163E2D0FC4B300E6CD23 /* InviteFriendViewController.swift in Sources */,

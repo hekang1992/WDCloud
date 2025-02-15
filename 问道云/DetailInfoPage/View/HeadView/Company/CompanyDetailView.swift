@@ -114,7 +114,6 @@ class CompanyDetailView: BaseView {
             guard let self = self, let dataModel = dataModel else { return }
             if let items = dataModel.items?.first?.children {
                 var previousButton: UIButton?
-                
                 for (index, model) in items.enumerated() {
                     // 创建按钮
                     let button = UIButton(type: .custom)

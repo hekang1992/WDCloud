@@ -175,7 +175,7 @@ class LoginView: BaseView {
             make.top.equalTo(mlabel.snp.bottom).offset(36.5)
             make.left.equalToSuperview().offset(29.5)
             make.height.equalTo(17)
-            make.width.equalTo(27)
+            make.width.equalTo(34)
         }
         phoneTx.snp.makeConstraints { make in
             make.left.equalTo(numlabel.snp.right).offset(12)
