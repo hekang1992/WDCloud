@@ -118,7 +118,7 @@ class PopMoreBtnView: BaseView {
         btn2.snp.makeConstraints { make in
             make.left.equalTo(btn1.snp.right).offset(20)
             make.top.equalTo(nameLabel.snp.bottom).offset(26)
-            make.size.equalTo(CGSize(width: 70, height: 74))
+            make.size.equalTo(CGSize(width: 80, height: 74))
         }
         btn3.snp.makeConstraints { make in
             make.left.equalTo(btn2.snp.right).offset(20)
@@ -128,7 +128,7 @@ class PopMoreBtnView: BaseView {
         btn4.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(17.5)
             make.top.equalTo(btn3.snp.bottom).offset(17)
-            make.size.equalTo(CGSize(width: 120, height: 24))
+            make.size.equalTo(CGSize(width: 160, height: 24))
         }
         btn.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()

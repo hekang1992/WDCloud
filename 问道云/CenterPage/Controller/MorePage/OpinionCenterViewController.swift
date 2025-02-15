@@ -159,22 +159,22 @@ class OpinionCenterViewController: WDBaseViewController {
         
         oneBtn.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 339, height: 44))
+            make.size.equalTo(CGSize(width: 339.pix(), height: 44.pix()))
         }
         
         twoBtn.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 339, height: 44))
+            make.size.equalTo(CGSize(width: 339.pix(), height: 44.pix()))
         }
         
         threeBtn.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 339, height: 44))
+            make.size.equalTo(CGSize(width: 339.pix(), height: 44.pix()))
         }
         
         fourBtn.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 339, height: 44))
+            make.size.equalTo(CGSize(width: 339.pix(), height: 44.pix()))
         }
         
         fiveBtn.snp.makeConstraints { make in

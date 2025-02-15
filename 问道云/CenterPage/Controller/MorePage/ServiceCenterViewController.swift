@@ -136,28 +136,28 @@ class ServiceCenterViewController: WDBaseViewController {
         twoView.snp.makeConstraints { make in
             make.top.equalTo(oneView.snp.bottom).offset(1)
             make.left.right.equalToSuperview()
-            make.height.equalTo(150)
+            make.height.equalTo(150.pix())
         }
         
         oneImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.left.equalToSuperview().offset(13.5)
-            make.size.equalTo(CGSize(width: 170, height: 62))
+            make.size.equalTo(CGSize(width: 170.pix(), height: 62.pix()))
         }
         twoImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.right.equalToSuperview().offset(-13.5)
-            make.size.equalTo(CGSize(width: 170, height: 62))
+            make.size.equalTo(CGSize(width: 170.pix(), height: 62.pix()))
         }
         threeImageView.snp.makeConstraints { make in
             make.top.equalTo(oneImageView.snp.bottom).offset(6)
             make.left.equalToSuperview().offset(13.5)
-            make.size.equalTo(CGSize(width: 170, height: 62))
+            make.size.equalTo(CGSize(width: 170.pix(), height: 62.pix()))
         }
         fourImageView.snp.makeConstraints { make in
             make.top.equalTo(twoImageView.snp.bottom).offset(6)
             make.right.equalToSuperview().offset(-13.5)
-            make.size.equalTo(CGSize(width: 170, height: 62))
+            make.size.equalTo(CGSize(width: 170.pix(), height: 62.pix()))
         }
         
         view.addSubview(threeView)
