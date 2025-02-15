@@ -87,6 +87,8 @@ class ServiceCenterViewController: WDBaseViewController {
     
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.backgroundColor = .white
         return scrollView
     }()
@@ -176,13 +178,13 @@ class ServiceCenterViewController: WDBaseViewController {
             make.top.equalTo(threeView.snp.bottom).offset(1)
             make.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
-            make.height.equalTo(35)
+            make.height.equalTo(32)
         }
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(scrollView.snp.bottom)
+            make.top.equalTo(scrollView.snp.bottom).offset(1)
         }
         
         oneImageView
@@ -265,7 +267,7 @@ extension ServiceCenterViewController {
             // 设置按钮的约束
             button.snp.makeConstraints { make in
                 make.top.bottom.equalToSuperview()
-                make.width.equalTo(68)
+                make.width.equalTo(75)
                 if let previousButton = previousButton {
                     make.left.equalTo(previousButton.snp.right).offset(9)
                 } else {
