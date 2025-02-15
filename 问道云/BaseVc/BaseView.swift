@@ -122,7 +122,7 @@ class HeadView: UIView {
             make.centerX.equalToSuperview()
             make.left.equalTo(backBtn.snp.right).offset(10)
             make.centerY.equalTo(backBtn.snp.centerY)
-            make.height.equalTo(17)
+            make.height.equalTo(20)
         }
         headTitleView.snp.makeConstraints { make in
             make.height.equalTo(40)

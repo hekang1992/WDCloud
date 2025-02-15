@@ -262,7 +262,7 @@ class UserCenterView: BaseView {
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 24
+        layout.minimumLineSpacing = 20
         layout.minimumInteritemSpacing = (SCREEN_WIDTH - 300) / 3
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(UserCenterItemCell.self, forCellWithReuseIdentifier: "UserCenterItemCell")
@@ -452,11 +452,10 @@ class UserCenterView: BaseView {
         }
         collectionView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(28)
+            make.left.equalToSuperview().offset(20)
             make.bottom.equalToSuperview()
             make.top.equalTo(morelabel.snp.bottom).offset(13.5)
         }
-        
         
         modelArray.asObservable().bind(to: collectionView.rx.items(cellIdentifier: "UserCenterItemCell", cellType: UserCenterItemCell.self)) { row, model, cell in
             cell.model.accept(model)
@@ -486,7 +485,7 @@ class UserCenterView: BaseView {
 extension UserCenterView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 48, height: 43.5)
+        return CGSize(width: 52, height: 43.5)
     }
     
     override func layoutSubviews() {

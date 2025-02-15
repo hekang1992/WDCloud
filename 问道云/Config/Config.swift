@@ -27,6 +27,24 @@ let SHOW_HOME_LAUNCH = "SHOW_HOME_LAUNCH"
 //高德地图key
 let ATUO_MAP_KEY = "be5c7fd08d404c308286ca0ce04629d0"
 
+extension Double {
+    func pix() -> CGFloat {
+        return CGFloat.init(CGFloat.init(self)/375.0 * SCREEN_WIDTH)
+    }
+}
+
+extension CGFloat {
+    func pix() -> CGFloat {
+        return CGFloat.init(CGFloat.init(self)/375.0 * SCREEN_WIDTH)
+    }
+}
+
+extension Int {
+    func pix() -> CGFloat {
+        return CGFloat.init(CGFloat.init(self)/375.0 * SCREEN_WIDTH)
+    }
+}
+
 //颜色
 extension UIColor {
     convenience init?(cssStr: String) {
@@ -80,21 +98,20 @@ extension UIView {
 
 //字体
 extension UIFont {
-    
     class func regularFontOfSize(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: .regular)
+        return UIFont.systemFont(ofSize: size.pix(), weight: .regular)
     }
     
     class func mediumFontOfSize(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: .medium)
+        return UIFont.systemFont(ofSize: size.pix(), weight: .medium)
     }
     
     class func boldFontOfSize(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: .bold)
+        return UIFont.systemFont(ofSize: size.pix(), weight: .bold)
     }
     
     class func semiboldFontOfSize(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: .semibold)
+        return UIFont.systemFont(ofSize: size.pix(), weight: .semibold)
     }
 }
 

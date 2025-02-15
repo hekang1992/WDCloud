@@ -32,7 +32,7 @@ class SearchHotWordsListView: BaseView {
         descLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
             make.top.equalToSuperview().offset(7)
-            make.size.equalTo(CGSize(width: 50, height: 16.5))
+            make.height.equalTo(16.5)
         }
         lineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()

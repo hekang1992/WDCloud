@@ -35,7 +35,7 @@ class UserCenterItemCell: UICollectionViewCell {
         iconImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview()
-            make.size.equalTo(CGSize(width: 23, height: 23))
+            make.size.equalTo(CGSize(width: 23.pix(), height: 23.pix()))
         }
         desclabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

@@ -144,9 +144,7 @@ class DataModel {
         self.staff = json["staff"].intValue
         self.shareholder = json["shareholder"].intValue
         
-        self.tags = json["tags"].arrayValue.map({
-            $0.stringValue
-        })
+        self.tags = json["tags"].arrayValue.map { $0.stringValue }
         self.shareholderList = json["shareholderList"].arrayValue.map { shareholderListModel(json: $0) }
         self.personId = json["personId"].stringValue
         self.personName = json["personName"].stringValue
@@ -353,9 +351,7 @@ class itemsModel {
         self.shareCode = json["shareCode"].stringValue
         self.shareShortCode = json["shareShortCode"].stringValue
         self.datanumber = json["datanumber"].stringValue
-        self.relate = json["relate"].arrayValue.map({
-            $0.stringValue
-        })
+        self.relate = json["relate"].arrayValue.map { $0.stringValue }
         self.entityid = json["entityid"].stringValue
         self.personname = json["personname"].stringValue
         self.riskData = riskDataModel(json: json["riskData"])
@@ -593,7 +589,15 @@ class rowsModel {
     var relatedEntity: [relatedEntityModel]?
     var tags: [newstagsobjModel]?
     var viewrecordtype: String?
+    var feedbacktype: String?
+    var feedbacksubtype: String?
+    var question: String?
+    var piclist: [String]?
     init(json: JSON) {
+        self.piclist = json["piclist"].arrayValue.map { $0.stringValue }
+        self.question = json["question"].stringValue
+        self.feedbacksubtype = json["feedbacksubtype"].stringValue
+        self.feedbacktype = json["feedbacktype"].stringValue
         self.personnumber = json["personnumber"].stringValue
         self.viewrecordtype = json["viewrecordtype"].stringValue
         self.tags = json["tags"].arrayValue.map {
@@ -816,9 +820,7 @@ class firmInfoModel {
         self.registerCapitalCurrency = json["registerCapitalCurrency"].stringValue
         self.website = json["website"].stringValue
         self.usCreditCode = json["usCreditCode"].stringValue
-        self.industry = json["industry"].arrayValue.map({
-            $0.stringValue
-        })
+        self.industry = json["industry"].arrayValue.map { $0.stringValue }
     }
 }
 
