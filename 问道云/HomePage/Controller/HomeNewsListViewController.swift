@@ -60,7 +60,10 @@ class HomeNewsListViewController: WDBaseViewController {
             cell.block = { [weak self] model in
                 let type = model.type ?? ""
                 if type == "1" {//企业
-                    ToastViewConfig.showToast(message: model.abbName ?? "")
+                    let companyDetailVc = CompanyBothViewController()
+                    companyDetailVc.enityId.accept(model.tag ?? "")
+                    companyDetailVc.companyName.accept(model.name ?? "")
+                    self?.navigationController?.pushViewController(companyDetailVc, animated: true)
                 }else if type == "2" {//法典
                     let pageUrl = model.value ?? ""
                     if !pageUrl.isEmpty {

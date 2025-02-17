@@ -453,8 +453,9 @@ extension WeekReportViewController: UITableViewDelegate, UITableViewDataSource {
             self?.oneLineView.isHidden = false
             self?.twoLineView.isHidden = true
             self?.isClick = "0"
+            ViewHud.addLoadView()
             self?.getMonitoringCompanyInfo {
-                
+                ViewHud.hideLoadView()
             }
         }).disposed(by: disposeBag)
         
@@ -466,8 +467,9 @@ extension WeekReportViewController: UITableViewDelegate, UITableViewDataSource {
             self?.oneLineView.isHidden = true
             self?.twoLineView.isHidden = false
             self?.isClick = "1"
+            ViewHud.addLoadView()
             self?.getMonitoringPeopleInfo {
-                
+                ViewHud.hideLoadView()
             }
         }).disposed(by: disposeBag)
         
