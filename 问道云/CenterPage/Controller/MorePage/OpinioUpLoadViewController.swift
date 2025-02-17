@@ -256,7 +256,7 @@ class OpinioUpLoadViewController: WDBaseViewController {
         }
         
         oneImageView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
+            make.left.equalToSuperview().offset(16)
             make.top.equalToSuperview()
             make.size.equalTo(CGSize(width: 0, height: 0))
         }

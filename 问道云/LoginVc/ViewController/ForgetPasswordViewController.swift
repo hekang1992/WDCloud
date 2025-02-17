@@ -58,7 +58,7 @@ extension ForgetPasswordViewController {
         ViewHud.addLoadView()
         let dict = ["phone": self.forgetView.phoneTx.text ?? ""]
         man.requestAPI(params: dict,
-                       pageUrl: get_code,
+                       pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in
             ViewHud.hideLoadView()
             guard let self = self else { return }
@@ -97,7 +97,7 @@ extension ForgetPasswordViewController {
                     "code": self.forgetView.codeTx.text ?? "",
                     "password": self.forgetView.passTx.text ?? ""]
         man.requestAPI(params: dict,
-                       pageUrl: rest_password,
+                       pageUrl: "/operation/messageVerification/resetpassword",
                        method: .post) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {

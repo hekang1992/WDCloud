@@ -83,7 +83,7 @@ extension WDLoginViewController {
         ViewHud.addLoadView()
         let dict = ["phone": self.loginView.phoneTx.text ?? ""]
         man.requestAPI(params: dict,
-                       pageUrl: get_code,
+                       pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {

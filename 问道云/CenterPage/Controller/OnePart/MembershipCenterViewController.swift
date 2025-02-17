@@ -206,7 +206,7 @@ extension MembershipCenterViewController {
         ViewHud.addLoadView()
         let emptyDict = [String: Any]()
         man.requestAPI(params: emptyDict,
-                       pageUrl: getCombo_selectmember,
+                       pageUrl: "/operation/combo/selectmember",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {
@@ -227,7 +227,7 @@ extension MembershipCenterViewController {
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
-                       pageUrl: buymore_info,
+                       pageUrl: "/operation/enterpriseclientbm/buymoreinfo",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             guard let self = self else { return }

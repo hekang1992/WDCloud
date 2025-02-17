@@ -193,7 +193,7 @@ extension DonateMembershipViewController {
         ViewHud.addLoadView()
         let emptyDict = [String: Any]()
         man.requestAPI(params: emptyDict,
-                       pageUrl: getCombo_selectmember,
+                       pageUrl: "/operation/combo/selectmember",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {

@@ -258,7 +258,7 @@ extension DeleteSureViewController {
         ViewHud.addLoadView()
         let dict = ["phone": self.numLabel.text ?? ""]
         man.requestAPI(params: dict,
-                       pageUrl: get_code,
+                       pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in
             ViewHud.hideLoadView()
             guard let self = self else { return }

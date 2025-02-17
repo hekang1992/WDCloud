@@ -246,7 +246,7 @@ extension WDHomeViewController {
         let dict = ["moduleType": "1",
                     "appleVersion": appleVersion]
         man.requestAPI(params: dict,
-                       pageUrl: customer_menuTree,
+                       pageUrl: "/operation/customermenu/customerMenuTree",
                        method: .get) { result in
             ViewHud.hideLoadView()
             switch result {
@@ -267,7 +267,7 @@ extension WDHomeViewController {
         ViewHud.addLoadView()
         let dict = ["binnertype": "1"]
         man.requestAPI(params: dict,
-                       pageUrl: bannerHome_url,
+                       pageUrl: "/operation/configurationoc/selectconfigurationenabledstate2",
                        method: .get) { [weak self] reslut in
             ViewHud.hideLoadView()
             switch reslut {

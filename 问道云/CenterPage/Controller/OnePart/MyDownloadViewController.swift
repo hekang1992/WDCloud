@@ -302,7 +302,7 @@ extension MyDownloadViewController {
                     "pageNum": pageNum,
                     "pageSize": 10] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: customerDownload_list,
+                       pageUrl: "/operation/mydownload/customerDownload",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             guard let self = self else { return }

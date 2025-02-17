@@ -73,7 +73,7 @@ extension GetCodeViewController {
         ViewHud.addLoadView()
         let dict = ["phone": self.phoneStr]
         man.requestAPI(params: dict,
-                       pageUrl: get_code,
+                       pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in
             guard let self = self else { return }
             ViewHud.hideLoadView()
@@ -96,7 +96,7 @@ extension GetCodeViewController {
         let dict = ["phone": self.phoneStr,
                     "code": code]
         man.requestAPI(params: dict,
-                       pageUrl: get_code_login,
+                       pageUrl: "/auth/loginmessage",
                        method: .post) { result in
             ViewHud.hideLoadView()
             switch result {

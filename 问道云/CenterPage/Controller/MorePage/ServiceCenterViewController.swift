@@ -192,7 +192,8 @@ class ServiceCenterViewController: WDBaseViewController {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                ToastViewConfig.showToast(message: "数据纠错")
+                let dataVc = DataErrorCorrectionViewController()
+                self?.navigationController?.pushViewController(dataVc, animated: true)
             }).disposed(by: disposeBag)
         
         twoImageView
@@ -200,7 +201,8 @@ class ServiceCenterViewController: WDBaseViewController {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                ToastViewConfig.showToast(message: "添加企业")
+                let dataVc = AddCompanyViewController()
+                self?.navigationController?.pushViewController(dataVc, animated: true)
             }).disposed(by: disposeBag)
         
         threeImageView

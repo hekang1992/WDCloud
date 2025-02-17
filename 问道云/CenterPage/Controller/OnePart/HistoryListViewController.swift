@@ -59,7 +59,7 @@ extension HistoryListViewController {
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: browsing_History,
+                       pageUrl: "/operation/clientbrowsecb/selectBrowserecord",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             guard let self = self else { return }

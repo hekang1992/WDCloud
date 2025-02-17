@@ -137,7 +137,7 @@ extension RiskSettingViewController {
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
-                       pageUrl: buymore_info,
+                       pageUrl: "/operation/enterpriseclientbm/buymoreinfo",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             guard let self = self else { return }

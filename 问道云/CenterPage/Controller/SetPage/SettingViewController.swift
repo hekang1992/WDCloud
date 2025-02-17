@@ -172,7 +172,7 @@ extension SettingViewController {
         ViewHud.addLoadView()
         let dict = [String: Any]()
         man.requestAPI(params: dict,
-                       pageUrl: log_out,
+                       pageUrl: "/auth/logout",
                        method: .delete) { result in
             ViewHud.hideLoadView()
             switch result {

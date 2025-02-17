@@ -121,7 +121,7 @@ extension UserAllOrderSController {
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: myorder_info,
+                       pageUrl: "/operation/customerorder/myorder",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             guard let self = self else { return }
@@ -173,7 +173,7 @@ extension UserAllOrderSController {
         let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
-                       pageUrl: combotype_list,
+                       pageUrl: "/operation/combotype/list",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {

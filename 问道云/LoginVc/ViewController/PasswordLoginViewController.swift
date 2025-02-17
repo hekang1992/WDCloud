@@ -70,7 +70,7 @@ extension PasswordLoginViewController {
         let dict = ["username": self.passView.phoneTx.text ?? "",
                     "password": self.passView.passTx.text ?? ""]
         man.requestAPI(params: dict,
-                       pageUrl: password_login,
+                       pageUrl: "/auth/customerlogin",
                        method: .post) { result in
             ViewHud.hideLoadView()
             switch result {

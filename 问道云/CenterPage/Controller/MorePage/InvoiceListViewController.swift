@@ -106,7 +106,7 @@ extension InvoiceListViewController {
         let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
-                       pageUrl: invoiceriseit_selecinvoicerise,
+                       pageUrl: "/operation/invoiceriseit/selecinvoicerise",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             guard let self = self else { return }
