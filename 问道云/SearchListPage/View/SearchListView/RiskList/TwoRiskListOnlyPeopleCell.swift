@@ -140,12 +140,12 @@ class TwoRiskListOnlyPeopleCell: BaseViewCell {
             self.nameLabel.attributedText = TextStyler.styledText(for: model.name ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
             
             let count = String(model.relevanceCount ?? 0)
-            numlabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业")
+            numlabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业", font: .mediumFontOfSize(size: 11))
             
             let riskOne = String(model.riskNum1 ?? 0)
             let riskTwo = String(model.riskNum2 ?? 0)
-            self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskOne, fullText: "共\(riskOne)条自身风险")
-            self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskTwo, fullText: "\(riskTwo)条关联风险")
+            self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskOne, fullText: "共\(riskOne)条自身风险", font: .regularFontOfSize(size: 12))
+            self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskTwo, fullText: "\(riskTwo)条关联风险", font: .regularFontOfSize(size: 12))
             
         }).disposed(by: disposeBag)
     }

@@ -186,7 +186,7 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
         headView.backgroundColor = .init(cssStr: "#F3F3F3")
         headView.addSubview(numLabel)
         //搜索的总结果
-        numLabel.attributedText = GetRedStrConfig.getRedStr(from: num, fullText: "搜索到\(num)条结果")
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: num, fullText: "搜索到\(num)条结果", font: .mediumFontOfSize(size: 12))
         numLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.height.equalTo(25)

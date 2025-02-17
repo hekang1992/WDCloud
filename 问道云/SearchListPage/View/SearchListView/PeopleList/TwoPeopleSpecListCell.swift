@@ -138,7 +138,7 @@ class TwoPeopleSpecListCell: BaseViewCell {
             nameLabel.text = model.personName ?? ""
             
             let count = String(model.companyCount ?? 0)
-            self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业")
+            self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业", font: .regularFontOfSize(size: 13))
             
             //关联公司
             if let listCompany = model.listCompany {

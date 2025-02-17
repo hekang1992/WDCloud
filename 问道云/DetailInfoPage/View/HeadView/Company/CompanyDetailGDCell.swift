@@ -176,7 +176,7 @@ class DetailPeopleInfoCell: UICollectionViewCell {
             mlabel.text = model.name ?? "--"
             mlabel1.text = model.positionName ?? "--"
             let count = String(model.count ?? 0)
-            mlabel2.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "关联企业\(count)家", colorStr: "#333333")
+            mlabel2.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "关联企业\(count)家", colorStr: "#333333", font: .mediumFontOfSize(size: 11))
         }).disposed(by: disposeBag)
     }
     

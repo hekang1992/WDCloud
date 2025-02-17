@@ -366,11 +366,10 @@ class BiaoQianView: BaseView {
     
     lazy var timeLabel: PaddedLabel = {
         let timeLabel = PaddedLabel()
-        timeLabel.font = .regularFontOfSize(size: 9)
+        timeLabel.font = .regularFontOfSize(size: 8)
         timeLabel.layer.borderWidth = 1
         timeLabel.layer.borderColor = UIColor.init(cssStr: "#9FA4AD")?.cgColor
         timeLabel.layer.cornerRadius = 1
-        
         return timeLabel
     }()
     

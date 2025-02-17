@@ -200,8 +200,8 @@ class TwoRiskListCompanyCell: BaseViewCell {
             
             let riskOne = String(model.riskNum1 ?? 0)
             let riskTwo = String(model.riskNum2 ?? 0)
-            self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskOne, fullText: "共\(riskOne)条自身风险")
-            self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskTwo, fullText: "\(riskTwo)条关联风险")
+            self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskOne, fullText: "共\(riskOne)条自身风险", font: .regularFontOfSize(size: 12))
+            self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskTwo, fullText: "\(riskTwo)条关联风险", font: .regularFontOfSize(size: 12))
             
             self.tagListView.removeAllTags()
             self.tagListView.addTag(model.entityStatus ?? "")

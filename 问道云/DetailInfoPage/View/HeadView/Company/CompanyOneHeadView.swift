@@ -79,11 +79,11 @@ class CompanyOneHeadView: BaseView {
     }()
     
     lazy var moreButton: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.font = .mediumFontOfSize(size: 12)
-        button.setTitleColor(.init(cssStr: "#3F96FF"), for: .normal)
-        button.setTitle("展开", for: .normal)
-        return button
+        let moreButton = UIButton()
+        moreButton.titleLabel?.font = .mediumFontOfSize(size: 12)
+        moreButton.setTitleColor(.init(cssStr: "#3F96FF"), for: .normal)
+        moreButton.setTitle("展开", for: .normal)
+        return moreButton
     }()
     
     lazy var nameView: BiaoQianView = {
@@ -252,7 +252,7 @@ class CompanyOneHeadView: BaseView {
         moreButton.snp.makeConstraints { make in
             make.centerY.equalTo(desLabel.snp.centerY)
             make.left.equalTo(desLabel.snp.right).offset(10)
-            make.size.equalTo(CGSize(width: 24, height: 16.5))
+            make.height.equalTo(16.5)
         }
         grayView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

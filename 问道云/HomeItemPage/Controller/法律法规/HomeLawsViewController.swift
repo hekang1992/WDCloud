@@ -151,7 +151,7 @@ extension HomeLawsViewController: UITableViewDelegate, UITableViewDataSource {
         nameLabel.font = .regularFontOfSize(size: 12)
         nameLabel.textColor = .init(cssStr: "#666666")
         let count = String(self.model?.total ?? 0)
-        nameLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)条法律法规信息")
+        nameLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)条法律法规信息", font: .regularFontOfSize(size: 12))
         headView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()

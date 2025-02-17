@@ -102,7 +102,7 @@ class TwoPeopleCoopViewCell: UICollectionViewCell {
             
             let companyCountText = String(data.count ?? 0)
             let fullText = "合作\(companyCountText)次"
-            numLabel.attributedText = GetRedStrConfig.getRedStr(from: companyCountText, fullText: fullText)
+            numLabel.attributedText = GetRedStrConfig.getRedStr(from: companyCountText, fullText: fullText, font: .regularFontOfSize(size: 10))
             companyLabel.text = data.entityName ?? ""
         }).disposed(by: disposeBag)
         
