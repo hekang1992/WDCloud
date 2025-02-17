@@ -3,22 +3,4 @@
    uuid = "C6710648-1641-4D7D-B92E-921CD04CB3F1"
    type = "0"
    version = "2.0">
-   <Breakpoints>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "28B6D5A0-1AEF-486B-87CB-E85A74679C7C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x95ee;&#x9053;&#x4e91;/SearchListPage/Controller/SearchPeopleViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "380"
-            endingLineNumber = "380"
-            landmarkName = "hotsWordsUI(data:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-   </Breakpoints>
 </Bucket>

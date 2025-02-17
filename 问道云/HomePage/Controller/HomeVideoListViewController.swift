@@ -77,7 +77,7 @@ class HomeVideoListViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] model in
                 guard let self = self else { return }
                 let videofile = model.videofile ?? ""
-                self.pushWebPage(from: base_url + videofile)
+                self.pushWebPage(from: videofile)
         }).disposed(by: disposeBag)
         
     }
