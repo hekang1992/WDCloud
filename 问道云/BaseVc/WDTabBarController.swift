@@ -20,11 +20,15 @@ class WDTabBarController: UITabBarController, UITabBarControllerDelegate {
         tabBar.layer.shadowOpacity = 0.1
         tabBar.layer.shadowOffset = CGSize(width: 0, height: -2)
         tabBar.layer.shadowRadius = 10
-        
         let homeVC = WDHomeViewController()
         let riskVc = WDRiskViewController()
-        let diligenceVc = WDDiligenceViewController()
+        var diligenceVc = WDBaseViewController()
         let centerVC = WDCenterViewController()
+        if IS_LOGIN {
+            diligenceVc = DueDiligenceViewController()
+        }else {
+            diligenceVc = WDDiligenceViewController()
+        }
         
         homeVC.tabBarItem = UITabBarItem(
             title: "首页",

@@ -70,7 +70,7 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
     func setupViewControllers() {
         listVCArray.forEach { $0.view.removeFromSuperview() }
         listVCArray.removeAll()
-        for _ in 0..<3 {
+        for _ in 0..<2 {
             let vc = DiligenceListViewController()
             cocsciew.addSubview(vc.view)
             listVCArray.append(vc)
@@ -101,12 +101,13 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
         segmentedView.delegate = self
         segmentedView.backgroundColor = .clear
         segmurce = JXSegmentedTitleDataSource()
-        segmurce.titles = ["基础版", "专业版", "定制版"]
+        segmurce.titles = ["企业尽职调查", "专项尽职调查"]
         segmurce.isTitleColorGradientEnabled = true
         segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
         segmurce.titleNormalFont = .regularFontOfSize(size: 14)
-        segmurce.titleNormalColor = .white
+        segmurce.titleNormalColor = UIColor.white.withAlphaComponent(0.6)
         segmurce.titleSelectedColor = .white
+        
         segmentedView.dataSource = segmurce
         let indicator = createSegmentedIndicator()
         segmentedView.indicators = [indicator]
@@ -116,7 +117,7 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
     
     private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
         let indicator = JXSegmentedIndicatorLineView()
-        indicator.indicatorWidth = JXSegmentedViewAutomaticDimension
+        indicator.indicatorWidth = 30
         indicator.indicatorHeight = 2
         indicator.lineStyle = .lengthen
         indicator.indicatorColor = .white

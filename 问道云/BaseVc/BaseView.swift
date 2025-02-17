@@ -132,7 +132,7 @@ class HeadView: UIView {
         }
         oneBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
-            make.right.equalToSuperview().offset(-10)
+            make.right.equalToSuperview().offset(-14)
             make.height.equalTo(25)
         }
         twoBtn.snp.makeConstraints { make in

@@ -189,6 +189,10 @@
 		73950F772D55EE2B005AD034 /* MonitoringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F762D55EE2B005AD034 /* MonitoringCell.swift */; };
 		739527F02D62CB360020589C /* DataErrorCorrectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739527EF2D62CB360020589C /* DataErrorCorrectionViewController.swift */; };
 		739527F22D62CBB30020589C /* AddCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739527F12D62CBB30020589C /* AddCompanyViewController.swift */; };
+		739527F62D6334EE0020589C /* DueDiligenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739527F52D6334EE0020589C /* DueDiligenceViewController.swift */; };
+		739527F82D633EB60020589C /* OneDueDiligenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739527F72D633EB60020589C /* OneDueDiligenceViewController.swift */; };
+		739527FA2D633EBE0020589C /* TwoDueDiligenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739527F92D633EBE0020589C /* TwoDueDiligenceViewController.swift */; };
+		739527FC2D633EC70020589C /* ThreeDueDiligenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739527FB2D633EC70020589C /* ThreeDueDiligenceViewController.swift */; };
 		739D90BC2D26A72100D9421B /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739D90BB2D26A72100D9421B /* GroupListViewController.swift */; };
 		739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739D90BD2D26AB1B00D9421B /* GroupListView.swift */; };
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
@@ -518,6 +522,10 @@
 		73950F762D55EE2B005AD034 /* MonitoringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringCell.swift; sourceTree = "<group>"; };
 		739527EF2D62CB360020589C /* DataErrorCorrectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataErrorCorrectionViewController.swift; sourceTree = "<group>"; };
 		739527F12D62CBB30020589C /* AddCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCompanyViewController.swift; sourceTree = "<group>"; };
+		739527F52D6334EE0020589C /* DueDiligenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDiligenceViewController.swift; sourceTree = "<group>"; };
+		739527F72D633EB60020589C /* OneDueDiligenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDueDiligenceViewController.swift; sourceTree = "<group>"; };
+		739527F92D633EBE0020589C /* TwoDueDiligenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoDueDiligenceViewController.swift; sourceTree = "<group>"; };
+		739527FB2D633EC70020589C /* ThreeDueDiligenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDueDiligenceViewController.swift; sourceTree = "<group>"; };
 		739D90BB2D26A72100D9421B /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		739D90BD2D26AB1B00D9421B /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -1252,6 +1260,10 @@
 			children = (
 				7325A7C32CFEEE8B0043C196 /* WDDiligenceViewController.swift */,
 				73A21DEF2D0C39BF00FC4C49 /* DiligenceListViewController.swift */,
+				739527F52D6334EE0020589C /* DueDiligenceViewController.swift */,
+				739527F72D633EB60020589C /* OneDueDiligenceViewController.swift */,
+				739527F92D633EBE0020589C /* TwoDueDiligenceViewController.swift */,
+				739527FB2D633EC70020589C /* ThreeDueDiligenceViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1813,6 +1825,7 @@
 				7340E1782D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift in Sources */,
 				73EDE9F22D59F0A900A0A7E3 /* OneReportViewController.swift in Sources */,
 				73807D592D33808400F8B90D /* CompanyCollectionCell.swift in Sources */,
+				739527FA2D633EBE0020589C /* TwoDueDiligenceViewController.swift in Sources */,
 				73FB9C922D5F20C000554CAD /* OpinioUpLoadViewController.swift in Sources */,
 				7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */,
 				733B5FF62D57230A00ADE7C5 /* PopCancelMonitoringView.swift in Sources */,
@@ -1882,6 +1895,7 @@
 				73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
 				737416482D0FD94B00E6CD23 /* AddInvoiceViewCell.swift in Sources */,
+				739527F62D6334EE0020589C /* DueDiligenceViewController.swift in Sources */,
 				73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */,
 				73FB9C8C2D5F173500554CAD /* ServiceCenterViewController.swift in Sources */,
 				7340E1B02D5DC535008FD5C7 /* SearchLoanDefaultViewController.swift in Sources */,
@@ -1970,6 +1984,7 @@
 				73E971792D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift in Sources */,
 				73EDE9E42D59C2B500A0A7E3 /* HomeNoticeListCell.swift in Sources */,
 				7340E1CC2D5DE619008FD5C7 /* SearchBeneficialOwnerViewController.swift in Sources */,
+				739527FC2D633EC70020589C /* ThreeDueDiligenceViewController.swift in Sources */,
 				7325A7B82CFEECF00043C196 /* WDNavigationController.swift in Sources */,
 				73E971732D2FCD8500F12B15 /* TwoCompanyView.swift in Sources */,
 				73C6B1B62D3503D400CD3816 /* MyCollectionSpecialReusableView.swift in Sources */,
@@ -2068,6 +2083,7 @@
 				7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */,
 				73C36A812D2D1BAA00D6DC46 /* SearchHotWordsListView.swift in Sources */,
 				734896EA2D3A429500B028FE /* RiskUnioViewCell.swift in Sources */,
+				739527F82D633EB60020589C /* OneDueDiligenceViewController.swift in Sources */,
 				73EABF922D320F460052F4AB /* TwoRiskListView.swift in Sources */,
 				737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,
