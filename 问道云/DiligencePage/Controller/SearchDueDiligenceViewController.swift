@@ -105,7 +105,7 @@ class SearchDueDiligenceViewController: WDBaseViewController {
                 if keywords.isEmpty {
                     bgView.isHidden = false
                 }else {
-                    bgView.isHidden = true
+//                    bgView.isHidden = true
                 }
                 self.pageIndex = 1
                 self.keywords = keywords
@@ -169,6 +169,11 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
                             self.tableView.mj_footer?.isHidden = true
                         }
                         self.tableView.reloadData()
+                    }
+                }else {
+                    if let self = self {
+                        self.bgView.isHidden = false
+                        self.tableView.isHidden = true
                     }
                 }
                 break
