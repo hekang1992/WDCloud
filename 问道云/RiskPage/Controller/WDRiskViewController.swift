@@ -44,7 +44,7 @@ class WDRiskViewController: WDBaseViewController {
     
     var JXTableHeaderViewHeight: Int = Int(StatusHeightManager.navigationBarHeight)
     
-    var JXheightForHeaderInSection: Int = 56
+    var JXheightForHeaderInSection: Int = 55
     
     lazy var pagingView: JXPagingView = preferredPagingView()
     
