@@ -245,17 +245,17 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
                    code == 200 {
                     var pageUrl: String = ""
                     if ddnumber == "1" {
-                        
+                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-basic"
                     } else if ddnumber == "5" {
-                        
+                        pageUrl = base_url + "/due-diligence/form-fill?type=badAsset"
                     } else if ddnumber == "6" {
-                        
+                        pageUrl = base_url + "/due-diligence/form-fill?type=corporateLoan"
                     } else if ddnumber == "11" {
-                        
+                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-professions"
                     } else if ddnumber == "15" {
-                        
+                        pageUrl = base_url + ""
                     } else if ddnumber == "16" {
-                        
+                        pageUrl = base_url + ""
                     }
                     self.pushWebPage(from: pageUrl)
                 }

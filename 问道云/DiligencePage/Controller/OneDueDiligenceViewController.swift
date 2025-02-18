@@ -28,9 +28,9 @@ class OneDueDiligenceViewController: WDBaseViewController {
         return twoView
     }()
     
-    var ddonenumber: String = ""
+    var ddonenumber: String = "1"
     
-    var ddtwonumber: String = ""
+    var ddtwonumber: String = "11"
     
     override func viewDidLoad() {
         super.viewDidLoad()

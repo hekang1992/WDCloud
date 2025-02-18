@@ -48,6 +48,9 @@ class WDDiligenceViewController: WDBaseViewController {
         addsentMentView()
         //添加子控制器
         setupViewControllers()
+        headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.popLogin()
+        }).disposed(by: disposeBag)
     }
 }
 

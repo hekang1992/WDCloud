@@ -298,6 +298,7 @@
 		73FB9C902D5F1C3D00554CAD /* OpinionListCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C8F2D5F1C3D00554CAD /* OpinionListCenterViewController.swift */; };
 		73FB9C922D5F20C000554CAD /* OpinioUpLoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C912D5F20C000554CAD /* OpinioUpLoadViewController.swift */; };
 		73FB9C942D5F22A800554CAD /* MyOpinioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C932D5F22A800554CAD /* MyOpinioViewController.swift */; };
+		73FBF6912D648CE30031452F /* DueDiligenceSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FBF6902D648CE30031452F /* DueDiligenceSettingViewController.swift */; };
 		73FC5E372D5B2AED001D0DEF /* SanctionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */; };
 		73FC5E3C2D5C3403001D0DEF /* SearchShareholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E3B2D5C3403001D0DEF /* SearchShareholderViewController.swift */; };
 		73FC5E3E2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E3D2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift */; };
@@ -639,6 +640,7 @@
 		73FB9C8F2D5F1C3D00554CAD /* OpinionListCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpinionListCenterViewController.swift; sourceTree = "<group>"; };
 		73FB9C912D5F20C000554CAD /* OpinioUpLoadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpinioUpLoadViewController.swift; sourceTree = "<group>"; };
 		73FB9C932D5F22A800554CAD /* MyOpinioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOpinioViewController.swift; sourceTree = "<group>"; };
+		73FBF6902D648CE30031452F /* DueDiligenceSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDiligenceSettingViewController.swift; sourceTree = "<group>"; };
 		73FC5E362D5B2AED001D0DEF /* SanctionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanctionTableViewCell.swift; sourceTree = "<group>"; };
 		73FC5E3B2D5C3403001D0DEF /* SearchShareholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShareholderViewController.swift; sourceTree = "<group>"; };
 		73FC5E3D2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyShareholderViewController.swift; sourceTree = "<group>"; };
@@ -1238,13 +1240,13 @@
 		73A21DE52D0C2E0800FC4C49 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				730CEDFF2D54AE2C002DE9DF /* SearchMonitoringViewController.swift */,
 				7325A7C12CFEEE6E0043C196 /* WDRiskViewController.swift */,
 				73868A402D55F53700CE107D /* DailyReportViewController.swift */,
 				73868A422D55F54E00CE107D /* WeekReportViewController.swift */,
 				73868A442D55F55A00CE107D /* MonthReportViewController.swift */,
 				73868A462D55F56600CE107D /* BothReportViewController.swift */,
 				73FB9C832D5EEC3700554CAD /* RiskSettingViewController.swift */,
+				730CEDFF2D54AE2C002DE9DF /* SearchMonitoringViewController.swift */,
 				73FB9C872D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift */,
 			);
 			path = Controller;
@@ -1277,6 +1279,7 @@
 				739527F92D633EBE0020589C /* TwoDueDiligenceViewController.swift */,
 				739527FB2D633EC70020589C /* ThreeDueDiligenceViewController.swift */,
 				73C0070C2D644EE1003C3CE1 /* SearchDueDiligenceViewController.swift */,
+				73FBF6902D648CE30031452F /* DueDiligenceSettingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1953,6 +1956,7 @@
 				7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */,
 				73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */,
 				73C36A712D2D050200D6DC46 /* SearchHeadView.swift in Sources */,
+				73FBF6912D648CE30031452F /* DueDiligenceSettingViewController.swift in Sources */,
 				73950F752D55B3E7005AD034 /* AddMonitoringListView.swift in Sources */,
 				73C0070D2D644EE1003C3CE1 /* SearchDueDiligenceViewController.swift in Sources */,
 				73C6B1B42D34FAB700CD3816 /* CompanyOneHeadView.swift in Sources */,

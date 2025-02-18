@@ -97,7 +97,10 @@ class DueDiligenceViewController: WDBaseViewController {
         
         addSegmentedPageViewController()
         setupPageViewControllers()
-        
+        oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            let settingVc = DueDiligenceSettingViewController()
+            self?.navigationController?.pushViewController(settingVc, animated: true)
+        }).disposed(by: disposeBag)
     }
 
 }
@@ -120,7 +123,7 @@ extension DueDiligenceViewController: HGSegmentedPageViewControllerDelegate {
     }
     
     private func setupPageViewControllers() {
-        let titles: [String] = ["基础班", "专业版", "定制版"]
+        let titles: [String] = ["基础版", "专业版", "定制版"]
         segmentedPageViewController.pageViewControllers = [oneVc, twoVc, threeVc]
         segmentedPageViewController.selectedPage = 0
         self.segmentedPageViewController.categoryView.titles = titles
