@@ -245,17 +245,17 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
                    code == 200 {
                     var pageUrl: String = ""
                     if ddnumber == "1" {
-                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-basic"
-                    } else if ddnumber == "5" {
-                        pageUrl = base_url + "/due-diligence/form-fill?type=badAsset"
+                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-basic&entityId=\(firmnumber)&customernumber=\(customernumber)"
                     } else if ddnumber == "6" {
-                        pageUrl = base_url + "/due-diligence/form-fill?type=corporateLoan"
+                        pageUrl = base_url + "/due-diligence/form-fill?type=badAsset&entityId=\(firmnumber)&customernumber=\(customernumber)"
+                    } else if ddnumber == "7" {
+                        pageUrl = base_url + "/due-diligence/form-fill?type=corporateLoan&entityId=\(firmnumber)&customernumber=\(customernumber)"
                     } else if ddnumber == "11" {
-                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-professions"
-                    } else if ddnumber == "15" {
-                        pageUrl = base_url + ""
+                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-professions&entityId=\(firmnumber)&customernumber=\(customernumber)"
                     } else if ddnumber == "16" {
-                        pageUrl = base_url + ""
+                        pageUrl = base_url + "/due-diligence/form-fill?type=badAsset&entityId=\(firmnumber)&customernumber=\(customernumber)&pageType=firm-professions"
+                    } else if ddnumber == "17" {
+                        pageUrl = base_url + "/due-diligence/form-fill?type=corporateLoan&entityId=\(firmnumber)&customernumber=\(customernumber)&pageType=firm-professions"
                     }
                     self.pushWebPage(from: pageUrl)
                 }
