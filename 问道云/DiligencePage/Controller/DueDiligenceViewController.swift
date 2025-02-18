@@ -35,18 +35,34 @@ class DueDiligenceViewController: WDBaseViewController {
     
     lazy var segmentedPageViewController: HGSegmentedPageViewController = {
         let segmentedPageViewController = HGSegmentedPageViewController()
+        segmentedPageViewController.categoryView.backgroundColor = .clear
         segmentedPageViewController.categoryView.alignment = .center
         segmentedPageViewController.categoryView.itemSpacing = 25
         segmentedPageViewController.categoryView.topBorder.isHidden = true
         segmentedPageViewController.categoryView.itemWidth = SCREEN_WIDTH * 0.25
-        segmentedPageViewController.categoryView.vernierWidth = 15
+        segmentedPageViewController.categoryView.vernierWidth = 20
         segmentedPageViewController.categoryView.titleNomalFont = .mediumFontOfSize(size: 14)
         segmentedPageViewController.categoryView.titleSelectedFont = .mediumFontOfSize(size: 14)
-        segmentedPageViewController.categoryView.titleNormalColor = .init(cssStr: "#9FA4AD")
-        segmentedPageViewController.categoryView.titleSelectedColor = .init(cssStr: "#333333")
-        segmentedPageViewController.categoryView.vernier.backgroundColor = .init(cssStr: "#547AFF")
+        segmentedPageViewController.categoryView.titleNormalColor = .init(cssStr: "#FFFFFF")?.withAlphaComponent(0.6)
+        segmentedPageViewController.categoryView.titleSelectedColor = .init(cssStr: "#FFFFFF")
+        segmentedPageViewController.categoryView.vernier.backgroundColor = .init(cssStr: "#FFFFFF")
         segmentedPageViewController.delegate = self
         return segmentedPageViewController
+    }()
+    
+    lazy var oneVc: OneDueDiligenceViewController = {
+        let oneVc = OneDueDiligenceViewController()
+        return oneVc
+    }()
+    
+    lazy var twoVc: TwoDueDiligenceViewController = {
+        let twoVc = TwoDueDiligenceViewController()
+        return twoVc
+    }()
+    
+    lazy var threeVc: ThreeDueDiligenceViewController = {
+        let threeVc = ThreeDueDiligenceViewController()
+        return threeVc
     }()
 
     override func viewDidLoad() {
@@ -75,10 +91,12 @@ class DueDiligenceViewController: WDBaseViewController {
             guard let self = self else { return }
             nameBtn.isSelected.toggle()
             nameBtn.setTitle(nameBtn.isSelected ? "专项尽职调查" : "企业尽职调查", for: .normal)
+            oneVc.headGrand = nameBtn.isSelected
+            twoVc.headGrand = nameBtn.isSelected
         }).disposed(by: disposeBag)
         
-//        addSegmentedPageViewController()
-//        setupPageViewControllers()
+        addSegmentedPageViewController()
+        setupPageViewControllers()
         
     }
 
@@ -91,25 +109,25 @@ extension DueDiligenceViewController: HGSegmentedPageViewControllerDelegate {
         nameBtn.layoutButtonEdgeInsets(style: .right, space: 8)
     }
     
-//    private func addSegmentedPageViewController() {
-//        self.addChild(self.segmentedPageViewController)
-//        self.view.addSubview(self.segmentedPageViewController.view)
-//        self.segmentedPageViewController.didMove(toParent: self)
-//        self.segmentedPageViewController.view.snp.makeConstraints { make in
-//            make.left.bottom.right.equalToSuperview()
-//            make.top.equalTo(headView.snp.bottom)
-//        }
-//    }
-//    
-//    private func setupPageViewControllers() {
-//        let titles: [String] = ["企业", "人员"]
-//        segmentedPageViewController.pageViewControllers = [companyVc, peopleVc]
-//        segmentedPageViewController.selectedPage = 0
-//        self.segmentedPageViewController.categoryView.titles = titles
-//        self.segmentedPageViewController.view.snp.makeConstraints { make in
-//            make.left.bottom.right.equalToSuperview()
-//            make.top.equalTo(headView.snp.bottom)
-//        }
-//    }
+    private func addSegmentedPageViewController() {
+        self.addChild(self.segmentedPageViewController)
+        self.view.addSubview(self.segmentedPageViewController.view)
+        self.segmentedPageViewController.didMove(toParent: self)
+        self.segmentedPageViewController.view.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(nameBtn.snp.bottom).offset(22)
+        }
+    }
+    
+    private func setupPageViewControllers() {
+        let titles: [String] = ["基础班", "专业版", "定制版"]
+        segmentedPageViewController.pageViewControllers = [oneVc, twoVc, threeVc]
+        segmentedPageViewController.selectedPage = 0
+        self.segmentedPageViewController.categoryView.titles = titles
+        self.segmentedPageViewController.view.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(nameBtn.snp.bottom).offset(22)
+        }
+    }
     
 }

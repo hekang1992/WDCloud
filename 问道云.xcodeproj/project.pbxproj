@@ -220,6 +220,12 @@
 		73B362592D37B9D4003BD911 /* PeopleDetailThreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362582D37B9D4003BD911 /* PeopleDetailThreeViewController.swift */; };
 		73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA12D1E973200D93691 /* MembershipListViewController.swift */; };
 		73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA32D1EA73100D93691 /* MembershipListView.swift */; };
+		73C007092D643786003C3CE1 /* DueDiligenceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C007082D643786003C3CE1 /* DueDiligenceListView.swift */; };
+		73C0070B2D644C6E003C3CE1 /* DueDiligenceOneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C0070A2D644C6E003C3CE1 /* DueDiligenceOneView.swift */; };
+		73C0070D2D644EE1003C3CE1 /* SearchDueDiligenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C0070C2D644EE1003C3CE1 /* SearchDueDiligenceViewController.swift */; };
+		73C0070F2D644F55003C3CE1 /* DueDiligenceTwoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C0070E2D644F55003C3CE1 /* DueDiligenceTwoView.swift */; };
+		73C007112D6459AF003C3CE1 /* SearchDueDiligenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C007102D6459AF003C3CE1 /* SearchDueDiligenceView.swift */; };
+		73C007132D6460C5003C3CE1 /* DueDiligenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C007122D6460C5003C3CE1 /* DueDiligenceCell.swift */; };
 		73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */; };
 		73C36A6C2D2D024C00D6DC46 /* SearchAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A6B2D2D024C00D6DC46 /* SearchAllViewController.swift */; };
 		73C36A712D2D050200D6DC46 /* SearchHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A702D2D050200D6DC46 /* SearchHeadView.swift */; };
@@ -553,6 +559,12 @@
 		73B362582D37B9D4003BD911 /* PeopleDetailThreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetailThreeViewController.swift; sourceTree = "<group>"; };
 		73BDABA12D1E973200D93691 /* MembershipListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListViewController.swift; sourceTree = "<group>"; };
 		73BDABA32D1EA73100D93691 /* MembershipListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListView.swift; sourceTree = "<group>"; };
+		73C007082D643786003C3CE1 /* DueDiligenceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDiligenceListView.swift; sourceTree = "<group>"; };
+		73C0070A2D644C6E003C3CE1 /* DueDiligenceOneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDiligenceOneView.swift; sourceTree = "<group>"; };
+		73C0070C2D644EE1003C3CE1 /* SearchDueDiligenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDueDiligenceViewController.swift; sourceTree = "<group>"; };
+		73C0070E2D644F55003C3CE1 /* DueDiligenceTwoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDiligenceTwoView.swift; sourceTree = "<group>"; };
+		73C007102D6459AF003C3CE1 /* SearchDueDiligenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDueDiligenceView.swift; sourceTree = "<group>"; };
+		73C007122D6460C5003C3CE1 /* DueDiligenceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDiligenceCell.swift; sourceTree = "<group>"; };
 		73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHotWordsCell.swift; sourceTree = "<group>"; };
 		73C36A6B2D2D024C00D6DC46 /* SearchAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllViewController.swift; sourceTree = "<group>"; };
 		73C36A702D2D050200D6DC46 /* SearchHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeadView.swift; sourceTree = "<group>"; };
@@ -1264,6 +1276,7 @@
 				739527F72D633EB60020589C /* OneDueDiligenceViewController.swift */,
 				739527F92D633EBE0020589C /* TwoDueDiligenceViewController.swift */,
 				739527FB2D633EC70020589C /* ThreeDueDiligenceViewController.swift */,
+				73C0070C2D644EE1003C3CE1 /* SearchDueDiligenceViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1272,6 +1285,11 @@
 			isa = PBXGroup;
 			children = (
 				73A21DED2D0C32A600FC4C49 /* DiligenceView.swift */,
+				73C007082D643786003C3CE1 /* DueDiligenceListView.swift */,
+				73C0070A2D644C6E003C3CE1 /* DueDiligenceOneView.swift */,
+				73C0070E2D644F55003C3CE1 /* DueDiligenceTwoView.swift */,
+				73C007102D6459AF003C3CE1 /* SearchDueDiligenceView.swift */,
+				73C007122D6460C5003C3CE1 /* DueDiligenceCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1808,6 +1826,7 @@
 				730488132D2BD2090024265C /* HomeBannerViewCell.swift in Sources */,
 				73FB9C942D5F22A800554CAD /* MyOpinioViewController.swift in Sources */,
 				730CEDFE2D546080002DE9DF /* CompanyLawDetailCell.swift in Sources */,
+				73C007112D6459AF003C3CE1 /* SearchDueDiligenceView.swift in Sources */,
 				739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */,
 				7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */,
 				730CEDFC2D544EF6002DE9DF /* CompanyLawCell.swift in Sources */,
@@ -1896,6 +1915,7 @@
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
 				737416482D0FD94B00E6CD23 /* AddInvoiceViewCell.swift in Sources */,
 				739527F62D6334EE0020589C /* DueDiligenceViewController.swift in Sources */,
+				73C007132D6460C5003C3CE1 /* DueDiligenceCell.swift in Sources */,
 				73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */,
 				73FB9C8C2D5F173500554CAD /* ServiceCenterViewController.swift in Sources */,
 				7340E1B02D5DC535008FD5C7 /* SearchLoanDefaultViewController.swift in Sources */,
@@ -1934,6 +1954,7 @@
 				73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */,
 				73C36A712D2D050200D6DC46 /* SearchHeadView.swift in Sources */,
 				73950F752D55B3E7005AD034 /* AddMonitoringListView.swift in Sources */,
+				73C0070D2D644EE1003C3CE1 /* SearchDueDiligenceViewController.swift in Sources */,
 				73C6B1B42D34FAB700CD3816 /* CompanyOneHeadView.swift in Sources */,
 				7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */,
 				7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */,
@@ -1965,6 +1986,7 @@
 				730488012D2A64410024265C /* WDRefreshHeader.swift in Sources */,
 				73FC5E5C2D5C8D05001D0DEF /* SearchCompanyDeadbeatDetailViewController.swift in Sources */,
 				7352B22A2D353F2200B5391B /* CompanySixHeadView.swift in Sources */,
+				73C0070B2D644C6E003C3CE1 /* DueDiligenceOneView.swift in Sources */,
 				73EDE9EC2D59E6D500A0A7E3 /* HomeSanctionViewController.swift in Sources */,
 				73FC5E5E2D5C8D15001D0DEF /* SearchPeopleDeadbeatDetailViewController.swift in Sources */,
 				734896DC2D39F1EC00B028FE /* UnioRiskDetailViewController.swift in Sources */,
@@ -1972,6 +1994,7 @@
 				7352B2282D353EBE00B5391B /* CompanyFiveHeadView.swift in Sources */,
 				73C7524A2D1D2BD200C47187 /* FocusCompanyEditViewCell.swift in Sources */,
 				730CEDF32D530924002DE9DF /* RiskUnioHeadView.swift in Sources */,
+				73C007092D643786003C3CE1 /* DueDiligenceListView.swift in Sources */,
 				737416442D0FD74F00E6CD23 /* AddInvoiceViewController.swift in Sources */,
 				7325A7DC2CFF0DBE0043C196 /* PasswordLoginView.swift in Sources */,
 				73EDE9E12D59A1A000A0A7E3 /* HomeItemSearchView.swift in Sources */,
@@ -2079,6 +2102,7 @@
 				733B5FFE2D574D3D00ADE7C5 /* HomeNavSearchView.swift in Sources */,
 				73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */,
 				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,
+				73C0070F2D644F55003C3CE1 /* DueDiligenceTwoView.swift in Sources */,
 				7374163A2D0ED72600E6CD23 /* WechatPushViewController.swift in Sources */,
 				7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */,
 				73C36A812D2D1BAA00D6DC46 /* SearchHotWordsListView.swift in Sources */,
@@ -2112,11 +2136,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
+				DEVELOPMENT_TEAM = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
@@ -2134,10 +2156,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2159,11 +2180,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
+				DEVELOPMENT_TEAM = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
@@ -2181,10 +2200,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

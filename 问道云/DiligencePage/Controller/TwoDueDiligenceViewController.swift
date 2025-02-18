@@ -8,22 +8,58 @@
 import UIKit
 
 class TwoDueDiligenceViewController: WDBaseViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    
+    var headGrand: Bool? {
+        didSet {
+            guard let headGrand = headGrand else { return }
+            oneView.isHidden = headGrand
+            twoView.isHidden = !headGrand
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    lazy var oneView: DueDiligenceOneView = {
+        let oneView = DueDiligenceOneView()
+        return oneView
+    }()
+    
+    lazy var twoView: DueDiligenceTwoView = {
+        let twoView = DueDiligenceTwoView()
+        twoView.isHidden = true
+        return twoView
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        view.backgroundColor = .white
+        view.addSubview(oneView)
+        view.addSubview(twoView)
+        oneView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        twoView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        oneView.threeImageView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                let searchVc = SearchDueDiligenceViewController()
+                self?.navigationController?.pushViewController(searchVc, animated: true)
+            }).disposed(by: disposeBag)
+        
+        twoView.threeImageView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                let searchVc = SearchDueDiligenceViewController()
+                self?.navigationController?.pushViewController(searchVc, animated: true)
+            }).disposed(by: disposeBag)
+        
     }
-    */
-
+    
 }
