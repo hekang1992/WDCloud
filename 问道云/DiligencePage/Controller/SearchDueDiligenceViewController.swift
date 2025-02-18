@@ -15,7 +15,7 @@ class SearchDueDiligenceViewController: WDBaseViewController {
     var pageIndex: Int = 1
     var keywords: String = ""
     var dataModel: DataModel?
-    
+    var ddNumber: String = "1"
     var allArray: [pageDataModel] = []
     
     lazy var headView: HeadView = {
@@ -60,10 +60,10 @@ class SearchDueDiligenceViewController: WDBaseViewController {
         }
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         addHeadView(from: headView)
@@ -92,7 +92,7 @@ class SearchDueDiligenceViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] _ in
                 let memVc = MembershipCenterViewController()
                 self?.navigationController?.pushViewController(memVc, animated: true)
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         self.searchView.searchTx
             .rx
@@ -124,7 +124,7 @@ class SearchDueDiligenceViewController: WDBaseViewController {
         })
         
     }
-
+    
 }
 
 extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewDataSource {
@@ -179,7 +179,7 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return 28
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -188,8 +188,8 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
         let numLabel = UILabel()
         let count = String(self.dataModel?.pageMeta?.totalNum ?? 0)
         numLabel.textColor = .init(cssStr: "#333333")
-        numLabel.font = .regularFontOfSize(size: 14)
-        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "根据企业名称及曾用名，找到\(count)条相似结果", font: .regularFontOfSize(size: 14))
+        numLabel.font = .regularFontOfSize(size: 13)
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "根据企业名称及曾用名，找到\(count)条相似结果", font: .regularFontOfSize(size: 13))
         headView.addSubview(numLabel)
         numLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -211,5 +211,59 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.allArray[indexPath.row]
+        self.startDueDiligence(form: model)
+    }
+    
+    private func startDueDiligence(form model: pageDataModel) {
+        ViewHud.addLoadView()
+        let firmnumber = model.firmInfo?.entityId ?? ""
+        let firmname = model.firmInfo?.entityName ?? ""
+        let registeredcapital = model.firmInfo?.registeredcapital ?? ""
+        let firmstate = model.firmInfo?.entityStatusLabel ?? ""
+        let legalperson = model.legalPerson?.legalName ?? ""
+        let ddnumber = ddNumber
+        let entitystatus = model.labels?.first?.name ?? ""
+        let registerCapitalCurrency = model.firmInfo?.registerCapitalCurrency ?? ""
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let dict = ["firmnumber": firmnumber,
+                    "firmname": firmname,
+                    "registeredcapital": "\(registeredcapital)\(registerCapitalCurrency)",
+                    "firmstate": firmstate,
+                    "legalperson": legalperson,
+                    "ddnumber": ddnumber,
+                    "entitystatus": entitystatus,
+                    "customernumber": customernumber]
+        let man = RequestManager()
+        man.requestAPI(params: dict, pageUrl: "/dd/ddFirm/saveFirm", method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if let self = self,
+                   let code = success.code,
+                   code == 200 {
+                    var pageUrl: String = ""
+                    if ddnumber == "1" {
+                        
+                    } else if ddnumber == "5" {
+                        
+                    } else if ddnumber == "6" {
+                        
+                    } else if ddnumber == "11" {
+                        
+                    } else if ddnumber == "15" {
+                        
+                    } else if ddnumber == "16" {
+                        
+                    }
+                    self.pushWebPage(from: pageUrl)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
     
 }

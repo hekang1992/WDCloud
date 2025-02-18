@@ -809,7 +809,9 @@ class firmInfoModel {
     var scale: String?
     var listingStatus: String?
     var entityAddress: String?
+    var registeredcapital: String?
     init(json: JSON) {
+        self.registeredcapital = json["registeredcapital"].stringValue
         self.entityAddress = json["entityAddress"].stringValue
         self.listingStatus = json["listingStatus"].stringValue
         self.scale = json["scale"].stringValue

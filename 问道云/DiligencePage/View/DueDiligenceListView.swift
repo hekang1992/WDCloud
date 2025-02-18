@@ -9,6 +9,8 @@ import UIKit
 
 class DueDiligenceListView: BaseView {
     
+    var ddnumber: String?
+    
     lazy var bgView: UIView = {
         let bgView = UIView()
         bgView.backgroundColor = .init(cssStr: "#F5F5F5")

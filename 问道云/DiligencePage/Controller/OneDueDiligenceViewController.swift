@@ -28,6 +28,10 @@ class OneDueDiligenceViewController: WDBaseViewController {
         return twoView
     }()
     
+    var ddonenumber: String = ""
+    
+    var ddtwonumber: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,22 +46,35 @@ class OneDueDiligenceViewController: WDBaseViewController {
             make.edges.equalToSuperview()
         }
         
+        oneView.block = { [weak self] ddnumber in
+            self?.ddonenumber = ddnumber
+        }
+        
         oneView.threeImageView
             .rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 let searchVc = SearchDueDiligenceViewController()
-                self?.navigationController?.pushViewController(searchVc, animated: true)
+                searchVc.ddNumber = ddonenumber
+                self.navigationController?.pushViewController(searchVc, animated: true)
             }).disposed(by: disposeBag)
+        
+        
+        twoView.block = { [weak self] ddnumber in
+            self?.ddtwonumber = ddnumber
+        }
         
         twoView.threeImageView
             .rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 let searchVc = SearchDueDiligenceViewController()
-                self?.navigationController?.pushViewController(searchVc, animated: true)
+                searchVc.ddNumber = ddtwonumber
+                self.navigationController?.pushViewController(searchVc, animated: true)
             }).disposed(by: disposeBag)
         
     }

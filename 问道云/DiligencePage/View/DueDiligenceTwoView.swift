@@ -9,6 +9,8 @@ import UIKit
 
 class DueDiligenceTwoView: BaseView {
     
+    var block: ((String) -> Void)?
+    
     lazy var oneImageView: UIImageView = {
         let oneImageView = UIImageView()
         oneImageView.image = UIImage(named: "duenoolgonimge")
@@ -159,7 +161,7 @@ class DueDiligenceTwoView: BaseView {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.removeLayer()
-                self.clickListView(from: oneListView)
+                self.clickListView(from: oneListView, type: "6")
             }).disposed(by: disposeBag)
         
         twoListView
@@ -169,7 +171,7 @@ class DueDiligenceTwoView: BaseView {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.removeLayer()
-                self.clickListView(from: twoListView)
+                self.clickListView(from: twoListView, type: "7")
             }).disposed(by: disposeBag)
         
         threeListView
@@ -177,9 +179,11 @@ class DueDiligenceTwoView: BaseView {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                ToastViewConfig.showToast(message: "敬请期待")
+                return
                 guard let self = self else { return }
                 self.removeLayer()
-                self.clickListView(from: threeListView)
+                self.clickListView(from: threeListView, type: "8")
             }).disposed(by: disposeBag)
         
         fourListView
@@ -187,9 +191,11 @@ class DueDiligenceTwoView: BaseView {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                ToastViewConfig.showToast(message: "敬请期待")
+                return
                 guard let self = self else { return }
                 self.removeLayer()
-                self.clickListView(from: fourListView)
+                self.clickListView(from: fourListView, type: "9")
             }).disposed(by: disposeBag)
         
         fiveListView
@@ -197,9 +203,11 @@ class DueDiligenceTwoView: BaseView {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                ToastViewConfig.showToast(message: "敬请期待")
+                return
                 guard let self = self else { return }
                 self.removeLayer()
-                self.clickListView(from: fiveListView)
+                self.clickListView(from: fiveListView, type: "10")
             }).disposed(by: disposeBag)
         
         sixListView
@@ -207,9 +215,11 @@ class DueDiligenceTwoView: BaseView {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                ToastViewConfig.showToast(message: "敬请期待")
+                return
                 guard let self = self else { return }
                 self.removeLayer()
-                self.clickListView(from: sixListView)
+                self.clickListView(from: sixListView, type: "")
             }).disposed(by: disposeBag)
     }
     
@@ -232,9 +242,10 @@ class DueDiligenceTwoView: BaseView {
         self.sixListView.bgView.layer.borderColor = UIColor.clear.cgColor
     }
     
-    private func clickListView(from view: DueDiligenceListView) {
+    private func clickListView(from view: DueDiligenceListView, type: String) {
         view.rightImageView.isHidden = false
         view.bgView.layer.borderColor = UIColor.init(cssStr: "#547AFF")?.cgColor
+        self.block?(type)
     }
     
 }
