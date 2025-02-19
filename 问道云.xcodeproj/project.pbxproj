@@ -150,6 +150,8 @@
 		7352B2382D36736400B5391B /* CompanyDescInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2372D36736400B5391B /* CompanyDescInfoView.swift */; };
 		735A3F6B2D65698200448268 /* SearchOneReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A3F6A2D65698200448268 /* SearchOneReportViewController.swift */; };
 		735A3F6D2D6572B000448268 /* SearchOneReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A3F6C2D6572B000448268 /* SearchOneReportCell.swift */; };
+		735A3F6F2D65B6FA00448268 /* MinitoringMessagePushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A3F6E2D65B6FA00448268 /* MinitoringMessagePushViewController.swift */; };
+		735A3F722D65B9F000448268 /* RiskTipsCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A3F712D65B9F000448268 /* RiskTipsCenterViewController.swift */; };
 		736A40D92D223AEB0065FD9D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A40D82D223AEB0065FD9D /* StoreKit.framework */; };
 		736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */; };
 		736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97792D22A61E009CC0DF /* SKExtensions.swift */; };
@@ -492,6 +494,8 @@
 		7352B2372D36736400B5391B /* CompanyDescInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDescInfoView.swift; sourceTree = "<group>"; };
 		735A3F6A2D65698200448268 /* SearchOneReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOneReportViewController.swift; sourceTree = "<group>"; };
 		735A3F6C2D6572B000448268 /* SearchOneReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOneReportCell.swift; sourceTree = "<group>"; };
+		735A3F6E2D65B6FA00448268 /* MinitoringMessagePushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinitoringMessagePushViewController.swift; sourceTree = "<group>"; };
+		735A3F712D65B9F000448268 /* RiskTipsCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskTipsCenterViewController.swift; sourceTree = "<group>"; };
 		736A40D82D223AEB0065FD9D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYFStoreReceiptVerifier.swift; sourceTree = "<group>"; };
 		736E97792D22A61E009CC0DF /* SKExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKExtensions.swift; sourceTree = "<group>"; };
@@ -1084,6 +1088,14 @@
 			path = PeopleRiskDetail;
 			sourceTree = "<group>";
 		};
+		735A3F702D65B9A000448268 /* 风控秘笈 */ = {
+			isa = PBXGroup;
+			children = (
+				735A3F712D65B9F000448268 /* RiskTipsCenterViewController.swift */,
+			);
+			path = "风控秘笈";
+			sourceTree = "<group>";
+		};
 		736E976F2D22A258009CC0DF /* ApplePay */ = {
 			isa = PBXGroup;
 			children = (
@@ -1252,6 +1264,7 @@
 				73FB9C832D5EEC3700554CAD /* RiskSettingViewController.swift */,
 				730CEDFF2D54AE2C002DE9DF /* SearchMonitoringViewController.swift */,
 				73FB9C872D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift */,
+				735A3F6E2D65B6FA00448268 /* MinitoringMessagePushViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1504,6 +1517,7 @@
 		73FC5E392D5C32E6001D0DEF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				735A3F702D65B9A000448268 /* 风控秘笈 */,
 				7340E1C42D5DD6AD008FD5C7 /* 对外投资 */,
 				7340E18B2D5CD3D2008FD5C7 /* 对外担保 */,
 				7340E1B72D5DD4DD008FD5C7 /* 资产抵押 */,
@@ -1842,6 +1856,7 @@
 				7340E1D62D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift in Sources */,
 				73FC5E652D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift in Sources */,
 				73B3624B2D37A653003BD911 /* PeopleDetailViewController.swift in Sources */,
+				735A3F6F2D65B6FA00448268 /* MinitoringMessagePushViewController.swift in Sources */,
 				7325A7D12CFEFBE60043C196 /* WDYModel.swift in Sources */,
 				73C36A7D2D2D1B8400D6DC46 /* SearchHistoryListView.swift in Sources */,
 				7325A7EE2D0008D10043C196 /* WLUnitFieldTextPosition.m in Sources */,
@@ -2056,6 +2071,7 @@
 				7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */,
 				73B362532D37B704003BD911 /* PeopleDetailHeadView.swift in Sources */,
 				73868A412D55F53700CE107D /* DailyReportViewController.swift in Sources */,
+				735A3F722D65B9F000448268 /* RiskTipsCenterViewController.swift in Sources */,
 				730CEDF52D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift in Sources */,
 				7340E19F2D5CD538008FD5C7 /* SearchPeopleCourtNoticeViewController.swift in Sources */,
 				73C36A6C2D2D024C00D6DC46 /* SearchAllViewController.swift in Sources */,

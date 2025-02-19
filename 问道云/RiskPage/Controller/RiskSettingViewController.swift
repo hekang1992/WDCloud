@@ -122,6 +122,15 @@ class RiskSettingViewController: WDBaseViewController {
                 self?.navigationController?.pushViewController(addVc, animated: true)
         }).disposed(by: disposeBag)
         
+        twoView.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                let messageVc = MinitoringMessagePushViewController()
+                self?.navigationController?.pushViewController(messageVc, animated: true)
+        }).disposed(by: disposeBag)
+        
+        
         //获取会员等级信息
         getVipInfo()
     }
