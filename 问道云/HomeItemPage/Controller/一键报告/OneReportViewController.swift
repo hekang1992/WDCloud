@@ -9,7 +9,7 @@ import UIKit
 
 class OneReportViewController: WDBaseViewController {
     
-    var dataModel: DataModel?
+    var firmModel: firmInfoModel?
     
     var modelArray: [rowsModel]?
 
@@ -147,8 +147,8 @@ extension OneReportViewController {
         ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let reportnumber = model.reportnumber ?? ""
-        let entityid = dataModel?.firmInfo?.entityId ?? ""
-        let firmname = dataModel?.firmInfo?.entityName ?? ""
+        let entityid = firmModel?.entityId ?? ""
+        let firmname = firmModel?.entityName ?? ""
         let man = RequestManager()
         let dict = ["customernumber": customernumber,
                     "reportnumber": reportnumber,
@@ -178,7 +178,7 @@ extension OneReportViewController {
     private func getOneReportInfo() {
         ViewHud.addLoadView()
         let man = RequestManager()
-        let dict = ["entityid": dataModel?.firmInfo?.entityId ?? ""]
+        let dict = ["entityid": firmModel?.entityId ?? ""]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerreport/reportlist",
                        method: .get) { [weak self] result in

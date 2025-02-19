@@ -50,8 +50,8 @@ class CompanyDetailViewController: WDBaseViewController {
         //一键报告
         companyDetailView.footerView.backBtn1.rx.tap.subscribe(onNext: { [weak self] in
             let oneRpVc = OneReportViewController()
-            if let headModel = self?.headModel.value {
-                oneRpVc.dataModel = headModel
+            if let firmModel = self?.headModel.value?.firmInfo {
+                oneRpVc.firmModel = firmModel
             }
             self?.navigationController?.pushViewController(oneRpVc, animated: true)
         }).disposed(by: disposeBag)

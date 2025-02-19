@@ -148,6 +148,8 @@
 		7352B2342D363CAB00B5391B /* CompanyDetailGDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2332D363CAB00B5391B /* CompanyDetailGDCell.swift */; };
 		7352B2362D366BE400B5391B /* CompanyDetailCommonServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2352D366BE400B5391B /* CompanyDetailCommonServiceCell.swift */; };
 		7352B2382D36736400B5391B /* CompanyDescInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2372D36736400B5391B /* CompanyDescInfoView.swift */; };
+		735A3F6B2D65698200448268 /* SearchOneReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A3F6A2D65698200448268 /* SearchOneReportViewController.swift */; };
+		735A3F6D2D6572B000448268 /* SearchOneReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A3F6C2D6572B000448268 /* SearchOneReportCell.swift */; };
 		736A40D92D223AEB0065FD9D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A40D82D223AEB0065FD9D /* StoreKit.framework */; };
 		736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */; };
 		736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97792D22A61E009CC0DF /* SKExtensions.swift */; };
@@ -488,6 +490,8 @@
 		7352B2332D363CAB00B5391B /* CompanyDetailGDCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailGDCell.swift; sourceTree = "<group>"; };
 		7352B2352D366BE400B5391B /* CompanyDetailCommonServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailCommonServiceCell.swift; sourceTree = "<group>"; };
 		7352B2372D36736400B5391B /* CompanyDescInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDescInfoView.swift; sourceTree = "<group>"; };
+		735A3F6A2D65698200448268 /* SearchOneReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOneReportViewController.swift; sourceTree = "<group>"; };
+		735A3F6C2D6572B000448268 /* SearchOneReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOneReportCell.swift; sourceTree = "<group>"; };
 		736A40D82D223AEB0065FD9D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYFStoreReceiptVerifier.swift; sourceTree = "<group>"; };
 		736E97792D22A61E009CC0DF /* SKExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKExtensions.swift; sourceTree = "<group>"; };
@@ -1570,7 +1574,9 @@
 			isa = PBXGroup;
 			children = (
 				73EDE9F32D59F82200A0A7E3 /* HomeOneReportViewController.swift */,
+				735A3F6A2D65698200448268 /* SearchOneReportViewController.swift */,
 				73EDE9F12D59F0A900A0A7E3 /* OneReportViewController.swift */,
+				735A3F6C2D6572B000448268 /* SearchOneReportCell.swift */,
 			);
 			path = "一键报告";
 			sourceTree = "<group>";
@@ -1887,6 +1893,7 @@
 				73C7524E2D1D5A3100C47187 /* FocusSearchViewController.swift in Sources */,
 				73807D4E2D3369C500F8B90D /* CompanyBothViewController.swift in Sources */,
 				73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */,
+				735A3F6D2D6572B000448268 /* SearchOneReportCell.swift in Sources */,
 				7340E18F2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift in Sources */,
 				73FB9C8A2D5F0EC200554CAD /* RiskPopGroupView.swift in Sources */,
 				73FB9C8E2D5F17BF00554CAD /* OpinionCenterViewController.swift in Sources */,
@@ -1977,6 +1984,7 @@
 				73807D472D32C8B200F8B90D /* LaunchViewController.swift in Sources */,
 				73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */,
 				734896DA2D39F1AC00B028FE /* MySelfRiskDetailViewController.swift in Sources */,
+				735A3F6B2D65698200448268 /* SearchOneReportViewController.swift in Sources */,
 				73FC5E542D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift in Sources */,
 				739D90BC2D26A72100D9421B /* GroupListViewController.swift in Sources */,
 				7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */,

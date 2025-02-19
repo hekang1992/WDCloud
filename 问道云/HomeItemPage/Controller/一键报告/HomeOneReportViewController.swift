@@ -39,6 +39,12 @@ class HomeOneReportViewController: WDBaseViewController {
         let footerView = LoginFootView()
         return footerView
     }()
+    
+    lazy var coverView: UIView = {
+        let coverView = UIView()
+        coverView.isUserInteractionEnabled = true
+        return coverView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +55,7 @@ class HomeOneReportViewController: WDBaseViewController {
         view.addSubview(searchView)
         view.addSubview(ctImageView)
         view.addSubview(footerView)
+        view.addSubview(coverView)
         searchView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(headView.snp.bottom).offset(1)
@@ -64,6 +71,22 @@ class HomeOneReportViewController: WDBaseViewController {
             make.left.right.equalToSuperview()
             make.height.equalTo(51.5)
         }
+        coverView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(headView.snp.bottom).offset(1)
+            make.height.equalTo(50)
+        }
+        
+        
+        coverView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let oneVc = SearchOneReportViewController()
+                self.navigationController?.pushViewController(oneVc, animated: true)
+        }).disposed(by: disposeBag)
     }
 
 }
