@@ -62,6 +62,8 @@ class MembershipCenterViewController: WDBaseViewController {
         setupViewControllers()
         //获取套餐信息
         getPriceInfo()
+        //获取会员类型
+        getBuymoreinfo()
     }
     
 }
@@ -200,27 +202,7 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
 
 extension MembershipCenterViewController {
     
-    //获取套餐信息
-    func getPriceInfo() {
-        let man = RequestManager()
-        ViewHud.addLoadView()
-        let emptyDict = [String: Any]()
-        man.requestAPI(params: emptyDict,
-                       pageUrl: "/operation/combo/selectmember",
-                       method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
-            switch result {
-            case .success(let success):
-                if let model = success.data {
-                    self?.model.accept(model)
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
+    //获取会员类型
     func getBuymoreinfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
@@ -238,7 +220,27 @@ extension MembershipCenterViewController {
                 }
                 break
             case .failure(_):
-                
+                break
+            }
+        }
+    }
+    
+    //获取套餐信息
+    func getPriceInfo() {
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        let emptyDict = [String: Any]()
+        man.requestAPI(params: emptyDict,
+                       pageUrl: "/operation/combo/selectmember",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    self?.model.accept(model)
+                }
+                break
+            case .failure(_):
                 break
             }
         }

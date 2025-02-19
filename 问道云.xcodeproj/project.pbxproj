@@ -745,7 +745,7 @@
 				7325A79C2CFEE58D0043C196 /* Main */,
 				7325A7AF2CFEE7D90043C196 /* Config */,
 				7325A7AC2CFEE7B20043C196 /* BaseVc */,
-				7325A7B02CFEE7E30043C196 /* RequsetManager */,
+				7325A7B02CFEE7E30043C196 /* RequsetMan */,
 				73CFEB902D0056DD00B2FE1B /* WebPage */,
 				7325A7C92CFEF1F20043C196 /* LoginVc */,
 				7325A7A82CFEE6C30043C196 /* HomePage */,
@@ -823,14 +823,14 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
-		7325A7B02CFEE7E30043C196 /* RequsetManager */ = {
+		7325A7B02CFEE7E30043C196 /* RequsetMan */ = {
 			isa = PBXGroup;
 			children = (
 				7325A7CC2CFEFA0B0043C196 /* APIUrl.swift */,
 				7325A7D02CFEFBDE0043C196 /* WDYModel.swift */,
 				7325A7B32CFEE9520043C196 /* RequestManager.swift */,
 			);
-			path = RequsetManager;
+			path = RequsetMan;
 			sourceTree = "<group>";
 		};
 		7325A7C92CFEF1F20043C196 /* LoginVc */ = {

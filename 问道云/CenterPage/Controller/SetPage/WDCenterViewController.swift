@@ -117,7 +117,7 @@ class WDCenterViewController: WDBaseViewController {
             guard let self = self, let model = model else { return }
             if IS_LOGIN {
                 let menVc = MembershipCenterViewController()
-                menVc.vipTypeModel.accept(model)
+//                menVc.vipTypeModel.accept(model)
                 self.navigationController?.pushViewController(menVc, animated: true)
             }else {
                 self.popLogin()
