@@ -2,14 +2,20 @@
 //  WDRiskViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2024/12/3.
+//  Created by 何康 on 2025/2/17.
 //
 
 import UIKit
-import JXSegmentedView
-import JXPagingView
+import HGSegmentedPageViewController
 
 class WDRiskViewController: WDBaseViewController {
+    
+    lazy var ctImageView: UIImageView = {
+        let ctImageView = UIImageView()
+        ctImageView.image = UIImage(named: "appheadbgimage")
+        ctImageView.isUserInteractionEnabled = true
+        return ctImageView
+    }()
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .twoBtn)
@@ -33,125 +39,84 @@ class WDRiskViewController: WDBaseViewController {
         return headView
     }()
     
-    //头部view
-    lazy var homeHeadView: RiskView = preferredTableHeaderView()
-    
-    var segmentedViewDataSource: JXSegmentedTitleDataSource!
-    
-    var segmentedView: JXSegmentedView!
-    
-    let titles = ["日报", "周报", "月报", "全部"]
-    
-    var JXTableHeaderViewHeight: Int = Int(StatusHeightManager.navigationBarHeight)
-    
-    var JXheightForHeaderInSection: Int = 55
-    
-    lazy var pagingView: JXPagingView = preferredPagingView()
-    
-    lazy var dailyVc: DailyReportViewController = {
-        let dailyVc = DailyReportViewController()
-        return dailyVc
+    lazy var segmentedPageViewController: HGSegmentedPageViewController = {
+        let segmentedPageViewController = HGSegmentedPageViewController()
+        segmentedPageViewController.categoryView.backgroundColor = .clear
+        segmentedPageViewController.categoryView.alignment = .center
+        segmentedPageViewController.categoryView.itemSpacing = 0
+        segmentedPageViewController.categoryView.leftMargin = 0
+        segmentedPageViewController.categoryView.rightMargin = 0
+        segmentedPageViewController.categoryView.topBorder.isHidden = true
+        segmentedPageViewController.categoryView.itemWidth = SCREEN_WIDTH * 0.25
+        segmentedPageViewController.categoryView.vernierWidth = 20
+        segmentedPageViewController.categoryView.titleNomalFont = .mediumFontOfSize(size: 14)
+        segmentedPageViewController.categoryView.titleSelectedFont = .mediumFontOfSize(size: 14)
+        segmentedPageViewController.categoryView.titleNormalColor = .init(cssStr: "#FFFFFF")?.withAlphaComponent(0.6)
+        segmentedPageViewController.categoryView.titleSelectedColor = .init(cssStr: "#FFFFFF")
+        segmentedPageViewController.categoryView.vernier.backgroundColor = .init(cssStr: "#FFFFFF")
+        segmentedPageViewController.delegate = self
+        return segmentedPageViewController
     }()
     
-    lazy var weekVc: WeekReportViewController = {
-        let weekVc = WeekReportViewController()
-        return weekVc
+    lazy var oneVc: DailyReportViewController = {
+        let oneVc = DailyReportViewController()
+        return oneVc
     }()
     
-    lazy var monthVc: MonthReportViewController = {
-        let monthVc = MonthReportViewController()
-        return monthVc
+    lazy var twoVc: WeekReportViewController = {
+        let twoVc = WeekReportViewController()
+        return twoVc
     }()
     
-    lazy var bothVc: BothReportViewController = {
-        let bothVc = BothReportViewController()
-        return bothVc
+    lazy var threeVc: MonthReportViewController = {
+        let threeVc = MonthReportViewController()
+        return threeVc
     }()
-
+    
+    lazy var fourVc: BothReportViewController = {
+        let fourVc = BothReportViewController()
+        return fourVc
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
-        segmentedViewDataSource = JXSegmentedTitleDataSource()
-        segmentedViewDataSource.titles = titles
-        segmentedViewDataSource.isTitleColorGradientEnabled = true
-        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#FFFFFF")!
-        segmentedViewDataSource.titleNormalColor = (UIColor.init(cssStr: "#FFFFFF")?.withAlphaComponent(0.6))!
-        segmentedViewDataSource.titleNormalFont = UIFont.regularFontOfSize(size: 15)
-        segmentedViewDataSource.titleSelectedFont = UIFont.mediumFontOfSize(size: 15)
-        
-        //指示器和指示器颜色
-        segmentedView = JXSegmentedView(frame: CGRectMake(0, 0, SCREEN_WIDTH, CGFloat(JXheightForHeaderInSection)))
-        segmentedView.backgroundColor = UIColor.clear
-        segmentedView.dataSource = segmentedViewDataSource
-        let lineView = JXSegmentedIndicatorLineView()
-        lineView.indicatorColor = UIColor.init(cssStr: "#FFFFFF")!
-        lineView.indicatorWidth = 18
-        lineView.indicatorHeight = 3
-        segmentedView.indicators = [lineView]
-        view.addSubview(pagingView)
-        pagingView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
-        segmentedView.listContainer = pagingView.listContainerView
-        pagingView.isListHorizontalScrollEnabled = IS_LOGIN
-        //距离高度禁止
-        pagingView.pinSectionHeaderVerticalOffset = Int(StatusHeightManager.navigationBarHeight)
-        headView.titlelabel.text = "风险监控"
-        headView.lineView.isHidden = true
+        view.addSubview(ctImageView)
         addHeadView(from: headView)
+        ctImageView.snp.makeConstraints { make in
+            make.left.right.top.equalToSuperview()
+            make.height.equalTo(233)
+        }
+        
+        addSegmentedPageViewController()
+        setupPageViewControllers()
         
     }
-
-}
-
-extension WDRiskViewController {
-    //一定要加上这句代码,否则不会下拉刷新
-    func preferredPagingView() -> JXPagingView {
-        return JXPagingListRefreshView(delegate: self)
-    }
-    
-    func preferredTableHeaderView() -> RiskView {
-        let riskView = RiskView()
-        return riskView
-    }
     
 }
+
+extension WDRiskViewController: HGSegmentedPageViewControllerDelegate {
     
-extension WDRiskViewController: JXPagingViewDelegate {
-    
-    func tableHeaderViewHeight(in pagingView: JXPagingView) -> Int {
-        return JXTableHeaderViewHeight
-    }
-    
-    func tableHeaderView(in pagingView: JXPagingView) -> UIView {
-        return homeHeadView
-    }
-    
-    func heightForPinSectionHeader(in pagingView: JXPagingView) -> Int {
-        return JXheightForHeaderInSection
-    }
-    
-    func viewForPinSectionHeader(in pagingView: JXPagingView) -> UIView {
-        return segmentedView
-    }
-    
-    func numberOfLists(in pagingView: JXPagingView) -> Int {
-        return titles.count
-    }
-    
-    func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
-        if index == 0 {
-            return dailyVc
-        }else if index == 1 {
-            return weekVc
-        }else if index == 2 {
-            return monthVc
-        }else {
-            return bothVc
+    private func addSegmentedPageViewController() {
+        self.addChild(self.segmentedPageViewController)
+        self.view.addSubview(self.segmentedPageViewController.view)
+        self.segmentedPageViewController.didMove(toParent: self)
+        self.segmentedPageViewController.view.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(headView.snp.bottom).offset(12)
         }
     }
     
-    func pagingView(_ pagingView: JXPagingView, mainTableViewDidScroll scrollView: UIScrollView) {
-        let contentOffsetY = scrollView.contentOffset.y
-        print("contentOffsetY======\(contentOffsetY)")
+    private func setupPageViewControllers() {
+        let titles: [String] = ["日报", "周报", "月报", "全部"]
+        segmentedPageViewController.pageViewControllers = [oneVc, twoVc, threeVc, fourVc]
+        segmentedPageViewController.selectedPage = 0
+        self.segmentedPageViewController.categoryView.titles = titles
+        self.segmentedPageViewController.view.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(headView.snp.bottom).offset(12)
+        }
     }
+    
 }

@@ -6,7 +6,6 @@
 //  日报
 
 import UIKit
-import JXPagingView
 import MJRefresh
 import TYAlertController
 
@@ -34,9 +33,7 @@ class DailyReportViewController: WDBaseViewController {
     
     var groupnumber: String = ""
     var groupName: String = "全部分组"
-    
-    var listViewDidScrollCallback: ((UIScrollView) -> Void)?
-    
+        
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
@@ -381,14 +378,11 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
         noMonitoringView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        noMonitoringView.iconImageView3.rx
-            .tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                let searchVc = SearchMonitoringViewController()
-                self.navigationController?.pushViewController(searchVc, animated: true)
-            }).disposed(by: disposeBag)
+        noMonitoringView.block = { [weak self] in
+            guard let self = self else { return }
+            let searchVc = SearchMonitoringViewController()
+            self.navigationController?.pushViewController(searchVc, animated: true)
+        }
     }
     
     private func popGroupView(from menuBtn: UIButton) {
@@ -549,24 +543,6 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
                 }
             }
         }
-    }
-    
-}
-
-extension DailyReportViewController: JXPagingViewListViewDelegate {
-    
-    func listView() -> UIView {
-        return view
-    }
-    
-    func listViewDidScrollCallback(callback: @escaping (UIScrollView) -> ()) {
-        self.listViewDidScrollCallback = callback
-    }
-    
-    func listScrollView() -> UIScrollView { tableView }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        listViewDidScrollCallback?(scrollView)
     }
     
 }

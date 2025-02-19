@@ -167,7 +167,7 @@ class DeleteSureViewController: WDBaseViewController {
         sendCodeBtn.snp.makeConstraints { make in
             make.centerY.equalTo(codeTx.snp.centerY)
             make.right.equalToSuperview().offset(-30)
-            make.size.equalTo(CGSize(width: 115, height: 18.5))
+            make.size.equalTo(CGSize(width: 115.pix(), height: 18.5))
         }
         
         view.addSubview(nextBtn)

@@ -31,6 +31,7 @@ class WDLoginConfig: NSObject {
     }
     
     static func removeLoginInfo() {
+        GetCacheConfig.clearCache()
         UserDefaults.standard.setValue("", forKey: WDY_PHONE)
         UserDefaults.standard.setValue("", forKey: WDY_SESSIONID)
         UserDefaults.standard.setValue("", forKey: WDY_CUSTOMERNUMBER)

@@ -120,7 +120,7 @@ class SettingPasswordViewController: WDBaseViewController {
         codeBtn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-19)
-            make.size.equalTo(CGSize(width: 115, height: 20))
+            make.size.equalTo(CGSize(width: 115.pix(), height: 20))
         }
         
         let bgView1 = UIView()

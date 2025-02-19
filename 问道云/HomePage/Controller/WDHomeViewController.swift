@@ -371,6 +371,9 @@ extension WDHomeViewController {
         }else if menuID == "11600" {//一键报告
             let oneRpVc = HomeOneReportViewController()
             self.navigationController?.pushViewController(oneRpVc, animated: true)
+        }else if menuID == "11700" {//求职监测
+            let jobVc = JobSearchViewController()
+            self.navigationController?.pushViewController(jobVc, animated: true)
         }else if menuID == "11800" {//风控秘笈
             let tipsVc = RiskTipsCenterViewController()
             self.navigationController?.pushViewController(tipsVc, animated: true)

@@ -37,9 +37,11 @@ class DueDiligenceViewController: WDBaseViewController {
         let segmentedPageViewController = HGSegmentedPageViewController()
         segmentedPageViewController.categoryView.backgroundColor = .clear
         segmentedPageViewController.categoryView.alignment = .center
-        segmentedPageViewController.categoryView.itemSpacing = 25
+        segmentedPageViewController.categoryView.itemSpacing = 0
+        segmentedPageViewController.categoryView.leftMargin = 0
+        segmentedPageViewController.categoryView.rightMargin = 0
         segmentedPageViewController.categoryView.topBorder.isHidden = true
-        segmentedPageViewController.categoryView.itemWidth = SCREEN_WIDTH * 0.25
+        segmentedPageViewController.categoryView.itemWidth = SCREEN_WIDTH / 3
         segmentedPageViewController.categoryView.vernierWidth = 20
         segmentedPageViewController.categoryView.titleNomalFont = .mediumFontOfSize(size: 14)
         segmentedPageViewController.categoryView.titleSelectedFont = .mediumFontOfSize(size: 14)

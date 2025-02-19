@@ -8,6 +8,8 @@
 import UIKit
 
 class RiskNoMonitoringView: BaseView {
+    
+    var block: (() -> Void)?
 
     lazy var iconImageView1: UIImageView = {
         let iconImageView1 = UIImageView()
@@ -23,6 +25,7 @@ class RiskNoMonitoringView: BaseView {
     
     lazy var iconImageView3: UIImageView = {
         let iconImageView3 = UIImageView()
+        iconImageView3.isUserInteractionEnabled = true
         iconImageView3.image = UIImage(named: "tianjiajianonmgqiye")
         return iconImageView3
     }()
@@ -48,6 +51,10 @@ class RiskNoMonitoringView: BaseView {
             make.top.equalTo(iconImageView2.snp.bottom).offset(111)
             make.size.equalTo(CGSize(width: 147, height: 46))
         }
+        iconImageView3.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            self.block?()
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {

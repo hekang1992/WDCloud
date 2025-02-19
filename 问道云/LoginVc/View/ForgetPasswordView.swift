@@ -182,7 +182,7 @@ class ForgetPasswordView: BaseView {
         sendCodeBtn.snp.makeConstraints { make in
             make.bottom.equalTo(lineView1.snp.top).offset(-10.5)
             make.right.equalTo(lineView1.snp.right)
-            make.size.equalTo(CGSize(width: 115, height: 18.5))
+            make.size.equalTo(CGSize(width: 115.pix(), height: 18.5))
         }
         lineView2.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

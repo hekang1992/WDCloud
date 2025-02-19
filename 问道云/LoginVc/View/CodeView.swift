@@ -84,7 +84,7 @@ class CodeView: BaseView {
         resendBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(codeInputView.snp.bottom).offset(48)
-            make.size.equalTo(CGSize(width: 114, height: 17))
+            make.size.equalTo(CGSize(width: 115.pix(), height: 17))
         }
     }
     

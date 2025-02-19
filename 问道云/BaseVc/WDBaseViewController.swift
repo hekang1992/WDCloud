@@ -367,7 +367,7 @@ extension WDBaseViewController {
                             String, complete: (() -> Void)? = nil) {
         let man = RequestManager()
         let dict = ["ordernumber": orderNumberID,
-                    "payway": "3"]
+                    "payway": "Apple"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/callback",
                        method: .post) { result in
