@@ -31,6 +31,7 @@ class RiskTipsCenterViewController: WDBaseViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.delegate = self
+        tableView.dataSource = self
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
@@ -65,7 +66,19 @@ class RiskTipsCenterViewController: WDBaseViewController {
     
 }
 
-extension RiskTipsCenterViewController: UITableViewDelegate {
+extension RiskTipsCenterViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.allArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let model = self.allArray[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeNewsListViewCell", for: indexPath) as! HomeNewsListViewCell
+        cell.selectionStyle = .none
+        cell.model.accept(model)
+        return cell
+    }
+    
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0
@@ -74,6 +87,8 @@ extension RiskTipsCenterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return nil
     }
+    
+    
     
     private func getListInfo() {
         ViewHud.addLoadView()
