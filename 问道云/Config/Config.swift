@@ -816,7 +816,7 @@ class TypeColorConfig {
 //获取支付ID
 class GetStoreIDManager {
     static func storeID(with comboNumber: Any) -> String {
-        return "ald.goods.\(comboNumber)"
+        return "wdy.goods.\(comboNumber)"
     }
 }
 

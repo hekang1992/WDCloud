@@ -160,5 +160,4 @@ extension RiskSettingViewController {
         }
     }
     
-    
 }

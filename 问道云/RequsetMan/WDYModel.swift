@@ -245,6 +245,8 @@ class itemsModel {
     var personname: String?//个人名字
     var personId: String?
     var logo: String?
+    var groupname: String?
+    var groupnumber: String?
     var shareholderList: [shareholderListModel]?//合作伙伴信息
     var listCompany: [listCompanyModel]?//自己公司列表数据
     
@@ -331,6 +333,8 @@ class itemsModel {
     var content: String?
     init(json: JSON) {
         //风险数据公司
+        self.groupnumber = json["groupnumber"].stringValue
+        self.groupname = json["groupname"].stringValue
         self.content = json["content"].stringValue
         self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
         self.total = json["total"].intValue

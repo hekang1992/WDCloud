@@ -229,15 +229,18 @@ extension RiskAddRiskGroupViewViewController {
     func deleteInfo(form model: rowsModel) {
         let groupnumber = model.groupnumber ?? ""
         ShowAlertManager.showAlert(title: "删除提醒", message: "删除该监控方案后，采用该监控方案的对象将使用默认监控方案监控", confirmAction:  {
+            ViewHud.addLoadView()
             let man = RequestManager()
             let dict = ["groupnumber": groupnumber]
             man.requestAPI(params: dict, pageUrl: "/riskmonitor/monitorgroup/delectmonitorgroup", method: .post) { [weak self] result in
+                ViewHud.hideLoadView()
                 switch result {
-                case .success(_):
-                    if let self = self {
+                case .success(let success):
+                    if let self = self, let code = success.code, code == 200 {
                         self.dismiss(animated: true) {
                             self.getMonitoringGroupInfo()
                         }
+                        ToastViewConfig.showToast(message: "删除成功")
                     }
                     break
                 case .failure(_):
