@@ -436,7 +436,7 @@ extension BothReportViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-StatusHeightManager.tabBarHeight)
+            make.bottom.equalToSuperview()
             make.top.equalTo(coverView.snp.bottom)
         }
         companyBtn.rx.tap.subscribe(onNext: { [weak self] in
