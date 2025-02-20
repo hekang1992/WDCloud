@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DropMenuBar
 
 class PropertyTwoViewController: WDBaseViewController {
     
@@ -28,6 +29,19 @@ class PropertyTwoViewController: WDBaseViewController {
         headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.backBlock?()
         }).disposed(by: disposeBag)
+        
+        let oneMenu = MenuAction(title: "财产流向", style: .typeList)!
+        let twoMenu = MenuAction(title: "线索类型", style: .typeList)!
+        let threeMenu = MenuAction(title: "财产类型", style: .typeList)!
+        let fourMenu = MenuAction(title: "更多筛选", style: .typeCustom)!
+        let menuView = DropMenuBar(action: [oneMenu, twoMenu, threeMenu, fourMenu])!
+        menuView.backgroundColor = .white
+        view.addSubview(menuView)
+        menuView.snp.makeConstraints { make in
+            make.top.equalTo(headView.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(32)
+        }
     }
     
 

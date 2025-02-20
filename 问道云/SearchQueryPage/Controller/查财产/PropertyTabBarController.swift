@@ -74,12 +74,12 @@ class PropertyTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         // 设置字体样式
         let normalAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.semiboldFontOfSize(size: 12),
+            .font: UIFont.mediumFontOfSize(size: 12),
             .foregroundColor: UIColor.init(cssStr: "#9FA4AD")!
         ]
         
         let selectedAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.semiboldFontOfSize(size: 12),
+            .font: UIFont.mediumFontOfSize(size: 12),
             .foregroundColor: UIColor.init(cssStr: "#27344B")!
         ]
         
@@ -102,8 +102,8 @@ class PropertyTabBarController: UITabBarController, UITabBarControllerDelegate {
                 // 创建缩放动画
                 let scaleUp = CABasicAnimation(keyPath: "transform.scale")
                 scaleUp.fromValue = 1.0
-                scaleUp.toValue = 1.2
-                scaleUp.duration = 0.2
+                scaleUp.toValue = 1.1
+                scaleUp.duration = 0.1
                 scaleUp.autoreverses = true // 动画完成后回到原来的大小
                 scaleUp.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
                 // 将动画应用到选中的 TabBarItem 图标上

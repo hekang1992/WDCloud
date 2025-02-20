@@ -25,7 +25,7 @@
     action.adjustsImageWhenDisabled = NO;
     action.adjustsImageWhenHighlighted = NO;
     [action setTitle:title forState:UIControlStateNormal];
-    action.titleLabel.font =  [UIFont systemFontOfSize:13 weight:UIFontWeightMedium];
+    action.titleLabel.font = [UIFont systemFontOfSize:13 weight:UIFontWeightMedium];
     action.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [action setTitleColor:[UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1] forState:UIControlStateNormal];
     [action setImage:[UIImage imageNamed:@"xialaiamge_nor"] forState:UIControlStateNormal];

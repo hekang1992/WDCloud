@@ -123,7 +123,12 @@ class DataModel {
     var riskList: riskListModel?
     var minutesList: [minutesListModel]?
     var entityName: String?
+/**
+ 监控设置模型
+*/
+    var propertyTypeSetting: [propertyTypeSettingModel]?
     init(json: JSON) {
+        self.propertyTypeSetting = json["propertyTypeSetting"].arrayValue.map { propertyTypeSettingModel(json: $0) }
         self.url = json["url"].stringValue
         self.entityName = json["entityName"].stringValue
         self.minutesList = json["minutesList"].arrayValue.map { minutesListModel(json: $0) }
@@ -198,6 +203,23 @@ class DataModel {
         self.shareholderCompany = json["shareholderCompany"].intValue
         self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
         self.data = json["data"].arrayValue.map { rowsModel(json: $0) }
+    }
+}
+
+class propertyTypeSettingModel {
+    var code: Int?
+    var isShow: String?
+    var name: String?
+    var select: String?
+    var levelKey: String?
+    var items: [itemsModel]?
+    init(json: JSON) {
+        self.code = json["code"].intValue
+        self.isShow = json["isShow"].stringValue
+        self.name = json["name"].stringValue
+        self.select = json["select"].stringValue
+        self.levelKey = json["levelKey"].stringValue
+        self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
     }
 }
 
@@ -329,10 +351,17 @@ class itemsModel {
     var idCardNumber: String?//身份证
     var resume: String?//简介
     var total: Int?
-    var items: [itemsModel]
+    var items: [itemsModel]?
     var content: String?
+    var select: String?
+    var code: String?
+    var levelKey: String?
+    var value: String?
     init(json: JSON) {
-        //风险数据公司
+        self.value = json["value"].stringValue
+        self.levelKey = json["levelKey"].stringValue
+        self.code = json["code"].stringValue
+        self.select = json["select"].stringValue
         self.groupnumber = json["groupnumber"].stringValue
         self.groupname = json["groupname"].stringValue
         self.content = json["content"].stringValue

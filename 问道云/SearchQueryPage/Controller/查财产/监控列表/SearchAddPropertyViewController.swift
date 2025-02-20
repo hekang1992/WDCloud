@@ -1,5 +1,5 @@
 //
-//  PropertyThreeViewController.swift
+//  SearchAddPropertyViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/2/20.
@@ -7,17 +7,26 @@
 
 import UIKit
 
-class PropertyThreeViewController: WDBaseViewController {
+class SearchAddPropertyViewController: WDBaseViewController {
     
-    var backBlock: (() -> Void)?
-
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
-        headView.titlelabel.text = "监控列表"
+        headView.titlelabel.text = "添加监控"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
         headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
+    }()
+    
+    lazy var searchView: HomeItemSearchView = {
+        let searchView = HomeItemSearchView()
+        let attrString = NSMutableAttributedString(string: "请输入企业、人员名", attributes: [
+            .foregroundColor: UIColor.init(cssStr: "#999999") as Any,
+            .font: UIFont.mediumFontOfSize(size: 14)
+        ])
+        searchView.searchTx.attributedPlaceholder = attrString
+        searchView.backgroundColor = .white
+        return searchView
     }()
 
     override func viewDidLoad() {
@@ -25,9 +34,12 @@ class PropertyThreeViewController: WDBaseViewController {
 
         // Do any additional setup after loading the view.
         addHeadView(from: headView)
-        headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.backBlock?()
-        }).disposed(by: disposeBag)
+        view.addSubview(searchView)
+        searchView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(headView.snp.bottom)
+            make.height.equalTo(45)
+        }
     }
     
 

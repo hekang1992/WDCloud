@@ -207,6 +207,16 @@
 		739DCA0C2D66E01A009CFC78 /* PropertyFourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA0B2D66E01A009CFC78 /* PropertyFourViewController.swift */; };
 		739DCA0E2D66FAA1009CFC78 /* PropertyCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA0D2D66FAA1009CFC78 /* PropertyCompanyViewController.swift */; };
 		739DCA102D66FAAB009CFC78 /* PropertyPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA0F2D66FAAB009CFC78 /* PropertyPeopleViewController.swift */; };
+		739DCA162D670E73009CFC78 /* PropertyThreeBothViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA152D670E73009CFC78 /* PropertyThreeBothViewController.swift */; };
+		739DCA182D670E7E009CFC78 /* PropertyThreeCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA172D670E7E009CFC78 /* PropertyThreeCompanyViewController.swift */; };
+		739DCA1A2D670E87009CFC78 /* PropertyThreePeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA192D670E87009CFC78 /* PropertyThreePeopleViewController.swift */; };
+		739DCA1C2D67133E009CFC78 /* SearchAddPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA1B2D67133E009CFC78 /* SearchAddPropertyViewController.swift */; };
+		739DCA1E2D671669009CFC78 /* MyCollectionPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA1D2D671669009CFC78 /* MyCollectionPropertyViewController.swift */; };
+		739DCA202D671A23009CFC78 /* MyCheckSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA1F2D671A23009CFC78 /* MyCheckSettingViewController.swift */; };
+		739DCA222D671A6E009CFC78 /* MyVipUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA212D671A6E009CFC78 /* MyVipUseViewController.swift */; };
+		739DCA262D671B45009CFC78 /* MyOneSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA252D671B45009CFC78 /* MyOneSettingViewController.swift */; };
+		739DCA282D671B4E009CFC78 /* MyTwoSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA272D671B4E009CFC78 /* MyTwoSettingViewController.swift */; };
+		739DCA2B2D67362B009CFC78 /* MyPropertySettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA2A2D67362B009CFC78 /* MyPropertySettingCell.swift */; };
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
 		73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE02D0C06E700FC4C49 /* SettingView.swift */; };
 		73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */; };
@@ -558,6 +568,16 @@
 		739DCA0B2D66E01A009CFC78 /* PropertyFourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyFourViewController.swift; sourceTree = "<group>"; };
 		739DCA0D2D66FAA1009CFC78 /* PropertyCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyCompanyViewController.swift; sourceTree = "<group>"; };
 		739DCA0F2D66FAAB009CFC78 /* PropertyPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyPeopleViewController.swift; sourceTree = "<group>"; };
+		739DCA152D670E73009CFC78 /* PropertyThreeBothViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyThreeBothViewController.swift; sourceTree = "<group>"; };
+		739DCA172D670E7E009CFC78 /* PropertyThreeCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyThreeCompanyViewController.swift; sourceTree = "<group>"; };
+		739DCA192D670E87009CFC78 /* PropertyThreePeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyThreePeopleViewController.swift; sourceTree = "<group>"; };
+		739DCA1B2D67133E009CFC78 /* SearchAddPropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddPropertyViewController.swift; sourceTree = "<group>"; };
+		739DCA1D2D671669009CFC78 /* MyCollectionPropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionPropertyViewController.swift; sourceTree = "<group>"; };
+		739DCA1F2D671A23009CFC78 /* MyCheckSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckSettingViewController.swift; sourceTree = "<group>"; };
+		739DCA212D671A6E009CFC78 /* MyVipUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVipUseViewController.swift; sourceTree = "<group>"; };
+		739DCA252D671B45009CFC78 /* MyOneSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOneSettingViewController.swift; sourceTree = "<group>"; };
+		739DCA272D671B4E009CFC78 /* MyTwoSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTwoSettingViewController.swift; sourceTree = "<group>"; };
+		739DCA2A2D67362B009CFC78 /* MyPropertySettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPropertySettingCell.swift; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		73A21DE02D0C06E700FC4C49 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
@@ -1278,14 +1298,63 @@
 			isa = PBXGroup;
 			children = (
 				739DCA032D66DF6F009CFC78 /* PropertyTabBarController.swift */,
+				739DCA112D670CDC009CFC78 /* 财产线索 */,
+				739DCA122D670CF2009CFC78 /* 线索监控 */,
+				739DCA142D670D03009CFC78 /* 监控列表 */,
+				739DCA132D670D01009CFC78 /* 我的 */,
+			);
+			path = "查财产";
+			sourceTree = "<group>";
+		};
+		739DCA112D670CDC009CFC78 /* 财产线索 */ = {
+			isa = PBXGroup;
+			children = (
 				739DCA052D66E001009CFC78 /* PropertyOneViewController.swift */,
 				739DCA0D2D66FAA1009CFC78 /* PropertyCompanyViewController.swift */,
 				739DCA0F2D66FAAB009CFC78 /* PropertyPeopleViewController.swift */,
-				739DCA072D66E009009CFC78 /* PropertyTwoViewController.swift */,
-				739DCA092D66E012009CFC78 /* PropertyThreeViewController.swift */,
-				739DCA0B2D66E01A009CFC78 /* PropertyFourViewController.swift */,
 			);
-			path = "查财产";
+			path = "财产线索";
+			sourceTree = "<group>";
+		};
+		739DCA122D670CF2009CFC78 /* 线索监控 */ = {
+			isa = PBXGroup;
+			children = (
+				739DCA072D66E009009CFC78 /* PropertyTwoViewController.swift */,
+			);
+			path = "线索监控";
+			sourceTree = "<group>";
+		};
+		739DCA132D670D01009CFC78 /* 我的 */ = {
+			isa = PBXGroup;
+			children = (
+				739DCA0B2D66E01A009CFC78 /* PropertyFourViewController.swift */,
+				739DCA1F2D671A23009CFC78 /* MyCheckSettingViewController.swift */,
+				739DCA252D671B45009CFC78 /* MyOneSettingViewController.swift */,
+				739DCA272D671B4E009CFC78 /* MyTwoSettingViewController.swift */,
+				739DCA1D2D671669009CFC78 /* MyCollectionPropertyViewController.swift */,
+				739DCA212D671A6E009CFC78 /* MyVipUseViewController.swift */,
+			);
+			path = "我的";
+			sourceTree = "<group>";
+		};
+		739DCA142D670D03009CFC78 /* 监控列表 */ = {
+			isa = PBXGroup;
+			children = (
+				739DCA092D66E012009CFC78 /* PropertyThreeViewController.swift */,
+				739DCA152D670E73009CFC78 /* PropertyThreeBothViewController.swift */,
+				739DCA172D670E7E009CFC78 /* PropertyThreeCompanyViewController.swift */,
+				739DCA192D670E87009CFC78 /* PropertyThreePeopleViewController.swift */,
+				739DCA1B2D67133E009CFC78 /* SearchAddPropertyViewController.swift */,
+			);
+			path = "监控列表";
+			sourceTree = "<group>";
+		};
+		739DCA292D6735FA009CFC78 /* 监控设置View */ = {
+			isa = PBXGroup;
+			children = (
+				739DCA2A2D67362B009CFC78 /* MyPropertySettingCell.swift */,
+			);
+			path = "监控设置View";
 			sourceTree = "<group>";
 		};
 		73A21DE52D0C2E0800FC4C49 /* Controller */ = {
@@ -1591,6 +1660,7 @@
 				73FC5E572D5C80E1001D0DEF /* 一键报告View */,
 				73FC5E562D5C80D5001D0DEF /* 法律法规View */,
 				73FC5E552D5C80B4001D0DEF /* 公告大全View */,
+				739DCA292D6735FA009CFC78 /* 监控设置View */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1892,9 +1962,11 @@
 				730CEDFC2D544EF6002DE9DF /* CompanyLawCell.swift in Sources */,
 				7340E1D62D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift in Sources */,
 				73FC5E652D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift in Sources */,
+				739DCA182D670E7E009CFC78 /* PropertyThreeCompanyViewController.swift in Sources */,
 				73B3624B2D37A653003BD911 /* PeopleDetailViewController.swift in Sources */,
 				735A3F6F2D65B6FA00448268 /* MinitoringMessagePushViewController.swift in Sources */,
 				7325A7D12CFEFBE60043C196 /* WDYModel.swift in Sources */,
+				739DCA282D671B4E009CFC78 /* MyTwoSettingViewController.swift in Sources */,
 				73C36A7D2D2D1B8400D6DC46 /* SearchHistoryListView.swift in Sources */,
 				7325A7EE2D0008D10043C196 /* WLUnitFieldTextPosition.m in Sources */,
 				7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */,
@@ -1923,6 +1995,8 @@
 				73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */,
 				73FB9C842D5EEC3700554CAD /* RiskSettingViewController.swift in Sources */,
 				7340E1982D5CD485008FD5C7 /* SearchPeopleHighConsumptionViewController.swift in Sources */,
+				739DCA162D670E73009CFC78 /* PropertyThreeBothViewController.swift in Sources */,
+				739DCA1E2D671669009CFC78 /* MyCollectionPropertyViewController.swift in Sources */,
 				7340E1CE2D5DE622008FD5C7 /* SearchCompanyBeneficialOwnerViewController.swift in Sources */,
 				739DCA062D66E001009CFC78 /* PropertyOneViewController.swift in Sources */,
 				7340E1C82D5DE416008FD5C7 /* SearchCompanyOverseasInvestmentViewController.swift in Sources */,
@@ -1955,6 +2029,7 @@
 				73950F732D55A93A005AD034 /* PopMonitoringGroupView.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				73B362572D37B9CB003BD911 /* PeopleDetailTwoViewController.swift in Sources */,
+				739DCA262D671B45009CFC78 /* MyOneSettingViewController.swift in Sources */,
 				730CEDFA2D5446C8002DE9DF /* CompanyLawCellHeadView.swift in Sources */,
 				73EF03DB2D31339A0070F850 /* TwoPeopleCoopViewCell.swift in Sources */,
 				736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */,
@@ -1972,6 +2047,7 @@
 				73EF03CF2D30F84B0070F850 /* TwoPeopleListView.swift in Sources */,
 				73FC5E522D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift in Sources */,
 				734896E42D3A094800B028FE /* PeopleRiskDetailViewController.swift in Sources */,
+				739DCA2B2D67362B009CFC78 /* MyPropertySettingCell.swift in Sources */,
 				73FC5E422D5C3C07001D0DEF /* SearchPeopleShareholderCell.swift in Sources */,
 				73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */,
 				7325A7C02CFEEE5F0043C196 /* WDHomeViewController.swift in Sources */,
@@ -2032,11 +2108,13 @@
 				730487F72D2A525D0024265C /* HomeHeadView.swift in Sources */,
 				73C752562D1E4DA000C47187 /* HistoryListView.swift in Sources */,
 				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
+				739DCA202D671A23009CFC78 /* MyCheckSettingViewController.swift in Sources */,
 				733B5FFA2D573BFF00ADE7C5 /* RiskNoMonitoringView.swift in Sources */,
 				73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */,
 				7340E1D82D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift in Sources */,
 				73EDE9F62D59F9AA00A0A7E3 /* HomeOneReportCell.swift in Sources */,
 				73807D472D32C8B200F8B90D /* LaunchViewController.swift in Sources */,
+				739DCA1A2D670E87009CFC78 /* PropertyThreePeopleViewController.swift in Sources */,
 				73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */,
 				734896DA2D39F1AC00B028FE /* MySelfRiskDetailViewController.swift in Sources */,
 				735A3F6B2D65698200448268 /* SearchOneReportViewController.swift in Sources */,
@@ -2055,6 +2133,7 @@
 				7352B22A2D353F2200B5391B /* CompanySixHeadView.swift in Sources */,
 				73C0070B2D644C6E003C3CE1 /* DueDiligenceOneView.swift in Sources */,
 				73EDE9EC2D59E6D500A0A7E3 /* SearchSanctionViewController.swift in Sources */,
+				739DCA222D671A6E009CFC78 /* MyVipUseViewController.swift in Sources */,
 				73FC5E5E2D5C8D15001D0DEF /* SearchPeopleDeadbeatDetailViewController.swift in Sources */,
 				734896DC2D39F1EC00B028FE /* UnioRiskDetailViewController.swift in Sources */,
 				73C36A7F2D2D1B9800D6DC46 /* SearchLastSearchListView.swift in Sources */,
@@ -2144,6 +2223,7 @@
 				73B362432D3793F9003BD911 /* PopRateMoneyView.swift in Sources */,
 				7340E18D2D5CD404008FD5C7 /* SearchExternalGuaranteeViewController.swift in Sources */,
 				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
+				739DCA1C2D67133E009CFC78 /* SearchAddPropertyViewController.swift in Sources */,
 				73807D5F2D33B7D100F8B90D /* CompanyActivityViewCell.swift in Sources */,
 				730488152D2BD2380024265C /* HomeItemViewCell.swift in Sources */,
 				734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */,

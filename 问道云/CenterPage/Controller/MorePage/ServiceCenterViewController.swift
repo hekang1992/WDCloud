@@ -295,7 +295,7 @@ extension ServiceCenterViewController {
         // 设置被点击按钮的样式
         sender.backgroundColor = .init(cssStr: "#547AFF")
         sender.setTitleColor(.white, for: .normal)
-        self.listArray = self.modelArray[sender.tag - 100].items
+        self.listArray = self.modelArray[sender.tag - 100].items ?? []
         self.tableView.reloadData()
     }
     
