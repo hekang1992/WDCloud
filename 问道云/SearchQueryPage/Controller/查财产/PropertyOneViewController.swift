@@ -1,16 +1,19 @@
 //
-//  HomeSanctionViewController.swift
+//  PropertyOneViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/2/10.
 //
 
 import UIKit
-import HGSegmentedPageViewController
 import RxRelay
 import RxSwift
+import SwiftyJSON
+import HGSegmentedPageViewController
 
-class HomeSanctionViewController: WDBaseViewController {
+class PropertyOneViewController: WDBaseViewController {
+    
+    var backBlock: (() -> Void)?
     
     //参数
     var searchKey = BehaviorRelay<String>(value: "")
@@ -21,9 +24,6 @@ class HomeSanctionViewController: WDBaseViewController {
     //城市数据
     var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
     
-    //行业数据
-    var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
-    
     lazy var oneView: OneCompanyView = {
         let oneView = OneCompanyView()
         return oneView
@@ -31,7 +31,7 @@ class HomeSanctionViewController: WDBaseViewController {
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
-        headView.titlelabel.text = "行政处罚"
+        headView.titlelabel.text = "财产线索"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
         headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
@@ -40,7 +40,7 @@ class HomeSanctionViewController: WDBaseViewController {
     
     lazy var searchView: HomeItemSearchView = {
         let searchView = HomeItemSearchView()
-        let attrString = NSMutableAttributedString(string: "请输入关键词", attributes: [
+        let attrString = NSMutableAttributedString(string: "请输入企业名、人名", attributes: [
             .foregroundColor: UIColor.init(cssStr: "#999999") as Any,
             .font: UIFont.mediumFontOfSize(size: 14)
         ])
@@ -61,7 +61,18 @@ class HomeSanctionViewController: WDBaseViewController {
         segmentedPageViewController.categoryView.titleNormalColor = .init(cssStr: "#9FA4AD")
         segmentedPageViewController.categoryView.titleSelectedColor = .init(cssStr: "#333333")
         segmentedPageViewController.categoryView.vernier.backgroundColor = .init(cssStr: "#547AFF")
+        segmentedPageViewController.delegate = self
         return segmentedPageViewController
+    }()
+    
+    lazy var companyVc: PropertyCompanyViewController = {
+        let companyVc = PropertyCompanyViewController()
+        return companyVc
+    }()
+    
+    lazy var peopleVc: PropertyPeopleViewController = {
+        let peopleVc = PropertyPeopleViewController()
+        return peopleVc
     }()
     
     override func viewDidLoad() {
@@ -69,6 +80,9 @@ class HomeSanctionViewController: WDBaseViewController {
         
         // Do any additional setup after loading the view.
         addHeadView(from: headView)
+        headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.backBlock?()
+        }).disposed(by: disposeBag)
         view.addSubview(searchView)
         searchView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
@@ -137,11 +151,9 @@ class HomeSanctionViewController: WDBaseViewController {
                 }
                 self?.searchKey.accept(keywords)
             }).disposed(by: disposeBag)
-        
+    
         //获取城市数据
         getAllRegionInfo()
-        //获取行业数据
-        getAllIndustryInfo()
         //最近搜索
         self.getlastSearch()
         //浏览历史
@@ -149,10 +161,6 @@ class HomeSanctionViewController: WDBaseViewController {
         //热搜
         self.getHotWords()
     }
-    
-}
-
-extension HomeSanctionViewController {
     
     //获取所有城市数据
     func getAllRegionInfo() {
@@ -175,27 +183,9 @@ extension HomeSanctionViewController {
         }
     }
     
-    //获取行业数据
-    func getAllIndustryInfo() {
-        let man = RequestManager()
-        ViewHud.addLoadView()
-        let emptyDict = [String: Any]()
-        man.requestAPI(params: emptyDict,
-                       pageUrl: "/operation/ajax/industryTree",
-                       method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
-            switch result {
-            case .success(let success):
-                if let self = self, let modelArray = success.data?.data {
-                    self.industryModelArray.accept(modelArray)
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
+}
+
+extension PropertyOneViewController: HGSegmentedPageViewControllerDelegate {
     
     private func addSegmentedPageViewController() {
         self.addChild(self.segmentedPageViewController)
@@ -208,32 +198,36 @@ extension HomeSanctionViewController {
     }
     
     private func setupPageViewControllers() {
-        var titles: [String] = []
-        let companyVc = HomeCompanySanctionViewController()
-        let peopleVc = HomePeopleSanctionViewController()
-        self.searchKey.asObservable().subscribe(onNext: { searchStr in
-            companyVc.keyWords.accept(searchStr)
-            peopleVc.keyWords.accept(searchStr)
-        }).disposed(by: disposeBag)
-        
-        self.regionModelArray.asObservable().subscribe(onNext: { modelArray in
-            guard let modelArray = modelArray else { return }
-            companyVc.regionModelArray.accept(modelArray)
-            peopleVc.regionModelArray.accept(modelArray)
-        }).disposed(by: disposeBag)
-        
-        self.industryModelArray.asObservable().subscribe(onNext: { modelArray in
-            guard let modelArray = modelArray else { return }
-            companyVc.industryModelArray.accept(modelArray)
-            peopleVc.industryModelArray.accept(modelArray)
-        }).disposed(by: disposeBag)
-        
+        let titles: [String] = ["企业", "自然人"]
         segmentedPageViewController.pageViewControllers = [companyVc, peopleVc]
         segmentedPageViewController.selectedPage = 0
-        companyVc.block = { [weak self] model in
-            titles = ["企业\(model.total ?? 0)", "个人"]
-            self?.segmentedPageViewController.categoryView.titles = titles
+        self.segmentedPageViewController.categoryView.titles = titles
+        self.segmentedPageViewController.view.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(self.searchView.snp.bottom)
         }
+    }
+    
+    func segmentedPageViewControllerWillTransition(toPage page: Int) {
+        self.searchKey.asObservable()
+            .subscribe(onNext: { [weak self] keyWords in
+            guard let self = self else { return }
+            if page == 0 {
+                peopleVc.keyWords.accept(keyWords)
+            }else {
+                companyVc.keyWords.accept(keyWords)
+            }
+        }).disposed(by: disposeBag)
+        
+        self.regionModelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self, let modelArray = modelArray else { return }
+            if page == 0 {
+                peopleVc.regionModelArray.accept(modelArray)
+            }else {
+                companyVc.regionModelArray.accept(modelArray)
+            }
+        }).disposed(by: disposeBag)
+        
     }
     
     //最近搜索
@@ -241,7 +235,7 @@ extension HomeSanctionViewController {
         let man = RequestManager()
         ViewHud.addLoadView()
         let dict = ["searchType": "",
-                    "moduleId": "19"]
+                    "moduleId": "07"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
@@ -290,7 +284,7 @@ extension HomeSanctionViewController {
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "",
-                    "moduleId": "19",
+                    "moduleId": "07",
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
@@ -315,11 +309,26 @@ extension HomeSanctionViewController {
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let pageUrl = "\(base_url)/litigation-risk/administrative-penalty"
-                let dict = ["firmname": model.firmname ?? "",
-                            "entityId": model.firmnumber ?? ""]
-                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-                self.pushWebPage(from: webUrl)
+                let type = model.viewrecordtype ?? ""
+                if type == "1" {//企业
+                    let entityId = model.firmnumber ?? ""
+                    let json: JSON = ["entityId": entityId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchCompanyDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    detailVc.nameTitle = "失信记录列表"
+                    detailVc.pageUrl = "/riskmonitor/cooperation/getDeadBeatDetail"
+                    self.navigationController?.pushViewController(detailVc, animated: true)
+                }else {//个人
+                    let personId = model.personnumber ?? ""
+                    let json: JSON = ["personId": personId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchPeopleDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    detailVc.nameTitle = "失信记录列表"
+                    detailVc.pageUrl = "/riskmonitor/cooperation/getDeadBeatDetail"
+                    self.navigationController?.pushViewController(detailVc, animated: true)
+                }
             }
             let type = model.viewrecordtype ?? ""
             if type == "1" {
@@ -354,7 +363,7 @@ extension HomeSanctionViewController {
     private func getHotWords() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["moduleId": "19"]
+        let dict = ["moduleId": "07"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
                        method: .get) { [weak self] result in
@@ -378,11 +387,38 @@ extension HomeSanctionViewController {
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let pageUrl = "\(base_url)/litigation-risk/administrative-penalty"
-                let dict = ["firmname": model.name ?? "",
-                            "entityId": model.eid ?? ""]
-                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-                self.pushWebPage(from: webUrl)
+                let type = model.type ?? ""
+                if type == "1" {//企业
+                    let entityId = model.eid ?? ""
+                    let json: JSON = ["entityId": entityId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchCompanyDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    detailVc.nameTitle = "失信记录列表"
+                    detailVc.pageUrl = "/riskmonitor/cooperation/getDeadBeatDetail"
+                    self.navigationController?.pushViewController(detailVc, animated: true)
+                }else {//个人
+                    let personId = model.eid ?? ""
+                    let json: JSON = ["personId": personId]
+                    let itemModel: itemsModel = itemsModel(json: json)
+                    let detailVc = SearchPeopleDeadbeatDetailViewController()
+                    detailVc.model = itemModel
+                    detailVc.nameTitle = "失信记录列表"
+                    detailVc.pageUrl = "/riskmonitor/cooperation/getDeadBeatDetail"
+                    self.navigationController?.pushViewController(detailVc, animated: true)
+                }
+//                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
+//                var dict: [String: String]
+//                let type = model.type ?? ""
+//                if type == "1" {
+//                    dict = ["firmname": model.name ?? "",
+//                            "entityId": model.eid ?? ""]
+//                }else {
+//                    dict = ["personName": model.name ?? "",
+//                            "personNumber": model.eid ?? ""]
+//                }
+//                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+//                self.pushWebPage(from: webUrl)
             }
             listView.nameLabel.text = model.name ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
@@ -412,7 +448,7 @@ extension HomeSanctionViewController {
             let man = RequestManager()
             ViewHud.addLoadView()
             let dict = ["searchType": "",
-                        "moduleId": "19"]
+                        "moduleId": "07"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
@@ -441,7 +477,7 @@ extension HomeSanctionViewController {
             ViewHud.addLoadView()
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
-                        "moduleId": "19",
+                        "moduleId": "07",
                         "viewrecordtype": ""]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",

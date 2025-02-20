@@ -51,11 +51,6 @@ class SearchAllViewController: WDBaseViewController {
         return riskVc
     }()
     
-    lazy var propertyVc: SearchPropertyClueViewController = {
-        let propertyVc = SearchPropertyClueViewController()
-        return propertyVc
-    }()
-    
     var selectIndex: Int = 0
     
     override func viewDidLoad() {
@@ -179,15 +174,13 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 peopleVc.searchWords = searchStr
             }
             return peopleVc
-        }else if index == 2 {
+        }else {
             riskVc.lastSearchTextBlock = { [weak self] searchStr in
                 guard let self = self else { return }
                 searchHeadView.searchTx.text = searchStr
                 riskVc.searchWords = searchStr
             }
             return riskVc
-        }else {
-            return propertyVc
         }
     }
     

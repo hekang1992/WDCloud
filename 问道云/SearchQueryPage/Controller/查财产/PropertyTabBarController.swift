@@ -1,5 +1,5 @@
 //
-//  WDTabBarController.swift
+//  PropertyTabBarController.swift
 //  问道云
 //
 //  Created by 何康 on 2024/12/3.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WDTabBarController: UITabBarController, UITabBarControllerDelegate {
+class PropertyTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,45 +20,56 @@ class WDTabBarController: UITabBarController, UITabBarControllerDelegate {
         tabBar.layer.shadowOpacity = 0.1
         tabBar.layer.shadowOffset = CGSize(width: 0, height: -2)
         tabBar.layer.shadowRadius = 10
-        let homeVC = WDHomeViewController()
-        let riskVc = WDRiskViewController()
-        var diligenceVc = WDBaseViewController()
-        let centerVC = WDCenterViewController()
-        if IS_LOGIN {
-            diligenceVc = DueDiligenceViewController()
-        }else {
-            diligenceVc = WDDiligenceViewController()
+        let oneVc = PropertyOneViewController()
+        let twoVc = PropertyTwoViewController()
+        let threeVc = PropertyThreeViewController()
+        let fourVc = PropertyFourViewController()
+        
+        oneVc.tabBarItem = UITabBarItem(
+            title: "财产线索",
+            image: UIImage(named: "checkone_nor")?.withRenderingMode(.alwaysOriginal),
+            selectedImage: UIImage(named: "checkone_sel")?.withRenderingMode(.alwaysOriginal)
+        )
+        
+        twoVc.tabBarItem = UITabBarItem(
+            title: "线索监控",
+            image: UIImage(named: "checktwo_nor")?.withRenderingMode(.alwaysOriginal),
+            selectedImage: UIImage(named: "checktwo_sel")?.withRenderingMode(.alwaysOriginal)
+        )
+        
+        threeVc.tabBarItem = UITabBarItem(
+            title: "监控列表",
+            image: UIImage(named: "checkthree_nor")?.withRenderingMode(.alwaysOriginal),
+            selectedImage: UIImage(named: "checkthree_sel")?.withRenderingMode(.alwaysOriginal)
+        )
+        
+        fourVc.tabBarItem = UITabBarItem(
+            title: "我的",
+            image: UIImage(named: "checkfour_nor")?.withRenderingMode(.alwaysOriginal),
+            selectedImage: UIImage(named: "checkfour_sel")?.withRenderingMode(.alwaysOriginal)
+        )
+        
+        oneVc.backBlock = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
         }
         
-        homeVC.tabBarItem = UITabBarItem(
-            title: "首页",
-            image: UIImage(named: "home_nor")?.withRenderingMode(.alwaysOriginal),
-            selectedImage: UIImage(named: "home_sel")?.withRenderingMode(.alwaysOriginal)
-        )
+        twoVc.backBlock = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
         
-        riskVc.tabBarItem = UITabBarItem(
-            title: "风控",
-            image: UIImage(named: "risk_nor")?.withRenderingMode(.alwaysOriginal),
-            selectedImage: UIImage(named: "risk_sel")?.withRenderingMode(.alwaysOriginal)
-        )
+        threeVc.backBlock = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
         
-        diligenceVc.tabBarItem = UITabBarItem(
-            title: "尽调",
-            image: UIImage(named: "dili_nor")?.withRenderingMode(.alwaysOriginal),
-            selectedImage: UIImage(named: "dili_sel")?.withRenderingMode(.alwaysOriginal)
-        )
-        
-        centerVC.tabBarItem = UITabBarItem(
-            title: "我的",
-            image: UIImage(named: "center_nor")?.withRenderingMode(.alwaysOriginal),
-            selectedImage: UIImage(named: "center_sel")?.withRenderingMode(.alwaysOriginal)
-        )
+        fourVc.backBlock = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
         
         viewControllers = [
-            WDNavigationController(rootViewController: homeVC),
-            WDNavigationController(rootViewController: riskVc),
-            WDNavigationController(rootViewController: diligenceVc),
-            WDNavigationController(rootViewController: centerVC)
+            WDNavigationController(rootViewController: oneVc),
+            WDNavigationController(rootViewController: twoVc),
+            WDNavigationController(rootViewController: threeVc),
+            WDNavigationController(rootViewController: fourVc)
         ]
         
         // 设置字体样式

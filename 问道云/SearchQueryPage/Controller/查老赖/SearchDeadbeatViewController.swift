@@ -6,10 +6,10 @@
 //
 
 import UIKit
-import HGSegmentedPageViewController
 import RxRelay
 import RxSwift
 import SwiftyJSON
+import HGSegmentedPageViewController
 
 class SearchDeadbeatViewController: WDBaseViewController {
     

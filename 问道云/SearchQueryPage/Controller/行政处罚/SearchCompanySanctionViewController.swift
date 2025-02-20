@@ -1,5 +1,5 @@
 //
-//  HomeCompanySanctionViewController.swift
+//  SearchCompanySanctionViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/2/10.
@@ -10,7 +10,7 @@ import RxRelay
 import MJRefresh
 import DropMenuBar
 
-class HomeCompanySanctionViewController: WDBaseViewController {
+class SearchCompanySanctionViewController: WDBaseViewController {
     
     var entityArea: String = ""//公司时候的地区
     var entityIndustry: String = ""//公司时候的行业
@@ -77,7 +77,7 @@ class HomeCompanySanctionViewController: WDBaseViewController {
     
 }
 
-extension HomeCompanySanctionViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchCompanySanctionViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25
@@ -130,7 +130,7 @@ extension HomeCompanySanctionViewController: UITableViewDelegate, UITableViewDat
     
 }
 
-extension HomeCompanySanctionViewController {
+extension SearchCompanySanctionViewController {
     
     private func addMenuWithCompanyView() {
         //添加下拉筛选

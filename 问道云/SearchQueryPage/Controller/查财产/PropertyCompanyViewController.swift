@@ -1,28 +1,25 @@
 //
-//  JobSearchViewController.swift
+//  PropertyCompanyViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2025/2/19.
+//  Created by 何康 on 2025/2/20.
 //
 
 import UIKit
+import RxRelay
 
-class JobSearchViewController: WDBaseViewController {
+class PropertyCompanyViewController: WDBaseViewController {
     
-    lazy var headView: HeadView = {
-        let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
-        headView.titlelabel.text = "求职监测"
-        headView.titlelabel.textColor = .black
-        headView.bgView.backgroundColor = .white
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
-        return headView
-    }()
+    //城市数据
+    var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
+    var entityArea: String = ""//公司时候的地区
+    
+    var keyWords = BehaviorRelay<String>(value: "")
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        addHeadView(from: headView)
     }
     
 

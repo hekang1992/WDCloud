@@ -1,5 +1,5 @@
 //
-//  HomeLawsViewController.swift
+//  SearchLawsViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/2/10.
@@ -12,7 +12,7 @@ import MJRefresh
 import RxRelay
 import SwiftyJSON
 
-class HomeLawsViewController: WDBaseViewController {
+class SearchLawsViewController: WDBaseViewController {
 
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
@@ -125,7 +125,7 @@ class HomeLawsViewController: WDBaseViewController {
 
 }
 
-extension HomeLawsViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.allArray.count
@@ -210,7 +210,7 @@ extension HomeLawsViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension HomeLawsViewController {
+extension SearchLawsViewController {
     
     //效力
     private func getOneMenuInfo() {

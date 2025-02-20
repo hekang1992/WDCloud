@@ -164,6 +164,7 @@ class WDHomeViewController: WDBaseViewController {
         
         //点击查财产更新文字轮博
         homeHeadView.tabView.threeBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.selectIndex = 3
             self?.isClickHeadTab = true
             self?.getHotWords()
         }).disposed(by: disposeBag)
@@ -172,10 +173,16 @@ class WDHomeViewController: WDBaseViewController {
         homeHeadView.tabView.textBlock = { [weak self] model in
             if IS_LOGIN {
                 DispatchQueue.main.async {
-                    let searchAllVc = SearchAllViewController()
-                    searchAllVc.selectIndex = self?.selectIndex ?? 0
-                    searchAllVc.model.accept(model)
-                    self?.navigationController?.pushViewController(searchAllVc, animated: true)
+                    let selectIndex = self?.selectIndex ?? 0
+                    if selectIndex == 3 {
+                        let searchClueVc = PropertyTabBarController()
+                        self?.navigationController?.pushViewController(searchClueVc, animated: true)
+                    }else {
+                        let searchAllVc = SearchAllViewController()
+                        searchAllVc.selectIndex = selectIndex
+                        searchAllVc.model.accept(model)
+                        self?.navigationController?.pushViewController(searchAllVc, animated: true)
+                    }
                 }
             }else {
                 self?.popLogin()
@@ -353,7 +360,7 @@ extension WDHomeViewController {
             let lawSuitVc = SearchLawSuitViewController()
             self.navigationController?.pushViewController(lawSuitVc, animated: true)
         }else if menuID == "11000" {//行政处罚
-            let sanctionVc = HomeSanctionViewController()
+            let sanctionVc = SearchSanctionViewController()
             self.navigationController?.pushViewController(sanctionVc, animated: true)
         }else if menuID == "11100" {//债券违约
             let bondVc = SearchDondDefaultViewController()
@@ -362,7 +369,7 @@ extension WDHomeViewController {
             let noticeVc = NoticeAllViewController()
             self.navigationController?.pushViewController(noticeVc, animated: true)
         }else if menuID == "11300" {//法律法规
-            let lawVc = HomeLawsViewController()
+            let lawVc = SearchLawsViewController()
             self.navigationController?.pushViewController(lawVc, animated: true)
         }else if menuID == "11400" {//风险监控
             NotificationCenter.default.post(name: NSNotification.Name(RISK_VC), object: nil)
@@ -372,7 +379,7 @@ extension WDHomeViewController {
             let oneRpVc = HomeOneReportViewController()
             self.navigationController?.pushViewController(oneRpVc, animated: true)
         }else if menuID == "11700" {//求职监测
-            let jobVc = JobSearchViewController()
+            let jobVc = SearchJobViewController()
             self.navigationController?.pushViewController(jobVc, animated: true)
         }else if menuID == "11800" {//风控秘笈
             let tipsVc = RiskTipsCenterViewController()
