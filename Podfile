@@ -58,4 +58,6 @@ target '问道云' do
   
   pod 'HGSegmentedPageViewController', '~> 1.2.2'
   
+  pod 'SevenSwitch', '~> 2.1.0'
+  
 end

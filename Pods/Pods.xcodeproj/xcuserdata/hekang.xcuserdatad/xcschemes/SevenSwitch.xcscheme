@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "77EB1A1E479102D95FE7C0BBBDB4475E"
-               BuildableName = "Pods____.framework"
-               BlueprintName = "Pods-问道云"
+               BlueprintIdentifier = "FFE3757CA89C29CEAA2E8EE48275CBDF"
+               BuildableName = "SevenSwitch.framework"
+               BlueprintName = "SevenSwitch"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

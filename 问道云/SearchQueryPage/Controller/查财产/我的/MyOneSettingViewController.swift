@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RoundedSwitch
+import SevenSwitch
 
 class MyOneSettingViewController: WDBaseViewController {
     
@@ -15,6 +17,31 @@ class MyOneSettingViewController: WDBaseViewController {
     var selectOneIndex: Int = 0
     var selectTwoIndex: Int = 0
     var selectThreeIndex: Int = 0
+    
+    lazy var onelabel: UILabel = {
+        let onelabel = UILabel()
+        onelabel.text = "财产线索消息"
+        onelabel.textColor = UIColor.init(cssStr: "#333333")
+        onelabel.textAlignment = .left
+        onelabel.font = .mediumFontOfSize(size: 15)
+        return onelabel
+    }()
+    
+    lazy var twolabel: UILabel = {
+        let twolabel = UILabel()
+        twolabel.text = "实时推送财产线索变化，避免错过重要信息"
+        twolabel.textColor = UIColor.init(cssStr: "#333333")
+        twolabel.textAlignment = .left
+        twolabel.font = .regularFontOfSize(size: 12)
+        return twolabel
+    }()
+    
+    lazy var oneSwitch: SevenSwitch = {
+        let oneSwitch = SevenSwitch()
+        oneSwitch.on = true
+        oneSwitch.onTintColor = .init(cssStr: "#547AFF")!
+        return oneSwitch
+    }()
     
     lazy var tableView1: UITableView = {
         let tableView1 = UITableView(frame: .zero, style: .plain)
@@ -72,12 +99,34 @@ class MyOneSettingViewController: WDBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        view.addSubview(onelabel)
+        view.addSubview(twolabel)
+        view.addSubview(oneSwitch)
         view.addSubview(tableView1)
         view.addSubview(tableView2)
         view.addSubview(tableView3)
         
+        onelabel.snp.makeConstraints { make in
+            make.height.equalTo(21)
+            make.top.equalToSuperview().offset(9)
+            make.left.equalToSuperview().offset(15)
+        }
+        
+        twolabel.snp.makeConstraints { make in
+            make.height.equalTo(21)
+            make.top.equalTo(onelabel.snp.bottom).offset(2)
+            make.left.equalToSuperview().offset(16.5)
+        }
+        
+        oneSwitch.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.left.equalTo(SCREEN_WIDTH - 60)
+            make.size.equalTo(CGSize(width: 40, height: 20))
+        }
+        
         tableView1.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalTo(twolabel.snp.bottom).offset(8)
             make.leading.equalToSuperview()
             make.bottom.equalToSuperview().offset(-120)
             make.width.equalToSuperview().dividedBy(3)
@@ -131,16 +180,19 @@ extension MyOneSettingViewController: UITableViewDelegate, UITableViewDataSource
             let model = self.modelArray?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyPropertySettingCell", for: indexPath) as! MyPropertySettingCell
             cell.mlabel.text = model?.name ?? ""
+            cell.backgroundColor = .init(cssStr: "#EEEEEE")
             return cell
         } else if tableView == tableView2 {
             let model = self.modelArray?[selectOneIndex].items?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyPropertySettingCell", for: indexPath) as! MyPropertySettingCell
             cell.mlabel.text = model?.name ?? ""
+            cell.backgroundColor = .init(cssStr: "#EEEEEE")
             return cell
         }else {
             let model = self.modelArray?[selectOneIndex].items?[selectTwoIndex].items?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyPropertySettingCell", for: indexPath) as! MyPropertySettingCell
             cell.mlabel.text = model?.name ?? ""
+            cell.backgroundColor = .init(cssStr: "#EEEEEE")
             return cell
         }
     }
