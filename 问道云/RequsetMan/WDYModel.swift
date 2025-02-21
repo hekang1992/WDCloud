@@ -127,7 +127,11 @@ class DataModel {
  监控设置模型
 */
     var propertyTypeSetting: [propertyTypeSettingModel]?
+    var propertyEntityRelatedSetting: [propertyTypeSettingModel]?
+    var propertyPersonRelatedSetting: [propertyTypeSettingModel]?
     init(json: JSON) {
+        self.propertyEntityRelatedSetting = json["propertyEntityRelatedSetting"].arrayValue.map { propertyTypeSettingModel(json: $0) }
+        self.propertyPersonRelatedSetting = json["propertyPersonRelatedSetting"].arrayValue.map { propertyTypeSettingModel(json: $0) }
         self.propertyTypeSetting = json["propertyTypeSetting"].arrayValue.map { propertyTypeSettingModel(json: $0) }
         self.url = json["url"].stringValue
         self.entityName = json["entityName"].stringValue

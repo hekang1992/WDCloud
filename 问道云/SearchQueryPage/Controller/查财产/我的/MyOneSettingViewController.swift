@@ -7,10 +7,13 @@
 
 import UIKit
 import SevenSwitch
+import RxRelay
 
 class MyOneSettingViewController: WDBaseViewController {
     
     var modelArray: [propertyTypeSettingModel]?
+    
+    var selectArray = BehaviorRelay<[propertyTypeSettingModel]?>(value: nil)
     
     //记录被点击的cell
     var selectOneIndex: Int = 0
@@ -166,19 +169,53 @@ class MyOneSettingViewController: WDBaseViewController {
             make.width.equalToSuperview().dividedBy(3)
         }
         oneBtn.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 173.pix(), height: 48.pix()))
+            make.size.equalTo(CGSize(width: 173, height: 48.pix()))
             make.left.equalToSuperview().offset(15)
             make.bottom.equalToSuperview().offset(-25)
         }
         twoBtn.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 173.pix(), height: 48.pix()))
+            make.size.equalTo(CGSize(width: 173, height: 48.pix()))
             make.right.equalToSuperview().offset(-15)
             make.bottom.equalToSuperview().offset(-25)
         }
+        oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            if let modelArray = modelArray {
+                for model in modelArray {
+                    model.select = "0"
+                    if let modelArray = model.items {
+                        for model in modelArray {
+                            model.select = "0"
+                            if let modelArray = model.items {
+                                for model in modelArray {
+                                    model.select = "0"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            self.tableView1.reloadData()
+            self.tableView2.reloadData()
+            self.tableView3.reloadData()
+        }).disposed(by: disposeBag)
+        
+        twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.selectArray.accept(modelArray)
+        }).disposed(by: disposeBag)
+        
+        //确定
+        self.selectArray.asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self, let modelArray = modelArray else { return }
+            let add = modelArray
+            print("=============")
+        }).disposed(by: disposeBag)
+        
         //获取用户监控设置
         getUserSettingInfo()
     }
-    
+
 }
 
 extension MyOneSettingViewController: UITableViewDelegate, UITableViewDataSource {
@@ -210,18 +247,148 @@ extension MyOneSettingViewController: UITableViewDelegate, UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyPropertySettingCell", for: indexPath) as! MyPropertySettingCell
             cell.mlabel.text = model?.name ?? ""
             cell.backgroundColor = .init(cssStr: "#EEEEEE")
+            cell.model.accept(model)
+            var titles: [String] = []
+            if let items = model?.items {
+                titles.removeAll()
+                for model in items {
+                    titles.append(model.select ?? "")
+                }
+                let containsZero = titles.contains("0")
+                let containsOne = titles.contains("1")
+                if containsZero && containsOne {
+                    model?.select = "0"
+                    cell.checkBtn.setImage(UIImage(named: "bottiamgeadd"), for: .normal)
+                } else if containsZero {
+                    print("只包含 0")
+                    model?.select = "0"
+                    cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
+                } else if containsOne {
+                    print("只包含 1")
+                    model?.select = "1"
+                    cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
+                } else {
+                    print("既不包含 0 也不包含 1")
+                }
+            }
+            cell.block = { [weak self] btn in
+                guard let self = self, let model = model else { return }
+                self.tableView(self.tableView1, didSelectRowAt: indexPath)
+                if model.select == "0" {
+                    model.select = "1"
+                    btn.setImage(UIImage(named: "agreeselimage"), for: .normal)
+                    if let items = model.items {
+                        for model in items {
+                            model.select = "1"
+                            if let items = model.items {
+                                for model in items {
+                                    model.select = "1"
+                                }
+                            }
+                        }
+                    }
+                }else {
+                    model.select = "0"
+                    btn.setImage(UIImage(named: "agreenorimage"), for: .normal)
+                    if let items = model.items {
+                        for model in items {
+                            model.select = "0"
+                            if let items = model.items {
+                                for model in items {
+                                    model.select = "0"
+                                }
+                            }
+                        }
+                    }
+                }
+                self.tableView1.reloadData()
+                self.tableView2.reloadData()
+                self.tableView3.reloadData()
+            }
             return cell
         } else if tableView == tableView2 {
             let model = self.modelArray?[selectOneIndex].items?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyPropertySettingCell", for: indexPath) as! MyPropertySettingCell
             cell.mlabel.text = model?.name ?? ""
             cell.backgroundColor = .init(cssStr: "#EEEEEE")
+            let select = model?.select ?? ""
+            if select == "1" {
+                cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
+            }else {
+                cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
+            }
+            var titles: [String] = []
+            if let items = model?.items {
+                titles.removeAll()
+                for model in items {
+                    titles.append(model.select ?? "")
+                }
+                let containsZero = titles.contains("0")
+                let containsOne = titles.contains("1")
+                if containsZero && containsOne {
+                    model?.select = "0"
+                    cell.checkBtn.setImage(UIImage(named: "bottiamgeadd"), for: .normal)
+                } else if containsZero {
+                    print("只包含 0")
+                    model?.select = "0"
+                    cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
+                } else if containsOne {
+                    print("只包含 1")
+                    model?.select = "1"
+                    cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
+                } else {
+                    
+                }
+            }
+            cell.block = { [weak self] btn in
+                guard let self = self, let model = model else { return }
+                self.tableView(self.tableView2, didSelectRowAt: indexPath)
+                if model.select == "0" {
+                    model.select = "1"
+                    btn.setImage(UIImage(named: "agreeselimage"), for: .normal)
+                    if let items = model.items {
+                        for model in items {
+                            model.select = "1"
+                        }
+                    }
+                }else {
+                    model.select = "0"
+                    btn.setImage(UIImage(named: "agreenorimage"), for: .normal)
+                    if let items = model.items {
+                        for model in items {
+                            model.select = "0"
+                        }
+                    }
+                }
+                self.tableView1.reloadData()
+                self.tableView2.reloadData()
+                self.tableView3.reloadData()
+            }
             return cell
         }else {
             let model = self.modelArray?[selectOneIndex].items?[selectTwoIndex].items?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyPropertySettingCell", for: indexPath) as! MyPropertySettingCell
             cell.mlabel.text = model?.name ?? ""
             cell.backgroundColor = .init(cssStr: "#EEEEEE")
+            let select = model?.select ?? ""
+            if select == "1" {
+                cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
+            } else {
+                cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
+            }
+            cell.block = { [weak self] btn in
+                guard let self = self, let model = model else { return }
+                if select == "1" {
+                    model.select = "0"
+                    btn.setImage(UIImage(named: "agreenorimage"), for: .normal)
+                }else {
+                    model.select = "1"
+                    btn.setImage(UIImage(named: "agreeselimage"), for: .normal)
+                }
+                self.tableView1.reloadData()
+                self.tableView2.reloadData()
+                self.tableView3.reloadData()
+            }
             return cell
         }
     }
