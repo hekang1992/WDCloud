@@ -348,6 +348,9 @@ extension WDHomeViewController {
             searchVc.selectIndex = 1
             searchVc.searchHeadView.searchTx.placeholder = "请输入老板,股东,高管姓名"
             self.navigationController?.pushViewController(searchVc, animated: true)
+        }else if menuID == "10400" {//高级搜索
+            let searchVc = HighSearchViewController()
+            self.navigationController?.pushViewController(searchVc, animated: true)
         }else if menuID == "10500" {//查股东
             let shareVc = SearchShareholderViewController()
             self.navigationController?.pushViewController(shareVc, animated: true)

@@ -92,6 +92,8 @@ class WDRiskViewController: WDBaseViewController {
         addSegmentedPageViewController()
         setupPageViewControllers()
         
+        //初始化监控配置
+        getRiskConfig()
     }
     
 }
@@ -116,6 +118,28 @@ extension WDRiskViewController: HGSegmentedPageViewControllerDelegate {
         self.segmentedPageViewController.view.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
             make.top.equalTo(headView.snp.bottom).offset(12)
+        }
+    }
+    
+}
+
+extension WDRiskViewController {
+    
+    //初始化监控配置
+    private func getRiskConfig() {
+        ViewHud.addLoadView()
+        let man = RequestManager()
+        let dict = [String: Any]()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-config/initRiskMonitorConfig",
+                       method: .post) { result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                break
+            case .failure(let failure):
+                break
+            }
         }
     }
     

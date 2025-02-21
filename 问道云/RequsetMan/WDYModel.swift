@@ -129,7 +129,26 @@ class DataModel {
     var propertyTypeSetting: [propertyTypeSettingModel]?
     var propertyEntityRelatedSetting: [propertyTypeSettingModel]?
     var propertyPersonRelatedSetting: [propertyTypeSettingModel]?
+/**
+ 高级搜索模型
+ */
+    var ORG_REG_STATUS: [itemsModel]?//登记状态
+    var INC_DATE_LEVEL: [itemsModel]?//成立年限
+    var REG_CAP_LEVEL: [itemsModel]?//注册资本
+    var ORG_CATEGORY: [itemsModel]?//机构类型
+    var ORG_ECON: [itemsModel]?//企业类型
+    var SIP_LEVEL: [itemsModel]?//参保人数
+    var LIST_STATUS: [itemsModel]?//上市状态
+    var LIST_SECTOR: [itemsModel]?//上市板块
     init(json: JSON) {
+        self.LIST_SECTOR = json["LIST_SECTOR"].arrayValue.map { itemsModel(json: $0) }
+        self.LIST_STATUS = json["LIST_STATUS"].arrayValue.map { itemsModel(json: $0) }
+        self.SIP_LEVEL = json["SIP_LEVEL"].arrayValue.map { itemsModel(json: $0) }
+        self.ORG_ECON = json["ORG_ECON"].arrayValue.map { itemsModel(json: $0) }
+        self.ORG_CATEGORY = json["ORG_CATEGORY"].arrayValue.map { itemsModel(json: $0) }
+        self.REG_CAP_LEVEL = json["REG_CAP_LEVEL"].arrayValue.map { itemsModel(json: $0) }
+        self.ORG_REG_STATUS = json["ORG_REG_STATUS"].arrayValue.map { itemsModel(json: $0) }
+        self.INC_DATE_LEVEL = json["INC_DATE_LEVEL"].arrayValue.map { itemsModel(json: $0) }
         self.propertyEntityRelatedSetting = json["propertyEntityRelatedSetting"].arrayValue.map { propertyTypeSettingModel(json: $0) }
         self.propertyPersonRelatedSetting = json["propertyPersonRelatedSetting"].arrayValue.map { propertyTypeSettingModel(json: $0) }
         self.propertyTypeSetting = json["propertyTypeSetting"].arrayValue.map { propertyTypeSettingModel(json: $0) }
@@ -508,12 +527,16 @@ class childrenModel {
     var path: String?//请求地址
     var menuId: String?
     var children: [childrenModel]?
+    var name: String?
+    var code: String?
     init(json: JSON) {
         self.children = json["children"].arrayValue.map { childrenModel(json: $0) }
         self.icon = json["icon"].stringValue
         self.menuName = json["menuName"].stringValue
         self.path = json["path"].stringValue
         self.menuId = json["menuId"].stringValue
+        self.name = json["name"].stringValue
+        self.code = json["code"].stringValue
     }
 }
 

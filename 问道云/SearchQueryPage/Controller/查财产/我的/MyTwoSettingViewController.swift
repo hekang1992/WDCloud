@@ -194,21 +194,21 @@ class MyTwoSettingViewController: WDBaseViewController {
         tableView1.snp.makeConstraints { make in
             make.top.equalTo(onelabel.snp.bottom).offset(8)
             make.leading.equalToSuperview()
-            make.height.equalTo(200)
+            make.height.equalTo(165)
             make.width.equalToSuperview().dividedBy(3)
         }
         
         tableView2.snp.makeConstraints { make in
             make.top.equalTo(tableView1.snp.top)
             make.leading.equalTo(tableView1.snp.trailing)
-            make.height.equalTo(200)
+            make.height.equalTo(165)
             make.width.equalToSuperview().dividedBy(3)
         }
         
         tableView3.snp.makeConstraints { make in
             make.top.equalTo(tableView1.snp.top)
             make.leading.equalTo(tableView2.snp.trailing)
-            make.height.equalTo(200)
+            make.height.equalTo(165)
             make.width.equalToSuperview().dividedBy(3)
         }
         
@@ -333,8 +333,12 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
             let count = self.modelArray?[selectOneIndex].items?.count ?? 0
             return count
         }else if tableView == tableView3 {
-            let count = self.modelArray?[selectOneIndex].items?[selectTwoIndex].items?.count ?? 0
-            return count
+            if let modelArray = self.modelArray?[selectOneIndex].items, modelArray.count > 0 {
+                let count = modelArray[selectTwoIndex].items?.count ?? 0
+                return count
+            }else {
+                return 0
+            }
         }else if tableView == tableView4 {
             return self.modelpArray?.count ?? 0
         }else if tableView == tableView5 {

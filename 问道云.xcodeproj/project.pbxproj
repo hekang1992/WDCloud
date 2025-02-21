@@ -270,6 +270,8 @@
 		73C752542D1E4B5800C47187 /* HistoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752532D1E4B5800C47187 /* HistoryListViewController.swift */; };
 		73C752562D1E4DA000C47187 /* HistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752552D1E4DA000C47187 /* HistoryListView.swift */; };
 		73C752582D1E728500C47187 /* HistoryListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752572D1E728500C47187 /* HistoryListViewCell.swift */; };
+		73CC03772D6859660022F794 /* HighSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03762D6859660022F794 /* HighSearchViewController.swift */; };
+		73CC037A2D685FED0022F794 /* HighSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03792D685FED0022F794 /* HighSearchView.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
 		73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB952D01415C00B2FE1B /* UserCenterView.swift */; };
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
@@ -631,6 +633,8 @@
 		73C752532D1E4B5800C47187 /* HistoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListViewController.swift; sourceTree = "<group>"; };
 		73C752552D1E4DA000C47187 /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		73C752572D1E728500C47187 /* HistoryListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListViewCell.swift; sourceTree = "<group>"; };
+		73CC03762D6859660022F794 /* HighSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchViewController.swift; sourceTree = "<group>"; };
+		73CC03792D685FED0022F794 /* HighSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchView.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		73CFEB952D01415C00B2FE1B /* UserCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterView.swift; sourceTree = "<group>"; };
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
@@ -1501,6 +1505,22 @@
 			path = SearchView;
 			sourceTree = "<group>";
 		};
+		73CC03752D68594D0022F794 /* 高级搜索 */ = {
+			isa = PBXGroup;
+			children = (
+				73CC03762D6859660022F794 /* HighSearchViewController.swift */,
+			);
+			path = "高级搜索";
+			sourceTree = "<group>";
+		};
+		73CC03782D685FD60022F794 /* 高级搜索View */ = {
+			isa = PBXGroup;
+			children = (
+				73CC03792D685FED0022F794 /* HighSearchView.swift */,
+			);
+			path = "高级搜索View";
+			sourceTree = "<group>";
+		};
 		73CFEB902D0056DD00B2FE1B /* WebPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1621,6 +1641,7 @@
 		73FC5E392D5C32E6001D0DEF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				73CC03752D68594D0022F794 /* 高级搜索 */,
 				739DCA022D66D24E009CFC78 /* 查财产 */,
 				73FC5E492D5C3C80001D0DEF /* 查股东 */,
 				73FC5E4A2D5C784E001D0DEF /* 查老赖 */,
@@ -1654,6 +1675,7 @@
 		73FC5E3A2D5C32EE001D0DEF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				73CC03782D685FD60022F794 /* 高级搜索View */,
 				73FC5E5A2D5C811F001D0DEF /* 查老赖View */,
 				73FC5E592D5C8111001D0DEF /* 查股东View */,
 				73FC5E582D5C80EC001D0DEF /* 行政处罚View */,
@@ -2200,6 +2222,7 @@
 				7340E1AB2D5CD60F008FD5C7 /* SearchCompanyJudicialAuctioniewViewController.swift in Sources */,
 				73FC5E3C2D5C3403001D0DEF /* SearchShareholderViewController.swift in Sources */,
 				73868A472D55F56600CE107D /* BothReportViewController.swift in Sources */,
+				73CC03772D6859660022F794 /* HighSearchViewController.swift in Sources */,
 				7330CB822D23E65900778D54 /* ContactManager.swift in Sources */,
 				739DCA0A2D66E012009CFC78 /* PropertyThreeViewController.swift in Sources */,
 				7340E19D2D5CD52A008FD5C7 /* SearchCompanyCourtNoticeViewController.swift in Sources */,
@@ -2208,6 +2231,7 @@
 				739DCA042D66DF6F009CFC78 /* PropertyTabBarController.swift in Sources */,
 				73EDE9DF2D599F8400A0A7E3 /* NoticeAllViewController.swift in Sources */,
 				7340E1AD2D5CD619008FD5C7 /* SearchPeopleJudicialAuctioniewViewController.swift in Sources */,
+				73CC037A2D685FED0022F794 /* HighSearchView.swift in Sources */,
 				73B3623F2D375189003BD911 /* PopInvoiceView.swift in Sources */,
 				7340E1BF2D5DD55F008FD5C7 /* SearchBackedLendingViewController.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
