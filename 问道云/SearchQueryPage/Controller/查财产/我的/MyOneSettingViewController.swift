@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RoundedSwitch
 import SevenSwitch
 
 class MyOneSettingViewController: WDBaseViewController {
@@ -41,6 +40,26 @@ class MyOneSettingViewController: WDBaseViewController {
         oneSwitch.on = true
         oneSwitch.onTintColor = .init(cssStr: "#547AFF")!
         return oneSwitch
+    }()
+    
+    lazy var oneBtn: UIButton = {
+        let oneBtn = UIButton(type: .custom)
+        oneBtn.setTitle("重置", for: .normal)
+        oneBtn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
+        oneBtn.titleLabel?.font = .mediumFontOfSize(size: 15)
+        oneBtn.layer.cornerRadius = 4
+        oneBtn.backgroundColor = .init(cssStr: "#547AFF")?.withAlphaComponent(0.1)
+        return oneBtn
+    }()
+    
+    lazy var twoBtn: UIButton = {
+        let twoBtn = UIButton(type: .custom)
+        twoBtn.setTitle("确定", for: .normal)
+        twoBtn.setTitleColor(UIColor.init(cssStr: "#FFFFFF"), for: .normal)
+        twoBtn.titleLabel?.font = .mediumFontOfSize(size: 15)
+        twoBtn.layer.cornerRadius = 4
+        twoBtn.backgroundColor = .init(cssStr: "#547AFF")
+        return twoBtn
     }()
     
     lazy var tableView1: UITableView = {
@@ -106,7 +125,8 @@ class MyOneSettingViewController: WDBaseViewController {
         view.addSubview(tableView1)
         view.addSubview(tableView2)
         view.addSubview(tableView3)
-        
+        view.addSubview(oneBtn)
+        view.addSubview(twoBtn)
         onelabel.snp.makeConstraints { make in
             make.height.equalTo(21)
             make.top.equalToSuperview().offset(9)
@@ -145,7 +165,16 @@ class MyOneSettingViewController: WDBaseViewController {
             make.bottom.equalToSuperview().offset(-120)
             make.width.equalToSuperview().dividedBy(3)
         }
-        
+        oneBtn.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 173.pix(), height: 48.pix()))
+            make.left.equalToSuperview().offset(15)
+            make.bottom.equalToSuperview().offset(-25)
+        }
+        twoBtn.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 173.pix(), height: 48.pix()))
+            make.right.equalToSuperview().offset(-15)
+            make.bottom.equalToSuperview().offset(-25)
+        }
         //获取用户监控设置
         getUserSettingInfo()
     }
