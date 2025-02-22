@@ -69,7 +69,7 @@ class FocusCompanyViewController: WDBaseViewController {
             self?.getFocusCompanyList()
         }
         
-        self.regionModel.asObservable().compactMap { $0?.data }.asObservable().subscribe(onNext: { [weak self] modelArray in
+        self.regionModel.asObservable().compactMap { $0?.REGION }.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
             let regionArray = getRegionInfo(from: modelArray)
             regionMenu.listDataSource = regionArray
@@ -86,7 +86,7 @@ class FocusCompanyViewController: WDBaseViewController {
             self?.getFocusCompanyList()
         }
         
-        self.industryModel.asObservable().compactMap { $0?.data }.asObservable().subscribe(onNext: { [weak self] modelArray in
+        self.industryModel.asObservable().compactMap { $0?.INDUSTRY }.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
             industryMenu.listDataSource = getIndustryInfo(from: modelArray)
         }).disposed(by: disposeBag)
@@ -252,9 +252,9 @@ extension FocusCompanyViewController {
     func getRegion() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = [String: Any]()
+        let dict = ["typeVec": "REGION"]
         man.requestAPI(params: dict,
-                       pageUrl: "/operation/follow/areaTree/1",
+                       pageUrl: "/entity/v2/meta",
                        method: .get) { result in
             ViewHud.hideLoadView()
             switch result {
@@ -273,9 +273,9 @@ extension FocusCompanyViewController {
     func getIndustry() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = [String: Any]()
+        let dict = ["typeVec": "INDUSTRY"]
         man.requestAPI(params: dict,
-                       pageUrl: "/operation/follow/industryTree/1",
+                       pageUrl: "/entity/v2/meta",
                        method: .get) { result in
             ViewHud.hideLoadView()
             switch result {

@@ -272,6 +272,7 @@
 		73C752582D1E728500C47187 /* HistoryListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752572D1E728500C47187 /* HistoryListViewCell.swift */; };
 		73CC03772D6859660022F794 /* HighSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03762D6859660022F794 /* HighSearchViewController.swift */; };
 		73CC037A2D685FED0022F794 /* HighSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03792D685FED0022F794 /* HighSearchView.swift */; };
+		73CC037E2D69BCEC0022F794 /* RiskMonitoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC037D2D69BCEC0022F794 /* RiskMonitoringView.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
 		73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB952D01415C00B2FE1B /* UserCenterView.swift */; };
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
@@ -635,6 +636,7 @@
 		73C752572D1E728500C47187 /* HistoryListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListViewCell.swift; sourceTree = "<group>"; };
 		73CC03762D6859660022F794 /* HighSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchViewController.swift; sourceTree = "<group>"; };
 		73CC03792D685FED0022F794 /* HighSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchView.swift; sourceTree = "<group>"; };
+		73CC037D2D69BCEC0022F794 /* RiskMonitoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskMonitoringView.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		73CFEB952D01415C00B2FE1B /* UserCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterView.swift; sourceTree = "<group>"; };
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
@@ -1386,10 +1388,11 @@
 				73950F742D55B3E7005AD034 /* AddMonitoringListView.swift */,
 				73950F762D55EE2B005AD034 /* MonitoringCell.swift */,
 				733B5FF52D57230A00ADE7C5 /* PopCancelMonitoringView.swift */,
-				733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */,
-				733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */,
 				73FB9C852D5EF33E00554CAD /* RiskSettingView.swift */,
 				73FB9C892D5F0EC200554CAD /* RiskPopGroupView.swift */,
+				733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */,
+				733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */,
+				73CC037D2D69BCEC0022F794 /* RiskMonitoringView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2077,6 +2080,7 @@
 				739527F62D6334EE0020589C /* DueDiligenceViewController.swift in Sources */,
 				73C007132D6460C5003C3CE1 /* DueDiligenceCell.swift in Sources */,
 				739DCA0C2D66E01A009CFC78 /* PropertyFourViewController.swift in Sources */,
+				73CC037E2D69BCEC0022F794 /* RiskMonitoringView.swift in Sources */,
 				73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */,
 				73FB9C8C2D5F173500554CAD /* ServiceCenterViewController.swift in Sources */,
 				7340E1B02D5DC535008FD5C7 /* SearchLoanDefaultViewController.swift in Sources */,

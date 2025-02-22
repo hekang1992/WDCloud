@@ -32,14 +32,24 @@ class DailyReportViewController: WDBaseViewController {
     
     var groupName: String = "全部分组"
     
+    var pushBlock: (() -> Void)?
+    
+    //未登录
     lazy var noLoginView: RiskNoLoginView = {
         let noLoginView = RiskNoLoginView()
         return noLoginView
     }()
     
+    //登录没有数据
     lazy var noMonitoringView: RiskNoMonitoringView = {
         let noMonitoringView = RiskNoMonitoringView()
         return noMonitoringView
+    }()
+    
+    //登录存在数据
+    lazy var monitoringView: RiskMonitoringView = {
+        let monitoringView = RiskMonitoringView()
+        return monitoringView
     }()
     
     lazy var monitorView: PopCancelMonitoringView = {
@@ -52,37 +62,25 @@ class DailyReportViewController: WDBaseViewController {
         return groupView
     }()
     
-    lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-        tableView.register(MonitoringCell.self, forCellReuseIdentifier: "MonitoringCell")
-        tableView.estimatedRowHeight = 80
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.showsHorizontalScrollIndicator = false
-        tableView.showsVerticalScrollIndicator = false
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
-        return tableView
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         if IS_LOGIN {
             self.noLoginView.isHidden = true
             view.addSubview(noMonitoringView)
+            view.addSubview(monitoringView)
             noMonitoringView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            monitoringView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
             noMonitoringView.block = { [weak self] in
                 guard let self = self else { return }
-                let searchVc = SearchMonitoringViewController()
-                self.navigationController?.pushViewController(searchVc, animated: true)
+                self.pushBlock?()
             }
+            getGroupInfo()
+            getCompanyInfo()
+            getPeopleInfo()
         }else {
             view.addSubview(noLoginView)
             noLoginView.loginBlock = { [weak self] in
@@ -97,11 +95,32 @@ class DailyReportViewController: WDBaseViewController {
         
         let combine = Observable.combineLatest(companyModel, peopleModel)
         combine.map { companyModel, peopleModel in
-            let companyArray = companyModel?.rows ?? []
-            let peopleArray = peopleModel?.rows ?? []
-            let gurad = (!companyArray.isEmpty) || (!peopleArray.isEmpty)
+            let companyTotal = companyModel?.total ?? 0
+            let peopleTotal = peopleModel?.total ?? 0
+            let gurad = (companyTotal != 0) || (peopleTotal != 0)
             return gurad
-        }.bind(to: noMonitoringView.rx.isHidden).disposed(by: disposeBag)
+        }
+        .bind(to: noMonitoringView.rx.isHidden)
+        .disposed(by: disposeBag)
+        
+        combine.map { companyModel, peopleModel in
+            let companyTotal = companyModel?.total ?? 0
+            let peopleTotal = peopleModel?.total ?? 0
+            let gurad = (companyTotal != 0) || (peopleTotal != 0)
+            return !gurad
+        }
+        .bind(to: monitoringView.rx.isHidden)
+        .disposed(by: disposeBag)
+       
+        monitoringView.companyBlock = { [weak self] btn in
+            guard let self = self else { return }
+            self.isClick = "0"
+        }
+        
+        monitoringView.peopleBlock = { [weak self] btn in
+            guard let self = self else { return }
+            self.isClick = "1"
+        }
     }
 }
 
@@ -147,6 +166,7 @@ extension DailyReportViewController {
                 if success.code == 200 {
                     if let self = self, let model = success.data, let modelArray = model.rows, let total = model.total {
                         self.dataModel.accept(model)
+                        self.monitoringView.companyBtn.setTitle("企业 \(total)", for: .normal)
                         self.companyModel.accept(model)
                         if pageNum == 1 {
                             pageNum = 1
@@ -157,14 +177,14 @@ extension DailyReportViewController {
                         if total != 0 {
                             self.emptyView.removeFromSuperview()
                         }else {
-                            self.addNodataView(from: self.tableView)
+                            self.addNodataView(from: self.monitoringView.tableView)
                         }
                         if self.allArray.count != total {
-                            self.tableView.mj_footer?.isHidden = false
+                            self.monitoringView.tableView.mj_footer?.isHidden = false
                         }else {
-                            self.tableView.mj_footer?.isHidden = true
+                            self.monitoringView.tableView.mj_footer?.isHidden = true
                         }
-                        self.tableView.reloadData()
+                        self.monitoringView.tableView.reloadData()
                     }
                 }
                 break
@@ -190,25 +210,28 @@ extension DailyReportViewController {
             case .success(let success):
                 if success.code == 200 {
                     if let self = self, let model = success.data, let modelArray = model.rows, let total = model.total {
-                        self.dataModel.accept(model)
                         self.peopleModel.accept(model)
-                        if pageNum == 1 {
-                            pageNum = 1
-                            self.allArray.removeAll()
+                        self.monitoringView.companyBtn.setTitle("个人 \(total)", for: .normal)
+                        if self.isClick == "1" {
+                            self.dataModel.accept(model)
+                            if pageNum == 1 {
+                                pageNum = 1
+                                self.allArray.removeAll()
+                            }
+                            pageNum += 1
+                            self.allArray.append(contentsOf: modelArray)
+                            if total != 0 {
+                                self.emptyView.removeFromSuperview()
+                            }else {
+                                self.addNodataView(from: self.monitoringView.tableView)
+                            }
+                            if self.allArray.count != total {
+                                self.monitoringView.tableView.mj_footer?.isHidden = false
+                            }else {
+                                self.monitoringView.tableView.mj_footer?.isHidden = true
+                            }
+                            self.monitoringView.tableView.reloadData()
                         }
-                        pageNum += 1
-                        self.allArray.append(contentsOf: modelArray)
-                        if total != 0 {
-                            self.emptyView.removeFromSuperview()
-                        }else {
-                            self.addNodataView(from: self.tableView)
-                        }
-                        if self.allArray.count != total {
-                            self.tableView.mj_footer?.isHidden = false
-                        }else {
-                            self.tableView.mj_footer?.isHidden = true
-                        }
-                        self.tableView.reloadData()
                     }
                 }
                 break

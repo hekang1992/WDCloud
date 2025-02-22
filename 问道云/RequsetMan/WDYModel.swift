@@ -140,7 +140,11 @@ class DataModel {
     var SIP_LEVEL: [itemsModel]?//参保人数
     var LIST_STATUS: [itemsModel]?//上市状态
     var LIST_SECTOR: [itemsModel]?//上市板块
+    var REGION: [rowsModel]?//地区
+    var INDUSTRY: [rowsModel]?//行业
     init(json: JSON) {
+        self.INDUSTRY = json["INDUSTRY"].arrayValue.map { rowsModel(json: $0) }
+        self.REGION = json["REGION"].arrayValue.map { rowsModel(json: $0) }
         self.LIST_SECTOR = json["LIST_SECTOR"].arrayValue.map { itemsModel(json: $0) }
         self.LIST_STATUS = json["LIST_STATUS"].arrayValue.map { itemsModel(json: $0) }
         self.SIP_LEVEL = json["SIP_LEVEL"].arrayValue.map { itemsModel(json: $0) }

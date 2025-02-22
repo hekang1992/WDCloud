@@ -99,7 +99,7 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(segmentedView.snp.bottom).offset(1)
         }
-//        cocsciew.frame = CGRectMake(0, StatusHeightManager.navigationBarHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT)
+        //        cocsciew.frame = CGRectMake(0, StatusHeightManager.navigationBarHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT)
     }
     
     func setupViewControllers() {
@@ -131,9 +131,11 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         if index == 0 {
             let oneVc = self.listVCArray[0] as! DailyReportViewController
-            oneVc.getGroupInfo()
-            oneVc.getCompanyInfo()
-            oneVc.getPeopleInfo()
+            oneVc.pushBlock = { [weak self] in
+                guard let self = self else { return }
+                let searchVc = SearchMonitoringViewController()
+                self.navigationController?.pushViewController(searchVc, animated: true)
+            }
         }else if index == 1 {
             let twoVc = self.listVCArray[1] as! WeekReportViewController
         }else if index == 2 {
