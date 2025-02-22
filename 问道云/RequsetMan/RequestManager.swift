@@ -126,9 +126,9 @@ class RequestManager: NSObject {
             completion(.success(baseModel))
         } else {
             if code == 401 {
-                let vc = UIViewController.getCurrentViewController() as? WDBaseViewController
-                vc?.popLogin()
-                WDLoginConfig.removeLoginInfo()
+//                let vc = UIViewController.getCurrentViewController() as? WDBaseViewController
+//                WDLoginConfig.removeLoginInfo()
+//                vc?.popLogin()
                 let error = NSError()
                 completion(.failure(error))
             }else if code == 500 {

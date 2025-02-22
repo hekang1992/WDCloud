@@ -587,6 +587,7 @@ class rowsModel {
     var code: String?
     var value: String?
     var firmname: String?
+    var entityid: String?
     var filepathH5: String?//h5链接
     var downloadfilename: String?//名称
     var dataid: String?//id号
@@ -660,6 +661,7 @@ class rowsModel {
     var question: String?
     var piclist: [String]?
     init(json: JSON) {
+        self.entityid = json["entityid"].stringValue
         self.piclist = json["piclist"].arrayValue.map { $0.stringValue }
         self.question = json["question"].stringValue
         self.feedbacksubtype = json["feedbacksubtype"].stringValue

@@ -58,7 +58,7 @@ extension BrowsingHistoryViewController: JXSegmentedViewDelegate {
         historyView.addSubview(cocsciew)
         segmentedView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(12)
+            make.top.equalTo(headView.snp.bottom).offset(5)
             make.height.equalTo(32)
         }
         cocsciew.frame = CGRectMake(0, StatusHeightManager.navigationBarHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44)

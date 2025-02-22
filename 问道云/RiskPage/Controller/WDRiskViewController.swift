@@ -7,6 +7,7 @@
 
 import UIKit
 import HGSegmentedPageViewController
+import JXSegmentedView
 
 class WDRiskViewController: WDBaseViewController {
     
@@ -39,24 +40,11 @@ class WDRiskViewController: WDBaseViewController {
         return headView
     }()
     
-    lazy var segmentedPageViewController: HGSegmentedPageViewController = {
-        let segmentedPageViewController = HGSegmentedPageViewController()
-        segmentedPageViewController.categoryView.backgroundColor = .clear
-        segmentedPageViewController.categoryView.alignment = .center
-        segmentedPageViewController.categoryView.itemSpacing = 0
-        segmentedPageViewController.categoryView.leftMargin = 0
-        segmentedPageViewController.categoryView.rightMargin = 0
-        segmentedPageViewController.categoryView.topBorder.isHidden = true
-        segmentedPageViewController.categoryView.itemWidth = SCREEN_WIDTH * 0.25
-        segmentedPageViewController.categoryView.vernierWidth = 20
-        segmentedPageViewController.categoryView.titleNomalFont = .mediumFontOfSize(size: 14)
-        segmentedPageViewController.categoryView.titleSelectedFont = .mediumFontOfSize(size: 14)
-        segmentedPageViewController.categoryView.titleNormalColor = .init(cssStr: "#FFFFFF")?.withAlphaComponent(0.6)
-        segmentedPageViewController.categoryView.titleSelectedColor = .init(cssStr: "#FFFFFF")
-        segmentedPageViewController.categoryView.vernier.backgroundColor = .init(cssStr: "#FFFFFF")
-        segmentedPageViewController.delegate = self
-        return segmentedPageViewController
-    }()
+    private lazy var segmentedView: JXSegmentedView = createSegmentedView()
+    private lazy var cocsciew: UIScrollView = createCocsciew()
+    private var segmurce: JXSegmentedTitleDataSource!
+    private var listVCArray = [WDBaseViewController]()
+    
     
     lazy var oneVc: DailyReportViewController = {
         let oneVc = DailyReportViewController()
@@ -89,58 +77,109 @@ class WDRiskViewController: WDBaseViewController {
             make.height.equalTo(233)
         }
         
-        addSegmentedPageViewController()
-        setupPageViewControllers()
+        //添加切换
+        addsentMentView()
+        //添加子控制器
+        setupViewControllers()
+    }
+    
+}
+
+extension WDRiskViewController: JXSegmentedViewDelegate {
+    
+    func addsentMentView() {
+        ctImageView.addSubview(segmentedView)
+        view.addSubview(cocsciew)
+        segmentedView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(headView.snp.bottom).offset(5)
+            make.height.equalTo(32)
+        }
+        cocsciew.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(segmentedView.snp.bottom).offset(1)
+        }
+//        cocsciew.frame = CGRectMake(0, StatusHeightManager.navigationBarHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT)
+    }
+    
+    func setupViewControllers() {
+        listVCArray.forEach { $0.view.removeFromSuperview() }
+        listVCArray.removeAll()
         
-        //初始化监控配置
-        getRiskConfig()
+        cocsciew.addSubview(oneVc.view)
+        listVCArray.append(oneVc)
+        
+        cocsciew.addSubview(twoVc.view)
+        listVCArray.append(twoVc)
+        
+        cocsciew.addSubview(threeVc.view)
+        listVCArray.append(threeVc)
+        
+        cocsciew.addSubview(fourVc.view)
+        listVCArray.append(fourVc)
+        
+        updateViewControllersLayout()
+        segmentedView(segmentedView, didSelectedItemAt: 0)
     }
     
-}
-
-extension WDRiskViewController: HGSegmentedPageViewControllerDelegate {
-    
-    private func addSegmentedPageViewController() {
-        self.addChild(self.segmentedPageViewController)
-        self.view.addSubview(self.segmentedPageViewController.view)
-        self.segmentedPageViewController.didMove(toParent: self)
-        self.segmentedPageViewController.view.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(12)
+    private func updateViewControllersLayout() {
+        for (index, vc) in listVCArray.enumerated() {
+            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT)
         }
     }
     
-    private func setupPageViewControllers() {
-        let titles: [String] = ["日报", "周报", "月报", "全部"]
-        segmentedPageViewController.pageViewControllers = [oneVc, twoVc, threeVc, fourVc]
-        segmentedPageViewController.selectedPage = 0
-        self.segmentedPageViewController.categoryView.titles = titles
-        self.segmentedPageViewController.view.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(12)
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        if index == 0 {
+            let oneVc = self.listVCArray[0] as! DailyReportViewController
+            oneVc.getGroupInfo()
+            oneVc.getCompanyInfo()
+            oneVc.getPeopleInfo()
+        }else if index == 1 {
+            let twoVc = self.listVCArray[1] as! WeekReportViewController
+        }else if index == 2 {
+            let threeVc = self.listVCArray[2] as! MonthReportViewController
+        }else {
+            let fourVc = self.listVCArray[3] as! BothReportViewController
         }
     }
     
-}
-
-extension WDRiskViewController {
+    private func createSegmentedView() -> JXSegmentedView {
+        let segmentedView = JXSegmentedView()
+        segmentedView.delegate = self
+        segmentedView.backgroundColor = .clear
+        segmurce = JXSegmentedTitleDataSource()
+        segmurce.titles = ["日报", "周报", "月报", "全部"]
+        segmurce.isTitleColorGradientEnabled = true
+        segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
+        segmurce.titleNormalFont = .regularFontOfSize(size: 14)
+        segmurce.titleNormalColor = (UIColor.init(cssStr: "#FFFFFF")?.withAlphaComponent(0.8))!
+        segmurce.titleSelectedColor = UIColor.init(cssStr: "#FFFFFF")!
+        segmentedView.dataSource = segmurce
+        let indicator = createSegmentedIndicator()
+        segmentedView.indicators = [indicator]
+        segmentedView.contentScrollView = cocsciew
+        return segmentedView
+    }
     
-    //初始化监控配置
-    private func getRiskConfig() {
-        ViewHud.addLoadView()
-        let man = RequestManager()
-        let dict = [String: Any]()
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/monitor-config/initRiskMonitorConfig",
-                       method: .post) { result in
-            ViewHud.hideLoadView()
-            switch result {
-            case .success(let success):
-                break
-            case .failure(let failure):
-                break
-            }
-        }
+    private func createCocsciew() -> UIScrollView {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = UIColor.init(cssStr: "#F5F5F5")
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.bounces = false
+        scrollView.alwaysBounceHorizontal = false
+        scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 4, height: 0)
+        return scrollView
+    }
+    
+    private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
+        let indicator = JXSegmentedIndicatorLineView()
+        indicator.indicatorWidth = JXSegmentedViewAutomaticDimension
+        indicator.indicatorHeight = 2
+        indicator.lineStyle = .lengthen
+        indicator.indicatorColor = UIColor.init(cssStr: "#FFFFFF")!
+        return indicator
     }
     
 }

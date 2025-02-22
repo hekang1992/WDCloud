@@ -8,6 +8,8 @@
 import UIKit
 
 class RiskNoLoginView: BaseView {
+    
+    var loginBlock: (() -> Void)?
 
     lazy var iconImageView1: UIImageView = {
         let iconImageView1 = UIImageView()
@@ -48,6 +50,14 @@ class RiskNoLoginView: BaseView {
             make.top.equalTo(iconImageView2.snp.bottom).offset(111)
             make.size.equalTo(CGSize(width: 119, height: 43))
         }
+        iconImageView3
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            self.loginBlock?()
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {

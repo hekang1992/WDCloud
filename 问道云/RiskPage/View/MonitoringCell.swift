@@ -10,40 +10,43 @@ import TagListView
 
 class MonitoringCell: BaseViewCell {
     
-    var model: itemsModel? {
+    var model: rowsModel? {
         didSet {
-            guard let model = model else { return }
-            let logo = model.logo ?? ""
-            var firmname = model.firmname ?? ""
-            if firmname.isEmpty {
-                firmname = model.personname ?? ""
-            }
-            let tags = model.firstate ?? ""
-            let relate = model.relate ?? []
-            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(firmname, size: (30, 30)))
-            namelabel.text = firmname
-            var strArray: [String] = []
-            if !tags.isEmpty {
-                strArray.append(tags)
-            }else {
-                for str in relate {
-                    strArray.append(str)
-                }
-            }
-            self.tagListView.removeAllTags()
-            self.tagListView.addTags(strArray)
-            timeDetailLabel.text = model.createtime ?? ""
-            numLabel.text = "\(model.riskSumup ?? 0)条"
-            highLabel.text = "高风险\(model.high_risk ?? 0)/\(model.high_risk_sum ?? 0)"
-            lowLabel.text = "低风险\(model.low_risk ?? 0)/\(model.low_risk_sum ?? 0)"
-            hintLabel.text = "提示\(model.hint ?? 0)/\(model.hint_sum ?? 0)"
-            if let riskData = model.riskData, let risktime = riskData.risktime, !risktime.isEmpty {
-                riskLabel.text = "\(riskData.risktime ?? "")" + " " + "\(riskData.itemname ?? "")"
-            }else {
-                riskLabel.text = "暂无动态"
-            }
             
         }
+//        didSet {
+//            guard let model = model else { return }
+//            let logo = model.logo ?? ""
+//            var firmname = model.firmname ?? ""
+//            if firmname.isEmpty {
+//                firmname = model.personname ?? ""
+//            }
+//            let tags = model.firstate ?? ""
+//            let relate = model.relate ?? []
+//            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(firmname, size: (30, 30)))
+//            namelabel.text = firmname
+//            var strArray: [String] = []
+//            if !tags.isEmpty {
+//                strArray.append(tags)
+//            }else {
+//                for str in relate {
+//                    strArray.append(str)
+//                }
+//            }
+//            self.tagListView.removeAllTags()
+//            self.tagListView.addTags(strArray)
+//            timeDetailLabel.text = model.createtime ?? ""
+//            numLabel.text = "\(model.riskSumup ?? 0)条"
+//            highLabel.text = "高风险\(model.high_risk ?? 0)/\(model.high_risk_sum ?? 0)"
+//            lowLabel.text = "低风险\(model.low_risk ?? 0)/\(model.low_risk_sum ?? 0)"
+//            hintLabel.text = "提示\(model.hint ?? 0)/\(model.hint_sum ?? 0)"
+//            if let riskData = model.riskData, let risktime = riskData.risktime, !risktime.isEmpty {
+//                riskLabel.text = "\(riskData.risktime ?? "")" + " " + "\(riskData.itemname ?? "")"
+//            }else {
+//                riskLabel.text = "暂无动态"
+//            }
+//            
+//        }
     }
     
     lazy var footView: UIView = {
