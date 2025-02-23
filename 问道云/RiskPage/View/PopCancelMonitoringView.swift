@@ -9,6 +9,10 @@ import UIKit
 
 class PopCancelMonitoringView: BaseView {
     
+    var block1: (() -> Void)?
+    var block2: (() -> Void)?
+    var block3: (() -> Void)?
+    
     lazy var bgView: UIView = {
         let bgView = UIView()
         bgView.backgroundColor = .init(cssStr: "#F6F6F6")
@@ -67,6 +71,18 @@ class PopCancelMonitoringView: BaseView {
             make.left.bottom.right.equalToSuperview()
             make.height.equalTo(50)
         }
+        
+        cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.block1?()
+        }).disposed(by: disposeBag)
+        
+        cancelMonBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.block2?()
+        }).disposed(by: disposeBag)
+        
+        setBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.block3?()
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {

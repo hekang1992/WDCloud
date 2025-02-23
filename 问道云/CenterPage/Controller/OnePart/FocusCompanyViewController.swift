@@ -35,10 +35,10 @@ class FocusCompanyViewController: WDBaseViewController {
         return companyView
     }()
     
-    //重命名
-    lazy var cmmView: CMMView = {
-        let cmmView = CMMView(frame: self.view.bounds)
-        return cmmView
+    //新家分组
+    lazy var addGroupView: CMMView = {
+        let addGroupView = CMMView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 200))
+        return addGroupView
     }()
 
     override func viewDidLoad() {
@@ -335,14 +335,14 @@ extension FocusCompanyViewController {
 extension FocusCompanyViewController: UITableViewDelegate {
     
     func addNewGroup() {
-        let alertVc = TYAlertController(alert: self.cmmView, preferredStyle: .actionSheet)!
-        self.cmmView.nameLabel.text = "添加分组"
-        self.cmmView.tf.placeholder = "请输入分组名称"
+        let alertVc = TYAlertController(alert: addGroupView, preferredStyle: .alert)!
+        self.addGroupView.nameLabel.text = "添加分组"
+        self.addGroupView.tf.placeholder = "请输入分组名称"
         self.present(alertVc, animated: true)
-        self.cmmView.cblock = { [weak self] in
+        self.addGroupView.cblock = { [weak self] in
             self?.dismiss(animated: true)
         }
-        self.cmmView.sblock = { [weak self] in
+        self.addGroupView.sblock = { [weak self] in
             self?.addNewInfo()
         }
     }
@@ -350,7 +350,7 @@ extension FocusCompanyViewController: UITableViewDelegate {
     private func addNewInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["groupName": self.cmmView.tf.text ?? "".removingEmojis,
+        let dict = ["groupName": self.addGroupView.tf.text ?? "".removingEmojis,
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/followGroup",

@@ -38,6 +38,14 @@ class RiskDetailHeadView: BaseView {
         return reportBtn
     }()
     
+    lazy var tagLabel: PaddedLabel = {
+        let tagLabel = PaddedLabel()
+        tagLabel.textColor = .init(cssStr: "#FF7D00")!
+        tagLabel.backgroundColor = .init(cssStr: "#FFEEDE")!
+        tagLabel.font = .regularFontOfSize(size: 10)
+        return tagLabel
+    }()
+    
     lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")
@@ -50,6 +58,7 @@ class RiskDetailHeadView: BaseView {
         addSubview(namelabel)
         addSubview(timeLabel)
         addSubview(reportBtn)
+        addSubview(tagLabel)
         addSubview(lineView)
         iconImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(StatusHeightManager.navigationBarHeight + 15.5)
@@ -70,6 +79,11 @@ class RiskDetailHeadView: BaseView {
             make.top.equalTo(namelabel.snp.bottom).offset(24.5)
             make.size.equalTo(CGSize(width: 89, height: 15))
             make.right.equalToSuperview().offset(-12)
+        }
+        tagLabel.snp.makeConstraints { make in
+            make.left.equalTo(timeLabel.snp.left)
+            make.centerY.equalTo(reportBtn.snp.centerY)
+            make.height.equalTo(15)
         }
         lineView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()

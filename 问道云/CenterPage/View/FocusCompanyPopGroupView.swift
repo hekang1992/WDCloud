@@ -208,7 +208,9 @@ class FenzuCell: BaseViewCell {
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            self.nameLabel.text = model.groupname ?? ""
+            let groupName = model.groupName ?? ""
+            let groupname = model.groupname ?? ""
+            self.nameLabel.text = !groupName.isEmpty ? groupName : groupname
             self.numLabel.text = "(\(model.customerFollowList?.count ?? 0))"
         }).disposed(by: disposeBag)
         

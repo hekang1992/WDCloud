@@ -181,8 +181,8 @@
         [UIView animateWithDuration:0.3 animations:^{
             backgroundView.alpha = 1;
         } completion:^(BOOL finished) {
-            [_backgroundView removeFromSuperview];
-            _backgroundView = backgroundView;
+            [self->_backgroundView removeFromSuperview];
+            self->_backgroundView = backgroundView;
             [self addSingleTapGesture];
         }];
     }
@@ -216,7 +216,7 @@
     self.transitioningDelegate = self;
     
     _backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
-    _backgoundTapDismissEnable = NO;
+    _backgoundTapDismissEnable = YES;
     _alertStyleEdging = 15;
     _actionSheetStyleEdging = 0;
 }

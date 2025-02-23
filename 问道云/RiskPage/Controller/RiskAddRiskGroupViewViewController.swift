@@ -63,10 +63,10 @@ class RiskAddRiskGroupViewViewController: WDBaseViewController {
         return tableView
     }()
     
-    //重命名
-    lazy var cmmView: CMMView = {
-        let cmmView = CMMView(frame: self.view.bounds)
-        return cmmView
+    //添加监控分组
+    lazy var addGroupView: CMMView = {
+        let addGroupView = CMMView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 200))
+        return addGroupView
     }()
     
     //
@@ -137,9 +137,9 @@ extension RiskAddRiskGroupViewViewController: UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
         cell.accessoryType = .disclosureIndicator
         cell.selectionStyle = .none
-        cell.textLabel?.text = model?.groupname ?? ""
+        cell.textLabel?.text = model?.groupName ?? ""
         cell.textLabel?.font = .regularFontOfSize(size: 15)
-        cell.textLabel?.textColor = .init(cssStr: "15")
+        cell.textLabel?.textColor = .init(cssStr: "#333333")
         return cell
     }
     
@@ -176,7 +176,7 @@ extension RiskAddRiskGroupViewViewController {
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/monitorgroup/selectmonitorgroup",
+                       pageUrl: "/entity/monitorgroup/selectMonitorGroup",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {
@@ -193,14 +193,14 @@ extension RiskAddRiskGroupViewViewController {
     }
     
     func AddMonitoringInfo() {
-        let alertVc = TYAlertController(alert: self.cmmView, preferredStyle: .actionSheet)!
-        self.cmmView.nameLabel.text = "添加分组"
-        self.cmmView.tf.placeholder = "请输入分组名称"
+        let alertVc = TYAlertController(alert: addGroupView, preferredStyle: .alert)!
+        self.addGroupView.nameLabel.text = "添加分组"
+        self.addGroupView.tf.placeholder = "请输入分组名称"
         self.present(alertVc, animated: true)
-        self.cmmView.cblock = { [weak self] in
+        self.addGroupView.cblock = { [weak self] in
             self?.dismiss(animated: true)
         }
-        self.cmmView.sblock = { [weak self] in
+        self.addGroupView.sblock = { [weak self] in
             self?.addNewInfo()
         }
     }
@@ -209,9 +209,9 @@ extension RiskAddRiskGroupViewViewController {
         ViewHud.addLoadView()
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
-        let dict = ["groupname": self.cmmView.tf.text ?? "",
+        let dict = ["groupName": self.addGroupView.tf.text ?? "",
                     "customernumber": customernumber]
-        man.requestAPI(params: dict, pageUrl: "/riskmonitor/monitorgroup/addmonitorgroup", method: .post) { [weak self] result in
+        man.requestAPI(params: dict, pageUrl: "/entity/monitorgroup/addRiskMonitorGroup", method: .post) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {
             case .success(_):
@@ -227,12 +227,12 @@ extension RiskAddRiskGroupViewViewController {
     }
     
     func deleteInfo(form model: rowsModel) {
-        let groupnumber = model.groupnumber ?? ""
+        let groupnumber = model.eid ?? ""
         ShowAlertManager.showAlert(title: "删除提醒", message: "删除该监控方案后，采用该监控方案的对象将使用默认监控方案监控", confirmAction:  {
             ViewHud.addLoadView()
             let man = RequestManager()
-            let dict = ["groupnumber": groupnumber]
-            man.requestAPI(params: dict, pageUrl: "/riskmonitor/monitorgroup/delectmonitorgroup", method: .post) { [weak self] result in
+            let dict = ["id": groupnumber]
+            man.requestAPI(params: dict, pageUrl: "/entity/monitorgroup/delectMonitorGroup", method: .post) { [weak self] result in
                 ViewHud.hideLoadView()
                 switch result {
                 case .success(let success):
@@ -251,14 +251,14 @@ extension RiskAddRiskGroupViewViewController {
     }
     
     func cmmInfo(form model: rowsModel) {
-        let alertVc = TYAlertController(alert: self.cmmView, preferredStyle: .actionSheet)!
-        self.cmmView.nameLabel.text = "重命名"
-        self.cmmView.tf.placeholder = "请输入分组名称"
+        let alertVc = TYAlertController(alert: self.addGroupView, preferredStyle: .alert)!
+        self.addGroupView.nameLabel.text = "重命名"
+        self.addGroupView.tf.placeholder = "请输入分组名称"
         self.present(alertVc, animated: true)
-        self.cmmView.cblock = { [weak self] in
+        self.addGroupView.cblock = { [weak self] in
             self?.dismiss(animated: true)
         }
-        self.cmmView.sblock = { [weak self] in
+        self.addGroupView.sblock = { [weak self] in
             self?.cmmNewInfo(from: model)
         }
     }
@@ -267,9 +267,10 @@ extension RiskAddRiskGroupViewViewController {
         ViewHud.addLoadView()
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
-        let dict = ["groupname": self.cmmView.tf.text ?? "",
-                    "groupnumber": model.groupnumber ?? ""]
-        man.requestAPI(params: dict, pageUrl: "/riskmonitor/monitorgroup/updatemonitorgroup", method: .post) { [weak self] result in
+        let dict = ["groupName": self.addGroupView.tf.text ?? "",
+                    "id": model.eid ?? "",
+                    "customernumber": customernumber]
+        man.requestAPI(params: dict, pageUrl: "/entity/monitorgroup/updateRiskMonitorGroup", method: .post) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {
             case .success(_):

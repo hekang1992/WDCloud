@@ -93,7 +93,7 @@ extension PopMonitoringGroupView: UITableViewDelegate, UITableViewDataSource {
         let model = self.groupArray?[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
         cell.textLabel?.textAlignment = .center
-        cell.textLabel?.text = model?.groupname ?? ""
+        cell.textLabel?.text = model?.groupName ?? ""
         cell.textLabel?.font = .mediumFontOfSize(size: 15)
         cell.selectionStyle = .none
         return cell

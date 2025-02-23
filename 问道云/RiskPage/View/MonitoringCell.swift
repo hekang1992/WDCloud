@@ -6,48 +6,47 @@
 //  监控cell
 
 import UIKit
-import TagListView
 
 class MonitoringCell: BaseViewCell {
     
     var model: rowsModel? {
         didSet {
+            guard let model = model else { return }
+            let logo = model.logo ?? ""
             
+            let orgName = model.orgName ?? ""
+            
+            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (30, 30)))
+            namelabel.text = orgName
+            
+            tagLabel.text = model.groupName ?? ""
+            
+            let startDate = model.startDate ?? ""
+            let endDate = model.endDate ?? ""
+            timeDetailLabel.text = "\(startDate)至\(endDate)"
+            
+            let total = model.totalRiskCnt ?? 0
+            let curTotal = model.curRiskCnt ?? 0
+            numLabel.text = "\(curTotal)/\(total)条"
+            
+            let total1 = model.totalHighRiskCnt ?? 0
+            let curTotal1 = model.curHighRiskCnt ?? 0
+            highLabel.text = "高风险\(curTotal1)/\(total1)"
+            
+            let total2 = model.totalLowRiskCnt ?? 0
+            let curTotal2 = model.curLowRiskCnt ?? 0
+            lowLabel.text = "低风险\(curTotal2)/\(total2)"
+            
+            let total3 = model.totalTipRiskCnt ?? 0
+            let curTotal3 = model.curTipRiskCnt ?? 0
+            hintLabel.text = "提示\(curTotal3)/\(total3)"
+            
+            let recentRisk = model.recentRisk ?? ""
+            riskLabel.text = !recentRisk.isEmpty ? recentRisk : "暂无动态"
         }
-//        didSet {
-//            guard let model = model else { return }
-//            let logo = model.logo ?? ""
-//            var firmname = model.firmname ?? ""
-//            if firmname.isEmpty {
-//                firmname = model.personname ?? ""
-//            }
-//            let tags = model.firstate ?? ""
-//            let relate = model.relate ?? []
-//            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(firmname, size: (30, 30)))
-//            namelabel.text = firmname
-//            var strArray: [String] = []
-//            if !tags.isEmpty {
-//                strArray.append(tags)
-//            }else {
-//                for str in relate {
-//                    strArray.append(str)
-//                }
-//            }
-//            self.tagListView.removeAllTags()
-//            self.tagListView.addTags(strArray)
-//            timeDetailLabel.text = model.createtime ?? ""
-//            numLabel.text = "\(model.riskSumup ?? 0)条"
-//            highLabel.text = "高风险\(model.high_risk ?? 0)/\(model.high_risk_sum ?? 0)"
-//            lowLabel.text = "低风险\(model.low_risk ?? 0)/\(model.low_risk_sum ?? 0)"
-//            hintLabel.text = "提示\(model.hint ?? 0)/\(model.hint_sum ?? 0)"
-//            if let riskData = model.riskData, let risktime = riskData.risktime, !risktime.isEmpty {
-//                riskLabel.text = "\(riskData.risktime ?? "")" + " " + "\(riskData.itemname ?? "")"
-//            }else {
-//                riskLabel.text = "暂无动态"
-//            }
-//            
-//        }
     }
+    
+    var moreBlock: (() -> Void)?
     
     lazy var footView: UIView = {
         let footView = UIView()
@@ -74,17 +73,12 @@ class MonitoringCell: BaseViewCell {
         return namelabel
     }()
     
-    lazy var tagListView: TagListView = {
-        let tagListView = TagListView()
-        tagListView.cornerRadius = 2
-        tagListView.paddingX = 2
-        tagListView.paddingY = 2
-        tagListView.marginX = 4
-        tagListView.marginY = 4
-        tagListView.textColor = .init(cssStr: "#FF7D00")!
-        tagListView.tagBackgroundColor = .init(cssStr: "#FFEEDE")!
-        tagListView.textFont = .regularFontOfSize(size: 10)
-        return tagListView
+    lazy var tagLabel: PaddedLabel = {
+        let tagLabel = PaddedLabel()
+        tagLabel.textColor = .init(cssStr: "#FF7D00")!
+        tagLabel.backgroundColor = .init(cssStr: "#FFEEDE")!
+        tagLabel.font = .regularFontOfSize(size: 10)
+        return tagLabel
     }()
     
     lazy var moreBtn: UIButton = {
@@ -98,7 +92,7 @@ class MonitoringCell: BaseViewCell {
         timeLabel.font = .regularFontOfSize(size: 12)
         timeLabel.textAlignment = .left
         timeLabel.textColor = .init(cssStr: "#9FA4AD")
-        timeLabel.text = "监控周期"
+        timeLabel.text = "监控周期:"
         return timeLabel
     }()
     
@@ -107,7 +101,6 @@ class MonitoringCell: BaseViewCell {
         timeDetailLabel.font = .regularFontOfSize(size: 12)
         timeDetailLabel.textAlignment = .left
         timeDetailLabel.textColor = .init(cssStr: "#333333")
-        timeDetailLabel.text = "2023-03-26至2024-03-26"
         return timeDetailLabel
     }()
     
@@ -116,7 +109,7 @@ class MonitoringCell: BaseViewCell {
         todayLabel.font = .regularFontOfSize(size: 12)
         todayLabel.textAlignment = .left
         todayLabel.textColor = .init(cssStr: "#9FA4AD")
-        todayLabel.text = "今日/累计事件"
+        todayLabel.text = "今日/累计事件:"
         return todayLabel
     }()
     
@@ -170,7 +163,7 @@ class MonitoringCell: BaseViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(ctImageView)
         contentView.addSubview(namelabel)
-        contentView.addSubview(tagListView)
+        contentView.addSubview(tagLabel)
         contentView.addSubview(moreBtn)
         contentView.addSubview(timeLabel)
         contentView.addSubview(timeDetailLabel)
@@ -198,11 +191,10 @@ class MonitoringCell: BaseViewCell {
             make.top.equalToSuperview().offset(10)
             make.size.equalTo(CGSize(width: 18, height: 18))
         }
-        tagListView.snp.makeConstraints { make in
+        tagLabel.snp.makeConstraints { make in
             make.left.equalTo(namelabel.snp.right).offset(6.5)
             make.centerY.equalTo(namelabel.snp.centerY)
             make.height.equalTo(15)
-            make.width.equalTo(250)
         }
         timeLabel.snp.makeConstraints { make in
             make.top.equalTo(namelabel.snp.bottom).offset(6)
@@ -260,6 +252,9 @@ class MonitoringCell: BaseViewCell {
             make.bottom.equalToSuperview()
             make.height.equalTo(6)
         }
+        moreBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.moreBlock?()
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {

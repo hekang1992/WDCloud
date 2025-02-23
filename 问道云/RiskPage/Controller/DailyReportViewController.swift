@@ -28,11 +28,11 @@ class DailyReportViewController: WDBaseViewController {
     
     var groupModel = BehaviorRelay<DataModel?>(value: nil)
     
-    var groupnumber: String = ""
-    
     var groupName: String = "全部分组"
     
     var pushBlock: (() -> Void)?
+    
+    var pushDetailBlock: (([String: String]) -> Void)?
     
     //未登录
     lazy var noLoginView: RiskNoLoginView = {
@@ -49,11 +49,13 @@ class DailyReportViewController: WDBaseViewController {
     //登录存在数据
     lazy var monitoringView: RiskMonitoringView = {
         let monitoringView = RiskMonitoringView()
+        monitoringView.tableView.delegate = self
+        monitoringView.tableView.dataSource = self
         return monitoringView
     }()
     
     lazy var monitorView: PopCancelMonitoringView = {
-        let monitorView = PopCancelMonitoringView(frame: self.view.bounds)
+        let monitorView = PopCancelMonitoringView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 200))
         return monitorView
     }()
     
@@ -111,16 +113,39 @@ class DailyReportViewController: WDBaseViewController {
         }
         .bind(to: monitoringView.rx.isHidden)
         .disposed(by: disposeBag)
-       
+        
         monitoringView.companyBlock = { [weak self] btn in
             guard let self = self else { return }
             self.isClick = "0"
+            self.pageNum = 1
+            self.getCompanyInfo()
         }
         
         monitoringView.peopleBlock = { [weak self] btn in
             guard let self = self else { return }
             self.isClick = "1"
+            self.pageNum = 1
+            self.getPeopleInfo()
         }
+        
+        self.monitoringView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.pageNum = 1
+            if self.isClick == "0" {
+                self.getCompanyInfo()
+            }else {
+                self.getPeopleInfo()
+            }
+        })
+        
+        self.monitoringView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            if self.isClick == "0" {
+                self.getCompanyInfo()
+            }else {
+                self.getPeopleInfo()
+            }
+        })
     }
 }
 
@@ -155,12 +180,14 @@ extension DailyReportViewController {
         let dict = ["reportTermType": "day",
                     "entityType": "1",
                     "groupId": groupId,
-                    "pageSize": 20,
+                    "pageSize": 10,
                     "pageNum": pageNum] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/queryRiskMonitorOrg",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
+            self?.monitoringView.tableView.mj_header?.endRefreshing()
+            self?.monitoringView.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -199,19 +226,20 @@ extension DailyReportViewController {
         let man = RequestManager()
         let dict = ["reportTermType": "day",
                     "entityType": "2",
-                    "groupId": groupId,
-                    "pageSize": 20,
+                    "pageSize": 10,
                     "pageNum": pageNum] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/queryRiskMonitorOrg",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
+            self?.monitoringView.tableView.mj_header?.endRefreshing()
+            self?.monitoringView.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     if let self = self, let model = success.data, let modelArray = model.rows, let total = model.total {
                         self.peopleModel.accept(model)
-                        self.monitoringView.companyBtn.setTitle("个人 \(total)", for: .normal)
+                        self.monitoringView.peopleBtn.setTitle("个人 \(total)", for: .normal)
                         if self.isClick == "1" {
                             self.dataModel.accept(model)
                             if pageNum == 1 {
@@ -248,7 +276,7 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
         if self.isClick == "0" {
             return 30
         }else {
-            return 1
+            return 0.01
         }
     }
     
@@ -312,37 +340,42 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
         cell.selectionStyle = .none
         cell.model = model
         //弹窗设置分组或者取消监控
-        cell.moreBtn.rx.tap.subscribe(onNext: { [weak self] in
+        cell.moreBlock = { [weak self] in
             guard let self = self else { return }
             let alertVc = TYAlertController(alert: monitorView, preferredStyle: .actionSheet)!
-            monitorView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            alertVc.backgoundTapDismissEnable = true
+            monitorView.block1 = { [weak self] in
                 self?.dismiss(animated: true)
-            }).disposed(by: disposeBag)
+            }
             //取消监控
-            monitorView.cancelMonBtn.rx.tap.subscribe(onNext: { [weak self] in
-                //                self?.cancelMonitoringInfo(from: model)
-            }).disposed(by: disposeBag)
+            monitorView.block2 = { [weak self] in
+                self?.cancelMonitoringInfo(from: model, indexPath: indexPath)
+            }
             //移动分组
-            monitorView.setBtn.rx.tap.subscribe(onNext: { [weak self] in
+            monitorView.block3 = { [weak self] in
                 self?.dismiss(animated: true, completion: {
-                    //                    self?.moveGroupInfo(from: self?.groupArray ?? [], itemModel: model)
+                    self?.moveGroupInfo(from: self?.groupModel.value?.rows ?? [], rowsModel: model)
                 })
-            }).disposed(by: disposeBag)
-            
+            }
             self.present(alertVc, animated: true)
-        }).disposed(by: disposeBag)
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if self.isClick == "0" {
             let model = self.allArray[indexPath.row]
-            let riskDetailVc = CompanyRiskDetailViewController()
-            riskDetailVc.name = model.firmname ?? ""
-            riskDetailVc.enityId = model.entityid ?? ""
-            riskDetailVc.logo = model.logo ?? ""
-            riskDetailVc.time = model.createtime ?? ""
-            self.navigationController?.pushViewController(riskDetailVc, animated: true)
+            let orgName = model.orgName ?? ""
+            let orgId = model.orgId ?? ""
+            let logo = model.logo ?? ""
+            let startDate = (model.startDate ?? "") + "至" + (model.endDate ?? "")
+            let groupName = model.groupName ?? ""
+            let dict = ["orgName": orgName,
+                        "orgId":orgId,
+                        "logo": logo,
+                        "startDate": startDate,
+                        "groupName": groupName]
+            self.pushDetailBlock?(dict)
         }else {
             ToastViewConfig.showToast(message: "数据端不支持,iOS端没有画这个页面")
         }
@@ -357,14 +390,52 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
         }).disposed(by: disposeBag)
         groupView.block = { [weak self] model in
             self?.dismiss(animated: true, completion: {
-                menuBtn.setTitle(model.groupname ?? "", for: .normal)
+                menuBtn.setTitle(model.groupName ?? "", for: .normal)
                 //根据分组去筛选数据
-                self?.groupName = model.groupname ?? ""
-                self?.groupnumber = model.groupnumber ?? ""
-                
+                self?.pageNum = 1
+                self?.groupName = model.groupName ?? ""
+                self?.groupId = model.eid ?? ""
+                if self?.isClick == "0" {
+                    self?.getCompanyInfo()
+                }else {
+                    self?.getPeopleInfo()
+                }
             })
         }
         self.present(alertVc, animated: true)
+    }
+    
+    private func cancelMonitoringInfo(from model: rowsModel, indexPath: IndexPath) {
+        ViewHud.addLoadView()
+        let dict = ["orgId": model.orgId ?? ""]
+        let man = RequestManager()
+        man.requestAPI(params: dict, pageUrl: "/entity/monitor-org/cancelRiskMonitorOrg", method: .post) { result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self.allArray.remove(at: indexPath.row)
+                    self.monitoringView.tableView.reloadData()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    private func moveGroupInfo(from modelArray: [rowsModel], rowsModel: rowsModel) {
+        let groupView = FocusCompanyPopGroupView()
+        groupView.frame = self.view.superview!.frame
+        groupView.model.accept(modelArray)
+        let alertVc = TYAlertController(alert: groupView, preferredStyle: .alert)!
+        self.present(alertVc, animated: true)
+        groupView.cblock = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+        groupView.sblock = { model in
+            ToastViewConfig.showToast(message: "等待接口")
+        }
     }
     
 }

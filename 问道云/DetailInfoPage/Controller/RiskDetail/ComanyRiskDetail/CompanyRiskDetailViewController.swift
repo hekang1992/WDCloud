@@ -19,6 +19,8 @@ class CompanyRiskDetailViewController: WDBaseViewController {
     
     var time: String = ""
     
+    var groupName: String = ""
+    
     var intBlock: ((Double) -> Void)?
     
 //    lazy var riskDetailView: RiskDetailView = {
@@ -91,6 +93,7 @@ class CompanyRiskDetailViewController: WDBaseViewController {
         header.iconImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(name, size: (40, 40)))
         header.namelabel.text = name
         header.timeLabel.text = "监控周期: \(time)"
+        header.tagLabel.text = groupName
         return header
     }
     

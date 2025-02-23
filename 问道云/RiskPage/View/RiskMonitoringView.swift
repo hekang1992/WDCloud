@@ -75,7 +75,7 @@ class RiskMonitoringView: BaseView {
         
         coverView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
-            make.height.equalTo(32)
+            make.height.equalTo(32.pix())
         }
         companyBtn.snp.makeConstraints { make in
             make.left.top.bottom.equalToSuperview()
@@ -88,12 +88,12 @@ class RiskMonitoringView: BaseView {
         }
         oneLineView.snp.makeConstraints { make in
             make.centerX.equalTo(companyBtn.snp.centerX)
-            make.size.equalTo(CGSize(width: 15, height: 2))
+            make.size.equalTo(CGSize(width: 18, height: 2))
             make.bottom.equalToSuperview()
         }
         twoLineView.snp.makeConstraints { make in
             make.centerX.equalTo(peopleBtn.snp.centerX)
-            make.size.equalTo(CGSize(width: 15, height: 2))
+            make.size.equalTo(CGSize(width: 18, height: 2))
             make.bottom.equalToSuperview()
         }
         tableView.snp.makeConstraints { make in

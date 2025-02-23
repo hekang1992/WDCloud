@@ -664,7 +664,35 @@ class rowsModel {
     var feedbacksubtype: String?
     var question: String?
     var piclist: [String]?
+    var orgName: String?
+    var groupName: String?
+    var startDate: String?
+    var endDate: String?
+    var orgId: String?//企业ID
+    var curHighRiskCnt: Int?
+    var curLowRiskCnt: Int?
+    var curRiskCnt: Int?
+    var curTipRiskCnt: Int?
+    var totalHighRiskCnt: Int?
+    var totalLowRiskCnt: Int?
+    var totalRiskCnt: Int?
+    var totalTipRiskCnt: Int?
+    var recentRisk: String?
     init(json: JSON) {
+        self.recentRisk = json["recentRisk"].stringValue
+        self.curHighRiskCnt = json["curHighRiskCnt"].intValue
+        self.curLowRiskCnt = json["curLowRiskCnt"].intValue
+        self.curRiskCnt = json["curRiskCnt"].intValue
+        self.curTipRiskCnt = json["curTipRiskCnt"].intValue
+        self.totalHighRiskCnt = json["totalHighRiskCnt"].intValue
+        self.totalLowRiskCnt = json["totalLowRiskCnt"].intValue
+        self.totalRiskCnt = json["totalRiskCnt"].intValue
+        self.totalTipRiskCnt = json["totalTipRiskCnt"].intValue
+        self.orgId = json["orgId"].stringValue
+        self.startDate = json["startDate"].stringValue
+        self.endDate = json["endDate"].stringValue
+        self.groupName = json["groupName"].stringValue
+        self.orgName = json["orgName"].stringValue
         self.entityid = json["entityid"].stringValue
         self.piclist = json["piclist"].arrayValue.map { $0.stringValue }
         self.question = json["question"].stringValue

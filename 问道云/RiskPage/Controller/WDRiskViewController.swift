@@ -124,7 +124,7 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
     
     private func updateViewControllersLayout() {
         for (index, vc) in listVCArray.enumerated() {
-            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT)
+            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: 1)
         }
     }
     
@@ -135,6 +135,16 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
                 guard let self = self else { return }
                 let searchVc = SearchMonitoringViewController()
                 self.navigationController?.pushViewController(searchVc, animated: true)
+            }
+            oneVc.pushDetailBlock = { [weak self] dict in
+                guard let self = self else { return }
+                let riskDetailVc = CompanyRiskDetailViewController()
+                riskDetailVc.enityId = dict["orgId"] ?? ""
+                riskDetailVc.name = dict["orgName"] ?? ""
+                riskDetailVc.logo = dict["logo"] ?? ""
+                riskDetailVc.time = dict["startDate"] ?? ""
+                riskDetailVc.groupName = dict["groupName"] ?? ""
+                self.navigationController?.pushViewController(riskDetailVc, animated: true)
             }
         }else if index == 1 {
             let twoVc = self.listVCArray[1] as! WeekReportViewController
