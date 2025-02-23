@@ -120,7 +120,6 @@
         self.twoListDataSource = firstModel.dataSource;
         return firstModel.dataSource.count;
     }else {
-        
         ItemModel *firstModel =self.action.ListDataSource[self.firstSelectRow];
         ItemModel *secondModel = firstModel.dataSource[self.secondSelectRow];
         self.threeListDataSource = secondModel.dataSource;
@@ -183,7 +182,9 @@
             UITableView *tableView = self.tableViewArr[1];
             [tableView reloadData];
             // 如果是二级列表，选择第一级时，重置第二级的选中。
+            self.secondSelectRow = 0;
             [self resetOldSelectWithDataSource:self.twoListDataSource selectRow:0];
+            
             [self adjustTableViewsWithCount:2];
         }else {
             // 表明只有一层数据。。选中第一行则恢复初始的title. 反正显示选中的数据
@@ -369,7 +370,6 @@
     }
     [tableView reloadData];
 }
-
 
 /** 懒加载 */
 -(NSArray *)tableViewArr{
