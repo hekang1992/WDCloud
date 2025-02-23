@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 import TagListView
+import DropMenuBar
 
 class HighSearchKeyView: BaseView {
 
@@ -127,13 +128,12 @@ class HighTwoView: BaseView {
         return mlabel
     }()
     
-    lazy var nextBtn: UIButton = {
-        let nextBtn = UIButton(type: .custom)
-        nextBtn.contentHorizontalAlignment = .left
-        nextBtn.setTitleColor(UIColor.init(cssStr: "#ACACAC"), for: .normal)
-        nextBtn.setTitle("非必填", for: .normal)
-        nextBtn.titleLabel?.font = .regularFontOfSize(size: 13)
-        return nextBtn
+    lazy var descLabel: UILabel = {
+        let descLabel = UILabel()
+        descLabel.textColor = .init(cssStr: "#ACACAC")
+        descLabel.text = "非必填"
+        descLabel.font = .regularFontOfSize(size: 13)
+        return descLabel
     }()
     
     lazy var lineView: UIView = {
@@ -152,7 +152,7 @@ class HighTwoView: BaseView {
         super.init(frame: frame)
         addSubview(lineView)
         addSubview(mlabel)
-        addSubview(nextBtn)
+        addSubview(descLabel)
         addSubview(ctImageView)
         lineView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
@@ -167,7 +167,7 @@ class HighTwoView: BaseView {
             make.width.equalTo(60)
         }
         
-        nextBtn.snp.makeConstraints { make in
+        descLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalTo(mlabel.snp.right).offset(30)
             make.size.equalTo(CGSize(width: SCREEN_WIDTH, height: 40))
@@ -197,13 +197,12 @@ class HighThreeView: BaseView {
         return mlabel
     }()
     
-    lazy var nextBtn: UIButton = {
-        let nextBtn = UIButton(type: .custom)
-        nextBtn.contentHorizontalAlignment = .left
-        nextBtn.setTitleColor(UIColor.init(cssStr: "#ACACAC"), for: .normal)
-        nextBtn.setTitle("全部", for: .normal)
-        nextBtn.titleLabel?.font = .regularFontOfSize(size: 13)
-        return nextBtn
+    lazy var descLabel: UILabel = {
+        let descLabel = UILabel()
+        descLabel.textColor = .init(cssStr: "#ACACAC")
+        descLabel.text = "全部"
+        descLabel.font = .regularFontOfSize(size: 13)
+        return descLabel
     }()
     
     lazy var lineView: UIView = {
@@ -222,7 +221,7 @@ class HighThreeView: BaseView {
         super.init(frame: frame)
         addSubview(lineView)
         addSubview(mlabel)
-        addSubview(nextBtn)
+        addSubview(descLabel)
         addSubview(ctImageView)
         lineView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
@@ -237,7 +236,7 @@ class HighThreeView: BaseView {
             make.width.equalTo(60)
         }
         
-        nextBtn.snp.makeConstraints { make in
+        descLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalTo(mlabel.snp.right).offset(30)
             make.size.equalTo(CGSize(width: SCREEN_WIDTH, height: 40))

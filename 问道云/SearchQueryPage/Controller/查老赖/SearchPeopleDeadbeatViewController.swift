@@ -46,7 +46,7 @@ class SearchPeopleDeadbeatViewController: WDBaseViewController {
         // Do any additional setup after loading the view.
         
         let regionMenu = MenuAction(title: "地区", style: .typeList)!
-        self.regionModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
+        self.regionModelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
             let regionArray = getThreeRegionInfo(from: modelArray ?? [])
             regionMenu.listDataSource = regionArray
