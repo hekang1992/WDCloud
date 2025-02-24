@@ -35,10 +35,10 @@ class UserAllOrderSController: WDBaseViewController {
         let orderView = UserAllOrderView()
         return orderView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         addHeadView(from: headView)
@@ -50,22 +50,24 @@ class UserAllOrderSController: WDBaseViewController {
         //添加下拉刷新
         self.orderView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
-            getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate)
+            getCombotype {}
+            ViewHud.addLoadView()
+            getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate) {
+                ViewHud.hideLoadView()
+            }
         })
+        getGroupInfo()
         //加载更多
         self.orderView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
             guard let self = self else { return }
-            getOrderInfo(form: combotypenumber, pageNum: pageIndex, orderstate: orderstate)
+            getOrderInfo(form: combotypenumber, pageNum: pageIndex, orderstate: orderstate) {}
         })
+        
         self.headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             let ticketVc = MyTicketViewController()
             ticketVc.model.accept(self?.model.value)
             self?.navigationController?.pushViewController(ticketVc, animated: true)
         }).disposed(by: disposeBag)
-        //获取订单状态
-        getCombotype()
-        //获取订单信息
-        getOrderInfo(form: 0, pageNum: pageIndex, orderstate: orderstate)
         //添加下拉筛选
         let leixing1 = MenuAction(title: "订单类型", style: .typeList)!
         listArray.asObservable().subscribe(onNext: { [weak self] modelArray in
@@ -77,7 +79,10 @@ class UserAllOrderSController: WDBaseViewController {
         leixing1.didSelectedMenuResult = { [weak self] index, model, granted in
             guard let self = self else { return }
             combotypenumber = Int(model?.currentID ?? "0") ?? 0
-            getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate)
+            ViewHud.addLoadView()
+            getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate) {
+                ViewHud.hideLoadView()
+            }
         }
         let leixing2 = MenuAction(title: "订单状态", style: .typeList)!
         let orderTypeArray = getListOrderType(from: true)
@@ -85,7 +90,10 @@ class UserAllOrderSController: WDBaseViewController {
         leixing2.didSelectedMenuResult = { [weak self] index, model, granted in
             guard let self = self else { return }
             orderstate = model?.currentID ?? ""
-            getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate)
+            ViewHud.addLoadView()
+            getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate) {
+                ViewHud.hideLoadView()
+            }
         }
         
         let menuView = DropMenuBar(action: [leixing1, leixing2])!
@@ -100,20 +108,39 @@ class UserAllOrderSController: WDBaseViewController {
             guard let self = self else { return }
             let storeID = String(model.combonumber ?? 0)
             self.toApplePay(form: storeID, orderNumberID: model.ordernumber ?? "") {
-                self.getOrderInfo(form: self.combotypenumber, pageNum: 1, orderstate: self.orderstate)
+                self.getOrderInfo(form: self.combotypenumber, pageNum: 1, orderstate: self.orderstate) {}
             }
         }
-        
     }
-
+    
 }
 
 extension UserAllOrderSController {
     
-    //数据请求
-    func getOrderInfo(form combotypenumber: Int, pageNum: Int, orderstate: String) {
-        let man = RequestManager()
+    func getGroupInfo() {
         ViewHud.addLoadView()
+        let group = DispatchGroup()
+        
+        group.enter()
+        getCombotype {
+            group.leave()
+        }
+        
+        group.enter()
+        getOrderInfo(form: 0, pageNum: 1, orderstate: orderstate) {
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            ViewHud.hideLoadView()
+            print("All requests completed.")
+        }
+    }
+    
+    //数据请求
+    func getOrderInfo(form combotypenumber: Int, pageNum: Int, orderstate: String, completion: @escaping () -> Void) {
+        let man = RequestManager()
+       
         let customernumber = model.value?.customernumber ?? ""
         let dict = ["customernumber": customernumber,
                     "combotypenumber": combotypenumber,
@@ -153,40 +180,38 @@ extension UserAllOrderSController {
                     self.addNodataView(from: self.orderView.whiteView)
                     self.orderView.tableView.mj_footer?.isHidden = true
                 }
-                break
             case .failure(_):
                 self.addNoNetView(from: self.orderView.whiteView)
                 self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
                     //获取订单状态
-                    self?.getCombotype()
+                    self?.getCombotype {
+                        
+                    }
                     //获取订单信息
-                    self?.getOrderInfo(form: 0, pageNum: 1, orderstate: orderstate)
+                    self?.getOrderInfo(form: 0, pageNum: 1, orderstate: orderstate) {}
                 }).disposed(by: disposeBag)
                 self.orderView.tableView.mj_footer?.isHidden = true
-                break
             }
+            completion()
         }
     }
     
-    func getCombotype() {
+    func getCombotype(completion: @escaping () -> Void) {
         let dict = [String: Any]()
         let man = RequestManager()
-        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/combotype/list",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 guard let self = self else { return }
                 if let rows = success.rows, rows.count > 0 {
                     self.listArray.accept(rows)
                 }
-                break
             case .failure(_):
                 break
             }
+            completion()
         }
     }
-    
 }

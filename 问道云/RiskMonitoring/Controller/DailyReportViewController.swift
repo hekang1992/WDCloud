@@ -79,9 +79,6 @@ class DailyReportViewController: WDBaseViewController {
                 let searchVc = SearchMonitoringViewController()
                 naviController?.navigationController?.pushViewController(searchVc, animated: true)
             }
-            getGroupInfo()
-            getCompanyInfo()
-            getPeopleInfo()
         }else {
             view.addSubview(noLoginView)
             noLoginView.loginBlock = { [weak self] in
@@ -117,41 +114,83 @@ class DailyReportViewController: WDBaseViewController {
             guard let self = self else { return }
             self.isClick = "0"
             self.pageNum = 1
-            self.getCompanyInfo()
+            ViewHud.addLoadView()
+            self.getCompanyInfo {
+                ViewHud.hideLoadView()
+            }
         }
         
         monitoringView.peopleBlock = { [weak self] btn in
             guard let self = self else { return }
             self.isClick = "1"
             self.pageNum = 1
-            self.getPeopleInfo()
+            ViewHud.addLoadView()
+            self.getPeopleInfo {
+                ViewHud.hideLoadView()
+            }
         }
         
         self.monitoringView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.pageNum = 1
+            ViewHud.addLoadView()
             if self.isClick == "0" {
-                self.getCompanyInfo()
+                self.getCompanyInfo {
+                    ViewHud.hideLoadView()
+                }
             }else {
-                self.getPeopleInfo()
+                self.getPeopleInfo {
+                    ViewHud.hideLoadView()
+                }
             }
         })
         
         self.monitoringView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
             guard let self = self else { return }
+            ViewHud.addLoadView()
             if self.isClick == "0" {
-                self.getCompanyInfo()
+                self.getCompanyInfo {
+                    ViewHud.hideLoadView()
+                }
             }else {
-                self.getPeopleInfo()
+                self.getPeopleInfo {
+                    ViewHud.hideLoadView()
+                }
             }
         })
     }
+    
+    func getListInfo() {
+        ViewHud.addLoadView()
+        let group = DispatchGroup()
+        
+        group.enter()
+        getGroupInfo {
+            group.leave()
+        }
+        
+        group.enter()
+        getCompanyInfo {
+            group.leave()
+        }
+        
+        group.enter()
+        getPeopleInfo {
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            ViewHud.hideLoadView()
+            print("All requests completed.")
+        }
+    }
+    
 }
 
 
 extension DailyReportViewController {
     
-    func getGroupInfo() {
+    func getGroupInfo(complete: @escaping () -> Void) {
         ViewHud.addLoadView()
         let man = RequestManager()
         let dict = [String: Any]()
@@ -170,10 +209,11 @@ extension DailyReportViewController {
             case .failure(_):
                 break
             }
+            complete()
         }
     }
     
-    func getCompanyInfo() {
+    func getCompanyInfo(complete: @escaping () -> Void) {
         ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["reportTermType": "day",
@@ -217,10 +257,11 @@ extension DailyReportViewController {
             case .failure(_):
                 break
             }
+            complete()
         }
     }
     
-    func getPeopleInfo() {
+    func getPeopleInfo(complete: @escaping () -> Void) {
         ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["reportTermType": "day",
@@ -265,6 +306,7 @@ extension DailyReportViewController {
             case .failure(_):
                 break
             }
+            complete()
         }
     }
 }
@@ -395,10 +437,15 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
                 self?.pageNum = 1
                 self?.groupName = model.groupName ?? ""
                 self?.groupId = model.eid ?? ""
+                ViewHud.addLoadView()
                 if self?.isClick == "0" {
-                    self?.getCompanyInfo()
+                    self?.getCompanyInfo {
+                        ViewHud.hideLoadView()
+                    }
                 }else {
-                    self?.getPeopleInfo()
+                    self?.getPeopleInfo {
+                        ViewHud.hideLoadView()
+                    }
                 }
             })
         }

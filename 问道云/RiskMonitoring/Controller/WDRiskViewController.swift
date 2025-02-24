@@ -165,4 +165,17 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
         return indicator
     }
     
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        if index == 0 {
+            let oneVc = listVCArray[0] as!DailyReportViewController
+            oneVc.getListInfo()
+        }else if index == 1 {
+            
+        }else if index == 2 {
+            
+        }else {
+            
+        }
+    }
+    
 }
