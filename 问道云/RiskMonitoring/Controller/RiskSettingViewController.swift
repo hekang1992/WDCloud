@@ -46,23 +46,30 @@ class RiskSettingViewController: WDBaseViewController {
     
     lazy var oneView: RiskSettingView = {
         let oneView = RiskSettingView()
-        oneView.namelabel.text = "监控分组"
+        oneView.namelabel.text = "监控方案"
         oneView.leftImageView.image = UIImage(named: "jiankongganganiamge")
         return oneView
     }()
 
     lazy var twoView: RiskSettingView = {
         let twoView = RiskSettingView()
-        twoView.namelabel.text = "消息通知"
+        twoView.namelabel.text = "监控分组"
         twoView.leftImageView.image = UIImage(named: "fenzuxingimage")
         return twoView
     }()
     
     lazy var threeView: RiskSettingView = {
         let threeView = RiskSettingView()
-        threeView.namelabel.text = "微信订阅监控通知"
+        threeView.namelabel.text = "消息通知"
         threeView.leftImageView.image = UIImage(named: "pushiamgejfa")
         return threeView
+    }()
+    
+    lazy var fourView: RiskSettingView = {
+        let fourView = RiskSettingView()
+        fourView.namelabel.text = "微信订阅监控通知"
+        fourView.leftImageView.image = UIImage(named: "weixinwechimge")
+        return fourView
     }()
     
     override func viewDidLoad() {
@@ -78,6 +85,7 @@ class RiskSettingViewController: WDBaseViewController {
         view.addSubview(oneView)
         view.addSubview(twoView)
         view.addSubview(threeView)
+        view.addSubview(fourView)
         ctImageView.snp.makeConstraints { make in
             make.top.equalTo(headView.snp.bottom).offset(12)
             make.left.equalToSuperview().offset(18)
@@ -113,8 +121,19 @@ class RiskSettingViewController: WDBaseViewController {
             make.height.equalTo(50)
             make.top.equalTo(twoView.snp.bottom)
         }
-        
+        fourView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.height.equalTo(50)
+            make.top.equalTo(threeView.snp.bottom)
+        }
         oneView.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                
+        }).disposed(by: disposeBag)
+        
+        twoView.rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
@@ -122,14 +141,13 @@ class RiskSettingViewController: WDBaseViewController {
                 self?.navigationController?.pushViewController(addVc, animated: true)
         }).disposed(by: disposeBag)
         
-        twoView.rx
+        threeView.rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
                 let messageVc = MinitoringMessagePushViewController()
                 self?.navigationController?.pushViewController(messageVc, animated: true)
         }).disposed(by: disposeBag)
-        
         
         //获取会员等级信息
         getVipInfo()
