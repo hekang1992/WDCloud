@@ -380,7 +380,28 @@ extension HighSearchViewController {
             twoView.descLabel.textColor = .init(cssStr: "#333333")
         }
         
-        
+        let regionMenu = MenuAction(title: "", style: .typeList)!
+        regionMenu.setImage(UIImage(named: ""), for: .normal)
+        regionMenu.setImage(UIImage(named: ""), for: .selected)
+        let menView = DropMenuBar(action: [regionMenu])!
+        view.addSubview(menView)
+        menView.snp.makeConstraints { make in
+            make.top.equalTo(threeView.snp.top)
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+            make.height.equalTo(43)
+        }
+        self.model.asObservable().map { $0?.REGION ?? [] }.subscribe(onNext: { [weak self] modelArray in
+            guard let self = self else { return }
+            let regionArray = getThreeRegionInfo(from: modelArray)
+            regionMenu.listDataSource = regionArray
+        }).disposed(by: disposeBag)
+        regionMenu.didSelectedMenuResult = { [weak self] index, model, grand in
+            guard let self = self else { return }
+            regionMenu.setTitle("", for: .normal)
+            threeView.descLabel.text = model?.displayText ?? ""
+            threeView.descLabel.textColor = .init(cssStr: "#333333")
+        }
         
     }
 }
