@@ -55,6 +55,7 @@ extension WDBaseViewController {
         self.present(rootVc, animated: true)
         WDLoginConfig.removeLoginInfo()
         loginVc.loginView.backBtn.rx.tap.subscribe(onNext: {
+            loginVc.loginView.phoneTx.resignFirstResponder()
             NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
         }).disposed(by: disposeBag)
     }

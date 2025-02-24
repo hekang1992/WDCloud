@@ -10,6 +10,8 @@ import DropMenuBar
 
 class PropertyThreeBothViewController: WDBaseViewController {
     
+    weak var navController: UINavigationController?
+    
     lazy var searchView: HomeItemSearchView = {
         let searchView = HomeItemSearchView()
         let attrString = NSMutableAttributedString(string: "请输入企业、人员名", attributes: [
@@ -39,7 +41,8 @@ class PropertyThreeBothViewController: WDBaseViewController {
         view.addSubview(menuView)
         menuView.snp.makeConstraints { make in
             make.top.equalTo(searchView.snp.bottom)
-            make.left.right.equalToSuperview()
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
             make.height.equalTo(32)
         }
     }

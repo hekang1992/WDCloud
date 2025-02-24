@@ -13,6 +13,8 @@ import RxSwift
 
 class DailyReportViewController: WDBaseViewController {
     
+    weak var naviController: UINavigationController?
+    
     var isClick: String = "0"
     
     var pageNum: Int = 1
@@ -29,10 +31,6 @@ class DailyReportViewController: WDBaseViewController {
     var groupModel = BehaviorRelay<DataModel?>(value: nil)
     
     var groupName: String = "全部分组"
-    
-    var pushBlock: (() -> Void)?
-    
-    var pushDetailBlock: (([String: String]) -> Void)?
     
     //未登录
     lazy var noLoginView: RiskNoLoginView = {
@@ -78,7 +76,8 @@ class DailyReportViewController: WDBaseViewController {
             }
             noMonitoringView.block = { [weak self] in
                 guard let self = self else { return }
-                self.pushBlock?()
+                let searchVc = SearchMonitoringViewController()
+                naviController?.navigationController?.pushViewController(searchVc, animated: true)
             }
             getGroupInfo()
             getCompanyInfo()
@@ -370,12 +369,13 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
             let logo = model.logo ?? ""
             let startDate = (model.startDate ?? "") + "至" + (model.endDate ?? "")
             let groupName = model.groupName ?? ""
-            let dict = ["orgName": orgName,
-                        "orgId":orgId,
-                        "logo": logo,
-                        "startDate": startDate,
-                        "groupName": groupName]
-            self.pushDetailBlock?(dict)
+            let riskDetailVc = CompanyRiskDetailViewController()
+            riskDetailVc.enityId = orgId
+            riskDetailVc.name = orgName
+            riskDetailVc.logo = logo
+            riskDetailVc.time = startDate
+            riskDetailVc.groupName = groupName
+            naviController?.navigationController?.pushViewController(riskDetailVc, animated: true)
         }else {
             ToastViewConfig.showToast(message: "数据端不支持,iOS端没有画这个页面")
         }

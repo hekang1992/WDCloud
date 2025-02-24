@@ -20,6 +20,8 @@ class HistoryListViewController: WDBaseViewController {
     var allArray: [rowsModel] = []//加载更多
     
     var pageNum: Int = 1
+    
+    weak var navController: UINavigationController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +43,22 @@ class HistoryListViewController: WDBaseViewController {
             guard let self = self else { return }
             getHistroyListInfo(from: viewType, pageNum: pageNum)
         })
+        
+        historyView.modelBlock = { [weak self] model in
+            guard let self = self else { return }
+            let viewrecordtype = model.viewrecordtype ?? ""
+            if viewrecordtype == "1" {//企业
+                let companyDetailVc = CompanyBothViewController()
+                companyDetailVc.enityId.accept(model.firmnumber ?? "")
+                companyDetailVc.companyName.accept(model.firmname ?? "")
+                navController?.navigationController?.pushViewController(companyDetailVc, animated: true)
+            }else {//个人
+                let peopleDetailVc = PeopleBothViewController()
+                peopleDetailVc.enityId.accept(String(model.personnumber ?? ""))
+                peopleDetailVc.peopleName.accept(model.personname ?? "")
+                navController?.navigationController?.pushViewController(peopleDetailVc, animated: true)
+            }
+        }
         
     }
 

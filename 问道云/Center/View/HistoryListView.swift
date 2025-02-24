@@ -30,6 +30,8 @@ class HistoryListView: BaseView {
     
     var sectionArray = BehaviorRelay<[SectionModel]?>(value: nil)
     
+    var modelBlock: ((rowsModel) -> Void)?
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.estimatedRowHeight = 80
@@ -55,7 +57,7 @@ class HistoryListView: BaseView {
         
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
         
-        
+
         let dataSource = RxTableViewSectionedReloadDataSource<SectionModel>(
             configureCell: { (dataSource, tableView, indexPath, model) in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryListViewCell", for: indexPath) as? HistoryListViewCell
@@ -78,6 +80,14 @@ class HistoryListView: BaseView {
         
         sectionArray.compactMap{ $0 }.asObservable().bind(to: tableView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
         
+        tableView
+            .rx
+            .modelSelected(rowsModel.self)
+            .subscribe(onNext: { [weak self] model in
+                guard let self = self else { return }
+                self.modelBlock?(model)
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -88,9 +98,7 @@ class HistoryListView: BaseView {
 extension HistoryListView {
     
     func groupRowsByOrderState(rows: [rowsModel]) -> [SectionModel] {
-        // 创建一个字典以 orderstate 为键
         var groupedDict: [String: [rowsModel]] = [:]
-        
         for row in rows {
             guard let state = row.createtime else { continue }
             if groupedDict[state] != nil {

@@ -83,6 +83,7 @@ extension PasswordLoginViewController {
                         let customernumber = model.customernumber ?? ""
                         WDLoginConfig.saveLoginInfo(phone, token, customernumber)
                     }
+                    self.view.endEditing(true)
                     NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
                     ToastViewConfig.showToast(message: "登录成功")
                 }

@@ -45,7 +45,6 @@ class WDRiskViewController: WDBaseViewController {
     private var segmurce: JXSegmentedTitleDataSource!
     private var listVCArray = [WDBaseViewController]()
     
-    
     lazy var oneVc: DailyReportViewController = {
         let oneVc = DailyReportViewController()
         return oneVc
@@ -99,7 +98,6 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(segmentedView.snp.bottom).offset(1)
         }
-        //        cocsciew.frame = CGRectMake(0, StatusHeightManager.navigationBarHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT)
     }
     
     func setupViewControllers() {
@@ -107,6 +105,7 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
         listVCArray.removeAll()
         
         cocsciew.addSubview(oneVc.view)
+        oneVc.naviController = navigationController
         listVCArray.append(oneVc)
         
         cocsciew.addSubview(twoVc.view)
@@ -128,36 +127,8 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
         }
     }
     
-    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
-        if index == 0 {
-            let oneVc = self.listVCArray[0] as! DailyReportViewController
-            oneVc.pushBlock = { [weak self] in
-                guard let self = self else { return }
-                let searchVc = SearchMonitoringViewController()
-                self.navigationController?.pushViewController(searchVc, animated: true)
-            }
-            oneVc.pushDetailBlock = { [weak self] dict in
-                guard let self = self else { return }
-                let riskDetailVc = CompanyRiskDetailViewController()
-                riskDetailVc.enityId = dict["orgId"] ?? ""
-                riskDetailVc.name = dict["orgName"] ?? ""
-                riskDetailVc.logo = dict["logo"] ?? ""
-                riskDetailVc.time = dict["startDate"] ?? ""
-                riskDetailVc.groupName = dict["groupName"] ?? ""
-                self.navigationController?.pushViewController(riskDetailVc, animated: true)
-            }
-        }else if index == 1 {
-            let twoVc = self.listVCArray[1] as! WeekReportViewController
-        }else if index == 2 {
-            let threeVc = self.listVCArray[2] as! MonthReportViewController
-        }else {
-            let fourVc = self.listVCArray[3] as! BothReportViewController
-        }
-    }
-    
     private func createSegmentedView() -> JXSegmentedView {
         let segmentedView = JXSegmentedView()
-        segmentedView.delegate = self
         segmentedView.backgroundColor = .clear
         segmurce = JXSegmentedTitleDataSource()
         segmurce.titles = ["日报", "周报", "月报", "全部"]

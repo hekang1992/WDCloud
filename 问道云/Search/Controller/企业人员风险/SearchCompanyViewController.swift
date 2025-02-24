@@ -11,6 +11,7 @@ import RxRelay
 import DropMenuBar
 import MJRefresh
 import RxSwift
+import MapKit
 
 class SearchCompanyViewController: WDBaseViewController {
     
@@ -165,28 +166,15 @@ class SearchCompanyViewController: WDBaseViewController {
                     self.companyView.isHidden = false
                     self.companyListView.isHidden = true
                 }
-                
-                //                let containsChinese = text.range(of: "[\\u4e00-\\u9fa5]", options: .regularExpression) != nil
-                //                let containsEnglish = text.range(of: "[a-zA-Z]", options: .regularExpression) != nil
-                //                if containsChinese && containsEnglish {
-                //                    // 如果同时包含中文和英文字符
-                //                    print("包含中文和英文")
-                //                    // 在这里执行您的逻辑
-                //                } else if containsChinese {
-                //                    // 只包含中文
-                //                    print("只包含中文")
-                //                    // 在这里执行您的中文逻辑
-                //                } else if containsEnglish {
-                //                    // 只包含英文
-                //                    print("只包含英文")
-                //                    // 在这里执行您的英文逻辑
-                //                }
             }).disposed(by: disposeBag)
         
         
         companyListView.addressBlock = { [weak self] model in
-            let locationVc = CompanyLocationViewController()
-            locationVc.headView.titlelabel.text = model.firmInfo?.entityName ?? ""
+            let latitude = 31.23383
+            let longitude = 121.51590
+            let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let locationVc = CompanyLocationViewController(location: location)
+            locationVc.name = model.firmInfo?.entityName ?? ""
             self?.navigationController?.pushViewController(locationVc, animated: true)
         }
         
@@ -504,14 +492,14 @@ extension SearchCompanyViewController {
     private func searchListInfo() {
         let dict = ["keywords": searchWords ?? "",
                     "matchType": 1,
-                    "entityIndustry": entityIndustry,
-                    "entityArea": entityArea,
+                    "industryType": entityIndustry,
+                    "region": entityArea,
                     "pageIndex": pageIndex,
                     "pageSize": 20] as [String : Any]
         let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/company/search",
+                       pageUrl: "/entity/v2/org-list",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.companyListView.tableView.mj_header?.endRefreshing()

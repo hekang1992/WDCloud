@@ -9,6 +9,8 @@ import UIKit
 import DropMenuBar
 
 class PropertyThreePeopleViewController: WDBaseViewController {
+    
+    weak var navController: UINavigationController?
 
     lazy var searchView: HomeItemSearchView = {
         let searchView = HomeItemSearchView()
@@ -38,7 +40,8 @@ class PropertyThreePeopleViewController: WDBaseViewController {
         view.addSubview(menuView)
         menuView.snp.makeConstraints { make in
             make.top.equalTo(searchView.snp.bottom)
-            make.left.right.equalToSuperview()
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
             make.height.equalTo(32)
         }
     }

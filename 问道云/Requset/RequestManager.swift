@@ -98,7 +98,9 @@ extension APIService: TargetType {
 }
 
 class RequestManager: NSObject {
-
+    
+    var grand: Bool = false
+    
     private let provider = MoyaProvider<APIService>()
     
     private func requestData(target: APIService, completion: @escaping (Result<BaseModel, Error>) -> Void) {
@@ -126,15 +128,14 @@ class RequestManager: NSObject {
             completion(.success(baseModel))
         } else {
             if code == 401 {
-//                let vc = UIViewController.getCurrentViewController() as? WDBaseViewController
-//                WDLoginConfig.removeLoginInfo()
-//                vc?.popLogin()
+                if grand == false {
+                    grand = true
+                    let vc = UIViewController.getCurrentViewController() as? WDBaseViewController
+                    WDLoginConfig.removeLoginInfo()
+                    vc?.popLogin()
+                }
                 let error = NSError()
                 completion(.failure(error))
-            }else if code == 500 {
-                let error = NSError()
-                completion(.failure(error))
-                ToastViewConfig.showToast(message: msg)
             }else {
                 let error = NSError()
                 completion(.failure(error))

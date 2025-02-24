@@ -58,10 +58,13 @@ extension BrowsingHistoryViewController: JXSegmentedViewDelegate {
         historyView.addSubview(cocsciew)
         segmentedView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(5)
+            make.top.equalTo(headView.snp.bottom)
             make.height.equalTo(32)
         }
-        cocsciew.frame = CGRectMake(0, StatusHeightManager.navigationBarHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44)
+        cocsciew.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(segmentedView.snp.bottom).offset(1)
+        }
     }
     
     func setupViewControllers() {
@@ -69,6 +72,7 @@ extension BrowsingHistoryViewController: JXSegmentedViewDelegate {
         listVCArray.removeAll()
         for _ in 0..<4 {
             let vc = HistoryListViewController()
+            vc.navController = navigationController
             cocsciew.addSubview(vc.view)
             listVCArray.append(vc)
         }
@@ -79,7 +83,7 @@ extension BrowsingHistoryViewController: JXSegmentedViewDelegate {
     
     private func updateViewControllersLayout() {
         for (index, vc) in listVCArray.enumerated() {
-            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44)
+            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: 1)
         }
     }
     

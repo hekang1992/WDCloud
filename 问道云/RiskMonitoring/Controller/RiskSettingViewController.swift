@@ -130,7 +130,8 @@ class RiskSettingViewController: WDBaseViewController {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                
+                let monVc = MonitoringSolutionViewController()
+                self?.navigationController?.pushViewController(monVc, animated: true)
         }).disposed(by: disposeBag)
         
         twoView.rx

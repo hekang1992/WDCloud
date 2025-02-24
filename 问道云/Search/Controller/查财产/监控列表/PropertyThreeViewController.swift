@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import HGSegmentedPageViewController
+import JXSegmentedView
 
 class PropertyThreeViewController: WDBaseViewController {
     
@@ -21,21 +21,10 @@ class PropertyThreeViewController: WDBaseViewController {
         return headView
     }()
     
-    lazy var segmentedPageViewController: HGSegmentedPageViewController = {
-        let segmentedPageViewController = HGSegmentedPageViewController()
-        segmentedPageViewController.categoryView.alignment = .center
-        segmentedPageViewController.categoryView.itemSpacing = 25
-        segmentedPageViewController.categoryView.topBorder.isHidden = true
-        segmentedPageViewController.categoryView.itemWidth = SCREEN_WIDTH * 0.25
-        segmentedPageViewController.categoryView.vernierWidth = 15
-        segmentedPageViewController.categoryView.titleNomalFont = .mediumFontOfSize(size: 14)
-        segmentedPageViewController.categoryView.titleSelectedFont = .mediumFontOfSize(size: 14)
-        segmentedPageViewController.categoryView.titleNormalColor = .init(cssStr: "#9FA4AD")
-        segmentedPageViewController.categoryView.titleSelectedColor = .init(cssStr: "#333333")
-        segmentedPageViewController.categoryView.vernier.backgroundColor = .init(cssStr: "#547AFF")
-        segmentedPageViewController.delegate = self
-        return segmentedPageViewController
-    }()
+    private lazy var segmentedView: JXSegmentedView = createSegmentedView()
+    private lazy var cocsciew: UIScrollView = createCocsciew()
+    private var segmurce: JXSegmentedTitleDataSource!
+    private var listVCArray = [WDBaseViewController]()
     
     lazy var bothVc: PropertyThreeBothViewController = {
         let bothVc = PropertyThreeBothViewController()
@@ -68,9 +57,6 @@ class PropertyThreeViewController: WDBaseViewController {
             self?.backBlock?()
         }).disposed(by: disposeBag)
         
-        addSegmentedPageViewController()
-        setupPageViewControllers()
-        
         view.addSubview(ctImageView)
         ctImageView.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-4.5)
@@ -85,30 +71,92 @@ class PropertyThreeViewController: WDBaseViewController {
                 let addVc = SearchAddPropertyViewController()
                 self?.navigationController?.pushViewController(addVc, animated: true)
             }).disposed(by: disposeBag)
+        
+        //添加切换
+        addsentMentView()
+        //添加子控制器
+        setupViewControllers()
+        
     }
 }
 
-extension PropertyThreeViewController: HGSegmentedPageViewControllerDelegate {
+extension PropertyThreeViewController: JXSegmentedViewDelegate {
     
-    private func addSegmentedPageViewController() {
-        self.addChild(self.segmentedPageViewController)
-        self.view.addSubview(self.segmentedPageViewController.view)
-        self.segmentedPageViewController.didMove(toParent: self)
-        self.segmentedPageViewController.view.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(self.headView.snp.bottom)
+    func addsentMentView() {
+        view.addSubview(segmentedView)
+        view.addSubview(cocsciew)
+        segmentedView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+            make.top.equalTo(headView.snp.bottom)
+            make.height.equalTo(32)
+        }
+        cocsciew.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(segmentedView.snp.bottom).offset(1)
         }
     }
     
-    private func setupPageViewControllers() {
-        let titles: [String] = ["全部", "企业", "人员"]
-        segmentedPageViewController.pageViewControllers = [bothVc, companyVc, peopleVc]
-        segmentedPageViewController.selectedPage = 0
-        self.segmentedPageViewController.categoryView.titles = titles
-        self.segmentedPageViewController.view.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(self.headView.snp.bottom)
+    func setupViewControllers() {
+        listVCArray.forEach { $0.view.removeFromSuperview() }
+        listVCArray.removeAll()
+        
+        cocsciew.addSubview(bothVc.view)
+        bothVc.navController = navigationController
+        listVCArray.append(bothVc)
+        
+        cocsciew.addSubview(companyVc.view)
+        listVCArray.append(companyVc)
+        
+        cocsciew.addSubview(peopleVc.view)
+        listVCArray.append(peopleVc)
+        
+        updateViewControllersLayout()
+        segmentedView(segmentedView, didSelectedItemAt: 0)
+    }
+    
+    private func updateViewControllersLayout() {
+        for (index, vc) in listVCArray.enumerated() {
+            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: 1)
         }
+    }
+    
+    private func createSegmentedView() -> JXSegmentedView {
+        let segmentedView = JXSegmentedView()
+        segmentedView.backgroundColor = .white
+        segmurce = JXSegmentedTitleDataSource()
+        segmurce.titles = ["全部", "企业", "人员"]
+        segmurce.isTitleColorGradientEnabled = true
+        segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
+        segmurce.titleNormalFont = .regularFontOfSize(size: 14)
+        segmurce.titleNormalColor = UIColor.init(cssStr: "#9FA4AD")!
+        segmurce.titleSelectedColor = UIColor.init(cssStr: "#333333")!
+        segmentedView.dataSource = segmurce
+        let indicator = createSegmentedIndicator()
+        segmentedView.indicators = [indicator]
+        segmentedView.contentScrollView = cocsciew
+        return segmentedView
+    }
+    
+    private func createCocsciew() -> UIScrollView {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = UIColor.init(cssStr: "#F5F5F5")
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.bounces = false
+        scrollView.alwaysBounceHorizontal = false
+        scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 3, height: 0)
+        return scrollView
+    }
+    
+    private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
+        let indicator = JXSegmentedIndicatorLineView()
+        indicator.indicatorWidth = JXSegmentedViewAutomaticDimension
+        indicator.indicatorHeight = 2
+        indicator.lineStyle = .lengthen
+        indicator.indicatorColor = UIColor.init(cssStr: "#547AFF")!
+        return indicator
     }
     
 }
