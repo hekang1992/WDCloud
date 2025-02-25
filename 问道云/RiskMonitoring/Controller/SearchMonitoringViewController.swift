@@ -13,8 +13,7 @@ import TYAlertController
 class SearchMonitoringViewController: WDBaseViewController {
     
     var pageNum: Int = 1
-    var pageSize: Int = 20
-    var allArray: [itemsModel] = []
+    var allArray: [rowsModel] = []
     //企业分组group
     var groupArray: [rowsModel]?
     //企业分组ID
@@ -25,7 +24,7 @@ class SearchMonitoringViewController: WDBaseViewController {
     var persons: [String] = []
     
     lazy var groupView: PopMonitoringGroupView = {
-        let groupView = PopMonitoringGroupView(frame: self.view.bounds)
+        let groupView = PopMonitoringGroupView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 300))
         return groupView
     }()
     
@@ -151,14 +150,15 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
         return true
     }
     
+    //搜索监控列表
     private func getSearchListInfo(from targetStr: String) {
-        let dict = ["firmname": targetStr,
+        let dict = ["entityName": targetStr,
                     "pageNum": pageNum,
-                    "pageSize": pageSize] as [String : Any]
+                    "pageSize": 20] as [String : Any]
         let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
-                       pageUrl: "riskmonitor/monitortarget/riskInquiryEnterprise",
+                       pageUrl: "/entity/monitortarget/riskInquiryEntity",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.tableView.mj_header?.endRefreshing()
@@ -174,7 +174,7 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
                         self.allArray.removeAll()
                     }
                     pageNum += 1
-                    let pageData = model.items ?? []
+                    let pageData = model.rows ?? []
                     self.allArray.append(contentsOf: pageData)
 //                    if total != 0 {
 //                        self.emptyView.removeFromSuperview()
@@ -279,11 +279,11 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
     }
 #warning("添加监控企业服务端报错=====无法调试")
     //添加监控企业
-    private func addMonitoringCompanyInfo(from model: itemsModel) {
-        let persons = (model.personnel?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? []) +
-        (model.seniorexecutive?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? [])
-        let entityid = model.entity_id ?? ""
-        let firmname = model.entity_name ?? ""
+    private func addMonitoringCompanyInfo(from model: rowsModel) {
+        let persons = (model.riskMonitorPersonDtoList?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? []) +
+        (model.positions?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? [])
+        let entityid = model.orgId ?? ""
+        let firmname = model.orgName ?? ""
         let groupnumber = self.groupnumber ?? ""
         let targettype = self.targettype
         let dict = ["persons": persons,

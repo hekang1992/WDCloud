@@ -91,7 +91,7 @@ class MonitoringListView: UIView {
     
     lazy var checkButton: UIButton = {
         let checkButton = UIButton()
-        checkButton.setImage(UIImage(named: "agreeselimage"), for: .selected)
+        checkButton.setImage(UIImage(named: "addjiankongqiye"), for: .selected)
         checkButton.setImage(UIImage(named: "agreenorimage"), for: .normal)
         checkButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         checkButton.contentEdgeInsets = UIEdgeInsets(top: -15, left: -15, bottom: -15, right: -15)

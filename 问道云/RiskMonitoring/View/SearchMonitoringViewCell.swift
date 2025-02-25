@@ -9,11 +9,11 @@ import UIKit
 
 class SearchMonitoringViewCell: BaseViewCell {
     
-    var model: itemsModel? {
+    var model: rowsModel? {
         didSet {
             guard let model = model else { return }
-            ctImageView.image = UIImage.imageOfText(model.entity_name ?? "", size: (24, 24), cornerRadius: 2)
-            namelabel.text = model.entity_name ?? ""
+            ctImageView.image = UIImage.imageOfText(model.orgName ?? "", size: (24, 24), cornerRadius: 2)
+            namelabel.text = model.orgName ?? ""
             configure(with: model)
         }
     }
@@ -121,24 +121,24 @@ extension SearchMonitoringViewCell {
         menuBtn.layoutButtonEdgeInsets(style: .right, space: 2)
     }
     
-    func configure(with model: itemsModel) {
-        //企业法人
-        let seniorexecutiveArray = model.seniorexecutive ?? []
-        //企业高管
-        let personnelArray = model.personnel ?? []
-        
-        if !seniorexecutiveArray.isEmpty {
-            oneListView.modelArray = seniorexecutiveArray
-            stackView.addArrangedSubview(oneListView)
-        } else {
-            oneListView.removeFromSuperview()
-        }
-        if !personnelArray.isEmpty {
-            twoListView.modelArray = personnelArray
-            stackView.addArrangedSubview(twoListView)
-        } else {
-            twoListView.removeFromSuperview()
-        }
+    func configure(with model: rowsModel) {
+//        //企业法人
+//        let seniorexecutiveArray = model.seniorexecutive ?? []
+//        //企业高管
+//        let personnelArray = model.personnel ?? []
+//        
+//        if !seniorexecutiveArray.isEmpty {
+//            oneListView.modelArray = seniorexecutiveArray
+//            stackView.addArrangedSubview(oneListView)
+//        } else {
+//            oneListView.removeFromSuperview()
+//        }
+//        if !personnelArray.isEmpty {
+//            twoListView.modelArray = personnelArray
+//            stackView.addArrangedSubview(twoListView)
+//        } else {
+//            twoListView.removeFromSuperview()
+//        }
     }
     
 }

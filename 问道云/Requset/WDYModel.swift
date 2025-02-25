@@ -345,8 +345,8 @@ class itemsModel {
     var risktime: String?
     var riskdynamicid: String?
     var subitems: [subitemsModel]?
-    var personnel: [personnelModel]?//搜索监控企业
-    var seniorexecutive: [personnelModel]?//搜索监控企业
+    var riskMonitorPersonDtoList: [personnelModel]?//搜索监控企业
+    var positions: [personnelModel]?//搜索监控企业
     var firstate: String?
     var riskSumup: Int?
     var high_risk: Int?
@@ -430,8 +430,8 @@ class itemsModel {
         self.riskSumup = json["riskSumup"].intValue
         self.firstate = json["firstate"].stringValue
         self.entity_id = json["entity_id"].stringValue
-        self.personnel = json["personnel"].arrayValue.map { personnelModel(json: $0) }
-        self.seniorexecutive = json["seniorexecutive"].arrayValue.map { personnelModel(json: $0) }
+        self.positions = json["positions"].arrayValue.map { personnelModel(json: $0) }
+        self.riskMonitorPersonDtoList = json["riskMonitorPersonDtoList"].arrayValue.map { personnelModel(json: $0) }
         self.riskdynamicid = json["riskdynamicid"].stringValue
         self.risktime = json["risktime"].stringValue
         self.entity_name = json["entity_name"].stringValue
@@ -678,7 +678,11 @@ class rowsModel {
     var totalRiskCnt: Int?
     var totalTipRiskCnt: Int?
     var recentRisk: String?
+    var riskMonitorPersonDtoList: [personnelModel]?//搜索监控企业
+    var positions: [personnelModel]?//搜索监控企业
     init(json: JSON) {
+        self.positions = json["positions"].arrayValue.map { personnelModel(json: $0) }
+        self.riskMonitorPersonDtoList = json["riskMonitorPersonDtoList"].arrayValue.map { personnelModel(json: $0) }
         self.recentRisk = json["recentRisk"].stringValue
         self.curHighRiskCnt = json["curHighRiskCnt"].intValue
         self.curLowRiskCnt = json["curLowRiskCnt"].intValue
