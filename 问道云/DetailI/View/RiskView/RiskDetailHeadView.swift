@@ -8,6 +8,8 @@
 import UIKit
 
 class RiskDetailHeadView: BaseView {
+    
+    var reportBtnBlock: (() -> Void)?
 
     lazy var iconImageView: UIImageView = {
         let iconImageView = UIImageView()
@@ -89,6 +91,10 @@ class RiskDetailHeadView: BaseView {
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(1)
         }
+        reportBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.reportBtnBlock?()
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {

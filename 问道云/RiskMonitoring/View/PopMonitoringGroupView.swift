@@ -62,6 +62,7 @@ class PopMonitoringGroupView: BaseView {
             make.left.bottom.right.equalToSuperview()
             make.height.equalTo(45)
         }
+        
     }
     
     @MainActor required init?(coder: NSCoder) {

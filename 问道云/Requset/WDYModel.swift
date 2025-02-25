@@ -666,6 +666,7 @@ class rowsModel {
     var piclist: [String]?
     var orgName: String?
     var groupName: String?
+    var groupId: String?
     var startDate: String?
     var endDate: String?
     var orgId: String?//企业ID
@@ -678,9 +679,12 @@ class rowsModel {
     var totalRiskCnt: Int?
     var totalTipRiskCnt: Int?
     var recentRisk: String?
+    var monitorFlag: String?//是否被监控0未监控 1已监控
     var riskMonitorPersonDtoList: [personnelModel]?//搜索监控企业
     var positions: [personnelModel]?//搜索监控企业
     init(json: JSON) {
+        self.groupId = json["groupId"].stringValue
+        self.monitorFlag = json["monitorFlag"].stringValue
         self.positions = json["positions"].arrayValue.map { personnelModel(json: $0) }
         self.riskMonitorPersonDtoList = json["riskMonitorPersonDtoList"].arrayValue.map { personnelModel(json: $0) }
         self.recentRisk = json["recentRisk"].stringValue

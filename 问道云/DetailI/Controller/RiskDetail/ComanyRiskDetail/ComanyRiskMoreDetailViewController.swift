@@ -103,7 +103,7 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
         
         riskHeadView.iconImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(name, size: (40, 40)))
         riskHeadView.namelabel.text = name
-        riskHeadView.timeLabel.text = "监控周期: 尚未监控"
+        riskHeadView.timeLabel.text = "监控周期:"
         
         
         view.addSubview(tableView)

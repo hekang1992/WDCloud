@@ -58,7 +58,7 @@ class DailyReportViewController: WDBaseViewController {
     }()
     
     lazy var groupView: PopMonitoringGroupView = {
-        let groupView = PopMonitoringGroupView(frame: self.view.bounds)
+        let groupView = PopMonitoringGroupView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 280))
         return groupView
     }()
     
@@ -217,7 +217,6 @@ extension DailyReportViewController {
         ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["reportTermType": "day",
-                    "entityType": "1",
                     "groupId": groupId,
                     "pageSize": 10,
                     "pageNum": pageNum] as [String : Any]
@@ -265,11 +264,10 @@ extension DailyReportViewController {
         ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["reportTermType": "day",
-                    "entityType": "2",
-                    "pageSize": 10,
-                    "pageNum": pageNum] as [String : Any]
+                    "pageNum": pageNum,
+                    "pageSize": 20,] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/entity/monitor-org/queryRiskMonitorOrg",
+                       pageUrl: "/entity/monitor-person/queryRiskMonitorPerson",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.monitoringView.tableView.mj_header?.endRefreshing()
@@ -326,7 +324,7 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
             let headView = UIView()
             headView.backgroundColor = .init(cssStr: "#F8F9FB")
             let oneLabel = UILabel()
-            let count = self.allArray.count
+            let count = self.companyModel.value?.total ?? 0
             oneLabel.textColor = .init(cssStr: "#333333")
             oneLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(count)", fullText: "已监控企业\(count)", colorStr: "#FF4444")
             oneLabel.font = .regularFontOfSize(size: 12)
@@ -390,7 +388,9 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
             }
             //取消监控
             monitorView.block2 = { [weak self] in
-                self?.cancelMonitoringInfo(from: model, indexPath: indexPath)
+                self?.dismiss(animated: true, completion: {
+                    self?.cancelMonitoringInfo(from: model, indexPath: indexPath)
+                })
             }
             //移动分组
             monitorView.block3 = { [weak self] in
@@ -453,7 +453,6 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     private func cancelMonitoringInfo(from model: rowsModel, indexPath: IndexPath) {
-        ViewHud.addLoadView()
         let dict = ["orgId": model.orgId ?? ""]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/entity/monitor-org/cancelRiskMonitorOrg", method: .post) { result in
@@ -461,8 +460,10 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    self.allArray.remove(at: indexPath.row)
-                    self.monitoringView.tableView.reloadData()
+                    ViewHud.addLoadView()
+                    self.getCompanyInfo {
+                        ViewHud.hideLoadView()
+                    }
                 }
                 break
             case .failure(_):
@@ -481,7 +482,28 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
             self?.dismiss(animated: true)
         }
         groupView.sblock = { model in
-            ToastViewConfig.showToast(message: "等待接口")
+            let man = RequestManager()
+            let dict = ["orgId": rowsModel.orgId ?? "",
+                        "groupId": model.eid ?? ""]
+            man.requestAPI(params: dict,
+                           pageUrl: "/entity/monitor-org/updRiskMonitorOrgGroup",
+                           method: .post) { [weak self] result in
+                switch result {
+                case .success(let success):
+                    if success.code == 200 {
+                        if let self = self {
+                            ViewHud.addLoadView()
+                            self.dismiss(animated: true) {
+                                self.pageNum = 1
+                                self.getCompanyInfo { ViewHud.hideLoadView() }
+                            }
+                        }
+                    }
+                    break
+                case .failure(_):
+                    break
+                }
+            }
         }
     }
     

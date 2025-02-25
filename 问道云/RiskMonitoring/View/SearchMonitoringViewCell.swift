@@ -9,11 +9,23 @@ import UIKit
 
 class SearchMonitoringViewCell: BaseViewCell {
     
+    var menuBlock: ((UIButton) -> Void)?
+    
+    var addBlock: ((UIButton) -> Void)?
+    
     var model: rowsModel? {
         didSet {
             guard let model = model else { return }
             ctImageView.image = UIImage.imageOfText(model.orgName ?? "", size: (24, 24), cornerRadius: 2)
             namelabel.text = model.orgName ?? ""
+            let monitorFlag = model.monitorFlag ?? ""
+            if monitorFlag == "1" {
+                addBtn.isSelected = true
+                menuBtn.isEnabled = false
+            }else {
+                addBtn.isSelected = false
+                menuBtn.isEnabled = true
+            }
             configure(with: model)
         }
     }
@@ -34,7 +46,6 @@ class SearchMonitoringViewCell: BaseViewCell {
     
     lazy var menuBtn: UIButton = {
         let menuBtn = UIButton(type: .custom)
-        menuBtn.setTitle("自身企业", for: .normal)
         menuBtn.layer.cornerRadius = 3.5
         menuBtn.layer.borderWidth = 1
         menuBtn.setImage(UIImage(named: "xialaimageicon"), for: .normal)
@@ -48,6 +59,7 @@ class SearchMonitoringViewCell: BaseViewCell {
     lazy var addBtn: UIButton = {
         let addBtn = UIButton(type: .custom)
         addBtn.setImage(UIImage(named: "jiankonganniu"), for: .normal)
+        addBtn.setImage(UIImage(named: "havejiankong"), for: .selected)
         return addBtn
     }()
     
@@ -87,11 +99,11 @@ class SearchMonitoringViewCell: BaseViewCell {
         namelabel.snp.makeConstraints { make in
             make.centerY.equalTo(ctImageView.snp.centerY)
             make.left.equalTo(ctImageView.snp.right).offset(4)
-            make.right.equalToSuperview().offset(-105)
+            make.right.equalToSuperview().offset(-110)
         }
         addBtn.snp.makeConstraints { make in
             make.centerY.equalTo(ctImageView.snp.centerY)
-            make.size.equalTo(CGSize(width: 30, height: 18))
+            make.height.equalTo(18)
             make.right.equalToSuperview().offset(-14)
         }
         menuBtn.snp.makeConstraints { make in
@@ -105,6 +117,15 @@ class SearchMonitoringViewCell: BaseViewCell {
             make.right.equalTo(addBtn.snp.right)
             make.bottom.equalTo(-10).priority(.medium)
         }
+        menuBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.menuBlock?(menuBtn)
+        }).disposed(by: disposeBag)
+        
+        addBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.addBlock?(addBtn)
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {

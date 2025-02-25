@@ -14,6 +14,8 @@ import DropMenuBar
 
 class SearchRiskViewController: WDBaseViewController {
     
+    var completeBlock: (() -> Void)?
+    
     //城市数据
     var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
     
@@ -232,12 +234,31 @@ class SearchRiskViewController: WDBaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        ViewHud.addLoadView()
+        let group = DispatchGroup()
         //最近搜索
-        getlastSearch()
+        group.enter()
+        getlastSearch {
+            group.leave()
+        }
+        
         //浏览历史
-        getBrowsingHistory()
+        group.enter()
+        getBrowsingHistory {
+            group.leave()
+        }
+        
         //热搜
-        getHotWords()
+        group.enter()
+        getHotWords {
+            group.leave()
+        }
+        
+        // 所有任务完成后的通知
+        group.notify(queue: .main) {
+            ViewHud.hideLoadView()
+            self.completeBlock?()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -251,15 +272,13 @@ class SearchRiskViewController: WDBaseViewController {
 extension SearchRiskViewController {
     
     //最近搜索
-    private func getlastSearch() {
+    private func getlastSearch(complete: @escaping () -> Void) {
         let man = RequestManager()
-        ViewHud.addLoadView()
         let dict = ["searchType": "",
                     "moduleId": "05"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -270,6 +289,7 @@ extension SearchRiskViewController {
             case .failure(_):
                 break
             }
+            complete()
         }
     }
     
@@ -298,9 +318,8 @@ extension SearchRiskViewController {
     }
     
     //浏览历史
-    private func getBrowsingHistory() {
+    private func getBrowsingHistory(complete: @escaping () -> Void) {
         let man = RequestManager()
-        ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber":customernumber,
                     "viewrecordtype": "",
@@ -310,7 +329,6 @@ extension SearchRiskViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/clientbrowsecb/selectBrowserecord",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -322,6 +340,7 @@ extension SearchRiskViewController {
                 
                 break
             }
+            complete()
         }
     }
     
@@ -370,14 +389,12 @@ extension SearchRiskViewController {
     }
     
     //热搜
-    private func getHotWords() {
+    private func getHotWords(complete: @escaping () -> Void) {
         let man = RequestManager()
-        ViewHud.addLoadView()
         let dict = ["moduleId": "05"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -389,6 +406,7 @@ extension SearchRiskViewController {
             case .failure(_):
                 break
             }
+            complete()
         }
     }
     
@@ -513,7 +531,7 @@ extension SearchRiskViewController {
                     self.twoRiskListView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1
-                        self.getlastSearch()
+                        self.getlastSearch {}
                         self.allArray.removeAll()
                     }
                     pageIndex += 1
@@ -575,7 +593,7 @@ extension SearchRiskViewController {
                     self.listPeopleView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1
-                        self.getlastSearch()
+                        self.getlastSearch{}
                         self.allPeopleArray.removeAll()
                     }
                     pageIndex += 1

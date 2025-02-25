@@ -18,8 +18,7 @@ class SearchMonitoringViewController: WDBaseViewController {
     var groupArray: [rowsModel]?
     //企业分组ID
     var groupnumber: String?
-    //企业还是个人 1企业 2个人
-    var targettype: String = "1"
+    var groupName: String?
     //个人数组
     var persons: [String] = []
     
@@ -84,10 +83,10 @@ class SearchMonitoringViewController: WDBaseViewController {
         tableView.dataSource = self
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         addHeadView(from: headView)
@@ -138,7 +137,7 @@ class SearchMonitoringViewController: WDBaseViewController {
         //查询监控分组
         getMonitoringGroupInfo()
     }
-
+    
 }
 
 extension SearchMonitoringViewController: UITextFieldDelegate {
@@ -146,6 +145,7 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("搜索文字:\(textField.text ?? "")")
         textField.resignFirstResponder()
+        self.pageNum = 1
         getSearchListInfo(from: textField.text ?? "")
         return true
     }
@@ -168,7 +168,8 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
                 if let self = self,
                    let model = success.data,
                    let code = success.code,
-                   code == 200 /*let total = model.total*/ {
+                   code == 200,
+                   let total = model.total {
                     if pageNum == 1 {
                         pageNum = 1
                         self.allArray.removeAll()
@@ -176,17 +177,17 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
                     pageNum += 1
                     let pageData = model.rows ?? []
                     self.allArray.append(contentsOf: pageData)
-//                    if total != 0 {
-//                        self.emptyView.removeFromSuperview()
-//                        self.noNetView.removeFromSuperview()
-//                    }else {
-//                        self.addNodataView(from: self.tableView)
-//                    }
-//                    if self.allArray.count != total {
-//                        self.tableView.mj_footer?.isHidden = false
-//                    }else {
-//                        self.tableView.mj_footer?.isHidden = true
-//                    }
+                    if total != 0 {
+                        self.emptyView.removeFromSuperview()
+                        self.noNetView.removeFromSuperview()
+                    }else {
+                        self.addNodataView(from: self.tableView)
+                    }
+                    if self.allArray.count != total {
+                        self.tableView.mj_footer?.isHidden = false
+                    }else {
+                        self.tableView.mj_footer?.isHidden = true
+                    }
                     self.tableView.reloadData()
                 }
                 break
@@ -203,7 +204,7 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/monitorgroup/selectmonitorgroup",
+                       pageUrl: "/entity/monitorgroup/selectMonitorGroup",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {
@@ -252,17 +253,31 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
         let model = self.allArray[indexPath.section]
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchMonitoringViewCell", for: indexPath) as! SearchMonitoringViewCell
         cell.selectionStyle = .none
-        cell.model = model
-        cell.menuBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.popGroupView(from: cell.menuBtn)
-        }).disposed(by: disposeBag)
+        //默认选择第一个分组
+        if let groupArray = self.groupArray, let rowsModel = groupArray.first {
+            let name = model.groupName ?? ""
+            let groupId = model.groupId ?? ""
+            if name.isEmpty {
+                cell.menuBtn.setTitle(rowsModel.groupName ?? "", for: .normal)
+                self.groupnumber = rowsModel.eid ?? ""
+            }else {
+                self.groupnumber = groupId
+                cell.menuBtn.setTitle(name, for: .normal)
+            }
+        }
+        cell.menuBlock = { [weak self] menuBtn in
+            guard let self = self else { return }
+            self.popGroupView(from: menuBtn)
+        }
         //添加监控企业
-        cell.addBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.addMonitoringCompanyInfo(from: model)
-        }).disposed(by: disposeBag)
+        cell.addBlock = { [weak self] addBtn in
+            guard let self = self else { return }
+            self.addMonitoringCompanyInfo(from: model)
+        }
+        cell.model = model
         return cell
     }
-
+    
     private func popGroupView(from menuBtn: UIButton) {
         let alertVc = TYAlertController(alert: groupView, preferredStyle: .actionSheet)!
         groupView.groupArray = self.groupArray ?? []
@@ -271,36 +286,42 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
         }).disposed(by: disposeBag)
         groupView.block = { [weak self] model in
             self?.dismiss(animated: true, completion: {
-                self?.groupnumber = model.groupnumber ?? ""
-                menuBtn.setTitle(model.groupname ?? "", for: .normal)
+                self?.groupnumber = model.eid ?? ""
+                self?.groupName = model.groupName ?? ""
+                menuBtn.setTitle(model.groupName ?? "", for: .normal)
+                menuBtn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
             })
         }
         self.present(alertVc, animated: true)
     }
-#warning("添加监控企业服务端报错=====无法调试")
+    
     //添加监控企业
     private func addMonitoringCompanyInfo(from model: rowsModel) {
-        let persons = (model.riskMonitorPersonDtoList?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? []) +
-        (model.positions?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? [])
+        //        let persons = (model.riskMonitorPersonDtoList?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? []) +
+        //        (model.positions?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? [])
         let entityid = model.orgId ?? ""
         let firmname = model.orgName ?? ""
         let groupnumber = self.groupnumber ?? ""
-        let targettype = self.targettype
-        let dict = ["persons": persons,
-                    "entityid": entityid,
-                    "firmname": firmname,
-                    "groupnumber": groupnumber,
-                    "targettype": targettype] as [String : Any]
+        let dict = ["orgId": entityid,
+                    "groupId": groupnumber,
+                    "firmname": firmname] as [String : Any]
         let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/monitortarget/addmonitortarget",
+                       pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
                        method: .post) { [weak self] result in
             ViewHud.hideLoadView()
+            guard let self = self else { return }
             switch result {
             case .success(let success):
+                if success.code == 200 {
+                    model.monitorFlag = "1"
+                    model.groupName = self.groupName ?? ""
+                    self.tableView.reloadData()
+                    ToastViewConfig.showToast(message: "监控成功")
+                }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }

@@ -8,18 +8,29 @@
 import UIKit
 import JXSegmentedView
 import JXPagingView
+import SwiftyJSON
 
 class CompanyRiskDetailViewController: WDBaseViewController {
     
-    var enityId: String = ""
+    var enityId: String? {
+        didSet {}
+    }
     
-    var name: String = ""
+    var name: String? {
+        didSet {}
+    }
     
-    var logo: String = ""
+    var logo: String? {
+        didSet {}
+    }
     
-    var time: String = ""
+    var time: String? {
+        didSet {}
+    }
     
-    var groupName: String = ""
+    var groupName: String? {
+        didSet {}
+    }
     
     var intBlock: ((Double) -> Void)?
     
@@ -90,10 +101,21 @@ class CompanyRiskDetailViewController: WDBaseViewController {
     //头部
     func preferredTableHeaderView() -> RiskDetailHeadView {
         let header = RiskDetailHeadView()
-        header.iconImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(name, size: (40, 40)))
+        header.iconImageView.kf.setImage(with: URL(string: logo ?? ""), placeholder: UIImage.imageOfText(name ?? "", size: (40, 40)))
         header.namelabel.text = name
-        header.timeLabel.text = "监控周期: \(time)"
-        header.tagLabel.text = groupName
+        header.timeLabel.text = "监控周期: \(time ?? "")"
+        header.tagLabel.text = groupName ?? ""
+        header.reportBtnBlock = { [weak self] in
+            guard let self = self else { return }
+            let oneRpVc = OneReportViewController()
+            let entityid = enityId ?? ""
+            let firmname = name ?? ""
+            let json: JSON = ["entityId": entityid,
+                              "entityName": firmname]
+            let firmModel = firmInfoModel(json: json)
+            oneRpVc.firmModel = firmModel
+            self.navigationController?.pushViewController(oneRpVc, animated: true)
+        }
         return header
     }
     
@@ -128,21 +150,21 @@ extension CompanyRiskDetailViewController: JXPagingViewDelegate {
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
             let oneRiskVc = MySelfRiskDetailViewController()
-            oneRiskVc.enityId = enityId
-            oneRiskVc.name = name
-            oneRiskVc.logo = logo
+            oneRiskVc.enityId = enityId ?? ""
+            oneRiskVc.name = name ?? ""
+            oneRiskVc.logo = logo ?? ""
             return oneRiskVc
         }else if index == 1 {
             let twoRiskVc = UnioRiskDetailViewController()
-            twoRiskVc.enityId = enityId
-            twoRiskVc.name = name
-            twoRiskVc.logo = logo
+            twoRiskVc.enityId = enityId ?? ""
+            twoRiskVc.name = name ?? ""
+            twoRiskVc.logo = logo ?? ""
             return twoRiskVc
         }else {
             let threeRiskVc = HistoryRiskDetailViewController()
-            threeRiskVc.enityId = enityId
-            threeRiskVc.name = name
-            threeRiskVc.logo = logo
+            threeRiskVc.enityId = enityId ?? ""
+            threeRiskVc.name = name ?? ""
+            threeRiskVc.logo = logo ?? ""
             return threeRiskVc
         }
     }

@@ -165,145 +165,131 @@
 			<key>orderHint</key>
 			<integer>23</integer>
 		</dict>
-		<key>NTESBaseComponent.xcscheme</key>
+		<key>Pods-问道云.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>24</integer>
 		</dict>
-		<key>NTESQuickPass.xcscheme</key>
+		<key>RxCocoa.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>25</integer>
 		</dict>
-		<key>Pods-问道云.xcscheme</key>
+		<key>RxDataSources.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>26</integer>
 		</dict>
-		<key>RxCocoa.xcscheme</key>
+		<key>RxGesture.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>27</integer>
 		</dict>
-		<key>RxDataSources.xcscheme</key>
+		<key>RxRelay.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>28</integer>
 		</dict>
-		<key>RxGesture.xcscheme</key>
+		<key>RxSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>29</integer>
 		</dict>
-		<key>RxRelay.xcscheme</key>
+		<key>SAMKeychain.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>30</integer>
 		</dict>
-		<key>RxSwift.xcscheme</key>
+		<key>SevenSwitch.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>31</integer>
 		</dict>
-		<key>SAMKeychain.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>32</integer>
-		</dict>
-		<key>SevenSwitch.xcscheme</key>
+		<key>SnapKit-SnapKit_Privacy.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>33</integer>
 		</dict>
-		<key>SnapKit-SnapKit_Privacy.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>35</integer>
-		</dict>
 		<key>SnapKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>34</integer>
+			<integer>32</integer>
 		</dict>
 		<key>SwiftyJSON-SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>37</integer>
+			<integer>35</integer>
 		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>36</integer>
+			<integer>34</integer>
 		</dict>
 		<key>TXScrollLabelView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>40</integer>
+			<integer>38</integer>
 		</dict>
 		<key>TYAlertController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>41</integer>
+			<integer>39</integer>
 		</dict>
 		<key>TYCyclePagerView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>42</integer>
+			<integer>40</integer>
 		</dict>
 		<key>TagListView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>38</integer>
+			<integer>36</integer>
 		</dict>
 		<key>Toaster.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>39</integer>
+			<integer>37</integer>
 		</dict>
 		<key>WechatOpenSDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>43</integer>
+			<integer>41</integer>
 		</dict>
 		<key>lottie-ios.xcscheme</key>
 		<dict>

@@ -11,6 +11,8 @@ import JXSegmentedView
 
 class WDRiskViewController: WDBaseViewController {
     
+    var selectIndex: Int = 0
+    
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         ctImageView.image = UIImage(named: "appheadbgimage")
@@ -82,6 +84,12 @@ class WDRiskViewController: WDBaseViewController {
         setupViewControllers()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let index = self.selectIndex
+        segmentedView(segmentedView, didSelectedItemAt: index)
+    }
+    
 }
 
 extension WDRiskViewController: JXSegmentedViewDelegate {
@@ -118,7 +126,6 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
         listVCArray.append(fourVc)
         
         updateViewControllersLayout()
-        segmentedView(segmentedView, didSelectedItemAt: 0)
     }
     
     private func updateViewControllersLayout() {
@@ -167,6 +174,7 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
     }
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        self.selectIndex = index
         if index == 0 {
             let oneVc = listVCArray[0] as!DailyReportViewController
             oneVc.getListInfo()

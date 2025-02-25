@@ -48,7 +48,7 @@ target '问道云' do
   
   pod 'SAMKeychain', '~> 1.5.3'
   
-  pod 'NTESQuickPass', '~> 3.6.2'
+#  pod 'NTESQuickPass', '~> 3.6.2'
   
   pod 'JXPagingView/Paging', '~> 2.1.3'
   

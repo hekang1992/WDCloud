@@ -14,6 +14,8 @@ import DropMenuBar
 
 class SearchPeopleViewController: WDBaseViewController {
     
+    var completeBlock: (() -> Void)?
+    
     //城市数据
     var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
     
@@ -212,6 +214,7 @@ class SearchPeopleViewController: WDBaseViewController {
         // 所有任务完成后的通知
         group.notify(queue: .main) {
             ViewHud.hideLoadView()
+            self.completeBlock?()
         }
     }
 }
