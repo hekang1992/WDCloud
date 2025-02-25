@@ -192,38 +192,26 @@ class SearchPeopleViewController: WDBaseViewController {
         super.viewWillAppear(animated)
         print("人员===============人员")
         let group = DispatchGroup()
-        var lastSearchSuccess = false
-        var browsingHistorySuccess = false
-        var hotWordsSuccess = false
         //最近搜索
         ViewHud.addLoadView()
         group.enter()
         getlastSearch { success in
-            lastSearchSuccess = success
             group.leave()
         }
         //浏览历史
         group.enter()
         getBrowsingHistory { success in
-            browsingHistorySuccess = success
             group.leave()
         }
         //热搜
         group.enter()
         getHotWords { success in
-            hotWordsSuccess = success
             group.leave()
         }
         
         // 所有任务完成后的通知
         group.notify(queue: .main) {
             ViewHud.hideLoadView()
-            print("所有数据加载完成，通知你！")
-            if lastSearchSuccess && browsingHistorySuccess && hotWordsSuccess {
-                print("所有接口请求成功！")
-            } else {
-                print("部分接口请求失败。")
-            }
         }
     }
 }

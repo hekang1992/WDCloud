@@ -141,6 +141,7 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
         let indicator = createSegmentedIndicator()
         segmentedView.indicators = [indicator]
         segmentedView.contentScrollView = cocsciew
+        segmentedView.delegate = self
         return segmentedView
     }
     

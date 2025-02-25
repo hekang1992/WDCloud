@@ -38,6 +38,9 @@ class SearchAllViewController: WDBaseViewController {
     
     lazy var companyVc: SearchCompanyViewController = {
         let companyVc = SearchCompanyViewController()
+        companyVc.completeBlock = { [weak self] in
+            self?.searchHeadView.searchTx.becomeFirstResponder()
+        }
         return companyVc
     }()
     
@@ -91,10 +94,6 @@ class SearchAllViewController: WDBaseViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
-        DispatchQueue.main.asyncAfter(delay: 0.5) {
-            self.searchHeadView.searchTx.becomeFirstResponder()
-        }
         
     }
     

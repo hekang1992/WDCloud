@@ -234,10 +234,8 @@ class SearchRiskViewController: WDBaseViewController {
         super.viewWillAppear(animated)
         //最近搜索
         getlastSearch()
-        
         //浏览历史
         getBrowsingHistory()
-        
         //热搜
         getHotWords()
     }

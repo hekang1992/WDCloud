@@ -196,7 +196,7 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
         //搜到共多少页
         let result = Int(ceil(Double(numStr) / Double(20)))
         headView.addSubview(pageLabel)
-        pageLabel.text = "第\(countModel?.size ?? 0)/\(result)页"
+        pageLabel.text = "第\(countModel?.index ?? 0)/\(result)页"
         pageLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.height.equalTo(25)

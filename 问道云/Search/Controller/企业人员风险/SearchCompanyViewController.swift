@@ -15,6 +15,8 @@ import MapKit
 
 class SearchCompanyViewController: WDBaseViewController {
     
+    var completeBlock: (() -> Void)?
+    
     //城市数据
     var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
     
@@ -217,38 +219,27 @@ class SearchCompanyViewController: WDBaseViewController {
         super.viewWillAppear(animated)
         print("企业===============企业")
         let group = DispatchGroup()
-        var lastSearchSuccess = false
-        var browsingHistorySuccess = false
-        var hotWordsSuccess = false
         //最近搜索
         ViewHud.addLoadView()
         group.enter()
-        getlastSearch { success in
-            lastSearchSuccess = success
+        getlastSearch {
             group.leave()
         }
         //浏览历史
         group.enter()
-        getBrowsingHistory { success in
-            browsingHistorySuccess = success
+        getBrowsingHistory {
             group.leave()
         }
         //热搜
         group.enter()
-        getHotWords { success in
-            hotWordsSuccess = success
+        getHotWords {
             group.leave()
         }
         
         // 所有任务完成后的通知
         group.notify(queue: .main) {
             ViewHud.hideLoadView()
-            print("所有数据加载完成，通知你！")
-            if lastSearchSuccess && browsingHistorySuccess && hotWordsSuccess {
-                print("所有接口请求成功！")
-            } else {
-                print("部分接口请求失败。")
-            }
+            self.completeBlock?()
         }
     }
 }
@@ -256,7 +247,7 @@ class SearchCompanyViewController: WDBaseViewController {
 extension SearchCompanyViewController {
     
     //最近搜索
-    private func getlastSearch(completion: @escaping (Bool) -> Void) {
+    private func getlastSearch(completion: @escaping () -> Void) {
         let man = RequestManager()
         let dict = ["searchType": "1",
                     "moduleId": "01"]
@@ -268,15 +259,13 @@ extension SearchCompanyViewController {
             case .success(let success):
                 if let rows = success.data?.data, let code = success.code, code == 200  {
                     reloadSearchUI(data: rows)
-                    completion(true)
-                }else {
-                    completion(false)
                 }
                 break
             case .failure(_):
-                completion(false)
+                
                 break
             }
+            completion()
         }
     }
     
@@ -305,7 +294,7 @@ extension SearchCompanyViewController {
     }
     
     //浏览历史
-    private func getBrowsingHistory(completion: @escaping (Bool) -> Void) {
+    private func getBrowsingHistory(completion: @escaping () -> Void) {
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
@@ -321,15 +310,13 @@ extension SearchCompanyViewController {
                 guard let self = self else { return }
                 if let rows = success.data?.rows, let code = success.code, code == 200 {
                     readHistoryUI(data: rows)
-                    completion(true)
-                }else {
-                    completion(false)
                 }
                 break
             case .failure(_):
-                completion(false)
+                
                 break
             }
+            completion()
         }
     }
     
@@ -371,7 +358,7 @@ extension SearchCompanyViewController {
     }
     
     //热搜
-    private func getHotWords(completion: @escaping (Bool) -> Void) {
+    private func getHotWords(completion: @escaping () -> Void) {
         let man = RequestManager()
         let dict = ["moduleId": "01"]
         man.requestAPI(params: dict,
@@ -383,15 +370,13 @@ extension SearchCompanyViewController {
                 if let model = success.data, let code = success.code, code == 200 {
                     self.hotWordsArray.accept(model.data ?? [])
                     hotsWordsUI(data: model.data ?? [])
-                    completion(true)
-                }else {
-                    completion(false)
                 }
                 break
             case .failure(_):
-                completion(false)
+                
                 break
             }
+            completion()
         }
     }
     
@@ -490,7 +475,7 @@ extension SearchCompanyViewController {
     
     //搜索企业列表
     private func searchListInfo() {
-        let dict = ["keywords": searchWords ?? "",
+        let dict = ["keyword": searchWords ?? "",
                     "matchType": 1,
                     "industryType": entityIndustry,
                     "region": entityArea,
@@ -514,9 +499,7 @@ extension SearchCompanyViewController {
                     self.companyListView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1
-                        self.getlastSearch { success in
-                            
-                        }
+                        self.getlastSearch {}
                         self.allArray.removeAll()
                     }
                     pageIndex += 1
