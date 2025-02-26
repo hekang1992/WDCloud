@@ -27,11 +27,14 @@ class DailyReportViewController: WDBaseViewController {
     var allArray: [rowsModel] = []
     
     var companyModel = BehaviorRelay<DataModel?>(value: nil)
+    
     var peopleModel = BehaviorRelay<DataModel?>(value: nil)
     
     var groupModel = BehaviorRelay<DataModel?>(value: nil)
     
     var groupName: String = "全部分组"
+    
+    var isShowMonitoring: Bool = false
     
     //未登录
     lazy var noLoginView: RiskNoLoginView = {
@@ -102,8 +105,10 @@ class DailyReportViewController: WDBaseViewController {
         combine
             .observe(on: MainScheduler.instance)
             .bind { [weak self] gurad in
-                self?.noMonitoringView.isHidden = gurad
-                self?.monitoringView.isHidden = !gurad
+                if gurad {
+                    self?.noMonitoringView.isHidden = gurad
+                    self?.monitoringView.isHidden = !gurad
+                }
             }
             .disposed(by: disposeBag)
         

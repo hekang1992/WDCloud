@@ -316,7 +316,9 @@ class OpinioUpLoadViewController: WDBaseViewController {
         
         //点击,获取相册权限
         uploadBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.checkPhotoLibraryPermission()
+            DispatchQueue.main.async {
+                self?.checkPhotoLibraryPermission()
+            }
         }).disposed(by: disposeBag)
         
         let combine = Observable.combineLatest(oneStr, pics, phone, feedbacktype, feedbacksubtype)

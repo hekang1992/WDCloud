@@ -136,9 +136,10 @@ class SearchMonitoringViewController: WDBaseViewController {
             getSearchListInfo(from: self.searchTx.text ?? "")
         })
         //查询监控分组
-        getMonitoringGroupInfo()
-        DispatchQueue.main.async {
-            self.searchTx.becomeFirstResponder()
+        getMonitoringGroupInfo { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                self?.searchTx.becomeFirstResponder()
+            }
         }
     }
     
@@ -202,7 +203,7 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
     }
     
     //查询监控分组
-    func getMonitoringGroupInfo() {
+    func getMonitoringGroupInfo(complete: @escaping () -> Void) {
         let man = RequestManager()
         ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
@@ -220,6 +221,7 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
             case .failure(_):
                 break
             }
+            complete()
         }
     }
     

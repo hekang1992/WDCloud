@@ -138,16 +138,43 @@ class MonitoringSolutionViewController: WDBaseViewController {
             guard let self = self else { return }
             self.selectArray.accept(modelArray)
         }).disposed(by: disposeBag)
-        
         //确定
         self.selectArray.asObservable().subscribe(onNext: { [weak self] modelArray in
+            var listArray: [String] = []
             guard let self = self, let modelArray = modelArray else { return }
-            let add = modelArray
-            print("=============")
+            for model in modelArray {
+                for model in model.items ?? [] {
+                    let select = model.select ?? ""
+                    listArray.append(select)
+                }
+            }
+            updateInfo(from: listArray)
         }).disposed(by: disposeBag)
         
         //获取用户监控设置
         getUserSettingInfo()
+    }
+    
+    //更新监控方案
+    private func updateInfo(from listArray: [String]) {
+        let liststr = listArray.joined()
+        let man = RequestManager()
+        let dict = ["pushOffset": liststr]
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-config/updateRiskMonitorConfig",
+                       method: .post) { result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    ToastViewConfig.showToast(message: "更新监控方案成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

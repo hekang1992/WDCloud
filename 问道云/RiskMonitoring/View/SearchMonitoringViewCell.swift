@@ -99,7 +99,7 @@ class SearchMonitoringViewCell: BaseViewCell {
         namelabel.snp.makeConstraints { make in
             make.centerY.equalTo(ctImageView.snp.centerY)
             make.left.equalTo(ctImageView.snp.right).offset(4)
-            make.right.equalToSuperview().offset(-110)
+            make.right.equalToSuperview().offset(-115)
         }
         addBtn.snp.makeConstraints { make in
             make.centerY.equalTo(ctImageView.snp.centerY)
