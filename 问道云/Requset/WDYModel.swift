@@ -684,7 +684,9 @@ class rowsModel {
     var monitorFlag: String?//是否被监控0未监控 1已监控
     var riskMonitorPersonDtoList: [personnelModel]?//搜索监控企业
     var positions: [personnelModel]?//搜索监控企业
+    var logoColor: String?//背景色
     init(json: JSON) {
+        self.logoColor = json["logoColor"].stringValue
         self.groupId = json["groupId"].stringValue
         self.monitorFlag = json["monitorFlag"].stringValue
         self.positions = json["positions"].arrayValue.map { personnelModel(json: $0) }

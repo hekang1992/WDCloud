@@ -16,7 +16,7 @@ class MonitoringCell: BaseViewCell {
             
             let orgName = model.orgName ?? ""
             
-            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (30, 30)))
+            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (30, 30), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             namelabel.text = orgName
             
             tagLabel.text = model.groupName ?? ""
