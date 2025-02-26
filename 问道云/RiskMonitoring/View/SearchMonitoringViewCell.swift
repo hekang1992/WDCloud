@@ -9,6 +9,9 @@ import UIKit
 
 class SearchMonitoringViewCell: BaseViewCell {
     
+    //返回点击的人员监控信息
+    var block: ((riskMonitorPersonDtoListModel, MonitoringListView) -> Void)?
+    
     var menuBlock: ((UIButton) -> Void)?
     
     var addBlock: ((UIButton) -> Void)?
@@ -74,13 +77,13 @@ class SearchMonitoringViewCell: BaseViewCell {
     
     lazy var oneListView: AddMonitoringListView = {
         let oneListView = AddMonitoringListView()
-        oneListView.titleLabel.text = "企业受益人/实控人/大股东/董监高/法人"
+//        oneListView.titleLabel.text = "企业受益人/实控人/大股东/董监高/法人"
         return oneListView
     }()
     
     lazy var twoListView: AddMonitoringListView = {
         let twoListView = AddMonitoringListView()
-        twoListView.titleLabel.text = "企业高管"
+//        twoListView.titleLabel.text = "企业高管"
         return twoListView
     }()
     
@@ -143,23 +146,19 @@ extension SearchMonitoringViewCell {
     }
     
     func configure(with model: rowsModel) {
-//        //企业法人
-//        let seniorexecutiveArray = model.seniorexecutive ?? []
-//        //企业高管
-//        let personnelArray = model.personnel ?? []
-//        
-//        if !seniorexecutiveArray.isEmpty {
-//            oneListView.modelArray = seniorexecutiveArray
-//            stackView.addArrangedSubview(oneListView)
-//        } else {
-//            oneListView.removeFromSuperview()
-//        }
-//        if !personnelArray.isEmpty {
-//            twoListView.modelArray = personnelArray
-//            stackView.addArrangedSubview(twoListView)
-//        } else {
-//            twoListView.removeFromSuperview()
-//        }
+        //描述文字
+        let positions = model.positions ?? []
+        let riskMonitorPersonDtoList = model.riskMonitorPersonDtoList ?? []
+        oneListView.titleLabel.text = positions.joined(separator: ",")
+        if !riskMonitorPersonDtoList.isEmpty {
+            oneListView.modelArray = riskMonitorPersonDtoList
+            stackView.addArrangedSubview(oneListView)
+        }else {
+            oneListView.removeFromSuperview()
+        }
+        oneListView.block = { [weak self] model, listView in
+            self?.block?(model, listView)
+        }
     }
     
 }

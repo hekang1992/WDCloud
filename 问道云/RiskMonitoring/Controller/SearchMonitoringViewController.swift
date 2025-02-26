@@ -280,6 +280,11 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
             guard let self = self else { return }
             self.addMonitoringCompanyInfo(from: model)
         }
+        //添加监控人员
+        cell.block = { [weak self] peopleModel, listView in
+            guard let self = self else { return }
+            self.addMonitoringPeopleInfo(from: model, peopleModel: peopleModel, listView: listView)
+        }
         cell.model = model
         return cell
     }
@@ -301,10 +306,8 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
         self.present(alertVc, animated: true)
     }
     
-    //添加监控企业
+    //添加企业监控
     private func addMonitoringCompanyInfo(from model: rowsModel) {
-        //        let persons = (model.riskMonitorPersonDtoList?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? []) +
-        //        (model.positions?.filter { !$0.isClickMonitoring }.compactMap { $0.name } ?? [])
         let entityid = model.orgId ?? ""
         let firmname = model.orgName ?? ""
         let groupnumber = self.groupnumber ?? ""
@@ -332,6 +335,32 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
             }
         }
     }
+    
+    //取消企业监控
+    
+    //添加人员监控
+    private func addMonitoringPeopleInfo(from model: rowsModel, peopleModel: riskMonitorPersonDtoListModel, listView: MonitoringListView) {
+        let personId = peopleModel.personId ?? ""
+        let customerId = GetSaveLoginInfoConfig.getCustomerNumber()
+        let groupId = self.groupnumber ?? ""
+        let man = RequestManager()
+        let dict = ["personId": personId, "customerId": customerId, "groupId": groupId]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
+                       method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    
+                }
+                break
+            case .failure(let failure):
+                break
+            }
+        }
+    }
+    
+    //取消人员监控
     
 }
 

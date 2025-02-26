@@ -10,21 +10,27 @@ import RxRelay
 
 class AddMonitoringListView: BaseView {
     
-    var modelArray: [personnelModel]? {
+    var block: ((riskMonitorPersonDtoListModel, MonitoringListView) -> Void)?
+    
+    var modelArray: [riskMonitorPersonDtoListModel]? {
         didSet {
             guard let modelArray = modelArray else { return }
             stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
             for model in modelArray {
                 let listView = MonitoringListView()
-                listView.nameLabel.text = model.name ?? ""
-                listView.tagsLabel.text = model.type ?? ""
-                listView.checkButton.isSelected = !model.isClickMonitoring
+                listView.nameLabel.text = model.personName ?? ""
+                listView.tagsLabel.text = model.positions?.joined(separator: ",")
+                listView.checkButton.isSelected = model.isClickMonitoring
                 listView.setContentHuggingPriority(.defaultLow, for: .vertical)
                 stackView.addArrangedSubview(listView)
-                listView.checkButton.rx.tap.subscribe(onNext: {
-                    model.isClickMonitoring.toggle()
-                    listView.checkButton.isSelected = !model.isClickMonitoring
+                listView.checkButton.rx.tap.subscribe(onNext: { [weak self] in
+                    guard let self = self else { return }
+                    self.block?(model, listView)
                 }).disposed(by: disposeBag)
+//                listView.checkButton.rx.tap.subscribe(onNext: {
+//                    model.isClickMonitoring.toggle()
+//                    listView.checkButton.isSelected = model.isClickMonitoring
+//                }).disposed(by: disposeBag)
             }
         }
     }
@@ -94,7 +100,7 @@ class MonitoringListView: UIView {
         checkButton.setImage(UIImage(named: "addjiankongqiye"), for: .selected)
         checkButton.setImage(UIImage(named: "agreenorimage"), for: .normal)
         checkButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        checkButton.contentEdgeInsets = UIEdgeInsets(top: -15, left: -15, bottom: -15, right: -15)
+        checkButton.contentEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
         return checkButton
     }()
     
@@ -107,14 +113,14 @@ class MonitoringListView: UIView {
         nameLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.verticalEdges.equalToSuperview()
-            make.width.equalTo(50)
-            make.height.equalTo(16)
+            make.width.equalTo(150)
+            make.height.equalTo(20)
         }
         
         checkButton.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-5)
             make.centerY.equalToSuperview()
-            make.size.equalTo(15)
+            make.size.equalTo(20)
         }
         
         tagsLabel.snp.makeConstraints { make in

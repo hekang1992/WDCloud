@@ -347,8 +347,8 @@ class itemsModel {
     var risktime: String?
     var riskdynamicid: String?
     var subitems: [subitemsModel]?
-    var riskMonitorPersonDtoList: [personnelModel]?//搜索监控企业
-    var positions: [personnelModel]?//搜索监控企业
+    var riskMonitorPersonDtoList: [riskMonitorPersonDtoListModel]?//搜索监控企业
+    var positions: [riskMonitorPersonDtoListModel]?//搜索监控企业
     var firstate: String?
     var riskSumup: Int?
     var high_risk: Int?
@@ -432,8 +432,8 @@ class itemsModel {
         self.riskSumup = json["riskSumup"].intValue
         self.firstate = json["firstate"].stringValue
         self.entity_id = json["entity_id"].stringValue
-        self.positions = json["positions"].arrayValue.map { personnelModel(json: $0) }
-        self.riskMonitorPersonDtoList = json["riskMonitorPersonDtoList"].arrayValue.map { personnelModel(json: $0) }
+        self.positions = json["positions"].arrayValue.map { riskMonitorPersonDtoListModel(json: $0) }
+        self.riskMonitorPersonDtoList = json["riskMonitorPersonDtoList"].arrayValue.map { riskMonitorPersonDtoListModel(json: $0) }
         self.riskdynamicid = json["riskdynamicid"].stringValue
         self.risktime = json["risktime"].stringValue
         self.entity_name = json["entity_name"].stringValue
@@ -488,13 +488,19 @@ class riskDataModel {
     }
 }
 
-class personnelModel {
-    var name: String?
-    var type: String?
+class riskMonitorPersonDtoListModel {
+    var monitorFlag: String?
+    var personName: String?
+    var personId: String?
+    var logoColor: String?
+    var positions: [String]?
     var isClickMonitoring: Bool//自定义,是否点击了☑️按钮
     init(json: JSON) {
-        self.name = json["name"].stringValue
-        self.type = json["type"].stringValue
+        self.monitorFlag = json["monitorFlag"].stringValue
+        self.personName = json["personName"].stringValue
+        self.personId = json["personId"].stringValue
+        self.logoColor = json["logoColor"].stringValue
+        self.positions = json["positions"].arrayValue.map { $0.stringValue }
         self.isClickMonitoring = json["isClickMonitoring"].boolValue
     }
 }
@@ -682,15 +688,15 @@ class rowsModel {
     var totalTipRiskCnt: Int?
     var recentRisk: String?
     var monitorFlag: String?//是否被监控0未监控 1已监控
-    var riskMonitorPersonDtoList: [personnelModel]?//搜索监控企业
-    var positions: [personnelModel]?//搜索监控企业
+    var riskMonitorPersonDtoList: [riskMonitorPersonDtoListModel]?//搜索监控企业
+    var positions: [String]?//搜索监控企业
     var logoColor: String?//背景色
     init(json: JSON) {
         self.logoColor = json["logoColor"].stringValue
         self.groupId = json["groupId"].stringValue
         self.monitorFlag = json["monitorFlag"].stringValue
-        self.positions = json["positions"].arrayValue.map { personnelModel(json: $0) }
-        self.riskMonitorPersonDtoList = json["riskMonitorPersonDtoList"].arrayValue.map { personnelModel(json: $0) }
+        self.positions = json["positions"].arrayValue.map { $0.stringValue }
+        self.riskMonitorPersonDtoList = json["riskMonitorPersonDtoList"].arrayValue.map { riskMonitorPersonDtoListModel(json: $0) }
         self.recentRisk = json["recentRisk"].stringValue
         self.curHighRiskCnt = json["curHighRiskCnt"].intValue
         self.curLowRiskCnt = json["curLowRiskCnt"].intValue
