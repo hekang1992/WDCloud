@@ -314,45 +314,95 @@ extension MonitoringSolutionViewController: UITableViewDelegate, UITableViewData
 extension MonitoringSolutionViewController {
     
     private func getUserSettingInfo() {
-        let itemJson1: JSON = [["name": "高风险", "select": "1"],
-                               ["name": "低风险", "select": "1"],
-                               ["name": "提示", "select": "1"]]
-        let json1: JSON = ["name": "经营风险",
-                           "select": "1",
-                           "items": itemJson1]
-        let propertyTypeSettingModel1 = propertyTypeSettingModel(json: json1)
-        
-        let itemJson2: JSON = [["name": "高风险", "select": "1"],
-                               ["name": "低风险", "select": "1"],
-                               ["name": "提示", "select": "1"]]
-        let json2: JSON = ["name": "法律风险",
-                           "select": "1",
-                           "items": itemJson2]
-        let propertyTypeSettingModel2 = propertyTypeSettingModel(json: json2)
-        
-        let itemJson3: JSON = [["name": "高风险", "select": "1"],
-                               ["name": "低风险", "select": "1"],
-                               ["name": "提示", "select": "1"]]
-        let json3: JSON = ["name": "财务风险",
-                           "select": "1",
-                           "items": itemJson3]
-        let propertyTypeSettingModel3 = propertyTypeSettingModel(json: json3)
-        
-        let itemJson4: JSON = [["name": "高风险", "select": "1"],
-                               ["name": "低风险", "select": "1"],
-                               ["name": "提示", "select": "1"]]
-        let json4: JSON = ["name": "舆情风险",
-                           "select": "1",
-                           "items": itemJson4]
-        let propertyTypeSettingModel4 = propertyTypeSettingModel(json: json4)
-        
-        
-        self.modelArray = [propertyTypeSettingModel1,
-                           propertyTypeSettingModel2,
-                           propertyTypeSettingModel3,
-                           propertyTypeSettingModel4]
-        self.tableView1.reloadData()
-        
+        let dict = [String: Any]()
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-config/getRiskMonitorConfig",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    guard let self = self, let model = success.data else { return }
+                    let pushOffset = model.pushOffset ?? ""
+                    let numberArray = pushOffset.compactMap { String($0) }
+                    let itemJson1: JSON = [["name": "高风险", "select": numberArray[0]],
+                                           ["name": "低风险", "select": numberArray[1]],
+                                           ["name": "提示", "select": numberArray[2]]]
+                    var select1 = "0"
+                    if numberArray[0] == "0" ||
+                        numberArray[1] == "0" ||
+                        numberArray[2] == "0"{
+                        select1 = "0"
+                    }else {
+                        select1 = "1"
+                    }
+                    let json1: JSON = ["name": "经营风险",
+                                       "select": select1,
+                                       "items": itemJson1]
+                    let propertyTypeSettingModel1 = propertyTypeSettingModel(json: json1)
+                    
+                    var select2 = "0"
+                    if numberArray[3] == "0" ||
+                        numberArray[4] == "0" ||
+                        numberArray[5] == "0"{
+                        select2 = "0"
+                    }else {
+                        select2 = "1"
+                    }
+                    let itemJson2: JSON = [["name": "高风险", "select": numberArray[3]],
+                                           ["name": "低风险", "select": numberArray[4]],
+                                           ["name": "提示", "select": numberArray[5]]]
+                    let json2: JSON = ["name": "法律风险",
+                                       "select": select2,
+                                       "items": itemJson2]
+                    let propertyTypeSettingModel2 = propertyTypeSettingModel(json: json2)
+                    
+                    var select3 = "0"
+                    if numberArray[6] == "0" ||
+                        numberArray[7] == "0" ||
+                        numberArray[8] == "0"{
+                        select3 = "0"
+                    }else {
+                        select3 = "1"
+                    }
+                    let itemJson3: JSON = [["name": "高风险", "select": numberArray[6]],
+                                           ["name": "低风险", "select": numberArray[7]],
+                                           ["name": "提示", "select": numberArray[8]]]
+                    let json3: JSON = ["name": "财务风险",
+                                       "select": select3,
+                                       "items": itemJson3]
+                    let propertyTypeSettingModel3 = propertyTypeSettingModel(json: json3)
+                    
+                    var select4 = "0"
+                    if numberArray[9] == "0" ||
+                        numberArray[10] == "0" ||
+                        numberArray[11] == "0"{
+                        select4 = "0"
+                    }else {
+                        select4 = "1"
+                    }
+                    let itemJson4: JSON = [["name": "高风险", "select": numberArray[9]],
+                                           ["name": "低风险", "select": numberArray[10]],
+                                           ["name": "提示", "select": numberArray[11]]]
+                    let json4: JSON = ["name": "舆情风险",
+                                       "select": select4,
+                                       "items": itemJson4]
+                    let propertyTypeSettingModel4 = propertyTypeSettingModel(json: json4)
+                    
+                    self.modelArray = [propertyTypeSettingModel1,
+                                       propertyTypeSettingModel2,
+                                       propertyTypeSettingModel3,
+                                       propertyTypeSettingModel4]
+                    self.tableView1.reloadData()
+                    self.tableView2.reloadData()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

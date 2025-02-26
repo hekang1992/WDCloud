@@ -9,6 +9,8 @@ import UIKit
 
 class PopMonitoringGroupView: BaseView {
     
+    var selectedIndexPath: IndexPath? = IndexPath(row: 0, section: 0)
+    
     var block: ((rowsModel) -> Void)?
 
     var groupArray: [rowsModel]? {
@@ -91,17 +93,23 @@ extension PopMonitoringGroupView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = self.groupArray?[indexPath.row]
+        guard let model = self.groupArray?[indexPath.row] else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
         cell.textLabel?.textAlignment = .center
-        cell.textLabel?.text = (model?.groupName ?? "").isEmpty ? (model?.groupname ?? "") : (model?.groupName ?? "")
+        cell.textLabel?.text = (model.groupName ?? "").isEmpty ? (model.groupname ?? "") : (model.groupName ?? "")
         cell.textLabel?.font = .mediumFontOfSize(size: 15)
         cell.selectionStyle = .none
+        if let selectedIndexPath = selectedIndexPath, selectedIndexPath == indexPath {
+            cell.textLabel?.textColor = .init(cssStr: "#547AFF")
+        }else {
+            cell.textLabel?.textColor = .black
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let model = self.groupArray?[indexPath.row] {
+            selectedIndexPath = indexPath
             self.block?(model)
         }
     }

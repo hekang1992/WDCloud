@@ -142,7 +142,9 @@ class DataModel {
     var LIST_SECTOR: [itemsModel]?//上市板块
     var REGION: [rowsModel]?//地区
     var INDUSTRY: [rowsModel]?//行业
+    var pushOffset: String?
     init(json: JSON) {
+        self.pushOffset = json["pushOffset"].stringValue
         self.INDUSTRY = json["INDUSTRY"].arrayValue.map { rowsModel(json: $0) }
         self.REGION = json["REGION"].arrayValue.map { rowsModel(json: $0) }
         self.LIST_SECTOR = json["LIST_SECTOR"].arrayValue.map { itemsModel(json: $0) }
@@ -863,13 +865,32 @@ class pageDataModel {
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
     var labels: [labelsModel]?
     var followStatus: String?//是否被关注
+    var orgInfo: orgInfoModel?
     init(json: JSON) {
+        self.orgInfo = orgInfoModel(json: json["orgInfo"])
         self.followStatus = json["followStatus"].stringValue
         self.searchStr = json["searchStr"].stringValue
         self.firmInfo = firmInfoModel(json: json["firmInfo"])
         self.legalPerson = legalPersonModel(json: json["legalPerson"])
         self.riskInfo = riskInfoModel(json: json["riskInfo"])
         self.labels = json["labels"].arrayValue.map { labelsModel(json: $0) }
+    }
+}
+
+class orgInfoModel {
+    var incDate: String?
+    var orgId: String?
+    var orgName: String?
+    var regCap: String?
+    var regStatusLabel: String?
+    var logo: String?
+    init(json: JSON) {
+        self.logo = json["logo"].stringValue
+        self.incDate = json["incDate"].stringValue
+        self.orgId = json["orgId"].stringValue
+        self.orgName = json["orgName"].stringValue
+        self.regCap = json["regCap"].stringValue
+        self.regStatusLabel = json["regStatusLabel"].stringValue
     }
 }
 

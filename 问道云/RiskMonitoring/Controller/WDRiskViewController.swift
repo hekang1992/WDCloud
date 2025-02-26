@@ -177,7 +177,10 @@ extension WDRiskViewController: JXSegmentedViewDelegate {
         self.selectIndex = index
         if index == 0 {
             let oneVc = listVCArray[0] as!DailyReportViewController
-            oneVc.getListInfo()
+            if IS_LOGIN {
+                oneVc.pageNum = 1
+                oneVc.getListInfo()
+            }
         }else if index == 1 {
             
         }else if index == 2 {

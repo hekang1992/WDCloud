@@ -182,9 +182,8 @@ class MonitoringCell: BaseViewCell {
             make.size.equalTo(CGSize(width: 30, height: 30))
         }
         namelabel.snp.makeConstraints { make in
-            make.centerY.equalTo(ctImageView.snp.centerY)
+            make.top.equalTo(ctImageView.snp.top)
             make.left.equalTo(ctImageView.snp.right).offset(4)
-            make.height.equalTo(21)
         }
         moreBtn.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-14.5)
@@ -192,14 +191,14 @@ class MonitoringCell: BaseViewCell {
             make.size.equalTo(CGSize(width: 18, height: 18))
         }
         tagLabel.snp.makeConstraints { make in
-            make.left.equalTo(namelabel.snp.right).offset(6.5)
-            make.centerY.equalTo(namelabel.snp.centerY)
+            make.left.equalTo(namelabel.snp.left)
+            make.top.equalTo(namelabel.snp.bottom).offset(4)
             make.height.equalTo(15)
         }
         timeLabel.snp.makeConstraints { make in
-            make.top.equalTo(namelabel.snp.bottom).offset(6)
+            make.top.equalTo(tagLabel.snp.bottom).offset(6)
             make.left.equalTo(namelabel.snp.left)
-            make.size.equalTo(CGSize(width: 58, height: 17))
+            make.size.equalTo(CGSize(width: 58.pix(), height: 17))
         }
         timeDetailLabel.snp.makeConstraints { make in
             make.centerY.equalTo(timeLabel.snp.centerY)
@@ -209,7 +208,7 @@ class MonitoringCell: BaseViewCell {
         todayLabel.snp.makeConstraints { make in
             make.top.equalTo(timeLabel.snp.bottom).offset(4)
             make.left.equalTo(namelabel.snp.left)
-            make.size.equalTo(CGSize(width: 88, height: 17))
+            make.size.equalTo(CGSize(width: 88.pix(), height: 17))
         }
         numLabel.snp.makeConstraints { make in
             make.centerY.equalTo(todayLabel.snp.centerY)

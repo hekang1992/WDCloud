@@ -10,6 +10,7 @@ import MJRefresh
 import TYAlertController
 import RxRelay
 import RxSwift
+import SwiftyJSON
 
 class DailyReportViewController: WDBaseViewController {
     
@@ -92,23 +93,19 @@ class DailyReportViewController: WDBaseViewController {
         }
         
         let combine = Observable.combineLatest(companyModel, peopleModel)
-        combine.map { companyModel, peopleModel in
-            let companyTotal = companyModel?.total ?? 0
-            let peopleTotal = peopleModel?.total ?? 0
-            let gurad = (companyTotal != 0) || (peopleTotal != 0)
-            return gurad
-        }
-        .bind(to: noMonitoringView.rx.isHidden)
-        .disposed(by: disposeBag)
+            .map { companyModel, peopleModel in
+                let companyTotal = companyModel?.total ?? 0
+                let peopleTotal = peopleModel?.total ?? 0
+                return (companyTotal != 0) || (peopleTotal != 0)
+            }
         
-        combine.map { companyModel, peopleModel in
-            let companyTotal = companyModel?.total ?? 0
-            let peopleTotal = peopleModel?.total ?? 0
-            let gurad = (companyTotal != 0) || (peopleTotal != 0)
-            return !gurad
-        }
-        .bind(to: monitoringView.rx.isHidden)
-        .disposed(by: disposeBag)
+        combine
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] gurad in
+                self?.noMonitoringView.isHidden = gurad
+                self?.monitoringView.isHidden = !gurad
+            }
+            .disposed(by: disposeBag)
         
         monitoringView.companyBlock = { [weak self] btn in
             guard let self = self else { return }
@@ -186,7 +183,6 @@ class DailyReportViewController: WDBaseViewController {
     }
     
 }
-
 
 extension DailyReportViewController {
     
@@ -352,13 +348,13 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
                 guard let self = self else { return }
                 self.popGroupView(from: groupBtn)
             }).disposed(by: disposeBag)
-            groupBtn.setTitleColor(.init(cssStr: "#666666"), for: .normal)
+            groupBtn.setTitleColor(.init(cssStr: "#547AFF"), for: .normal)
             groupBtn.titleLabel?.font = .regularFontOfSize(size: 10)
             groupBtn.setImage(UIImage(named: "downgrayimge"), for: .normal)
             headView.addSubview(groupBtn)
             groupBtn.snp.makeConstraints { make in
                 make.left.equalTo(SCREEN_WIDTH - 62)
-                make.size.equalTo(CGSize(width: 52, height: 14))
+                make.height.equalTo(14.pix())
                 make.centerY.equalTo(twoLabel.snp.centerY)
             }
             groupBtn.layoutButtonEdgeInsets(style: .right, space: 2)
@@ -425,8 +421,12 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     private func popGroupView(from menuBtn: UIButton) {
+        var groupArray: [rowsModel] = self.groupModel.value?.rows ?? []
         let alertVc = TYAlertController(alert: groupView, preferredStyle: .actionSheet)!
-        groupView.groupArray = self.groupModel.value?.rows ?? []
+        let json: JSON = ["groupName": "全部分组", "id": ""]
+        let model = rowsModel(json: json)
+        groupArray.insert(model, at: 0)
+        groupView.groupArray = groupArray
         groupView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.dismiss(animated: true)
         }).disposed(by: disposeBag)

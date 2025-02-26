@@ -137,8 +137,8 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
                     "matchType": 1] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/company/search",
-                       method: .post) { [weak self] result in
+                       pageUrl: "/entity/v2/org-list",
+                       method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
@@ -223,10 +223,10 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
     
     private func startDueDiligence(form model: pageDataModel) {
         ViewHud.addLoadView()
-        let firmnumber = model.firmInfo?.entityId ?? ""
-        let firmname = model.firmInfo?.entityName ?? ""
-        let registeredcapital = model.firmInfo?.registeredcapital ?? ""
-        let firmstate = model.firmInfo?.entityStatusLabel ?? ""
+        let firmnumber = model.orgInfo?.orgId ?? ""
+        let firmname = model.orgInfo?.orgName ?? ""
+        let registeredcapital = model.orgInfo?.regCap ?? ""
+        let firmstate = model.orgInfo?.regStatusLabel ?? ""
         let legalperson = model.legalPerson?.legalName ?? ""
         let ddnumber = ddNumber
         let entitystatus = model.labels?.first?.name ?? ""

@@ -52,7 +52,7 @@ class SearchMonitoringViewController: WDBaseViewController {
     
     lazy var descImageView: UIImageView = {
         let descImageView = UIImageView()
-        descImageView.image = UIImage(named: "miaoshiuriskomn")
+//        descImageView.image = UIImage(named: "miaoshiuriskomn")
         return descImageView
     }()
     
@@ -93,7 +93,7 @@ class SearchMonitoringViewController: WDBaseViewController {
         view.addSubview(cycleView)
         cycleView.addSubview(ctImageView)
         cycleView.addSubview(searchTx)
-        view.addSubview(descImageView)
+//        view.addSubview(descImageView)
         view.addSubview(tableView)
         cycleView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -112,15 +112,16 @@ class SearchMonitoringViewController: WDBaseViewController {
             make.right.equalToSuperview().offset(-4)
             make.left.equalTo(ctImageView.snp.right).offset(10)
         }
-        descImageView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-17)
-            make.size.equalTo(CGSize(width: 337, height: 79))
-        }
+//        descImageView.snp.makeConstraints { make in
+//            make.centerX.equalToSuperview()
+//            make.bottom.equalToSuperview().offset(-17)
+//            make.size.equalTo(CGSize(width: 337, height: 79))
+//        }
         tableView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(cycleView.snp.bottom).offset(2)
-            make.bottom.equalTo(descImageView.snp.top).offset(-2)
+            make.bottom.equalToSuperview().offset(-2)
+//            make.bottom.equalTo(descImageView.snp.top).offset(-2)
         }
         
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
@@ -136,6 +137,9 @@ class SearchMonitoringViewController: WDBaseViewController {
         })
         //查询监控分组
         getMonitoringGroupInfo()
+        DispatchQueue.main.async {
+            self.searchTx.becomeFirstResponder()
+        }
     }
     
 }

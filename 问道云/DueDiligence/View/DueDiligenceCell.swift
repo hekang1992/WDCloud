@@ -159,13 +159,13 @@ class DueDiligenceCell: BaseViewCell {
         
         model.asObservable()
             .subscribe(onNext: { [weak self] model in
-            guard let self = self, let model = model else { return }
-                let name = model.firmInfo?.entityName ?? ""
-                logoImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (32, 32)))
+                guard let self = self, let model = model?.orgInfo else { return }
+                let name = model.orgName ?? ""
+                logoImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (32, 32)))
                 namelabel.text = name
-                peoplelabel.text = model.legalPerson?.legalName ?? ""
+                peoplelabel.text = "--"
                 numlabel.text = "--"
-                timelabel.text = model.firmInfo?.incorporationTime ?? ""
+                timelabel.text = model.incDate ?? ""
         }).disposed(by: disposeBag)
     }
     

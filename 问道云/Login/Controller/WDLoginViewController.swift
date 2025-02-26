@@ -58,11 +58,10 @@ class WDLoginViewController: WDBaseViewController {
         loginView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.oneLogin()
         }).disposed(by: disposeBag)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        loginView.phoneTx.becomeFirstResponder()
+        
+        DispatchQueue.main.async {
+            self.loginView.phoneTx.becomeFirstResponder()
+        }
     }
     
 }
