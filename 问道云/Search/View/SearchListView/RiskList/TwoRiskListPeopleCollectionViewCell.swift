@@ -78,7 +78,7 @@ class TwoRiskListPeopleCollectionViewCell: UICollectionViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             
-            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (35, 35), bgColor: .random(), textColor: .white))
+            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (35, 35)))
             
             namelabel.text = model.name ?? ""
             

@@ -133,7 +133,7 @@ class TwoPeopleSpecListCell: BaseViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             
-            self.ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.personName ?? "", size: (40, 40), bgColor: .random(), textColor: .white))
+            self.ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.personName ?? "", size: (40, 40)))
             
             nameLabel.text = model.personName ?? ""
             

@@ -82,7 +82,7 @@ class HistoryListViewCell: BaseViewCell {
                 namelabel.text = personname
             }
             timelabel.text = model.createhourtime
-            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (24, 24), bgColor: .random(), textColor: .white))
+            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (24, 24)))
         }).disposed(by: disposeBag)
         
     }

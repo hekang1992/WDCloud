@@ -120,7 +120,7 @@ class GroupListViewCell: BaseViewCell {
             guard let self = self, let model = model else { return }
             let name = model.name ?? ""
             let username = model.username ?? ""
-            iconImageView.image = UIImage.imageOfText(name, size: (30, 30), bgColor: .random(), textColor: .white)
+            iconImageView.image = UIImage.imageOfText(name, size: (30, 30))
             let phoneNumStr = GetSaveLoginInfoConfig.getPhoneNumber()
             phonelabel.text = PhoneNumberFormatter.formatPhoneNumber(phoneNumber: username)
             if phoneNumStr == username {

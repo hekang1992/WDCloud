@@ -237,7 +237,7 @@ class PopChangePeopleView: BaseView {
             guard let self = self, let model = model else { return }
             let name = model.name ?? ""
             let username = model.username ?? ""
-            iconImageView.image = UIImage.imageOfText(name, size: (30, 30), bgColor: .random(), textColor: .white)
+            iconImageView.image = UIImage.imageOfText(name, size: (30, 30))
             phonelabel.text = PhoneNumberFormatter.formatPhoneNumber(phoneNumber: username)
         }).disposed(by: disposeBag)
         

@@ -134,7 +134,7 @@ class TwoRiskListOnlyPeopleCell: BaseViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             
-            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (40, 40), bgColor: .random(), textColor: .white))
+            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (40, 40)))
             
             //匹配文字
             self.nameLabel.attributedText = TextStyler.styledText(for: model.name ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)

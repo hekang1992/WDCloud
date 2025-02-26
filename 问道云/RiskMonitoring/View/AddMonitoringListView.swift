@@ -27,10 +27,6 @@ class AddMonitoringListView: BaseView {
                     guard let self = self else { return }
                     self.block?(model, listView)
                 }).disposed(by: disposeBag)
-//                listView.checkButton.rx.tap.subscribe(onNext: {
-//                    model.isClickMonitoring.toggle()
-//                    listView.checkButton.isSelected = model.isClickMonitoring
-//                }).disposed(by: disposeBag)
             }
         }
     }

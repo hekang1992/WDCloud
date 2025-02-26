@@ -73,7 +73,7 @@ class SearchFocusCell: BaseViewCell {
         
         model.subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model  else { return }
-            self.icon.image = UIImage.imageOfText(model.entityName ?? "", size: (20, 20), bgColor: .random(), textColor: .white, cornerRadius: 2)
+            self.icon.image = UIImage.imageOfText(model.entityName ?? "", size: (20, 20), bgColor: .random())
             self.nameLabel.text = model.entityName
             if model.follow == false {
                 self.focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)

@@ -112,7 +112,7 @@ class FocusCompanyEditViewCell: BaseViewCell {
             if let logo = model.logo, !logo.isEmpty, logo != "null" {
                 ctImageView.kf.setImage(with: URL(string: logo))
             }else {
-                ctImageView.image = UIImage.imageOfText(model.followtargetname ?? "", size: (24, 24), cornerRadius: 2)
+                ctImageView.image = UIImage.imageOfText(model.followtargetname ?? "", size: (24, 24))
             }
         }).disposed(by: disposeBag)
     }

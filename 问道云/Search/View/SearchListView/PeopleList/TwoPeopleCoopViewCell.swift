@@ -97,7 +97,7 @@ class TwoPeopleCoopViewCell: UICollectionViewCell {
         
         model1.subscribe(onNext: { [weak self] data in
             guard let self = self, let data = data else { return }
-            self.icon.kf.setImage(with: URL(string: ""), placeholder: UIImage.imageOfText(data.personName ?? "", size: (26, 26), bgColor: .random(), textColor: .white))
+            self.icon.kf.setImage(with: URL(string: ""), placeholder: UIImage.imageOfText(data.personName ?? "", size: (26, 26)))
             self.nameLabel.text = data.personName ?? ""
             
             let companyCountText = String(data.count ?? 0)

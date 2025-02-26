@@ -256,7 +256,7 @@ class TwoCompanySpecListCell: BaseViewCell {
         }
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            self.ctImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(model.firmInfo?.entityName ?? "", size: (32, 32), bgColor: .random(), textColor: .white))
+            self.ctImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(model.firmInfo?.entityName ?? "", size: (32, 32)))
            
             self.nameLabel.attributedText = TextStyler.styledText(for: model.firmInfo?.entityName ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
             

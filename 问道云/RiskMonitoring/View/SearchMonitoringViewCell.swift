@@ -19,7 +19,8 @@ class SearchMonitoringViewCell: BaseViewCell {
     var model: rowsModel? {
         didSet {
             guard let model = model else { return }
-            ctImageView.image = UIImage.imageOfText(model.orgName ?? "", size: (24, 24), cornerRadius: 2)
+            let color = UIColor.init(cssStr: model.logoColor ?? "")!
+            ctImageView.image = UIImage.imageOfText(model.orgName ?? "", size: (24, 24), bgColor: color)
             namelabel.text = model.orgName ?? ""
             let monitorFlag = model.monitorFlag ?? ""
             if monitorFlag == "1" {

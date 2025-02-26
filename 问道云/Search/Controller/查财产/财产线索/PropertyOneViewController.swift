@@ -337,7 +337,7 @@ extension PropertyOneViewController: HGSegmentedPageViewControllerDelegate {
                 listView.nameLabel.text = model.personname ?? ""
             }
             listView.timeLabel.text = model.createhourtime ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22)))
             self.oneView.historyView.addSubview(listView)
             listView.snp.makeConstraints { make in
                 make.height.equalTo(40)
@@ -421,7 +421,7 @@ extension PropertyOneViewController: HGSegmentedPageViewControllerDelegate {
 //                self.pushWebPage(from: webUrl)
             }
             listView.nameLabel.text = model.name ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: .random(), textColor: .white))
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22)))
             self.oneView.hotWordsView.addSubview(listView)
             listView.snp.updateConstraints { make in
                 make.height.equalTo(40)

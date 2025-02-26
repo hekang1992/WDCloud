@@ -339,19 +339,25 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
     //取消企业监控
     
     //添加人员监控
-    private func addMonitoringPeopleInfo(from model: rowsModel, peopleModel: riskMonitorPersonDtoListModel, listView: MonitoringListView) {
+    private func addMonitoringPeopleInfo(from model: rowsModel,
+                                         peopleModel: riskMonitorPersonDtoListModel,
+                                         listView: MonitoringListView) {
         let personId = peopleModel.personId ?? ""
         let customerId = GetSaveLoginInfoConfig.getCustomerNumber()
         let groupId = self.groupnumber ?? ""
         let man = RequestManager()
-        let dict = ["personId": personId, "customerId": customerId, "groupId": groupId]
+        let dict = ["personId": personId,
+                    "customerId": customerId,
+                    "groupId": groupId]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    
+                    peopleModel.isClickMonitoring.toggle()
+                    listView.checkButton.isSelected = peopleModel.isClickMonitoring
                 }
                 break
             case .failure(let failure):
