@@ -2,7 +2,7 @@
 //  DonateMembershipViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2024/12/31.
+//  Created by Andrew on 2024/12/31.
 //  赠送会员页面
 
 import UIKit

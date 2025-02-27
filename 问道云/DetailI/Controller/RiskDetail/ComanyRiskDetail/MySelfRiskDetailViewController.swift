@@ -2,7 +2,7 @@
 //  MySelfRiskDetailViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2025/1/17.
+//  Created by Andrew on 2025/1/17.
 //  自身风险
 
 import UIKit
@@ -422,8 +422,6 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             timeView.tableView.reloadData()
             return timeView
         }
-        
-        
         getRiskDetailInfo()
     }
     
@@ -444,6 +442,11 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             label.layer.borderWidth = 1
             label.layer.borderColor = UIColor.init(cssStr: "#547AFF")?.cgColor
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("===================")
     }
     
 }

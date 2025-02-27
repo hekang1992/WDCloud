@@ -2,7 +2,7 @@
 //  OpenTicketViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2024/12/19.
+//  Created by Andrew on 2024/12/19.
 //  选择开票页面普票还是专票
 
 import UIKit

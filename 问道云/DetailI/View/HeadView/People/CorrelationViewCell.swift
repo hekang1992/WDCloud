@@ -2,7 +2,7 @@
 //  CorrelationViewCell.swift
 //  问道云
 //
-//  Created by 何康 on 2025/1/16.
+//  Created by Andrew on 2025/1/16.
 //
 
 import UIKit
@@ -50,6 +50,8 @@ class CorrelationViewCell: BaseViewCell {
     
     lazy var statusLabel: PaddedLabel = {
         let statusLabel = PaddedLabel()
+        statusLabel.layer.cornerRadius = 2.5
+        statusLabel.layer.masksToBounds = true
         statusLabel.font = .regularFontOfSize(size: 11)
         return statusLabel
     }()

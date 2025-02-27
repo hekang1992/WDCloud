@@ -2,22 +2,77 @@
 //  MonitoringCell.swift
 //  问道云
 //
-//  Created by 何康 on 2025/2/7.
+//  Created by Andrew on 2025/2/7.
 //  监控cell
 
 import UIKit
 
 class MonitoringCell: BaseViewCell {
     
-    var model: rowsModel? {
+    var companyModel: rowsModel? {
         didSet {
-            guard let model = model else { return }
+            guard let model = companyModel else { return }
             let logo = model.logo ?? ""
             
             let orgName = model.orgName ?? ""
             
             ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (30, 30), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             namelabel.text = orgName
+            
+            let orgStatus = model.orgStatus ?? ""
+            typeLabel.text = orgStatus
+            TagsLabelColorConfig.nameLabelColor(from: typeLabel)
+            
+            tagLabel.text = model.groupName ?? ""
+            
+            let startDate = model.startDate ?? ""
+            let endDate = model.endDate ?? ""
+            timeDetailLabel.text = "\(startDate)至\(endDate)"
+            
+            let total = model.totalRiskCnt ?? 0
+            let curTotal = model.curRiskCnt ?? 0
+            numLabel.text = "\(curTotal)/\(total)条"
+            
+            let total1 = model.totalHighRiskCnt ?? 0
+            let curTotal1 = model.curHighRiskCnt ?? 0
+            highLabel.text = "高风险\(curTotal1)/\(total1)"
+            
+            let total2 = model.totalLowRiskCnt ?? 0
+            let curTotal2 = model.curLowRiskCnt ?? 0
+            lowLabel.text = "低风险\(curTotal2)/\(total2)"
+            
+            let total3 = model.totalTipRiskCnt ?? 0
+            let curTotal3 = model.curTipRiskCnt ?? 0
+            hintLabel.text = "提示\(curTotal3)/\(total3)"
+            
+            let recentRisk = model.recentRisk ?? ""
+            riskLabel.text = !recentRisk.isEmpty ? recentRisk : "暂无动态"
+        }
+    }
+    
+    var peopleModel: rowsModel? {
+        didSet {
+            guard let model = peopleModel else { return }
+            let logo = model.logo ?? ""
+            
+//            let personName = model.personName ?? ""
+            let personName = "问道云"
+            
+            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(personName, size: (30, 30), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
+            namelabel.text = personName
+            
+            let orgStatus = model.orgStatus ?? ""
+            if orgStatus.isEmpty {
+                typeLabel.text = ""
+                typeLabel.isHidden = true
+                tagLabel.snp.makeConstraints { make in
+                    make.left.equalTo(namelabel.snp.left)
+                }
+            }else {
+                typeLabel.text = orgStatus
+                typeLabel.isHidden = false
+                TagsLabelColorConfig.nameLabelColor(from: typeLabel)
+            }
             
             tagLabel.text = model.groupName ?? ""
             
@@ -73,11 +128,21 @@ class MonitoringCell: BaseViewCell {
         return namelabel
     }()
     
+    lazy var typeLabel: PaddedLabel = {
+        let typeLabel = PaddedLabel()
+        typeLabel.layer.cornerRadius = 2.5
+        typeLabel.layer.masksToBounds = true
+        typeLabel.font = .regularFontOfSize(size: 10)
+        return typeLabel
+    }()
+
     lazy var tagLabel: PaddedLabel = {
         let tagLabel = PaddedLabel()
         tagLabel.textColor = .init(cssStr: "#FF7D00")!
         tagLabel.backgroundColor = .init(cssStr: "#FFEEDE")!
         tagLabel.font = .regularFontOfSize(size: 10)
+        tagLabel.layer.cornerRadius = 2.5
+        tagLabel.layer.masksToBounds = true
         return tagLabel
     }()
     
@@ -163,6 +228,7 @@ class MonitoringCell: BaseViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(ctImageView)
         contentView.addSubview(namelabel)
+        contentView.addSubview(typeLabel)
         contentView.addSubview(tagLabel)
         contentView.addSubview(moreBtn)
         contentView.addSubview(timeLabel)
@@ -190,9 +256,14 @@ class MonitoringCell: BaseViewCell {
             make.top.equalToSuperview().offset(10)
             make.size.equalTo(CGSize(width: 18, height: 18))
         }
-        tagLabel.snp.makeConstraints { make in
+        typeLabel.snp.makeConstraints { make in
             make.left.equalTo(namelabel.snp.left)
             make.top.equalTo(namelabel.snp.bottom).offset(4)
+            make.height.equalTo(15)
+        }
+        tagLabel.snp.makeConstraints { make in
+            make.left.equalTo(typeLabel.snp.right).offset(5)
+            make.centerY.equalTo(typeLabel.snp.centerY)
             make.height.equalTo(15)
         }
         timeLabel.snp.makeConstraints { make in

@@ -2,7 +2,7 @@
 //  GroupListViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2025/1/2.
+//  Created by Andrew on 2025/1/2.
 //  团队成员列表页面
 
 import UIKit

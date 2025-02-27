@@ -2,7 +2,7 @@
 //  CompanyRiskDetailViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2025/1/17.
+//  Created by Andrew on 2025/1/17.
 //  风险详情页面
 
 import UIKit
@@ -33,12 +33,6 @@ class CompanyRiskDetailViewController: WDBaseViewController {
     }
     
     var intBlock: ((Double) -> Void)?
-    
-//    lazy var riskDetailView: RiskDetailView = {
-//        let riskDetailView = RiskDetailView()
-//        riskDetailView.backgroundColor = .white
-//        return riskDetailView
-//    }()
     
     //头部view
     lazy var homeHeadView: RiskDetailHeadView = preferredTableHeaderView()

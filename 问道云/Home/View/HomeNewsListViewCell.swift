@@ -2,7 +2,7 @@
 //  HomeNewsListViewCell.swift
 //  问道云
 //
-//  Created by 何康 on 2025/1/5.
+//  Created by Andrew on 2025/1/5.
 //
 
 import UIKit

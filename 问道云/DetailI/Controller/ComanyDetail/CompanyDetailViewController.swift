@@ -2,7 +2,7 @@
 //  CompanyDetailViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2025/1/12.
+//  Created by Andrew on 2025/1/12.
 //  企业详情
 
 import UIKit

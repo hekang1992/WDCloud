@@ -2,7 +2,7 @@
 //  HistoryView.swift
 //  问道云
 //
-//  Created by 何康 on 2024/12/15.
+//  Created by Andrew on 2024/12/15.
 //
 
 import UIKit

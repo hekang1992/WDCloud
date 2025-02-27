@@ -2,7 +2,7 @@
 //  WDCenterViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2024/12/3.
+//  Created by Andrew on 2024/12/3.
 //  个人中心页面
 
 import UIKit
@@ -32,10 +32,10 @@ class WDCenterViewController: WDBaseViewController {
     }()
     
     var isDistributor: String = "0"
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(centerView)
         centerView.snp.makeConstraints { make in
@@ -117,7 +117,7 @@ class WDCenterViewController: WDBaseViewController {
             guard let self = self, let model = model else { return }
             if IS_LOGIN {
                 let menVc = MembershipCenterViewController()
-//                menVc.vipTypeModel.accept(model)
+                //                menVc.vipTypeModel.accept(model)
                 self.navigationController?.pushViewController(menVc, animated: true)
             }else {
                 self.popLogin()
@@ -132,7 +132,7 @@ class WDCenterViewController: WDBaseViewController {
                 self.popLogin()
             }
         }).disposed(by: disposeBag)
-
+        
         //赠送会员
         self.centerView.zengsongBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self, let model = model else { return }
@@ -168,7 +168,7 @@ class WDCenterViewController: WDBaseViewController {
                 .when(.recognized)
                 .subscribe(onNext: { [weak self] _ in
                     self?.popLogin()
-            }).disposed(by: disposeBag)
+                }).disposed(by: disposeBag)
             centerView.huiyuanIcon.isHidden = true
             self.centerView.modelArray.accept(modelArray2)
         }
@@ -279,12 +279,14 @@ extension WDCenterViewController {
             self.navigationController?.pushViewController(serviceVc, animated: true)
             break
         case "微信通知":
-            let wechatVc = WechatPushViewController()
-            self.navigationController?.pushViewController(wechatVc, animated: true)
+            //            let wechatVc = WechatPushViewController()
+            //            self.navigationController?.pushViewController(wechatVc, animated: true)
+            goWechatApp()
             break
         case "邀请好友":
             let viteVc = InviteFriendViewController()
             self.navigationController?.pushViewController(viteVc, animated: true)
+            
             break
         case "分享好友":
             let alertVc = TYAlertController(alert: codeView, preferredStyle: .actionSheet)
@@ -318,6 +320,26 @@ extension WDCenterViewController {
             break
         default:
             break
+        }
+    }
+    
+    func goWechatApp() {
+        let accessToken = GetSaveLoginInfoConfig.getSessionID()
+        let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        if WXApi.isWXAppInstalled() {
+            let request = WXLaunchMiniProgramReq()
+            request.userName = "gh_3f4fcd0bdb14"
+            request.path = "packageMy/pages/share/index?Authorization=\(accessToken)&customNumber=\(customerNumber)"
+            request.miniProgramType = .preview
+            WXApi.send(request) { success in
+                if success {
+                    print("跳转到小程序成功")
+                } else {
+                    print("跳转到小程序失败")
+                }
+            }
+        }else {
+            ToastViewConfig.showToast(message: "微信未安装，无法跳转")
         }
     }
     

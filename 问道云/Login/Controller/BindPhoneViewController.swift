@@ -2,7 +2,7 @@
 //  BindPhoneViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2025/1/4.
+//  Created by Andrew on 2025/1/4.
 //  微信绑定手机号
 
 import UIKit

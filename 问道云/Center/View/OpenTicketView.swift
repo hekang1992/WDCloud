@@ -2,7 +2,7 @@
 //  OpenTicketView.swift
 //  问道云
 //
-//  Created by 何康 on 2024/12/19.
+//  Created by Andrew on 2024/12/19.
 //  开票页面
 
 import UIKit
@@ -172,7 +172,7 @@ class ThreeCell: BaseViewCell {
             make.left.equalTo(statlabel.snp.right).offset(2.5)
             make.top.equalToSuperview().offset(15)
             make.height.equalTo(18.5)
-            make.width.equalTo(80)
+            make.width.equalTo(85.pix())
             make.bottom.equalToSuperview().offset(-15.5)
         }
         phoneTx.snp.makeConstraints { make in

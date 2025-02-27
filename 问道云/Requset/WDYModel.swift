@@ -2,7 +2,7 @@
 //  WDYModel.swift
 //  问道云
 //
-//  Created by 何康 on 2024/12/3.
+//  Created by Andrew on 2024/12/3.
 //
 
 import SwiftyJSON
@@ -118,7 +118,7 @@ class DataModel {
     var riskGrade: riskGradeModel?
     var sumTotal: Int?
     var rimRisk: [rimRiskModel]?
-    var recentNews: Int?
+    var totaRiskCnt: Int?
     var name: String?
     var riskList: riskListModel?
     var minutesList: [minutesListModel]?
@@ -143,7 +143,11 @@ class DataModel {
     var REGION: [rowsModel]?//地区
     var INDUSTRY: [rowsModel]?//行业
     var pushOffset: String?
+    var orgNum: Int?
+    var personNum: Int?
     init(json: JSON) {
+        self.orgNum = json["orgNum"].intValue
+        self.personNum = json["personNum"].intValue
         self.pushOffset = json["pushOffset"].stringValue
         self.INDUSTRY = json["INDUSTRY"].arrayValue.map { rowsModel(json: $0) }
         self.REGION = json["REGION"].arrayValue.map { rowsModel(json: $0) }
@@ -166,7 +170,7 @@ class DataModel {
         self.followInfo = followInfoModel(json: json["followInfo"])
         self.rimRisk = json["rimRisk"].arrayValue.map { rimRiskModel(json: $0) }
         self.sumTotal = json["sumTotal"].intValue
-        self.recentNews = json["recentNews"].intValue
+        self.totaRiskCnt = json["totaRiskCnt"].intValue
         self.riskGrade = riskGradeModel(json: json["riskGrade"])
         self.entityRiskEventInfo = entityRiskEventInfoModel(json: json["entityRiskEventInfo"])
         self.map1 = map1Model(json: json["map1"])
@@ -691,7 +695,11 @@ class rowsModel {
     var riskMonitorPersonDtoList: [riskMonitorPersonDtoListModel]?//搜索监控企业
     var positions: [String]?//搜索监控企业
     var logoColor: String?//背景色
+    var orgStatus: String?
+    var personName: String?
     init(json: JSON) {
+        self.personName = json["personName"].stringValue
+        self.orgStatus = json["orgStatus"].stringValue
         self.logoColor = json["logoColor"].stringValue
         self.groupId = json["groupId"].stringValue
         self.monitorFlag = json["monitorFlag"].stringValue

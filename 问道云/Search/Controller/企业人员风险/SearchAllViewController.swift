@@ -2,7 +2,7 @@
 //  SearchAllViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2025/1/7.
+//  Created by Andrew on 2025/1/7.
 //  所有搜索页面
 
 import UIKit

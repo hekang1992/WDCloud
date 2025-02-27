@@ -2,7 +2,7 @@
 //  SanctionTableViewCell.swift
 //  问道云
 //
-//  Created by 何康 on 2025/2/11.
+//  Created by Andrew on 2025/2/11.
 //
 
 import UIKit

@@ -2,7 +2,7 @@
 //  HighSearchOneView.swift
 //  问道云
 //
-//  Created by 何康 on 2025/2/21.
+//  Created by Andrew on 2025/2/21.
 //
 
 import UIKit

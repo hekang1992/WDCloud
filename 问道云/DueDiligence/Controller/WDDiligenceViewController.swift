@@ -2,7 +2,7 @@
 //  WDDiligenceViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2024/12/3.
+//  Created by Andrew on 2024/12/3.
 //
 
 import UIKit
@@ -106,8 +106,8 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
         segmurce = JXSegmentedTitleDataSource()
         segmurce.titles = ["企业尽职调查", "专项尽职调查"]
         segmurce.isTitleColorGradientEnabled = true
-        segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
-        segmurce.titleNormalFont = .regularFontOfSize(size: 14)
+        segmurce.titleSelectedFont = .mediumFontOfSize(size: 15)
+        segmurce.titleNormalFont = .regularFontOfSize(size: 15)
         segmurce.titleNormalColor = UIColor.white.withAlphaComponent(0.6)
         segmurce.titleSelectedColor = .white
         

@@ -2,7 +2,7 @@
 //  MinitoringMessagePushViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2025/2/19.
+//  Created by Andrew on 2025/2/19.
 //  监控消息通知
 
 import UIKit
