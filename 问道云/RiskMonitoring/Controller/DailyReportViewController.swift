@@ -24,7 +24,9 @@ class DailyReportViewController: WDBaseViewController {
     
     var dataModel = BehaviorRelay<DataModel?>(value: nil)
     
-    var allArray: [rowsModel] = []
+    var companyArray: [rowsModel] = []
+    
+    var peopleArray: [rowsModel] = []
     
     var companyModel = BehaviorRelay<DataModel?>(value: nil)
     
@@ -214,6 +216,7 @@ extension DailyReportViewController {
         }
     }
     
+    //获取公司列表
     func getCompanyInfo(complete: @escaping () -> Void) {
         ViewHud.addLoadView()
         let man = RequestManager()
@@ -236,16 +239,16 @@ extension DailyReportViewController {
                         self.companyModel.accept(model)
                         if pageNum == 1 {
                             pageNum = 1
-                            self.allArray.removeAll()
+                            self.companyArray.removeAll()
                         }
                         pageNum += 1
-                        self.allArray.append(contentsOf: modelArray)
+                        self.companyArray.append(contentsOf: modelArray)
                         if total != 0 {
                             self.emptyView.removeFromSuperview()
                         }else {
                             self.addNodataView(from: self.monitoringView.tableView)
                         }
-                        if self.allArray.count != total {
+                        if self.companyArray.count != total {
                             self.monitoringView.tableView.mj_footer?.isHidden = false
                         }else {
                             self.monitoringView.tableView.mj_footer?.isHidden = true
@@ -261,6 +264,7 @@ extension DailyReportViewController {
         }
     }
     
+    //获取人员信息列表
     func getPeopleInfo(complete: @escaping () -> Void) {
         ViewHud.addLoadView()
         let man = RequestManager()
@@ -283,16 +287,16 @@ extension DailyReportViewController {
                             self.dataModel.accept(model)
                             if pageNum == 1 {
                                 pageNum = 1
-                                self.allArray.removeAll()
+                                self.peopleArray.removeAll()
                             }
                             pageNum += 1
-                            self.allArray.append(contentsOf: modelArray)
+                            self.peopleArray.append(contentsOf: modelArray)
                             if total != 0 {
                                 self.emptyView.removeFromSuperview()
                             }else {
                                 self.addNodataView(from: self.monitoringView.tableView)
                             }
-                            if self.allArray.count != total {
+                            if self.peopleArray.count != total {
                                 self.monitoringView.tableView.mj_footer?.isHidden = false
                             }else {
                                 self.monitoringView.tableView.mj_footer?.isHidden = true
@@ -371,11 +375,21 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.allArray.count
+        if self.isClick == "0" {
+            return self.companyArray.count
+        }else {
+            return self.peopleArray.count
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = self.allArray[indexPath.row]
+        var model: rowsModel?
+        if self.isClick == "0" {
+            model = self.companyArray[indexPath.row]
+        }else {
+            model = self.peopleArray[indexPath.row]
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "MonitoringCell", for: indexPath) as! MonitoringCell
         cell.selectionStyle = .none
         cell.model = model
@@ -389,14 +403,16 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
             }
             //取消监控
             monitorView.block2 = { [weak self] in
-                self?.dismiss(animated: true, completion: {
-                    self?.cancelMonitoringInfo(from: model, indexPath: indexPath)
+                guard let self = self, let model = model else { return }
+                self.dismiss(animated: true, completion: {
+                    self.cancelMonitoringInfo(from: model, indexPath: indexPath)
                 })
             }
             //移动分组
             monitorView.block3 = { [weak self] in
-                self?.dismiss(animated: true, completion: {
-                    self?.moveGroupInfo(from: self?.groupModel.value?.rows ?? [], rowsModel: model)
+                guard let self = self, let model = model else { return }
+                self.dismiss(animated: true, completion: {
+                    self.moveGroupInfo(from: self.groupModel.value?.rows ?? [], rowsModel: model)
                 })
             }
             self.present(alertVc, animated: true)
@@ -406,7 +422,7 @@ extension DailyReportViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if self.isClick == "0" {
-            let model = self.allArray[indexPath.row]
+            let model = self.companyArray[indexPath.row]
             let orgName = model.orgName ?? ""
             let orgId = model.orgId ?? ""
             let logo = model.logo ?? ""

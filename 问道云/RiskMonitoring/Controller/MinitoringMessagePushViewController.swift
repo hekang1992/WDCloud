@@ -7,8 +7,12 @@
 
 import UIKit
 import SevenSwitch
+import BRPickerView
 
 class MinitoringMessagePushViewController: WDBaseViewController {
+    
+    var leftDate: Date?
+    var rightDate: Date?
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .none)
@@ -160,6 +164,51 @@ class MinitoringMessagePushViewController: WDBaseViewController {
         oneSwitch.onTintColor = .init(cssStr: "#547AFF")!
         return oneSwitch
     }()
+    
+    lazy var zlabel: UILabel = {
+        let zlabel = UILabel()
+        zlabel.text = "上午"
+        zlabel.textColor = .init(cssStr: "#666666")
+        zlabel.textAlignment = .left
+        zlabel.font = .regularFontOfSize(size: 13)
+        return zlabel
+    }()
+    
+    lazy var xlabel: UILabel = {
+        let xlabel = UILabel()
+        xlabel.text = "下午"
+        xlabel.textColor = .init(cssStr: "#666666")
+        xlabel.textAlignment = .left
+        xlabel.font = .regularFontOfSize(size: 13)
+        return xlabel
+    }()
+    
+    lazy var zbtn: UIButton = {
+        let zbtn = UIButton(type: .custom)
+        zbtn.backgroundColor = .init(cssStr: "#F3F3F3")
+        zbtn.layer.cornerRadius = 2.5
+        zbtn.titleLabel?.font = .regularFontOfSize(size: 13)
+        zbtn.setTitleColor(.init(cssStr: "#333333"), for: .normal)
+        return zbtn
+    }()
+    
+    lazy var mmlabel: UILabel = {
+        let mmlabel = UILabel()
+        mmlabel.text = "~"
+        mmlabel.textAlignment = .center
+        mmlabel.textColor = .init(cssStr: "#666666")
+        mmlabel.font = .regularFontOfSize(size: 20)
+        return mmlabel
+    }()
+    
+    lazy var xbtn: UIButton = {
+        let xbtn = UIButton(type: .custom)
+        xbtn.backgroundColor = .init(cssStr: "#F3F3F3")
+        xbtn.layer.cornerRadius = 2.5
+        xbtn.titleLabel?.font = .regularFontOfSize(size: 13)
+        xbtn.setTitleColor(.init(cssStr: "#333333"), for: .normal)
+        return xbtn
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,6 +229,11 @@ class MinitoringMessagePushViewController: WDBaseViewController {
         twoView.addSubview(threelineView)
         twoView.addSubview(label3)
         twoView.addSubview(label4)
+        twoView.addSubview(zlabel)
+        twoView.addSubview(xlabel)
+        twoView.addSubview(zbtn)
+        twoView.addSubview(mmlabel)
+        twoView.addSubview(xbtn)
         
         view.addSubview(threeView)
         threeView.addSubview(pushLabel)
@@ -254,6 +308,31 @@ class MinitoringMessagePushViewController: WDBaseViewController {
             make.top.equalTo(label3.snp.bottom).offset(6.5)
             make.left.equalTo(label3.snp.left)
         }
+        zlabel.snp.makeConstraints { make in
+            make.centerY.equalTo(label3.snp.centerY)
+            make.left.equalTo(label3.snp.right).offset(5)
+            make.size.equalTo(CGSize(width: 26.pix(), height: 20))
+        }
+        zbtn.snp.makeConstraints { make in
+            make.centerY.equalTo(zlabel.snp.centerY)
+            make.left.equalTo(zlabel.snp.right)
+            make.size.equalTo(CGSize(width: 43, height: 27))
+        }
+        mmlabel.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 15, height: 20))
+            make.left.equalTo(zbtn.snp.right).offset(8)
+            make.centerY.equalTo(zbtn.snp.centerY)
+        }
+        xlabel.snp.makeConstraints { make in
+            make.centerY.equalTo(label3.snp.centerY)
+            make.left.equalTo(mmlabel.snp.right).offset(5)
+            make.size.equalTo(CGSize(width: 28.pix(), height: 20))
+        }
+        xbtn.snp.makeConstraints { make in
+            make.centerY.equalTo(xlabel.snp.centerY)
+            make.left.equalTo(xlabel.snp.right)
+            make.size.equalTo(CGSize(width: 43, height: 27))
+        }
         
         threeView.snp.makeConstraints { make in
             make.top.equalTo(twoView.snp.bottom).offset(8)
@@ -286,6 +365,7 @@ class MinitoringMessagePushViewController: WDBaseViewController {
             make.right.equalToSuperview().offset(-18)
         }
         
+        
         oneView
             .rx
             .tapGesture()
@@ -296,17 +376,70 @@ class MinitoringMessagePushViewController: WDBaseViewController {
                 self.navigationController?.pushViewController(soVc, animated: true)
         }).disposed(by: disposeBag)
         
+        zbtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            showDatePicker(from: zbtn)
+        }).disposed(by: disposeBag)
+        
+        xbtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            showxDatePicker(from: xbtn)
+        }).disposed(by: disposeBag)
+        
     }
     
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension MinitoringMessagePushViewController {
+    
+    func showDatePicker(from btn: UIButton) {
+        let datePickerView = BRDatePickerView()
+        datePickerView.pickerMode = .HM
+        datePickerView.title = "选择时间"
+        datePickerView.isAutoSelect = true
+        datePickerView.isTwelveHourMode = true
+        datePickerView.selectDate = NSDate.br_setHour(9, minute: 0)
+        datePickerView.timeZone = TimeZone(identifier: "Asia/Shanghai")
+        if let leftDate = self.leftDate {
+            datePickerView.selectDate = leftDate
+        }
+        datePickerView.resultBlock = { selectDate, selectValue in
+            btn.setTitle(selectValue ?? "", for: .normal)
+            self.leftDate = selectDate
+        }
+        
+        let customStyle = BRPickerStyle()
+        customStyle.pickerColor = .white
+        customStyle.pickerTextFont = .regularFontOfSize(size: 16)
+        customStyle.selectRowTextColor = .black
+        datePickerView.pickerStyle = customStyle
+        datePickerView.show()
     }
-    */
+    
+    func showxDatePicker(from btn: UIButton) {
+        let datePickerView = BRDatePickerView()
+        datePickerView.pickerMode = .HM
+        datePickerView.minDate = NSDate.br_setHour(13, minute: 0)
+        datePickerView.maxDate = NSDate.br_setHour(23, minute: 59)
+        datePickerView.title = "选择时间"
+        datePickerView.isAutoSelect = true
+        datePickerView.timeZone = TimeZone(identifier: "Asia/Shanghai")
+        if let rightDate = self.rightDate {
+            datePickerView.selectDate = rightDate
+        }
+        datePickerView.resultBlock = { selectDate, selectValue in
+            btn.setTitle(selectValue ?? "", for: .normal)
+            self.rightDate = selectDate
+        }
+        let customStyle = BRPickerStyle()
+        customStyle.pickerColor = .white
+        customStyle.pickerTextFont = .regularFontOfSize(size: 16)
+        customStyle.selectRowTextColor = .black
+        datePickerView.pickerStyle = customStyle
+        
 
+        datePickerView.show()
+    }
+    
+    
 }

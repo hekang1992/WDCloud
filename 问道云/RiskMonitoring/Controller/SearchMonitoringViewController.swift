@@ -342,6 +342,7 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
     private func addMonitoringPeopleInfo(from model: rowsModel,
                                          peopleModel: riskMonitorPersonDtoListModel,
                                          listView: MonitoringListView) {
+        ViewHud.addLoadView()
         let personId = peopleModel.personId ?? ""
         let customerId = GetSaveLoginInfoConfig.getCustomerNumber()
         let groupId = self.groupnumber ?? ""
@@ -352,6 +353,7 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):

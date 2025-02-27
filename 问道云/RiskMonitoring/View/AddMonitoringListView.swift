@@ -109,7 +109,7 @@ class MonitoringListView: UIView {
         nameLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.verticalEdges.equalToSuperview()
-            make.width.equalTo(150)
+            make.width.equalTo(170)
             make.height.equalTo(20)
         }
         
