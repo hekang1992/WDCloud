@@ -124,6 +124,7 @@ class MonitoringCell: BaseViewCell {
         let namelabel = UILabel()
         namelabel.textColor = UIColor.init(cssStr: "#333333")
         namelabel.textAlignment = .left
+        namelabel.numberOfLines = 0
         namelabel.font = .mediumFontOfSize(size: 15)
         return namelabel
     }()
@@ -250,6 +251,7 @@ class MonitoringCell: BaseViewCell {
         namelabel.snp.makeConstraints { make in
             make.top.equalTo(ctImageView.snp.top)
             make.left.equalTo(ctImageView.snp.right).offset(4)
+            make.right.equalToSuperview().offset(-40)
         }
         moreBtn.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-14.5)

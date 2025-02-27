@@ -25,10 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-//    lazy var tabBarVc: WDTabBarController = {
-//        let tabBarVc = WDTabBarController()
-//        return tabBarVc
-//    }()
+    //    lazy var tabBarVc: WDTabBarController = {
+    //        let tabBarVc = WDTabBarController()
+    //        return tabBarVc
+    //    }()
     
     var tabBarVc: WDTabBarController?
     
@@ -62,7 +62,8 @@ extension AppDelegate: WXApiDelegate {
     }
     
     func onResp(_ resp: BaseResp) {
-        if let resp = resp as? SendAuthResp, resp.state == GetIDFVConfig.getIDFV() {
+        if let resp = resp as? SendAuthResp,
+           resp.state == GetIDFVConfig.getIDFV() {
             switch resp.errCode {
             case 0:
                 if let code = resp.code {

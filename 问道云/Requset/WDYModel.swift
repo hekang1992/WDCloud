@@ -698,7 +698,9 @@ class rowsModel {
     var logoColor: String?//背景色
     var orgStatus: String?
     var personName: String?
+    var monitorCnt: Int?
     init(json: JSON) {
+        self.monitorCnt = json["monitorCnt"].intValue
         self.personId = json["personId"].stringValue
         self.personName = json["personName"].stringValue
         self.orgStatus = json["orgStatus"].stringValue

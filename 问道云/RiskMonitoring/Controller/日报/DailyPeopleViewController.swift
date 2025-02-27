@@ -316,6 +316,7 @@ extension DailyPeopleViewController: UITableViewDelegate, UITableViewDataSource 
                             ToastViewConfig.showToast(message: "移动成功")
                             self.dismiss(animated: true) {
                                 self.pageNum = 1
+                                self.getGroupInfo()
                                 self.getPeopleInfo()
                             }
                         }

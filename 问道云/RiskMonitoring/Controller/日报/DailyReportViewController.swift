@@ -98,7 +98,7 @@ extension DailyReportViewController {
                     }
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }

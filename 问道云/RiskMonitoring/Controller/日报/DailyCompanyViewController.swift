@@ -247,27 +247,27 @@ extension DailyCompanyViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     private func popGroupView(from menuBtn: UIButton) {
-            var groupArray: [rowsModel] = self.groupModel.value?.rows ?? []
-            let alertVc = TYAlertController(alert: groupView, preferredStyle: .actionSheet)!
-            let json: JSON = ["groupName": "全部分组", "id": ""]
-            let model = rowsModel(json: json)
-            groupArray.insert(model, at: 0)
-            groupView.groupArray = groupArray
-            groupView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
-                self?.dismiss(animated: true)
-            }).disposed(by: disposeBag)
-            groupView.block = { [weak self] model in
-                self?.dismiss(animated: true, completion: {
-                    menuBtn.setTitle(model.groupName ?? "", for: .normal)
-                    //根据分组去筛选数据
-                    self?.pageNum = 1
-                    self?.groupName = model.groupName ?? ""
-                    self?.groupId = model.eid ?? ""
-                    self?.getCompanyInfo()
-                })
-            }
-            self.present(alertVc, animated: true)
+        var groupArray: [rowsModel] = self.groupModel.value?.rows ?? []
+        let alertVc = TYAlertController(alert: groupView, preferredStyle: .actionSheet)!
+        let json: JSON = ["groupName": "全部分组", "id": ""]
+        let model = rowsModel(json: json)
+        groupArray.insert(model, at: 0)
+        groupView.groupArray = groupArray
+        groupView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+        groupView.block = { [weak self] model in
+            self?.dismiss(animated: true, completion: {
+                menuBtn.setTitle(model.groupName ?? "", for: .normal)
+                //根据分组去筛选数据
+                self?.pageNum = 1
+                self?.groupName = model.groupName ?? ""
+                self?.groupId = model.eid ?? ""
+                self?.getCompanyInfo()
+            })
         }
+        self.present(alertVc, animated: true)
+    }
     
     //取消监控
     private func cancelMonitoringInfo(from model: rowsModel, indexPath: IndexPath) {
@@ -315,6 +315,7 @@ extension DailyCompanyViewController: UITableViewDelegate, UITableViewDataSource
                             ToastViewConfig.showToast(message: "移动成功")
                             self.dismiss(animated: true) {
                                 self.pageNum = 1
+                                self.getGroupInfo()
                                 self.getCompanyInfo()
                             }
                         }

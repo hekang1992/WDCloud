@@ -210,8 +210,10 @@ class FenzuCell: BaseViewCell {
             guard let self = self, let model = model else { return }
             let groupName = model.groupName ?? ""
             let groupname = model.groupname ?? ""
+            let count = String(model.customerFollowList?.count ?? 0)
+            let count1 = String(model.monitorCnt ?? 0)
             self.nameLabel.text = !groupName.isEmpty ? groupName : groupname
-            self.numLabel.text = "(\(model.customerFollowList?.count ?? 0))"
+            self.numLabel.text = count == "0" ? "(\(count1))" : "(\(count))"
         }).disposed(by: disposeBag)
         
     }
