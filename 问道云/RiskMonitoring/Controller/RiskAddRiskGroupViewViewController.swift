@@ -117,8 +117,9 @@ class RiskAddRiskGroupViewViewController: WDBaseViewController {
         }
         //查询监控分组
         getMonitoringGroupInfo()
-        //新增
-        whiteView.rx
+        //新增分组
+        whiteView
+            .rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
