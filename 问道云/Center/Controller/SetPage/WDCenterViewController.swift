@@ -327,16 +327,23 @@ extension WDCenterViewController {
         let accessToken = GetSaveLoginInfoConfig.getSessionID()
         let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
         if WXApi.isWXAppInstalled() {
-            let request = WXLaunchMiniProgramReq()
-            request.userName = "gh_3f4fcd0bdb14"
-            request.path = "packageMy/pages/share/index?Authorization=\(accessToken)&customNumber=\(customerNumber)"
-            request.miniProgramType = .preview
-            WXApi.send(request) { success in
-                if success {
-                    print("跳转到小程序成功")
-                } else {
-                    print("跳转到小程序失败")
-                }
+            let miniProgramObject = WXMiniProgramObject()
+            miniProgramObject.userName = "gh_3f4fcd0bdb14"
+            miniProgramObject.path = "packageMy/pages/share/index?Authorization=\(accessToken)&customNumber=\(customerNumber)"
+            miniProgramObject.miniProgramType = .preview
+            
+            let mediaMessage = WXMediaMessage()
+            mediaMessage.mediaObject = miniProgramObject
+            mediaMessage.title = ""
+            mediaMessage.description = ""
+            
+            let req = SendMessageToWXReq()
+            req.bText = false
+            req.message = mediaMessage
+            req.scene = Int32(WXSceneSession.rawValue)
+            
+            WXApi.send(req) { success in
+                print(success ? "请求发送成功" : "请求发送失败")
             }
         }else {
             ToastViewConfig.showToast(message: "微信未安装，无法跳转")

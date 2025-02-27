@@ -452,7 +452,7 @@ class ToastViewConfig {
             let screenHeight = window.frame.size.height
             let toastHeight: CGFloat = 50
             let centerY = screenHeight / 2 - toastHeight / 2
-            ToastView.appearance().bottomOffsetPortrait = centerY
+            ToastView.appearance().bottomOffsetPortrait = StatusHeightManager.tabBarHeight + 20
             ToastView.appearance().bottomOffsetLandscape = centerY
         }
         toast.show()

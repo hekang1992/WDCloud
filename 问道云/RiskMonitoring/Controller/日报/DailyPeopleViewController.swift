@@ -272,10 +272,10 @@ extension DailyPeopleViewController: UITableViewDelegate, UITableViewDataSource 
     
     //取消监控
     private func cancelMonitoringInfo(from model: rowsModel, indexPath: IndexPath) {
-        let dict = ["orgId": model.orgId ?? ""]
+        let dict = ["personId": model.personId ?? ""]
         let man = RequestManager()
         man.requestAPI(params: dict,
-                       pageUrl: "/entity/monitor-org/cancelRiskMonitorOrg",
+                       pageUrl: "/entity/monitor-person/cancelRiskMonitorPerson",
                        method: .post) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {
@@ -304,10 +304,10 @@ extension DailyPeopleViewController: UITableViewDelegate, UITableViewDataSource 
         }
         groupView.sblock = { model in
             let man = RequestManager()
-            let dict = ["orgId": rowsModel.orgId ?? "",
+            let dict = ["personId": rowsModel.personId ?? "",
                         "groupId": model.eid ?? ""]
             man.requestAPI(params: dict,
-                           pageUrl: "/entity/monitor-org/updRiskMonitorOrgGroup",
+                           pageUrl: "/entity/monitor-person/updRiskMonitorPersonGroup",
                            method: .post) { [weak self] result in
                 switch result {
                 case .success(let success):

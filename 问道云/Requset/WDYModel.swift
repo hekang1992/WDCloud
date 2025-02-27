@@ -682,6 +682,7 @@ class rowsModel {
     var startDate: String?
     var endDate: String?
     var orgId: String?//企业ID
+    var personId: String?//人员ID
     var curHighRiskCnt: Int?
     var curLowRiskCnt: Int?
     var curRiskCnt: Int?
@@ -698,6 +699,7 @@ class rowsModel {
     var orgStatus: String?
     var personName: String?
     init(json: JSON) {
+        self.personId = json["personId"].stringValue
         self.personName = json["personName"].stringValue
         self.orgStatus = json["orgStatus"].stringValue
         self.logoColor = json["logoColor"].stringValue
