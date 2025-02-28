@@ -215,6 +215,13 @@ extension AppDelegate: GeTuiSdkDelegate {
     
     func geTuiSdkDidRegisterClient(_ clientId: String) {
         print("clientId=====\(clientId)")
+        //更新cid信息
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let dict = ["customernumber": customernumber, "cid": clientId]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/messageVerification/updatecid",
+                       method: .post) { result in }
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

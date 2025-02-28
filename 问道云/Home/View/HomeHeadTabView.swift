@@ -72,17 +72,17 @@ class HomeHeadTabView: BaseView {
         whiteView.addSubview(ctImageView)
         oneBtn.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.size.equalTo(CGSize(width: 48.pix(), height: 22.5))
+            make.size.equalTo(CGSize(width: 50.pix(), height: 22.5))
             make.left.equalToSuperview().offset(60)
         }
         twoBtn.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.size.equalTo(CGSize(width: 48.pix(), height: 22.5))
+            make.size.equalTo(CGSize(width: 50.pix(), height: 22.5))
             make.centerX.equalToSuperview()
         }
         threeBtn.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.size.equalTo(CGSize(width: 48.pix(), height: 22.5))
+            make.size.equalTo(CGSize(width: 50.pix(), height: 22.5))
             make.right.equalToSuperview().offset(-60)
         }
         lineView.snp.makeConstraints { make in

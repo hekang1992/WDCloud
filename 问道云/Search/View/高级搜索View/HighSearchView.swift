@@ -356,7 +356,7 @@ class CustomButtonView: BaseView {
         button.setTitleColor(UIColor.init(cssStr: "#27344B"), for: .normal)
         button.setImage(UIImage(named: "agreenorimage"), for: .normal)
         button.addTarget(self, action: #selector(allButtonTapped), for: .touchUpInside)
-        button.layoutButtonEdgeInsets(style: .left, space: 3)
+        button.layoutButtonEdgeInsets(style: .left, space: 8)
         return button
     }()
     
@@ -388,7 +388,7 @@ class CustomButtonView: BaseView {
         allButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(4.5)
             make.left.equalToSuperview()
-            make.size.equalTo(CGSize(width: 41, height: 17))
+            make.size.equalTo(CGSize(width: 41.pix(), height: 17))
         }
         setNeedsLayout()
         layoutIfNeeded()
@@ -424,7 +424,7 @@ class CustomButtonView: BaseView {
     // MARK: - 创建按钮的工厂方法
     private func createButton(title: String) -> UIButton {
         let button = UIButton(type: .custom)
-        button.layer.cornerRadius = 2
+        button.layer.cornerRadius = 5
         button.setTitle(title, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .init(cssStr: "#F1F1F1")
@@ -442,7 +442,7 @@ class CustomButtonView: BaseView {
         let label = UILabel()
         label.text = title
         label.sizeToFit()
-        let width = label.frame.width + padding
+        let width = label.frame.width + padding + 5
         return width
     }
     
@@ -542,14 +542,14 @@ class HighFiveView: BaseView {
     
     lazy var tagListView: TagListView = {
         let tagListView = TagListView()
-        tagListView.cornerRadius = 2
+        tagListView.cornerRadius = 5
         tagListView.paddingX = 5
         tagListView.paddingY = 5
         tagListView.marginX = 8
         tagListView.marginY = 8
-        tagListView.textColor = .init(cssStr: "#666666")!
+        tagListView.textColor = .init(cssStr: "#27344B")!
         tagListView.tagBackgroundColor = .init(cssStr: "#F3F3F3")!
-        tagListView.textFont = .regularFontOfSize(size: 14)
+        tagListView.textFont = .regularFontOfSize(size: 12)
         tagListView.borderWidth = 1
         tagListView.borderColor = UIColor.clear
         tagListView.selectedTextColor = UIColor.init(cssStr: "#547AFF")!
@@ -615,7 +615,7 @@ class HighFiveView: BaseView {
         tagListView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(12)
             make.left.equalTo(mlabel.snp.right).offset(26)
-            make.width.equalTo(260)
+            make.width.equalTo(280)
         }
         grayView.snp.makeConstraints { make in
             make.left.equalTo(tagListView.snp.left)
@@ -706,14 +706,14 @@ class HighSixView: BaseView {
     
     lazy var tagListView: TagListView = {
         let tagListView = TagListView()
-        tagListView.cornerRadius = 2
+        tagListView.cornerRadius = 5
         tagListView.paddingX = 5
         tagListView.paddingY = 5
         tagListView.marginX = 8
         tagListView.marginY = 8
-        tagListView.textColor = .init(cssStr: "#666666")!
+        tagListView.textColor = .init(cssStr: "#27344B")!
         tagListView.tagBackgroundColor = .init(cssStr: "#F3F3F3")!
-        tagListView.textFont = .regularFontOfSize(size: 14)
+        tagListView.textFont = .regularFontOfSize(size: 12)
         tagListView.borderWidth = 1
         tagListView.borderColor = UIColor.clear
         tagListView.selectedTextColor = UIColor.init(cssStr: "#547AFF")!
@@ -872,14 +872,14 @@ class HighAgentView: BaseView {
     
     lazy var tagListView: TagListView = {
         let tagListView = TagListView()
-        tagListView.cornerRadius = 2
+        tagListView.cornerRadius = 5
         tagListView.paddingX = 5
         tagListView.paddingY = 5
         tagListView.marginX = 8
         tagListView.marginY = 8
-        tagListView.textColor = .init(cssStr: "#666666")!
+        tagListView.textColor = .init(cssStr: "#27344B")!
         tagListView.tagBackgroundColor = .init(cssStr: "#F3F3F3")!
-        tagListView.textFont = .regularFontOfSize(size: 14)
+        tagListView.textFont = .regularFontOfSize(size: 12)
         tagListView.borderWidth = 1
         tagListView.borderColor = UIColor.clear
         tagListView.selectedTextColor = UIColor.init(cssStr: "#547AFF")!
@@ -958,14 +958,14 @@ class HighCompanyTypeView: BaseView {
     
     lazy var tagListView: TagListView = {
         let tagListView = TagListView()
-        tagListView.cornerRadius = 2
+        tagListView.cornerRadius = 5
         tagListView.paddingX = 5
         tagListView.paddingY = 5
         tagListView.marginX = 8
         tagListView.marginY = 8
-        tagListView.textColor = .init(cssStr: "#666666")!
+        tagListView.textColor = .init(cssStr: "#27344B")!
         tagListView.tagBackgroundColor = .init(cssStr: "#F3F3F3")!
-        tagListView.textFont = .regularFontOfSize(size: 14)
+        tagListView.textFont = .regularFontOfSize(size: 12)
         tagListView.borderWidth = 1
         tagListView.borderColor = UIColor.clear
         tagListView.selectedTextColor = UIColor.init(cssStr: "#547AFF")!
@@ -1044,14 +1044,14 @@ class HighPeopleView: BaseView {
     
     lazy var tagListView: TagListView = {
         let tagListView = TagListView()
-        tagListView.cornerRadius = 2
+        tagListView.cornerRadius = 5
         tagListView.paddingX = 5
         tagListView.paddingY = 5
         tagListView.marginX = 8
         tagListView.marginY = 8
-        tagListView.textColor = .init(cssStr: "#666666")!
+        tagListView.textColor = .init(cssStr: "#27344B")!
         tagListView.tagBackgroundColor = .init(cssStr: "#F3F3F3")!
-        tagListView.textFont = .regularFontOfSize(size: 14)
+        tagListView.textFont = .regularFontOfSize(size: 12)
         tagListView.borderWidth = 1
         tagListView.borderColor = UIColor.clear
         tagListView.selectedTextColor = UIColor.init(cssStr: "#547AFF")!
@@ -1210,14 +1210,14 @@ class HighStatusView: BaseView {
     
     lazy var tagListView: TagListView = {
         let tagListView = TagListView()
-        tagListView.cornerRadius = 2
+        tagListView.cornerRadius = 5
         tagListView.paddingX = 5
         tagListView.paddingY = 5
         tagListView.marginX = 8
         tagListView.marginY = 8
-        tagListView.textColor = .init(cssStr: "#666666")!
+        tagListView.textColor = .init(cssStr: "#27344B")!
         tagListView.tagBackgroundColor = .init(cssStr: "#F3F3F3")!
-        tagListView.textFont = .regularFontOfSize(size: 14)
+        tagListView.textFont = .regularFontOfSize(size: 12)
         tagListView.borderWidth = 1
         tagListView.borderColor = UIColor.clear
         tagListView.selectedTextColor = UIColor.init(cssStr: "#547AFF")!
@@ -1245,7 +1245,7 @@ class HighStatusView: BaseView {
             make.height.equalTo(1)
         }
         tagListView.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-30)
+            make.right.equalToSuperview().offset(-10)
             make.top.equalToSuperview().offset(12)
             make.left.equalTo(mlabel.snp.right).offset(26)
         }
@@ -1296,14 +1296,14 @@ class HighBlockView: BaseView {
     
     lazy var tagListView: TagListView = {
         let tagListView = TagListView()
-        tagListView.cornerRadius = 2
+        tagListView.cornerRadius = 5
         tagListView.paddingX = 5
         tagListView.paddingY = 5
         tagListView.marginX = 8
         tagListView.marginY = 8
-        tagListView.textColor = .init(cssStr: "#666666")!
+        tagListView.textColor = .init(cssStr: "#27344B")!
         tagListView.tagBackgroundColor = .init(cssStr: "#F3F3F3")!
-        tagListView.textFont = .regularFontOfSize(size: 14)
+        tagListView.textFont = .regularFontOfSize(size: 12)
         tagListView.borderWidth = 1
         tagListView.borderColor = UIColor.clear
         tagListView.selectedTextColor = UIColor.init(cssStr: "#547AFF")!

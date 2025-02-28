@@ -326,7 +326,7 @@ extension HighSearchViewController {
             make.left.equalToSuperview()
             make.top.equalTo(peopleView.snp.bottom)
             make.width.equalTo(SCREEN_WIDTH)
-            make.height.equalTo(85)
+            make.height.equalTo(45)
         }
         blockView.snp.makeConstraints { make in
             make.left.equalToSuperview()
@@ -348,12 +348,12 @@ extension HighSearchViewController {
         oneBtn.snp.makeConstraints { make in
             make.top.equalTo(descLabel.snp.bottom).offset(11)
             make.left.equalToSuperview().offset(15)
-            make.size.equalTo(CGSize(width: 120, height: 44))
+            make.size.equalTo(CGSize(width: 120.pix(), height: 50))
         }
         twoBtn.snp.makeConstraints { make in
             make.top.equalTo(descLabel.snp.bottom).offset(11)
-            make.left.equalTo(SCREEN_WIDTH - 231)
-            make.size.equalTo(CGSize(width: 216, height: 44))
+            make.left.equalTo(SCREEN_WIDTH - 231.pix())
+            make.size.equalTo(CGSize(width: 216.pix(), height: 50))
             make.bottom.equalToSuperview().offset(-10)
         }
         
