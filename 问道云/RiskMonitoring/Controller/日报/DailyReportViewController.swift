@@ -41,6 +41,12 @@ class DailyReportViewController: WDBaseViewController {
     
     var titles: [String] = ["企业", "个人"]
     
+    lazy var noMonitoringView: RiskNoMonitoringView = {
+        let noMonitoringView = RiskNoMonitoringView()
+        noMonitoringView.isHidden = true
+        return noMonitoringView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,6 +69,7 @@ class DailyReportViewController: WDBaseViewController {
         segmentedView.indicators = [indicator]
         
         view.addSubview(pagingView)
+        pagingView.isHidden = true
         pagingView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
@@ -70,12 +77,27 @@ class DailyReportViewController: WDBaseViewController {
             make.bottom.equalToSuperview()
         }
         segmentedView.listContainer = pagingView.listContainerView
+        
+        view.addSubview(noMonitoringView)
+        noMonitoringView.block = { [weak self] in
+            let searchVc = SearchMonitoringViewController()
+            self?.navigationController?.pushViewController(searchVc, animated: true)
+        }
+        noMonitoringView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+            make.top.equalToSuperview().offset(1)
+            make.bottom.equalToSuperview()
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //获取数字信息
-        getNumInfo()
+        if IS_LOGIN {
+            //获取数字信息
+            getNumInfo()
+        }
     }
     
 }
@@ -92,9 +114,7 @@ extension DailyReportViewController {
             case .success(let success):
                 if success.code == 200 {
                     if let self = self, let model = success.data {
-                        let titles = ["企业\(model.orgNum ?? 0)", "人员\(model.personNum ?? 0)"]
-                        segmentedViewDataSource.titles = titles
-                        segmentedView.reloadData()
+                        showMonitoringView(from: model)
                     }
                 }
                 break
@@ -102,6 +122,23 @@ extension DailyReportViewController {
                 break
             }
         }
+    }
+    
+    func showMonitoringView(from model: DataModel) {
+        let orgNum = model.orgNum ?? 0
+        let personNum = model.personNum ?? 0
+        let titles = ["企业\(orgNum)", "人员\(personNum)"]
+        segmentedViewDataSource.titles = titles
+        segmentedView.reloadData()
+        
+        if orgNum == 0 && personNum == 0 {
+            self.pagingView.isHidden = true
+            self.noMonitoringView.isHidden = false
+        }else {
+            self.pagingView.isHidden = false
+            self.noMonitoringView.isHidden = true
+        }
+        
     }
     
 }

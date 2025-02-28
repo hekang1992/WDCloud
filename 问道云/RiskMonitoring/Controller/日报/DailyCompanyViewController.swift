@@ -81,9 +81,12 @@ class DailyCompanyViewController: WDBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("企业列表信息=========")
-        self.pageNum = 1
-        getGroupInfo()
-        getCompanyInfo()
+        if IS_LOGIN {
+            self.pageNum = 1
+            getGroupInfo()
+            getCompanyInfo()
+        }
+        
     }
     
     func getCompanyInfo() {

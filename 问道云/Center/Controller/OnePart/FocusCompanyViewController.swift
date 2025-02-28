@@ -179,7 +179,7 @@ class FocusCompanyViewController: WDBaseViewController {
         view.addSubview(companyView)
         companyView.snp.makeConstraints { make in
             make.left.equalToSuperview()
-            make.top.equalTo(menuView.snp.bottom).offset(6.5)
+            make.top.equalTo(menuView.snp.bottom).offset(3)
             make.width.equalTo(SCREEN_WIDTH)
             make.bottom.equalToSuperview()
         }

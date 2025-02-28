@@ -81,9 +81,11 @@ class DailyPeopleViewController: WDBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("人员列表信息=========")
-        self.pageNum = 1
-        getGroupInfo()
-        getPeopleInfo()
+        if IS_LOGIN {
+            self.pageNum = 1
+            getGroupInfo()
+            getPeopleInfo()
+        }
     }
     
     func getPeopleInfo() {

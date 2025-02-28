@@ -19,7 +19,7 @@ import RxDataSources
 //        self.isExpanded = isExpanded
 //    }
 //}
-//
+
 //extension SectionModel: SectionModelType {
 //    typealias Item = customerFollowListModel
 //    init(original: SectionModel, items: [customerFollowListModel]) {
@@ -273,12 +273,12 @@ extension FocusCompanyView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 5 // Section 之间的间距
+        return 1 // Section 之间的间距
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView()
-        footerView.backgroundColor = .clear
+        footerView.backgroundColor = .init(cssStr: "#F5F5F5")
         return footerView
     }
     
