@@ -52,8 +52,20 @@ class SearchMonitoringViewController: WDBaseViewController {
     
     lazy var descImageView: UIImageView = {
         let descImageView = UIImageView()
-//        descImageView.image = UIImage(named: "miaoshiuriskomn")
+        descImageView.image = UIImage(named: "monitoringimgesea")
         return descImageView
+    }()
+    
+    lazy var descImageView1: UIImageView = {
+        let descImageView1 = UIImageView()
+        descImageView1.image = UIImage(named: "wenanjianjong")
+        return descImageView1
+    }()
+    
+    lazy var descImageView2: UIImageView = {
+        let descImageView2 = UIImageView()
+        descImageView2.image = UIImage(named: "bgiamgesea")
+        return descImageView2
     }()
     
     lazy var searchTx: UITextField = {
@@ -81,6 +93,7 @@ class SearchMonitoringViewController: WDBaseViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.isHidden = true
         return tableView
     }()
     
@@ -93,7 +106,9 @@ class SearchMonitoringViewController: WDBaseViewController {
         view.addSubview(cycleView)
         cycleView.addSubview(ctImageView)
         cycleView.addSubview(searchTx)
-//        view.addSubview(descImageView)
+        view.addSubview(descImageView)
+        descImageView.addSubview(descImageView1)
+        descImageView.addSubview(descImageView2)
         view.addSubview(tableView)
         cycleView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -112,16 +127,26 @@ class SearchMonitoringViewController: WDBaseViewController {
             make.right.equalToSuperview().offset(-4)
             make.left.equalTo(ctImageView.snp.right).offset(10)
         }
-//        descImageView.snp.makeConstraints { make in
-//            make.centerX.equalToSuperview()
-//            make.bottom.equalToSuperview().offset(-17)
-//            make.size.equalTo(CGSize(width: 337, height: 79))
-//        }
+        descImageView.snp.makeConstraints { make in
+            make.top.equalTo(cycleView.snp.bottom).offset(1)
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+        }
+        descImageView1.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(110)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: 320, height: 253))
+        }
+        descImageView2.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: 375.pix(), height: 270))
+        }
         tableView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(cycleView.snp.bottom).offset(2)
             make.bottom.equalToSuperview().offset(-2)
-//            make.bottom.equalTo(descImageView.snp.top).offset(-2)
         }
         
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
@@ -135,6 +160,7 @@ class SearchMonitoringViewController: WDBaseViewController {
             guard let self = self else { return }
             getSearchListInfo(from: self.searchTx.text ?? "")
         })
+        
         //查询监控分组
         getMonitoringGroupInfo { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
@@ -183,9 +209,13 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
                     let pageData = model.rows ?? []
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
+                        self.tableView.isHidden = false
+                        self.descImageView.isHidden = true
                         self.emptyView.removeFromSuperview()
                         self.noNetView.removeFromSuperview()
                     }else {
+                        self.tableView.isHidden = true
+                        self.descImageView.isHidden = false
                         self.addNodataView(from: self.tableView)
                     }
                     if self.allArray.count != total {
@@ -323,11 +353,14 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
             guard let self = self else { return }
             switch result {
             case .success(let success):
-                if success.code == 200 {
+                let code = success.code ?? 0
+                if code == 200 {
                     model.monitorFlag = "1"
                     model.groupName = self.groupName ?? ""
                     self.tableView.reloadData()
                     ToastViewConfig.showToast(message: "监控成功")
+                }else if code == 702 {
+                    
                 }
                 break
             case .failure(_):
@@ -354,7 +387,7 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { [weak self] result in
             ViewHud.hideLoadView()
-            guard let self = self else { return }
+            guard self != nil else { return }
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -362,7 +395,7 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
                     listView.checkButton.isSelected = peopleModel.isClickMonitoring
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }
@@ -370,5 +403,9 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
     
     //取消人员监控
     
+    //权限不够,弹窗提示会员
+    private func popVipView() {
+        
+    }
 }
 
