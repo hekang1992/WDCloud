@@ -24,6 +24,13 @@ let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
 
 let SHOW_HOME_LAUNCH = "SHOW_HOME_LAUNCH"
 
+/// 个推开发者网站中申请App时，注册的AppId、AppKey、AppSecret
+let kGtAppId = "GTCNT3ZJsDArVl4BIZsce2"
+
+let kGtAppKey = "OQc1Yk8iat8wtPDhO0G2l6"
+
+let kGtAppSecret = "YSziclPG4rAZZW87YkKfd3"
+
 //高德地图key
 let ATUO_MAP_KEY = "be5c7fd08d404c308286ca0ce04629d0"
 

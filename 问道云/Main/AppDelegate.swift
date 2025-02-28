@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GTSDK
 import DYFStore
 import StoreKit
 import IQKeyboardManagerSwift
@@ -38,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootVcPush()
         openWechat()
         initIAPSDK()
+        initGeTuiSDK(launchOptions: launchOptions)
         window = UIWindow()
         window?.frame = UIScreen.main.bounds
         window?.rootViewController = LaunchViewController()
@@ -151,9 +153,7 @@ extension AppDelegate: WXApiDelegate {
 //内购相关
 extension AppDelegate: DYFStoreAppStorePaymentDelegate {
     
-    //
     func didReceiveAppStorePurchaseRequest(_ queue: SKPaymentQueue, payment: SKPayment, forProduct product: SKProduct) {
-        
     }
     
     func initIAPSDK() {
@@ -165,10 +165,74 @@ extension AppDelegate: DYFStoreAppStorePaymentDelegate {
     
 }
 
+//推送相关
+extension AppDelegate: GeTuiSdkDelegate {
+    
+    func initGeTuiSDK(launchOptions: [AnyHashable : Any]?) {
+        // 通过个推平台分配的appId、 appKey 、appSecret 启动SDK，注：该方法需要在主线程中调用
+        GeTuiSdk.start(withAppId: kGtAppId,
+                       appKey: kGtAppKey,
+                       appSecret: kGtAppSecret,
+                       delegate: self,
+                       launchingOptions: launchOptions)
+        
+        GeTuiSdk.registerRemoteNotification(.init(arrayLiteral: .alert, .badge, .sound))
+        GeTuiSdk.runBackgroundEnable(true)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // 在前台时显示通知
+        completionHandler([.badge, .sound, .list])
+    }
+    
+    //展示APNs通知
+    func geTuiSdkNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler(.init(arrayLiteral: .badge, .sound, .list))
+    }
+    
+    /// 收到通知信息
+    /// - Parameters:
+    ///   - userInfo: apns通知内容
+    ///   - center: UNUserNotificationCenter（iOS10及以上版本）
+    ///   - response: UNNotificationResponse（iOS10及以上版本）
+    ///   - completionHandler: 用来在后台状态下进行操作（iOS10以下版本）
+    func geTuiSdkDidReceiveNotification(_ userInfo: [AnyHashable : Any], notificationCenter center: UNUserNotificationCenter?, response: UNNotificationResponse?, fetchCompletionHandler completionHandler: ((UIBackgroundFetchResult) -> Void)? = nil) {
+        if let userInfo = response?.notification.request.content.userInfo {
+            print("接受userInfo======\(userInfo)")
+        }
+        completionHandler?(.noData)
+    }
+    
+    //接收到通知,可以
+    func geTuiSdkDidReceiveSlience(_ userInfo: [AnyHashable : Any], fromGetui: Bool, offLine: Bool, appId: String?, taskId: String?, msgId: String?, fetchCompletionHandler completionHandler: ((UIBackgroundFetchResult) -> Void)? = nil) {
+        print("通知userInfo======\(userInfo)")
+        completionHandler?(.noData)
+    }
+    
+    func geTuiSdkNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) {
+        
+    }
+    
+    func geTuiSdkDidRegisterClient(_ clientId: String) {
+        print("clientId=====\(clientId)")
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        GeTuiSdk.registerDeviceToken(token)
+    }
+    
+    func geTuiSdkDidOccurError(_ error: Error) {
+        
+    }
+    
+}
+
 extension AppDelegate {
     @objc(application:supportedInterfaceOrientationsForWindow:) func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         if isLandscape {
-            return .all //允许所有模式，手机转动会跟随转动
+            return .all
         } else {
             return .portrait
         }
