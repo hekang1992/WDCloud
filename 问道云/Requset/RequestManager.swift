@@ -122,20 +122,21 @@ class RequestManager: NSObject {
     private func handleResponse(baseModel: BaseModel, completion: @escaping (Result<BaseModel, Error>) -> Void) {
         let msg = baseModel.msg ?? ""
         let code = baseModel.code ?? 0
-        if code == 200 {
+        if code == 200  {
             completion(.success(baseModel))
-        } else {
-            if code == 401 {
-                let vc = UIViewController.getCurrentViewController() as? WDBaseViewController
-                WDLoginConfig.removeLoginInfo()
-                vc?.popLogin()
-                let error = NSError()
-                completion(.failure(error))
-            }else {
-                let error = NSError()
-                completion(.failure(error))
-                ToastViewConfig.showToast(message: msg)
-            }
+        }else if code == 401 {
+            let vc = UIViewController.getCurrentViewController() as? WDBaseViewController
+            WDLoginConfig.removeLoginInfo()
+            vc?.popLogin()
+            let error = NSError()
+            completion(.failure(error))
+        }else if code == 702 {
+            completion(.success(baseModel))
+            ToastViewConfig.showToast(message: msg)
+        }else {
+            let error = NSError()
+            completion(.failure(error))
+            ToastViewConfig.showToast(message: msg)
         }
     }
     

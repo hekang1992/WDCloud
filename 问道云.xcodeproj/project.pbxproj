@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11BAA59D7C6C6212BA834AD4 /* Pods____.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68995903FB3663C128436F79 /* Pods____.framework */; };
 		730384482D606572008AA7C3 /* MyOpinionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730384472D606572008AA7C3 /* MyOpinionViewCell.swift */; };
 		7303844A2D60731C008AA7C3 /* MyOpinioDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730384492D60731C008AA7C3 /* MyOpinioDetailViewController.swift */; };
 		7303844C2D609006008AA7C3 /* ServiceCenterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303844B2D609006008AA7C3 /* ServiceCenterViewCell.swift */; };
@@ -33,7 +34,6 @@
 		730CEE002D54AE2C002DE9DF /* SearchMonitoringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDFF2D54AE2C002DE9DF /* SearchMonitoringViewController.swift */; };
 		730CEE022D54BE83002DE9DF /* SearchMonitoringViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEE012D54BE83002DE9DF /* SearchMonitoringViewCell.swift */; };
 		730DB4192D6C2475007B49B6 /* MonitoringSolutionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730DB4182D6C2475007B49B6 /* MonitoringSolutionViewController.swift */; };
-		730DB4212D6D8856007B49B6 /* Pods_问道云.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 730DB4202D6D8856007B49B6 /* Pods_问道云.framework */; };
 		730DB4222D6D8856007B49B6 /* Pods_问道云.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 730DB4202D6D8856007B49B6 /* Pods_问道云.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD802D01A55900770009 /* OrderListViewCell.swift */; };
 		7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */; };
@@ -142,6 +142,8 @@
 		734896EA2D3A429500B028FE /* RiskUnioViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734896E92D3A429500B028FE /* RiskUnioViewCell.swift */; };
 		734F4EA72D7030DF000D701F /* DailyCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734F4EA62D7030DF000D701F /* DailyCompanyViewController.swift */; };
 		734F4EA92D7030EA000D701F /* DailyPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734F4EA82D7030EA000D701F /* DailyPeopleViewController.swift */; };
+		734F4EAB2D715D48000D701F /* PopBuyVipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734F4EAA2D715D48000D701F /* PopBuyVipView.swift */; };
+		734F4EAD2D716591000D701F /* BuyOneVipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734F4EAC2D716591000D701F /* BuyOneVipViewController.swift */; };
 		7352B2222D35321C00B5391B /* CompanyTwoHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2212D35321C00B5391B /* CompanyTwoHeadView.swift */; };
 		7352B2242D353AB700B5391B /* CompanyThreeHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2232D353AB700B5391B /* CompanyThreeHeadView.swift */; };
 		7352B2262D353C9300B5391B /* CompanyFourHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2252D353C9300B5391B /* CompanyFourHeadView.swift */; };
@@ -363,7 +365,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		68995903FB3663C128436F79 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		68995903FB3663C128436F79 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods____.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		730384472D606572008AA7C3 /* MyOpinionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOpinionViewCell.swift; sourceTree = "<group>"; };
 		730384492D60731C008AA7C3 /* MyOpinioDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOpinioDetailViewController.swift; sourceTree = "<group>"; };
 		7303844B2D609006008AA7C3 /* ServiceCenterViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCenterViewCell.swift; sourceTree = "<group>"; };
@@ -509,6 +511,8 @@
 		734896E92D3A429500B028FE /* RiskUnioViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskUnioViewCell.swift; sourceTree = "<group>"; };
 		734F4EA62D7030DF000D701F /* DailyCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCompanyViewController.swift; sourceTree = "<group>"; };
 		734F4EA82D7030EA000D701F /* DailyPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPeopleViewController.swift; sourceTree = "<group>"; };
+		734F4EAA2D715D48000D701F /* PopBuyVipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopBuyVipView.swift; sourceTree = "<group>"; };
+		734F4EAC2D716591000D701F /* BuyOneVipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyOneVipViewController.swift; sourceTree = "<group>"; };
 		7352B2212D35321C00B5391B /* CompanyTwoHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyTwoHeadView.swift; sourceTree = "<group>"; };
 		7352B2232D353AB700B5391B /* CompanyThreeHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyThreeHeadView.swift; sourceTree = "<group>"; };
 		7352B2252D353C9300B5391B /* CompanyFourHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyFourHeadView.swift; sourceTree = "<group>"; };
@@ -725,7 +729,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				736A40D92D223AEB0065FD9D /* StoreKit.framework in Frameworks */,
-				730DB4212D6D8856007B49B6 /* Pods_问道云.framework in Frameworks */,
+				11BAA59D7C6C6212BA834AD4 /* Pods____.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1233,6 +1237,7 @@
 				737416352D0EC37400E6CD23 /* MembershipCenterViewController.swift */,
 				7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */,
 				73BDABA12D1E973200D93691 /* MembershipListViewController.swift */,
+				734F4EAC2D716591000D701F /* BuyOneVipViewController.swift */,
 			);
 			path = OnePart;
 			sourceTree = "<group>";
@@ -1432,6 +1437,7 @@
 				73FB9C892D5F0EC200554CAD /* RiskPopGroupView.swift */,
 				733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */,
 				733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */,
+				734F4EAA2D715D48000D701F /* PopBuyVipView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1848,7 +1854,6 @@
 		C61455D1CEA19ADD364A1DEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				730DB4202D6D8856007B49B6 /* Pods_问道云.framework */,
 				736A40D82D223AEB0065FD9D /* StoreKit.framework */,
 				73E306D42D1552FC00D18943 /* WechatOpenSDK-XCFramework.xcframework */,
 				73460D1A2D154CCB00EC9408 /* WebKit.framework */,
@@ -2011,6 +2016,7 @@
 				73EDE9F22D59F0A900A0A7E3 /* OneReportViewController.swift in Sources */,
 				73807D592D33808400F8B90D /* CompanyCollectionCell.swift in Sources */,
 				739527FA2D633EBE0020589C /* TwoDueDiligenceViewController.swift in Sources */,
+				734F4EAD2D716591000D701F /* BuyOneVipViewController.swift in Sources */,
 				73FB9C922D5F20C000554CAD /* OpinioUpLoadViewController.swift in Sources */,
 				7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */,
 				733B5FF62D57230A00ADE7C5 /* PopCancelMonitoringView.swift in Sources */,
@@ -2160,6 +2166,7 @@
 				730488092D2A7ACD0024265C /* HomeHeadHotsView.swift in Sources */,
 				734F4EA72D7030DF000D701F /* DailyCompanyViewController.swift in Sources */,
 				7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */,
+				734F4EAB2D715D48000D701F /* PopBuyVipView.swift in Sources */,
 				7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */,
 				73FC5E402D5C342F001D0DEF /* SearchPeopleShareholderViewController.swift in Sources */,
 				730488012D2A64410024265C /* WDRefreshHeader.swift in Sources */,

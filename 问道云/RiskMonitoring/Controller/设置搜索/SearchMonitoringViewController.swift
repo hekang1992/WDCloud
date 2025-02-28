@@ -13,12 +13,17 @@ import TYAlertController
 class SearchMonitoringViewController: WDBaseViewController {
     
     var pageNum: Int = 1
+    
     var allArray: [rowsModel] = []
+    
     //企业分组group
     var groupArray: [rowsModel]?
+    
     //企业分组ID
     var groupnumber: String?
+    
     var groupName: String?
+    
     //个人数组
     var persons: [String] = []
     
@@ -27,10 +32,14 @@ class SearchMonitoringViewController: WDBaseViewController {
         return groupView
     }()
     
+    lazy var buyVipView: PopBuyVipView = {
+        let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+        return buyVipView
+    }()
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "搜索监控企业"
-        headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .clear
         headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
@@ -360,7 +369,8 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
                     self.tableView.reloadData()
                     ToastViewConfig.showToast(message: "监控成功")
                 }else if code == 702 {
-                    
+                    //弹窗提示购买会员
+                    popVipView()
                 }
                 break
             case .failure(_):
@@ -387,12 +397,16 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { [weak self] result in
             ViewHud.hideLoadView()
-            guard self != nil else { return }
+            guard let self = self else { return }
             switch result {
             case .success(let success):
-                if success.code == 200 {
+                let code = success.code ?? 0
+                if code == 200 {
                     peopleModel.isClickMonitoring.toggle()
                     listView.checkButton.isSelected = peopleModel.isClickMonitoring
+                }else if code == 702 {
+                    //弹窗提示购买会员
+                    popVipView()
                 }
                 break
             case .failure(_):
@@ -405,7 +419,25 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
     
     //权限不够,弹窗提示会员
     private func popVipView() {
-        
+        let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+        buyVipView.cancelBlock = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+        buyVipView.buyOneBlock = { [weak self] in
+            //跳转购买单次会员
+            self?.dismiss(animated: true, completion: {
+                let oneVc = BuyOneVipViewController()
+                self?.navigationController?.pushViewController(oneVc, animated: true)
+            })
+        }
+        buyVipView.buyVipBlock = { [weak self] in
+            //跳转购买会员
+            self?.dismiss(animated: true, completion: {
+                let memVc = MembershipCenterViewController()
+                self?.navigationController?.pushViewController(memVc, animated: true)
+            })
+        }
+        self.present(alertVc, animated: true)
     }
 }
 

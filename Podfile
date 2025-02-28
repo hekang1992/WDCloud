@@ -60,4 +60,10 @@ target '问道云' do
   
   pod 'SevenSwitch', '~> 2.1.0'
   
+  pod 'GTSDK', "~> 3.0.4.0"
+  
+  pod 'GTCommonSDK', '3.0.8.0-noidfa'
+  
+  pod 'GTExtensionSDK', "~> 3.0.3"
+  
 end
