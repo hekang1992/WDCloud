@@ -47,6 +47,12 @@ class DailyReportViewController: WDBaseViewController {
         return noMonitoringView
     }()
     
+    lazy var noLoginView: RiskNoLoginView = {
+        let noLoginView = RiskNoLoginView()
+        noLoginView.isHidden = true
+        return noLoginView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -89,14 +95,26 @@ class DailyReportViewController: WDBaseViewController {
             make.top.equalToSuperview().offset(1)
             make.bottom.equalToSuperview()
         }
-        
+        view.addSubview(noLoginView)
+        noLoginView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+            make.top.equalToSuperview().offset(1)
+            make.bottom.equalToSuperview()
+        }
+        noLoginView.loginBlock = { [weak self] in
+            self?.popLogin()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if IS_LOGIN {
             //获取数字信息
+            noLoginView.isHidden = true
             getNumInfo()
+        }else {
+            noLoginView.isHidden = false
         }
     }
     
