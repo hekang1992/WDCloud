@@ -39,24 +39,24 @@ class WDRiskViewController: WDBaseViewController {
         return headView
     }()
     
-    lazy var oneVc: DailyReportViewController = {
-        let oneVc = DailyReportViewController()
-        return oneVc
+    lazy var dailyVc: DailyReportViewController = {
+        let dailyVc = DailyReportViewController()
+        return dailyVc
     }()
     
-    lazy var twoVc: WeekReportViewController = {
-        let twoVc = WeekReportViewController()
-        return twoVc
+    lazy var weekVc: WeekReportViewController = {
+        let weekVc = WeekReportViewController()
+        return weekVc
     }()
     
-    lazy var threeVc: MonthReportViewController = {
-        let threeVc = MonthReportViewController()
-        return threeVc
+    lazy var monthVc: MonthReportViewController = {
+        let monthVc = MonthReportViewController()
+        return monthVc
     }()
     
-    lazy var fourVc: BothReportViewController = {
-        let fourVc = BothReportViewController()
-        return fourVc
+    lazy var bothVc: BothReportViewController = {
+        let bothVc = BothReportViewController()
+        return bothVc
     }()
     
     var titles = ["日报", "周报", "月报", "全部"]
@@ -129,21 +129,14 @@ extension WDRiskViewController: JXSegmentedListContainerViewDataSource {
     
     func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
         if index == 0 {
-            let vc = DailyReportViewController()
-            if index == 0 {
-               vc.titles = ["吃鸡🍗", "吃西瓜🍉", "吃热狗🌭"]
-            }else {
-                vc.titles = ["高尔夫🏌", "滑雪⛷", "自行车🚴"]
-            }
-            return vc
-        }
-        let vc = DailyReportViewController()
-        if index == 0 {
-           vc.titles = ["吃鸡🍗", "吃西瓜🍉", "吃热狗🌭"]
+            return self.dailyVc
+        }else if index == 1 {
+            return self.weekVc
+        }else if index  == 2 {
+            return self.monthVc
         }else {
-            vc.titles = ["高尔夫🏌", "滑雪⛷", "自行车🚴"]
+            return self.bothVc
         }
-        return vc
     }
     
 }

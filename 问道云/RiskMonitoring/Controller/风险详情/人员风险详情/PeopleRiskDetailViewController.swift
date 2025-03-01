@@ -3,25 +3,36 @@
 //  问道云
 //
 //  Created by Andrew on 2025/1/17.
-//
+//  风险详情页面
 
 import UIKit
 import JXSegmentedView
 import JXPagingView
+import SwiftyJSON
 
 class PeopleRiskDetailViewController: WDBaseViewController {
     
-    var enityId: String = ""
+    var enityId: String? {
+        didSet {}
+    }
     
-    var name: String = ""
+    var name: String? {
+        didSet {}
+    }
+    
+    var logo: String? {
+        didSet {}
+    }
+    
+    var time: String? {
+        didSet {}
+    }
+    
+    var groupName: String? {
+        didSet {}
+    }
     
     var intBlock: ((Double) -> Void)?
-    
-//    lazy var riskDetailView: RiskDetailView = {
-//        let riskDetailView = RiskDetailView()
-//        riskDetailView.backgroundColor = .white
-//        return riskDetailView
-//    }()
     
     //头部view
     lazy var homeHeadView: RiskDetailHeadView = preferredTableHeaderView()
@@ -32,7 +43,7 @@ class PeopleRiskDetailViewController: WDBaseViewController {
     
     let titles = ["自身风险", "关联风险", "历史风险"]
     
-    var JXTableHeaderViewHeight: Int = Int(65 + StatusHeightManager.navigationBarHeight)
+    var JXTableHeaderViewHeight: Int = Int(84 + StatusHeightManager.navigationBarHeight)
     
     var JXheightForHeaderInSection: Int = 36
     
@@ -42,10 +53,6 @@ class PeopleRiskDetailViewController: WDBaseViewController {
         let headView = HeadView(frame: .zero, typeEnum: .none)
         return headView
     }()
-    
-    var functionType: String = ""// 1-自身风险，2-历史风险，3-日报，4-全部
-    var dateType: String = ""
-    var date: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,10 +81,10 @@ class PeopleRiskDetailViewController: WDBaseViewController {
         segmentedView.listContainer = pagingView.listContainerView
         //距离高度禁止
         pagingView.pinSectionHeaderVerticalOffset = Int(StatusHeightManager.navigationBarHeight)
-        headView.titlelabel.text = "个人风险信息"
+        headView.titlelabel.text = "企业风险信息"
         addHeadView(from: headView)
         //获取风险数据
-        getRiskDetailInfo()
+//        getRiskDetailInfo()
     }
     
     //一定要加上这句代码,否则不会下拉刷新
@@ -88,7 +95,21 @@ class PeopleRiskDetailViewController: WDBaseViewController {
     //头部
     func preferredTableHeaderView() -> RiskDetailHeadView {
         let header = RiskDetailHeadView()
-        //获取个人详情头部信息
+        header.iconImageView.kf.setImage(with: URL(string: logo ?? ""), placeholder: UIImage.imageOfText(name ?? "", size: (57, 57)))
+        header.namelabel.text = name
+        header.timeLabel.text = "监控周期: \(time ?? "")"
+        header.tagLabel.text = groupName ?? ""
+        header.reportBtnBlock = { [weak self] in
+            guard let self = self else { return }
+            let oneRpVc = OneReportViewController()
+            let entityid = enityId ?? ""
+            let firmname = name ?? ""
+            let json: JSON = ["entityId": entityid,
+                              "entityName": firmname]
+            let firmModel = firmInfoModel(json: json)
+            oneRpVc.firmModel = firmModel
+            self.navigationController?.pushViewController(oneRpVc, animated: true)
+        }
         return header
     }
     
@@ -97,36 +118,6 @@ class PeopleRiskDetailViewController: WDBaseViewController {
     }
     
 }
-
-extension PeopleRiskDetailViewController {
-#warning("获取人寰风险详情======数据不支持未开发")
-    //获取风险详情
-    private func getRiskDetailInfo() {
-        let man = RequestManager()
-        ViewHud.addLoadView()
-        let dict = ["entityid": enityId,
-                    "functionType": functionType,
-                    "dateType": dateType,
-                    "date": date]
-        man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/riskmonitoring/riskDynamicslow",
-                       method: .get) { result in
-            switch result {
-            case .success(let success):
-                if let model = success.data {
-                    
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
-}
-
-
-
 
 extension PeopleRiskDetailViewController: JXPagingViewDelegate {
     
@@ -153,12 +144,21 @@ extension PeopleRiskDetailViewController: JXPagingViewDelegate {
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
             let oneRiskVc = MySelfRiskDetailViewController()
+            oneRiskVc.enityId = enityId ?? ""
+            oneRiskVc.name = name ?? ""
+            oneRiskVc.logo = logo ?? ""
             return oneRiskVc
         }else if index == 1 {
             let twoRiskVc = UnioRiskDetailViewController()
+            twoRiskVc.enityId = enityId ?? ""
+            twoRiskVc.name = name ?? ""
+            twoRiskVc.logo = logo ?? ""
             return twoRiskVc
         }else {
             let threeRiskVc = HistoryRiskDetailViewController()
+            threeRiskVc.enityId = enityId ?? ""
+            threeRiskVc.name = name ?? ""
+            threeRiskVc.logo = logo ?? ""
             return threeRiskVc
         }
     }

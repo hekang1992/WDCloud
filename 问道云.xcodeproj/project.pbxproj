@@ -280,6 +280,14 @@
 		73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */; };
 		73CFEB9A2D01955300B2FE1B /* UserAllOrderSController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */; };
 		73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */; };
+		73D4E3EB2D733D00005C73D8 /* DailyPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D4E3EA2D733D00005C73D8 /* DailyPeopleViewController.swift */; };
+		73D4E3ED2D733D0B005C73D8 /* DailyCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D4E3EC2D733D0B005C73D8 /* DailyCompanyViewController.swift */; };
+		73D4E3EF2D73401B005C73D8 /* WeekCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D4E3EE2D73401B005C73D8 /* WeekCompanyViewController.swift */; };
+		73D4E3F12D734026005C73D8 /* WeekPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D4E3F02D734026005C73D8 /* WeekPeopleViewController.swift */; };
+		73D4E3F52D734038005C73D8 /* MonthPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D4E3F42D734038005C73D8 /* MonthPeopleViewController.swift */; };
+		73D4E3F72D734042005C73D8 /* MonthCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D4E3F62D734042005C73D8 /* MonthCompanyViewController.swift */; };
+		73D4E3F92D73404F005C73D8 /* BothCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D4E3F82D73404F005C73D8 /* BothCompanyViewController.swift */; };
+		73D4E3FB2D734059005C73D8 /* BothPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D4E3FA2D734059005C73D8 /* BothPeopleViewController.swift */; };
 		73D50B872D16ACEC00EF081A /* FocusCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D50B862D16ACEC00EF081A /* FocusCompanyViewController.swift */; };
 		73E306D22D154E9E00D18943 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73E306D12D154E9D00D18943 /* Launch Screen.storyboard */; };
 		73E306DF2D156C0800D18943 /* MyQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E306DE2D156C0800D18943 /* MyQRCodeView.swift */; };
@@ -647,6 +655,14 @@
 		73CFEB972D01887600B2FE1B /* UserCenterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCenterItemCell.swift; sourceTree = "<group>"; };
 		73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAllOrderSController.swift; sourceTree = "<group>"; };
 		73CFEB9B2D01996900B2FE1B /* UserAllOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAllOrderView.swift; sourceTree = "<group>"; };
+		73D4E3EA2D733D00005C73D8 /* DailyPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPeopleViewController.swift; sourceTree = "<group>"; };
+		73D4E3EC2D733D0B005C73D8 /* DailyCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCompanyViewController.swift; sourceTree = "<group>"; };
+		73D4E3EE2D73401B005C73D8 /* WeekCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCompanyViewController.swift; sourceTree = "<group>"; };
+		73D4E3F02D734026005C73D8 /* WeekPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekPeopleViewController.swift; sourceTree = "<group>"; };
+		73D4E3F42D734038005C73D8 /* MonthPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPeopleViewController.swift; sourceTree = "<group>"; };
+		73D4E3F62D734042005C73D8 /* MonthCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCompanyViewController.swift; sourceTree = "<group>"; };
+		73D4E3F82D73404F005C73D8 /* BothCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothCompanyViewController.swift; sourceTree = "<group>"; };
+		73D4E3FA2D734059005C73D8 /* BothPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothPeopleViewController.swift; sourceTree = "<group>"; };
 		73D50B862D16ACEC00EF081A /* FocusCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyViewController.swift; sourceTree = "<group>"; };
 		73E306D12D154E9D00D18943 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		73E306D32D15521800D18943 /* 问道云.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "问道云.entitlements"; sourceTree = "<group>"; };
@@ -1146,6 +1162,8 @@
 			isa = PBXGroup;
 			children = (
 				73868A402D55F53700CE107D /* DailyReportViewController.swift */,
+				73D4E3EC2D733D0B005C73D8 /* DailyCompanyViewController.swift */,
+				73D4E3EA2D733D00005C73D8 /* DailyPeopleViewController.swift */,
 			);
 			path = "日报";
 			sourceTree = "<group>";
@@ -1154,6 +1172,8 @@
 			isa = PBXGroup;
 			children = (
 				73868A422D55F54E00CE107D /* WeekReportViewController.swift */,
+				73D4E3EE2D73401B005C73D8 /* WeekCompanyViewController.swift */,
+				73D4E3F02D734026005C73D8 /* WeekPeopleViewController.swift */,
 			);
 			path = "周报";
 			sourceTree = "<group>";
@@ -1162,6 +1182,8 @@
 			isa = PBXGroup;
 			children = (
 				73868A442D55F55A00CE107D /* MonthReportViewController.swift */,
+				73D4E3F62D734042005C73D8 /* MonthCompanyViewController.swift */,
+				73D4E3F42D734038005C73D8 /* MonthPeopleViewController.swift */,
 			);
 			path = "月报";
 			sourceTree = "<group>";
@@ -1170,6 +1192,8 @@
 			isa = PBXGroup;
 			children = (
 				73868A462D55F56600CE107D /* BothReportViewController.swift */,
+				73D4E3F82D73404F005C73D8 /* BothCompanyViewController.swift */,
+				73D4E3FA2D734059005C73D8 /* BothPeopleViewController.swift */,
 			);
 			path = "全部";
 			sourceTree = "<group>";
@@ -1990,6 +2014,7 @@
 				73C007112D6459AF003C3CE1 /* SearchDueDiligenceView.swift in Sources */,
 				739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */,
 				7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */,
+				73D4E3EF2D73401B005C73D8 /* WeekCompanyViewController.swift in Sources */,
 				730CEDFC2D544EF6002DE9DF /* CompanyLawCell.swift in Sources */,
 				7340E1D62D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift in Sources */,
 				73FC5E652D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift in Sources */,
@@ -2028,6 +2053,8 @@
 				73FB9C842D5EEC3700554CAD /* RiskSettingViewController.swift in Sources */,
 				7340E1982D5CD485008FD5C7 /* SearchPeopleHighConsumptionViewController.swift in Sources */,
 				739DCA162D670E73009CFC78 /* PropertyThreeBothViewController.swift in Sources */,
+				73D4E3F52D734038005C73D8 /* MonthPeopleViewController.swift in Sources */,
+				73D4E3F92D73404F005C73D8 /* BothCompanyViewController.swift in Sources */,
 				739DCA1E2D671669009CFC78 /* MyCollectionPropertyViewController.swift in Sources */,
 				7340E1CE2D5DE622008FD5C7 /* SearchCompanyBeneficialOwnerViewController.swift in Sources */,
 				739DCA062D66E001009CFC78 /* PropertyOneViewController.swift in Sources */,
@@ -2053,6 +2080,7 @@
 				73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */,
 				735A3F6D2D6572B000448268 /* SearchOneReportCell.swift in Sources */,
 				7340E18F2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift in Sources */,
+				73D4E3F72D734042005C73D8 /* MonthCompanyViewController.swift in Sources */,
 				73FB9C8A2D5F0EC200554CAD /* RiskPopGroupView.swift in Sources */,
 				73FB9C8E2D5F17BF00554CAD /* OpinionCenterViewController.swift in Sources */,
 				734896D82D39EDDF00B028FE /* RiskDetailView.swift in Sources */,
@@ -2129,6 +2157,7 @@
 				73950F752D55B3E7005AD034 /* AddMonitoringListView.swift in Sources */,
 				73C0070D2D644EE1003C3CE1 /* SearchDueDiligenceViewController.swift in Sources */,
 				73C6B1B42D34FAB700CD3816 /* CompanyOneHeadView.swift in Sources */,
+				73D4E3F12D734026005C73D8 /* WeekPeopleViewController.swift in Sources */,
 				7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */,
 				7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */,
 				737416422D0FD0D000E6CD23 /* InvoiceListView.swift in Sources */,
@@ -2155,6 +2184,7 @@
 				73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */,
 				73FC5E6A2D5CADFC001D0DEF /* SearchLawSuitViewController.swift in Sources */,
 				7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */,
+				73D4E3ED2D733D0B005C73D8 /* DailyCompanyViewController.swift in Sources */,
 				730488092D2A7ACD0024265C /* HomeHeadHotsView.swift in Sources */,
 				7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */,
 				734F4EAB2D715D48000D701F /* PopBuyVipView.swift in Sources */,
@@ -2205,6 +2235,7 @@
 				7340E1832D5CD326008FD5C7 /* SearchPeopleAssetFreezeViewController.swift in Sources */,
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				7340E1712D5CC6B8008FD5C7 /* SearchEnvironmentalPenaltyViewController.swift in Sources */,
+				73D4E3FB2D734059005C73D8 /* BothPeopleViewController.swift in Sources */,
 				730488112D2A97F00024265C /* HomeVideoListViewCell.swift in Sources */,
 				7340E19B2D5CD4D0008FD5C7 /* SearchCourtNoticeViewController.swift in Sources */,
 				734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */,
@@ -2232,6 +2263,7 @@
 				73FB9C902D5F1C3D00554CAD /* OpinionListCenterViewController.swift in Sources */,
 				7340E1AB2D5CD60F008FD5C7 /* SearchCompanyJudicialAuctioniewViewController.swift in Sources */,
 				73FC5E3C2D5C3403001D0DEF /* SearchShareholderViewController.swift in Sources */,
+				73D4E3EB2D733D00005C73D8 /* DailyPeopleViewController.swift in Sources */,
 				73868A472D55F56600CE107D /* BothReportViewController.swift in Sources */,
 				73CC03772D6859660022F794 /* HighSearchViewController.swift in Sources */,
 				7330CB822D23E65900778D54 /* ContactManager.swift in Sources */,
