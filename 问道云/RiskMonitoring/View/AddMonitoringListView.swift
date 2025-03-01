@@ -20,7 +20,13 @@ class AddMonitoringListView: BaseView {
                 let listView = MonitoringListView()
                 listView.nameLabel.text = model.personName ?? ""
                 listView.tagsLabel.text = model.positions?.joined(separator: ",")
-                listView.checkButton.isSelected = model.isClickMonitoring
+                let monitorFlag = model.monitorFlag ?? ""
+                if monitorFlag == "1" {
+                    listView.checkButton.isSelected = true
+                }else {
+                    listView.checkButton.isSelected = false
+                }
+//                listView.checkButton.isSelected = model.isClickMonitoring
                 listView.setContentHuggingPriority(.defaultLow, for: .vertical)
                 stackView.addArrangedSubview(listView)
                 listView.checkButton.rx.tap.subscribe(onNext: { [weak self] in

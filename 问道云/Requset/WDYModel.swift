@@ -699,7 +699,9 @@ class rowsModel {
     var orgStatus: String?
     var personName: String?
     var monitorCnt: Int?
+    var appleById: Int?//单项付费ID
     init(json: JSON) {
+        self.appleById = json["appleById"].intValue
         self.monitorCnt = json["monitorCnt"].intValue
         self.personId = json["personId"].stringValue
         self.personName = json["personName"].stringValue

@@ -54,10 +54,7 @@ class MonitoringCell: BaseViewCell {
         didSet {
             guard let model = peopleModel else { return }
             let logo = model.logo ?? ""
-            
-//            let personName = model.personName ?? ""
-            let personName = "问道云"
-            
+            let personName = model.personName ?? ""
             ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(personName, size: (30, 30), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             namelabel.text = personName
             

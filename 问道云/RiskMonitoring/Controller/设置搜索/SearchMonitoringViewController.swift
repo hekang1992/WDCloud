@@ -402,8 +402,9 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
             case .success(let success):
                 let code = success.code ?? 0
                 if code == 200 {
-                    peopleModel.isClickMonitoring.toggle()
-                    listView.checkButton.isSelected = peopleModel.isClickMonitoring
+                    peopleModel.monitorFlag = "1"
+                    self.tableView.reloadData()
+                    ToastViewConfig.showToast(message: "监控成功")
                 }else if code == 702 {
                     //弹窗提示购买会员
                     popVipView()

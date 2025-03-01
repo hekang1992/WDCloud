@@ -291,7 +291,7 @@ class PayBtnView: BaseView {
         addSubview(payBtn)
         payBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: 351, height: 48))
+            make.size.equalTo(CGSize(width: 351.pix(), height: 48.pix()))
             make.bottom.equalToSuperview().offset(-25)
         }
     }

@@ -151,6 +151,7 @@ extension SearchMonitoringViewCell {
         let positions = model.positions ?? []
         let riskMonitorPersonDtoList = model.riskMonitorPersonDtoList ?? []
         oneListView.titleLabel.text = positions.joined(separator: ",")
+        
         if !riskMonitorPersonDtoList.isEmpty {
             oneListView.modelArray = riskMonitorPersonDtoList
             stackView.addArrangedSubview(oneListView)

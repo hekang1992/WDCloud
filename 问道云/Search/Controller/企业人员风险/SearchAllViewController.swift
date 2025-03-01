@@ -38,31 +38,17 @@ class SearchAllViewController: WDBaseViewController {
     
     lazy var companyVc: SearchCompanyViewController = {
         let companyVc = SearchCompanyViewController()
-//        companyVc.completeBlock = { [weak self] in
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                self?.searchHeadView.searchTx.becomeFirstResponder()
-//            }
-//        }
         return companyVc
     }()
     
     lazy var peopleVc: SearchPeopleViewController = {
         let peopleVc = SearchPeopleViewController()
-//        peopleVc.completeBlock = { [weak self] in
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                self?.searchHeadView.searchTx.becomeFirstResponder()
-//            }
-//        }
         return peopleVc
     }()
     
     lazy var riskVc: SearchRiskViewController = {
         let riskVc = SearchRiskViewController()
-//        riskVc.completeBlock = { [weak self] in
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                self?.searchHeadView.searchTx.becomeFirstResponder()
-//            }
-//        }
+        
         return riskVc
     }()
     
@@ -106,9 +92,6 @@ class SearchAllViewController: WDBaseViewController {
                 }
             })
             .disposed(by: disposeBag)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.searchHeadView.searchTx.becomeFirstResponder()
-        }
     }
     
 }
@@ -179,6 +162,9 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 searchHeadView.searchTx.text = searchStr
                 companyVc.searchWords = searchStr
             }
+            companyVc.completeBlock = { [weak self] in
+                self?.searchHeadView.searchTx.becomeFirstResponder()
+            }
             return companyVc
         }else if index == 1 {
             peopleVc.lastSearchTextBlock = { [weak self] searchStr in
@@ -186,12 +172,18 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 searchHeadView.searchTx.text = searchStr
                 peopleVc.searchWords = searchStr
             }
+            peopleVc.completeBlock = { [weak self] in
+                self?.searchHeadView.searchTx.becomeFirstResponder()
+            }
             return peopleVc
         }else {
             riskVc.lastSearchTextBlock = { [weak self] searchStr in
                 guard let self = self else { return }
                 searchHeadView.searchTx.text = searchStr
                 riskVc.searchWords = searchStr
+            }
+            riskVc.completeBlock = { [weak self] in
+                self?.searchHeadView.searchTx.becomeFirstResponder()
             }
             return riskVc
         }

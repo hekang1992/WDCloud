@@ -207,10 +207,4 @@ extension MembershipListViewController {
             }
         }
     }
-    
-    
-}
-
-extension MembershipListViewController {
-    
 }

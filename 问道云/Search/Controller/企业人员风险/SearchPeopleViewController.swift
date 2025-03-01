@@ -32,13 +32,6 @@ class SearchPeopleViewController: WDBaseViewController {
     //被搜索的关键词
     var searchWordsRelay = BehaviorRelay<String>(value: "")
     
-    var searchWords: String? {
-        didSet {
-            guard let searchWords = searchWords else { return }
-            searchWordsRelay.accept(searchWords)
-        }
-    }
-    
     //热搜
     var hotWordsArray = BehaviorRelay<[rowsModel]?>(value: nil)
     
@@ -46,6 +39,13 @@ class SearchPeopleViewController: WDBaseViewController {
     
     //搜索文字回调
     var lastSearchTextBlock: ((String) -> Void)?
+    
+    var searchWords: String? {
+        didSet {
+            guard let searchWords = searchWords else { return }
+            searchWordsRelay.accept(searchWords)
+        }
+    }
     
     lazy var peopleView: OneCompanyView = {
         let peopleView = OneCompanyView()
@@ -208,13 +208,11 @@ extension SearchPeopleViewController {
     //最近搜索
     private func getlastSearch(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
-        ViewHud.addLoadView()
         let dict = ["searchType": "2",
                     "moduleId": "02"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -257,7 +255,6 @@ extension SearchPeopleViewController {
     //浏览历史
     private func getBrowsingHistory(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
-        ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "2",
@@ -265,7 +262,6 @@ extension SearchPeopleViewController {
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -321,7 +317,6 @@ extension SearchPeopleViewController {
     //热搜
     private func getHotWords(completion: @escaping (Bool) -> Void) {
         let man = RequestManager()
-        ViewHud.addLoadView()
         let dict = ["moduleId": "02"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
@@ -438,14 +433,14 @@ extension SearchPeopleViewController {
     //搜索人员列表
     private func searchListInfo() {
         let dict = ["keywords": searchWords ?? "",
-                    "entityIndustry": entityIndustry,
-                    "entityArea": entityArea,
+                    "orgIndustry": entityIndustry,
+                    "orgArea": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
         let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/person/search",
+                       pageUrl: "/firminfo/v2/person/boss-search",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.twoPeopleListView.tableView.mj_header?.endRefreshing()

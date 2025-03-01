@@ -194,6 +194,12 @@
 		73868A432D55F54E00CE107D /* WeekReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73868A422D55F54E00CE107D /* WeekReportViewController.swift */; };
 		73868A452D55F55A00CE107D /* MonthReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73868A442D55F55A00CE107D /* MonthReportViewController.swift */; };
 		73868A472D55F56600CE107D /* BothReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73868A462D55F56600CE107D /* BothReportViewController.swift */; };
+		738E96162D72CF7800E564B1 /* WeekCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E96152D72CF7800E564B1 /* WeekCompanyViewController.swift */; };
+		738E96182D72CF8300E564B1 /* WeekPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E96172D72CF8300E564B1 /* WeekPeopleViewController.swift */; };
+		738E961A2D72CF9C00E564B1 /* MonthCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E96192D72CF9C00E564B1 /* MonthCompanyViewController.swift */; };
+		738E961C2D72CFC200E564B1 /* MonthPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E961B2D72CFC200E564B1 /* MonthPeopleViewController.swift */; };
+		738E961E2D72CFD000E564B1 /* BothPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E961D2D72CFD000E564B1 /* BothPeopleViewController.swift */; };
+		738E96202D72CFDA00E564B1 /* BothCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E961F2D72CFDA00E564B1 /* BothCompanyViewController.swift */; };
 		73950F732D55A93A005AD034 /* PopMonitoringGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F722D55A93A005AD034 /* PopMonitoringGroupView.swift */; };
 		73950F752D55B3E7005AD034 /* AddMonitoringListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F742D55B3E7005AD034 /* AddMonitoringListView.swift */; };
 		73950F772D55EE2B005AD034 /* MonitoringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F762D55EE2B005AD034 /* MonitoringCell.swift */; };
@@ -563,6 +569,12 @@
 		73868A422D55F54E00CE107D /* WeekReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekReportViewController.swift; sourceTree = "<group>"; };
 		73868A442D55F55A00CE107D /* MonthReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthReportViewController.swift; sourceTree = "<group>"; };
 		73868A462D55F56600CE107D /* BothReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothReportViewController.swift; sourceTree = "<group>"; };
+		738E96152D72CF7800E564B1 /* WeekCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCompanyViewController.swift; sourceTree = "<group>"; };
+		738E96172D72CF8300E564B1 /* WeekPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekPeopleViewController.swift; sourceTree = "<group>"; };
+		738E96192D72CF9C00E564B1 /* MonthCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCompanyViewController.swift; sourceTree = "<group>"; };
+		738E961B2D72CFC200E564B1 /* MonthPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPeopleViewController.swift; sourceTree = "<group>"; };
+		738E961D2D72CFD000E564B1 /* BothPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothPeopleViewController.swift; sourceTree = "<group>"; };
+		738E961F2D72CFDA00E564B1 /* BothCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothCompanyViewController.swift; sourceTree = "<group>"; };
 		73950F722D55A93A005AD034 /* PopMonitoringGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopMonitoringGroupView.swift; sourceTree = "<group>"; };
 		73950F742D55B3E7005AD034 /* AddMonitoringListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMonitoringListView.swift; sourceTree = "<group>"; };
 		73950F762D55EE2B005AD034 /* MonitoringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringCell.swift; sourceTree = "<group>"; };
@@ -1160,6 +1172,8 @@
 			isa = PBXGroup;
 			children = (
 				73868A422D55F54E00CE107D /* WeekReportViewController.swift */,
+				738E96152D72CF7800E564B1 /* WeekCompanyViewController.swift */,
+				738E96172D72CF8300E564B1 /* WeekPeopleViewController.swift */,
 			);
 			path = "周报";
 			sourceTree = "<group>";
@@ -1168,6 +1182,8 @@
 			isa = PBXGroup;
 			children = (
 				73868A442D55F55A00CE107D /* MonthReportViewController.swift */,
+				738E96192D72CF9C00E564B1 /* MonthCompanyViewController.swift */,
+				738E961B2D72CFC200E564B1 /* MonthPeopleViewController.swift */,
 			);
 			path = "月报";
 			sourceTree = "<group>";
@@ -1176,6 +1192,8 @@
 			isa = PBXGroup;
 			children = (
 				73868A462D55F56600CE107D /* BothReportViewController.swift */,
+				738E961F2D72CFDA00E564B1 /* BothCompanyViewController.swift */,
+				738E961D2D72CFD000E564B1 /* BothPeopleViewController.swift */,
 			);
 			path = "全部";
 			sourceTree = "<group>";
@@ -1996,6 +2014,7 @@
 				73C007112D6459AF003C3CE1 /* SearchDueDiligenceView.swift in Sources */,
 				739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */,
 				7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */,
+				738E96162D72CF7800E564B1 /* WeekCompanyViewController.swift in Sources */,
 				730CEDFC2D544EF6002DE9DF /* CompanyLawCell.swift in Sources */,
 				7340E1D62D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift in Sources */,
 				73FC5E652D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift in Sources */,
@@ -2051,6 +2070,7 @@
 				7374164E2D100BB200E6CD23 /* SearchInvoiceCell.swift in Sources */,
 				73C36A7B2D2D147400D6DC46 /* OneCompanyView.swift in Sources */,
 				73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */,
+				738E96202D72CFDA00E564B1 /* BothCompanyViewController.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
 				7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */,
 				73FC5E372D5B2AED001D0DEF /* SanctionTableViewCell.swift in Sources */,
@@ -2066,6 +2086,7 @@
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
 				73950F732D55A93A005AD034 /* PopMonitoringGroupView.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
+				738E961C2D72CFC200E564B1 /* MonthPeopleViewController.swift in Sources */,
 				73B362572D37B9CB003BD911 /* PeopleDetailTwoViewController.swift in Sources */,
 				739DCA262D671B45009CFC78 /* MyOneSettingViewController.swift in Sources */,
 				730CEDFA2D5446C8002DE9DF /* CompanyLawCellHeadView.swift in Sources */,
@@ -2079,6 +2100,7 @@
 				736E97812D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift in Sources */,
 				730CEE002D54AE2C002DE9DF /* SearchMonitoringViewController.swift in Sources */,
 				73E971752D2FCF0500F12B15 /* TwoCompanySpecListCell.swift in Sources */,
+				738E961E2D72CFD000E564B1 /* BothPeopleViewController.swift in Sources */,
 				736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */,
 				736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */,
 				73FC5E6E2D5CAE19001D0DEF /* SearchPeopleLawSuitViewController.swift in Sources */,
@@ -2131,6 +2153,7 @@
 				7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */,
 				73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */,
 				73C36A712D2D050200D6DC46 /* SearchHeadView.swift in Sources */,
+				738E96182D72CF8300E564B1 /* WeekPeopleViewController.swift in Sources */,
 				739DCA102D66FAAB009CFC78 /* PropertyPeopleViewController.swift in Sources */,
 				73FBF6912D648CE30031452F /* DueDiligenceSettingViewController.swift in Sources */,
 				73950F752D55B3E7005AD034 /* AddMonitoringListView.swift in Sources */,
@@ -2266,6 +2289,7 @@
 				7340E18D2D5CD404008FD5C7 /* SearchExternalGuaranteeViewController.swift in Sources */,
 				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
 				739DCA1C2D67133E009CFC78 /* SearchAddPropertyViewController.swift in Sources */,
+				738E961A2D72CF9C00E564B1 /* MonthCompanyViewController.swift in Sources */,
 				73807D5F2D33B7D100F8B90D /* CompanyActivityViewCell.swift in Sources */,
 				730488152D2BD2380024265C /* HomeItemViewCell.swift in Sources */,
 				734F4EA92D7030EA000D701F /* DailyPeopleViewController.swift in Sources */,
