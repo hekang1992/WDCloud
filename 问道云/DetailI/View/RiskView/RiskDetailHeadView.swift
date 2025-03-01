@@ -65,7 +65,7 @@ class RiskDetailHeadView: BaseView {
         iconImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(StatusHeightManager.navigationBarHeight + 15.5)
             make.left.equalToSuperview().offset(18)
-            make.size.equalTo(CGSize(width: 35, height: 35))
+            make.size.equalTo(CGSize(width: 57, height: 57))
         }
         namelabel.snp.makeConstraints { make in
             make.top.equalTo(iconImageView.snp.top).offset(-2)

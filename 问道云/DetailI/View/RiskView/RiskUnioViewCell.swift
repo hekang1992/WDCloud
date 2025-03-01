@@ -10,7 +10,7 @@ import RxRelay
 
 class RiskUnioViewCell: BaseViewCell {
     
-    var model = BehaviorRelay<rimRiskModel?>(value: nil)
+    var model = BehaviorRelay<statisticRiskDtosModel?>(value: nil)
 
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
@@ -114,30 +114,30 @@ class RiskUnioViewCell: BaseViewCell {
             make.height.equalTo(1)
         }
         model.asObservable().subscribe(onNext: { [weak self] model in
-            guard let self = self, let model = model else { return }
-            nameLabel.text = model.entityname ?? ""
-            descLabel.text = model.relate ?? ""
-            numLabel.text = "累计风险: \(model.relatedEntitySize ?? 0)条"
-            if let itemType = model.itemType, itemType.count > 0 {
-                oneView.nameLabel.text = itemType[0].typeName ?? ""
-                twoView.nameLabel.text = itemType[1].typeName ?? ""
-                threeView.nameLabel.text = itemType[2].typeName ?? ""
-                fourView.nameLabel.text = itemType[3].typeName ?? ""
-                
-                oneView.numLabel.text = "\(itemType[0].count ?? 0)"
-                twoView.numLabel.text = "\(itemType[1].count ?? 0)"
-                threeView.numLabel.text = "\(itemType[2].count ?? 0)"
-                fourView.numLabel.text = "\(itemType[3].count ?? 0)"
-                
-                oneView.numLabel.textColor = UIColor.init(cssStr: "#333333")
-                twoView.numLabel.textColor = UIColor.init(cssStr: "#333333")
-                threeView.numLabel.textColor = UIColor.init(cssStr: "#333333")
-                fourView.numLabel.textColor = UIColor.init(cssStr: "#333333")
-                oneView.numLabel.font = .mediumFontOfSize(size: 14)
-                twoView.numLabel.font = .mediumFontOfSize(size: 14)
-                threeView.numLabel.font = .mediumFontOfSize(size: 14)
-                fourView.numLabel.font = .mediumFontOfSize(size: 14)
-            }
+//            guard let self = self, let model = model else { return }
+//            nameLabel.text = model.entityname ?? ""
+//            descLabel.text = model.relate ?? ""
+//            numLabel.text = "累计风险: \(model.relatedEntitySize ?? 0)条"
+//            if let itemType = model.itemType, itemType.count > 0 {
+//                oneView.nameLabel.text = itemType[0].typeName ?? ""
+//                twoView.nameLabel.text = itemType[1].typeName ?? ""
+//                threeView.nameLabel.text = itemType[2].typeName ?? ""
+//                fourView.nameLabel.text = itemType[3].typeName ?? ""
+//                
+//                oneView.numLabel.text = "\(itemType[0].count ?? 0)"
+//                twoView.numLabel.text = "\(itemType[1].count ?? 0)"
+//                threeView.numLabel.text = "\(itemType[2].count ?? 0)"
+//                fourView.numLabel.text = "\(itemType[3].count ?? 0)"
+//                
+//                oneView.numLabel.textColor = UIColor.init(cssStr: "#333333")
+//                twoView.numLabel.textColor = UIColor.init(cssStr: "#333333")
+//                threeView.numLabel.textColor = UIColor.init(cssStr: "#333333")
+//                fourView.numLabel.textColor = UIColor.init(cssStr: "#333333")
+//                oneView.numLabel.font = .mediumFontOfSize(size: 14)
+//                twoView.numLabel.font = .mediumFontOfSize(size: 14)
+//                threeView.numLabel.font = .mediumFontOfSize(size: 14)
+//                fourView.numLabel.font = .mediumFontOfSize(size: 14)
+//            }
         }).disposed(by: disposeBag)
     }
     

@@ -1112,13 +1112,13 @@
 			path = "对外投资";
 			sourceTree = "<group>";
 		};
-		734896D32D39ED7600B028FE /* RiskDetail */ = {
+		734896D32D39ED7600B028FE /* 风险详情 */ = {
 			isa = PBXGroup;
 			children = (
-				734896E22D3A08EC00B028FE /* PeopleRiskDetail */,
-				734896E12D3A08DB00B028FE /* ComanyRiskDetail */,
+				734896E12D3A08DB00B028FE /* 企业风险详情 */,
+				734896E22D3A08EC00B028FE /* 人员风险详情 */,
 			);
-			path = RiskDetail;
+			path = "风险详情";
 			sourceTree = "<group>";
 		};
 		734896D62D39EDCD00B028FE /* RiskView */ = {
@@ -1138,7 +1138,7 @@
 			path = RiskView;
 			sourceTree = "<group>";
 		};
-		734896E12D3A08DB00B028FE /* ComanyRiskDetail */ = {
+		734896E12D3A08DB00B028FE /* 企业风险详情 */ = {
 			isa = PBXGroup;
 			children = (
 				734896D42D39ED9300B028FE /* CompanyRiskDetailViewController.swift */,
@@ -1147,15 +1147,15 @@
 				734896DD2D39F20700B028FE /* HistoryRiskDetailViewController.swift */,
 				730CEDF42D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift */,
 			);
-			path = ComanyRiskDetail;
+			path = "企业风险详情";
 			sourceTree = "<group>";
 		};
-		734896E22D3A08EC00B028FE /* PeopleRiskDetail */ = {
+		734896E22D3A08EC00B028FE /* 人员风险详情 */ = {
 			isa = PBXGroup;
 			children = (
 				734896E32D3A094800B028FE /* PeopleRiskDetailViewController.swift */,
 			);
-			path = PeopleRiskDetail;
+			path = "人员风险详情";
 			sourceTree = "<group>";
 		};
 		734F4EA12D702F5A000D701F /* 日报 */ = {
@@ -1349,7 +1349,6 @@
 		73807D562D33806300F8B90D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				734896D32D39ED7600B028FE /* RiskDetail */,
 				73807D4B2D33699100F8B90D /* ComanyDetail */,
 				73807D4C2D33699C00F8B90D /* PersonalDetail */,
 			);
@@ -1432,11 +1431,12 @@
 		73A21DE52D0C2E0800FC4C49 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				734F4EA52D702F88000D701F /* 设置搜索 */,
 				734F4EA12D702F5A000D701F /* 日报 */,
 				734F4EA22D702F62000D701F /* 周报 */,
 				734F4EA32D702F66000D701F /* 月报 */,
 				734F4EA42D702F6A000D701F /* 全部 */,
+				734896D32D39ED7600B028FE /* 风险详情 */,
+				734F4EA52D702F88000D701F /* 设置搜索 */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

@@ -67,10 +67,10 @@ class DataModel {
     var personData: personDataModel?
     var rimRiskSize: Int?//企业个数
     var sumCount: Int?//风险个数
-    var parentCompanyfiliale: Int?//子公司
-    var investmentsAbroad: Int?//对外投资
-    var keyPersonnel: Int?//董监高投资
-    var shareholderCompany: Int?//股东
+    var generaCompanyCnt: Int?//子公司
+    var investCompanyCnt: Int?//对外投资
+    var directorCompanyCnt: Int?//董监高投资
+    var shCompanyCnt: Int?//股东
 /**
  公司详情数据模型
  */
@@ -116,13 +116,18 @@ class DataModel {
     var map4: map1Model?
     
     var riskGrade: riskGradeModel?
-    var sumTotal: Int?
+    var totalRiskCnt: Int?
+    var totalCompanyCnt: Int?
     var rimRisk: [rimRiskModel]?
     var totaRiskCnt: Int?
     var name: String?
     var riskList: riskListModel?
     var minutesList: [minutesListModel]?
     var entityName: String?
+    var highLevelCnt: Int?
+    var lowLevelCnt: Int?
+    var tipLevelCnt: Int?
+    var statisticRiskDtos: [statisticRiskDtosModel]?
 /**
  监控设置模型
 */
@@ -146,6 +151,11 @@ class DataModel {
     var orgNum: Int?
     var personNum: Int?
     init(json: JSON) {
+        self.totalCompanyCnt = json["totalCompanyCnt"].intValue
+        self.highLevelCnt = json["highLevelCnt"].intValue
+        self.lowLevelCnt = json["lowLevelCnt"].intValue
+        self.tipLevelCnt = json["tipLevelCnt"].intValue
+        self.statisticRiskDtos = json["statisticRiskDtos"].arrayValue.map { statisticRiskDtosModel(json: $0) }
         self.orgNum = json["orgNum"].intValue
         self.personNum = json["personNum"].intValue
         self.pushOffset = json["pushOffset"].stringValue
@@ -169,7 +179,7 @@ class DataModel {
         self.name = json["name"].stringValue
         self.followInfo = followInfoModel(json: json["followInfo"])
         self.rimRisk = json["rimRisk"].arrayValue.map { rimRiskModel(json: $0) }
-        self.sumTotal = json["sumTotal"].intValue
+        self.totalRiskCnt = json["totalRiskCnt"].intValue
         self.totaRiskCnt = json["totaRiskCnt"].intValue
         self.riskGrade = riskGradeModel(json: json["riskGrade"])
         self.entityRiskEventInfo = entityRiskEventInfoModel(json: json["entityRiskEventInfo"])
@@ -230,10 +240,10 @@ class DataModel {
         self.rimRiskSize = json["rimRiskSize"].intValue
         self.sumCount = json["sumCount"].intValue
         self.total = json["total"].intValue
-        self.investmentsAbroad = json["investmentsAbroad"].intValue
-        self.keyPersonnel = json["keyPersonnel"].intValue
-        self.parentCompanyfiliale = json["parentCompanyfiliale"].intValue
-        self.shareholderCompany = json["shareholderCompany"].intValue
+        self.generaCompanyCnt = json["generaCompanyCnt"].intValue
+        self.generaCompanyCnt = json["generaCompanyCnt"].intValue
+        self.directorCompanyCnt = json["directorCompanyCnt"].intValue
+        self.shCompanyCnt = json["shCompanyCnt"].intValue
         self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
         self.data = json["data"].arrayValue.map { rowsModel(json: $0) }
     }
@@ -1321,5 +1331,26 @@ class threelevelitemsModel {
         self.caseproperty = json["caseproperty"].stringValue
         self.size = json["size"].intValue
         self.threelevelitemname = json["threelevelitemname"].stringValue
+    }
+}
+
+
+///新模型数据
+class statisticRiskDtosModel {
+    var itemId: String?//ID
+    var haveSon: String?//是否有下一级
+    var itemName: String?//名字
+    var highLevelCnt: Int?//高风险
+    var lowLevelCnt: Int?//低风险
+    var tipLevelCnt: Int?//低风险
+    var totalCnt: Int?//总共
+    init(json: JSON) {
+        self.itemId = json["itemId"].stringValue
+        self.haveSon = json["haveSon"].stringValue
+        self.itemName = json["itemName"].stringValue
+        self.highLevelCnt = json["highLevelCnt"].intValue
+        self.lowLevelCnt = json["lowLevelCnt"].intValue
+        self.tipLevelCnt = json["tipLevelCnt"].intValue
+        self.totalCnt = json["totalCnt"].intValue
     }
 }

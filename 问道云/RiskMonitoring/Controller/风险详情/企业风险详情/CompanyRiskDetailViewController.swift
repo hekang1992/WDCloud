@@ -95,7 +95,7 @@ class CompanyRiskDetailViewController: WDBaseViewController {
     //头部
     func preferredTableHeaderView() -> RiskDetailHeadView {
         let header = RiskDetailHeadView()
-        header.iconImageView.kf.setImage(with: URL(string: logo ?? ""), placeholder: UIImage.imageOfText(name ?? "", size: (40, 40)))
+        header.iconImageView.kf.setImage(with: URL(string: logo ?? ""), placeholder: UIImage.imageOfText(name ?? "", size: (57, 57)))
         header.namelabel.text = name
         header.timeLabel.text = "监控周期: \(time ?? "")"
         header.tagLabel.text = groupName ?? ""

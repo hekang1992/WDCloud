@@ -13,15 +13,13 @@ import RxRelay
 class MySelfRiskDetailViewController: WDBaseViewController {
     
     var enityId: String = ""
-    
     var name: String = ""
-    
     var logo: String = ""
     
-    var functionType: String = "1"// 1-自身风险，2-历史风险，3-日报，4-全部
+    var functionType: String = "1"
     var dateType: String = ""
     var itemtype: String = "1"
-    var allArray: [itemsModel]?
+    var allArray: [statisticRiskDtosModel]?
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
@@ -76,6 +74,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         return lawView
     }()
     
+    //经营风险
     lazy var onelabel: PaddedLabel = {
         let onelabel = PaddedLabel()
         onelabel.text = "经营风险"
@@ -92,6 +91,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         return onelabel
     }()
     
+    //法律风险
     lazy var twolabel: PaddedLabel = {
         let twolabel = PaddedLabel()
         twolabel.text = "法律风险"
@@ -108,6 +108,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         return twolabel
     }()
     
+    //财务风险
     lazy var threelabel: PaddedLabel = {
         let threelabel = PaddedLabel()
         threelabel.text = "财务风险"
@@ -124,6 +125,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         return threelabel
     }()
     
+    //舆情风险
     lazy var fourlabel: PaddedLabel = {
         let fourlabel = PaddedLabel()
         fourlabel.text = "舆情风险"
@@ -188,7 +190,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         threeItemView.numLabel.font = .mediumFontOfSize(size: 14)
         return threeItemView
     }()
-
+    
     var startDateRelay = BehaviorRelay<String?>(value: nil)//开始时间
     
     var endDateRelay = BehaviorRelay<String?>(value: nil)//结束时间
@@ -304,7 +306,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
                 self?.hideLawOrTableView(form: "2")
                 self?.updateSelectedLabel(self?.twolabel)
                 self?.itemtype = "2"
-                self?.getRiskLowDetailInfo()
+                self?.getRiskDetailInfo()
             })
             .disposed(by: disposeBag)
         
@@ -356,7 +358,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
                 self?.endDateRelay.accept("")
                 //根据时间去筛选
                 if self?.itemtype == "2" {
-                    self?.getRiskLowDetailInfo()
+                    self?.getRiskDetailInfo()
                 }else {
                     self?.getRiskDetailInfo()
                 }
@@ -413,7 +415,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
                 modelArray = self?.getListTime(from: false) ?? []
                 //根据时间去筛选
                 if self?.itemtype == "2" {
-                    self?.getRiskLowDetailInfo()
+                    self?.getRiskDetailInfo()
                 }else {
                     self?.getRiskDetailInfo()
                 }
@@ -455,37 +457,37 @@ extension MySelfRiskDetailViewController {
     
     //显示和隐藏
     private func hideLawOrTableView(form type: String) {
-        if type == "2" {
-            self.lawView.isHidden = false
-            self.tableView.isHidden = true
-        }else {
-            self.lawView.isHidden = true
-            self.tableView.isHidden = false
-        }
+//        if type == "2" {
+//            self.lawView.isHidden = false
+//            self.tableView.isHidden = true
+//        }else {
+//            self.lawView.isHidden = true
+//            self.tableView.isHidden = false
+//        }
     }
     
     //获取风险信息
     private func getRiskDetailInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["entityid": enityId,
+        let dict = ["orgId": enityId,
                     "functionType": functionType,
-                    "itemtype": itemtype,
+                    "itemType": itemtype,
                     "dateType": dateType]
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/riskmonitoring/riskDynamicslow",
+                       pageUrl: "/entity/risk-monitor/statisticOrgRisk",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):
                 if let model = success.data {
-                    let rows = model.items ?? []
-                    self.allArray = rows
+                    let modelArray = model.statisticRiskDtos ?? []
+                    self.allArray = modelArray
                     self.tableView.reloadData()
                     self.refreshUI(from: model)
                     self.emptyView.removeFromSuperview()
-                    if rows.isEmpty {
+                    if modelArray.isEmpty {
                         self.addNodataView(from: self.tableView)
                     }
                 }
@@ -497,51 +499,20 @@ extension MySelfRiskDetailViewController {
         }
     }
     
-    //获取法律风险数据信息
-    private func getRiskLowDetailInfo() {
-        let man = RequestManager()
-        ViewHud.addLoadView()
-        let dict = ["entityid": enityId,
-                    "functionType": functionType,
-                    "itemtype": itemtype,
-                    "dateType": dateType]
-        man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/riskmonitoring/riskDynamicsbereLegalRisk",
-                       method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                if let model = success.data {
-                    let rows = model.items ?? []
-                    self.refreshUI(from: model)
-                    self.emptyView.removeFromSuperview()
-                    if rows.isEmpty {
-                        self.addNodataView(from: self.lawView)
-                    }
-                }
-                break
-            case .failure(_):
-                self.addNodataView(from: self.lawView)
-                break
-            }
-        }
-    }
-    
     //数据刷新
     func refreshUI(from model: DataModel) {
-        let count = String(model.sumTotal ?? 0)
+        let count = String(model.totalRiskCnt ?? 0)
         self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险:\(count)条", colorStr: "#FF0000")
-        self.oneItemView.numLabel.text = model.riskGrade?.highRiskSum ?? "0"
-        self.twoItemView.numLabel.text = model.riskGrade?.lowRiskSum ?? "0"
-        self.threeItemView.numLabel.text = model.riskGrade?.hintRiskSum ?? "0"
+        self.oneItemView.numLabel.text = String(model.highLevelCnt ?? 0)
+        self.twoItemView.numLabel.text = String(model.lowLevelCnt ?? 0)
+        self.threeItemView.numLabel.text = String(model.tipLevelCnt ?? 0)
         //法律风险数据
-        if self.itemtype == "2" {
-            let modelArray = model.items ?? []
-            self.lawView.modelArray.accept(modelArray)
-            self.lawView.numLabel.text = "案件信息(\(count))"
-        }
-        self.lawView.tableView.reloadData()
+//        if self.itemtype == "2" {
+//            let modelArray = model.items ?? []
+//            self.lawView.modelArray.accept(modelArray)
+//            self.lawView.numLabel.text = "案件信息(\(count))"
+//        }
+//        self.lawView.tableView.reloadData()
     }
     
 }
@@ -565,25 +536,25 @@ extension MySelfRiskDetailViewController: UITableViewDelegate, UITableViewDataSo
         let model = self.allArray?[indexPath.row]
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        cell.namelabel.text = model?.itemname ?? ""
-        cell.numlabel.text = "共\(model?.size ?? 0)条"
+        cell.namelabel.text = model?.itemName ?? ""
+        cell.numlabel.text = "共\(model?.totalCnt ?? 0)条"
         if let model = model {
-            cell.highLabel.text = "高风险(\(model.highCount ?? 0))"
-            if model.highCount == 0 {
+            cell.highLabel.text = "高风险(\(model.highLevelCnt ?? 0))"
+            if model.highLevelCnt == 0 {
                 cell.highLabel.snp.makeConstraints({ make in
                     make.width.equalTo(0)
                     make.left.equalTo(cell.namelabel.snp.right)
                 })
             }
-            cell.lowLabel.text = "低风险(\(model.lowCount ?? 0))"
-            if model.lowCount == 0 {
+            cell.lowLabel.text = "低风险(\(model.lowLevelCnt ?? 0))"
+            if model.lowLevelCnt == 0 {
                 cell.lowLabel.snp.makeConstraints({ make in
                     make.width.equalTo(0)
                     make.left.equalTo(cell.highLabel.snp.right)
                 })
             }
-            cell.hitLabel.text = "提示(\(model.hintCount ?? 0))"
-            if model.hintCount == 0 {
+            cell.hitLabel.text = "提示(\(model.tipLevelCnt ?? 0))"
+            if model.tipLevelCnt == 0 {
                 cell.hitLabel.snp.makeConstraints({ make in
                     make.width.equalTo(0)
                 })
@@ -593,9 +564,7 @@ extension MySelfRiskDetailViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let model = self.allArray?[indexPath.row] else { return }
         let riskSecondVc = ComanyRiskMoreDetailViewController()
-        riskSecondVc.itemsModel.accept(model)
         riskSecondVc.dateType = self.dateType
         riskSecondVc.itemtype = self.itemtype
         riskSecondVc.logo = self.logo

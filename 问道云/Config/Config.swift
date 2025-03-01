@@ -201,7 +201,7 @@ extension UIImage {
                            size: (CGFloat, CGFloat),
                            bgColor: UIColor = .random(),
                            textColor: UIColor = .white,
-                           cornerRadius: CGFloat = 3) -> UIImage? {
+                           cornerRadius: CGFloat = 5) -> UIImage? {
         // 过滤空""
         if text.isEmpty { return nil }
         // 取第一个字符
@@ -227,7 +227,7 @@ extension UIImage {
         
         let attr = [
             NSAttributedString.Key.foregroundColor : textColor,
-            NSAttributedString.Key.font : UIFont.boldFontOfSize(size: minSide * 0.52),
+            NSAttributedString.Key.font : UIFont.boldFontOfSize(size: minSide * 0.55),
             NSAttributedString.Key.paragraphStyle: style,
             NSAttributedString.Key.kern: 0
         ] as [NSAttributedString.Key : Any]

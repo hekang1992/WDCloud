@@ -119,7 +119,7 @@ class DailyCompanyViewController: WDBaseViewController {
                             self.addNodataView(from: self.tableView)
                             self.emptyView.snp.makeConstraints { make in
                                 make.left.equalToSuperview()
-                                make.top.equalToSuperview().offset(32)
+                                make.top.equalToSuperview().offset(64)
                                 make.height.equalTo(SCREEN_HEIGHT)
                                 make.width.equalTo(SCREEN_WIDTH)
                             }
@@ -247,6 +247,17 @@ extension DailyCompanyViewController: UITableViewDelegate, UITableViewDataSource
             self.present(alertVc, animated: true)
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.companyArray[indexPath.row]
+        let riskDetailVc = CompanyRiskDetailViewController()
+        riskDetailVc.name = model.orgName ?? ""
+        riskDetailVc.enityId = model.orgId ?? ""
+        riskDetailVc.logo = model.logo ?? ""
+        riskDetailVc.time = (model.startDate ?? "") + "至" + (model.endDate ?? "")
+        riskDetailVc.groupName = model.groupName ?? ""
+        self.navigationController?.pushViewController(riskDetailVc, animated: true)
     }
     
     private func popGroupView(from menuBtn: UIButton) {

@@ -16,6 +16,7 @@ class RiskUnioHeadView: BaseView {
         descLabel.layer.cornerRadius = 2
         descLabel.layer.borderWidth = 1
         descLabel.textAlignment = .center
+        descLabel.layer.masksToBounds = true
         descLabel.textColor = UIColor.init(cssStr: "#333333")
         descLabel.layer.borderColor = UIColor.init(cssStr: "#547AFF")?.cgColor
         return descLabel
