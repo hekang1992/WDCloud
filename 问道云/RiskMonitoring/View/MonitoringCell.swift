@@ -243,15 +243,15 @@ class MonitoringCell: BaseViewCell {
         ctImageView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
             make.top.equalToSuperview().offset(10)
-            make.size.equalTo(CGSize(width: 30, height: 30))
+            make.size.equalTo(CGSize(width: 35.pix(), height: 35.pix()))
         }
         namelabel.snp.makeConstraints { make in
             make.top.equalTo(ctImageView.snp.top)
-            make.left.equalTo(ctImageView.snp.right).offset(4)
+            make.left.equalTo(ctImageView.snp.right).offset(5)
             make.right.equalToSuperview().offset(-40)
         }
         moreBtn.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-14.5)
+            make.right.equalToSuperview().offset(-15)
             make.top.equalToSuperview().offset(10)
             make.size.equalTo(CGSize(width: 18, height: 18))
         }

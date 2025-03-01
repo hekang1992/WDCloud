@@ -105,7 +105,10 @@ class DailyCompanyViewController: WDBaseViewController {
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    if let self = self, let model = success.data, let modelArray = model.rows, let total = model.total {
+                    if let self = self,
+                        let model = success.data,
+                        let modelArray = model.rows,
+                        let total = model.total {
                         self.companyModel.accept(model)
                         if pageNum == 1 {
                             pageNum = 1

@@ -191,10 +191,8 @@ extension MonthReportViewController: JXPagingViewDelegate {
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
-            let companyVc = DailyCompanyViewController()
             return companyVc
         }else {
-            let peopleVc = DailyPeopleViewController()
             return peopleVc
         }
     }

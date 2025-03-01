@@ -19,13 +19,13 @@ class BothReportViewController: WDBaseViewController {
         return tableView
     }()
     
-    lazy var companyVc: MonthCompanyViewController = {
-        let companyVc = MonthCompanyViewController()
+    lazy var companyVc: BothCompanyViewController = {
+        let companyVc = BothCompanyViewController()
         return companyVc
     }()
     
-    lazy var peopleVc: MonthPeopleViewController = {
-        let peopleVc = MonthPeopleViewController()
+    lazy var peopleVc: BothPeopleViewController = {
+        let peopleVc = BothPeopleViewController()
         return peopleVc
     }()
     
@@ -191,10 +191,8 @@ extension BothReportViewController: JXPagingViewDelegate {
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
-            let companyVc = DailyCompanyViewController()
             return companyVc
         }else {
-            let peopleVc = DailyPeopleViewController()
             return peopleVc
         }
     }

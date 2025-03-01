@@ -24,8 +24,8 @@ class DailyReportViewController: WDBaseViewController {
         return companyVc
     }()
     
-    lazy var peopleVc: DailyReportViewController = {
-        let peopleVc = DailyReportViewController()
+    lazy var peopleVc: DailyPeopleViewController = {
+        let peopleVc = DailyPeopleViewController()
         return peopleVc
     }()
     
@@ -191,10 +191,8 @@ extension DailyReportViewController: JXPagingViewDelegate {
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
-            let companyVc = DailyCompanyViewController()
             return companyVc
         }else {
-            let peopleVc = DailyPeopleViewController()
             return peopleVc
         }
     }
