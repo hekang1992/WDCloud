@@ -6,9 +6,7 @@
 //
 
 import UIKit
-import HGSegmentedPageViewController
 import JXSegmentedView
-import JXPagingView
 
 class WDRiskViewController: WDBaseViewController {
     
@@ -67,11 +65,9 @@ class WDRiskViewController: WDBaseViewController {
     
     var segmentedView: JXSegmentedView!
     
-    var JXTableHeaderViewHeight: Int = 0
-    
-    var JXheightForHeaderInSection: Int = 36
-    
-    lazy var pagingView: JXPagingView = preferredPagingView()
+    lazy var listContainerView: JXSegmentedListContainerView! = {
+        return JXSegmentedListContainerView(dataSource: self)
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +89,7 @@ class WDRiskViewController: WDBaseViewController {
         segmentedViewDataSource.titleSelectedFont = UIFont.mediumFontOfSize(size: 15)
         
         //指示器和指示器颜色
-        segmentedView = JXSegmentedView(frame: CGRectMake(0, 0, SCREEN_WIDTH, CGFloat(JXheightForHeaderInSection)))
+        segmentedView = JXSegmentedView()
         segmentedView.dataSource = segmentedViewDataSource
         let indicator = JXSegmentedIndicatorLineView()
         indicator.indicatorColor = UIColor.init(cssStr: "#FFFFFF")!
@@ -101,61 +97,53 @@ class WDRiskViewController: WDBaseViewController {
         indicator.indicatorHeight = 2
         indicator.indicatorWidth = 15
         segmentedView.indicators = [indicator]
-        
-        view.addSubview(pagingView)
-        pagingView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.width.equalTo(SCREEN_WIDTH)
+        ctImageView.addSubview(segmentedView)
+        segmentedView.snp.makeConstraints { make in
             make.top.equalTo(headView.snp.bottom).offset(18)
-            make.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.height.equalTo(32)
         }
-        pagingView.mainTableView.backgroundColor = .clear
-        segmentedView.listContainer = pagingView.listContainerView
+        segmentedView.listContainer = listContainerView
+        view.addSubview(listContainerView)
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        listContainerView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(headView.snp.bottom).offset(52)
+        }
     }
     
 }
 
-extension WDRiskViewController: JXPagingViewDelegate {
-
-    //一定要加上这句代码,否则不会下拉刷新
-    func preferredPagingView() -> JXPagingView {
-        return JXPagingListRefreshView(delegate: self)
-    }
+extension WDRiskViewController: JXSegmentedListContainerViewDataSource {
     
-    func tableHeaderViewHeight(in pagingView: JXPagingView) -> Int {
-        return JXTableHeaderViewHeight
-    }
-    
-    func tableHeaderView(in pagingView: JXPagingView) -> UIView {
-        let headView = UIView()
-        return headView
-    }
-    
-    func heightForPinSectionHeader(in pagingView: JXPagingView) -> Int {
-        return JXheightForHeaderInSection
-    }
-    
-    func viewForPinSectionHeader(in pagingView: JXPagingView) -> UIView {
-        return segmentedView
-    }
-    
-    func numberOfLists(in pagingView: JXPagingView) -> Int {
-        return titles.count
-    }
-    
-    func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
-        if index == 0 {
-            let oneRiskVc = DailyReportViewController()
-            return oneRiskVc
-        }else if index == 1 {
-            let twoRiskVc = WeekReportViewController()
-            return twoRiskVc
-        }else if index == 2 {
-            let threeRiskVc = MonthReportViewController()
-            return threeRiskVc
-        }else {
-            let fourRiskVc = BothReportViewController()
-            return fourRiskVc
+    func numberOfLists(in listContainerView: JXSegmentedListContainerView) -> Int {
+        if let titleDataSource = segmentedView.dataSource as? JXSegmentedBaseDataSource {
+            return titleDataSource.dataSource.count
         }
+        return 0
     }
+    
+    func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
+        if index == 0 {
+            let vc = DailyReportViewController()
+            if index == 0 {
+               vc.titles = ["吃鸡🍗", "吃西瓜🍉", "吃热狗🌭"]
+            }else {
+                vc.titles = ["高尔夫🏌", "滑雪⛷", "自行车🚴"]
+            }
+            return vc
+        }
+        let vc = DailyReportViewController()
+        if index == 0 {
+           vc.titles = ["吃鸡🍗", "吃西瓜🍉", "吃热狗🌭"]
+        }else {
+            vc.titles = ["高尔夫🏌", "滑雪⛷", "自行车🚴"]
+        }
+        return vc
+    }
+    
 }

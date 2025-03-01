@@ -6,213 +6,63 @@
 //  日报
 
 import UIKit
-import JXPagingView
 import JXSegmentedView
 
-class DailyReportViewController: WDBaseViewController {
-    
-    var listViewDidScrollCallback: ((UIScrollView) -> Void)?
-    
-    lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.backgroundColor = .clear
-        return tableView
-    }()
-    
-    lazy var companyVc: DailyCompanyViewController = {
-        let companyVc = DailyCompanyViewController()
-        return companyVc
-    }()
-    
-    lazy var peopleVc: DailyPeopleViewController = {
-        let peopleVc = DailyPeopleViewController()
-        return peopleVc
-    }()
-    
-    var segmentedViewDataSource: JXSegmentedTitleDataSource!
-    
-    var segmentedView: JXSegmentedView!
-    
-    var JXTableHeaderViewHeight: Int = 0
-    
-    var JXheightForHeaderInSection: Int = 36
-    
-    lazy var pagingView: JXPagingView = preferredPagingView()
-    
-    var titles: [String] = ["企业", "个人"]
-    
-    lazy var noMonitoringView: RiskNoMonitoringView = {
-        let noMonitoringView = RiskNoMonitoringView()
-        noMonitoringView.isHidden = true
-        return noMonitoringView
-    }()
-    
-    lazy var noLoginView: RiskNoLoginView = {
-        let noLoginView = RiskNoLoginView()
-        noLoginView.isHidden = true
-        return noLoginView
+class DailyReportViewController: UIViewController {
+    var titles = [String]()
+    let segmentedDataSource = JXSegmentedTitleDataSource()
+    let segmentedView = JXSegmentedView()
+    lazy var listContainerView: JXSegmentedListContainerView! = {
+        return JXSegmentedListContainerView(dataSource: self)
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        segmentedViewDataSource = JXSegmentedTitleDataSource()
-        segmentedViewDataSource.titles = titles
-        segmentedViewDataSource.isTitleColorGradientEnabled = true
-        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#3849F7")!
-        segmentedViewDataSource.titleNormalColor = UIColor.init(cssStr: "#333333")!.withAlphaComponent(0.6)
-        segmentedViewDataSource.titleNormalFont = UIFont.mediumFontOfSize(size: 15)
-        segmentedViewDataSource.titleSelectedFont = UIFont.mediumFontOfSize(size: 15)
+        view.backgroundColor = .white
         
-        //指示器和指示器颜色
-        segmentedView = JXSegmentedView(frame: CGRectMake(0, 0, SCREEN_WIDTH, CGFloat(JXheightForHeaderInSection)))
-        segmentedView.dataSource = segmentedViewDataSource
+        //配置数据源
+        segmentedDataSource.isTitleColorGradientEnabled = true
+        segmentedDataSource.titles = ["企业", "个人"]
+        
+        //配置指示器
         let indicator = JXSegmentedIndicatorLineView()
-        indicator.indicatorColor = UIColor.init(cssStr: "#3849F7")!
+        indicator.indicatorWidth = JXSegmentedViewAutomaticDimension
         indicator.lineStyle = .lengthen
-        indicator.indicatorHeight = 2
-        indicator.indicatorWidth = 15
+        
+        //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
+        segmentedView.dataSource = segmentedDataSource
         segmentedView.indicators = [indicator]
+        segmentedView.frame = CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 32)
+        view.addSubview(segmentedView)
         
-        view.addSubview(pagingView)
-        pagingView.isHidden = true
-        pagingView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.width.equalTo(SCREEN_WIDTH)
-            make.top.equalToSuperview().offset(1)
-            make.bottom.equalToSuperview()
-        }
-        segmentedView.listContainer = pagingView.listContainerView
-        
-        view.addSubview(noMonitoringView)
-        noMonitoringView.block = { [weak self] in
-            let searchVc = SearchMonitoringViewController()
-            self?.navigationController?.pushViewController(searchVc, animated: true)
-        }
-        noMonitoringView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.width.equalTo(SCREEN_WIDTH)
-            make.top.equalToSuperview().offset(1)
-            make.bottom.equalToSuperview()
-        }
-        view.addSubview(noLoginView)
-        noLoginView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.width.equalTo(SCREEN_WIDTH)
-            make.top.equalToSuperview().offset(1)
-            make.bottom.equalToSuperview()
-        }
-        noLoginView.loginBlock = { [weak self] in
-            self?.popLogin()
-        }
+        segmentedView.listContainer = listContainerView
+        view.addSubview(listContainerView)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if IS_LOGIN {
-            //获取数字信息
-            noLoginView.isHidden = true
-            getNumInfo()
-        }else {
-            noLoginView.isHidden = false
-        }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        listContainerView.frame = CGRect(x: 0, y: 32, width: view.bounds.size.width, height: view.bounds.size.height - 32)
     }
-    
 }
 
-extension DailyReportViewController {
-    
-    private func getNumInfo() {
-        let dict = [String: Any]()
-        let man = RequestManager()
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/monitortarget/queryRiskMonitorEntity",
-                       method: .get) { [weak self] result in
-            switch result {
-            case .success(let success):
-                if success.code == 200 {
-                    if let self = self, let model = success.data {
-                        showMonitoringView(from: model)
-                    }
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
-    func showMonitoringView(from model: DataModel) {
-        let orgNum = model.orgNum ?? 0
-        let personNum = model.personNum ?? 0
-        let titles = ["企业\(orgNum)", "人员\(personNum)"]
-        segmentedViewDataSource.titles = titles
-        segmentedView.reloadData()
-        
-        if orgNum == 0 && personNum == 0 {
-            self.pagingView.isHidden = true
-            self.noMonitoringView.isHidden = false
-        }else {
-            self.pagingView.isHidden = false
-            self.noMonitoringView.isHidden = true
-        }
-        
-    }
-    
-}
-
-extension DailyReportViewController: JXPagingViewDelegate {
-    
-    //一定要加上这句代码,否则不会下拉刷新
-    func preferredPagingView() -> JXPagingView {
-        return JXPagingListRefreshView(delegate: self)
-    }
-    
-    func tableHeaderViewHeight(in pagingView: JXPagingView) -> Int {
-        return JXTableHeaderViewHeight
-    }
-    
-    func tableHeaderView(in pagingView: JXPagingView) -> UIView {
-        let headView = UIView()
-        return headView
-    }
-    
-    func heightForPinSectionHeader(in pagingView: JXPagingView) -> Int {
-        return JXheightForHeaderInSection
-    }
-    
-    func viewForPinSectionHeader(in pagingView: JXPagingView) -> UIView {
-        return segmentedView
-    }
-    
-    func numberOfLists(in pagingView: JXPagingView) -> Int {
-        return titles.count
-    }
-    
-    func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
-        if index == 0 {
-            return companyVc
-        }else {
-            return peopleVc
-        }
-    }
-    
-}
-
-extension DailyReportViewController: JXPagingViewListViewDelegate {
+extension DailyReportViewController: JXSegmentedListContainerViewListDelegate, JXSegmentedListContainerViewDataSource {
     
     func listView() -> UIView {
-        return self.view
+        return view
     }
     
-    func listViewDidScrollCallback(callback: @escaping (UIScrollView) -> ()) {
-        self.listViewDidScrollCallback = callback
+    func numberOfLists(in listContainerView: JXSegmentedListContainerView) -> Int {
+        if let titleDataSource = segmentedView.dataSource as? JXSegmentedBaseDataSource {
+            return titleDataSource.dataSource.count
+        }
+        return 0
     }
     
-    func listScrollView() -> UIScrollView { tableView }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        listViewDidScrollCallback?(scrollView)
+    func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
+        return RiskHaveDataView()
     }
     
 }
+
+

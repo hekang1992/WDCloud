@@ -139,8 +139,6 @@
 		734896E62D3A2FE300B028FE /* RiskNumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734896E52D3A2FE300B028FE /* RiskNumView.swift */; };
 		734896E82D3A329E00B028FE /* RiskDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734896E72D3A329E00B028FE /* RiskDetailViewCell.swift */; };
 		734896EA2D3A429500B028FE /* RiskUnioViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734896E92D3A429500B028FE /* RiskUnioViewCell.swift */; };
-		734F4EA72D7030DF000D701F /* DailyCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734F4EA62D7030DF000D701F /* DailyCompanyViewController.swift */; };
-		734F4EA92D7030EA000D701F /* DailyPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734F4EA82D7030EA000D701F /* DailyPeopleViewController.swift */; };
 		734F4EAB2D715D48000D701F /* PopBuyVipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734F4EAA2D715D48000D701F /* PopBuyVipView.swift */; };
 		734F4EAD2D716591000D701F /* BuyOneVipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734F4EAC2D716591000D701F /* BuyOneVipViewController.swift */; };
 		7352B2222D35321C00B5391B /* CompanyTwoHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352B2212D35321C00B5391B /* CompanyTwoHeadView.swift */; };
@@ -194,12 +192,6 @@
 		73868A432D55F54E00CE107D /* WeekReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73868A422D55F54E00CE107D /* WeekReportViewController.swift */; };
 		73868A452D55F55A00CE107D /* MonthReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73868A442D55F55A00CE107D /* MonthReportViewController.swift */; };
 		73868A472D55F56600CE107D /* BothReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73868A462D55F56600CE107D /* BothReportViewController.swift */; };
-		738E96162D72CF7800E564B1 /* WeekCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E96152D72CF7800E564B1 /* WeekCompanyViewController.swift */; };
-		738E96182D72CF8300E564B1 /* WeekPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E96172D72CF8300E564B1 /* WeekPeopleViewController.swift */; };
-		738E961A2D72CF9C00E564B1 /* MonthCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E96192D72CF9C00E564B1 /* MonthCompanyViewController.swift */; };
-		738E961C2D72CFC200E564B1 /* MonthPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E961B2D72CFC200E564B1 /* MonthPeopleViewController.swift */; };
-		738E961E2D72CFD000E564B1 /* BothPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E961D2D72CFD000E564B1 /* BothPeopleViewController.swift */; };
-		738E96202D72CFDA00E564B1 /* BothCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738E961F2D72CFDA00E564B1 /* BothCompanyViewController.swift */; };
 		73950F732D55A93A005AD034 /* PopMonitoringGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F722D55A93A005AD034 /* PopMonitoringGroupView.swift */; };
 		73950F752D55B3E7005AD034 /* AddMonitoringListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F742D55B3E7005AD034 /* AddMonitoringListView.swift */; };
 		73950F772D55EE2B005AD034 /* MonitoringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F762D55EE2B005AD034 /* MonitoringCell.swift */; };
@@ -231,7 +223,6 @@
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
 		73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE02D0C06E700FC4C49 /* SettingView.swift */; };
 		73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */; };
-		73A21DEA2D0C2F2B00FC4C49 /* RiskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE92D0C2F2B00FC4C49 /* RiskView.swift */; };
 		73A21DEE2D0C32A600FC4C49 /* DiligenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DED2D0C32A600FC4C49 /* DiligenceView.swift */; };
 		73A21DF02D0C39BF00FC4C49 /* DiligenceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DEF2D0C39BF00FC4C49 /* DiligenceListViewController.swift */; };
 		73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */; };
@@ -281,6 +272,7 @@
 		73C752542D1E4B5800C47187 /* HistoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752532D1E4B5800C47187 /* HistoryListViewController.swift */; };
 		73C752562D1E4DA000C47187 /* HistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752552D1E4DA000C47187 /* HistoryListView.swift */; };
 		73C752582D1E728500C47187 /* HistoryListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752572D1E728500C47187 /* HistoryListViewCell.swift */; };
+		73C770712D731E140031016F /* RiskHaveDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C770702D731E140031016F /* RiskHaveDataView.swift */; };
 		73CC03772D6859660022F794 /* HighSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03762D6859660022F794 /* HighSearchViewController.swift */; };
 		73CC037A2D685FED0022F794 /* HighSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03792D685FED0022F794 /* HighSearchView.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
@@ -514,8 +506,6 @@
 		734896E52D3A2FE300B028FE /* RiskNumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskNumView.swift; sourceTree = "<group>"; };
 		734896E72D3A329E00B028FE /* RiskDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskDetailViewCell.swift; sourceTree = "<group>"; };
 		734896E92D3A429500B028FE /* RiskUnioViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskUnioViewCell.swift; sourceTree = "<group>"; };
-		734F4EA62D7030DF000D701F /* DailyCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCompanyViewController.swift; sourceTree = "<group>"; };
-		734F4EA82D7030EA000D701F /* DailyPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPeopleViewController.swift; sourceTree = "<group>"; };
 		734F4EAA2D715D48000D701F /* PopBuyVipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopBuyVipView.swift; sourceTree = "<group>"; };
 		734F4EAC2D716591000D701F /* BuyOneVipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyOneVipViewController.swift; sourceTree = "<group>"; };
 		7352B2212D35321C00B5391B /* CompanyTwoHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyTwoHeadView.swift; sourceTree = "<group>"; };
@@ -569,12 +559,6 @@
 		73868A422D55F54E00CE107D /* WeekReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekReportViewController.swift; sourceTree = "<group>"; };
 		73868A442D55F55A00CE107D /* MonthReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthReportViewController.swift; sourceTree = "<group>"; };
 		73868A462D55F56600CE107D /* BothReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothReportViewController.swift; sourceTree = "<group>"; };
-		738E96152D72CF7800E564B1 /* WeekCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCompanyViewController.swift; sourceTree = "<group>"; };
-		738E96172D72CF8300E564B1 /* WeekPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekPeopleViewController.swift; sourceTree = "<group>"; };
-		738E96192D72CF9C00E564B1 /* MonthCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCompanyViewController.swift; sourceTree = "<group>"; };
-		738E961B2D72CFC200E564B1 /* MonthPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPeopleViewController.swift; sourceTree = "<group>"; };
-		738E961D2D72CFD000E564B1 /* BothPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothPeopleViewController.swift; sourceTree = "<group>"; };
-		738E961F2D72CFDA00E564B1 /* BothCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothCompanyViewController.swift; sourceTree = "<group>"; };
 		73950F722D55A93A005AD034 /* PopMonitoringGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopMonitoringGroupView.swift; sourceTree = "<group>"; };
 		73950F742D55B3E7005AD034 /* AddMonitoringListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMonitoringListView.swift; sourceTree = "<group>"; };
 		73950F762D55EE2B005AD034 /* MonitoringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringCell.swift; sourceTree = "<group>"; };
@@ -606,7 +590,6 @@
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		73A21DE02D0C06E700FC4C49 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
-		73A21DE92D0C2F2B00FC4C49 /* RiskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskView.swift; sourceTree = "<group>"; };
 		73A21DED2D0C32A600FC4C49 /* DiligenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiligenceView.swift; sourceTree = "<group>"; };
 		73A21DEF2D0C39BF00FC4C49 /* DiligenceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiligenceListViewController.swift; sourceTree = "<group>"; };
 		73A21DF32D0C403000FC4C49 /* AccountManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerViewController.swift; sourceTree = "<group>"; };
@@ -656,6 +639,7 @@
 		73C752532D1E4B5800C47187 /* HistoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListViewController.swift; sourceTree = "<group>"; };
 		73C752552D1E4DA000C47187 /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		73C752572D1E728500C47187 /* HistoryListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListViewCell.swift; sourceTree = "<group>"; };
+		73C770702D731E140031016F /* RiskHaveDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskHaveDataView.swift; sourceTree = "<group>"; };
 		73CC03762D6859660022F794 /* HighSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchViewController.swift; sourceTree = "<group>"; };
 		73CC03792D685FED0022F794 /* HighSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchView.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
@@ -1162,8 +1146,6 @@
 			isa = PBXGroup;
 			children = (
 				73868A402D55F53700CE107D /* DailyReportViewController.swift */,
-				734F4EA62D7030DF000D701F /* DailyCompanyViewController.swift */,
-				734F4EA82D7030EA000D701F /* DailyPeopleViewController.swift */,
 			);
 			path = "日报";
 			sourceTree = "<group>";
@@ -1172,8 +1154,6 @@
 			isa = PBXGroup;
 			children = (
 				73868A422D55F54E00CE107D /* WeekReportViewController.swift */,
-				738E96152D72CF7800E564B1 /* WeekCompanyViewController.swift */,
-				738E96172D72CF8300E564B1 /* WeekPeopleViewController.swift */,
 			);
 			path = "周报";
 			sourceTree = "<group>";
@@ -1182,8 +1162,6 @@
 			isa = PBXGroup;
 			children = (
 				73868A442D55F55A00CE107D /* MonthReportViewController.swift */,
-				738E96192D72CF9C00E564B1 /* MonthCompanyViewController.swift */,
-				738E961B2D72CFC200E564B1 /* MonthPeopleViewController.swift */,
 			);
 			path = "月报";
 			sourceTree = "<group>";
@@ -1192,8 +1170,6 @@
 			isa = PBXGroup;
 			children = (
 				73868A462D55F56600CE107D /* BothReportViewController.swift */,
-				738E961F2D72CFDA00E564B1 /* BothCompanyViewController.swift */,
-				738E961D2D72CFD000E564B1 /* BothPeopleViewController.swift */,
 			);
 			path = "全部";
 			sourceTree = "<group>";
@@ -1444,17 +1420,17 @@
 		73A21DE62D0C2E0B00FC4C49 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				73A21DE92D0C2F2B00FC4C49 /* RiskView.swift */,
+				73950F762D55EE2B005AD034 /* MonitoringCell.swift */,
 				730CEE012D54BE83002DE9DF /* SearchMonitoringViewCell.swift */,
 				73950F722D55A93A005AD034 /* PopMonitoringGroupView.swift */,
 				73950F742D55B3E7005AD034 /* AddMonitoringListView.swift */,
-				73950F762D55EE2B005AD034 /* MonitoringCell.swift */,
 				733B5FF52D57230A00ADE7C5 /* PopCancelMonitoringView.swift */,
 				73FB9C852D5EF33E00554CAD /* RiskSettingView.swift */,
 				73FB9C892D5F0EC200554CAD /* RiskPopGroupView.swift */,
 				733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */,
 				733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */,
 				734F4EAA2D715D48000D701F /* PopBuyVipView.swift */,
+				73C770702D731E140031016F /* RiskHaveDataView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2014,7 +1990,6 @@
 				73C007112D6459AF003C3CE1 /* SearchDueDiligenceView.swift in Sources */,
 				739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */,
 				7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */,
-				738E96162D72CF7800E564B1 /* WeekCompanyViewController.swift in Sources */,
 				730CEDFC2D544EF6002DE9DF /* CompanyLawCell.swift in Sources */,
 				7340E1D62D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift in Sources */,
 				73FC5E652D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift in Sources */,
@@ -2070,7 +2045,6 @@
 				7374164E2D100BB200E6CD23 /* SearchInvoiceCell.swift in Sources */,
 				73C36A7B2D2D147400D6DC46 /* OneCompanyView.swift in Sources */,
 				73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */,
-				738E96202D72CFDA00E564B1 /* BothCompanyViewController.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
 				7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */,
 				73FC5E372D5B2AED001D0DEF /* SanctionTableViewCell.swift in Sources */,
@@ -2086,7 +2060,6 @@
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
 				73950F732D55A93A005AD034 /* PopMonitoringGroupView.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
-				738E961C2D72CFC200E564B1 /* MonthPeopleViewController.swift in Sources */,
 				73B362572D37B9CB003BD911 /* PeopleDetailTwoViewController.swift in Sources */,
 				739DCA262D671B45009CFC78 /* MyOneSettingViewController.swift in Sources */,
 				730CEDFA2D5446C8002DE9DF /* CompanyLawCellHeadView.swift in Sources */,
@@ -2100,7 +2073,6 @@
 				736E97812D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift in Sources */,
 				730CEE002D54AE2C002DE9DF /* SearchMonitoringViewController.swift in Sources */,
 				73E971752D2FCF0500F12B15 /* TwoCompanySpecListCell.swift in Sources */,
-				738E961E2D72CFD000E564B1 /* BothPeopleViewController.swift in Sources */,
 				736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */,
 				736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */,
 				73FC5E6E2D5CAE19001D0DEF /* SearchPeopleLawSuitViewController.swift in Sources */,
@@ -2129,7 +2101,6 @@
 				73B3623D2D374222003BD911 /* PopHistoryNameView.swift in Sources */,
 				73950F772D55EE2B005AD034 /* MonitoringCell.swift in Sources */,
 				73FB9C882D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift in Sources */,
-				73A21DEA2D0C2F2B00FC4C49 /* RiskView.swift in Sources */,
 				7303844C2D609006008AA7C3 /* ServiceCenterViewCell.swift in Sources */,
 				73B362492D37A642003BD911 /* PeopleBothViewController.swift in Sources */,
 				7335F6EA2D0ADA050074985F /* MyDownloadSearchView.swift in Sources */,
@@ -2153,7 +2124,6 @@
 				7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */,
 				73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */,
 				73C36A712D2D050200D6DC46 /* SearchHeadView.swift in Sources */,
-				738E96182D72CF8300E564B1 /* WeekPeopleViewController.swift in Sources */,
 				739DCA102D66FAAB009CFC78 /* PropertyPeopleViewController.swift in Sources */,
 				73FBF6912D648CE30031452F /* DueDiligenceSettingViewController.swift in Sources */,
 				73950F752D55B3E7005AD034 /* AddMonitoringListView.swift in Sources */,
@@ -2186,7 +2156,6 @@
 				73FC5E6A2D5CADFC001D0DEF /* SearchLawSuitViewController.swift in Sources */,
 				7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */,
 				730488092D2A7ACD0024265C /* HomeHeadHotsView.swift in Sources */,
-				734F4EA72D7030DF000D701F /* DailyCompanyViewController.swift in Sources */,
 				7374163C2D0EDC3000E6CD23 /* InvoiceListViewController.swift in Sources */,
 				734F4EAB2D715D48000D701F /* PopBuyVipView.swift in Sources */,
 				7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */,
@@ -2251,6 +2220,7 @@
 				7374163E2D0FC4B300E6CD23 /* InviteFriendViewController.swift in Sources */,
 				737416342D0EBCB000E6CD23 /* ContactUsViewController.swift in Sources */,
 				73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */,
+				73C770712D731E140031016F /* RiskHaveDataView.swift in Sources */,
 				7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */,
 				73B362532D37B704003BD911 /* PeopleDetailHeadView.swift in Sources */,
 				73868A412D55F53700CE107D /* DailyReportViewController.swift in Sources */,
@@ -2289,10 +2259,8 @@
 				7340E18D2D5CD404008FD5C7 /* SearchExternalGuaranteeViewController.swift in Sources */,
 				7335F6EC2D0ADA620074985F /* MyDownloadView.swift in Sources */,
 				739DCA1C2D67133E009CFC78 /* SearchAddPropertyViewController.swift in Sources */,
-				738E961A2D72CF9C00E564B1 /* MonthCompanyViewController.swift in Sources */,
 				73807D5F2D33B7D100F8B90D /* CompanyActivityViewCell.swift in Sources */,
 				730488152D2BD2380024265C /* HomeItemViewCell.swift in Sources */,
-				734F4EA92D7030EA000D701F /* DailyPeopleViewController.swift in Sources */,
 				734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */,
 				73C752362D19451400C47187 /* FocusCompanyView.swift in Sources */,
 				7340E1942D5CD46C008FD5C7 /* SearchHighConsumptionViewController.swift in Sources */,
