@@ -49,15 +49,11 @@ extension WDBaseViewController {
     }
     
     func popLogin() {
+        WDLoginConfig.removeLoginInfo()
         let loginVc = WDLoginViewController()
         let rootVc = WDNavigationController(rootViewController: loginVc)
         rootVc.modalPresentationStyle = .overFullScreen
         self.present(rootVc, animated: true)
-        WDLoginConfig.removeLoginInfo()
-        loginVc.loginView.backBtn.rx.tap.subscribe(onNext: {
-            loginVc.loginView.phoneTx.resignFirstResponder()
-            NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
-        }).disposed(by: disposeBag)
     }
     
     func pushWebPage(from pageUrl: String) {
