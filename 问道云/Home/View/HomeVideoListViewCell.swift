@@ -9,11 +9,11 @@ import UIKit
 import RxRelay
 
 class HomeVideoListViewCell: BaseViewCell {
-
+    
     var model = BehaviorRelay<rowsModel?>(value: nil)
     
     var block: ((newstagsobjModel) -> Void)?
-
+    
     lazy var iconImageView: UIImageView = {
         let iconImageView = UIImageView()
         iconImageView.layer.cornerRadius = 4
@@ -124,7 +124,7 @@ class HomeVideoListViewCell: BaseViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }
 
 extension HomeVideoListViewCell {

@@ -42,26 +42,26 @@ class ContactManager {
     }
     
     private func fetchAllContacts() -> [CNContact]? {
-            let keys = [
-                CNContactGivenNameKey,
-                CNContactFamilyNameKey,
-                CNContactPhoneNumbersKey
-            ] as [CNKeyDescriptor]
-            
-            let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
-            
-            var contacts: [CNContact] = []
-            
-            do {
-                try contactStore.enumerateContacts(with: fetchRequest) { contact, stop in
-                    contacts.append(contact)
-                }
-            } catch {
-                print("Error fetching contacts: \(error)")
+        let keys = [
+            CNContactGivenNameKey,
+            CNContactFamilyNameKey,
+            CNContactPhoneNumbersKey
+        ] as [CNKeyDescriptor]
+        
+        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
+        
+        var contacts: [CNContact] = []
+        
+        do {
+            try contactStore.enumerateContacts(with: fetchRequest) { contact, stop in
+                contacts.append(contact)
             }
-            
-            return contacts
+        } catch {
+            print("Error fetching contacts: \(error)")
         }
+        
+        return contacts
+    }
     
 }
 

@@ -12,7 +12,7 @@ import TagListView
 import DropMenuBar
 
 class HighSearchKeyView: BaseView {
-
+    
     lazy var mlabel: UILabel = {
         let mlabel = UILabel()
         mlabel.text = "关键词"
@@ -114,7 +114,7 @@ class HighSearchKeyView: BaseView {
         unselectedButton.setTitleColor(UIColor.init(cssStr: "#666666"), for: .normal)
         unselectedButton.setImage(UIImage(named: "iconselcehignor"), for: .normal)
     }
-
+    
 }
 
 class HighTwoView: BaseView {
@@ -247,7 +247,7 @@ class HighThreeView: BaseView {
             make.left.equalToSuperview().offset(SCREEN_WIDTH - 25)
             make.size.equalTo(CGSize(width: 13, height: 13))
         }
-
+        
     }
     
     required init?(coder: NSCoder) {

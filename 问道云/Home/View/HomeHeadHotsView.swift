@@ -108,7 +108,7 @@ class HomeHeadHotsView: BaseView {
             .modelSelected(rowsModel.self)
             .subscribe(onNext: { [weak self] model in
                 self?.hotWordsBlock?(model)
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
     }
     

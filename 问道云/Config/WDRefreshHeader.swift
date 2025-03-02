@@ -10,7 +10,7 @@ import Lottie
 import MJRefresh
 
 class WDRefreshHeader: MJRefreshHeader {
-
+    
     lazy var headTapView: LottieAnimationView = {
         let animationView = LottieAnimationView(name: "refreshloading.json", bundle: Bundle.main)
         animationView.animationSpeed = 2
@@ -27,14 +27,14 @@ class WDRefreshHeader: MJRefreshHeader {
         nameLabel.text = "下拉刷新"
         return nameLabel
     }()
-
+    
     override func prepare() {
         super.prepare()
         addSubview(headTapView)
         addSubview(nameLabel)
         self.mj_h = 80
     }
-
+    
     override func placeSubviews() {
         super.placeSubviews()
         headTapView.snp.makeConstraints { make in
@@ -48,7 +48,7 @@ class WDRefreshHeader: MJRefreshHeader {
             make.size.equalTo(CGSize(width: 120, height: 13))
         }
     }
-
+    
     override func scrollViewContentOffsetDidChange(_ change: [AnyHashable : Any]?) {
         super.scrollViewContentOffsetDidChange(change)
         let isDragging = scrollView?.isDragging ?? false

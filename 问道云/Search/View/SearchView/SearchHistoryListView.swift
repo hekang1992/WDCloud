@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchHistoryListView: BaseView {
-
+    
     lazy var descLabel: UILabel = {
         let descLabel = UILabel()
         descLabel.text = "浏览历史"
@@ -56,5 +56,5 @@ class SearchHistoryListView: BaseView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }

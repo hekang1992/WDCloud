@@ -8,7 +8,7 @@
 import UIKit
 
 class PopAgainLoginView: BaseView {
-
+    
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         ctImageView.isUserInteractionEnabled = true

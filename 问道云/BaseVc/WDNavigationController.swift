@@ -8,10 +8,10 @@
 import UIKit
 
 class WDNavigationController: UINavigationController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.navigationBar.isHidden = true
         self.navigationBar.isTranslucent = false

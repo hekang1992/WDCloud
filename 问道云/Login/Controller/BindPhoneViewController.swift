@@ -19,10 +19,10 @@ class BindPhoneViewController: WDBaseViewController {
         let bindView = BindPhoneView()
         return bindView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(bindView)
         bindView.snp.makeConstraints { make in
@@ -42,7 +42,7 @@ class BindPhoneViewController: WDBaseViewController {
         }).disposed(by: disposeBag)
         
     }
-
+    
 }
 
 extension BindPhoneViewController {

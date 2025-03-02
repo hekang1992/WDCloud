@@ -19,7 +19,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
     var phoneBlock: ((pageDataModel) -> Void)?
     //人物点击
     var peopleBlock: ((pageDataModel) -> Void)?
-
+    
     var model = BehaviorRelay<pageDataModel?>(value: nil)
     
     //是否点击了展开是收起
@@ -206,14 +206,14 @@ class TwoCompanyNormalListCell: BaseViewCell {
             let companyName = model.orgInfo?.orgName ?? ""
             //logo
             self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (40, 40)))
-           
+            
             //名字
             self.nameLabel.attributedText = TextStyler.styledText(for: companyName, target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
             
             //法人
             self.nameView.label2.text = model.legalPerson?.legalName ?? ""
             self.nameView.label2.textColor = .init(cssStr: "#F55B5B")
-           
+            
             //注册资本
             self.moneyView.label2.text = "\(model.orgInfo?.regCap ?? "--")\(model.firmInfo?.registerCapitalCurrency ?? "")"
             self.moneyView.label2.textColor = .init(cssStr: "#333333")
@@ -277,39 +277,39 @@ class TwoCompanyNormalListCell: BaseViewCell {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.addressBlock?(model)
-            }
-        }).disposed(by: disposeBag)
+                if let self = self, let model = self.model.value {
+                    self.addressBlock?(model)
+                }
+            }).disposed(by: disposeBag)
         
         //官网点击
         websiteimageView.rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.websiteBlock?(model)
-            }
-        }).disposed(by: disposeBag)
+                if let self = self, let model = self.model.value {
+                    self.websiteBlock?(model)
+                }
+            }).disposed(by: disposeBag)
         
         //电话点击
         phoneimageView.rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.phoneBlock?(model)
-            }
-        }).disposed(by: disposeBag)
+                if let self = self, let model = self.model.value {
+                    self.phoneBlock?(model)
+                }
+            }).disposed(by: disposeBag)
         
         nameView.rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.peopleBlock?(model)
-            }
-        }).disposed(by: disposeBag)
+                if let self = self, let model = self.model.value {
+                    self.peopleBlock?(model)
+                }
+            }).disposed(by: disposeBag)
         
         focusBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self, let model = self.model.value else { return }
@@ -321,7 +321,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }
 
 
@@ -446,7 +446,7 @@ extension TwoCompanyNormalListCell {
                     make.height.equalTo(buttonHeight)
                     make.width.equalTo(width)
                 }
-            
+                
                 lastRight += width + buttonSpacing
             }
         }
@@ -466,5 +466,5 @@ extension TwoCompanyNormalListCell {
         companyModel.isOpenTag.toggle() // 切换展开/收起状态
         setupScrollView(tagScrollView: tagListView, tagArray: tagArray) // 重新设置标签
     }
-
+    
 }

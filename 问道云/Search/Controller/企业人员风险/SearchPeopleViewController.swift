@@ -62,10 +62,10 @@ class SearchPeopleViewController: WDBaseViewController {
         let tableView = UITableView(frame: .zero, style: .grouped)
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(peopleView)
         view.addSubview(twoPeopleListView)
@@ -80,14 +80,14 @@ class SearchPeopleViewController: WDBaseViewController {
             .rx
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteSearchInfo()
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         //删除浏览历史
         self.peopleView.historyView.deleteBtn
             .rx
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteHistoryInfo()
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         //点击最近搜索
         self.peopleView.lastSearchTextBlock = { [weak self] searchStr in
@@ -173,7 +173,7 @@ class SearchPeopleViewController: WDBaseViewController {
         }
         
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("人员===============人员")
@@ -376,7 +376,7 @@ extension SearchPeopleViewController {
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-        ViewHud.addLoadView()
+            ViewHud.addLoadView()
             let dict = ["searchType": "1",
                         "moduleId": "02"]
             man.requestAPI(params: dict,
@@ -404,7 +404,7 @@ extension SearchPeopleViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-        ViewHud.addLoadView()
+            ViewHud.addLoadView()
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
                         "moduleId": "02",

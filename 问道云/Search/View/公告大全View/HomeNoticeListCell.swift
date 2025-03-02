@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeNoticeListCell: BaseViewCell {
-
+    
     var model: itemsModel? {
         didSet {
             guard let model = model else { return }

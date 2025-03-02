@@ -16,7 +16,7 @@ class HomeVideoListViewController: WDBaseViewController {
     var pageNum = 1
     
     var allArray: [rowsModel] = []//加载更多
-
+    
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
     var modelArray = BehaviorRelay<[rowsModel]?>(value: nil)
@@ -34,10 +34,10 @@ class HomeVideoListViewController: WDBaseViewController {
         tableView.register(HomeVideoListViewCell.self, forCellReuseIdentifier: "HomeVideoListViewCell")
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -78,7 +78,7 @@ class HomeVideoListViewController: WDBaseViewController {
                 guard let self = self else { return }
                 let videofile = model.videofile ?? ""
                 self.pushWebPage(from: videofile)
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
     }
     

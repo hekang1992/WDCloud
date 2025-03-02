@@ -257,12 +257,12 @@ class TwoCompanySpecListCell: BaseViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             self.ctImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(model.firmInfo?.entityName ?? "", size: (32, 32)))
-           
+            
             self.nameLabel.attributedText = TextStyler.styledText(for: model.firmInfo?.entityName ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
             
             self.nameView.label2.text = model.legalPerson?.legalName ?? ""
             self.nameView.label2.textColor = .init(cssStr: "#547AFF")
-           
+            
             self.moneyView.label2.text = "\(model.firmInfo?.registerCapital ?? "--")\(model.firmInfo?.registerCapitalCurrency ?? "")"
             self.moneyView.label2.textColor = .init(cssStr: "#333333")
             
@@ -288,40 +288,40 @@ class TwoCompanySpecListCell: BaseViewCell {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.addressBlock?(model)
-            }
-        }).disposed(by: disposeBag)
+                if let self = self, let model = self.model.value {
+                    self.addressBlock?(model)
+                }
+            }).disposed(by: disposeBag)
         
         //官网点击
         websiteimageView.rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.websiteBlock?(model)
-            }
-        }).disposed(by: disposeBag)
+                if let self = self, let model = self.model.value {
+                    self.websiteBlock?(model)
+                }
+            }).disposed(by: disposeBag)
         
         //电话点击
         phoneimageView.rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.phoneBlock?(model)
-            }
-        }).disposed(by: disposeBag)
+                if let self = self, let model = self.model.value {
+                    self.phoneBlock?(model)
+                }
+            }).disposed(by: disposeBag)
         
         //人物点击
         nameView.rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-            if let self = self, let model = self.model.value {
-                self.peopleBlock?(model)
-            }
-        }).disposed(by: disposeBag)
+                if let self = self, let model = self.model.value {
+                    self.peopleBlock?(model)
+                }
+            }).disposed(by: disposeBag)
         
         focusBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self, let model = self.model.value else { return }
@@ -435,7 +435,7 @@ class BiaoQianView: BaseView {
 }
 
 class TextStyler {
-
+    
     static func styledText(for text: String, target: String, color: UIColor) -> NSAttributedString {
         let attributedText = NSMutableAttributedString(string: text)
         var range = (text as NSString).range(of: target)
@@ -556,7 +556,7 @@ extension TwoCompanySpecListCell {
                 lab.layer.cornerRadius = 2
                 lab.textAlignment = .center
                 lab.text = "\(tags)   "
-//                self.nameLabelColor(from: lab)
+                //                self.nameLabelColor(from: lab)
                 TagsLabelColorConfig.nameLabelColor(from: lab)
                 tagScrollView.addSubview(lab)
                 
@@ -574,7 +574,7 @@ extension TwoCompanySpecListCell {
                     make.height.equalTo(buttonHeight)
                     make.width.equalTo(width)
                 }
-            
+                
                 lastRight += width + buttonSpacing
             }
         }

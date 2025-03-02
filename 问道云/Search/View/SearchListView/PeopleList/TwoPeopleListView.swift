@@ -24,7 +24,7 @@ class TwoPeopleListView: BaseView {
         whiteView.backgroundColor = .clear
         return whiteView
     }()
-
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none

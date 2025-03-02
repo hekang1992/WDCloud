@@ -19,10 +19,10 @@ class GetCodeViewController: WDBaseViewController {
         let codeView = CodeView()
         return codeView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(codeView)
         codeView.snp.makeConstraints { make in
@@ -45,7 +45,7 @@ class GetCodeViewController: WDBaseViewController {
         }
     }
     
-
+    
 }
 
 extension GetCodeViewController {

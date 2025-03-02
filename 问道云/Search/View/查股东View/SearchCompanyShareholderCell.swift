@@ -16,12 +16,12 @@ class SearchCompanyShareholderCell: BaseViewCell {
     var tagArray: [String] = []
     
     var model = BehaviorRelay<rowsModel?>(value: nil)
-
+    
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         return ctImageView
     }()
-
+    
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.textColor = UIColor.init(cssStr: "#333333")
@@ -432,7 +432,7 @@ extension SearchCompanyShareholderCell {
                     make.height.equalTo(buttonHeight)
                     make.width.equalTo(width)
                 }
-            
+                
                 lastRight += width + buttonSpacing
             }
         }
@@ -441,9 +441,9 @@ extension SearchCompanyShareholderCell {
         tagScrollView.snp.updateConstraints { make in
             make.height.equalTo(numberOfLine * (buttonHeight + buttonSpacing))
         }
-//        self.lineView.snp.updateConstraints { make in
-//            make.top.equalTo(tagListView.snp.bottom).offset(60)
-//        }
+        //        self.lineView.snp.updateConstraints { make in
+        //            make.top.equalTo(tagListView.snp.bottom).offset(60)
+        //        }
         openButton.layoutButtonEdgeInsets(style: .right, space: 2)
     }
     
@@ -452,5 +452,5 @@ extension SearchCompanyShareholderCell {
         companyModel.isOpenTag.toggle() // 切换展开/收起状态
         setupScrollView(tagScrollView: tagListView, tagArray: tagArray) // 重新设置标签
     }
-
+    
 }

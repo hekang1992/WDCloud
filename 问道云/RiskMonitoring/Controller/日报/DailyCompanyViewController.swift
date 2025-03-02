@@ -211,9 +211,9 @@ extension DailyCompanyViewController {
             case .success(let success):
                 if success.code == 200 {
                     if let self = self,
-                        let model = success.data,
-                        let modelArray = model.rows,
-                        let total = model.total {
+                       let model = success.data,
+                       let modelArray = model.rows,
+                       let total = model.total {
                         self.companyModel.accept(model)
                         if self.pageNum == 1 {
                             self.companyArray.removeAll()

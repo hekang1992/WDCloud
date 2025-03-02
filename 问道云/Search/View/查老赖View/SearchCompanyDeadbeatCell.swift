@@ -38,7 +38,7 @@ class SearchCompanyDeadbeatCell: BaseViewCell {
         lineView.backgroundColor = .init(cssStr: "#F8F8F8")
         return lineView
     }()
-
+    
     lazy var cImageView: UIImageView = {
         let cImageView = UIImageView()
         cImageView.image = UIImage(named: "lailaiimage")

@@ -14,7 +14,7 @@ class SearchHeadView: BaseView {
         whiteView.backgroundColor = .white
         return whiteView
     }()
-
+    
     lazy var searchView: UIView = {
         let searchView = UIView()
         searchView.backgroundColor = .init(cssStr: "#F3F3F3")

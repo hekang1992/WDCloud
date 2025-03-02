@@ -11,7 +11,7 @@ import RxRelay
 class TwoRiskListPeopleCell: BaseViewCell {
     
     var modelArray = BehaviorRelay<[itemsModel]?>(value: nil)
-
+    
     lazy var bgView: UIView = {
         let bgView = UIView()
         bgView.backgroundColor = .white

@@ -11,7 +11,7 @@ class OneCompanyView: BaseView {
     
     //点击最近搜索返回
     var lastSearchTextBlock: ((String) -> Void)?
-
+    
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -55,19 +55,19 @@ class OneCompanyView: BaseView {
         hotWordsView.isHidden = true
         return hotWordsView
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        addSubview(searchbtn)
+        //        addSubview(searchbtn)
         addSubview(scrollView)
         scrollView.addSubview(searchView)
         scrollView.addSubview(historyView)
         scrollView.addSubview(hotWordsView)
-//        searchbtn.snp.makeConstraints { make in
-//            make.left.equalToSuperview().offset(11)
-//            make.top.equalToSuperview().offset(8)
-//            make.size.equalTo(CGSize(width: 72, height: 23.5))
-//        }
+        //        searchbtn.snp.makeConstraints { make in
+        //            make.left.equalToSuperview().offset(11)
+        //            make.top.equalToSuperview().offset(8)
+        //            make.size.equalTo(CGSize(width: 72, height: 23.5))
+        //        }
         scrollView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(1)
             make.left.right.bottom.equalToSuperview()

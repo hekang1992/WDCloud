@@ -122,7 +122,7 @@ class HighSearchViewController: WDBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         addHeadView(from: headView)
         getHighMessageInfo()
@@ -221,7 +221,7 @@ class HighSearchViewController: WDBaseViewController {
         
         
     }
-
+    
 }
 
 extension HighSearchViewController {

@@ -451,7 +451,7 @@ extension SearchRiskViewController {
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-        ViewHud.addLoadView()
+            ViewHud.addLoadView()
             let dict = ["searchType": "",
                         "moduleId": "05"]
             man.requestAPI(params: dict,
@@ -479,7 +479,7 @@ extension SearchRiskViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-        ViewHud.addLoadView()
+            ViewHud.addLoadView()
             let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["moduleId": "05",
                         "viewrecordtype": "",

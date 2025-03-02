@@ -107,28 +107,28 @@ extension WDLoginViewController {
 extension WDLoginViewController {
     
     private func oneLogin() {
-//        let manager = NTESQuickLoginManager.sharedInstance()
-//        manager.register(withBusinessID: "5467cd077ec5425c8779ef27b682bb8e")
-//        //是否支持一键登录
-//        let isOneLogin = manager.shouldQuickLogin()
-//        if !isOneLogin {
-//            ToastViewConfig.showToast(message: "您的设备不支持一键登录功能!")
-//        }else {
-//            self.oneTouchLoginInfo(from: manager)
-//        }
+        //        let manager = NTESQuickLoginManager.sharedInstance()
+        //        manager.register(withBusinessID: "5467cd077ec5425c8779ef27b682bb8e")
+        //        //是否支持一键登录
+        //        let isOneLogin = manager.shouldQuickLogin()
+        //        if !isOneLogin {
+        //            ToastViewConfig.showToast(message: "您的设备不支持一键登录功能!")
+        //        }else {
+        //            self.oneTouchLoginInfo(from: manager)
+        //        }
     }
     
-//    private func oneTouchLoginInfo(from manager: NTESQuickLoginManager) {
-//        manager.getPhoneNumberCompletion { resultDic in
-//            if let boolNum = resultDic["success"] as? NSNumber, boolNum.boolValue {
-//                let securityPhone = resultDic["securityPhone"]
-//                print("securityPhone====\(securityPhone ?? "")")
-//            } else {
-//                // 预取号失败，建议后续直接走降级方案（例如短信）
-//            }
-//        }
-//        
-//    }
+    //    private func oneTouchLoginInfo(from manager: NTESQuickLoginManager) {
+    //        manager.getPhoneNumberCompletion { resultDic in
+    //            if let boolNum = resultDic["success"] as? NSNumber, boolNum.boolValue {
+    //                let securityPhone = resultDic["securityPhone"]
+    //                print("securityPhone====\(securityPhone ?? "")")
+    //            } else {
+    //                // 预取号失败，建议后续直接走降级方案（例如短信）
+    //            }
+    //        }
+    //        
+    //    }
     
 }
 

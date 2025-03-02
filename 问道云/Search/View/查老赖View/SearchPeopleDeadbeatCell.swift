@@ -11,7 +11,7 @@ import RxRelay
 class SearchPeopleDeadbeatCell: BaseViewCell {
     
     var model = BehaviorRelay<itemsModel?>(value: nil)
-
+    
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         return ctImageView

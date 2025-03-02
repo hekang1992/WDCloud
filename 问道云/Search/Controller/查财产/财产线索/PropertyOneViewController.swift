@@ -17,7 +17,7 @@ class PropertyOneViewController: WDBaseViewController {
     
     //参数
     var searchKey = BehaviorRelay<String>(value: "")
-
+    
     //热搜
     var hotWordsArray = BehaviorRelay<[rowsModel]?>(value: nil)
     
@@ -151,7 +151,7 @@ class PropertyOneViewController: WDBaseViewController {
                 }
                 self?.searchKey.accept(keywords)
             }).disposed(by: disposeBag)
-    
+        
         //获取城市数据
         getAllRegionInfo()
         //最近搜索
@@ -211,13 +211,13 @@ extension PropertyOneViewController: HGSegmentedPageViewControllerDelegate {
     func segmentedPageViewControllerWillTransition(toPage page: Int) {
         self.searchKey.asObservable()
             .subscribe(onNext: { [weak self] keyWords in
-            guard let self = self else { return }
-            if page == 0 {
-                peopleVc.keyWords.accept(keyWords)
-            }else {
-                companyVc.keyWords.accept(keyWords)
-            }
-        }).disposed(by: disposeBag)
+                guard let self = self else { return }
+                if page == 0 {
+                    peopleVc.keyWords.accept(keyWords)
+                }else {
+                    companyVc.keyWords.accept(keyWords)
+                }
+            }).disposed(by: disposeBag)
         
         self.regionModelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self, let modelArray = modelArray else { return }
@@ -407,18 +407,18 @@ extension PropertyOneViewController: HGSegmentedPageViewControllerDelegate {
                     detailVc.pageUrl = "/riskmonitor/cooperation/getDeadBeatDetail"
                     self.navigationController?.pushViewController(detailVc, animated: true)
                 }
-//                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
-//                var dict: [String: String]
-//                let type = model.type ?? ""
-//                if type == "1" {
-//                    dict = ["firmname": model.name ?? "",
-//                            "entityId": model.eid ?? ""]
-//                }else {
-//                    dict = ["personName": model.name ?? "",
-//                            "personNumber": model.eid ?? ""]
-//                }
-//                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-//                self.pushWebPage(from: webUrl)
+                //                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
+                //                var dict: [String: String]
+                //                let type = model.type ?? ""
+                //                if type == "1" {
+                //                    dict = ["firmname": model.name ?? "",
+                //                            "entityId": model.eid ?? ""]
+                //                }else {
+                //                    dict = ["personName": model.name ?? "",
+                //                            "personNumber": model.eid ?? ""]
+                //                }
+                //                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                //                self.pushWebPage(from: webUrl)
             }
             listView.nameLabel.text = model.name ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22)))
@@ -499,5 +499,5 @@ extension PropertyOneViewController: HGSegmentedPageViewControllerDelegate {
             }
         })
     }
-
+    
 }

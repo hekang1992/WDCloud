@@ -29,7 +29,7 @@ class HomeItemSearchView: BaseView {
         searchTx.clearButtonMode = .whileEditing
         return searchTx
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

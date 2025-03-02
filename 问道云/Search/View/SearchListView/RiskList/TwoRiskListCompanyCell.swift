@@ -33,7 +33,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
         nameLabel.numberOfLines = 0
         return nameLabel
     }()
-
+    
     lazy var tagListView: TagListView = {
         let tagListView = TagListView()
         tagListView.cornerRadius = 2

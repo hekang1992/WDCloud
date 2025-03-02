@@ -15,10 +15,10 @@ class PasswordLoginViewController: WDBaseViewController {
         let passView = PasswordLoginView()
         return passView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(passView)
         passView.snp.makeConstraints { make in
@@ -46,7 +46,7 @@ class PasswordLoginViewController: WDBaseViewController {
         super.viewDidAppear(animated)
         passView.phoneTx.becomeFirstResponder()
     }
-
+    
 }
 
 extension PasswordLoginViewController {

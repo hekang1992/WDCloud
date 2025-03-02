@@ -25,19 +25,15 @@ class LaunchViewController: WDBaseViewController {
     }()
     
     var isShow: Bool = false
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.addSubview(homeBgImageView)
         view.addSubview(priImageView)
         homeBgImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-//        priImageView.snp.makeConstraints { make in
-//            make.center.equalToSuperview()
-//            make.size.equalTo(CGSize(width: 310, height: 385))
-//        }
         NetworkManager.shared.startListening()
     }
     

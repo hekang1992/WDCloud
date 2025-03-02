@@ -11,7 +11,7 @@ import DropMenuBar
 class PropertyThreeCompanyViewController: WDBaseViewController {
     
     weak var navController: UINavigationController?
-
+    
     lazy var searchView: HomeItemSearchView = {
         let searchView = HomeItemSearchView()
         let attrString = NSMutableAttributedString(string: "请输入企业、人员名", attributes: [
@@ -22,10 +22,10 @@ class PropertyThreeCompanyViewController: WDBaseViewController {
         searchView.backgroundColor = .white
         return searchView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(searchView)
         searchView.snp.makeConstraints { make in
@@ -46,5 +46,5 @@ class PropertyThreeCompanyViewController: WDBaseViewController {
             make.height.equalTo(32)
         }
     }
-
+    
 }

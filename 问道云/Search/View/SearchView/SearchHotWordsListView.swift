@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchHotWordsListView: BaseView {
-
+    
     lazy var descLabel: UILabel = {
         let descLabel = UILabel()
         descLabel.text = "热门搜索"
@@ -44,5 +44,5 @@ class SearchHotWordsListView: BaseView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }

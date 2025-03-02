@@ -22,7 +22,7 @@ var IS_LOGIN: Bool {
 }
 
 class WDLoginConfig: NSObject {
-
+    
     static func saveLoginInfo(_ phone: String, _ sessionID: String, _ customerNumber: String) {
         UserDefaults.standard.setValue(phone, forKey: WDY_PHONE)
         UserDefaults.standard.setValue(sessionID, forKey: WDY_SESSIONID)

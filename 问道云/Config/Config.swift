@@ -1030,7 +1030,7 @@ class TagsLabelColorConfig {
             tagView.textColor = .init(cssStr: "#3F96FF")
             tagView.layer.borderColor = UIColor.clear.cgColor
         }
-    
+        
     }
     
 }

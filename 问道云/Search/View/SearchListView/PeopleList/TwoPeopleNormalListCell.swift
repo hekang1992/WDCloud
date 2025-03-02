@@ -9,7 +9,7 @@ import UIKit
 import RxRelay
 
 class TwoPeopleNormalListCell: BaseViewCell {
-
+    
     var model = BehaviorRelay<itemsModel?>(value: nil)
     
     var height: Float = 0
@@ -118,7 +118,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
             if let listCompany = model.listCompany {
                 configureLabels(with: listCompany)
             }
-
+            
         }).disposed(by: disposeBag)
         
     }

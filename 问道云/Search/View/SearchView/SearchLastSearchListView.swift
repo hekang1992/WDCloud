@@ -12,7 +12,7 @@ class SearchLastSearchListView: BaseView {
     
     //点击最近搜索返回
     var lastSearchTextBlock: ((String) -> Void)?
-
+    
     lazy var descLabel: UILabel = {
         let descLabel = UILabel()
         descLabel.text = "最近搜索"
@@ -81,7 +81,7 @@ class SearchLastSearchListView: BaseView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }
 
 extension SearchLastSearchListView: TagListViewDelegate {

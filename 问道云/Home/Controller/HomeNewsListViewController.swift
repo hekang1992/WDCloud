@@ -16,7 +16,7 @@ class HomeNewsListViewController: WDBaseViewController {
     var pageNum = 1
     
     var allArray: [rowsModel] = []//加载更多
-
+    
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
     var modelArray = BehaviorRelay<[rowsModel]?>(value: nil)
@@ -34,10 +34,10 @@ class HomeNewsListViewController: WDBaseViewController {
         tableView.register(HomeNewsListViewCell.self, forCellReuseIdentifier: "HomeNewsListViewCell")
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -82,7 +82,7 @@ class HomeNewsListViewController: WDBaseViewController {
                 let itemId = model.itemId ?? ""
                 let pageUrl = "/news-information?itemId=\(itemId)"
                 self.pushWebPage(from: base_url + pageUrl)
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
     }
     

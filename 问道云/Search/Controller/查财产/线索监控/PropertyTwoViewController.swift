@@ -11,7 +11,7 @@ import DropMenuBar
 class PropertyTwoViewController: WDBaseViewController {
     
     var backBlock: (() -> Void)?
-
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "财产线索监控"
@@ -20,10 +20,10 @@ class PropertyTwoViewController: WDBaseViewController {
         headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         addHeadView(from: headView)
         headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
@@ -44,15 +44,15 @@ class PropertyTwoViewController: WDBaseViewController {
         }
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

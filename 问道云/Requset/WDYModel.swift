@@ -73,9 +73,9 @@ class DataModel {
     var investCompanyCnt: Int?//对外投资
     var directorCompanyCnt: Int?//董监高投资
     var shCompanyCnt: Int?//股东
-/**
- 公司详情数据模型
- */
+    /**
+     公司详情数据模型
+     */
     //股票模型
     var stockInfo: [stockInfoModel]?
     //
@@ -102,9 +102,9 @@ class DataModel {
     var promptLabels: [promptLabelsModel]?
     //是否被关注
     var followInfo: followInfoModel?
-/**
- 个人详情数据模型
- */
+    /**
+     个人详情数据模型
+     */
     var personId: String?//个人ID
     var personName: String?//个人名字
     var resume: String?//个人描述
@@ -130,15 +130,15 @@ class DataModel {
     var lowLevelCnt: Int?
     var tipLevelCnt: Int?
     var statisticRiskDtos: [statisticRiskDtosModel]?
-/**
- 监控设置模型
-*/
+    /**
+     监控设置模型
+     */
     var propertyTypeSetting: [propertyTypeSettingModel]?
     var propertyEntityRelatedSetting: [propertyTypeSettingModel]?
     var propertyPersonRelatedSetting: [propertyTypeSettingModel]?
-/**
- 高级搜索模型
- */
+    /**
+     高级搜索模型
+     */
     var ORG_REG_STATUS: [itemsModel]?//登记状态
     var INC_DATE_LEVEL: [itemsModel]?//成立年限
     var REG_CAP_LEVEL: [itemsModel]?//注册资本

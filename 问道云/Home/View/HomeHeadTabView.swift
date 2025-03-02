@@ -15,7 +15,7 @@ class HomeHeadTabView: BaseView {
     var textBlock: ((rowsModel) -> Void)?
     
     var modelArray = BehaviorRelay<[rowsModel]?>(value: nil)
-
+    
     lazy var oneBtn: UIButton = {
         let oneBtn = UIButton(type: .custom)
         oneBtn.setTitle("查企业", for: .normal)

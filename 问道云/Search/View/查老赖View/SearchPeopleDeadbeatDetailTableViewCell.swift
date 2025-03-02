@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchPeopleDeadbeatDetailTableViewCell: BaseViewCell {
-
+    
     lazy var namelabel: UILabel = {
         let namelabel = UILabel()
         namelabel.textColor = UIColor.init(cssStr: "#333333")
@@ -17,7 +17,7 @@ class SearchPeopleDeadbeatDetailTableViewCell: BaseViewCell {
         namelabel.numberOfLines = 0
         return namelabel
     }()
-
+    
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         ctImageView.image = UIImage(named: "righticonimage")
