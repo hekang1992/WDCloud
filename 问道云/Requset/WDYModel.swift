@@ -41,7 +41,9 @@ class DataModel {
     var userinfo: userinfoModel?//用户信息模型
     var accounttype: Int?//会员类型
     var viplevel: String?
+    var endTime: String?
     var endtime: String?
+    var startTime: String?
     var comboname: String?
     var combotypenumber: String?
     var combonumber: Int?//多少天
@@ -151,6 +153,8 @@ class DataModel {
     var orgNum: Int?
     var personNum: Int?
     init(json: JSON) {
+        self.endtime = json["endtime"].stringValue
+        self.startTime = json["startTime"].stringValue
         self.totalCompanyCnt = json["totalCompanyCnt"].intValue
         self.highLevelCnt = json["highLevelCnt"].intValue
         self.lowLevelCnt = json["lowLevelCnt"].intValue
@@ -233,7 +237,7 @@ class DataModel {
         self.userinfo = userinfoModel(json: json["userinfo"])
         self.accounttype = json["accounttype"].intValue
         self.viplevel = json["viplevel"].stringValue
-        self.endtime = json["endtime"].stringValue
+        self.endTime = json["endTime"].stringValue
         self.comboname = json["comboname"].stringValue
         self.combotypenumber = json["combotypenumber"].stringValue
         self.combonumber = json["combonumber"].intValue

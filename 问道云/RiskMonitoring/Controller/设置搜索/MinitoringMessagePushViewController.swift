@@ -386,11 +386,60 @@ class MinitoringMessagePushViewController: WDBaseViewController {
             showxDatePicker(from: xbtn)
         }).disposed(by: disposeBag)
         
+        //获取用户监控设置
+        getUserSettingInfo()
+    
+        //判断通知开关
+        checkNotificationAuthorization { [weak self] isAuthorized in
+            self?.oneSwitch.on = isAuthorized
+        }
     }
     
 }
 
 extension MinitoringMessagePushViewController {
+    
+    //获取用户监控设置
+    func getUserSettingInfo() {
+        ViewHud.addLoadView()
+        let man = RequestManager()
+        let dict = [String: Any]()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-config/getRiskMonitorConfig",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    if let self = self, let model = success.data {
+                        refreshUI(from: model)
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    func refreshUI(from model: DataModel) {
+        let startTime = formatTimeString(model.startTime ?? "", from: "HH:mm:ss", to: "HH:mm")
+        let endTime = formatTimeString(model.endTime ?? "", from: "HH:mm:ss", to: "HH:mm")
+        self.zbtn.setTitle(startTime, for: .normal)
+        self.xbtn.setTitle(endTime, for: .normal)
+    }
+    
+    func formatTimeString(_ timeString: String, from inputFormat: String, to outputFormat: String) -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = inputFormat
+        guard let date = inputFormatter.date(from: timeString) else {
+            print("输入的时间格式不正确")
+            return nil
+        }
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = outputFormat
+        return outputFormatter.string(from: date)
+    }
     
     func showDatePicker(from btn: UIButton) {
         let datePickerView = BRDatePickerView()
@@ -403,9 +452,10 @@ extension MinitoringMessagePushViewController {
         if let leftDate = self.leftDate {
             datePickerView.selectDate = leftDate
         }
-        datePickerView.resultBlock = { selectDate, selectValue in
+        datePickerView.resultBlock = { [weak self] selectDate, selectValue in
             btn.setTitle(selectValue ?? "", for: .normal)
-            self.leftDate = selectDate
+            self?.leftDate = selectDate
+            self?.updateInfo()
         }
         
         let customStyle = BRPickerStyle()
@@ -427,19 +477,59 @@ extension MinitoringMessagePushViewController {
         if let rightDate = self.rightDate {
             datePickerView.selectDate = rightDate
         }
-        datePickerView.resultBlock = { selectDate, selectValue in
+        datePickerView.resultBlock = { [weak self] selectDate, selectValue in
             btn.setTitle(selectValue ?? "", for: .normal)
-            self.rightDate = selectDate
+            self?.rightDate = selectDate
+            self?.updateInfo()
         }
         let customStyle = BRPickerStyle()
         customStyle.pickerColor = .white
         customStyle.pickerTextFont = .regularFontOfSize(size: 16)
         customStyle.selectRowTextColor = .black
         datePickerView.pickerStyle = customStyle
-        
-
         datePickerView.show()
     }
     
+    //更新监控方案
+    private func updateInfo() {
+        let man = RequestManager()
+        let startTime = self.zbtn.titleLabel?.text ?? ""
+        let endTime = self.xbtn.titleLabel?.text ?? ""
+        let dict = ["startTime": startTime, "endTime": endTime]
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-config/updateRiskMonitorConfig",
+                       method: .post) { result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    ToastViewConfig.showToast(message: "更新监控方案成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    func checkNotificationAuthorization(completion: @escaping (Bool) -> Void) {
+        let center = UNUserNotificationCenter.current()
+        
+        center.getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .authorized, .provisional, .ephemeral:
+                // 用户已授权通知权限
+                completion(true)
+            case .denied, .notDetermined:
+                // 用户未授权或拒绝了通知权限
+                completion(false)
+            @unknown default:
+                // 处理未知情况
+                completion(false)
+            }
+        }
+    }
+
     
 }

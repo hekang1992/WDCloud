@@ -93,7 +93,7 @@ class FocusCompanyView: BaseView {
         addBtn.setImage(UIImage(named: "plus-circle"), for: .normal)
         addBtn.setTitle("新建分组", for: .normal)
         addBtn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
-        addBtn.titleLabel?.font = .mediumFontOfSize(size: 13)
+        addBtn.titleLabel?.font = .mediumFontOfSize(size: 15)
         addBtn.layoutButtonEdgeInsets(style: .left, space: 6)
         addBtn.backgroundColor = .white
         return addBtn
