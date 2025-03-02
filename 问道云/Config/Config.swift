@@ -653,7 +653,7 @@ extension UIViewController {
 class ShowAlertManager {
     
     /// 获取当前的视图控制器
-    static func getTopViewController() -> WDBaseViewController? {
+    static func getTopViewController() -> UIViewController? {
         // 获取应用的所有窗口
         let windows = UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
@@ -664,7 +664,7 @@ class ShowAlertManager {
         while let presentedController = topController?.presentedViewController {
             topController = presentedController
         }
-        return topController as? WDBaseViewController
+        return topController
     }
     
     /// 通用的Alert封装方法
@@ -1053,7 +1053,15 @@ class ShowAgainLoginConfig {
         
         againLoginView.sureBtn.rx.tap.subscribe(onNext: {
             vc?.dismiss(animated: true, completion: {
-                vc?.popLogin()
+                let loginVc = WDLoginViewController()
+                let rootVc = WDNavigationController(rootViewController: loginVc)
+                rootVc.modalPresentationStyle = .overFullScreen
+                vc?.present(rootVc, animated: true)
+                WDLoginConfig.removeLoginInfo()
+                loginVc.loginView.backBtn.rx.tap.subscribe(onNext: {
+                    loginVc.loginView.phoneTx.resignFirstResponder()
+                    NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
+                }).disposed(by: disposeBag)
             })
         }).disposed(by: disposeBag)
         
