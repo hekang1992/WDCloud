@@ -124,8 +124,6 @@ class RequestManager: NSObject {
         }else if code == 401 {
             WDLoginConfig.removeLoginInfo()
             ShowAgainLoginConfig.againLoginView()
-//            let error = NSError()
-//            completion(.failure(error))
         }else if code == 702 {
             completion(.success(baseModel))
             ToastViewConfig.showToast(message: msg)

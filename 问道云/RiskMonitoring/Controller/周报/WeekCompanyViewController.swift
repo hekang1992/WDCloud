@@ -221,6 +221,7 @@ extension WeekCompanyViewController {
                         self.pageNum += 1
                         self.companyArray.append(contentsOf: modelArray)
                         if total != 0 {
+                            self.noNetView.removeFromSuperview()
                             self.emptyView.removeFromSuperview()
                         }else {
                             self.addNodataView(from: self.dailyView.tableView)
@@ -241,6 +242,9 @@ extension WeekCompanyViewController {
                 }
                 break
             case .failure(_):
+                if let self = self {
+                    self.addNoNetView(from: self.dailyView.tableView)
+                }
                 break
             }
         }
