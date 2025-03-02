@@ -8,7 +8,6 @@
 import UIKit
 import RxRelay
 import JXSegmentedView
-import HGSegmentedPageViewController
 
 class FocusAllViewController: WDBaseViewController {
     
@@ -22,12 +21,6 @@ class FocusAllViewController: WDBaseViewController {
         return headView
     }()
     
-    lazy var historyView: HistoryView = {
-        let historyView = HistoryView()
-        historyView.backgroundColor = .white
-        return historyView
-    }()
-    
     lazy var companyVc: FocusCompanyViewController = {
         let companyVc = FocusCompanyViewController()
         return companyVc
@@ -38,30 +31,19 @@ class FocusAllViewController: WDBaseViewController {
         return peopleVc
     }()
     
-    lazy var segmentedPageViewController: HGSegmentedPageViewController = {
-        let segmentedPageViewController = HGSegmentedPageViewController()
-        segmentedPageViewController.categoryView.alignment = .center
-        segmentedPageViewController.categoryView.itemSpacing = 25
-        segmentedPageViewController.categoryView.topBorder.isHidden = true
-        segmentedPageViewController.categoryView.itemWidth = SCREEN_WIDTH * 0.25
-        segmentedPageViewController.categoryView.vernierWidth = 15
-        segmentedPageViewController.categoryView.titleNomalFont = .mediumFontOfSize(size: 14)
-        segmentedPageViewController.categoryView.titleSelectedFont = .mediumFontOfSize(size: 14)
-        segmentedPageViewController.categoryView.titleNormalColor = .init(cssStr: "#9FA4AD")
-        segmentedPageViewController.categoryView.titleSelectedColor = .init(cssStr: "#333333")
-        segmentedPageViewController.categoryView.vernier.backgroundColor = .init(cssStr: "#547AFF")
-        segmentedPageViewController.delegate = self
-        return segmentedPageViewController
-    }()
+    private lazy var segmentedView: JXSegmentedView = createSegmentedView()
+    
+    private lazy var cocsciew: UIScrollView = createCocsciew()
+    
+    private var segmurce: JXSegmentedTitleDataSource!
+    
+    private var listVCArray = [WDBaseViewController]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        view.addSubview(historyView)
-        historyView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
         addHeadView(from: headView)
         headView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
@@ -71,34 +53,102 @@ class FocusAllViewController: WDBaseViewController {
             let searchVc = FocusSearchViewController()
             self?.navigationController?.pushViewController(searchVc, animated: false)
         }).disposed(by: disposeBag)
-        //设置
-        addSegmentedPageViewController()
-        setupPageViewControllers()
+        
+        //添加切换
+        addsentMentView()
+        
+        //添加子控制器
+        setupViewControllers()
+        
     }
     
 }
 
-extension FocusAllViewController: HGSegmentedPageViewControllerDelegate {
+extension FocusAllViewController: JXSegmentedViewDelegate {
     
-    private func addSegmentedPageViewController() {
-        self.addChild(self.segmentedPageViewController)
-        self.view.addSubview(self.segmentedPageViewController.view)
-        self.segmentedPageViewController.didMove(toParent: self)
-        self.segmentedPageViewController.view.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
+    func addsentMentView() {
+        view.addSubview(segmentedView)
+        view.addSubview(cocsciew)
+        segmentedView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
             make.top.equalTo(headView.snp.bottom)
+            make.height.equalTo(32)
+        }
+        cocsciew.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(segmentedView.snp.bottom).offset(1)
         }
     }
     
-    private func setupPageViewControllers() {
-        let titles: [String] = ["企业", "人员"]
-        segmentedPageViewController.pageViewControllers = [companyVc, peopleVc]
-        segmentedPageViewController.selectedPage = 0
-        self.segmentedPageViewController.categoryView.titles = titles
-        self.segmentedPageViewController.view.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom)
+    func setupViewControllers() {
+        listVCArray.forEach { $0.view.removeFromSuperview() }
+        listVCArray.removeAll()
+       
+        companyVc.navController = navigationController
+        cocsciew.addSubview(companyVc.view)
+        listVCArray.append(companyVc)
+        
+        peopleVc.navController = navigationController
+        cocsciew.addSubview(peopleVc.view)
+        listVCArray.append(peopleVc)
+        
+        updateViewControllersLayout()
+        segmentedView(segmentedView, didSelectedItemAt: 0)
+    }
+    
+    private func updateViewControllersLayout() {
+        for (index, vc) in listVCArray.enumerated() {
+            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: 1)
         }
     }
-
+    
+    private func createSegmentedView() -> JXSegmentedView {
+        let segmentedView = JXSegmentedView()
+        segmentedView.delegate = self
+        segmentedView.backgroundColor = .white
+        segmurce = JXSegmentedTitleDataSource()
+        segmurce.titles = ["企业", "人员"]
+        segmurce.isTitleColorGradientEnabled = true
+        segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
+        segmurce.titleNormalFont = .regularFontOfSize(size: 14)
+        segmurce.titleNormalColor = UIColor.init(cssStr: "#666666")!
+        segmurce.titleSelectedColor = UIColor.init(cssStr: "#333333")!
+        segmentedView.dataSource = segmurce
+        let indicator = createSegmentedIndicator()
+        segmentedView.indicators = [indicator]
+        segmentedView.contentScrollView = cocsciew
+        return segmentedView
+    }
+    
+    private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
+        let indicator = JXSegmentedIndicatorLineView()
+        indicator.indicatorWidth = JXSegmentedViewAutomaticDimension
+        indicator.indicatorHeight = 2
+        indicator.lineStyle = .lengthen
+        indicator.indicatorColor = UIColor.init(cssStr: "#547AFF")!
+        return indicator
+    }
+    
+    private func createCocsciew() -> UIScrollView {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = UIColor.init(cssStr: "#F5F5F5")
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.bounces = false
+        scrollView.alwaysBounceHorizontal = false
+        scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 2, height: 0)
+        return scrollView
+    }
+    
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        if index == 0 {
+            let companyVc = self.listVCArray.first as! FocusCompanyViewController
+            companyVc.getCompanyAllInfo()
+        }else {
+            let peopleVc = self.listVCArray.last as! FocusPeopleViewController
+            peopleVc.getPeopleAllInfo()
+        }
+    }
+    
 }

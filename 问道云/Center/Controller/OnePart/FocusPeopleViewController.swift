@@ -12,6 +12,8 @@ import TYAlertController
 
 class FocusPeopleViewController: WDBaseViewController {
     
+    weak var navController: UINavigationController?
+    
     var groupModel = BehaviorRelay<DataModel?>(value: nil)
     var regionModel = BehaviorRelay<DataModel?>(value: nil)
     var industryModel = BehaviorRelay<DataModel?>(value: nil)
@@ -213,8 +215,8 @@ class FocusPeopleViewController: WDBaseViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    //获取所有人员信息
+    func getPeopleAllInfo() {
         getAllGroup()
         getRegion()
         getIndustry()

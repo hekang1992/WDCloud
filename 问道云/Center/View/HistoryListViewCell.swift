@@ -21,8 +21,6 @@ class HistoryListViewCell: BaseViewCell {
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
-        ctImageView.layer.cornerRadius = 2
-        ctImageView.backgroundColor = .random()
         return ctImageView
     }()
     

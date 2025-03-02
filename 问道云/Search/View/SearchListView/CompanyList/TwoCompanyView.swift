@@ -208,8 +208,7 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let model = self.dataModelArray.value?[indexPath.row] {
-            print("公司ID=========\(model.firmInfo?.entityId ?? "")")
-            self.entityIdBlock?(model.firmInfo?.entityId ?? "", model.firmInfo?.entityName ?? "")
+            self.entityIdBlock?(model.orgInfo?.orgId ?? "", model.orgInfo?.orgName ?? "")
         }
         
     }
@@ -219,14 +218,14 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
 extension TwoCompanyView {
     
     private func focusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
-        if let specificCell = cell as? TwoCompanyNormalListCell {
+        if cell is TwoCompanyNormalListCell {
             let followStatus = model.followStatus ?? ""
             if followStatus == "1" {
                 addFocusInfo(from: model, cell: cell)
             }else {
                 deleteFocusInfo(from: model, cell: cell)
             }
-        } else if let otherCell = cell as? TwoCompanySpecListCell {
+        } else if cell is TwoCompanySpecListCell {
             let followStatus = model.followStatus ?? ""
             if followStatus == "1" {
                 addFocusInfo(from: model, cell: cell)

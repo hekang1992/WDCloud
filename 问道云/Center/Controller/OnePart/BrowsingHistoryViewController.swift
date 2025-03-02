@@ -19,12 +19,6 @@ class BrowsingHistoryViewController: WDBaseViewController {
         return headView
     }()
     
-    lazy var historyView: HistoryView = {
-        let historyView = HistoryView()
-        historyView.backgroundColor = .white
-        return historyView
-    }()
-    
     private lazy var segmentedView: JXSegmentedView = createSegmentedView()
     private lazy var cocsciew: UIScrollView = createCocsciew()
     private var segmurce: JXSegmentedTitleDataSource!
@@ -34,10 +28,6 @@ class BrowsingHistoryViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.addSubview(historyView)
-        historyView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
         addHeadView(from: headView)
         headView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
@@ -54,8 +44,8 @@ class BrowsingHistoryViewController: WDBaseViewController {
 extension BrowsingHistoryViewController: JXSegmentedViewDelegate {
     
     func addsentMentView() {
-        historyView.addSubview(segmentedView)
-        historyView.addSubview(cocsciew)
+        view.addSubview(segmentedView)
+        view.addSubview(cocsciew)
         segmentedView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(headView.snp.bottom)

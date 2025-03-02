@@ -12,6 +12,8 @@ import TYAlertController
 
 class FocusCompanyViewController: WDBaseViewController {
     
+    weak var navController: UINavigationController?
+    
     var dataModel = BehaviorRelay<DataModel?>(value: nil)
     var groupModel = BehaviorRelay<DataModel?>(value: nil)
     var regionModel = BehaviorRelay<DataModel?>(value: nil)
@@ -215,8 +217,8 @@ class FocusCompanyViewController: WDBaseViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    //获取所有企业信息
+    func getCompanyAllInfo() {
         getAllGroup()
         getRegion()
         getIndustry()
