@@ -176,6 +176,11 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.height.equalTo(0.5)
             make.bottom.equalToSuperview().offset(-38)
         }
+        focusBtn.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-15.5)
+            make.top.equalToSuperview().offset(13)
+            make.height.equalTo(14)
+        }
         
         addressimageView.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(6)
@@ -194,25 +199,27 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.size.equalTo(CGSize(width: 47, height: 21))
             make.right.equalTo(websiteimageView.snp.left).offset(-8)
         }
-        focusBtn.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-15.5)
-            make.top.equalToSuperview().offset(13)
-            make.height.equalTo(14)
-        }
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            self.ctImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(model.firmInfo?.entityName ?? "", size: (32, 32)))
+            let logo = model.orgInfo?.logo ?? ""
+            let companyName = model.orgInfo?.orgName ?? ""
+            //logo
+            self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (40, 40)))
            
-            self.nameLabel.attributedText = TextStyler.styledText(for: model.firmInfo?.entityName ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
+            //名字
+            self.nameLabel.attributedText = TextStyler.styledText(for: companyName, target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
             
+            //法人
             self.nameView.label2.text = model.legalPerson?.legalName ?? ""
             self.nameView.label2.textColor = .init(cssStr: "#F55B5B")
            
-            self.moneyView.label2.text = "\(model.firmInfo?.registerCapital ?? "--")\(model.firmInfo?.registerCapitalCurrency ?? "")"
+            //注册资本
+            self.moneyView.label2.text = "\(model.orgInfo?.regCap ?? "--")\(model.firmInfo?.registerCapitalCurrency ?? "")"
             self.moneyView.label2.textColor = .init(cssStr: "#333333")
             
-            self.timeView.label2.text = model.firmInfo?.incorporationTime ?? ""
+            //成立时间
+            self.timeView.label2.text = model.orgInfo?.incDate ?? ""
             self.timeView.label2.textColor = .init(cssStr: "#333333")
             
             //小标签
@@ -224,6 +231,45 @@ class TwoCompanyNormalListCell: BaseViewCell {
             }else {
                 focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
             }
+            let phone = model.orgInfo?.phone ?? ""
+            let website = model.orgInfo?.website ?? ""
+            let longitude = model.orgInfo?.longitude ?? ""
+            if longitude.isEmpty {
+                addressimageView.isHidden = true
+                addressimageView.snp.updateConstraints { make in
+                    make.width.equalTo(0)
+                }
+            }else {
+                addressimageView.isHidden = false
+                addressimageView.snp.updateConstraints { make in
+                    make.width.equalTo(47)
+                }
+            }
+            
+            if website.isEmpty {
+                websiteimageView.isHidden = true
+                websiteimageView.snp.updateConstraints { make in
+                    make.width.equalTo(0)
+                }
+            }else {
+                websiteimageView.isHidden = false
+                websiteimageView.snp.updateConstraints { make in
+                    make.width.equalTo(47)
+                }
+            }
+            
+            if phone.isEmpty {
+                phoneimageView.isHidden = true
+                phoneimageView.snp.updateConstraints { make in
+                    make.width.equalTo(0)
+                }
+            }else {
+                phoneimageView.isHidden = false
+                phoneimageView.snp.updateConstraints { make in
+                    make.width.equalTo(47)
+                }
+            }
+            
         }).disposed(by: disposeBag)
         
         //地址点击

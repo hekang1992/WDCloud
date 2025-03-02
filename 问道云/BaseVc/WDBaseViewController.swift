@@ -372,4 +372,16 @@ extension WDBaseViewController {
         }
     }
     
+    func makePhoneCall(phoneNumber: String) {
+        guard let url = URL(string: "tel://\(phoneNumber)") else {
+            print("无效的电话号码")
+            return
+        }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            print("设备不支持拨打电话")
+        }
+    }
+    
 }

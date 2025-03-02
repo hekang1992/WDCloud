@@ -54,6 +54,8 @@ class SearchAllViewController: WDBaseViewController {
     
     var selectIndex: Int = 0
     
+    var isShowKeyboard: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -163,7 +165,11 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 companyVc.searchWords = searchStr
             }
             companyVc.completeBlock = { [weak self] in
-                self?.searchHeadView.searchTx.becomeFirstResponder()
+                guard let self = self else { return }
+                if self.isShowKeyboard {
+                    self.isShowKeyboard = false
+                    self.searchHeadView.searchTx.becomeFirstResponder()
+                }
             }
             return companyVc
         }else if index == 1 {
@@ -173,7 +179,11 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 peopleVc.searchWords = searchStr
             }
             peopleVc.completeBlock = { [weak self] in
-                self?.searchHeadView.searchTx.becomeFirstResponder()
+                guard let self = self else { return }
+                if self.isShowKeyboard {
+                    self.isShowKeyboard = false
+                    self.searchHeadView.searchTx.becomeFirstResponder()
+                }
             }
             return peopleVc
         }else {
@@ -183,7 +193,11 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 riskVc.searchWords = searchStr
             }
             riskVc.completeBlock = { [weak self] in
-                self?.searchHeadView.searchTx.becomeFirstResponder()
+                guard let self = self else { return }
+                if self.isShowKeyboard {
+                    self.isShowKeyboard = false
+                    self.searchHeadView.searchTx.becomeFirstResponder()
+                }
             }
             return riskVc
         }

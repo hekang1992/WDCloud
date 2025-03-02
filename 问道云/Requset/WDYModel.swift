@@ -916,6 +916,9 @@ class orgInfoModel {
     var regCap: String?
     var regStatusLabel: String?
     var logo: String?
+    var phone: String?
+    var website: String?
+    var longitude: String?
     init(json: JSON) {
         self.logo = json["logo"].stringValue
         self.incDate = json["incDate"].stringValue
@@ -923,6 +926,9 @@ class orgInfoModel {
         self.orgName = json["orgName"].stringValue
         self.regCap = json["regCap"].stringValue
         self.regStatusLabel = json["regStatusLabel"].stringValue
+        self.phone = json["phone"].stringValue
+        self.website = json["website"].stringValue
+        self.longitude = json["longitude"].stringValue
     }
 }
 

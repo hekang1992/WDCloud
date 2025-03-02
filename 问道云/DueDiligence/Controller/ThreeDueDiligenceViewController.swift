@@ -67,18 +67,6 @@ class ThreeDueDiligenceViewController: WDBaseViewController {
 
 extension ThreeDueDiligenceViewController: UIScrollViewDelegate {
     
-    func makePhoneCall(phoneNumber: String) {
-        guard let url = URL(string: "tel://\(phoneNumber)") else {
-            print("无效的电话号码")
-            return
-        }
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            print("设备不支持拨打电话")
-        }
-    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y <= 0 {
             scrollView.contentOffset.y = 0

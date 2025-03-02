@@ -181,13 +181,8 @@ class SearchCompanyViewController: WDBaseViewController {
         }
         
         companyListView.websiteBlock = { [weak self] model in
-            let pageUrl = model.firmInfo?.website ?? ""
-            if !pageUrl.isEmpty {
-                self?.pushWebPage(from: pageUrl)
-            }else {
-                ToastViewConfig.showToast(message: "无法跳转,链接非法!")
-            }
-            
+            let pageUrl = model.orgInfo?.website ?? ""
+            self?.pushWebPage(from: pageUrl)
         }
         
         companyListView.peopleBlock = { [weak self] model in
@@ -202,7 +197,7 @@ class SearchCompanyViewController: WDBaseViewController {
         
         //点击电话回调
         companyListView.phoneBlock = { [weak self] model in
-            
+            self?.makePhoneCall(phoneNumber: model.orgInfo?.phone ?? "")
         }
         
         //企业ID回调
