@@ -9,6 +9,8 @@ import UIKit
 import Lottie
 import Toaster
 import SAMKeychain
+import TYAlertController
+import RxSwift
 
 let ROOT_VC = "ROOT_VC"
 
@@ -651,7 +653,7 @@ extension UIViewController {
 class ShowAlertManager {
     
     /// 获取当前的视图控制器
-    static func getTopViewController() -> UIViewController? {
+    static func getTopViewController() -> WDBaseViewController? {
         // 获取应用的所有窗口
         let windows = UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
@@ -662,7 +664,7 @@ class ShowAlertManager {
         while let presentedController = topController?.presentedViewController {
             topController = presentedController
         }
-        return topController
+        return topController as? WDBaseViewController
     }
     
     /// 通用的Alert封装方法
@@ -705,7 +707,6 @@ class ShowAlertManager {
 
 //获取缓存方法
 class GetCacheConfig {
-    
     /// 获取缓存大小，单位为 MB
     static func getCacheSizeInMB() -> String {
         let cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
@@ -746,7 +747,6 @@ class GetCacheConfig {
 
 //密码验证
 class PasswordConfig {
-    
     static  func isPasswordValid(_ password: String) -> Bool {
         // 检查长度是否符合
         guard password.count >= 8 && password.count <= 20 else {
@@ -1035,6 +1035,31 @@ class TagsLabelColorConfig {
     
 }
 
+class ShowAgainLoginConfig {
+    
+    static let disposeBag = DisposeBag()
+    
+    static func againLoginView() {
+        let againLoginView = PopAgainLoginView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 300))
+        let alertVc = TYAlertController(alert: againLoginView, preferredStyle: .alert)!
+        let vc = ShowAlertManager.getTopViewController()
+        vc?.present(alertVc, animated: true)
+        
+        againLoginView.cancelBtn.rx.tap.subscribe(onNext: {
+            vc?.dismiss(animated: true, completion: {
+                NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
+            })
+        }).disposed(by: disposeBag)
+        
+        againLoginView.sureBtn.rx.tap.subscribe(onNext: {
+            vc?.dismiss(animated: true, completion: {
+                vc?.popLogin()
+            })
+        }).disposed(by: disposeBag)
+        
+    }
+    
+}
 
 final class URLQueryAppender {
     static func appendQueryParameters(to url: String, parameters: [String: String]) -> String? {

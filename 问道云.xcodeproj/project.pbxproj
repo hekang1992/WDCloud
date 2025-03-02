@@ -273,6 +273,7 @@
 		73C752562D1E4DA000C47187 /* HistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752552D1E4DA000C47187 /* HistoryListView.swift */; };
 		73C752582D1E728500C47187 /* HistoryListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752572D1E728500C47187 /* HistoryListViewCell.swift */; };
 		73C770712D731E140031016F /* RiskHaveDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C770702D731E140031016F /* RiskHaveDataView.swift */; };
+		73C89F132D74047D0002C3C9 /* PopAgainLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C89F122D74047D0002C3C9 /* PopAgainLoginView.swift */; };
 		73CC03772D6859660022F794 /* HighSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03762D6859660022F794 /* HighSearchViewController.swift */; };
 		73CC037A2D685FED0022F794 /* HighSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03792D685FED0022F794 /* HighSearchView.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
@@ -648,6 +649,7 @@
 		73C752552D1E4DA000C47187 /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		73C752572D1E728500C47187 /* HistoryListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListViewCell.swift; sourceTree = "<group>"; };
 		73C770702D731E140031016F /* RiskHaveDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskHaveDataView.swift; sourceTree = "<group>"; };
+		73C89F122D74047D0002C3C9 /* PopAgainLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopAgainLoginView.swift; sourceTree = "<group>"; };
 		73CC03762D6859660022F794 /* HighSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchViewController.swift; sourceTree = "<group>"; };
 		73CC03792D685FED0022F794 /* HighSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchView.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
@@ -935,6 +937,7 @@
 				7325A7DB2CFF0DBE0043C196 /* PasswordLoginView.swift */,
 				7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */,
 				730487F42D2932640024265C /* BindPhoneView.swift */,
+				73C89F122D74047D0002C3C9 /* PopAgainLoginView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2226,6 +2229,7 @@
 				7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */,
 				7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */,
 				73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */,
+				73C89F132D74047D0002C3C9 /* PopAgainLoginView.swift in Sources */,
 				73EDE9EE2D59E81F00A0A7E3 /* SearchCompanySanctionViewController.swift in Sources */,
 				7303844A2D60731C008AA7C3 /* MyOpinioDetailViewController.swift in Sources */,
 				73EABF9C2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift in Sources */,
@@ -2356,9 +2360,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XS8842FK7N;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
@@ -2376,9 +2382,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
+				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2400,9 +2407,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XS8842FK7N;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
@@ -2420,9 +2429,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
+				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

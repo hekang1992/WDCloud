@@ -32,10 +32,7 @@ extension APIService: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case
-                .requestAPI(_, _, let method),
-                .uploadImageAPI(_, _, _, let method),
-                .uploadDataAPI(_, _, let method):
+        case .requestAPI(_, _, let method), .uploadImageAPI(_, _, _, let method), .uploadDataAPI(_, _, let method):
             return method
         }
     }
@@ -125,9 +122,8 @@ class RequestManager: NSObject {
         if code == 200  {
             completion(.success(baseModel))
         }else if code == 401 {
-            let vc = UIViewController.getCurrentViewController() as? WDBaseViewController
             WDLoginConfig.removeLoginInfo()
-            vc?.popLogin()
+            ShowAgainLoginConfig.againLoginView()
             let error = NSError()
             completion(.failure(error))
         }else if code == 702 {
