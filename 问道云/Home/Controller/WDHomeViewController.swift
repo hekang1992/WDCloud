@@ -251,7 +251,8 @@ extension WDHomeViewController {
         ViewHud.addLoadView()
         let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
         let dict = ["moduleType": "1",
-                    "appleVersion": appleVersion]
+                    "appleVersion": appleVersion,
+                    "appType": "apple"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customermenu/customerMenuTree",
                        method: .get) { result in

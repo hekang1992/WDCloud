@@ -11,6 +11,14 @@ import DropMenuBar
 
 class HighSearchViewController: WDBaseViewController {
     
+    //搜索条件
+    var searchConditionArray: [String]?
+    
+    //行业
+    var industryType: String?
+    //地区
+    var region: String?
+    
     var model = BehaviorRelay<DataModel?>(value: nil)
     
     lazy var headView: HeadView = {
@@ -142,22 +150,22 @@ class HighSearchViewController: WDBaseViewController {
                 if name == "未知" {
                     if let titles = model.children {
                         fourView.view0.allButton.setTitle(name, for: .normal)
-                        fourView.view0.configureButtons(titles: titles.map { $0.name ?? "" })
+                        fourView.view0.configureButtons(modelArray: titles)
                     }
                 }else if name == "正常" {
                     if let titles = model.children {
                         fourView.view1.allButton.setTitle(name, for: .normal)
-                        fourView.view1.configureButtons(titles: titles.map { $0.name ?? "" })
+                        fourView.view1.configureButtons(modelArray: titles)
                     }
                 }else if name == "异常" {
                     if let titles = model.children {
                         fourView.view2.allButton.setTitle(name, for: .normal)
-                        fourView.view2.configureButtons(titles: titles.map { $0.name ?? "" })
+                        fourView.view2.configureButtons(modelArray: titles)
                     }
                 }else if name == "其他" {
                     if let titles = model.children {
                         fourView.view3.allButton.setTitle(name, for: .normal)
-                        fourView.view3.configureButtons(titles: titles.map { $0.name ?? "" })
+                        fourView.view3.configureButtons(modelArray: titles)
                     }
                 }
             }
@@ -390,6 +398,7 @@ extension HighSearchViewController {
             industryMenu.setTitle("", for: .normal)
             twoView.descLabel.text = model?.displayText ?? ""
             twoView.descLabel.textColor = .init(cssStr: "#333333")
+            self.industryType = model?.currentID ?? ""
         }
         
         //地区
@@ -414,11 +423,12 @@ extension HighSearchViewController {
             regionMenu.setTitle("", for: .normal)
             threeView.descLabel.text = model?.displayText ?? ""
             threeView.descLabel.textColor = .init(cssStr: "#333333")
+            self.region = model?.currentID ?? ""
         }
         
         //重置
         oneBtn.rx.tap.subscribe(onNext: { [weak self] in
-            guard let self = self else { return  }
+            guard let self = self else { return }
             //关键词
             self.oneView.nameTx.text = ""
             //行业
@@ -454,11 +464,140 @@ extension HighSearchViewController {
             self.statusView.clearStateOfSelected()
             //上市板块
             self.blockView.clearStateOfSelected()
+            //邮箱
+            self.emailView.clearStateOfSelected()
         }).disposed(by: disposeBag)
         
         //确认结果
         twoBtn.rx.tap.subscribe(onNext: { [weak self] in
-            guard let self = self else { return  }
+            guard let self = self else { return }
+            //关键词
+            let keyword = self.oneView.nameTx.text ?? ""
+            
+            //精度
+            let matchType = self.oneView.matchType ?? ""
+            
+            //行业
+            let industryType = self.industryType ?? ""
+            
+            //地区
+            let region = self.region ?? ""
+            
+            //登记状态
+            var regStatusVec: [String] = []//ID
+            var regStatusTitles: [String] = []//名称
+            if let oneStatus = self.fourView.view0.dengjiBinder.value {
+                regStatusVec.append(contentsOf: oneStatus)
+            }
+            if let twoStatus = self.fourView.view1.dengjiBinder.value {
+                regStatusVec.append(contentsOf: twoStatus)
+            }
+            if let threeStatus = self.fourView.view2.dengjiBinder.value {
+                regStatusVec.append(contentsOf: threeStatus)
+            }
+            if let fourStatus = self.fourView.view3.dengjiBinder.value {
+                regStatusVec.append(contentsOf: fourStatus)
+            }
+            
+            if let oneStatus = self.fourView.view0.dengjiStringBinder.value {
+                regStatusTitles.append(contentsOf: oneStatus)
+            }
+            if let twoStatus = self.fourView.view1.dengjiStringBinder.value {
+                regStatusTitles.append(contentsOf: twoStatus)
+            }
+            if let threeStatus = self.fourView.view2.dengjiStringBinder.value {
+                regStatusTitles.append(contentsOf: threeStatus)
+            }
+            if let fourStatus = self.fourView.view3.dengjiStringBinder.value {
+                regStatusTitles.append(contentsOf: fourStatus)
+            }
+            
+            //成立年限
+            let startTime = self.fiveView.startBtn.titleLabel?.text ?? ""
+            let endTime = self.fiveView.startBtn.titleLabel?.text ?? ""
+            var selectArray = self.fiveView.selectArray
+            let timeIds = self.model.value?.INC_DATE_LEVEL ?? []
+            // 过滤出与字符串数组匹配的模型
+            let filteredModels = timeIds.filter { model in
+                selectArray.contains(model.name ?? "")
+            }
+            //成立年限参数
+            let incDateTypeVec: [String] = filteredModels.map { $0.code ?? "" }
+            let incDateRange = startTime + "-" + endTime
+            
+            //注册资本
+            let startMoney = self.sixView.startTx.text ?? ""
+            let endMoney = self.sixView.endTx.text ?? ""
+            var selectMoneyArray = self.sixView.selectArray
+            let moneyIds = self.model.value?.REG_CAP_LEVEL ?? []
+            // 过滤出与字符串数组匹配的模型
+            let filteredMoneyModels = moneyIds.filter { model in
+                selectMoneyArray.contains(model.name ?? "")
+            }
+            //成立年限参数
+            let regCapLevelVec: [String] = filteredMoneyModels.map { $0.code ?? "" }
+            let regCapRange = startMoney + "-" + endMoney
+            
+            //机构类型
+            var selectAgentArray = self.agentView.selectArray
+            let agentIds = self.model.value?.ORG_CATEGORY ?? []
+            // 过滤出与字符串数组匹配的模型
+            let filteredAgentModels = agentIds.filter { model in
+                selectAgentArray.contains(model.name ?? "")
+            }
+            //机构类型参数
+            let econTypeVec: [String] = filteredAgentModels.map { $0.code ?? "" }
+            
+            //企业类型
+            var selectCompanyArray = self.companyTypeView.selectArray
+            let companyIds = self.model.value?.ORG_ECON ?? []
+            // 过滤出与字符串数组匹配的模型
+            let filteredCompanyModels = companyIds.filter { model in
+                selectCompanyArray.contains(model.name ?? "")
+            }
+            //机构类型参数
+            let categoryVec: [String] = filteredCompanyModels.map { $0.code ?? "" }
+            
+            //参保人数
+            var selectNumArray = self.peopleView.selectArray
+            let numIds = self.model.value?.SIP_LEVEL ?? []
+            // 过滤出与字符串数组匹配的模型
+            let filteredNumModels = numIds.filter { model in
+                selectNumArray.contains(model.name ?? "")
+            }
+            //参保人数参数
+            let sipCountLevelVec: [String] = filteredNumModels.map { $0.code ?? "" }
+            let startPeople = self.peopleView.startTx.text ?? ""
+            let endPeople = self.peopleView.endTx.text ?? ""
+            let sipCountRange = startPeople + "-" + endPeople
+            
+            //上市状态
+            var selectStatusArray = self.statusView.selectArray
+            let statusIds = self.model.value?.LIST_STATUS ?? []
+            // 过滤出与字符串数组匹配的模型
+            let filteredStatusModels = statusIds.filter { model in
+                selectStatusArray.contains(model.name ?? "")
+            }
+            //上市状态参数
+            let listStatusVec: [String] = filteredStatusModels.map { $0.code ?? "" }
+            
+            //上市板块
+            var selectBlockArray = self.blockView.selectArray
+            let blockIds = self.model.value?.LIST_SECTOR ?? []
+            // 过滤出与字符串数组匹配的模型
+            let filteredBlockModels = blockIds.filter { model in
+                selectBlockArray.contains(model.name ?? "")
+            }
+            //上市状态参数
+            let listingSectorVec: [String] = filteredBlockModels.map { $0.code ?? "" }
+            
+            //邮箱
+            
+            
+            
+            let resultVc = HighSearchResultViewController()
+            resultVc.searchConditionArray = []
+            self.navigationController?.pushViewController(resultVc, animated: true)
         }).disposed(by: disposeBag)
         
     }

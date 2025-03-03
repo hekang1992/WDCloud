@@ -273,6 +273,7 @@
 		73C752582D1E728500C47187 /* HistoryListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C752572D1E728500C47187 /* HistoryListViewCell.swift */; };
 		73C770712D731E140031016F /* RiskHaveDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C770702D731E140031016F /* RiskHaveDataView.swift */; };
 		73C89F132D74047D0002C3C9 /* PopAgainLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C89F122D74047D0002C3C9 /* PopAgainLoginView.swift */; };
+		73C89F152D7594C80002C3C9 /* HighSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C89F142D7594C80002C3C9 /* HighSearchResultViewController.swift */; };
 		73CC03772D6859660022F794 /* HighSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03762D6859660022F794 /* HighSearchViewController.swift */; };
 		73CC037A2D685FED0022F794 /* HighSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03792D685FED0022F794 /* HighSearchView.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
@@ -648,6 +649,7 @@
 		73C752572D1E728500C47187 /* HistoryListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListViewCell.swift; sourceTree = "<group>"; };
 		73C770702D731E140031016F /* RiskHaveDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskHaveDataView.swift; sourceTree = "<group>"; };
 		73C89F122D74047D0002C3C9 /* PopAgainLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopAgainLoginView.swift; sourceTree = "<group>"; };
+		73C89F142D7594C80002C3C9 /* HighSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchResultViewController.swift; sourceTree = "<group>"; };
 		73CC03762D6859660022F794 /* HighSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchViewController.swift; sourceTree = "<group>"; };
 		73CC03792D685FED0022F794 /* HighSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchView.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
@@ -1558,6 +1560,7 @@
 			isa = PBXGroup;
 			children = (
 				73CC03762D6859660022F794 /* HighSearchViewController.swift */,
+				73C89F142D7594C80002C3C9 /* HighSearchResultViewController.swift */,
 			);
 			path = "高级搜索";
 			sourceTree = "<group>";
@@ -2219,6 +2222,7 @@
 				739DCA082D66E009009CFC78 /* PropertyTwoViewController.swift in Sources */,
 				73E971732D2FCD8500F12B15 /* TwoCompanyView.swift in Sources */,
 				73C6B1B62D3503D400CD3816 /* MyCollectionSpecialReusableView.swift in Sources */,
+				73C89F152D7594C80002C3C9 /* HighSearchResultViewController.swift in Sources */,
 				7340E1682D5CBB36008FD5C7 /* SearchControllingPersonViewController.swift in Sources */,
 				73F6046A2D1171280061D5D3 /* MyTicketView.swift in Sources */,
 				7352B2342D363CAB00B5391B /* CompanyDetailGDCell.swift in Sources */,

@@ -13,6 +13,8 @@ import DropMenuBar
 
 class HighSearchKeyView: BaseView {
     
+    var matchType: String?
+    
     lazy var mlabel: UILabel = {
         let mlabel = UILabel()
         mlabel.text = "关键词"
@@ -100,11 +102,13 @@ class HighSearchKeyView: BaseView {
     // 选中“精准”按钮
     @objc private func selectPrecise() {
         updateButtonSelection(selectedButton: preciseButton, unselectedButton: fuzzyButton)
+        self.matchType = "2"
     }
     
     // 选中“模糊”按钮
     @objc private func selectFuzzy() {
         updateButtonSelection(selectedButton: fuzzyButton, unselectedButton: preciseButton)
+        self.matchType = "1"
     }
     
     private func updateButtonSelection(selectedButton: UIButton, unselectedButton: UIButton) {
@@ -343,12 +347,16 @@ class HighFourView: UIView {
             make.height.equalTo(1)
         }
     }
-    
+}
+
+class ModelButton: UIButton {
+    var model: childrenModel?
 }
 
 class CustomButtonView: BaseView {
     
     var dengjiBinder = BehaviorRelay<[String]?>(value: nil)
+    var dengjiStringBinder = BehaviorRelay<[String]?>(value: nil)
     
     lazy var allButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -361,12 +369,12 @@ class CustomButtonView: BaseView {
     }()
     
     // MARK: - 按钮数组
-    private var buttons: [UIButton] = []
-    
+    private var buttons: [ModelButton] = []
+//    titles: titles.map { $0.name ?? "" }
     // MARK: - 外部方法配置按钮
-    func configureButtons(titles: [String]) {
-        buttons = titles.map { title in
-            let button = createButton(title: title)
+    func configureButtons(modelArray: [childrenModel]) {
+        buttons = modelArray.map { model in
+            let button = createButton(model: model)
             button.addTarget(self, action: #selector(singleButtonTapped(_:)), for: .touchUpInside)
             return button
         }
@@ -422,10 +430,11 @@ class CustomButtonView: BaseView {
     }
     
     // MARK: - 创建按钮的工厂方法
-    private func createButton(title: String) -> UIButton {
-        let button = UIButton(type: .custom)
+    private func createButton(model: childrenModel) -> ModelButton {
+        let button = ModelButton(type: .custom)
+        button.model = model
         button.layer.cornerRadius = 5
-        button.setTitle(title, for: .normal)
+        button.setTitle(model.name ?? "", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .init(cssStr: "#F1F1F1")
         button.titleLabel?.font = .regularFontOfSize(size: 12)
@@ -463,7 +472,7 @@ class CustomButtonView: BaseView {
         buttons.forEach { deselectButton($0) }
     }
     
-    @objc private func singleButtonTapped(_ sender: UIButton) {
+    @objc private func singleButtonTapped(_ sender: ModelButton) {
         // 如果点击的按钮已选中，则取消选中
         if sender.backgroundColor == UIColor.init(cssStr: "#547AFF")!.withAlphaComponent(0.05) {
             deselectButton(sender)
@@ -486,22 +495,28 @@ class CustomButtonView: BaseView {
     }
     
     // MARK: - 选中按钮的方法
-    private func selectButton(_ button: UIButton) {
+    private func selectButton(_ button: ModelButton) {
         guard let title = button.titleLabel?.text else { return }
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.05)
         button.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.init(cssStr: "#547AFF")?.cgColor
+        //ID
         var currentValues = self.dengjiBinder.value ?? []
-        if !currentValues.contains(title) {
-            currentValues.append(title) // 追加新的值
+        //文字
+        var titles = self.dengjiStringBinder.value ?? []
+        if !currentValues.contains(button.model?.code ?? "") {
+            currentValues.append(button.model?.code ?? "") // 追加新的值
+        }
+        if !titles.contains(title) {
+            titles.append(title) // 追加新的值
         }
         self.dengjiBinder.accept(currentValues)
-        print("button:====添加======\(self.dengjiBinder.value ?? [])")
+        self.dengjiStringBinder.accept(titles)
     }
     
-    private func deselectButton(_ button: UIButton) {
+    private func deselectButton(_ button: ModelButton) {
         guard let title = button.titleLabel?.text else { return }
         // 修改按钮样式
         button.setTitleColor(.gray, for: .normal)
@@ -509,19 +524,27 @@ class CustomButtonView: BaseView {
         button.setTitleColor(UIColor(cssStr: "#27344B"), for: .normal)
         button.layer.borderWidth = 0.0
         button.layer.borderColor = UIColor(cssStr: "#547AFF")?.cgColor
-        // 获取当前数组
+        // 获取当前数组ID
         var currentValues = self.dengjiBinder.value ?? []
+        // 获取当前数组文字
+        var currentStringValues = self.dengjiStringBinder.value ?? []
         // 检查数组中是否包含按钮的 title，并将其移除
-        if let index = currentValues.firstIndex(of: title) {
+        if let index = currentValues.firstIndex(of: button.model?.code ?? "") {
             currentValues.remove(at: index)
+        }
+        if let index = currentStringValues.firstIndex(of: title) {
+            currentStringValues.remove(at: index)
         }
         // 更新数组
         self.dengjiBinder.accept(currentValues)
-        print("当前数组: \(self.dengjiBinder.value ?? [])")
+        self.dengjiStringBinder.accept(currentStringValues)
     }
 }
 
 class HighFiveView: BaseView {
+    
+    //选中的标签
+    var selectArray: [String] = []
     
     var tagListViews: [TagView] = []
     
@@ -670,13 +693,22 @@ extension HighFiveView: TagListViewDelegate {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
         if title == "不限" {
-            self.startBtn.setTitle("开始时间", for: .normal)
-            self.endBtn.setTitle("结束时间", for: .normal)
+            self.startBtn.setTitle("开始日期", for: .normal)
+            self.endBtn.setTitle("结束日期", for: .normal)
             self.startBtn.setTitleColor(UIColor.init(cssStr: "#9FA4AD"), for: .normal)
             self.endBtn.setTitleColor(UIColor.init(cssStr: "#9FA4AD"), for: .normal)
-            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
+            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            selectArray.removeAll()
+            if tagView.isSelected {
+                selectArray.append(title)
+            }else {
+                selectArray.append("")
+            }
         } else {
+            selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
+            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+            print("selectArray=====\(selectArray)")
         }
     }
     
@@ -694,6 +726,9 @@ extension HighFiveView: TagListViewDelegate {
 }
 
 class HighSixView: BaseView {
+    
+    //选中的标签
+    var selectArray: [String] = []
     
     var tagListViews: [TagView] = []
     
@@ -846,9 +881,18 @@ extension HighSixView: TagListViewDelegate {
         if title == "不限" {
             self.startTx.text = ""
             self.endTx.text = ""
-            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
+            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            selectArray.removeAll()
+            if tagView.isSelected {
+                selectArray.append(title)
+            }else {
+                selectArray.append("")
+            }
         } else {
+            selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
+            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+            print("selectArray=====\(selectArray)")
         }
     }
     
@@ -866,6 +910,9 @@ extension HighSixView: TagListViewDelegate {
 }
 
 class HighAgentView: BaseView {
+    
+    //选中的标签
+    var selectArray: [String] = []
     
     var tagListViews: [TagView] = []
     
@@ -938,9 +985,18 @@ extension HighAgentView: TagListViewDelegate {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
         if title == "不限" {
-            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
+            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            selectArray.removeAll()
+            if tagView.isSelected {
+                selectArray.append(title)
+            }else {
+                selectArray.append("")
+            }
         } else {
+            selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
+            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+            print("selectArray=====\(selectArray)")
         }
     }
     
@@ -958,6 +1014,9 @@ extension HighAgentView: TagListViewDelegate {
 }
 
 class HighCompanyTypeView: BaseView {
+    
+    //选中的标签
+    var selectArray: [String] = []
     
     var tagListViews: [TagView] = []
     
@@ -1030,9 +1089,18 @@ extension HighCompanyTypeView: TagListViewDelegate {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
         if title == "不限" {
-            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
+            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            selectArray.removeAll()
+            if tagView.isSelected {
+                selectArray.append(title)
+            }else {
+                selectArray.append("")
+            }
         } else {
+            selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
+            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+            print("selectArray=====\(selectArray)")
         }
     }
     
@@ -1050,6 +1118,9 @@ extension HighCompanyTypeView: TagListViewDelegate {
 }
 
 class HighPeopleView: BaseView {
+    
+    //选中的标签
+    var selectArray: [String] = []
     
     var tagListViews: [TagView] = []
     
@@ -1202,9 +1273,18 @@ extension HighPeopleView: TagListViewDelegate {
         if title == "不限" {
             self.startTx.text = ""
             self.endTx.text = ""
-            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
-        } else {
+            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            selectArray.removeAll()
+            if tagView.isSelected {
+                selectArray.append(title)
+            }else {
+                selectArray.append("")
+            }
+        }else {
+            selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
+            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+            print("selectArray=====\(selectArray)")
         }
     }
     
@@ -1222,6 +1302,9 @@ extension HighPeopleView: TagListViewDelegate {
 }
 
 class HighStatusView: BaseView {
+    
+    //选中的标签
+    var selectArray: [String] = []
     
     var tagListViews: [TagView] = []
     
@@ -1294,9 +1377,18 @@ extension HighStatusView: TagListViewDelegate {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
         if title == "不限" {
-            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
-        } else {
+            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            selectArray.removeAll()
+            if tagView.isSelected {
+                selectArray.append(title)
+            }else {
+                selectArray.append("")
+            }
+        }else {
+            selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
+            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+            print("selectArray=====\(selectArray)")
         }
     }
     
@@ -1313,6 +1405,9 @@ extension HighStatusView: TagListViewDelegate {
 }
 
 class HighBlockView: BaseView {
+    
+    //选中的标签
+    var selectArray: [String] = []
     
     var tagListViews: [TagView] = []
     
@@ -1385,9 +1480,18 @@ extension HighBlockView: TagListViewDelegate {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
         if title == "不限" {
-            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
-        } else {
+            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            selectArray.removeAll()
+            if tagView.isSelected {
+                selectArray.append(title)
+            }else {
+                selectArray.append("")
+            }
+        }else {
+            selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
+            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+            print("selectArray=====\(selectArray)")
         }
     }
     
@@ -1404,6 +1508,9 @@ extension HighBlockView: TagListViewDelegate {
 }
 
 class HighEmailView: BaseView {
+    
+    //选中的标签
+    var selectArray: [String] = []
     
     var tagListViews: [TagView] = []
     
@@ -1476,15 +1583,30 @@ extension HighEmailView: TagListViewDelegate {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
         if title == "有" {
-            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
-        } else {
+            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            selectArray.removeAll()
+            if tagView.isSelected {
+                selectArray.append(title)
+            }else {
+                selectArray.append("")
+            }
+        }else {
+            selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "有" })?.isSelected = false
+            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+            print("selectArray=====\(selectArray)")
         }
     }
     
-    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-        UIView.animate(withDuration: 0.3) {
-            sender.removeTag(title)
+    func clearStateOfSelected() {
+        selectedTags().forEach { [weak self] tagView in
+            guard let self = self else { return }
+            tagPressed(tagView.currentTitle ?? "", tagView: tagView, sender: tagListView)
         }
     }
+    
+    func selectedTags() -> [TagView] {
+        return tagListView.tagViews.filter { $0.isSelected }
+    }
+    
 }
