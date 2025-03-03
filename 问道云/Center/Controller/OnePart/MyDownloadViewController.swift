@@ -159,10 +159,10 @@ class MyDownloadViewController: WDBaseViewController {
             .distinctUntilChanged()
             .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
-            self?.pageNum = 1
-            self?.downloadfilename = text
-            self?.getPdfInfo()
-        }).disposed(by: disposeBag)
+                self?.pageNum = 1
+                self?.downloadfilename = text
+                self?.getPdfInfo()
+            }).disposed(by: disposeBag)
         
         addDownList()
         getDownloadTypeList()

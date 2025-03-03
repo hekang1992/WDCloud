@@ -244,6 +244,12 @@ extension MonthCompanyViewController {
             case .failure(_):
                 if let self = self {
                     self.addNoNetView(from: self.dailyView.tableView)
+                    self.noNetView.snp.makeConstraints { make in
+                        make.left.equalToSuperview()
+                        make.top.equalToSuperview().offset(64)
+                        make.height.equalTo(SCREEN_HEIGHT)
+                        make.width.equalTo(SCREEN_WIDTH)
+                    }
                 }
                 break
             }

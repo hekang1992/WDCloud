@@ -660,6 +660,8 @@ class HighFiveView: BaseView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
 }
 
 extension HighFiveView: TagListViewDelegate {
@@ -678,11 +680,17 @@ extension HighFiveView: TagListViewDelegate {
         }
     }
     
-    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-        UIView.animate(withDuration: 0.3) {
-            sender.removeTag(title)
+    func clearStateOfSelected() {
+        selectedTags().forEach { [weak self] tagView in
+            guard let self = self else { return }
+            tagPressed(tagView.currentTitle ?? "", tagView: tagView, sender: tagListView)
         }
     }
+    
+    func selectedTags() -> [TagView] {
+        return tagListView.tagViews.filter { $0.isSelected }
+    }
+    
 }
 
 class HighSixView: BaseView {
@@ -844,11 +852,17 @@ extension HighSixView: TagListViewDelegate {
         }
     }
     
-    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-        UIView.animate(withDuration: 0.3) {
-            sender.removeTag(title)
+    func clearStateOfSelected() {
+        selectedTags().forEach { [weak self] tagView in
+            guard let self = self else { return }
+            tagPressed(tagView.currentTitle ?? "", tagView: tagView, sender: tagListView)
         }
     }
+    
+    func selectedTags() -> [TagView] {
+        return tagListView.tagViews.filter { $0.isSelected }
+    }
+    
 }
 
 class HighAgentView: BaseView {
@@ -930,11 +944,17 @@ extension HighAgentView: TagListViewDelegate {
         }
     }
     
-    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-        UIView.animate(withDuration: 0.3) {
-            sender.removeTag(title)
+    func clearStateOfSelected() {
+        selectedTags().forEach { [weak self] tagView in
+            guard let self = self else { return }
+            tagPressed(tagView.currentTitle ?? "", tagView: tagView, sender: tagListView)
         }
     }
+    
+    func selectedTags() -> [TagView] {
+        return tagListView.tagViews.filter { $0.isSelected }
+    }
+    
 }
 
 class HighCompanyTypeView: BaseView {
@@ -1016,11 +1036,17 @@ extension HighCompanyTypeView: TagListViewDelegate {
         }
     }
     
-    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-        UIView.animate(withDuration: 0.3) {
-            sender.removeTag(title)
+    func clearStateOfSelected() {
+        selectedTags().forEach { [weak self] tagView in
+            guard let self = self else { return }
+            tagPressed(tagView.currentTitle ?? "", tagView: tagView, sender: tagListView)
         }
     }
+    
+    func selectedTags() -> [TagView] {
+        return tagListView.tagViews.filter { $0.isSelected }
+    }
+    
 }
 
 class HighPeopleView: BaseView {
@@ -1134,7 +1160,7 @@ class HighPeopleView: BaseView {
         tagListView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(12)
             make.left.equalTo(mlabel.snp.right).offset(26)
-            make.width.equalTo(260)
+            make.right.equalToSuperview().offset(-20)
         }
         grayView.snp.makeConstraints { make in
             make.left.equalTo(tagListView.snp.left)
@@ -1182,11 +1208,17 @@ extension HighPeopleView: TagListViewDelegate {
         }
     }
     
-    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-        UIView.animate(withDuration: 0.3) {
-            sender.removeTag(title)
+    func clearStateOfSelected() {
+        selectedTags().forEach { [weak self] tagView in
+            guard let self = self else { return }
+            tagPressed(tagView.currentTitle ?? "", tagView: tagView, sender: tagListView)
         }
     }
+    
+    func selectedTags() -> [TagView] {
+        return tagListView.tagViews.filter { $0.isSelected }
+    }
+    
 }
 
 class HighStatusView: BaseView {
@@ -1268,10 +1300,15 @@ extension HighStatusView: TagListViewDelegate {
         }
     }
     
-    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-        UIView.animate(withDuration: 0.3) {
-            sender.removeTag(title)
+    func clearStateOfSelected() {
+        selectedTags().forEach { [weak self] tagView in
+            guard let self = self else { return }
+            tagPressed(tagView.currentTitle ?? "", tagView: tagView, sender: tagListView)
         }
+    }
+    
+    func selectedTags() -> [TagView] {
+        return tagListView.tagViews.filter { $0.isSelected }
     }
 }
 
@@ -1354,10 +1391,15 @@ extension HighBlockView: TagListViewDelegate {
         }
     }
     
-    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-        UIView.animate(withDuration: 0.3) {
-            sender.removeTag(title)
+    func clearStateOfSelected() {
+        selectedTags().forEach { [weak self] tagView in
+            guard let self = self else { return }
+            tagPressed(tagView.currentTitle ?? "", tagView: tagView, sender: tagListView)
         }
+    }
+    
+    func selectedTags() -> [TagView] {
+        return tagListView.tagViews.filter { $0.isSelected }
     }
 }
 
@@ -1382,7 +1424,7 @@ class HighEmailView: BaseView {
     
     lazy var tagListView: TagListView = {
         let tagListView = TagListView()
-        tagListView.cornerRadius = 2
+        tagListView.cornerRadius = 5
         tagListView.paddingX = 5
         tagListView.paddingY = 5
         tagListView.marginX = 8

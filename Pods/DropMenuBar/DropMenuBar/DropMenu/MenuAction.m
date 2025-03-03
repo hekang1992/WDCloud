@@ -11,8 +11,7 @@
 @interface MenuAction ()
 @property (nonatomic, assign, readwrite) MenuActionStyle actionStyle;
 @property (nonatomic, copy, readwrite) NSString *title;
-/** 私有属性用于自定义视图 主动移除筛选列表  */
-@property (nonatomic, copy) void (^didDismissDropMenu)(void);
+
 
 @end
 

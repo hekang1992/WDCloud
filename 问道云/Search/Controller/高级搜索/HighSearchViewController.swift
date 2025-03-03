@@ -106,7 +106,7 @@ class HighSearchViewController: WDBaseViewController {
         oneBtn.titleLabel?.font = .regularFontOfSize(size: 18)
         oneBtn.setTitleColor(.white, for: .normal)
         oneBtn.backgroundColor = .init(cssStr: "#D0D4DA")
-        oneBtn.layer.cornerRadius = 3
+        oneBtn.layer.cornerRadius = 5
         return oneBtn
     }()
     
@@ -116,8 +116,14 @@ class HighSearchViewController: WDBaseViewController {
         twoBtn.titleLabel?.font = .regularFontOfSize(size: 18)
         twoBtn.setTitleColor(.white, for: .normal)
         twoBtn.backgroundColor = .init(cssStr: "#547AFF")
-        twoBtn.layer.cornerRadius = 3
+        twoBtn.layer.cornerRadius = 5
         return twoBtn
+    }()
+    
+    lazy var footerView: UIView = {
+        let footerView = UIView()
+        footerView.backgroundColor = .white
+        return footerView
     }()
     
     override func viewDidLoad() {
@@ -261,12 +267,13 @@ extension HighSearchViewController {
         scrollView.addSubview(statusView)
         scrollView.addSubview(blockView)
         scrollView.addSubview(emailView)
-        scrollView.addSubview(descLabel)
-        scrollView.addSubview(oneBtn)
-        scrollView.addSubview(twoBtn)
+        view.addSubview(footerView)
+        footerView.addSubview(descLabel)
+        footerView.addSubview(oneBtn)
+        footerView.addSubview(twoBtn)
         scrollView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(5)
+            make.top.equalTo(headView.snp.bottom).offset(1)
         }
         oneView.snp.makeConstraints { make in
             make.left.equalToSuperview()
@@ -320,7 +327,7 @@ extension HighSearchViewController {
             make.left.equalToSuperview()
             make.top.equalTo(companyTypeView.snp.bottom)
             make.width.equalTo(SCREEN_WIDTH)
-            make.height.equalTo(155)
+            make.height.equalTo(120)
         }
         statusView.snp.makeConstraints { make in
             make.left.equalToSuperview()
@@ -339,24 +346,29 @@ extension HighSearchViewController {
             make.top.equalTo(blockView.snp.bottom)
             make.width.equalTo(SCREEN_WIDTH)
             make.height.equalTo(45)
+            make.bottom.equalToSuperview().offset(-95)
+        }
+        footerView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(95)
         }
         descLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(emailView.snp.bottom).offset(30)
+            make.top.equalToSuperview().offset(5)
             make.height.equalTo(15)
         }
         oneBtn.snp.makeConstraints { make in
-            make.top.equalTo(descLabel.snp.bottom).offset(11)
-            make.left.equalToSuperview().offset(15)
-            make.size.equalTo(CGSize(width: 120.pix(), height: 50))
+            make.top.equalTo(descLabel.snp.bottom).offset(6)
+            make.left.equalToSuperview().offset(15.pix())
+            make.size.equalTo(CGSize(width: 120.pix(), height: 45.pix()))
         }
         twoBtn.snp.makeConstraints { make in
-            make.top.equalTo(descLabel.snp.bottom).offset(11)
-            make.left.equalTo(SCREEN_WIDTH - 231.pix())
-            make.size.equalTo(CGSize(width: 216.pix(), height: 50))
-            make.bottom.equalToSuperview().offset(-10)
+            make.top.equalTo(descLabel.snp.bottom).offset(6)
+            make.right.equalToSuperview().offset(-15.pix())
+            make.size.equalTo(CGSize(width: 216.pix(), height: 45.pix()))
         }
         
+        //行业
         let industryMenu = MenuAction(title: "", style: .typeList)!
         industryMenu.setImage(UIImage(named: ""), for: .normal)
         industryMenu.setImage(UIImage(named: ""), for: .selected)
@@ -380,6 +392,7 @@ extension HighSearchViewController {
             twoView.descLabel.textColor = .init(cssStr: "#333333")
         }
         
+        //地区
         let regionMenu = MenuAction(title: "", style: .typeList)!
         regionMenu.setImage(UIImage(named: ""), for: .normal)
         regionMenu.setImage(UIImage(named: ""), for: .selected)
@@ -402,6 +415,51 @@ extension HighSearchViewController {
             threeView.descLabel.text = model?.displayText ?? ""
             threeView.descLabel.textColor = .init(cssStr: "#333333")
         }
+        
+        //重置
+        oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return  }
+            //关键词
+            self.oneView.nameTx.text = ""
+            //行业
+            self.twoView.descLabel.text = "非必填"
+            self.twoView.descLabel.textColor = UIColor.init(cssStr: "#ACACAC")
+            //地区
+            self.threeView.descLabel.text = "全部"
+            self.threeView.descLabel.textColor = UIColor.init(cssStr: "#ACACAC")
+            //登记状态
+            self.fourView.view0.removeBtnConfig()
+            self.fourView.view1.removeBtnConfig()
+            self.fourView.view2.removeBtnConfig()
+            self.fourView.view3.removeBtnConfig()
+            //成立年限
+            self.fiveView.clearStateOfSelected()
+            self.fiveView.startBtn.setTitle("开始日期", for: .normal)
+            self.fiveView.startBtn.setTitleColor(UIColor.init(cssStr: "#9FA4AD"), for: .normal)
+            self.fiveView.endBtn.setTitle("结束日期", for: .normal)
+            self.fiveView.endBtn.setTitleColor(UIColor.init(cssStr: "#9FA4AD"), for: .normal)
+            //注册资本
+            self.sixView.clearStateOfSelected()
+            self.sixView.startTx.text = ""
+            self.sixView.endTx.text = ""
+            //机构类型
+            self.agentView.clearStateOfSelected()
+            //企业类型
+            self.companyTypeView.clearStateOfSelected()
+            //参保人数
+            self.peopleView.clearStateOfSelected()
+            self.peopleView.startTx.text = ""
+            self.peopleView.endTx.text = ""
+            //上市状态
+            self.statusView.clearStateOfSelected()
+            //上市板块
+            self.blockView.clearStateOfSelected()
+        }).disposed(by: disposeBag)
+        
+        //确认结果
+        twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return  }
+        }).disposed(by: disposeBag)
         
     }
 }
