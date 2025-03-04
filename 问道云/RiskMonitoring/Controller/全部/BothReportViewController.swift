@@ -133,8 +133,10 @@ extension BothReportViewController: JXSegmentedListContainerViewListDelegate, JX
     
     func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
         if index == 0 {
+            self.companyVc.vc = self
             return self.companyVc
         }else {
+            self.peopleVc.vc = self
             return self.peopleVc
         }
     }

@@ -256,7 +256,7 @@ class OpinioUpLoadViewController: WDBaseViewController {
         }
         
         oneImageView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview()
             make.top.equalToSuperview()
             make.size.equalTo(CGSize(width: 0, height: 0))
         }
@@ -316,8 +316,9 @@ class OpinioUpLoadViewController: WDBaseViewController {
         
         //点击,获取相册权限
         uploadBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
             DispatchQueue.main.async {
-                self?.checkPhotoLibraryPermission()
+                self.checkPhotoLibraryPermission()
             }
         }).disposed(by: disposeBag)
         
@@ -375,7 +376,7 @@ extension OpinioUpLoadViewController: UITextViewDelegate {
                     ToastViewConfig.showToast(message: "提交成功")
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }
@@ -401,7 +402,9 @@ extension OpinioUpLoadViewController: UITextViewDelegate {
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
         case .authorized:
-            openPhotoLibrary()
+            DispatchQueue.main.async {
+                self.openPhotoLibrary()
+            }
         case .denied, .restricted:
             print("未授权，无法访问相册")
             ShowAlertManager.showAlert(title: "相册权限", message: "请在设置中启用相册权限以便您可以上传截图。", confirmAction: { [weak self] in
@@ -412,7 +415,9 @@ extension OpinioUpLoadViewController: UITextViewDelegate {
             PHPhotoLibrary.requestAuthorization { newStatus in
                 if newStatus == .authorized {
                     print("用户已授权")
-                    self.openPhotoLibrary()
+                    DispatchQueue.main.async {
+                        self.openPhotoLibrary()
+                    }
                 } else {
                     self.openSettings()
                 }
@@ -517,6 +522,7 @@ extension OpinioUpLoadViewController: UIImagePickerControllerDelegate, UINavigat
         self.pics.accept(picsArray)
         if count == 1 {
             self.oneImageView.snp.updateConstraints { make in
+                make.left.equalToSuperview()
                 make.size.equalTo(CGSize(width: 70, height: 70))
             }
             self.oneImageView.kf.setImage(with: URL(string: model.url ?? ""))

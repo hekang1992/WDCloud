@@ -14,6 +14,8 @@ import SwiftyJSON
 
 class WeekCompanyViewController: WDBaseViewController {
     
+    var vc: WeekReportViewController?
+    
     var pageNum: Int = 1
     
     var groupId: String = ""
@@ -242,8 +244,8 @@ extension WeekCompanyViewController {
                 }
                 break
             case .failure(_):
-                if let self = self {
-                    self.addNoNetView(from: self.dailyView.tableView)
+                if let self = self, let vc = vc {
+                    self.addNoNetView(from: vc.view)
                     self.noNetView.snp.makeConstraints { make in
                         make.left.equalToSuperview()
                         make.top.equalToSuperview().offset(64)

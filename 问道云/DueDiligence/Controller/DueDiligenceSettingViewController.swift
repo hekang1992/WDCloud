@@ -97,7 +97,7 @@ class DueDiligenceSettingViewController: WDBaseViewController {
     
     //重命名
     lazy var cmmView: CMMView = {
-        let cmmView = CMMView(frame: self.view.bounds)
+        let cmmView = CMMView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 200))
         return cmmView
     }()
 
@@ -245,7 +245,7 @@ extension DueDiligenceSettingViewController {
     }
     
     func AddMonitoringInfo() {
-        let alertVc = TYAlertController(alert: self.cmmView, preferredStyle: .actionSheet)!
+        let alertVc = TYAlertController(alert: self.cmmView, preferredStyle: .alert)!
         self.cmmView.nameLabel.text = "添加分组"
         self.cmmView.tf.placeholder = "请输入分组名称"
         self.present(alertVc, animated: true)
