@@ -245,6 +245,16 @@ class WDHomeViewController: WDBaseViewController {
 
 extension WDHomeViewController {
     
+    //获取地区信息
+    private func getReginInfo() {
+        
+    }
+    
+    //获取行业信息
+    private func getIndustryInfo() {
+        
+    }
+    
     //获取首页item
     private func getHomeItemInfo(complete: @escaping ((childrenModel) -> Void)) {
         let man = RequestManager()

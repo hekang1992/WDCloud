@@ -404,7 +404,9 @@ class itemsModel {
     var code: String?
     var levelKey: String?
     var value: String?
+    var logoColor: String?
     init(json: JSON) {
+        self.logoColor = json["logoColor"].stringValue
         self.value = json["value"].stringValue
         self.levelKey = json["levelKey"].stringValue
         self.code = json["code"].stringValue
@@ -525,11 +527,11 @@ class riskMonitorPersonDtoListModel {
 
 class listCompanyModel {
     var count: Int?
-    var entityName: String?
+    var orgName: String?
     var province: String?
     var percent: Double?
     init(json: JSON) {
-        self.entityName = json["entityName"].stringValue
+        self.orgName = json["orgName"].stringValue
         self.province = json["province"].stringValue
         self.count = json["count"].intValue
         self.percent = json["percent"].doubleValue

@@ -684,7 +684,6 @@ class HighFiveView: BaseView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
 }
 
 extension HighFiveView: TagListViewDelegate {
@@ -697,7 +696,7 @@ extension HighFiveView: TagListViewDelegate {
             self.endBtn.setTitle("结束日期", for: .normal)
             self.startBtn.setTitleColor(UIColor.init(cssStr: "#9FA4AD"), for: .normal)
             self.endBtn.setTitleColor(UIColor.init(cssStr: "#9FA4AD"), for: .normal)
-            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
             selectArray.removeAll()
             if tagView.isSelected {
                 selectArray.append(title)
@@ -881,7 +880,7 @@ extension HighSixView: TagListViewDelegate {
         if title == "不限" {
             self.startTx.text = ""
             self.endTx.text = ""
-            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
             selectArray.removeAll()
             if tagView.isSelected {
                 selectArray.append(title)
@@ -985,7 +984,7 @@ extension HighAgentView: TagListViewDelegate {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
         if title == "不限" {
-            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
             selectArray.removeAll()
             if tagView.isSelected {
                 selectArray.append(title)
@@ -1089,7 +1088,7 @@ extension HighCompanyTypeView: TagListViewDelegate {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
         if title == "不限" {
-            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
             selectArray.removeAll()
             if tagView.isSelected {
                 selectArray.append(title)
@@ -1273,7 +1272,7 @@ extension HighPeopleView: TagListViewDelegate {
         if title == "不限" {
             self.startTx.text = ""
             self.endTx.text = ""
-            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
             selectArray.removeAll()
             if tagView.isSelected {
                 selectArray.append(title)
@@ -1377,7 +1376,7 @@ extension HighStatusView: TagListViewDelegate {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
         if title == "不限" {
-            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
             selectArray.removeAll()
             if tagView.isSelected {
                 selectArray.append(title)
@@ -1480,7 +1479,7 @@ extension HighBlockView: TagListViewDelegate {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
         if title == "不限" {
-            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
             selectArray.removeAll()
             if tagView.isSelected {
                 selectArray.append(title)
@@ -1583,7 +1582,7 @@ extension HighEmailView: TagListViewDelegate {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
         if title == "有" {
-            tagListViews.forEach { _ in /*$0.isSelected = $0.currentTitle == title*/ }
+            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
             selectArray.removeAll()
             if tagView.isSelected {
                 selectArray.append(title)

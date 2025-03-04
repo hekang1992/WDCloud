@@ -102,7 +102,7 @@ class SearchCompanyViewController: WDBaseViewController {
         //添加下拉筛选
         let regionMenu = MenuAction(title: "地区", style: .typeList)!
         
-        self.regionModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
+        self.regionModelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
             let regionArray = getThreeRegionInfo(from: modelArray ?? [])
             regionMenu.listDataSource = regionArray
@@ -169,7 +169,6 @@ class SearchCompanyViewController: WDBaseViewController {
                     self.companyListView.isHidden = true
                 }
             }).disposed(by: disposeBag)
-        
         
         companyListView.addressBlock = { [weak self] model in
             let latitude = 31.23383

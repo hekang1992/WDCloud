@@ -133,7 +133,8 @@ class TwoPeopleSpecListCell: BaseViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             
-            self.ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.personName ?? "", size: (40, 40)))
+            let logoColor = model.logoColor ?? ""
+            self.ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.personName ?? "", size: (40, 40), bgColor: UIColor.init(cssStr: logoColor)!))
             
             nameLabel.text = model.personName ?? ""
             
@@ -172,7 +173,7 @@ extension TwoPeopleSpecListCell {
             
             listView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: companyCountText, fullText: fullText)
             
-            listView.nameLabel.text = model.entityName ?? ""
+            listView.nameLabel.text = model.orgName ?? ""
             
             listViews.append(listView)
             listView.heightAnchor.constraint(equalToConstant: 18.5).isActive = true

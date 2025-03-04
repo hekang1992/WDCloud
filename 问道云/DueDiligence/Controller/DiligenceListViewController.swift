@@ -36,18 +36,18 @@ class DiligenceListViewController: WDBaseViewController {
         view.addSubview(threeImageView)
         
         oneImageView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset((SCREEN_WIDTH - 325) * 0.5)
+            make.left.equalToSuperview().offset((SCREEN_WIDTH - 325.pix()) * 0.5)
             make.top.equalToSuperview().offset(25)
-            make.size.equalTo(CGSize(width: 325, height: 94))
+            make.size.equalTo(CGSize(width: 325.pix(), height: 94.pix()))
         }
         twoImageView.snp.makeConstraints { make in
             make.centerX.equalTo(oneImageView.snp.centerX)
             make.top.equalTo(oneImageView.snp.bottom).offset(20.5)
-            make.size.equalTo(CGSize(width: 352, height: 347))
+            make.size.equalTo(CGSize(width: 352.pix(), height: 347.pix()))
         }
         threeImageView.snp.makeConstraints { make in
             make.centerX.equalTo(oneImageView.snp.centerX)
-            make.size.equalTo(CGSize(width: 119, height: 43))
+            make.size.equalTo(CGSize(width: 119.pix(), height: 43.pix()))
             make.top.equalTo(twoImageView.snp.bottom).offset(32)
         }
         

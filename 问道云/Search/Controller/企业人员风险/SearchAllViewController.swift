@@ -94,6 +94,7 @@ class SearchAllViewController: WDBaseViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
     }
     
 }

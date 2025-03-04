@@ -21,22 +21,52 @@ class HighSearchResultViewController: WDBaseViewController {
     //搜索条件
     var searchConditionArray: [String]?
     
+    //搜索参数
+    var pageIndex: Int = 1
+    //关键词
+    var keyword: String = ""
+    //精准度
+    var matchType: String = ""
+    //行业
+    var industryType: String = ""
+    //地区
+    var region: String = ""
+    //登记状态
+    var regStatusVec: [Int] = []
+    //成立年限
+    var incDateTypeVec: [Int] = []
+    //自定义时间
+    var incDateRange: String = ""
+    //注册资本
+    var regCapLevelVec: [Int] = []
+    //自定义资本
+    var regCapRange: String = ""
+    //机构类型
+    var econTypeVec: [Int] = []
+    //企业类型
+    var categoryVec: [Int] = []
+    //参保人数
+    var sipCountLevelVec: [Int] = []
+    //自定义参保人数
+    var sipCountRange: String = ""
+    //上市状态
+    var listStatusVec: [Int] = []
+    //上市板块
+    var listingSectorVec: [Int] = []
+    //邮箱
+    var hasEmail: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         addHeadView(from: headView)
     }
+
+}
+
+extension HighSearchResultViewController {
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+    
 }

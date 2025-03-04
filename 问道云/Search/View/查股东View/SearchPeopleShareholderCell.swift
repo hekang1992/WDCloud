@@ -131,7 +131,9 @@ class SearchPeopleShareholderCell: BaseViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model, let name = model.personName, !name.isEmpty else { return }
             
-            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (40, 40)))
+            let logoColor = UIColor.init(cssStr: model.logoColor ?? "")!
+            
+            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (40, 40), bgColor: logoColor))
             nameLabel.text = name
             
             let count = model.listCompany?.count ?? 0
@@ -177,7 +179,7 @@ extension SearchPeopleShareholderCell {
             label.textColor = .init(cssStr: "#333333")
             label.textAlignment = .left
             label.font = .regularFontOfSize(size: 13)
-            let name = model.entityName ?? ""
+            let name = model.orgName ?? ""
             let persent = PercentageConfig.formatToPercentage(value: model.percent ?? 0.0)
             label.attributedText = GetRedStrConfig.getRedStr(from: "\(persent)", fullText: "\(name) (\(persent))")
             label.setContentHuggingPriority(.defaultLow, for: .vertical)

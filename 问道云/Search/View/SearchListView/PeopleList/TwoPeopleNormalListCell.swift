@@ -107,7 +107,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             
-            self.ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.personName ?? "", size: (40, 40)))
+            self.ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.personName ?? "", size: (40, 40), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             
             nameLabel.text = model.personName ?? ""
             
@@ -146,7 +146,7 @@ extension TwoPeopleNormalListCell {
             
             listView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: companyCountText, fullText: fullText)
             
-            listView.nameLabel.text = model.entityName ?? ""
+            listView.nameLabel.text = model.orgName ?? ""
             
             listViews.append(listView)
             listView.heightAnchor.constraint(equalToConstant: 18.5).isActive = true

@@ -36,19 +36,19 @@ class RiskNoLoginView: BaseView {
         addSubview(iconImageView3)
         
         iconImageView1.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset((SCREEN_WIDTH - 341) * 0.5)
+            make.left.equalToSuperview().offset((SCREEN_WIDTH - 341.pix()) * 0.5)
             make.top.equalToSuperview().offset(18.5)
-            make.size.equalTo(CGSize(width: 341, height: 108))
+            make.size.equalTo(CGSize(width: 341.pix(), height: 108.pix()))
         }
         iconImageView2.snp.makeConstraints { make in
             make.centerX.equalTo(iconImageView1.snp.centerX)
             make.top.equalTo(iconImageView1.snp.bottom).offset(18.5)
-            make.size.equalTo(CGSize(width: 355, height: 276))
+            make.size.equalTo(CGSize(width: 355.pix(), height: 276.pix()))
         }
         iconImageView3.snp.makeConstraints { make in
             make.centerX.equalTo(iconImageView1.snp.centerX)
             make.top.equalTo(iconImageView2.snp.bottom).offset(111)
-            make.size.equalTo(CGSize(width: 119, height: 43))
+            make.size.equalTo(CGSize(width: 119.pix(), height: 43.pix()))
         }
         iconImageView3
             .rx

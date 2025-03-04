@@ -238,11 +238,13 @@ class TwoCompanyNormalListCell: BaseViewCell {
                 addressimageView.isHidden = true
                 addressimageView.snp.updateConstraints { make in
                     make.width.equalTo(0)
+                    make.right.equalToSuperview().offset(-4)
                 }
             }else {
                 addressimageView.isHidden = false
                 addressimageView.snp.updateConstraints { make in
                     make.width.equalTo(47)
+                    make.right.equalToSuperview().offset(-12)
                 }
             }
             
@@ -256,6 +258,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
                 websiteimageView.isHidden = false
                 websiteimageView.snp.updateConstraints { make in
                     make.width.equalTo(47)
+                    make.right.equalTo(self.addressimageView.snp.left).offset(-8)
                 }
             }
             
@@ -269,6 +272,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
                 phoneimageView.isHidden = false
                 phoneimageView.snp.updateConstraints { make in
                     make.width.equalTo(47)
+                    make.right.equalTo(self.websiteimageView.snp.left).offset(-8)
                 }
             }
             

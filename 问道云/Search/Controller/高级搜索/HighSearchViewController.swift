@@ -592,11 +592,11 @@ extension HighSearchViewController {
             let listingSectorVec: [String] = filteredBlockModels.map { $0.code ?? "" }
             
             //邮箱
-            
-            
+            var selectEmailArray = self.emailView.selectArray
             
             let resultVc = HighSearchResultViewController()
             resultVc.searchConditionArray = []
+            
             self.navigationController?.pushViewController(resultVc, animated: true)
         }).disposed(by: disposeBag)
         
