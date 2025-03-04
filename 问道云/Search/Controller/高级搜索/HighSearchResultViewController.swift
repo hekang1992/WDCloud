@@ -19,7 +19,12 @@ class HighSearchResultViewController: WDBaseViewController {
     }()
     
     //搜索条件
-    var searchConditionArray: [String]?
+    var searchConditionArray: [String]? {
+        didSet {
+            guard let searchConditionArray = searchConditionArray else { return }
+            numLabel.text = "已选 \(searchConditionArray.count)"
+        }
+    }
     
     //搜索参数
     var pageIndex: Int = 1
@@ -56,11 +61,26 @@ class HighSearchResultViewController: WDBaseViewController {
     //邮箱
     var hasEmail: Bool = true
     
+    lazy var numLabel: UILabel = {
+        let numLabel = UILabel()
+        numLabel.textColor = .init(cssStr: "#333333")
+        numLabel.textAlignment = .left
+        numLabel.font = .mediumFontOfSize(size: 12)
+        return numLabel
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         addHeadView(from: headView)
+        view.backgroundColor = .white
+        view.addSubview(numLabel)
+        numLabel.snp.makeConstraints { make in
+            make.height.equalTo(16.5)
+            make.left.equalToSuperview().offset(12)
+            make.top.equalTo(headView.snp.bottom).offset(13.5)
+        }
     }
 
 }

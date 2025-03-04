@@ -514,7 +514,7 @@ extension HighSearchViewController {
             
             //成立年限
             let startTime = self.fiveView.startBtn.titleLabel?.text ?? ""
-            let endTime = self.fiveView.startBtn.titleLabel?.text ?? ""
+            let endTime = self.fiveView.endBtn.titleLabel?.text ?? ""
             var selectArray = self.fiveView.selectArray
             let timeIds = self.model.value?.INC_DATE_LEVEL ?? []
             // 过滤出与字符串数组匹配的模型
@@ -592,13 +592,27 @@ extension HighSearchViewController {
             let listingSectorVec: [String] = filteredBlockModels.map { $0.code ?? "" }
             
             //邮箱
-            var selectEmailArray = self.emailView.selectArray
+            var selectEmailStr = self.emailView.selectArray.first ?? ""
             
-            
+            //所有参数
+            var searchConditionArray: [String] = []
+            searchConditionArray.append(keyword)//名字
+            searchConditionArray.append(contentsOf: regStatusTitles)//登记状态
+            searchConditionArray.append(contentsOf: selectArray)//成立时间
+            searchConditionArray.append(incDateRange)//自定义时间
+            searchConditionArray.append(contentsOf: selectMoneyArray)//注册资本
+            searchConditionArray.append(regCapRange)//自定义资本
+            searchConditionArray.append(contentsOf: selectAgentArray)//机构类型
+            searchConditionArray.append(contentsOf: selectCompanyArray)//企业类型
+            searchConditionArray.append(contentsOf: selectNumArray)//参保人数
+            searchConditionArray.append(sipCountRange)//自定义参保人数
+            searchConditionArray.append(contentsOf: selectStatusArray)//上市状态
+            searchConditionArray.append(contentsOf: selectBlockArray)//上市板块
+            searchConditionArray.append(selectEmailStr)//邮箱
             
             let resultVc = HighSearchResultViewController()
-            resultVc.searchConditionArray = []
-            
+            resultVc.searchConditionArray = searchConditionArray
+                .filter { !$0.isEmpty && $0 != "开始日期-结束日期" && $0 != "-" }
             self.navigationController?.pushViewController(resultVc, animated: true)
         }).disposed(by: disposeBag)
         

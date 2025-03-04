@@ -110,7 +110,8 @@ extension PeopleUnioRiskViewController {
         let dict = ["functionType": functionType,
                     "relevaCompType": relevaCompType,
                     "customernumber": customernumber,
-                    "personId": enityId]
+                    "personId": enityId,
+                    "itemType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk-monitor/statisticPersonRisk",
                        method: .get) { [weak self] result in
