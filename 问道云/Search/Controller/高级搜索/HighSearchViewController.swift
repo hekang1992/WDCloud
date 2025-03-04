@@ -594,6 +594,8 @@ extension HighSearchViewController {
             //邮箱
             var selectEmailArray = self.emailView.selectArray
             
+            
+            
             let resultVc = HighSearchResultViewController()
             resultVc.searchConditionArray = []
             
