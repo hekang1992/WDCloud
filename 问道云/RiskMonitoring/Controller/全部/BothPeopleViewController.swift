@@ -250,6 +250,9 @@ extension BothPeopleViewController {
                         make.height.equalTo(SCREEN_HEIGHT)
                         make.width.equalTo(SCREEN_WIDTH)
                     }
+                    self.noNetView.refreshBlock = { [weak self] in
+                        self?.getPeopleInfo()
+                    }
                 }
                 break
             }

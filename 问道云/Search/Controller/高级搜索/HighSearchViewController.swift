@@ -610,9 +610,14 @@ extension HighSearchViewController {
             searchConditionArray.append(contentsOf: selectBlockArray)//上市板块
             searchConditionArray.append(selectEmailStr)//邮箱
             
-            let resultVc = HighSearchResultViewController()
-            resultVc.searchConditionArray = searchConditionArray
+            let searchArray = searchConditionArray
                 .filter { !$0.isEmpty && $0 != "开始日期-结束日期" && $0 != "-" }
+            if searchArray.isEmpty {
+                ToastViewConfig.showToast(message: "请至少选择一个筛选条件")
+                return
+            }
+            let resultVc = HighSearchResultViewController()
+            resultVc.searchConditionArray = searchArray
             self.navigationController?.pushViewController(resultVc, animated: true)
         }).disposed(by: disposeBag)
         

@@ -50,12 +50,6 @@ class WDHomeViewController: WDBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        //获取地区信息
-        getReginInfo()
-        //获取行业信息
-        getIndustryInfo()
-        
         //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
         segmentedViewDataSource = JXSegmentedTitleDataSource()
         segmentedViewDataSource.titles = titles
@@ -205,6 +199,13 @@ class WDHomeViewController: WDBaseViewController {
             }else {
                 self?.popLogin()
             }
+        }
+        
+        if IS_LOGIN {
+            //获取地区信息
+            getReginInfo()
+            //获取行业信息
+            getIndustryInfo()
         }
         
         //添加启动页

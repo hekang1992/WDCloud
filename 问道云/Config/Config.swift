@@ -559,7 +559,9 @@ class LLemptyView: UIView {
 }
 
 //无网络页面
-class NoNetView: UIView {
+class NoNetView: BaseView {
+    
+    var refreshBlock: (() -> Void)?
     
     lazy var bgView: UIView = {
         let bgView = UIView()
@@ -615,6 +617,10 @@ class NoNetView: UIView {
             make.top.equalTo(mlabel.snp.bottom).offset(12)
             make.size.equalTo(CGSize(width: 88, height: 21))
         }
+        refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.refreshBlock?()
+        }).disposed(by: disposeBag)
         refreshBtn.layoutButtonEdgeInsets(style: .left, space: 5)
     }
     

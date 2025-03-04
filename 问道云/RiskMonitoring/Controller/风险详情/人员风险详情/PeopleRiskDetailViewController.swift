@@ -104,10 +104,10 @@ class PeopleRiskDetailViewController: WDBaseViewController {
             let oneRpVc = OneReportViewController()
             let entityid = personId ?? ""
             let firmname = name ?? ""
-            let json: JSON = ["entityId": entityid,
-                              "entityName": firmname]
-            let firmModel = firmInfoModel(json: json)
-            oneRpVc.firmModel = firmModel
+            let json: JSON = ["orgId": entityid,
+                              "orgName": firmname]
+            let orgInfo = orgInfoModel(json: json)
+            oneRpVc.orgInfo = orgInfo
             self.navigationController?.pushViewController(oneRpVc, animated: true)
         }
         return header

@@ -190,8 +190,8 @@ extension SearchOneReportViewController {
                     "matchType": 1] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/company/search",
-                       method: .post) { [weak self] result in
+                       pageUrl: "/entity/v2/org-list",
+                       method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
@@ -504,8 +504,8 @@ extension SearchOneReportViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
         let oneRpVc = OneReportViewController()
-        if let firmInfo = model.firmInfo {
-            oneRpVc.firmModel = firmInfo
+        if let orgInfo = model.orgInfo {
+            oneRpVc.orgInfo = orgInfo
         }
         self.navigationController?.pushViewController(oneRpVc, animated: true)
     }
