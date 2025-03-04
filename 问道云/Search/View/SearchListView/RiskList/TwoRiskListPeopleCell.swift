@@ -62,7 +62,6 @@ class TwoRiskListPeopleCell: BaseViewCell {
 
 extension TwoRiskListPeopleCell: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 161, height: 88)
     }
@@ -82,8 +81,8 @@ extension TwoRiskListPeopleCell: UICollectionViewDelegateFlowLayout, UICollectio
         let vc = ViewControllerUtils.findViewController(from: self)
         let model = self.modelArray.value?[indexPath.row]
         let riskDetailVc = PeopleRiskDetailViewController()
-        riskDetailVc.name = model?.name ?? ""
-        riskDetailVc.enityId = model?.personNumber ?? ""
+        riskDetailVc.name = model?.personName ?? ""
+        riskDetailVc.personId = model?.personId ?? ""
         vc?.navigationController?.pushViewController(riskDetailVc, animated: true)
     }
     

@@ -229,7 +229,7 @@ extension UIImage {
         
         let attr = [
             NSAttributedString.Key.foregroundColor : textColor,
-            NSAttributedString.Key.font : UIFont.boldFontOfSize(size: minSide * 0.55),
+            NSAttributedString.Key.font : UIFont.boldFontOfSize(size: minSide * 0.6),
             NSAttributedString.Key.paragraphStyle: style,
             NSAttributedString.Key.kern: 0
         ] as [NSAttributedString.Key : Any]

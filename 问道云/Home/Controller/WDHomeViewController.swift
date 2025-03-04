@@ -50,6 +50,11 @@ class WDHomeViewController: WDBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        //获取地区信息
+        getReginInfo()
+        //获取行业信息
+        getIndustryInfo()
         
         //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
         segmentedViewDataSource = JXSegmentedTitleDataSource()
@@ -241,18 +246,41 @@ class WDHomeViewController: WDBaseViewController {
             }
         }
     }
+    
 }
 
 extension WDHomeViewController {
     
     //获取地区信息
     private func getReginInfo() {
-        
+        let man = RequestManager()
+        let dict = ["typeVec": "REGION"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/v2/meta",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                break
+            case .failure(let failure):
+                break
+            }
+        }
     }
     
     //获取行业信息
     private func getIndustryInfo() {
-        
+        let man = RequestManager()
+        let dict = ["typeVec": "INDUSTRY"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/v2/meta",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                break
+            case .failure(let failure):
+                break
+            }
+        }
     }
     
     //获取首页item

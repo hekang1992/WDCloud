@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class PeopleRiskDetailViewController: WDBaseViewController {
     
-    var enityId: String? {
+    var personId: String? {
         didSet {}
     }
     
@@ -35,7 +35,7 @@ class PeopleRiskDetailViewController: WDBaseViewController {
     var intBlock: ((Double) -> Void)?
     
     //头部view
-    lazy var homeHeadView: RiskDetailHeadView = preferredTableHeaderView()
+    lazy var homeHeadView: PeopleRiskDetailHeadView = preferredTableHeaderView()
     
     var segmentedViewDataSource: JXSegmentedTitleDataSource!
     
@@ -61,7 +61,7 @@ class PeopleRiskDetailViewController: WDBaseViewController {
         segmentedViewDataSource = JXSegmentedTitleDataSource()
         segmentedViewDataSource.titles = titles
         segmentedViewDataSource.isTitleColorGradientEnabled = true
-        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#333333")!
+        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#547AFF")!
         segmentedViewDataSource.titleNormalColor = UIColor.init(cssStr: "#9FA4AD")!
         segmentedViewDataSource.titleNormalFont = UIFont.mediumFontOfSize(size: 15)
         segmentedViewDataSource.titleSelectedFont = UIFont.mediumFontOfSize(size: 15)
@@ -81,7 +81,7 @@ class PeopleRiskDetailViewController: WDBaseViewController {
         segmentedView.listContainer = pagingView.listContainerView
         //距离高度禁止
         pagingView.pinSectionHeaderVerticalOffset = Int(StatusHeightManager.navigationBarHeight)
-        headView.titlelabel.text = "企业风险信息"
+        headView.titlelabel.text = "个人风险信息"
         addHeadView(from: headView)
         //获取风险数据
 //        getRiskDetailInfo()
@@ -93,16 +93,16 @@ class PeopleRiskDetailViewController: WDBaseViewController {
     }
     
     //头部
-    func preferredTableHeaderView() -> RiskDetailHeadView {
-        let header = RiskDetailHeadView()
-        header.iconImageView.kf.setImage(with: URL(string: logo ?? ""), placeholder: UIImage.imageOfText(name ?? "", size: (57, 57)))
+    func preferredTableHeaderView() -> PeopleRiskDetailHeadView {
+        let header = PeopleRiskDetailHeadView()
+        header.iconImageView.kf.setImage(with: URL(string: logo ?? ""), placeholder: UIImage.imageOfText(name ?? "", size: (45, 45)))
         header.namelabel.text = name
         header.timeLabel.text = "监控周期: \(time ?? "")"
         header.tagLabel.text = groupName ?? ""
         header.reportBtnBlock = { [weak self] in
             guard let self = self else { return }
             let oneRpVc = OneReportViewController()
-            let entityid = enityId ?? ""
+            let entityid = personId ?? ""
             let firmname = name ?? ""
             let json: JSON = ["entityId": entityid,
                               "entityName": firmname]
@@ -143,20 +143,20 @@ extension PeopleRiskDetailViewController: JXPagingViewDelegate {
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
-            let oneRiskVc = MySelfRiskDetailViewController()
-            oneRiskVc.enityId = enityId ?? ""
+            let oneRiskVc = PeopleMySelfRiskViewController()
+            oneRiskVc.enityId = personId ?? ""
             oneRiskVc.name = name ?? ""
             oneRiskVc.logo = logo ?? ""
             return oneRiskVc
         }else if index == 1 {
-            let twoRiskVc = UnioRiskDetailViewController()
-            twoRiskVc.enityId = enityId ?? ""
+            let twoRiskVc = PeopleUnioRiskViewController()
+            twoRiskVc.enityId = personId ?? ""
             twoRiskVc.name = name ?? ""
             twoRiskVc.logo = logo ?? ""
             return twoRiskVc
         }else {
-            let threeRiskVc = HistoryRiskDetailViewController()
-            threeRiskVc.enityId = enityId ?? ""
+            let threeRiskVc = PeopleHistoryRiskViewController()
+            threeRiskVc.enityId = personId ?? ""
             threeRiskVc.name = name ?? ""
             threeRiskVc.logo = logo ?? ""
             return threeRiskVc

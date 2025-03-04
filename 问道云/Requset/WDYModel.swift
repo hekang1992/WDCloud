@@ -153,6 +153,10 @@ class DataModel {
     var orgNum: Int?
     var personNum: Int?
     init(json: JSON) {
+        self.generaCompanyCnt = json["generaCompanyCnt"].intValue
+        self.investCompanyCnt = json["investCompanyCnt"].intValue
+        self.directorCompanyCnt = json["directorCompanyCnt"].intValue
+        self.shCompanyCnt = json["shCompanyCnt"].intValue
         self.endtime = json["endtime"].stringValue
         self.startTime = json["startTime"].stringValue
         self.totalCompanyCnt = json["totalCompanyCnt"].intValue
@@ -1356,7 +1360,16 @@ class statisticRiskDtosModel {
     var lowLevelCnt: Int?//低风险
     var tipLevelCnt: Int?//低风险
     var totalCnt: Int?//总共
+    var orgId: String?//
+    var orgName: String?//
+    var orgRelaveType: [String]?
+    var operationRiskCnt: Int?//经营风险
+    var lowRiskCnt: Int?//法律风险
+    var financeRiskCnt: Int?//经营风险
+    var opinionRiskCnt: Int?//舆情风险
     init(json: JSON) {
+        self.orgName = json["orgName"].stringValue
+        self.orgRelaveType = json["orgRelaveType"].arrayValue.map { $0.stringValue }
         self.itemId = json["itemId"].stringValue
         self.haveSon = json["haveSon"].stringValue
         self.itemName = json["itemName"].stringValue
@@ -1364,5 +1377,10 @@ class statisticRiskDtosModel {
         self.lowLevelCnt = json["lowLevelCnt"].intValue
         self.tipLevelCnt = json["tipLevelCnt"].intValue
         self.totalCnt = json["totalCnt"].intValue
+        
+        self.operationRiskCnt = json["operationRiskCnt"].intValue
+        self.lowRiskCnt = json["lowRiskCnt"].intValue
+        self.financeRiskCnt = json["financeRiskCnt"].intValue
+        self.opinionRiskCnt = json["opinionRiskCnt"].intValue
     }
 }

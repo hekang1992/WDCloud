@@ -16,8 +16,8 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
         return headView
     }()
     
-    lazy var riskHeadView: RiskDetailHeadView = {
-        let riskHeadView = RiskDetailHeadView()
+    lazy var riskHeadView: CompanyRiskDetailHeadView = {
+        let riskHeadView = CompanyRiskDetailHeadView()
         return riskHeadView
     }()
     

@@ -274,6 +274,9 @@
 		73C770712D731E140031016F /* RiskHaveDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C770702D731E140031016F /* RiskHaveDataView.swift */; };
 		73C89F132D74047D0002C3C9 /* PopAgainLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C89F122D74047D0002C3C9 /* PopAgainLoginView.swift */; };
 		73C89F152D7594C80002C3C9 /* HighSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C89F142D7594C80002C3C9 /* HighSearchResultViewController.swift */; };
+		73C89F172D76E2130002C3C9 /* PeopleMySelfRiskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C89F162D76E2130002C3C9 /* PeopleMySelfRiskViewController.swift */; };
+		73C89F192D76E2290002C3C9 /* PeopleUnioRiskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C89F182D76E2290002C3C9 /* PeopleUnioRiskViewController.swift */; };
+		73C89F1B2D76E2350002C3C9 /* PeopleHistoryRiskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C89F1A2D76E2350002C3C9 /* PeopleHistoryRiskViewController.swift */; };
 		73CC03772D6859660022F794 /* HighSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03762D6859660022F794 /* HighSearchViewController.swift */; };
 		73CC037A2D685FED0022F794 /* HighSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CC03792D685FED0022F794 /* HighSearchView.swift */; };
 		73CFEB922D00570400B2FE1B /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CFEB912D00570400B2FE1B /* WebPageViewController.swift */; };
@@ -650,6 +653,9 @@
 		73C770702D731E140031016F /* RiskHaveDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskHaveDataView.swift; sourceTree = "<group>"; };
 		73C89F122D74047D0002C3C9 /* PopAgainLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopAgainLoginView.swift; sourceTree = "<group>"; };
 		73C89F142D7594C80002C3C9 /* HighSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchResultViewController.swift; sourceTree = "<group>"; };
+		73C89F162D76E2130002C3C9 /* PeopleMySelfRiskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleMySelfRiskViewController.swift; sourceTree = "<group>"; };
+		73C89F182D76E2290002C3C9 /* PeopleUnioRiskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleUnioRiskViewController.swift; sourceTree = "<group>"; };
+		73C89F1A2D76E2350002C3C9 /* PeopleHistoryRiskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleHistoryRiskViewController.swift; sourceTree = "<group>"; };
 		73CC03762D6859660022F794 /* HighSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchViewController.swift; sourceTree = "<group>"; };
 		73CC03792D685FED0022F794 /* HighSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchView.swift; sourceTree = "<group>"; };
 		73CFEB912D00570400B2FE1B /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
@@ -1157,6 +1163,9 @@
 			isa = PBXGroup;
 			children = (
 				734896E32D3A094800B028FE /* PeopleRiskDetailViewController.swift */,
+				73C89F162D76E2130002C3C9 /* PeopleMySelfRiskViewController.swift */,
+				73C89F182D76E2290002C3C9 /* PeopleUnioRiskViewController.swift */,
+				73C89F1A2D76E2350002C3C9 /* PeopleHistoryRiskViewController.swift */,
 			);
 			path = "人员风险详情";
 			sourceTree = "<group>";
@@ -2105,6 +2114,7 @@
 				730CEE002D54AE2C002DE9DF /* SearchMonitoringViewController.swift in Sources */,
 				73E971752D2FCF0500F12B15 /* TwoCompanySpecListCell.swift in Sources */,
 				736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */,
+				73C89F192D76E2290002C3C9 /* PeopleUnioRiskViewController.swift in Sources */,
 				736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */,
 				73FC5E6E2D5CAE19001D0DEF /* SearchPeopleLawSuitViewController.swift in Sources */,
 				73EF03CF2D30F84B0070F850 /* TwoPeopleListView.swift in Sources */,
@@ -2142,6 +2152,7 @@
 				7352B22C2D3544BF00B5391B /* CompanyStockInfoView.swift in Sources */,
 				73EDE9E82D59DD8900A0A7E3 /* HomeLawsViewCell.swift in Sources */,
 				7380433A2D27DA66009B25F8 /* PopChangePeopleView.swift in Sources */,
+				73C89F172D76E2130002C3C9 /* PeopleMySelfRiskViewController.swift in Sources */,
 				734896D52D39ED9300B028FE /* CompanyRiskDetailViewController.swift in Sources */,
 				737416362D0EC37400E6CD23 /* MembershipCenterViewController.swift in Sources */,
 				7340E1A42D5CD59D008FD5C7 /* SearchCompanyStartCourtNoticeViewController.swift in Sources */,
@@ -2320,6 +2331,7 @@
 				73FC5E672D5CAB2F001D0DEF /* SearchPeopleDondDefaultViewController.swift in Sources */,
 				734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */,
 				73EABF942D321B6F0052F4AB /* TwoRiskListPeopleCell.swift in Sources */,
+				73C89F1B2D76E2350002C3C9 /* PeopleHistoryRiskViewController.swift in Sources */,
 				73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */,
 				7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */,
 				733B5FFE2D574D3D00ADE7C5 /* HomeNavSearchView.swift in Sources */,

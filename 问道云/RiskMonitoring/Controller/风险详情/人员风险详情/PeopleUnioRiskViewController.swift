@@ -1,5 +1,5 @@
 //
-//  UnioRiskDetailViewController.swift
+//  PeopleUnioRiskViewController.swift
 //  问道云
 //
 //  Created by Andrew on 2025/1/17.
@@ -8,7 +8,7 @@
 import UIKit
 import JXPagingView
 
-class UnioRiskDetailViewController: WDBaseViewController {
+class PeopleUnioRiskViewController: WDBaseViewController {
     
     var enityId: String = ""
     
@@ -64,7 +64,7 @@ class UnioRiskDetailViewController: WDBaseViewController {
     }
 }
 
-extension UnioRiskDetailViewController: UITableViewDelegate, UITableViewDataSource {
+extension PeopleUnioRiskViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0
@@ -100,7 +100,7 @@ extension UnioRiskDetailViewController: UITableViewDelegate, UITableViewDataSour
     
 }
 
-extension UnioRiskDetailViewController {
+extension PeopleUnioRiskViewController {
     
     //获取关联风险
     private func getUnioRiskInfo() {
@@ -110,9 +110,9 @@ extension UnioRiskDetailViewController {
         let dict = ["functionType": functionType,
                     "relevaCompType": relevaCompType,
                     "customernumber": customernumber,
-                    "orgId": enityId]
+                    "personId": enityId]
         man.requestAPI(params: dict,
-                       pageUrl: "/entity/risk-monitor/statisticOrgRisk",
+                       pageUrl: "/entity/risk-monitor/statisticPersonRisk",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             guard let self = self else { return }
@@ -158,7 +158,7 @@ extension UnioRiskDetailViewController {
     
 }
 
-extension UnioRiskDetailViewController: JXPagingViewListViewDelegate {
+extension PeopleUnioRiskViewController: JXPagingViewListViewDelegate {
     
     func listView() -> UIView {
         return view

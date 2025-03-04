@@ -543,6 +543,8 @@ class CustomButtonView: BaseView {
 
 class HighFiveView: BaseView {
     
+    var isGrand: Bool = true
+    
     //选中的标签
     var selectArray: [String] = []
     
@@ -691,24 +693,22 @@ extension HighFiveView: TagListViewDelegate {
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
+        selectArray.removeAll()
         if title == "不限" {
             self.startBtn.setTitle("开始日期", for: .normal)
             self.endBtn.setTitle("结束日期", for: .normal)
             self.startBtn.setTitleColor(UIColor.init(cssStr: "#9FA4AD"), for: .normal)
             self.endBtn.setTitleColor(UIColor.init(cssStr: "#9FA4AD"), for: .normal)
-            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
-            selectArray.removeAll()
-            if tagView.isSelected {
-                selectArray.append(title)
+            if isGrand == false {
+                tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
             }else {
-                selectArray.append("")
+                tagListViews.forEach { _ in }
             }
         } else {
-            selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
-            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
-            print("selectArray=====\(selectArray)")
         }
+        selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+        print("成立时间=====\(selectArray)")
     }
     
     func clearStateOfSelected() {
@@ -725,6 +725,8 @@ extension HighFiveView: TagListViewDelegate {
 }
 
 class HighSixView: BaseView {
+    
+    var isGrand: Bool = true
     
     //选中的标签
     var selectArray: [String] = []
@@ -877,29 +879,29 @@ extension HighSixView: TagListViewDelegate {
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
+        selectArray.removeAll()
         if title == "不限" {
             self.startTx.text = ""
             self.endTx.text = ""
-            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
-            selectArray.removeAll()
-            if tagView.isSelected {
-                selectArray.append(title)
+            if isGrand == false {
+                tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
             }else {
-                selectArray.append("")
+                tagListViews.forEach { _ in }
             }
         } else {
-            selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
-            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
-            print("selectArray=====\(selectArray)")
         }
+        selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+        print("注册资本=====\(selectArray)")
     }
     
     func clearStateOfSelected() {
+        isGrand = true
         selectedTags().forEach { [weak self] tagView in
             guard let self = self else { return }
             tagPressed(tagView.currentTitle ?? "", tagView: tagView, sender: tagListView)
         }
+        isGrand = false
     }
     
     func selectedTags() -> [TagView] {
@@ -1118,6 +1120,8 @@ extension HighCompanyTypeView: TagListViewDelegate {
 
 class HighPeopleView: BaseView {
     
+    var isGrand: Bool = true
+    
     //选中的标签
     var selectArray: [String] = []
     
@@ -1269,29 +1273,29 @@ extension HighPeopleView: TagListViewDelegate {
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
+        selectArray.removeAll()
         if title == "不限" {
             self.startTx.text = ""
             self.endTx.text = ""
-            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
-            selectArray.removeAll()
-            if tagView.isSelected {
-                selectArray.append(title)
+            if isGrand == false {
+                tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
             }else {
-                selectArray.append("")
+                tagListViews.forEach { _ in }
             }
         }else {
-            selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
-            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
-            print("selectArray=====\(selectArray)")
         }
+        selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+        print("selectPeopleArray=====\(selectArray)")
     }
     
     func clearStateOfSelected() {
+        isGrand = true
         selectedTags().forEach { [weak self] tagView in
             guard let self = self else { return }
             tagPressed(tagView.currentTitle ?? "", tagView: tagView, sender: tagListView)
         }
+        isGrand = false
     }
     
     func selectedTags() -> [TagView] {
@@ -1375,20 +1379,15 @@ extension HighStatusView: TagListViewDelegate {
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
         tagView.isSelected.toggle()
         tagListViews.append(tagView)
+        selectArray.removeAll()
         if title == "不限" {
             tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
-            selectArray.removeAll()
-            if tagView.isSelected {
-                selectArray.append(title)
-            }else {
-                selectArray.append("")
-            }
         }else {
             selectArray.removeAll()
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
-            selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
-            print("selectArray=====\(selectArray)")
         }
+        selectArray.append(contentsOf: sender.selectedTags().compactMap { $0.currentTitle })
+        print("selectArray=====\(selectArray)")
     }
     
     func clearStateOfSelected() {

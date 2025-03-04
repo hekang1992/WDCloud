@@ -35,7 +35,7 @@ class CompanyRiskDetailViewController: WDBaseViewController {
     var intBlock: ((Double) -> Void)?
     
     //头部view
-    lazy var homeHeadView: RiskDetailHeadView = preferredTableHeaderView()
+    lazy var homeHeadView: CompanyRiskDetailHeadView = preferredTableHeaderView()
     
     var segmentedViewDataSource: JXSegmentedTitleDataSource!
     
@@ -61,7 +61,7 @@ class CompanyRiskDetailViewController: WDBaseViewController {
         segmentedViewDataSource = JXSegmentedTitleDataSource()
         segmentedViewDataSource.titles = titles
         segmentedViewDataSource.isTitleColorGradientEnabled = true
-        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#333333")!
+        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#547AFF")!
         segmentedViewDataSource.titleNormalColor = UIColor.init(cssStr: "#9FA4AD")!
         segmentedViewDataSource.titleNormalFont = UIFont.mediumFontOfSize(size: 15)
         segmentedViewDataSource.titleSelectedFont = UIFont.mediumFontOfSize(size: 15)
@@ -93,9 +93,9 @@ class CompanyRiskDetailViewController: WDBaseViewController {
     }
     
     //头部
-    func preferredTableHeaderView() -> RiskDetailHeadView {
-        let header = RiskDetailHeadView()
-        header.iconImageView.kf.setImage(with: URL(string: logo ?? ""), placeholder: UIImage.imageOfText(name ?? "", size: (57, 57)))
+    func preferredTableHeaderView() -> CompanyRiskDetailHeadView {
+        let header = CompanyRiskDetailHeadView()
+        header.iconImageView.kf.setImage(with: URL(string: logo ?? ""), placeholder: UIImage.imageOfText(name ?? "", size: (45, 45)))
         header.namelabel.text = name
         header.timeLabel.text = "监控周期: \(time ?? "")"
         header.tagLabel.text = groupName ?? ""

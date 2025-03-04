@@ -182,8 +182,8 @@ extension MonthPeopleViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.peopleArray[indexPath.row]
         let riskDetailVc = PeopleRiskDetailViewController()
-        riskDetailVc.name = model.orgName ?? ""
-        riskDetailVc.enityId = model.orgId ?? ""
+        riskDetailVc.name = model.personName ?? ""
+        riskDetailVc.personId = model.personId ?? ""
         riskDetailVc.logo = model.logo ?? ""
         riskDetailVc.time = (model.startDate ?? "") + "至" + (model.endDate ?? "")
         riskDetailVc.groupName = model.groupName ?? ""
