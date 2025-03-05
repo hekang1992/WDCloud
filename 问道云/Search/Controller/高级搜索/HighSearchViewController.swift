@@ -475,28 +475,28 @@ extension HighSearchViewController {
             let keyword = self.oneView.nameTx.text ?? ""
             
             //精度
-            let matchType = self.oneView.matchType ?? ""
+            let matchType = Int(self.oneView.matchType ?? "1")
             
             //行业
             let industryType = self.industryType ?? ""
             
             //地区
-            let region = self.region ?? ""
+            let region = self.region ?? "0"
             
             //登记状态
-            var regStatusVec: [String] = []//ID
+            var regStatusVec: [Int] = []//ID
             var regStatusTitles: [String] = []//名称
             if let oneStatus = self.fourView.view0.dengjiBinder.value {
-                regStatusVec.append(contentsOf: oneStatus)
+                regStatusVec.append(contentsOf: oneStatus.map { Int($0) ?? 0 })
             }
             if let twoStatus = self.fourView.view1.dengjiBinder.value {
-                regStatusVec.append(contentsOf: twoStatus)
+                regStatusVec.append(contentsOf: twoStatus.map { Int($0) ?? 0 })
             }
             if let threeStatus = self.fourView.view2.dengjiBinder.value {
-                regStatusVec.append(contentsOf: threeStatus)
+                regStatusVec.append(contentsOf: threeStatus.map { Int($0) ?? 0 })
             }
             if let fourStatus = self.fourView.view3.dengjiBinder.value {
-                regStatusVec.append(contentsOf: fourStatus)
+                regStatusVec.append(contentsOf: fourStatus.map { Int($0) ?? 0 })
             }
             
             if let oneStatus = self.fourView.view0.dengjiStringBinder.value {
@@ -515,85 +515,96 @@ extension HighSearchViewController {
             //成立年限
             let startTime = self.fiveView.startBtn.titleLabel?.text ?? ""
             let endTime = self.fiveView.endBtn.titleLabel?.text ?? ""
-            var selectArray = self.fiveView.selectArray
+            let selectArray = self.fiveView.selectArray
             let timeIds = self.model.value?.INC_DATE_LEVEL ?? []
             // 过滤出与字符串数组匹配的模型
             let filteredModels = timeIds.filter { model in
                 selectArray.contains(model.name ?? "")
             }
             //成立年限参数
-            let incDateTypeVec: [String] = filteredModels.map { $0.code ?? "" }
-            let incDateRange = startTime + "-" + endTime
+            let incDateTypeVec: [Int] = filteredModels.map { Int($0.code ?? "0") ?? 0 }
+            var incDateRange = startTime + "-" + endTime
+            if incDateRange.contains("日期") {
+                incDateRange = ""
+            }
             
             //注册资本
             let startMoney = self.sixView.startTx.text ?? ""
             let endMoney = self.sixView.endTx.text ?? ""
-            var selectMoneyArray = self.sixView.selectArray
+            let selectMoneyArray = self.sixView.selectArray
             let moneyIds = self.model.value?.REG_CAP_LEVEL ?? []
             // 过滤出与字符串数组匹配的模型
             let filteredMoneyModels = moneyIds.filter { model in
                 selectMoneyArray.contains(model.name ?? "")
             }
-            //成立年限参数
-            let regCapLevelVec: [String] = filteredMoneyModels.map { $0.code ?? "" }
-            let regCapRange = startMoney + "-" + endMoney
+            //注册资本参数
+            let regCapLevelVec: [Int] = filteredMoneyModels.map { Int($0.code ?? "0") ?? 0 }
+            
+            var regCapRange = startMoney + "-" + endMoney
+            if regCapRange == "-" {
+                regCapRange = ""
+            }
             
             //机构类型
-            var selectAgentArray = self.agentView.selectArray
+            let selectAgentArray = self.agentView.selectArray
             let agentIds = self.model.value?.ORG_CATEGORY ?? []
             // 过滤出与字符串数组匹配的模型
             let filteredAgentModels = agentIds.filter { model in
                 selectAgentArray.contains(model.name ?? "")
             }
             //机构类型参数
-            let econTypeVec: [String] = filteredAgentModels.map { $0.code ?? "" }
+            let econTypeVec: [Int] = filteredAgentModels.map { Int($0.code ?? "0") ?? 0 }
             
             //企业类型
-            var selectCompanyArray = self.companyTypeView.selectArray
+            let selectCompanyArray = self.companyTypeView.selectArray
             let companyIds = self.model.value?.ORG_ECON ?? []
             // 过滤出与字符串数组匹配的模型
             let filteredCompanyModels = companyIds.filter { model in
                 selectCompanyArray.contains(model.name ?? "")
             }
-            //机构类型参数
-            let categoryVec: [String] = filteredCompanyModels.map { $0.code ?? "" }
+            //企业类型参数
+            let categoryVec: [Int] = filteredCompanyModels.map { Int($0.code ?? "0") ?? 0 }
             
             //参保人数
-            var selectNumArray = self.peopleView.selectArray
+            let selectNumArray = self.peopleView.selectArray
             let numIds = self.model.value?.SIP_LEVEL ?? []
             // 过滤出与字符串数组匹配的模型
             let filteredNumModels = numIds.filter { model in
                 selectNumArray.contains(model.name ?? "")
             }
             //参保人数参数
-            let sipCountLevelVec: [String] = filteredNumModels.map { $0.code ?? "" }
+            let sipCountLevelVec: [Int] = filteredNumModels.map { Int($0.code ?? "0") ?? 0 }
             let startPeople = self.peopleView.startTx.text ?? ""
             let endPeople = self.peopleView.endTx.text ?? ""
-            let sipCountRange = startPeople + "-" + endPeople
+            var sipCountRange = startPeople + "-" + endPeople
+            if sipCountRange == "-" {
+                sipCountRange = ""
+            }
             
             //上市状态
-            var selectStatusArray = self.statusView.selectArray
+            let selectStatusArray = self.statusView.selectArray
             let statusIds = self.model.value?.LIST_STATUS ?? []
             // 过滤出与字符串数组匹配的模型
             let filteredStatusModels = statusIds.filter { model in
                 selectStatusArray.contains(model.name ?? "")
             }
             //上市状态参数
-            let listStatusVec: [String] = filteredStatusModels.map { $0.code ?? "" }
+            let listStatusVec: [Int] = filteredStatusModels.map { Int($0.code ?? "0") ?? 0 }
             
             //上市板块
-            var selectBlockArray = self.blockView.selectArray
+            let selectBlockArray = self.blockView.selectArray
             let blockIds = self.model.value?.LIST_SECTOR ?? []
             // 过滤出与字符串数组匹配的模型
             let filteredBlockModels = blockIds.filter { model in
                 selectBlockArray.contains(model.name ?? "")
             }
-            //上市状态参数
-            let listingSectorVec: [String] = filteredBlockModels.map { $0.code ?? "" }
+            //上市板块参数
+            let listingSectorVec: [Int] = filteredBlockModels.map { Int($0.code ?? "0") ?? 0 }
             
             //邮箱
-            var selectEmailStr = self.emailView.selectArray.first ?? ""
-            
+            var hasEmail: Bool
+            let selectEmailStr = self.emailView.selectArray.first ?? ""
+            hasEmail = selectEmailStr == "有" ? true : false
             //所有参数
             var searchConditionArray: [String] = []
             searchConditionArray.append(keyword)//名字
@@ -618,6 +629,83 @@ extension HighSearchViewController {
             }
             let resultVc = HighSearchResultViewController()
             resultVc.searchConditionArray = searchArray
+            //关键词
+            if !keyword.isEmpty {
+                resultVc.keyword = ["keyword": keyword]
+            }
+            
+            //精度
+            resultVc.matchType = ["matchType": matchType as Any]
+            //行业
+            if !industryType.isEmpty {
+                resultVc.industryType = ["industryType": industryType]
+            }
+            
+            //地区
+            if region != "0" {
+                resultVc.region = ["region": Int(region) as Any]
+            }
+            
+            //登记状态
+            if regStatusVec.count > 0 {
+                resultVc.regStatusVec = ["regStatusVec": regStatusVec]
+            }
+            
+            //成立年限
+            if incDateTypeVec.count > 0 {
+                resultVc.incDateTypeVec = ["incDateTypeVec": incDateTypeVec]
+            }
+            
+            //自定义年限
+            if !incDateRange.isEmpty {
+                resultVc.incDateRange = ["incDateRange": incDateRange]
+            }
+            
+            //注册资本
+            if regCapLevelVec.count > 0 {
+                resultVc.regCapLevelVec = ["regCapLevelVec": regCapLevelVec]
+            }
+            
+            //自定义资本
+            if !regCapRange.isEmpty {
+                resultVc.regCapRange = ["regCapRange": regCapRange]
+            }
+            
+            //机构类型
+            if econTypeVec.count > 0 {
+                resultVc.econTypeVec = ["econTypeVec": econTypeVec]
+            }
+            
+            //企业类型
+            if categoryVec.count > 0 {
+                resultVc.categoryVec = ["categoryVec": categoryVec]
+            }
+            
+            //参保人数
+            if sipCountLevelVec.count > 0 {
+                resultVc.sipCountLevelVec = ["sipCountLevelVec": sipCountLevelVec]
+            }
+            
+            //自定义参保人数
+            if !sipCountRange.isEmpty {
+                resultVc.sipCountRange = ["sipCountRange": sipCountRange]
+            }
+            
+            //上市状态
+            if listStatusVec.count > 0 {
+                resultVc.listStatusVec = ["listStatusVec": listStatusVec]
+            }
+            
+            //上市板块
+            if listingSectorVec.count > 0 {
+                resultVc.listingSectorVec = ["listingSectorVec": listingSectorVec]
+            }
+            
+            //是否有邮箱
+            if !selectEmailStr.isEmpty {
+                resultVc.hasEmail = ["hasEmail": hasEmail]
+            }
+            
             self.navigationController?.pushViewController(resultVc, animated: true)
         }).disposed(by: disposeBag)
         

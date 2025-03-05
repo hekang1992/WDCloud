@@ -167,12 +167,12 @@ class HomeHeadView: BaseView {
             make.top.bottom.equalToSuperview()
             make.centerX.equalToSuperview()
             make.left.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-28)
+            make.bottom.equalToSuperview().offset(-22)
         }
         itemBgImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 25, height: 4))
-            make.top.equalTo(collectionView.snp.bottom).offset(14.5)
+            make.top.equalTo(collectionView.snp.bottom).offset(10)
         }
         grayImageView.frame = CGRectMake(0, 0, 12.5, 4)
         
@@ -224,15 +224,17 @@ extension HomeHeadView: UICollectionViewDelegate, UICollectionViewDelegateFlowLa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemWidth = SCREEN_WIDTH / 5
-        return CGSize(width: itemWidth, height: 62)
+        return CGSize(width: itemWidth, height: 62.pix())
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-        if currentPage == 0 {
-            self.grayImageView.mj_x = 0
-        }else {
-            self.grayImageView.mj_x = 12.5
+        UIView.animate(withDuration: 0.25) {
+            if currentPage == 0 {
+                self.grayImageView.mj_x = 0
+            }else {
+                self.grayImageView.mj_x = 12.5
+            }
         }
     }
     

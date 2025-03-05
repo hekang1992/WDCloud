@@ -42,7 +42,7 @@ class HighSearchKeyView: BaseView {
         button.setTitle("精准", for: .normal)
         button.titleLabel?.font = .mediumFontOfSize(size: 13)
         button.setTitleColor(UIColor.init(cssStr: "#333333"), for: .normal)
-        button.setImage(UIImage(named: "iconselecthgiimge"), for: .normal)
+        button.setImage(UIImage(named: "iconselcehignor"), for: .normal)
         button.addTarget(self, action: #selector(selectPrecise), for: .touchUpInside)
         button.layoutButtonEdgeInsets(style: .left, space: 3)
         return button
@@ -53,7 +53,7 @@ class HighSearchKeyView: BaseView {
         button.setTitle("模糊", for: .normal)
         button.titleLabel?.font = .mediumFontOfSize(size: 13)
         button.setTitleColor(UIColor.init(cssStr: "#666666"), for: .normal)
-        button.setImage(UIImage(named: "iconselcehignor"), for: .normal)
+        button.setImage(UIImage(named: "iconselecthgiimge"), for: .normal)
         button.addTarget(self, action: #selector(selectFuzzy), for: .touchUpInside)
         button.layoutButtonEdgeInsets(style: .left, space: 3)
         return button
@@ -83,14 +83,14 @@ class HighSearchKeyView: BaseView {
             make.left.equalTo(mlabel.snp.right).offset(30)
             make.size.equalTo(CGSize(width: SCREEN_WIDTH - 210, height: 20))
         }
-        fuzzyButton.snp.makeConstraints { make in
+        preciseButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(SCREEN_WIDTH - 60)
             make.size.equalTo(CGSize(width: 55, height: 19))
         }
-        preciseButton.snp.makeConstraints { make in
+        fuzzyButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.right.equalTo(fuzzyButton.snp.left).offset(-5)
+            make.right.equalTo(preciseButton.snp.left).offset(-5)
             make.size.equalTo(CGSize(width: 55, height: 19))
         }
     }
@@ -370,7 +370,7 @@ class CustomButtonView: BaseView {
     
     // MARK: - 按钮数组
     private var buttons: [ModelButton] = []
-//    titles: titles.map { $0.name ?? "" }
+    //    titles: titles.map { $0.name ?? "" }
     // MARK: - 外部方法配置按钮
     func configureButtons(modelArray: [childrenModel]) {
         buttons = modelArray.map { model in
@@ -543,6 +543,9 @@ class CustomButtonView: BaseView {
 
 class HighFiveView: BaseView {
     
+    var startTime = BehaviorRelay<String>(value: "")
+    var endTime = BehaviorRelay<String>(value: "")
+    
     var isGrand: Bool = true
     
     //选中的标签
@@ -668,6 +671,7 @@ class HighFiveView: BaseView {
             vc?.getPopTimeDatePicker(completion: { time in
                 self.startBtn.setTitle(time, for: .normal)
                 self.startBtn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
+                self.startTime.accept(time ?? "")
             })
         }).disposed(by: disposeBag)
         
@@ -677,9 +681,27 @@ class HighFiveView: BaseView {
             vc?.getPopTimeDatePicker(completion: { time in
                 self.endBtn.setTitle(time, for: .normal)
                 self.endBtn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
+                self.endTime.accept(time ?? "")
             })
         }).disposed(by: disposeBag)
         
+        let combine = Observable.combineLatest(startTime, endTime)
+            .map { startTime, endTime in
+                if startTime != "" && endTime != "" {
+                    if startTime > endTime {
+                        return false
+                    }else {
+                        return true
+                    }
+                }else {
+                    return true
+                }
+            }
+        combine.subscribe(onNext: { isValid in
+            if !isValid {
+                ToastViewConfig.showToast(message: "开始日期大于结束日期,请重新选择")
+            }
+        }).disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
@@ -725,6 +747,9 @@ extension HighFiveView: TagListViewDelegate {
 }
 
 class HighSixView: BaseView {
+    
+    var startMoney = BehaviorRelay<String>(value: "")
+    var endMoney = BehaviorRelay<String>(value: "")
     
     var isGrand: Bool = true
     
@@ -866,6 +891,36 @@ class HighSixView: BaseView {
             make.top.bottom.equalToSuperview()
             make.left.equalTo(linegView.snp.right)
         }
+        startTx.rx.controlEvent(.editingChanged)
+            .withLatestFrom(startTx.rx.text.orEmpty)
+            .subscribe(onNext: { [weak self] text in
+                self?.startMoney.accept(text)
+            })
+            .disposed(by: disposeBag)
+        endTx.rx.controlEvent(.editingChanged)
+            .withLatestFrom(endTx.rx.text.orEmpty)
+            .subscribe(onNext: { [weak self] text in
+                self?.endMoney.accept(text)
+            })
+            .disposed(by: disposeBag)
+        
+        let combine = Observable.combineLatest(startMoney, endMoney)
+            .map { startMoney, endMoney in
+                if startMoney != "" && endMoney != "" {
+                    if startMoney > endMoney {
+                        return false
+                    }else {
+                        return true
+                    }
+                }else {
+                    return true
+                }
+            }
+        combine.subscribe(onNext: { isValid in
+            if !isValid {
+                ToastViewConfig.showToast(message: "最低资本大于最高资本,请重新填写")
+            }
+        }).disposed(by: disposeBag)
         
     }
     

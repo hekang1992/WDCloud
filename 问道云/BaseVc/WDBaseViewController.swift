@@ -97,7 +97,11 @@ extension WDBaseViewController {
         var allArray = [ItemModel]()
         let model1 = ItemModel(text: "全部分组", currentID: "", isSelect: true)!
         for rowmodel in modelArray {
-            let model = ItemModel(text: rowmodel.groupname, currentID: rowmodel.groupnumber ?? "", isSelect: false)!
+            let model = ItemModel(
+                text: rowmodel.groupname,
+                currentID: rowmodel.groupnumber ?? "",
+                isSelect: false
+            )!
             allArray.append(model)
         }
         allArray.insert(model1, at: 0)
@@ -112,7 +116,11 @@ extension WDBaseViewController {
         twoList.append(regionModel)
         for (_, rowModel) in modelArray.enumerated() {
             var model: ItemModel
-            model = ItemModel(text: rowModel.name, currentID: rowModel.code, isSelect: false)
+            model = ItemModel(
+                text: rowModel.name,
+                currentID: rowModel.code,
+                isSelect: false
+            )
             var temp: [ItemModel] = []
             if let children = rowModel.children {
                 temp.append(noModel)
@@ -137,19 +145,40 @@ extension WDBaseViewController {
         let regionModel = ItemModel(text: "全国", currentID: "", isSelect: true)!
         threeList.append(regionModel)
         for (_, rowModel) in modelArray.enumerated() {
-            let levelOneModel = ItemModel(text: rowModel.name, currentID: rowModel.code, isSelect: false)!
+            let levelOneModel = ItemModel(
+                text: rowModel.name,
+                currentID: rowModel.code,
+                isSelect: false
+            )!
             if let secondLevelChildren = rowModel.children {
                 var secondLevelList: [ItemModel] = []
-                let hanyeModel = ItemModel(text: "不限", currentID: "", isSelect: true)!
+                let hanyeModel = ItemModel(
+                    text: "不限",
+                    currentID: "",
+                    isSelect: true
+                )!
                 secondLevelList.append(hanyeModel)
                 for (_, secondLevelModel) in secondLevelChildren.enumerated() {
-                    let levelTwoModel = ItemModel(text: secondLevelModel.name, currentID: secondLevelModel.code, isSelect: false)!
+                    let levelTwoModel = ItemModel(
+                        text: secondLevelModel.name,
+                        currentID: secondLevelModel.code,
+                        isSelect: false
+                    )!
                     if let thirdLevelChildren = secondLevelModel.children {
                         var thirdLevelList: [ItemModel] = []
-                        let hanyeModelThirdLevel = ItemModel(text: "不限", currentID: "", isSelect: true)!
+                        let hanyeModelThirdLevel = ItemModel(
+                            text: "不限",
+                            currentID: "",
+                            isSelect: true
+                        )!
                         thirdLevelList.append(hanyeModelThirdLevel)
-                        for (_, thirdLevelModel) in thirdLevelChildren.enumerated() {
-                            let levelThreeModel = ItemModel(text: thirdLevelModel.name, currentID: thirdLevelModel.code, isSelect: false)!
+                        for (_, thirdLevelModel) in thirdLevelChildren
+                            .enumerated() {
+                            let levelThreeModel = ItemModel(
+                                text: thirdLevelModel.name,
+                                currentID: thirdLevelModel.code,
+                                isSelect: false
+                            )!
                             thirdLevelList.append(levelThreeModel)
                         }
                         levelTwoModel.dataSource = thirdLevelList
@@ -169,19 +198,40 @@ extension WDBaseViewController {
         let regionModel = ItemModel(text: "全部", currentID: "", isSelect: true)!
         threeList.append(regionModel)
         for (_, rowModel) in modelArray.enumerated() {
-            let levelOneModel = ItemModel(text: rowModel.name, currentID: rowModel.code, isSelect: false)!
+            let levelOneModel = ItemModel(
+                text: rowModel.name,
+                currentID: rowModel.code,
+                isSelect: false
+            )!
             if let secondLevelChildren = rowModel.children {
                 var secondLevelList: [ItemModel] = []
-                let hanyeModel = ItemModel(text: "不限", currentID: "", isSelect: true)!
+                let hanyeModel = ItemModel(
+                    text: "不限",
+                    currentID: "",
+                    isSelect: true
+                )!
                 secondLevelList.append(hanyeModel)
                 for (_, secondLevelModel) in secondLevelChildren.enumerated() {
-                    let levelTwoModel = ItemModel(text: secondLevelModel.name, currentID: secondLevelModel.code, isSelect: false)!
+                    let levelTwoModel = ItemModel(
+                        text: secondLevelModel.name,
+                        currentID: secondLevelModel.code,
+                        isSelect: false
+                    )!
                     if let thirdLevelChildren = secondLevelModel.children {
                         var thirdLevelList: [ItemModel] = []
-                        let hanyeModelThirdLevel = ItemModel(text: "不限", currentID: "", isSelect: true)!
+                        let hanyeModelThirdLevel = ItemModel(
+                            text: "不限",
+                            currentID: "",
+                            isSelect: true
+                        )!
                         thirdLevelList.append(hanyeModelThirdLevel)
-                        for (_, thirdLevelModel) in thirdLevelChildren.enumerated() {
-                            let levelThreeModel = ItemModel(text: thirdLevelModel.name, currentID: thirdLevelModel.code, isSelect: false)!
+                        for (_, thirdLevelModel) in thirdLevelChildren
+                            .enumerated() {
+                            let levelThreeModel = ItemModel(
+                                text: thirdLevelModel.name,
+                                currentID: thirdLevelModel.code,
+                                isSelect: false
+                            )!
                             thirdLevelList.append(levelThreeModel)
                         }
                         levelTwoModel.dataSource = thirdLevelList
@@ -203,7 +253,11 @@ extension WDBaseViewController {
         twoList.append(allModel)
         for (_, rowModel) in modelArray.enumerated() {
             var model: ItemModel
-            model = ItemModel(text: rowModel.name, currentID: rowModel.code, isSelect: false)
+            model = ItemModel(
+                text: rowModel.name,
+                currentID: rowModel.code,
+                isSelect: false
+            )
             var temp: [ItemModel] = []
             if let children = rowModel.children {
                 temp.append(noModel)
@@ -227,7 +281,11 @@ extension WDBaseViewController {
         var allArray = [ItemModel]()
         let model1 = ItemModel(text: "全部", currentID: "0", isSelect: true)!
         for rowmodel in modelArray {
-            let model = ItemModel(text: rowmodel.combotypename, currentID: String(rowmodel.combotypenumber ?? 0), isSelect: false)!
+            let model = ItemModel(
+                text: rowmodel.combotypename,
+                currentID: String(rowmodel.combotypenumber ?? 0),
+                isSelect: false
+            )!
             allArray.append(model)
         }
         allArray.insert(model1, at: 0)
@@ -239,7 +297,11 @@ extension WDBaseViewController {
         var allArray = [ItemModel]()
         var isFirst = true // 用来判断是否是第一个元素
         for rowmodel in modelArray {
-            let model = ItemModel(text: rowmodel.value, currentID: rowmodel.code, isSelect: isFirst)!
+            let model = ItemModel(
+                text: rowmodel.value,
+                currentID: rowmodel.code,
+                isSelect: isFirst
+            )!
             allArray.append(model)
             isFirst = false // 之后的元素都设置为 false
         }
@@ -261,7 +323,11 @@ extension WDBaseViewController {
         let model1 = ItemModel(text: "全部", currentID: "", isSelect: isSelect)!
         let model2 = ItemModel(text: "今天", currentID: "today", isSelect: false)!
         let model3 = ItemModel(text: "近一周", currentID: "week", isSelect: false)!
-        let model4 = ItemModel(text: "近一月", currentID: "month", isSelect: false)!
+        let model4 = ItemModel(
+            text: "近一月",
+            currentID: "month",
+            isSelect: false
+        )!
         let model5 = ItemModel(text: "近一年", currentID: "year", isSelect: false)!
         let modelArray = [model1, model2, model3, model4, model5]
         return modelArray
@@ -381,6 +447,48 @@ extension WDBaseViewController {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
             print("设备不支持拨打电话")
+        }
+    }
+    
+    //获取地区信息
+    func getReginInfo(complete: @escaping ([rowsModel]) -> Void) {
+        let man = RequestManager()
+        let dict = ["typeVec": "REGION"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/v2/meta",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    let modelArray = success.data?.REGION ?? []
+                    RegionDataManager.shared.saveData(modelArray)
+                    complete(modelArray)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //获取行业信息
+    func getIndustryInfo(complete: @escaping ([rowsModel]) -> Void) {
+        let man = RequestManager()
+        let dict = ["typeVec": "INDUSTRY"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/v2/meta",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    let modelArray = success.data?.INDUSTRY ?? []
+                    IndustruDataManager.shared.saveData(modelArray)
+                    complete(modelArray)
+                }
+                break
+            case .failure(_):
+                break
+            }
         }
     }
     

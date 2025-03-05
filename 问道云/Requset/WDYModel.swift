@@ -99,7 +99,7 @@ class DataModel {
     //总资产
     var assetInfo: assetInfoModel?
     //标签
-    var promptLabels: [promptLabelsModel]?
+    var labels: [promptLabelsModel]?
     //是否被关注
     var followInfo: followInfoModel?
     /**
@@ -152,7 +152,9 @@ class DataModel {
     var pushOffset: String?
     var orgNum: Int?
     var personNum: Int?
+    var basicInfo: basicInfoModel?//企业详情基本信息
     init(json: JSON) {
+        self.basicInfo = basicInfoModel(json: json["basicInfo"])
         self.generaCompanyCnt = json["generaCompanyCnt"].intValue
         self.investCompanyCnt = json["investCompanyCnt"].intValue
         self.directorCompanyCnt = json["directorCompanyCnt"].intValue
@@ -205,7 +207,7 @@ class DataModel {
         self.personId = json["personId"].stringValue
         self.personName = json["personName"].stringValue
         self.resume = json["resume"].stringValue
-        self.promptLabels = json["promptLabels"].arrayValue.map { promptLabelsModel(json: $0) }
+        self.labels = json["labels"].arrayValue.map { promptLabelsModel(json: $0) }
         self.assetInfo = assetInfoModel(json: json["assetInfo"])
         self.taxInfo = taxInfoModel(json: json["taxInfo"])
         self.namesUsedBefore = json["namesUsedBefore"].arrayValue.map { namesUsedBeforeModel(json: $0) }
@@ -1382,5 +1384,37 @@ class statisticRiskDtosModel {
         self.lowRiskCnt = json["lowRiskCnt"].intValue
         self.financeRiskCnt = json["financeRiskCnt"].intValue
         self.opinionRiskCnt = json["opinionRiskCnt"].intValue
+    }
+}
+
+class basicInfoModel {
+    var actCap: String?
+    var actCapCur: String?
+    var incDate: String?
+    var industry: [industryModel]?
+    var orgId: String?
+    var orgName: String?
+    var regCap: String?
+    var scale: String?
+    var usCreditCode: String?
+    init(json: JSON) {
+        self.actCap = json["actCap"].stringValue
+        self.actCapCur = json["actCapCur"].stringValue
+        self.incDate = json["incDate"].stringValue
+        self.orgId = json["orgId"].stringValue
+        self.orgName = json["orgName"].stringValue
+        self.regCap = json["regCap"].stringValue
+        self.scale = json["scale"].stringValue
+        self.usCreditCode = json["usCreditCode"].stringValue
+        self.industry = json["industry"].arrayValue.map { industryModel(json: $0) }
+    }
+}
+
+class industryModel {
+    var code: String?
+    var name: String?
+    init(json: JSON) {
+        self.code = json["code"].stringValue
+        self.name = json["name"].stringValue
     }
 }

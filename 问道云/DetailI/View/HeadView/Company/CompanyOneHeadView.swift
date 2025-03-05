@@ -241,7 +241,7 @@ class CompanyOneHeadView: BaseView {
         tagListView.snp.makeConstraints { make in
             make.left.equalTo(historyNamesButton.snp.left)
             make.top.equalTo(historyNamesButton.snp.bottom).offset(6)
-            make.width.equalTo(SCREEN_WIDTH - 80)
+            make.right.equalToSuperview().offset(-20)
             make.height.equalTo(15)
         }
         desLabel.snp.makeConstraints { make in
@@ -331,7 +331,7 @@ class CompanyOneHeadView: BaseView {
         //标签
         tagArray.asObservable().subscribe(onNext: { [weak self] texts in
             guard let self = self else { return }
-            setupScrollView(tagScrollView: tagListView, tagArray: texts)
+            setupScrollView(tagScrollView: tagListView, tagArray: ["fadads", "风大说法", "fdafad", "fdaf", "fdaf", "fdafdauef", "fad", "fafdas", "fadfeaf"])
         }).disposed(by: disposeBag)
         
         //简介点击展开
@@ -489,10 +489,9 @@ extension CompanyOneHeadView {
         for view in tagScrollView.subviews {
             view.removeFromSuperview()
         }
-        
-        let maxWidth = UIScreen.main.bounds.width - 80 // 标签展示最大宽度（左右各 20 的边距）
-        let openButtonWidth: CGFloat = 35 // 展开按钮宽度
-        let buttonHeight: CGFloat = 15 // 标签高度
+        let maxWidth = self.tagListView.frame.width
+        let openButtonWidth: CGFloat = 40 // 展开按钮宽度
+        let buttonHeight: CGFloat = 20 // 标签高度
         let buttonSpacing: CGFloat = 5 // 标签之间的间距
         var numberOfLine: CGFloat = 1 // 标签总行数
         var lastRight: CGFloat = 0 // 标签的左边距
@@ -500,7 +499,7 @@ extension CompanyOneHeadView {
         
         // 创建展开/收起按钮
         let openButton = UIButton(type: .custom)
-        openButton.titleLabel?.font = .regularFontOfSize(size: 10)
+        openButton.titleLabel?.font = .regularFontOfSize(size: 12)
         openButton.backgroundColor = UIColor(cssStr: "#3F96FF")?.withAlphaComponent(0.1)
         openButton.setTitle("展开", for: .normal)
         openButton.setTitleColor(UIColor(cssStr: "#3F96FF"), for: .normal)
@@ -516,8 +515,8 @@ extension CompanyOneHeadView {
         // 计算标签总长度
         var totalLength = lastRight
         for tags in tagArray {
-            let tag = "\(tags)   "
-            let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 11)])
+            let tag = "\(tags)"
+            let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 12)])
             var width = titleSize.width
             if tags.contains("展开") {
                 width = openButtonWidth
@@ -531,8 +530,8 @@ extension CompanyOneHeadView {
             var p = 0
             var lastLength = lastRight
             for tags in tagArray {
-                let tag = "\(tags)   "
-                let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 11)])
+                let tag = "\(tags)"
+                let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 12)])
                 var width = titleSize.width
                 if tags.contains("展开") {
                     width = openButtonWidth
@@ -579,18 +578,18 @@ extension CompanyOneHeadView {
                 lastRight += openButtonWidth + buttonSpacing
             } else {
                 let lab = UILabel()
-                lab.font = .regularFontOfSize(size: 11)
+                lab.font = .regularFontOfSize(size: 12)
                 lab.textColor = UIColor(cssStr: "#ECF2FF")
                 lab.backgroundColor = UIColor(cssStr: "#93B2F5")
                 lab.layer.masksToBounds = true
                 lab.layer.cornerRadius = 2
                 lab.textAlignment = .center
-                lab.text = "\(tags)   "
+                lab.text = "\(tags)"
                 TagsLabelColorConfig.nameLabelColor(from: lab)
                 tagScrollView.addSubview(lab)
                 
                 let titleSize = (lab.text! as NSString).size(withAttributes: [.font: lab.font!])
-                let width = titleSize.width  // 增加左右 padding
+                let width = titleSize.width + 10  // 增加左右 padding
                 
                 if width + lastRight > maxWidth {
                     numberOfLine += 1
@@ -618,7 +617,7 @@ extension CompanyOneHeadView {
     // 按钮点击事件
     @objc func didOpenTags(_ sender: UIButton) {
         companyModel.isOpenTag.toggle() // 切换展开/收起状态
-        setupScrollView(tagScrollView: tagListView, tagArray: tagArray.value) // 重新设置标签
+        setupScrollView(tagScrollView: tagListView, tagArray: ["fadads", "风大说法", "fdafad", "fdaf", "fdaf", "fdafdauef", "fad", "fafdas", "fadfeaf"]) // 重新设置标签
         self.moreClickBlcok?(companyModel)
     }
     

@@ -126,14 +126,16 @@ extension CompanyDetailViewController {
     private func getCompanyHeadInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["entityId": enityId]
+        let dict = ["orgId": enityId]
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/company/overview",
+                       pageUrl: "/entity/v2/org/overview",
                        method: .get) { result in
             ViewHud.hideLoadView()
             switch result {
             case .success(let success):
-                if let model = success.data, let code = success.code, code == 200 {
+                if let model = success.data,
+                    let code = success.code,
+                    code == 200 {
                     self.headModel.accept(model)
                     self.companyDetailView.headModel.accept(model)
                     self.companyDetailView.collectionView.reloadData()

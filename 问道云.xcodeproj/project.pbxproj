@@ -124,6 +124,8 @@
 		7340E1D42D5DF9DB008FD5C7 /* SearchJudgmentDebtorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1D32D5DF9DB008FD5C7 /* SearchJudgmentDebtorViewController.swift */; };
 		7340E1D62D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1D52D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift */; };
 		7340E1D82D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1D72D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift */; };
+		7342CF552D7815C3005157A0 /* ServerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342CF542D7815C3005157A0 /* ServerDataManager.swift */; };
+		7342CF572D78456B005157A0 /* HighSearchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342CF562D78456B005157A0 /* HighSearchViewCell.swift */; };
 		734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E72D2641C400BB4087 /* GroupTeamViewController.swift */; };
 		734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E92D26431900BB4087 /* GroupTeamNorView.swift */; };
 		734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */; };
@@ -499,6 +501,8 @@
 		7340E1D32D5DF9DB008FD5C7 /* SearchJudgmentDebtorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchJudgmentDebtorViewController.swift; sourceTree = "<group>"; };
 		7340E1D52D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyJudgmentDebtorViewController.swift; sourceTree = "<group>"; };
 		7340E1D72D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleJudgmentDebtorViewController.swift; sourceTree = "<group>"; };
+		7342CF542D7815C3005157A0 /* ServerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerDataManager.swift; sourceTree = "<group>"; };
+		7342CF562D78456B005157A0 /* HighSearchViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchViewCell.swift; sourceTree = "<group>"; };
 		734355E72D2641C400BB4087 /* GroupTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamViewController.swift; sourceTree = "<group>"; };
 		734355E92D26431900BB4087 /* GroupTeamNorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamNorView.swift; sourceTree = "<group>"; };
 		734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamSpecView.swift; sourceTree = "<group>"; };
@@ -900,6 +904,7 @@
 				7330CB812D23E65900778D54 /* ContactManager.swift */,
 				730488002D2A64410024265C /* WDRefreshHeader.swift */,
 				73807D482D32C93C00F8B90D /* Networkmanager.swift */,
+				7342CF542D7815C3005157A0 /* ServerDataManager.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1578,6 +1583,7 @@
 			isa = PBXGroup;
 			children = (
 				73CC03792D685FED0022F794 /* HighSearchView.swift */,
+				7342CF562D78456B005157A0 /* HighSearchViewCell.swift */,
 			);
 			path = "高级搜索View";
 			sourceTree = "<group>";
@@ -2241,6 +2247,7 @@
 				7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */,
 				73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */,
 				73C89F132D74047D0002C3C9 /* PopAgainLoginView.swift in Sources */,
+				7342CF572D78456B005157A0 /* HighSearchViewCell.swift in Sources */,
 				73EDE9EE2D59E81F00A0A7E3 /* SearchCompanySanctionViewController.swift in Sources */,
 				7303844A2D60731C008AA7C3 /* MyOpinioDetailViewController.swift in Sources */,
 				73EABF9C2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift in Sources */,
@@ -2320,6 +2327,7 @@
 				73EABF9A2D323C460052F4AB /* RiskListPeopleView.swift in Sources */,
 				73C6B1A72D34EC8900CD3816 /* CompanyDetailHeadView.swift in Sources */,
 				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
+				7342CF552D7815C3005157A0 /* ServerDataManager.swift in Sources */,
 				7340E1882D5CD374008FD5C7 /* SearchCompanyAssetSeizureViewController.swift in Sources */,
 				736E97852D22A7A0009CC0DF /* ApplePayConfig.swift in Sources */,
 				7352B2382D36736400B5391B /* CompanyDescInfoView.swift in Sources */,

@@ -54,13 +54,14 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             guard let self = self, let model = model else { return }
             //icon
             headView.oneHeadView.model.accept(model)
-            headView.oneHeadView.iconImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(model.firmInfo?.entityName ?? "", size: (40, 40)))
+            let companyName = model.basicInfo?.orgName ?? ""
+            headView.oneHeadView.iconImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(companyName, size: (40, 40)))
             //名字
-            headView.oneHeadView.namelabel.text = model.firmInfo?.entityName ?? ""
+            headView.oneHeadView.namelabel.text = companyName
             //代码
-            headView.oneHeadView.numlabel.text = model.firmInfo?.usCreditCode ?? ""
+            headView.oneHeadView.numlabel.text = model.basicInfo?.usCreditCode ?? ""
             //标签
-            let promptLabels = model.promptLabels?.compactMap { $0.name } ?? []
+            let promptLabels = model.labels?.compactMap { $0.name } ?? []
             let riskLabels = model.warnLabels?.compactMap{ $0.name } ?? []
             headView.oneHeadView.tagArray.accept(promptLabels + riskLabels)
             //简介

@@ -30,7 +30,7 @@ class HomeItemViewCell: UICollectionViewCell {
         iconImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 25.pix(), height: 25.pix()))
-            make.top.equalToSuperview().offset(8)
+            make.top.equalToSuperview().offset(16)
         }
         titlelabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

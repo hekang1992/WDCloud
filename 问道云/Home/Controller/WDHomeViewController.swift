@@ -28,9 +28,9 @@ class WDHomeViewController: WDBaseViewController {
     
     let titles = ["问道头条", "问道讲堂"]
     
-    var JXTableHeaderViewHeight: Int = 400
+    var JXTableHeaderViewHeight: Int = Int(212 + StatusHeightManager.allHeight + 185)
     
-    var JXheightForHeaderInSection: Int = 36
+    var JXheightForHeaderInSection: Int = 40
     
     lazy var pagingView: JXPagingView = preferredPagingView()
     
@@ -64,8 +64,8 @@ class WDHomeViewController: WDBaseViewController {
         segmentedView.backgroundColor = UIColor.white
         segmentedView.dataSource = segmentedViewDataSource
         let lineView = JXSegmentedIndicatorLineView()
-        lineView.indicatorColor = UIColor.init(cssStr: "#2353F0")!
-        lineView.indicatorWidth = 18
+        lineView.indicatorColor = UIColor.init(cssStr: "#547AFF")!
+        lineView.indicatorWidth = 18.pix()
         lineView.indicatorHeight = 3
         segmentedView.indicators = [lineView]
         
@@ -203,9 +203,9 @@ class WDHomeViewController: WDBaseViewController {
         
         if IS_LOGIN {
             //获取地区信息
-            getReginInfo()
+            getReginInfo { modelArray in }
             //获取行业信息
-            getIndustryInfo()
+            getIndustryInfo { modelArray in }
         }
         
         //添加启动页
@@ -237,7 +237,7 @@ class WDHomeViewController: WDBaseViewController {
     }
     
     @objc func changeTableHeaderViewHeight(from multiplier: Int) {
-        JXTableHeaderViewHeight = 62 * multiplier + 318 + 28
+        JXTableHeaderViewHeight = Int(62.pix()) * multiplier + 318 + 28
         pagingView.resizeTableHeaderViewHeight(animatable: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             UIView.animate(withDuration: 0.5, animations: {
@@ -251,38 +251,6 @@ class WDHomeViewController: WDBaseViewController {
 }
 
 extension WDHomeViewController {
-    
-    //获取地区信息
-    private func getReginInfo() {
-        let man = RequestManager()
-        let dict = ["typeVec": "REGION"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/v2/meta",
-                       method: .get) { result in
-            switch result {
-            case .success(let success):
-                break
-            case .failure(let failure):
-                break
-            }
-        }
-    }
-    
-    //获取行业信息
-    private func getIndustryInfo() {
-        let man = RequestManager()
-        let dict = ["typeVec": "INDUSTRY"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/v2/meta",
-                       method: .get) { result in
-            switch result {
-            case .success(let success):
-                break
-            case .failure(let failure):
-                break
-            }
-        }
-    }
     
     //获取首页item
     private func getHomeItemInfo(complete: @escaping ((childrenModel) -> Void)) {
@@ -512,7 +480,7 @@ extension WDHomeViewController: JXPagingViewDelegate {
     
     func pagingView(_ pagingView: JXPagingView, mainTableViewDidScroll scrollView: UIScrollView) {
         let contentOffsetY = scrollView.contentOffset.y
-        if contentOffsetY > 200 {
+        if contentOffsetY > 150 {
             UIView.animate(withDuration: 0.25) {
                 self.homeScroView.alpha = 1
             }

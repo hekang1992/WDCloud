@@ -458,10 +458,8 @@ class ToastViewConfig {
         ToastView.appearance().font = UIFont.boldSystemFont(ofSize: 20)
         let toast = Toast(text: message, duration: 1.0)
         if let window = UIApplication.shared.windows.first {
-            let screenHeight = window.frame.size.height
-            let toastHeight: CGFloat = 50
-            let centerY = screenHeight / 2 - toastHeight / 2
-            ToastView.appearance().bottomOffsetPortrait = StatusHeightManager.tabBarHeight + 20
+            let centerY = SCREEN_HEIGHT * 0.5
+            ToastView.appearance().bottomOffsetPortrait = centerY
             ToastView.appearance().bottomOffsetLandscape = centerY
         }
         toast.show()
@@ -789,7 +787,7 @@ class GetPhoneNumberManager {
 }
 
 class PaddedLabel: UILabel {
-    var padding = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
+    var padding = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     
     override func drawText(in rect: CGRect) {
         let paddedRect = rect.inset(by: padding)

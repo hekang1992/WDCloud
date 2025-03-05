@@ -262,7 +262,7 @@ class PopInvoiceView: BaseView {
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            namelabel.text = model.firmInfo?.entityName ?? ""
+            namelabel.text = model.basicInfo?.orgName ?? ""
             label1.text = model.taxInfo?.taxpayerId ?? ""
             label2.text = model.firmInfo?.entityAddress ?? ""
             label3.text = model.taxInfo?.phone ?? ""
