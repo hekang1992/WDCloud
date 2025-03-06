@@ -331,7 +331,7 @@ class CompanyOneHeadView: BaseView {
         //标签
         tagArray.asObservable().subscribe(onNext: { [weak self] texts in
             guard let self = self else { return }
-            setupScrollView(tagScrollView: tagListView, tagArray: ["fadads", "风大说法", "fdafad", "fdaf", "fdaf", "fdafdauef", "fad", "fafdas", "fadfeaf"])
+            setupScrollView(tagScrollView: tagListView, tagArray: texts)
         }).disposed(by: disposeBag)
         
         //简介点击展开
@@ -617,7 +617,7 @@ extension CompanyOneHeadView {
     // 按钮点击事件
     @objc func didOpenTags(_ sender: UIButton) {
         companyModel.isOpenTag.toggle() // 切换展开/收起状态
-        setupScrollView(tagScrollView: tagListView, tagArray: ["fadads", "风大说法", "fdafad", "fdaf", "fdaf", "fdafdauef", "fad", "fafdas", "fadfeaf"]) // 重新设置标签
+        setupScrollView(tagScrollView: tagListView, tagArray: tagArray.value) // 重新设置标签
         self.moreClickBlcok?(companyModel)
     }
     

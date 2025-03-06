@@ -44,8 +44,8 @@ class DueDiligenceOneView: BaseView {
         let twoListView = DueDiligenceListView()
         twoListView.isUserInteractionEnabled = true
         twoListView.rightImageView.isHidden = true
-        twoListView.ctImageView.image = UIImage(named: "dueyeimagiemg")
-        twoListView.mlabel.text = "企业业务尽职调查"
+        twoListView.ctImageView.image = UIImage(named: "badzichaimage")
+        twoListView.mlabel.text = "不良资产尽职调查"
         twoListView.bgView.layer.borderWidth = 1
         twoListView.bgView.layer.borderColor = UIColor.clear.cgColor
         return twoListView
@@ -55,8 +55,8 @@ class DueDiligenceOneView: BaseView {
         let threeListView = DueDiligenceListView()
         threeListView.isUserInteractionEnabled = true
         threeListView.rightImageView.isHidden = true
-        threeListView.ctImageView.image = UIImage(named: "dueimgelawimage")
-        threeListView.mlabel.text = "企业法律尽职调查"
+        threeListView.ctImageView.image = UIImage(named: "qiyedaikuaniamge")
+        threeListView.mlabel.text = "企业贷款尽职调查"
         threeListView.bgView.layer.borderWidth = 1
         threeListView.bgView.layer.borderColor = UIColor.clear.cgColor
         return threeListView
@@ -66,8 +66,8 @@ class DueDiligenceOneView: BaseView {
         let fourListView = DueDiligenceListView()
         fourListView.isUserInteractionEnabled = true
         fourListView.rightImageView.isHidden = true
-        fourListView.ctImageView.image = UIImage(named: "caiwuimagedue")
-        fourListView.mlabel.text = "企业财务尽职调查"
+        fourListView.ctImageView.image = UIImage(named: "dueimgelawimage")
+        fourListView.mlabel.text = "企业法律尽职调查"
         fourListView.bgView.layer.borderWidth = 1
         fourListView.bgView.layer.borderColor = UIColor.clear.cgColor
         return fourListView

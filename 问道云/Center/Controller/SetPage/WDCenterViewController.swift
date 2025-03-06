@@ -124,10 +124,11 @@ class WDCenterViewController: WDBaseViewController {
             }
         }).disposed(by: disposeBag)
         
-        //团购会员
-        self.centerView.tuangouBtn.rx.tap.subscribe(onNext: {
+        //财险线索
+        self.centerView.moneyBtn.rx.tap.subscribe(onNext: {
             if IS_LOGIN {
-                ToastViewConfig.showToast(message: "敬请期待!")
+                let moneyVc = PropertyTabBarController()
+                self.navigationController?.pushViewController(moneyVc, animated: true)
             }else {
                 self.popLogin()
             }
@@ -149,6 +150,7 @@ class WDCenterViewController: WDBaseViewController {
         self.centerView.jiankongBtn.rx.tap.subscribe(onNext: {
             NotificationCenter.default.post(name: NSNotification.Name(RISK_VC), object: nil)
         }).disposed(by: disposeBag)
+        
         //调查
         self.centerView.tiaochaBtn.rx.tap.subscribe(onNext: {
             NotificationCenter.default.post(name: NSNotification.Name(DILI_VC), object: nil)

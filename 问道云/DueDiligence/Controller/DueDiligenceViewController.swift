@@ -2,54 +2,28 @@
 //  DueDiligenceViewController.swift
 //  问道云
 //
-//  Created by Andrew on 2025/2/17.
+//  Created by Andrew on 2024/12/3.
 //
 
 import UIKit
-import HGSegmentedPageViewController
+import JXSegmentedView
 
 class DueDiligenceViewController: WDBaseViewController {
     
-    lazy var ctImageView: UIImageView = {
-        let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "appheadbgimage")
-        ctImageView.isUserInteractionEnabled = true
-        return ctImageView
+    lazy var headView: HeadView = {
+        let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
+        headView.titlelabel.text = "尽职调查"
+        headView.lineView.isHidden = true
+        headView.titlelabel.textColor = .white
+        headView.bgView.backgroundColor = .clear
+        headView.oneBtn.setImage(UIImage(named: "shezhianniuimage"), for: .normal)
+        headView.backBtn.isHidden = true
+        return headView
     }()
     
-    lazy var nameBtn: UIButton = {
-        let nameBtn = UIButton(type: .custom)
-        nameBtn.setTitle("企业尽职调查", for: .normal)
-        nameBtn.setTitleColor(.white, for: .normal)
-        nameBtn.titleLabel?.font = .mediumFontOfSize(size: 18)
-        nameBtn.setImage(UIImage(named: "changimagebtn"), for: .normal)
-        return nameBtn
-    }()
-    
-    lazy var oneBtn: UIButton = {
-        let oneBtn = UIButton(type: .custom)
-        oneBtn.setImage(UIImage(named: "shezhianniuimage"), for: .normal)
-        oneBtn.adjustsImageWhenHighlighted = false
-        return oneBtn
-    }()
-    
-    lazy var segmentedPageViewController: HGSegmentedPageViewController = {
-        let segmentedPageViewController = HGSegmentedPageViewController()
-        segmentedPageViewController.categoryView.backgroundColor = .clear
-        segmentedPageViewController.categoryView.alignment = .center
-        segmentedPageViewController.categoryView.itemSpacing = 0
-        segmentedPageViewController.categoryView.leftMargin = 0
-        segmentedPageViewController.categoryView.rightMargin = 0
-        segmentedPageViewController.categoryView.topBorder.isHidden = true
-        segmentedPageViewController.categoryView.itemWidth = SCREEN_WIDTH / 3
-        segmentedPageViewController.categoryView.vernierWidth = 20
-        segmentedPageViewController.categoryView.titleNomalFont = .mediumFontOfSize(size: 14)
-        segmentedPageViewController.categoryView.titleSelectedFont = .mediumFontOfSize(size: 14)
-        segmentedPageViewController.categoryView.titleNormalColor = .init(cssStr: "#FFFFFF")?.withAlphaComponent(0.6)
-        segmentedPageViewController.categoryView.titleSelectedColor = .init(cssStr: "#FFFFFF")
-        segmentedPageViewController.categoryView.vernier.backgroundColor = .init(cssStr: "#FFFFFF")
-        segmentedPageViewController.delegate = self
-        return segmentedPageViewController
+    lazy var diligenceView: DiligenceView = {
+        let diligenceView = DiligenceView()
+        return diligenceView
     }()
     
     lazy var oneVc: OneDueDiligenceViewController = {
@@ -66,73 +40,108 @@ class DueDiligenceViewController: WDBaseViewController {
         let threeVc = ThreeDueDiligenceViewController()
         return threeVc
     }()
+    
+    private lazy var segmentedView: JXSegmentedView = createSegmentedView()
+    private lazy var cocsciew: UIScrollView = createCocsciew()
+    private var segmurce: JXSegmentedTitleDataSource!
+    private var listVCArray = [WDBaseViewController]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        view.addSubview(ctImageView)
-        ctImageView.addSubview(nameBtn)
-        ctImageView.addSubview(oneBtn)
-        ctImageView.snp.makeConstraints { make in
-            make.left.right.top.equalToSuperview()
-            make.height.equalTo(233)
-        }
-        nameBtn.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(StatusHeightManager.statusBarHeight + 10)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(25)
-            make.width.equalTo(250)
-        }
-        oneBtn.snp.makeConstraints { make in
-            make.centerY.equalTo(nameBtn.snp.centerY)
-            make.right.equalToSuperview().offset(-14)
-            make.size.equalTo(CGSize(width: 25, height: 25))
-        }
-        nameBtn.rx.tap.subscribe(onNext: { [weak self] in
-            guard let self = self else { return }
-            nameBtn.isSelected.toggle()
-            nameBtn.setTitle(nameBtn.isSelected ? "专项尽职调查" : "企业尽职调查", for: .normal)
-            oneVc.headGrand = nameBtn.isSelected
-            twoVc.headGrand = nameBtn.isSelected
-        }).disposed(by: disposeBag)
         
-        addSegmentedPageViewController()
-        setupPageViewControllers()
-        oneBtn.rx.tap.subscribe(onNext: { [weak self] in
-            let settingVc = DueDiligenceSettingViewController()
-            self?.navigationController?.pushViewController(settingVc, animated: true)
+        // Do any additional setup after loading the view.
+        view.addSubview(diligenceView)
+        diligenceView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        diligenceView.addSubview(headView)
+        headView.snp.makeConstraints { make in
+            make.left.right.top.equalToSuperview()
+            make.height.equalTo(StatusHeightManager.navigationBarHeight)
+        }
+        //添加切换
+        addsentMentView()
+        //添加子控制器
+        setupViewControllers()
+        headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.popLogin()
         }).disposed(by: disposeBag)
     }
-
 }
 
-extension DueDiligenceViewController: HGSegmentedPageViewControllerDelegate {
+extension DueDiligenceViewController: JXSegmentedViewDelegate {
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        nameBtn.layoutButtonEdgeInsets(style: .right, space: 8)
-    }
-    
-    private func addSegmentedPageViewController() {
-        self.addChild(self.segmentedPageViewController)
-        self.view.addSubview(self.segmentedPageViewController.view)
-        self.segmentedPageViewController.didMove(toParent: self)
-        self.segmentedPageViewController.view.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(nameBtn.snp.bottom).offset(22)
+    func addsentMentView() {
+        diligenceView.addSubview(segmentedView)
+        diligenceView.addSubview(cocsciew)
+        segmentedView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(headView.snp.bottom).offset(18)
+            make.height.equalTo(32)
+        }
+        cocsciew.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(segmentedView.snp.bottom)
         }
     }
     
-    private func setupPageViewControllers() {
-        let titles: [String] = ["基础版", "专业版", "定制版"]
-        segmentedPageViewController.pageViewControllers = [oneVc, twoVc, threeVc]
-        segmentedPageViewController.selectedPage = 0
-        self.segmentedPageViewController.categoryView.titles = titles
-        self.segmentedPageViewController.view.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(nameBtn.snp.bottom).offset(22)
+    func setupViewControllers() {
+        listVCArray.forEach { $0.view.removeFromSuperview() }
+        listVCArray.removeAll()
+        cocsciew.addSubview(oneVc.view)
+        listVCArray.append(oneVc)
+        
+        cocsciew.addSubview(twoVc.view)
+        listVCArray.append(twoVc)
+        
+        cocsciew.addSubview(threeVc.view)
+        listVCArray.append(threeVc)
+        
+        updateViewControllersLayout()
+        segmentedView(segmentedView, didSelectedItemAt: 0)
+    }
+    
+    private func updateViewControllersLayout() {
+        for (index, vc) in listVCArray.enumerated() {
+            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: 1)
         }
+    }
+    
+    private func createCocsciew() -> UIScrollView {
+        let scrollView = UIScrollView()
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 3, height: 0)
+        return scrollView
+    }
+    
+    private func createSegmentedView() -> JXSegmentedView {
+        let segmentedView = JXSegmentedView()
+        segmentedView.delegate = self
+        segmentedView.backgroundColor = .clear
+        segmurce = JXSegmentedTitleDataSource()
+        segmurce.titles = ["基础班", "专业版", "定制版"]
+        segmurce.isTitleColorGradientEnabled = true
+        segmurce.titleSelectedFont = .mediumFontOfSize(size: 15)
+        segmurce.titleNormalFont = .regularFontOfSize(size: 15)
+        segmurce.titleNormalColor = UIColor.white.withAlphaComponent(0.6)
+        segmurce.titleSelectedColor = .white
+        
+        segmentedView.dataSource = segmurce
+        let indicator = createSegmentedIndicator()
+        segmentedView.indicators = [indicator]
+        segmentedView.contentScrollView = cocsciew
+        return segmentedView
+    }
+    
+    private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
+        let indicator = JXSegmentedIndicatorLineView()
+        indicator.indicatorWidth = 30
+        indicator.indicatorHeight = 2
+        indicator.lineStyle = .lengthen
+        indicator.indicatorColor = .white
+        return indicator
     }
     
 }

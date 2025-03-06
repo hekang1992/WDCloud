@@ -73,7 +73,7 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
     func setupViewControllers() {
         listVCArray.forEach { $0.view.removeFromSuperview() }
         listVCArray.removeAll()
-        for _ in 0..<2 {
+        for _ in 0..<3 {
             let vc = DiligenceListViewController()
             cocsciew.addSubview(vc.view)
             listVCArray.append(vc)
@@ -104,7 +104,7 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
         segmentedView.delegate = self
         segmentedView.backgroundColor = .clear
         segmurce = JXSegmentedTitleDataSource()
-        segmurce.titles = ["企业尽职调查", "专项尽职调查"]
+        segmurce.titles = ["基础班", "专业版", "定制版"]
         segmurce.isTitleColorGradientEnabled = true
         segmurce.titleSelectedFont = .mediumFontOfSize(size: 15)
         segmurce.titleNormalFont = .regularFontOfSize(size: 15)

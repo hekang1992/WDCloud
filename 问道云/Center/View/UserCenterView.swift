@@ -219,28 +219,28 @@ class UserCenterView: BaseView {
         return stackView
     }()
     
-    lazy var tuangouBtn: UserBuyButton = {
-        let button = UserBuyButton(type: .custom)
-        button.set(image: UIImage(named: "buyimage"), title: "购买团体套餐", title1: "统一管理更便捷")
-        return button
+    lazy var jiankongBtn: UserBuyButton = {
+        let jiankongBtn = UserBuyButton(type: .custom)
+        jiankongBtn.set(image: UIImage(named: "kaitongfengxian"), title: "开通风险监控", title1: "动态监测企业风险")
+        return jiankongBtn
+    }()
+    
+    lazy var moneyBtn: UserBuyButton = {
+        let moneyBtn = UserBuyButton(type: .custom)
+        moneyBtn.set(image: UIImage(named: "caichanzhuizongimge"), title: "追踪财产线索", title1: "精准捕捉财产动向")
+        return moneyBtn
+    }()
+
+    lazy var tiaochaBtn: UserBuyButton = {
+        let tiaochaBtn = UserBuyButton(type: .custom)
+        tiaochaBtn.set(image: UIImage(named: "jinzhidiaocha"), title: "开启尽职调查", title1: "智能分析助力决策")
+        return tiaochaBtn
     }()
     
     lazy var zengsongBtn: UserBuyButton = {
-        let button = UserBuyButton(type: .custom)
-        button.set(image: UIImage(named: "hongbaoimage"), title: "赠送好友会员", title1: "立即为TA买单")
-        return button
-    }()
-    
-    lazy var jiankongBtn: UserBuyButton = {
-        let button = UserBuyButton(type: .custom)
-        button.set(image: UIImage(named: "kaitongfengxian"), title: "开通风险监控", title1: "全网监测分析舆情")
-        return button
-    }()
-    
-    lazy var tiaochaBtn: UserBuyButton = {
-        let button = UserBuyButton(type: .custom)
-        button.set(image: UIImage(named: "jinzhidiaocha"), title: "开启尽职调查", title1: "客户尽职调研")
-        return button
+        let zengsongBtn = UserBuyButton(type: .custom)
+        zengsongBtn.set(image: UIImage(named: "hongbaoimage"), title: "赠送好友会员", title1: "共赴美好体验之旅")
+        return zengsongBtn
     }()
     
     lazy var whiteView2: UIView = {
@@ -324,10 +324,10 @@ class UserCenterView: BaseView {
         whiteView1.addSubview(lineView2)
         stackViewVertical.addArrangedSubview(stackViewHorizontal1)
         stackViewVertical.addArrangedSubview(stackViewHorizontal2)
-        stackViewHorizontal1.addArrangedSubview(tuangouBtn)
-        stackViewHorizontal1.addArrangedSubview(zengsongBtn)
-        stackViewHorizontal2.addArrangedSubview(jiankongBtn)
+        stackViewHorizontal1.addArrangedSubview(jiankongBtn)
+        stackViewHorizontal1.addArrangedSubview(moneyBtn)
         stackViewHorizontal2.addArrangedSubview(tiaochaBtn)
+        stackViewHorizontal2.addArrangedSubview(zengsongBtn)
         scrollView.addSubview(whiteView2)
         whiteView2.addSubview(morelabel)
         whiteView2.addSubview(collectionView)

@@ -42,14 +42,16 @@ class ThreeDueDiligenceViewController: WDBaseViewController {
         scrollView.addSubview(ctImageView)
         ctImageView.addSubview(oneBtn)
         scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.left.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            make.width.equalTo(SCREEN_WIDTH)
         }
         ctImageView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.top.equalToSuperview()
             make.width.equalTo(375.pix())
             make.height.equalTo(622.pix())
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-5)
         }
         oneBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -59,7 +61,7 @@ class ThreeDueDiligenceViewController: WDBaseViewController {
         
         oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
-            makePhoneCall(phoneNumber: "4006326699")
+            makePhoneCall(phoneNumber: "4000129988")
         }).disposed(by: disposeBag)
     }
     
