@@ -152,24 +152,6 @@ class SearchCompanyViewController: WDBaseViewController {
             self.searchListInfo()
         })
         
-        //更新搜索文字
-        self.searchWordsRelay
-            .debounce(.milliseconds(1000),
-                      scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                if !text.isEmpty {
-                    self.pageIndex = 1
-                    self.searchListInfo()
-                }else {
-                    self.pageIndex = 1
-                    self.allArray.removeAll()
-                    self.companyView.isHidden = false
-                    self.companyListView.isHidden = true
-                }
-            }).disposed(by: disposeBag)
-        
         companyListView.addressBlock = { [weak self] model in
             let latitude = 31.23383
             let longitude = 121.51590
@@ -207,38 +189,68 @@ class SearchCompanyViewController: WDBaseViewController {
             self?.navigationController?.pushViewController(companyDetailVc, animated: true)
         }
         
+        //网络请求
+        getDataInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("企业===============企业")
-        let group = DispatchGroup()
-        //最近搜索
-        ViewHud.addLoadView()
-        group.enter()
-        getlastSearch {
-            group.leave()
-        }
-        //浏览历史
-        group.enter()
-        getBrowsingHistory {
-            group.leave()
-        }
-        //热搜
-        group.enter()
-        getHotWords {
-            group.leave()
-        }
-        
-        // 所有任务完成后的通知
-        group.notify(queue: .main) {
-            ViewHud.hideLoadView()
-            self.completeBlock?()
-        }
     }
 }
 
 extension SearchCompanyViewController {
+    
+    private func getDataInfo() {
+        //更新搜索文字
+        self.searchWordsRelay
+            .debounce(.milliseconds(1000),
+                      scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if !text.isEmpty {
+                    self.pageIndex = 1
+                    self.searchListInfo()
+                }else {
+                    self.pageIndex = 1
+                    self.allArray.removeAll()
+                    self.companyView.isHidden = false
+                    self.companyListView.isHidden = true
+                }
+            }).disposed(by: disposeBag)
+        
+        self.searchWordsRelay
+            .debounce(.milliseconds(50),
+                      scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                let group = DispatchGroup()
+                //最近搜索
+                ViewHud.addLoadView()
+                group.enter()
+                getlastSearch {
+                    group.leave()
+                }
+                //浏览历史
+                group.enter()
+                getBrowsingHistory {
+                    group.leave()
+                }
+                //热搜
+                group.enter()
+                getHotWords {
+                    group.leave()
+                }
+                
+                // 所有任务完成后的通知
+                group.notify(queue: .main) {
+                    ViewHud.hideLoadView()
+                    self.completeBlock?()
+                }
+            }).disposed(by: disposeBag)
+    }
     
     //最近搜索
     private func getlastSearch(completion: @escaping () -> Void) {

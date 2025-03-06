@@ -233,8 +233,8 @@ extension ComanyRiskMoreDetailViewController: UITableViewDelegate, UITableViewDa
         let riskLevel = model.risklevel ?? ""
         if riskLevel == "3" {
             cell.highLabel.text = "提示"
-            cell.highLabel.backgroundColor = UIColor.init(cssStr: "#3F96FF")?.withAlphaComponent(0.05)
-            cell.highLabel.textColor = UIColor.init(cssStr: "#3F96FF")
+            cell.highLabel.backgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.05)
+            cell.highLabel.textColor = UIColor.init(cssStr: "#547AFF")
         } else if riskLevel == "2" {
             cell.highLabel.text = "低风险"
             cell.highLabel.backgroundColor = UIColor.init(cssStr: "#FFEEDE")

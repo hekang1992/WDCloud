@@ -21,7 +21,7 @@ class SearchAllViewController: WDBaseViewController {
     
     var JXTableHeaderViewHeight: Int = 104
     
-    var JXheightForHeaderInSection: Int = 36
+    var JXheightForHeaderInSection: Int = 40
     
     lazy var pagingView: JXPagingView = preferredPagingView()
     
@@ -48,7 +48,6 @@ class SearchAllViewController: WDBaseViewController {
     
     lazy var riskVc: SearchRiskViewController = {
         let riskVc = SearchRiskViewController()
-        
         return riskVc
     }()
     
@@ -106,8 +105,8 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
         segmentedViewDataSource = JXSegmentedTitleDataSource()
         segmentedViewDataSource.titles = titles
         segmentedViewDataSource.isTitleColorGradientEnabled = true
-        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#333333")!
-        segmentedViewDataSource.titleNormalColor = UIColor.init(cssStr: "#9FA4AD")!
+        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#547AFF")!
+        segmentedViewDataSource.titleNormalColor = UIColor.init(cssStr: "#666666")!
         segmentedViewDataSource.titleNormalFont = UIFont.mediumFontOfSize(size: 15)
         segmentedViewDataSource.titleSelectedFont = UIFont.mediumFontOfSize(size: 15)
         
@@ -118,7 +117,7 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
         segmentedView.dataSource = segmentedViewDataSource
         segmentedView.defaultSelectedIndex = selectIndex
         let lineView = JXSegmentedIndicatorLineView()
-        lineView.indicatorColor = UIColor.init(cssStr: "#2353F0")!
+        lineView.indicatorColor = UIColor.init(cssStr: "#547AFF ")!
         lineView.indicatorWidth = 18
         lineView.indicatorHeight = 3
         segmentedView.indicators = [lineView]
@@ -127,7 +126,6 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
         pagingView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
         segmentedView.listContainer = pagingView.listContainerView
         //距离高度禁止
         pagingView.pinSectionHeaderVerticalOffset = 104

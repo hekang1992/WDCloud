@@ -150,44 +150,6 @@ class SearchRiskViewController: WDBaseViewController {
             self?.lastSearchTextBlock?(searchStr)
         }
         
-        //搜索
-        self.searchWordsRelay
-            .debounce(.milliseconds(1000),
-                      scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                if !text.isEmpty {
-                    self.pageIndex = 1
-                    //                    self.searchListInfo()
-                    self.buttonTapped(companyBtn)
-                }else {
-                    self.pageIndex = 1
-                    self.allArray.removeAll()
-                    self.riskView.isHidden = false
-                    self.twoRiskListView.isHidden = true
-                    self.listPeopleView.isHidden = true
-                    self.companyBtn.isHidden = true
-                    self.peopleBtn.isHidden = true
-                }
-                
-                //                let containsChinese = text.range(of: "[\\u4e00-\\u9fa5]", options: .regularExpression) != nil
-                //                let containsEnglish = text.range(of: "[a-zA-Z]", options: .regularExpression) != nil
-                //                if containsChinese && containsEnglish {
-                //                    // 如果同时包含中文和英文字符
-                //                    print("包含中文和英文")
-                //                    // 在这里执行您的逻辑
-                //                } else if containsChinese {
-                //                    // 只包含中文
-                //                    print("只包含中文")
-                //                    // 在这里执行您的中文逻辑
-                //                } else if containsEnglish {
-                //                    // 只包含英文
-                //                    print("只包含英文")
-                //                    // 在这里执行您的英文逻辑
-                //                }
-            }).disposed(by: disposeBag)
-        
         //添加下拉刷新
         self.twoRiskListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
@@ -230,35 +192,8 @@ class SearchRiskViewController: WDBaseViewController {
         addMenuWithCompanyView()
         //人员风险搜索添加下拉选择
         addMenuWithPeopleView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        ViewHud.addLoadView()
-        let group = DispatchGroup()
-        //最近搜索
-        group.enter()
-        getlastSearch {
-            group.leave()
-        }
-        
-        //浏览历史
-        group.enter()
-        getBrowsingHistory {
-            group.leave()
-        }
-        
-        //热搜
-        group.enter()
-        getHotWords {
-            group.leave()
-        }
-        
-        // 所有任务完成后的通知
-        group.notify(queue: .main) {
-            ViewHud.hideLoadView()
-            self.completeBlock?()
-        }
+        //网络请求
+        getDataInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -270,6 +205,61 @@ class SearchRiskViewController: WDBaseViewController {
 
 //数据请求
 extension SearchRiskViewController {
+    
+    private func getDataInfo() {
+        //搜索
+        self.searchWordsRelay
+            .debounce(.milliseconds(1000),
+                      scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if !text.isEmpty {
+                    self.pageIndex = 1
+                    //                    self.searchListInfo()
+                    self.buttonTapped(companyBtn)
+                }else {
+                    self.pageIndex = 1
+                    self.allArray.removeAll()
+                    self.riskView.isHidden = false
+                    self.twoRiskListView.isHidden = true
+                    self.listPeopleView.isHidden = true
+                    self.companyBtn.isHidden = true
+                    self.peopleBtn.isHidden = true
+                }
+            }).disposed(by: disposeBag)
+        
+        self.searchWordsRelay
+            .debounce(.milliseconds(50),
+                      scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                let group = DispatchGroup()
+                //最近搜索
+                ViewHud.addLoadView()
+                group.enter()
+                getlastSearch {
+                    group.leave()
+                }
+                //浏览历史
+                group.enter()
+                getBrowsingHistory {
+                    group.leave()
+                }
+                //热搜
+                group.enter()
+                getHotWords {
+                    group.leave()
+                }
+                
+                // 所有任务完成后的通知
+                group.notify(queue: .main) {
+                    ViewHud.hideLoadView()
+                    self.completeBlock?()
+                }
+            }).disposed(by: disposeBag)
+    }
     
     //最近搜索
     private func getlastSearch(complete: @escaping () -> Void) {
@@ -505,18 +495,18 @@ extension SearchRiskViewController {
         })
     }
     
-    //风险列表数据 企业加人员
+    //风险列表数据企业
     private func searchListInfo() {
         let dict = ["keywords": searchWords ?? "",
-                    "entityIndustry": entityIndustry,
-                    "entityArea": entityArea,
+                    "industryType": entityIndustry,
+                    "region": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20,
-                    "type": ""] as [String : Any]
+                    "type": "1"] as [String : Any]
         let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/cooperation/getRiskData",
+                       pageUrl: "/entity/risk/getRiskData",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.twoRiskListView.tableView.mj_header?.endRefreshing()
@@ -570,15 +560,15 @@ extension SearchRiskViewController {
     //只搜索人员
     func searchPeopleListinfo() {
         let dict = ["keywords": searchWords ?? "",
-                    "entityIndustry": entityIndustry,
-                    "entityArea": entityArea,
+                    "industryType": entityIndustry,
+                    "region": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20,
-                    "type": "1"] as [String : Any]
+                    "type": "2"] as [String : Any]
         let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/cooperation/getRiskData",
+                       pageUrl: "/entity/risk/getRiskData",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.listPeopleView.tableView.mj_header?.endRefreshing()

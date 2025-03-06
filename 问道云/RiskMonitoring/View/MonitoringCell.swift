@@ -203,7 +203,7 @@ class MonitoringCell: BaseViewCell {
     lazy var hintLabel: UILabel = {
         let hintLabel = UILabel()
         hintLabel.textAlignment = .left
-        hintLabel.textColor = .init(cssStr: "#3F96FF")
+        hintLabel.textColor = .init(cssStr: "#547AFF")
         hintLabel.font = .regularFontOfSize(size: 12)
         return hintLabel
     }()

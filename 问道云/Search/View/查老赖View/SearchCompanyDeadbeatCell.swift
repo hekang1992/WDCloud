@@ -149,7 +149,7 @@ class SearchCompanyDeadbeatCell: BaseViewCell {
             numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条失信记录", font: .regularFontOfSize(size: 13))
             
             let legalName = model.legalName ?? ""
-            oneLabel.attributedText = GetRedStrConfig.getRedStr(from: legalName, fullText: "法定代表人: \(legalName)", colorStr: "#3F96FF", font: .regularFontOfSize(size: 13))
+            oneLabel.attributedText = GetRedStrConfig.getRedStr(from: legalName, fullText: "法定代表人: \(legalName)", colorStr: "#547AFF", font: .regularFontOfSize(size: 13))
             
             let registerCapital = model.registerCapital ?? ""
             twoLabel.attributedText = GetRedStrConfig.getRedStr(from: registerCapital, fullText: "注册资本: \(registerCapital)", colorStr: "#333333", font: .regularFontOfSize(size: 13))

@@ -40,7 +40,7 @@ class MyDownloadViewNormalCell: UITableViewCell {
     
     lazy var gongsiLabel: UILabel = {
         let gongsiLabel = UILabel()
-        gongsiLabel.textColor = UIColor.init(cssStr: "#3F96FF")
+        gongsiLabel.textColor = UIColor.init(cssStr: "#547AFF")
         gongsiLabel.font = .regularFontOfSize(size: 12)
         gongsiLabel.textAlignment = .left
         return gongsiLabel

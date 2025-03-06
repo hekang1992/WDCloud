@@ -65,8 +65,8 @@ class CompanyLawCellHeadView: BaseView {
     
     lazy var hitLabel: PaddedLabel = {
         let hitLabel = PaddedLabel()
-        hitLabel.backgroundColor = UIColor.init(cssStr: "#3F96FF")?.withAlphaComponent(0.05)
-        hitLabel.textColor = UIColor.init(cssStr: "#3F96FF")
+        hitLabel.backgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.05)
+        hitLabel.textColor = UIColor.init(cssStr: "#547AFF")
         hitLabel.layer.cornerRadius = 2
         hitLabel.layer.masksToBounds = true
         hitLabel.font = .regularFontOfSize(size: 9)

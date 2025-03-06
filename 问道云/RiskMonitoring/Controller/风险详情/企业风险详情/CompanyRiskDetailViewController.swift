@@ -71,7 +71,7 @@ class CompanyRiskDetailViewController: WDBaseViewController {
         segmentedView.backgroundColor = UIColor.white
         segmentedView.dataSource = segmentedViewDataSource
         let lineView = JXSegmentedIndicatorLineView()
-        lineView.indicatorColor = UIColor.init(cssStr: "#2353F0")!
+        lineView.indicatorColor = UIColor.init(cssStr: "#547AFF ")!
         lineView.indicatorWidth = 18
         lineView.indicatorHeight = 3
         segmentedView.indicators = [lineView]

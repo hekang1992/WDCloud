@@ -144,8 +144,8 @@ class CompanyActivityViewCell: BaseViewCell {
                 break
             case "3":
                 typeLabel.text = "提示信息"
-                typeLabel.textColor = UIColor.init(cssStr: "#3F96FF")
-                typeLabel.backgroundColor = UIColor.init(cssStr: "#3F96FF")?.withAlphaComponent(0.1)
+                typeLabel.textColor = UIColor.init(cssStr: "#547AFF")
+                typeLabel.backgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.1)
                 break
             default:
                 break

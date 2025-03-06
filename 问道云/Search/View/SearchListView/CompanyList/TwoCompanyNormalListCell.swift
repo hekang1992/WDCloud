@@ -350,9 +350,9 @@ extension TwoCompanyNormalListCell {
         // 创建展开/收起按钮
         let openButton = UIButton(type: .custom)
         openButton.titleLabel?.font = .regularFontOfSize(size: 10)
-        openButton.backgroundColor = UIColor(cssStr: "#3F96FF")?.withAlphaComponent(0.1)
+        openButton.backgroundColor = UIColor(cssStr: "#547AFF")?.withAlphaComponent(0.1)
         openButton.setTitle("展开", for: .normal)
-        openButton.setTitleColor(UIColor(cssStr: "#3F96FF"), for: .normal)
+        openButton.setTitleColor(UIColor(cssStr: "#547AFF"), for: .normal)
         openButton.layer.masksToBounds = true
         openButton.layer.cornerRadius = 2
         openButton.setImage(UIImage(named: "xialaimageicon"), for: .normal)

@@ -50,9 +50,9 @@ class CompanyCollectionCell: UICollectionViewCell {
     
     lazy var nlabel: PaddedLabel = {
         let nlabel = PaddedLabel()
-        nlabel.textColor = UIColor.init(cssStr: "#3F96FF")
+        nlabel.textColor = UIColor.init(cssStr: "#547AFF")
         nlabel.textAlignment = .center
-        nlabel.backgroundColor = UIColor.init(cssStr: "#3F96FF")?.withAlphaComponent(0.1)
+        nlabel.backgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.1)
         nlabel.font = .regularFontOfSize(size: 9)
         nlabel.layer.cornerRadius = 2
         nlabel.isHidden = true
@@ -61,7 +61,7 @@ class CompanyCollectionCell: UICollectionViewCell {
     
     lazy var numlabel: UILabel = {
         let numlabel = UILabel()
-        numlabel.textColor = UIColor.init(cssStr: "#3F96FF")
+        numlabel.textColor = UIColor.init(cssStr: "#547AFF")
         numlabel.textAlignment = .right
         numlabel.font = .regularFontOfSize(size: 10)
         return numlabel

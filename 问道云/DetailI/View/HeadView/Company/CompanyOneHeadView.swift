@@ -81,7 +81,7 @@ class CompanyOneHeadView: BaseView {
     lazy var moreButton: UIButton = {
         let moreButton = UIButton()
         moreButton.titleLabel?.font = .mediumFontOfSize(size: 12)
-        moreButton.setTitleColor(.init(cssStr: "#3F96FF"), for: .normal)
+        moreButton.setTitleColor(.init(cssStr: "#547AFF"), for: .normal)
         moreButton.setTitle("展开", for: .normal)
         return moreButton
     }()
@@ -90,7 +90,7 @@ class CompanyOneHeadView: BaseView {
         let nameView = BiaoQianView(frame: .zero, enmu: .hide)
         nameView.lineView.isHidden = false
         nameView.label1.text = "法定代表人"
-        nameView.label2.textColor = .init(cssStr: "#3F96FF")
+        nameView.label2.textColor = .init(cssStr: "#547AFF")
         return nameView
     }()
     
@@ -124,7 +124,7 @@ class CompanyOneHeadView: BaseView {
     lazy var oneView: BiaoQianView = {
         let oneView = BiaoQianView(frame: .zero, enmu: .hide)
         oneView.label1.text = "行业"
-        oneView.label2.textColor = .init(cssStr: "#3F96FF")
+        oneView.label2.textColor = .init(cssStr: "#547AFF")
         oneView.lineView.isHidden = false
         oneView.isUserInteractionEnabled = true
         return oneView
@@ -500,9 +500,9 @@ extension CompanyOneHeadView {
         // 创建展开/收起按钮
         let openButton = UIButton(type: .custom)
         openButton.titleLabel?.font = .regularFontOfSize(size: 12)
-        openButton.backgroundColor = UIColor(cssStr: "#3F96FF")?.withAlphaComponent(0.1)
+        openButton.backgroundColor = UIColor(cssStr: "#547AFF")?.withAlphaComponent(0.1)
         openButton.setTitle("展开", for: .normal)
-        openButton.setTitleColor(UIColor(cssStr: "#3F96FF"), for: .normal)
+        openButton.setTitleColor(UIColor(cssStr: "#547AFF"), for: .normal)
         openButton.layer.masksToBounds = true
         openButton.layer.cornerRadius = 2
         openButton.setImage(UIImage(named: "xialaimageicon"), for: .normal)

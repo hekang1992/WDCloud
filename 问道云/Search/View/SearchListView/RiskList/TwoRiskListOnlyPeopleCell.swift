@@ -68,7 +68,7 @@ class TwoRiskListOnlyPeopleCell: BaseViewCell {
         let moreLabel = UILabel()
         moreLabel.text = "点击查看更多"
         moreLabel.textAlignment = .right
-        moreLabel.textColor = .init(cssStr: "#3F96FF")
+        moreLabel.textColor = .init(cssStr: "#547AFF")
         moreLabel.font = .mediumFontOfSize(size: 12)
         return moreLabel
     }()

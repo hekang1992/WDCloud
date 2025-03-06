@@ -1026,12 +1026,12 @@ class TagsLabelColorConfig {
             tagView.layer.borderColor = tagView.textColor.cgColor
             tagView.layer.borderWidth = 1
         }else if currentTitle.contains("小微企业") || currentTitle.contains("高新技术企业") || currentTitle.contains("国有控股") || currentTitle.contains("国有独资") || currentTitle.contains("国有全资") || currentTitle.contains("深主板") || currentTitle.contains("沪主板") || currentTitle.contains("港交所") || currentTitle.contains("北交所") || currentTitle.contains("发债"){
-            tagView.backgroundColor = .init(cssStr: "#3F96FF")?.withAlphaComponent(0.05)
-            tagView.textColor = .init(cssStr: "#3F96FF")
+            tagView.backgroundColor = .init(cssStr: "#547AFF")?.withAlphaComponent(0.05)
+            tagView.textColor = .init(cssStr: "#547AFF")
             tagView.layer.borderColor = UIColor.clear.cgColor
         } else {
-            tagView.backgroundColor = .init(cssStr: "#3F96FF")?.withAlphaComponent(0.05)
-            tagView.textColor = .init(cssStr: "#3F96FF")
+            tagView.backgroundColor = .init(cssStr: "#547AFF")?.withAlphaComponent(0.05)
+            tagView.textColor = .init(cssStr: "#547AFF")
             tagView.layer.borderColor = UIColor.clear.cgColor
         }
         

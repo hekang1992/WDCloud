@@ -79,8 +79,8 @@ extension PeopleBothViewController: JXSegmentedViewDelegate {
         // 设置指示器
         let indicator = JXSegmentedIndicatorLineView()
         indicator.indicatorWidth = 16
-        indicator.indicatorHeight = 2
-        indicator.indicatorColor = UIColor.init(cssStr: "#3F96FF")!
+        indicator.indicatorHeight = 4
+        indicator.indicatorColor = UIColor.init(cssStr: "#547AFF")!
         segmentedView.indicators = [indicator]
         self.headView.headTitleView.addSubview(segmentedView)
         segmentedView.frame = CGRect(x: 0, y: 0, width: 200, height: 40)

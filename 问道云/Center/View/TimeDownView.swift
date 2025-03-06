@@ -108,7 +108,7 @@ class TimeDownView: BaseView, UITableViewDelegate, UITableViewDataSource {
         
         label.text = "自定义时间"
         label.font = .mediumFontOfSize(size: 12)
-        label.textColor = UIColor.init(cssStr: "#3F96FF")
+        label.textColor = UIColor.init(cssStr: "#547AFF")
         label.textAlignment = .left
         
         lineView.backgroundColor = UIColor.init(cssStr: "#666666")

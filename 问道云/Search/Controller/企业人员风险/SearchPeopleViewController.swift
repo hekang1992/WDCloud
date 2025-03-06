@@ -94,24 +94,6 @@ class SearchPeopleViewController: WDBaseViewController {
             self?.lastSearchTextBlock?(searchStr)
         }
         
-        self.searchWordsRelay
-            .debounce(.milliseconds(1000),
-                      scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                if !text.isEmpty {
-                    self.pageIndex = 1
-                    self.searchListInfo()
-                }else {
-                    self.pageIndex = 1
-                    self.allArray.removeAll()
-                    self.peopleView.isHidden = false
-                    self.twoPeopleListView.isHidden = true
-                }
-            }).disposed(by: disposeBag)
-        
-        
         //添加下拉刷新
         self.twoPeopleListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
@@ -172,38 +154,67 @@ class SearchPeopleViewController: WDBaseViewController {
             self.navigationController?.pushViewController(peopleDetailVc, animated: true)
         }
         
+        //网络请求
+        getDataInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("人员===============人员")
-        let group = DispatchGroup()
-        //最近搜索
-        ViewHud.addLoadView()
-        group.enter()
-        getlastSearch { success in
-            group.leave()
-        }
-        //浏览历史
-        group.enter()
-        getBrowsingHistory { success in
-            group.leave()
-        }
-        //热搜
-        group.enter()
-        getHotWords { success in
-            group.leave()
-        }
-        
-        // 所有任务完成后的通知
-        group.notify(queue: .main) {
-            ViewHud.hideLoadView()
-            self.completeBlock?()
-        }
     }
 }
 
 extension SearchPeopleViewController {
+    
+    private func getDataInfo() {
+        self.searchWordsRelay
+            .debounce(.milliseconds(1000),
+                      scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if !text.isEmpty {
+                    self.pageIndex = 1
+                    self.searchListInfo()
+                }else {
+                    self.pageIndex = 1
+                    self.allArray.removeAll()
+                    self.peopleView.isHidden = false
+                    self.twoPeopleListView.isHidden = true
+                }
+            }).disposed(by: disposeBag)
+        
+        self.searchWordsRelay
+            .debounce(.milliseconds(50),
+                      scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                let group = DispatchGroup()
+                //最近搜索
+                ViewHud.addLoadView()
+                group.enter()
+                getlastSearch {_ in
+                    group.leave()
+                }
+                //浏览历史
+                group.enter()
+                getBrowsingHistory {_ in
+                    group.leave()
+                }
+                //热搜
+                group.enter()
+                getHotWords {_ in
+                    group.leave()
+                }
+                
+                // 所有任务完成后的通知
+                group.notify(queue: .main) {
+                    ViewHud.hideLoadView()
+                    self.completeBlock?()
+                }
+            }).disposed(by: disposeBag)
+    }
     
     //最近搜索
     private func getlastSearch(completion: @escaping (Bool) -> Void) {
