@@ -208,7 +208,8 @@ class TwoCompanyNormalListCell: BaseViewCell {
             self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (40, 40)))
             
             //名字
-            self.nameLabel.attributedText = TextStyler.styledText(for: companyName, target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
+//            self.nameLabel.attributedText = TextStyler.styledText(for: companyName, target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
+            self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: companyName, colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))
             
             //法人
             self.nameView.label2.text = model.legalPerson?.legalName ?? ""
@@ -231,10 +232,14 @@ class TwoCompanyNormalListCell: BaseViewCell {
             }else {
                 focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
             }
+            //电话
             let phone = model.orgInfo?.phone ?? ""
+            //网站
             let website = model.orgInfo?.website ?? ""
-            let longitude = model.orgInfo?.longitude ?? ""
-            if longitude.isEmpty {
+            //经纬度
+            let regAddr = model.orgInfo?.regAddr
+            let lat = regAddr?.lat ?? ""
+            if lat.isEmpty {
                 addressimageView.isHidden = true
                 addressimageView.snp.updateConstraints { make in
                     make.width.equalTo(0)

@@ -521,7 +521,6 @@ extension SearchRiskViewController {
                     self.twoRiskListView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1
-                        self.getlastSearch {}
                         self.allArray.removeAll()
                     }
                     pageIndex += 1
@@ -529,7 +528,6 @@ extension SearchRiskViewController {
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
-                        self.noNetView.removeFromSuperview()
                     }else {
                         self.addNodataView(from: self.twoRiskListView.whiteView)
                     }
@@ -591,7 +589,6 @@ extension SearchRiskViewController {
                     self.allPeopleArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
-                        self.noNetView.removeFromSuperview()
                     }else {
                         self.addNodataView(from: self.listPeopleView.whiteView)
                     }

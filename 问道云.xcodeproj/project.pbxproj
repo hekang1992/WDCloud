@@ -126,6 +126,9 @@
 		7340E1D82D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1D72D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift */; };
 		7342CF552D7815C3005157A0 /* ServerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342CF542D7815C3005157A0 /* ServerDataManager.swift */; };
 		7342CF572D78456B005157A0 /* HighSearchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342CF562D78456B005157A0 /* HighSearchViewCell.swift */; };
+		734334932D798C1F006AE608 /* CompanyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734334922D798C1F006AE608 /* CompanyListView.swift */; };
+		734334952D798DEE006AE608 /* CompanySearchPeopleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734334942D798DEE006AE608 /* CompanySearchPeopleViewCell.swift */; };
+		734334972D799E84006AE608 /* BiaoQianView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734334962D799E84006AE608 /* BiaoQianView.swift */; };
 		734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E72D2641C400BB4087 /* GroupTeamViewController.swift */; };
 		734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E92D26431900BB4087 /* GroupTeamNorView.swift */; };
 		734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */; };
@@ -300,7 +303,6 @@
 		73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E56BE02D1274630015BF34 /* TwoTicketView.swift */; };
 		73E971302D2E614200F12B15 /* CommonSearchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E9712F2D2E614200F12B15 /* CommonSearchListView.swift */; };
 		73E971732D2FCD8500F12B15 /* TwoCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */; };
-		73E971752D2FCF0500F12B15 /* TwoCompanySpecListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971742D2FCF0500F12B15 /* TwoCompanySpecListCell.swift */; };
 		73E971792D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */; };
 		73EABF922D320F460052F4AB /* TwoRiskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF912D320F460052F4AB /* TwoRiskListView.swift */; };
 		73EABF942D321B6F0052F4AB /* TwoRiskListPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABF932D321B6F0052F4AB /* TwoRiskListPeopleCell.swift */; };
@@ -503,6 +505,9 @@
 		7340E1D72D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleJudgmentDebtorViewController.swift; sourceTree = "<group>"; };
 		7342CF542D7815C3005157A0 /* ServerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerDataManager.swift; sourceTree = "<group>"; };
 		7342CF562D78456B005157A0 /* HighSearchViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchViewCell.swift; sourceTree = "<group>"; };
+		734334922D798C1F006AE608 /* CompanyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyListView.swift; sourceTree = "<group>"; };
+		734334942D798DEE006AE608 /* CompanySearchPeopleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanySearchPeopleViewCell.swift; sourceTree = "<group>"; };
+		734334962D799E84006AE608 /* BiaoQianView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiaoQianView.swift; sourceTree = "<group>"; };
 		734355E72D2641C400BB4087 /* GroupTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamViewController.swift; sourceTree = "<group>"; };
 		734355E92D26431900BB4087 /* GroupTeamNorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamNorView.swift; sourceTree = "<group>"; };
 		734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamSpecView.swift; sourceTree = "<group>"; };
@@ -683,7 +688,6 @@
 		73E56BE02D1274630015BF34 /* TwoTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoTicketView.swift; sourceTree = "<group>"; };
 		73E9712F2D2E614200F12B15 /* CommonSearchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSearchListView.swift; sourceTree = "<group>"; };
 		73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyView.swift; sourceTree = "<group>"; };
-		73E971742D2FCF0500F12B15 /* TwoCompanySpecListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanySpecListCell.swift; sourceTree = "<group>"; };
 		73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyHeadPeopleCell.swift; sourceTree = "<group>"; };
 		73EABF912D320F460052F4AB /* TwoRiskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRiskListView.swift; sourceTree = "<group>"; };
 		73EABF932D321B6F0052F4AB /* TwoRiskListPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRiskListPeopleCell.swift; sourceTree = "<group>"; };
@@ -1675,11 +1679,13 @@
 		73EF03CC2D30F4D50070F850 /* CompanyList */ = {
 			isa = PBXGroup;
 			children = (
+				734334922D798C1F006AE608 /* CompanyListView.swift */,
 				73C36A7A2D2D147400D6DC46 /* OneCompanyView.swift */,
 				73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */,
-				73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */,
-				73E971742D2FCF0500F12B15 /* TwoCompanySpecListCell.swift */,
 				73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */,
+				73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */,
+				734334942D798DEE006AE608 /* CompanySearchPeopleViewCell.swift */,
+				734334962D799E84006AE608 /* BiaoQianView.swift */,
 			);
 			path = CompanyList;
 			sourceTree = "<group>";
@@ -2118,7 +2124,6 @@
 				730CEDF82D53590B002DE9DF /* CompanyLawListView.swift in Sources */,
 				736E97812D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift in Sources */,
 				730CEE002D54AE2C002DE9DF /* SearchMonitoringViewController.swift in Sources */,
-				73E971752D2FCF0500F12B15 /* TwoCompanySpecListCell.swift in Sources */,
 				736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */,
 				73C89F192D76E2290002C3C9 /* PeopleUnioRiskViewController.swift in Sources */,
 				736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */,
@@ -2210,6 +2215,7 @@
 				7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */,
 				73FC5E402D5C342F001D0DEF /* SearchPeopleShareholderViewController.swift in Sources */,
 				730488012D2A64410024265C /* WDRefreshHeader.swift in Sources */,
+				734334952D798DEE006AE608 /* CompanySearchPeopleViewCell.swift in Sources */,
 				73FC5E5C2D5C8D05001D0DEF /* SearchCompanyDeadbeatDetailViewController.swift in Sources */,
 				7352B22A2D353F2200B5391B /* CompanySixHeadView.swift in Sources */,
 				73C0070B2D644C6E003C3CE1 /* DueDiligenceOneView.swift in Sources */,
@@ -2239,6 +2245,7 @@
 				739DCA082D66E009009CFC78 /* PropertyTwoViewController.swift in Sources */,
 				73E971732D2FCD8500F12B15 /* TwoCompanyView.swift in Sources */,
 				73C6B1B62D3503D400CD3816 /* MyCollectionSpecialReusableView.swift in Sources */,
+				734334972D799E84006AE608 /* BiaoQianView.swift in Sources */,
 				73C89F152D7594C80002C3C9 /* HighSearchResultViewController.swift in Sources */,
 				7340E1682D5CBB36008FD5C7 /* SearchControllingPersonViewController.swift in Sources */,
 				73F6046A2D1171280061D5D3 /* MyTicketView.swift in Sources */,
@@ -2257,6 +2264,7 @@
 				7340E1832D5CD326008FD5C7 /* SearchPeopleAssetFreezeViewController.swift in Sources */,
 				7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */,
 				7340E1712D5CC6B8008FD5C7 /* SearchEnvironmentalPenaltyViewController.swift in Sources */,
+				734334932D798C1F006AE608 /* CompanyListView.swift in Sources */,
 				73D4E3FB2D734059005C73D8 /* BothPeopleViewController.swift in Sources */,
 				730488112D2A97F00024265C /* HomeVideoListViewCell.swift in Sources */,
 				7340E19B2D5CD4D0008FD5C7 /* SearchCourtNoticeViewController.swift in Sources */,

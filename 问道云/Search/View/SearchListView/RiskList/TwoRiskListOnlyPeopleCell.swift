@@ -137,7 +137,7 @@ class TwoRiskListOnlyPeopleCell: BaseViewCell {
             ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (40, 40)))
             
             //匹配文字
-            self.nameLabel.attributedText = TextStyler.styledText(for: model.name ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
+            self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: model.name ?? "", colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))
             
             let count = String(model.relevanceCount ?? 0)
             numlabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业", font: .mediumFontOfSize(size: 11))

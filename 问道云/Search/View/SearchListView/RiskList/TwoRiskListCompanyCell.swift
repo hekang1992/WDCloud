@@ -192,7 +192,8 @@ class TwoRiskListCompanyCell: BaseViewCell {
             self.ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.entityName ?? "", size: (32, 32)))
             
             //匹配文字
-            self.nameLabel.attributedText = TextStyler.styledText(for: model.entityName ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
+//            self.nameLabel.attributedText = TextStyler.styledText(for: model.entityName ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
+            self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: model.entityName ?? "", colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))
             
             self.nameView.label2.text = model.legalName ?? ""
             self.moneyView.label2.text = model.registerCapital ?? ""

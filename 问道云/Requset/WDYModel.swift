@@ -60,7 +60,7 @@ class DataModel {
     var flag: String?
     var wechatopenid: String?
     var items: [itemsModel]?
-    var bossList: [bossListModel]?
+    var bossList: bossListModel?
     var pageData: [pageDataModel]?
     var pageMeta: pageMetaModel?
     
@@ -223,7 +223,7 @@ class DataModel {
         self.personData = personDataModel(json: json["personData"])
         self.pageMeta = pageMetaModel(json: json["pageMeta"])
         self.pageData = json["pageData"].arrayValue.map { pageDataModel(json: $0) }
-        self.bossList = json["bossList"].arrayValue.map { bossListModel(json: $0) }
+        self.bossList = bossListModel(json: json["bossList"])
         self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
         self.flag = json["flag"].stringValue
         self.wechatopenid = json["wechatopenid"].stringValue
@@ -411,7 +411,11 @@ class itemsModel {
     var levelKey: String?
     var value: String?
     var logoColor: String?
+    var orgCount: Int?
+    var provinceStatList: [provinceStatListModel]?
     init(json: JSON) {
+        self.provinceStatList = json["provinceStatList"].arrayValue.map { provinceStatListModel(json: $0) }
+        self.orgCount = json["orgCount"].intValue
         self.logoColor = json["logoColor"].stringValue
         self.value = json["value"].stringValue
         self.levelKey = json["levelKey"].stringValue
@@ -930,7 +934,7 @@ class orgInfoModel {
     var logo: String?
     var phone: String?
     var website: String?
-    var longitude: String?
+    var regAddr: regAddrModel?
     init(json: JSON) {
         self.logo = json["logo"].stringValue
         self.incDate = json["incDate"].stringValue
@@ -940,7 +944,7 @@ class orgInfoModel {
         self.regStatusLabel = json["regStatusLabel"].stringValue
         self.phone = json["phone"].stringValue
         self.website = json["website"].stringValue
-        self.longitude = json["longitude"].stringValue
+        self.regAddr = regAddrModel(json: json["regAddr"])
     }
 }
 
@@ -1017,9 +1021,11 @@ class pageMetaModel {
 }
 
 class bossListModel {
-    var name: String?
+    var totalNum: Int?
+    var items: [itemsModel]?
     init(json: JSON) {
-        self.name = json["name"].stringValue
+        self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
+        self.totalNum = json["totalNum"].intValue
     }
 }
 
@@ -1416,5 +1422,31 @@ class industryModel {
     init(json: JSON) {
         self.code = json["code"].stringValue
         self.name = json["name"].stringValue
+    }
+}
+
+class provinceStatListModel {
+    var count: Int?
+    var province: String?
+    var repOrgName: String?
+    init(json: JSON) {
+        self.count = json["count"].intValue
+        self.province = json["province"].stringValue
+        self.repOrgName = json["repOrgName"].stringValue
+    }
+}
+
+class regAddrModel {
+    var content: String?
+    var id: String?
+    var lat: String?
+    var lng: String?
+    var orgCount: Int?
+    init(json: JSON) {
+        self.content = json["content"].stringValue
+        self.id = json["id"].stringValue
+        self.lat = json["lat"].stringValue
+        self.lng = json["lng"].stringValue
+        self.orgCount = json["orgCount"].intValue
     }
 }

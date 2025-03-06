@@ -17,6 +17,9 @@ class SearchCompanyViewController: WDBaseViewController {
     
     var completeBlock: (() -> Void)?
     
+    //人员查看更多
+    var moreBtnBlock: (() -> Void)?
+    
     //城市数据
     var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
     
@@ -79,7 +82,9 @@ class SearchCompanyViewController: WDBaseViewController {
         companyListView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
+        companyListView.moreBtnBlock = { [weak self] in
+            self?.moreBtnBlock?()
+        }
         //删除最近搜索
         self.companyView.searchView.deleteBtn
             .rx
@@ -136,7 +141,7 @@ class SearchCompanyViewController: WDBaseViewController {
         menuView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(0.5)
             make.left.right.equalToSuperview()
-            make.height.equalTo(32)
+            make.height.equalTo(34)
         }
         
         //添加下拉刷新
@@ -153,11 +158,11 @@ class SearchCompanyViewController: WDBaseViewController {
         })
         
         companyListView.addressBlock = { [weak self] model in
-            let latitude = 31.23383
-            let longitude = 121.51590
+            let latitude = Double(model.orgInfo?.regAddr?.lat ?? "0.0") ?? 0.0
+            let longitude = Double(model.orgInfo?.regAddr?.lng ?? "0.0") ?? 0.0
             let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let locationVc = CompanyLocationViewController(location: location)
-            locationVc.name = model.firmInfo?.entityName ?? ""
+            locationVc.name = model.orgInfo?.regAddr?.content ?? ""
             self?.navigationController?.pushViewController(locationVc, animated: true)
         }
         
@@ -341,7 +346,7 @@ extension SearchCompanyViewController {
             }
             listView.nameLabel.text = model.firmname ?? ""
             listView.timeLabel.text = model.createhourtime ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22)))
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             self.companyView.historyView.addSubview(listView)
             listView.snp.makeConstraints { make in
                 make.height.equalTo(40)
@@ -505,7 +510,6 @@ extension SearchCompanyViewController {
                     self.companyListView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1
-                        self.getlastSearch {}
                         self.allArray.removeAll()
                     }
                     pageIndex += 1
@@ -513,7 +517,6 @@ extension SearchCompanyViewController {
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
-                        self.noNetView.removeFromSuperview()
                     }else {
                         self.addNodataView(from: self.companyListView.whiteView)
                     }
@@ -522,10 +525,9 @@ extension SearchCompanyViewController {
                     }else {
                         self.companyListView.tableView.mj_footer?.isHidden = true
                     }
-                    self.companyListView.dataModel.accept(model)
-                    self.companyListView.dataModelArray.accept(self.allArray)
+                    self.companyListView.dataModel = model
+                    self.companyListView.dataModelArray = self.allArray
                     self.companyListView.searchWordsRelay.accept(self.searchWordsRelay.value)
-                    self.companyListView.tableView.reloadData()
                 }
                 break
             case .failure(_):

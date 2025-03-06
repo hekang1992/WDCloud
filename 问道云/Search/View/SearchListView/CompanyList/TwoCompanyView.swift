@@ -20,10 +20,16 @@ class TwoCompanyView: BaseView {
     var peopleBlock: ((pageDataModel) -> Void)?
     //企业ID回调
     var entityIdBlock: ((String, String) -> Void)?
+    //人员查看更多
+    var moreBtnBlock: (() -> Void)?
     
-    var dataModel = BehaviorRelay<DataModel?>(value: nil)
+    var dataModel: DataModel?
     
-    var dataModelArray = BehaviorRelay<[pageDataModel]?>(value: nil)
+    var dataModelArray: [pageDataModel]? {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     //被搜索的文字,根据这个文字,去给cell的namelabel加上颜色
     var searchWordsRelay = BehaviorRelay<String?>(value: nil)
@@ -32,23 +38,7 @@ class TwoCompanyView: BaseView {
         let whiteView = UIView()
         return whiteView
     }()
-    
-    lazy var numLabel: UILabel = {
-        let numLabel = UILabel()
-        numLabel.font = .mediumFontOfSize(size: 12)
-        numLabel.textColor = .init(cssStr: "#666666")
-        numLabel.textAlignment = .left
-        return numLabel
-    }()
-    
-    lazy var pageLabel: UILabel = {
-        let pageLabel = UILabel()
-        pageLabel.font = .mediumFontOfSize(size: 12)
-        pageLabel.textColor = .init(cssStr: "#666666")
-        pageLabel.textAlignment = .right
-        return pageLabel
-    }()
-    
+
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
@@ -63,7 +53,7 @@ class TwoCompanyView: BaseView {
         //头部人员cell
         tableView.register(TwoCompanyHeadPeopleCell.self, forCellReuseIdentifier: "TwoCompanyHeadPeopleCell")
         //公司cell
-        tableView.register(TwoCompanySpecListCell.self, forCellReuseIdentifier: "TwoCompanySpecListCell")
+//        tableView.register(TwoCompanySpecListCell.self, forCellReuseIdentifier: "TwoCompanySpecListCell")
         tableView.register(TwoCompanyNormalListCell.self, forCellReuseIdentifier: "TwoCompanyNormalListCell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
@@ -94,8 +84,7 @@ class TwoCompanyView: BaseView {
 extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        let model = dataModel.value
-        let bossList = model?.bossList ?? []
+        let bossList = dataModel?.bossList?.items ?? []
         if !bossList.isEmpty {
             return 2
         }else {
@@ -104,50 +93,56 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let model = dataModel.value
-        let bossList = model?.bossList ?? []
+        let bossList = dataModel?.bossList?.items ?? []
         if !bossList.isEmpty {
             if section == 0 {
-                return bossList.count
+                return 1
             }else {
-                return dataModelArray.value?.count ?? 0
+                return dataModelArray?.count ?? 0
             }
         }else {
-            return dataModelArray.value?.count ?? 0
+            return dataModelArray?.count ?? 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = dataModel.value
-        let bossList = model?.bossList ?? []
-        
-        let companyList = dataModelArray.value
-        let pageDataModel = companyList?[indexPath.row]
-        if let riskModel = pageDataModel?.riskInfo, let content = riskModel.content, !content.isEmpty {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanySpecListCell") as? TwoCompanySpecListCell
-            pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
-            cell?.backgroundColor = .clear
-            cell?.selectionStyle = .none
-            cell?.model.accept(pageDataModel)
-            cell?.addressBlock = { [weak self] model in
-                self?.addressBlock?(model)
-            }
-            cell?.websiteBlock = { [weak self] model in
-                self?.websiteBlock?(model)
-            }
-            cell?.phoneBlock = { [weak self] model in
-                self?.phoneBlock?(model)
-            }
-            cell?.peopleBlock = { [weak self] model in
-                self?.peopleBlock?(model)
-            }
-            cell?.focusBlock = { [weak self] model in
-                if let cell = cell {
-                    self?.focusInfo(from: model, cell: cell)
+        let bossList = dataModel?.bossList?.items ?? []
+        if !bossList.isEmpty {
+            if indexPath.section == 0 {
+                let pageDataModel = dataModel?.bossList?.items
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyHeadPeopleCell") as? TwoCompanyHeadPeopleCell
+                cell?.backgroundColor = .clear
+                cell?.selectionStyle = .none
+                cell?.modelArray = pageDataModel
+                return cell ?? UITableViewCell()
+            }else {
+                let pageDataModel = dataModel?.pageData?[indexPath.row]
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
+                pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
+                cell?.backgroundColor = .clear
+                cell?.selectionStyle = .none
+                cell?.model.accept(pageDataModel)
+                cell?.addressBlock = { [weak self] model in
+                    self?.addressBlock?(model)
                 }
+                cell?.websiteBlock = { [weak self] model in
+                    self?.websiteBlock?(model)
+                }
+                cell?.phoneBlock = { [weak self] model in
+                    self?.phoneBlock?(model)
+                }
+                cell?.peopleBlock = { [weak self] model in
+                    self?.peopleBlock?(model)
+                }
+                cell?.focusBlock = { [weak self] model in
+                    if let cell = cell {
+                        self?.focusInfo(from: model, cell: cell)
+                    }
+                }
+                return cell ?? UITableViewCell()
             }
-            return cell ?? UITableViewCell()
         }else {
+            let pageDataModel = dataModel?.pageData?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
             pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
             cell?.backgroundColor = .clear
@@ -179,12 +174,98 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let countModel = dataModel.value?.pageMeta
-        let numStr = countModel?.totalNum ?? 0
-        let num = String(countModel?.totalNum ?? 0)
+        let headView = UIView()
+        let bossList = dataModel?.bossList?.items ?? []
+        if !bossList.isEmpty {
+            if section == 0 {
+                let peopleView = self.peopleHeadView()
+                headView.addSubview(peopleView)
+                peopleView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                return headView
+            }else {
+                let companyView = self.companyHeadView()
+                headView.addSubview(companyView)
+                companyView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                return headView
+            }
+        }else {
+            let companyView = self.companyHeadView()
+            headView.addSubview(companyView)
+            companyView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            return headView
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let model = self.dataModelArray?[indexPath.row] {
+            self.entityIdBlock?(model.orgInfo?.orgId ?? "", model.orgInfo?.orgName ?? "")
+        }
+    }
+    
+    func peopleHeadView() -> UIView {
+        let moreBtn = UIButton(type: .custom)
+        moreBtn.setImage(UIImage(named: "blueImagemore"), for: .normal)
+        moreBtn.setTitle("查看更多", for: .normal)
+        moreBtn.titleLabel?.font = .regularFontOfSize(size: 12)
+        moreBtn.setTitleColor(.init(cssStr: "#3F96FF"), for: .normal)
+        moreBtn.layoutButtonEdgeInsets(style: .right, space: 2)
+        
+        let numLabel = UILabel()
+        numLabel.font = .mediumFontOfSize(size: 12)
+        numLabel.textColor = .init(cssStr: "#666666")
+        numLabel.textAlignment = .left
+        
+        let num = String(dataModel?.bossList?.totalNum ?? 0)
+        
         let headView = UIView()
         headView.backgroundColor = .init(cssStr: "#F3F3F3")
         headView.addSubview(numLabel)
+        headView.addSubview(moreBtn)
+        //搜索的总结果
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: num, fullText: "搜索到\(num)位相关人员", font: .mediumFontOfSize(size: 12))
+        numLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.height.equalTo(25)
+            make.left.equalToSuperview().offset(10)
+        }
+        moreBtn.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.height.equalTo(25)
+            make.right.equalToSuperview().offset(-10)
+        }
+        
+        moreBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.moreBtnBlock?()
+        }).disposed(by: disposeBag)
+        
+        return headView
+    }
+    
+    func companyHeadView() -> UIView {
+        let countModel = dataModel?.pageMeta
+        let numStr = countModel?.totalNum ?? 0
+        let num = String(countModel?.totalNum ?? 0)
+        let headView = UIView()
+        
+        let numLabel = UILabel()
+        numLabel.font = .mediumFontOfSize(size: 12)
+        numLabel.textColor = .init(cssStr: "#666666")
+        numLabel.textAlignment = .left
+        
+        let pageLabel = UILabel()
+        pageLabel.font = .mediumFontOfSize(size: 12)
+        pageLabel.textColor = .init(cssStr: "#666666")
+        pageLabel.textAlignment = .right
+        
+        headView.backgroundColor = .init(cssStr: "#F3F3F3")
+        headView.addSubview(numLabel)
+        
         //搜索的总结果
         numLabel.attributedText = GetRedStrConfig.getRedStr(from: num, fullText: "搜索到\(num)条结果", font: .mediumFontOfSize(size: 12))
         numLabel.snp.makeConstraints { make in
@@ -192,7 +273,6 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             make.height.equalTo(25)
             make.left.equalToSuperview().offset(10)
         }
-        
         //搜到共多少页
         let result = Int(ceil(Double(numStr) / Double(20)))
         headView.addSubview(pageLabel)
@@ -202,15 +282,7 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             make.height.equalTo(25)
             make.right.equalToSuperview().offset(-10)
         }
-        
         return headView
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let model = self.dataModelArray.value?[indexPath.row] {
-            self.entityIdBlock?(model.orgInfo?.orgId ?? "", model.orgInfo?.orgName ?? "")
-        }
-        
     }
     
 }
@@ -225,7 +297,7 @@ extension TwoCompanyView {
             }else {
                 deleteFocusInfo(from: model, cell: cell)
             }
-        } else if cell is TwoCompanySpecListCell {
+        } else if cell is TwoCompanyNormalListCell {
             let followStatus = model.followStatus ?? ""
             if followStatus == "1" {
                 addFocusInfo(from: model, cell: cell)
@@ -238,20 +310,19 @@ extension TwoCompanyView {
     private func addFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["entityId": model.firmInfo?.entityId ?? "",
+        let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/save",
-                       method: .post) { [weak self] result in
+                       method: .post) { result in
             ViewHud.hideLoadView()
-            guard let self = self else { return }
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     model.followStatus = "2"
                     if let specificCell = cell as? TwoCompanyNormalListCell {
                         specificCell.focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
-                    }else if let otherCell = cell as? TwoCompanySpecListCell {
+                    }else if let otherCell = cell as? TwoCompanyNormalListCell {
                         otherCell.focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
                     }
                     ToastViewConfig.showToast(message: "关注成功")
@@ -279,7 +350,7 @@ extension TwoCompanyView {
                     model.followStatus = "1"
                     if let specificCell = cell as? TwoCompanyNormalListCell {
                         specificCell.focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
-                    }else if let otherCell = cell as? TwoCompanySpecListCell {
+                    }else if let otherCell = cell as? TwoCompanyNormalListCell {
                         otherCell.focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
                     }
                     ToastViewConfig.showToast(message: "取消关注成功")

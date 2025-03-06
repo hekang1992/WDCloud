@@ -229,7 +229,7 @@ class SanctionTableViewCell: BaseViewCell {
             guard let self = self, let model = model else { return }
             ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.entityName ?? "", size: (32, 32)))
             
-            self.nameLabel.attributedText = TextStyler.styledText(for: model.entityName ?? "", target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
+            self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: model.entityName ?? "", colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))
             
             nameView.label2.textColor = .init(cssStr: "#333333")
             nameView.label2.text = model.legalName ?? ""

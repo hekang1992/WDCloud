@@ -144,7 +144,7 @@ class SearchPeopleViewController: WDBaseViewController {
         menuView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(0.5)
             make.left.right.equalToSuperview()
-            make.height.equalTo(33.5)
+            make.height.equalTo(34)
         }
         
         twoPeopleListView.peopleBlock = { model in
@@ -466,9 +466,6 @@ extension SearchPeopleViewController {
                     self.twoPeopleListView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1
-                        self.getlastSearch { success in
-                            
-                        }
                         self.allArray.removeAll()
                     }
                     pageIndex += 1
@@ -476,7 +473,6 @@ extension SearchPeopleViewController {
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
-                        self.noNetView.removeFromSuperview()
                     }else {
                         self.addNodataView(from: self.twoPeopleListView.whiteView)
                     }

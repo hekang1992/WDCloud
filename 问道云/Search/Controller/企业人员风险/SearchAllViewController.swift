@@ -170,6 +170,10 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                     self.searchHeadView.searchTx.becomeFirstResponder()
                 }
             }
+            companyVc.moreBtnBlock = { [weak self] in
+                guard let self = self else { return }
+                segmentedView(segmentedView, didSelectedItemAt: 1)
+            }
             return companyVc
         }else if index == 1 {
             peopleVc.lastSearchTextBlock = { [weak self] searchStr in
