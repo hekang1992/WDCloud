@@ -583,6 +583,7 @@ extension CompanyOneHeadView {
                 lab.backgroundColor = UIColor(cssStr: "#93B2F5")
                 lab.layer.masksToBounds = true
                 lab.layer.cornerRadius = 2
+                lab.layer.allowsEdgeAntialiasing = true
                 lab.textAlignment = .center
                 lab.text = "\(tags)"
                 TagsLabelColorConfig.nameLabelColor(from: lab)

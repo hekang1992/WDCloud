@@ -459,18 +459,17 @@ extension TwoCompanySpecListCell {
         for view in tagScrollView.subviews {
             view.removeFromSuperview()
         }
-        
-        let maxWidth = UIScreen.main.bounds.width - 80 // 标签展示最大宽度（左右各 20 的边距）
-        let openButtonWidth: CGFloat = 35 // 展开按钮宽度
-        let buttonHeight: CGFloat = 15 // 标签高度
-        let buttonSpacing: CGFloat = 2 // 标签之间的间距
+        let maxWidth = self.tagListView.frame.width
+        let openButtonWidth: CGFloat = 40 // 展开按钮宽度
+        let buttonHeight: CGFloat = 20 // 标签高度
+        let buttonSpacing: CGFloat = 5 // 标签之间的间距
         var numberOfLine: CGFloat = 1 // 标签总行数
         var lastRight: CGFloat = 0 // 标签的左边距
         let isOpen = companyModel.isOpenTag // 标签展开或者收起
         
         // 创建展开/收起按钮
         let openButton = UIButton(type: .custom)
-        openButton.titleLabel?.font = .regularFontOfSize(size: 10)
+        openButton.titleLabel?.font = .regularFontOfSize(size: 12)
         openButton.backgroundColor = UIColor(cssStr: "#547AFF")?.withAlphaComponent(0.1)
         openButton.setTitle("展开", for: .normal)
         openButton.setTitleColor(UIColor(cssStr: "#547AFF"), for: .normal)
@@ -486,8 +485,8 @@ extension TwoCompanySpecListCell {
         // 计算标签总长度
         var totalLength = lastRight
         for tags in tagArray {
-            let tag = "\(tags)   "
-            let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 11)])
+            let tag = "\(tags)"
+            let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 12)])
             var width = titleSize.width
             if tags.contains("展开") {
                 width = openButtonWidth
@@ -501,8 +500,8 @@ extension TwoCompanySpecListCell {
             var p = 0
             var lastLength = lastRight
             for tags in tagArray {
-                let tag = "\(tags)   "
-                let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 11)])
+                let tag = "\(tags)"
+                let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 12)])
                 var width = titleSize.width
                 if tags.contains("展开") {
                     width = openButtonWidth
@@ -548,20 +547,20 @@ extension TwoCompanySpecListCell {
                 }
                 lastRight += openButtonWidth + buttonSpacing
             } else {
-                let lab = PaddedLabel()
-                lab.font = .regularFontOfSize(size: 11)
+                let lab = UILabel()
+                lab.font = .regularFontOfSize(size: 12)
                 lab.textColor = UIColor(cssStr: "#ECF2FF")
                 lab.backgroundColor = UIColor(cssStr: "#93B2F5")
                 lab.layer.masksToBounds = true
                 lab.layer.cornerRadius = 2
+                lab.layer.allowsEdgeAntialiasing = true
                 lab.textAlignment = .center
-                lab.text = "\(tags)   "
-                //                self.nameLabelColor(from: lab)
+                lab.text = "\(tags)"
                 TagsLabelColorConfig.nameLabelColor(from: lab)
                 tagScrollView.addSubview(lab)
                 
                 let titleSize = (lab.text! as NSString).size(withAttributes: [.font: lab.font!])
-                let width = titleSize.width  // 增加左右 padding
+                let width = titleSize.width + 10  // 增加左右 padding
                 
                 if width + lastRight > maxWidth {
                     numberOfLine += 1
@@ -574,7 +573,7 @@ extension TwoCompanySpecListCell {
                     make.height.equalTo(buttonHeight)
                     make.width.equalTo(width)
                 }
-                
+            
                 lastRight += width + buttonSpacing
             }
         }
@@ -588,11 +587,12 @@ extension TwoCompanySpecListCell {
         }
         openButton.layoutButtonEdgeInsets(style: .right, space: 2)
     }
-    
+
     // 按钮点击事件
     @objc func didOpenTags(_ sender: UIButton) {
         companyModel.isOpenTag.toggle() // 切换展开/收起状态
         setupScrollView(tagScrollView: tagListView, tagArray: tagArray) // 重新设置标签
+//        self.moreClickBlcok?(companyModel)
     }
 }
 

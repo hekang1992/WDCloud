@@ -237,7 +237,7 @@ extension SearchRiskViewController {
                 guard let self = self else { return }
                 let group = DispatchGroup()
                 //最近搜索
-                ViewHud.addLoadView()
+//                ViewHud.addLoadView()
                 group.enter()
                 getlastSearch {
                     group.leave()
@@ -255,7 +255,7 @@ extension SearchRiskViewController {
                 
                 // 所有任务完成后的通知
                 group.notify(queue: .main) {
-                    ViewHud.hideLoadView()
+//                    ViewHud.hideLoadView()
                     self.completeBlock?()
                 }
             }).disposed(by: disposeBag)
