@@ -11,15 +11,9 @@ import JXPagingView
 
 class PeopleDetailViewController: WDBaseViewController {
     
-    var enityId: String = ""
+    var personId: String = ""
     
     var intBlock: ((Double) -> Void)?
-    
-//    lazy var peopleDetailView: PeopleDetailView = {
-//        let peopleDetailView = PeopleDetailView()
-//        peopleDetailView.backgroundColor = .white
-//        return peopleDetailView
-//    }()
     
     //简介
     lazy var infoView: CompanyDescInfoView = {
@@ -96,7 +90,7 @@ extension PeopleDetailViewController {
     private func getPeopleRiskInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["personNumber": enityId]
+        let dict = ["personId": personId]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew",
                        method: .get) { [weak self] result in
@@ -150,7 +144,7 @@ extension PeopleDetailViewController {
         let dict = [String: Any]()
         let man = RequestManager()
         ViewHud.addLoadView()
-        let pageUrl = "/firminfo/person/search/\(enityId)"
+        let pageUrl = "/firminfo/person/search/\(personId)"
         man.requestAPI(params: dict,
                        pageUrl: pageUrl,
                        method: .get) { [weak self] result in
@@ -254,15 +248,15 @@ extension PeopleDetailViewController: JXPagingViewDelegate {
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
             let oneVc = PeopleDetailOneViewController()
-            oneVc.enityId = enityId
+            oneVc.personId = personId
             return oneVc
         }else if index == 1 {
             let twoVc = PeopleDetailTwoViewController()
-            twoVc.enityId = enityId
+            twoVc.personId = personId
             return twoVc
         }else {
             let threeVc = PeopleDetailThreeViewController()
-            threeVc.enityId = enityId
+            threeVc.personId = personId
             return threeVc
         }
     }

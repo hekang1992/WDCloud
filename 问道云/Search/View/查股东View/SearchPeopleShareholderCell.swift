@@ -210,7 +210,7 @@ extension SearchPeopleShareholderCell: UICollectionViewDelegate, UICollectionVie
         let model = self.model.value?.shareholderList?[indexPath.row]
         let vc = ViewControllerUtils.findViewController(from: self)
         let peopleDetailVc = PeopleBothViewController()
-        peopleDetailVc.enityId.accept(String(model?.personId ?? 0))
+        peopleDetailVc.personId.accept(String(model?.personId ?? 0))
         peopleDetailVc.peopleName.accept(model?.personName ?? "")
         vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
     }

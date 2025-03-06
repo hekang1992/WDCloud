@@ -11,7 +11,7 @@ import RxRelay
 
 class PeopleDetailOneViewController: WDBaseViewController {
     
-    var enityId: String = ""
+    var personId: String = ""
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
@@ -53,7 +53,7 @@ class PeopleDetailOneViewController: WDBaseViewController {
    
     private func getPeopleDetailItemInfo() {
         let dict = ["moduleType": "3",
-                    "entityId": enityId] as [String: Any]
+                    "personId": personId] as [String: Any]
         let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
@@ -105,7 +105,7 @@ extension PeopleDetailOneViewController: UICollectionViewDelegateFlowLayout, UIC
         let newArray = Array(modelArray.dropLast())[indexPath.section]
         let model = newArray.children?[indexPath.row]
         let oneUrl = base_url + (model?.path ?? "")
-        pageUrl = oneUrl + "?" + "personNumber=\(enityId)"
+        pageUrl = oneUrl + "?" + "personNumber=\(personId)"
         self.pushWebPage(from: pageUrl)
     }
     

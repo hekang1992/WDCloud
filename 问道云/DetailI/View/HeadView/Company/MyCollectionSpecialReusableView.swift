@@ -182,7 +182,7 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
                     let legalName = model.name ?? ""
                     let personNumber = model.id ?? ""
                     let peopleDetailVc = PeopleBothViewController()
-                    peopleDetailVc.enityId.accept(personNumber)
+                    peopleDetailVc.personId.accept(personNumber)
                     peopleDetailVc.peopleName.accept(legalName)
                     vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
                 }
@@ -192,7 +192,7 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
                 let legalName = model.name ?? ""
                 let personNumber = model.id ?? ""
                 let peopleDetailVc = PeopleBothViewController()
-                peopleDetailVc.enityId.accept(personNumber)
+                peopleDetailVc.personId.accept(personNumber)
                 peopleDetailVc.peopleName.accept(legalName)
                 vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }
@@ -215,6 +215,7 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
                 .init(imageResource: "itemfiveicon",
                       path: "")
             ]
+            
             //问道图谱
             headView.sixHeadView.twoItems = [
                 .init(imageResource: "picone",

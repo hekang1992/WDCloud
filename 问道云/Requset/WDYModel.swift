@@ -914,6 +914,7 @@ class pageDataModel {
     var labels: [labelsModel]?
     var followStatus: String?//是否被关注
     var orgInfo: orgInfoModel?
+    var leaderVec: leaderVecModel?
     init(json: JSON) {
         self.orgInfo = orgInfoModel(json: json["orgInfo"])
         self.followStatus = json["followStatus"].stringValue
@@ -922,6 +923,7 @@ class pageDataModel {
         self.legalPerson = legalPersonModel(json: json["legalPerson"])
         self.riskInfo = riskInfoModel(json: json["riskInfo"])
         self.labels = json["labels"].arrayValue.map { labelsModel(json: $0) }
+        self.leaderVec = leaderVecModel(json: json["leaderVec"])
     }
 }
 
@@ -1448,5 +1450,23 @@ class regAddrModel {
         self.lat = json["lat"].stringValue
         self.lng = json["lng"].stringValue
         self.orgCount = json["orgCount"].intValue
+    }
+}
+
+class leaderVecModel {
+    var leaderList: [leaderListModel]?
+    init(json: JSON) {
+        self.leaderList = json["leaderList"].arrayValue.map { leaderListModel(json: $0) }
+    }
+}
+
+class leaderListModel {
+    var leaderCategory: String?
+    var leaderId: String?
+    var name: String?
+    init(json: JSON) {
+        self.leaderCategory = json["leaderCategory"].stringValue
+        self.leaderId = json["leaderId"].stringValue
+        self.name = json["name"].stringValue
     }
 }

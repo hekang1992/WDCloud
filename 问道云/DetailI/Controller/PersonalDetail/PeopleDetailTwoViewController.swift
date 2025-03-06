@@ -17,7 +17,7 @@ class PeopleDetailTwoViewController: WDBaseViewController {
     
     var isHistory: Int = 0
     
-    var enityId: String = ""
+    var personId: String = ""
     
     var allArray: [rowsModel] = []
     
@@ -241,7 +241,7 @@ extension PeopleDetailTwoViewController {
     private func getCorrelationInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["personId": enityId,
+        let dict = ["personId": personId,
                     "holdType": holdType,
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
@@ -290,7 +290,7 @@ extension PeopleDetailTwoViewController {
     private func getNumInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["personId": enityId]
+        let dict = ["personId": personId]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/person/relatedEntityCount",
                        method: .get) { [weak self] result in

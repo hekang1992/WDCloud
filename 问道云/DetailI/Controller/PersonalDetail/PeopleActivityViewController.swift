@@ -10,7 +10,7 @@ import MJRefresh
 
 class PeopleActivityViewController: WDBaseViewController {
     
-    var enityId: String = ""
+    var personId: String = ""
     
     var pageIndex: Int = 1
     
@@ -144,7 +144,7 @@ extension PeopleActivityViewController {
     private func getActivityInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["personNumber": enityId,
+        let dict = ["personId": personId,
                     "pageNum": pageIndex,
                     "pageSize": "20"] as [String : Any]
         man.requestAPI(params: dict,

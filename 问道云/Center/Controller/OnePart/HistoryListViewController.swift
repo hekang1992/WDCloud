@@ -54,7 +54,7 @@ class HistoryListViewController: WDBaseViewController {
                 navController?.navigationController?.pushViewController(companyDetailVc, animated: true)
             }else {//个人
                 let peopleDetailVc = PeopleBothViewController()
-                peopleDetailVc.enityId.accept(String(model.personnumber ?? ""))
+                peopleDetailVc.personId.accept(String(model.personnumber ?? ""))
                 peopleDetailVc.peopleName.accept(model.personname ?? "")
                 navController?.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }

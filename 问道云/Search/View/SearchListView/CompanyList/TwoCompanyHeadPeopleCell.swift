@@ -70,7 +70,7 @@ extension TwoCompanyHeadPeopleCell: UICollectionViewDelegate, UICollectionViewDa
         let name = model?.name ?? ""
         let vc = ViewControllerUtils.findViewController(from: self)
         let peopleDetailVc = PeopleBothViewController()
-        peopleDetailVc.enityId.accept(personId)
+        peopleDetailVc.personId.accept(personId)
         peopleDetailVc.peopleName.accept(name)
         vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
     }

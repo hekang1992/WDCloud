@@ -12,7 +12,7 @@ import JXSegmentedView
 class PeopleBothViewController: WDBaseViewController {
     
     //个人ID
-    var enityId = BehaviorRelay<String>(value: "")
+    var personId = BehaviorRelay<String>(value: "")
     
     //个人名称
     var peopleName = BehaviorRelay<String>(value: "")
@@ -31,13 +31,13 @@ class PeopleBothViewController: WDBaseViewController {
     
     lazy var peopleDetailVc: PeopleDetailViewController = {
         let peopleDetailVc = PeopleDetailViewController()
-        peopleDetailVc.enityId = self.enityId.value
+        peopleDetailVc.personId = self.personId.value
         return peopleDetailVc
     }()
     
     lazy var activityDetailVc: PeopleActivityViewController = {
         let activityDetailVc = PeopleActivityViewController()
-        activityDetailVc.enityId = self.enityId.value
+        activityDetailVc.personId = self.personId.value
         return activityDetailVc
     }()
 

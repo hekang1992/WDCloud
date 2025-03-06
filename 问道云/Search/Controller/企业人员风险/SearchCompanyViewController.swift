@@ -173,10 +173,11 @@ class SearchCompanyViewController: WDBaseViewController {
         
         companyListView.peopleBlock = { [weak self] model in
             guard let self = self else { return }
-            let legalName = model.legalPerson?.legalName ?? ""
-            let personNumber = model.legalPerson?.personNumber ?? ""
+            let peopleModel = model.leaderVec?.leaderList?.first
+            let legalName = peopleModel?.name ?? ""
+            let personNumber = peopleModel?.leaderId ?? ""
             let peopleDetailVc = PeopleBothViewController()
-            peopleDetailVc.enityId.accept(personNumber)
+            peopleDetailVc.personId.accept(personNumber)
             peopleDetailVc.peopleName.accept(legalName)
             self.navigationController?.pushViewController(peopleDetailVc, animated: true)
         }

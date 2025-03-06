@@ -149,7 +149,7 @@ class SearchPeopleViewController: WDBaseViewController {
         
         twoPeopleListView.peopleBlock = { model in
             let peopleDetailVc = PeopleBothViewController()
-            peopleDetailVc.enityId.accept(model.personId ?? "")
+            peopleDetailVc.personId.accept(model.personId ?? "")
             peopleDetailVc.peopleName.accept(model.personName ?? "")
             self.navigationController?.pushViewController(peopleDetailVc, animated: true)
         }
@@ -297,7 +297,7 @@ extension SearchPeopleViewController {
                 let peopleDetailVc = PeopleBothViewController()
                 let peopleID = model.personnumber ?? ""
                 let peopleName = model.personname ?? ""
-                peopleDetailVc.enityId.accept(peopleID)
+                peopleDetailVc.personId.accept(peopleID)
                 peopleDetailVc.peopleName.accept(peopleName)
                 self.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }
@@ -357,7 +357,7 @@ extension SearchPeopleViewController {
                 let peopleDetailVc = PeopleBothViewController()
                 let peopleID = model.eid ?? ""
                 let peopleName = model.name ?? ""
-                peopleDetailVc.enityId.accept(peopleID)
+                peopleDetailVc.personId.accept(peopleID)
                 peopleDetailVc.peopleName.accept(peopleName)
                 self.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }

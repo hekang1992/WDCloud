@@ -208,11 +208,10 @@ class TwoCompanyNormalListCell: BaseViewCell {
             self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (40, 40)))
             
             //名字
-//            self.nameLabel.attributedText = TextStyler.styledText(for: companyName, target: model.searchStr ?? "", color: UIColor.init(cssStr: "#F55B5B")!)
             self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: companyName, colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))
             
             //法人
-            self.nameView.label2.text = model.legalPerson?.legalName ?? ""
+            self.nameView.label2.text = model.leaderVec?.leaderList?.first?.name ?? ""
             self.nameView.label2.textColor = .init(cssStr: "#F55B5B")
             
             //注册资本
