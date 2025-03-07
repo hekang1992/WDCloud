@@ -157,7 +157,17 @@ class DataModel {
     var pushOffset: String?
     var orgNum: Int?
     var personNum: Int?
+    var phoneList: [phoneListModel]?
+    var addressList: [addressListModel]?
+    var websitesList: [websitesListModel]?
+    var emailList: [emailListModel]?
+    var wechatList: [wechatListModel]?
     init(json: JSON) {
+        self.phoneList = json["phoneList"].arrayValue.map { phoneListModel(json: $0) }
+        self.addressList = json["addressList"].arrayValue.map { addressListModel(json: $0) }
+        self.websitesList = json["websitesList"].arrayValue.map { websitesListModel(json: $0) }
+        self.emailList = json["emailList"].arrayValue.map { emailListModel(json: $0) }
+        self.wechatList = json["wechatList"].arrayValue.map { wechatListModel(json: $0) }
         self.contactInfoCount = contactInfoCountModel(json: json["contactInfoCount"])
         self.leaderVec = leaderVecModel(json: json["leaderVec"])
         self.basicInfo = basicInfoModel(json: json["basicInfo"])
@@ -947,8 +957,10 @@ class orgInfoModel {
     var phone: String?
     var website: String?
     var regAddr: regAddrModel?
+    var logoColor: String?
     init(json: JSON) {
         self.logo = json["logo"].stringValue
+        self.logoColor = json["logoColor"].stringValue
         self.incDate = json["incDate"].stringValue
         self.orgId = json["orgId"].stringValue
         self.orgName = json["orgName"].stringValue
@@ -1495,5 +1507,80 @@ class contactInfoCountModel {
         self.phoneCount = json["phoneCount"].intValue
         self.webSiteCount = json["webSiteCount"].intValue
         self.wechatCount = json["wechatCount"].intValue
+    }
+}
+
+class phoneListModel {
+    var phone: String?
+    var year: String?
+    var source: String?
+    var orgCount: String?
+    init(json: JSON) {
+        self.phone = json["phone"].stringValue
+        self.year = json["year"].stringValue
+        self.source = json["source"].stringValue
+        self.orgCount = json["orgCount"].stringValue
+    }
+}
+
+class addressListModel {
+    var address: String?
+    var lng: String?
+    var lat: String?
+    var orgCount: String?
+    var type: String?
+    init(json: JSON) {
+        self.address = json["address"].stringValue
+        self.lng = json["lng"].stringValue
+        self.lat = json["lat"].stringValue
+        self.orgCount = json["orgCount"].stringValue
+        self.type = json["type"].stringValue
+    }
+}
+
+class websitesListModel {
+    var website: String?
+    var year: String?
+    var icpFlag: String?
+    var orgCount: String?
+    init(json: JSON) {
+        self.website = json["website"].stringValue
+        self.year = json["year"].stringValue
+        self.icpFlag = json["icpFlag"].stringValue
+        self.orgCount = json["orgCount"].stringValue
+    }
+}
+
+class emailListModel {
+    var emailId: String?
+    var email: String?
+    var year: String?
+    var source: String?
+    var orgCount: String?
+    init(json: JSON) {
+        self.emailId = json["emailId"].stringValue
+        self.email = json["email"].stringValue
+        self.year = json["year"].stringValue
+        self.source = json["source"].stringValue
+        self.orgCount = json["orgCount"].stringValue
+    }
+}
+
+class wechatListModel {
+    var wechatId: String?
+    var wechat: String?
+    var title: String?
+    var imgUrl: String?
+    var year: String?
+    var source: String?
+    var orgCount: String?
+    init(json: JSON) {
+        self.wechatId = json["wechatId"].stringValue
+        self.wechat = json["wechat"].stringValue
+        self.title = json["title"].stringValue
+        self.imgUrl = json["imgUrl"].stringValue
+        self.year = json["year"].stringValue
+        self.source = json["source"].stringValue
+        self.orgCount = json["orgCount"].stringValue
     }
 }

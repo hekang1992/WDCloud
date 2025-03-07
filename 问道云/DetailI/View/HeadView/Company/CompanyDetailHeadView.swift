@@ -53,21 +53,6 @@ class CompanyDetailHeadView: BaseView {
     
     lazy var twoHeadView: CompanyTwoHeadView = {
         let twoHeadView = CompanyTwoHeadView()
-        twoHeadView.oneBlock = { [weak self] in
-            self?.oneBlock?()
-        }
-        twoHeadView.twoBlock = { [weak self] in
-            self?.twoBlock?()
-        }
-        twoHeadView.threeBlock = { [weak self] in
-            self?.threeBlock?()
-        }
-        twoHeadView.fourBlock = { [weak self] in
-            self?.fourBlock?()
-        }
-        twoHeadView.fiveBlock = { [weak self] in
-            self?.fiveBlock?()
-        }
         return twoHeadView
     }()
     

@@ -38,6 +38,9 @@ class CompanyDetailView: BaseView {
     
     var headHeight: Double = 906
     
+    //电话邮箱地址弹窗
+    var phoneEmailModel = BehaviorRelay<DataModel?>(value: nil)
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -253,6 +256,9 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
             }
             if let riskModel = self.riskModel.value {
                 headerView.riskModel.accept(riskModel)
+            }
+            if let phoneEmailModel = self.phoneEmailModel.value {
+                headerView.phoneEmailModel.accept(phoneEmailModel)
             }
             return headerView
         }else {

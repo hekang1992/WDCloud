@@ -169,6 +169,8 @@ extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigat
             self.navigationController?.popViewController(animated: true)
         }else if method == "enable_landscape" {
             enableLandscape()
+        }else if method == "open_pdf_url" {
+            
         }
         return ""
     }

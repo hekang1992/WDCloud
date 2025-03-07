@@ -187,8 +187,10 @@ class TwoRiskListCompanyCell: BaseViewCell {
             guard let self = self, let model = model else { return }
             
             let companyName = model.orgInfo?.orgName ?? ""
+            let logoColor = model.orgInfo?.logoColor ?? ""
+            let logo = model.orgInfo?.logo ?? ""
             
-            self.ctImageView.kf.setImage(with: URL(string: model.orgInfo?.logo ?? ""), placeholder: UIImage.imageOfText(companyName, size: (32, 32)))
+            self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (32, 32), bgColor: UIColor.init(cssStr: logoColor)!))
             
             //匹配文字
             self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: companyName, colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))

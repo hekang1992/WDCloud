@@ -204,8 +204,9 @@ class TwoCompanyNormalListCell: BaseViewCell {
             guard let self = self, let model = model else { return }
             let logo = model.orgInfo?.logo ?? ""
             let companyName = model.orgInfo?.orgName ?? ""
+            let logoColor = model.orgInfo?.logoColor ?? ""
             //logo
-            self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (40, 40)))
+            self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (40, 40), bgColor: UIColor.init(cssStr: logoColor)!))
             
             //名字
             self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: companyName, colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))

@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import TYAlertController
 
 class CompanyTwoHeadView: BaseView {
     
@@ -161,27 +162,27 @@ class CompanyTwoHeadView: BaseView {
             
             oneBtn.rx.tap.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-               
+                self.getPhoneInfo()
             }).disposed(by: disposeBag)
             
             twoBtn.rx.tap.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                
+                self.getPhoneInfo()
             }).disposed(by: disposeBag)
             
             threeBtn.rx.tap.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                
+                self.getPhoneInfo()
             }).disposed(by: disposeBag)
             
             fourBtn.rx.tap.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                
+                self.getPhoneInfo()
             }).disposed(by: disposeBag)
             
             fiveBtn.rx.tap.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                
+                self.getPhoneInfo()
             }).disposed(by: disposeBag)
             
         }).disposed(by: disposeBag)
@@ -189,6 +190,21 @@ class CompanyTwoHeadView: BaseView {
     
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+extension CompanyTwoHeadView {
+    
+    //获取电话信息
+    private func getPhoneInfo() {
+        let phoneView = PopPhoneEmailView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 610))
+        let alertVc = TYAlertController(alert: phoneView, preferredStyle: .actionSheet)!
+        if let model = self.model.value {
+            phoneView.model.accept(model)
+        }
+        let vc = ViewControllerUtils.findViewController(from: self)
+        vc?.present(alertVc, animated: true)
     }
     
 }

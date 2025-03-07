@@ -16,19 +16,13 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
     
     //头部数据模型
     var model = BehaviorRelay<DataModel?>(value: nil)
+    var phoneEmailModel = BehaviorRelay<DataModel?>(value: nil)
     
     //风险模型
     var riskModel = BehaviorRelay<DataModel?>(value: nil)
     
     //点击了小标签的展开和收起
     var moreClickBlcok: ((CompanyModel) -> Void)?
-    
-    //电话点击
-    var oneBlock: (() -> Void)?
-    var twoBlock: (() -> Void)?
-    var threeBlock: (() -> Void)?
-    var fourBlock: (() -> Void)?
-    var fiveBlock: (() -> Void)?
     
     static let identifier = "MyCollectionSpecialReusableView"
     
@@ -37,21 +31,6 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
         headView.moreClickBlcok = { [weak self] model in
             guard let self = self else { return }
             self.moreClickBlcok?(model)
-        }
-        headView.oneBlock = { [weak self] in
-            self?.oneBlock?()
-        }
-        headView.twoBlock = { [weak self] in
-            self?.twoBlock?()
-        }
-        headView.threeBlock = { [weak self] in
-            self?.threeBlock?()
-        }
-        headView.fourBlock = { [weak self] in
-            self?.fourBlock?()
-        }
-        headView.fiveBlock = { [weak self] in
-            self?.fiveBlock?()
         }
         return headView
     }()
@@ -311,6 +290,10 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             
         }).disposed(by: disposeBag)
         
+        phoneEmailModel.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            headView.twoHeadView.model.accept(model)
+        }).disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {

@@ -130,6 +130,7 @@
 		734334952D798DEE006AE608 /* CompanySearchPeopleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734334942D798DEE006AE608 /* CompanySearchPeopleViewCell.swift */; };
 		734334972D799E84006AE608 /* BiaoQianView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734334962D799E84006AE608 /* BiaoQianView.swift */; };
 		734334992D7AA31F006AE608 /* PopIndustryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734334982D7AA31F006AE608 /* PopIndustryView.swift */; };
+		7343349B2D7AFA40006AE608 /* PopPhoneEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7343349A2D7AFA40006AE608 /* PopPhoneEmailView.swift */; };
 		734355E82D2641C400BB4087 /* GroupTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E72D2641C400BB4087 /* GroupTeamViewController.swift */; };
 		734355EA2D26431900BB4087 /* GroupTeamNorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355E92D26431900BB4087 /* GroupTeamNorView.swift */; };
 		734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */; };
@@ -510,6 +511,7 @@
 		734334942D798DEE006AE608 /* CompanySearchPeopleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanySearchPeopleViewCell.swift; sourceTree = "<group>"; };
 		734334962D799E84006AE608 /* BiaoQianView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiaoQianView.swift; sourceTree = "<group>"; };
 		734334982D7AA31F006AE608 /* PopIndustryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopIndustryView.swift; sourceTree = "<group>"; };
+		7343349A2D7AFA40006AE608 /* PopPhoneEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopPhoneEmailView.swift; sourceTree = "<group>"; };
 		734355E72D2641C400BB4087 /* GroupTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamViewController.swift; sourceTree = "<group>"; };
 		734355E92D26431900BB4087 /* GroupTeamNorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamNorView.swift; sourceTree = "<group>"; };
 		734355EB2D26433000BB4087 /* GroupTeamSpecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTeamSpecView.swift; sourceTree = "<group>"; };
@@ -1527,6 +1529,7 @@
 				73B362402D377C28003BD911 /* PopEmployeeNumView.swift */,
 				73B362422D3793F9003BD911 /* PopRateMoneyView.swift */,
 				734334982D7AA31F006AE608 /* PopIndustryView.swift */,
+				7343349A2D7AFA40006AE608 /* PopPhoneEmailView.swift */,
 			);
 			path = PopView;
 			sourceTree = "<group>";
@@ -2342,6 +2345,7 @@
 				7342CF552D7815C3005157A0 /* ServerDataManager.swift in Sources */,
 				7340E1882D5CD374008FD5C7 /* SearchCompanyAssetSeizureViewController.swift in Sources */,
 				736E97852D22A7A0009CC0DF /* ApplePayConfig.swift in Sources */,
+				7343349B2D7AFA40006AE608 /* PopPhoneEmailView.swift in Sources */,
 				7352B2382D36736400B5391B /* CompanyDescInfoView.swift in Sources */,
 				73868A432D55F54E00CE107D /* WeekReportViewController.swift in Sources */,
 				739527F22D62CBB30020589C /* AddCompanyViewController.swift in Sources */,
