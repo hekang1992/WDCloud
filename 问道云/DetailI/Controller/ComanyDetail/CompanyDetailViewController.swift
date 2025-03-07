@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import SwiftyJSON
 
 class CompanyDetailViewController: WDBaseViewController {
     
@@ -50,9 +51,13 @@ class CompanyDetailViewController: WDBaseViewController {
         //一键报告
         companyDetailView.footerView.backBtn1.rx.tap.subscribe(onNext: { [weak self] in
             let oneRpVc = OneReportViewController()
-            if let firmModel = self?.headModel.value?.firmInfo {
-#warning("=======================================")
-//                oneRpVc.orgInfo = orgInfoModel
+            if let model = self?.headModel.value?.basicInfo {
+                let orgId = model.orgId ?? ""
+                let orgName = model.orgName ?? ""
+                let json: JSON = ["orgId": orgId,
+                                  "orgName": orgName]
+                let orgInfo = orgInfoModel(json: json)
+                oneRpVc.orgInfo = orgInfo
             }
             self?.navigationController?.pushViewController(oneRpVc, animated: true)
         }).disposed(by: disposeBag)
@@ -113,7 +118,8 @@ extension CompanyDetailViewController {
             switch result {
             case .success(let success):
                 if let model = success.data {
-                    
+                    self.companyDetailView.numModel.accept(model)
+                    self.companyDetailView.collectionView.reloadData()
                 }
                 break
             case .failure(_):

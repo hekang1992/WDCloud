@@ -15,6 +15,8 @@ class CompanyCollectionCell: UICollectionViewCell {
     
     var model = BehaviorRelay<childrenModel?>(value: nil)
     
+    var numModel = BehaviorRelay<itemsModel?>(value: nil)
+    
     lazy var lineView1: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .init(cssStr: "#EEEEEE")
@@ -111,8 +113,20 @@ class CompanyCollectionCell: UICollectionViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             namelabel.text = model.menuName ?? ""
-            ctImageView.kf.setImage(with: URL(string: model.icon ?? ""))
+            let clickFlag = model.clickFlag ?? 0
+            if clickFlag == 1 {
+                ctImageView.kf.setImage(with: URL(string: model.iconGrey ?? ""))
+            }else {
+                ctImageView.kf.setImage(with: URL(string: model.icon ?? ""))
+            }
         }).disposed(by: disposeBag)
+        
+        numModel.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            let count = model.count ?? "0"
+            numlabel.text = String(count)
+        }).disposed(by: disposeBag)
+        
     }
     
     required init?(coder: NSCoder) {

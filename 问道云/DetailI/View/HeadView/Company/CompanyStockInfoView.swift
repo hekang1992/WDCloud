@@ -108,9 +108,9 @@ class CompanyStockInfoView: BaseView {
         return timeLabel
     }()
     
-    lazy var icon: UIImageView = {
-        let icon = UIImageView()
-        return icon
+    lazy var iconImageView: UIImageView = {
+        let iconImageView = UIImageView()
+        return iconImageView
     }()
     
     lazy var jgLabel: UILabel = {
@@ -236,7 +236,7 @@ class CompanyStockInfoView: BaseView {
         addSubview(nameLabel)
         addSubview(lineView)
         addSubview(timeLabel)
-        addSubview(icon)
+        addSubview(iconImageView)
         addSubview(jgLabel)
         addSubview(ctImageView)
         addSubview(zdLabel)
@@ -268,7 +268,7 @@ class CompanyStockInfoView: BaseView {
             make.height.equalTo(12)
             make.left.equalTo(lineView.snp.right).offset(5)
         }
-        icon.snp.makeConstraints { make in
+        iconImageView.snp.makeConstraints { make in
             make.centerY.equalTo(nameLabel.snp.centerY)
             make.right.equalToSuperview().offset(-13)
             make.size.equalTo(CGSize(width: 28, height: 16))
@@ -358,7 +358,7 @@ class CompanyStockInfoView: BaseView {
         
         dataModel.asObservable().subscribe(onNext: { [weak self] model in
             if let self = self, let stockModel = model?.stockInfo?.first, let valueModel = stockModel.value {
-                self.icon.image = UIImage(named: stockModel.key ?? "")
+                self.iconImageView.image = UIImage(named: stockModel.key ?? "")
                 
                 self.nameLabel.text = valueModel.stockName ?? ""
                 
@@ -389,8 +389,8 @@ class CompanyStockInfoView: BaseView {
                 
                 self.zdLabel.text = "(\(valueModel.riseFallRatio ?? "--")%)"
                 
-                let listingStatus = model?.firmInfo?.listingStatus ?? ""
-                if listingStatus != "1" {
+                let listingStatus = model?.stockInfo?.first?.value?.listingStatus ?? ""
+                if listingStatus != "2" {
                     self.typeLabel.text = "退市"
                     self.typeLabel.textColor = .init(cssStr: "#666666")
                 }else {

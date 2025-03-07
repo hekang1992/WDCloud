@@ -63,6 +63,7 @@ class DataModel {
     var bossList: bossListModel?
     var pageData: [pageDataModel]?
     var pageMeta: pageMetaModel?
+    var contactInfoCount: contactInfoCountModel?
     
     //风险数据模型
     var entityData: entityDataModel?
@@ -91,9 +92,9 @@ class DataModel {
     //主要股东
     var shareHolders: [shareHoldersModel]?
     //主要人员
-    var staffInfos: [staffInfosModel]?
+    var srMgmtInfos: [staffInfosModel]?
     //曾用名
-    var namesUsedBefore: [namesUsedBeforeModel]?
+    var namesHis: [namesUsedBeforeModel]?
     //税号
     var taxInfo: taxInfoModel?
     //总资产
@@ -102,6 +103,10 @@ class DataModel {
     var labels: [promptLabelsModel]?
     //是否被关注
     var followInfo: followInfoModel?
+    //法人
+    var leaderVec: leaderVecModel?
+    //基本信息
+    var basicInfo: basicInfoModel?
     /**
      个人详情数据模型
      */
@@ -152,8 +157,9 @@ class DataModel {
     var pushOffset: String?
     var orgNum: Int?
     var personNum: Int?
-    var basicInfo: basicInfoModel?//企业详情基本信息
     init(json: JSON) {
+        self.contactInfoCount = contactInfoCountModel(json: json["contactInfoCount"])
+        self.leaderVec = leaderVecModel(json: json["leaderVec"])
         self.basicInfo = basicInfoModel(json: json["basicInfo"])
         self.generaCompanyCnt = json["generaCompanyCnt"].intValue
         self.investCompanyCnt = json["investCompanyCnt"].intValue
@@ -210,8 +216,8 @@ class DataModel {
         self.labels = json["labels"].arrayValue.map { promptLabelsModel(json: $0) }
         self.assetInfo = assetInfoModel(json: json["assetInfo"])
         self.taxInfo = taxInfoModel(json: json["taxInfo"])
-        self.namesUsedBefore = json["namesUsedBefore"].arrayValue.map { namesUsedBeforeModel(json: $0) }
-        self.staffInfos = json["staffInfos"].arrayValue.map { staffInfosModel(json: $0) }
+        self.namesHis = json["namesUsedBefore"].arrayValue.map { namesUsedBeforeModel(json: $0) }
+        self.srMgmtInfos = json["srMgmtInfos"].arrayValue.map { staffInfosModel(json: $0) }
         self.shareHolders = json["shareHolders"].arrayValue.map { shareHoldersModel(json: $0) }
         self.profitInfo = profitInfoModel(json: json["profitInfo"])
         self.incomeInfo = incomeInfoModel(json: json["incomeInfo"])
@@ -337,7 +343,7 @@ class itemsModel {
     var legalName: String?//法定代表人
     var incorporationTime: String?//成立时间
     var organizationNumber: String?//组织代码
-    var count: Int?
+    var count: String?
     var riskNum1: Int?//成立时间
     var riskNum2: Int?//成立时间
     
@@ -437,7 +443,7 @@ class itemsModel {
         self.templatepath = json["templatepath"].stringValue
         self.descprtion = json["descprtion"].stringValue
         self.forshort = json["forshort"].stringValue
-        self.count = json["count"].intValue
+        self.count = json["count"].stringValue
         self.ossUrl = json["ossUrl"].stringValue
         self.timeliness = json["timeliness"].stringValue
         self.entryIntoForceTime = json["entryIntoForceTime"].stringValue
@@ -565,20 +571,24 @@ class shareholderListModel {
 
 class childrenModel {
     var icon: String?
+    var iconGrey: String?
     var menuName: String?
     var path: String?//请求地址
     var menuId: String?
     var children: [childrenModel]?
     var name: String?
     var code: String?
+    var clickFlag: Int?
     init(json: JSON) {
         self.children = json["children"].arrayValue.map { childrenModel(json: $0) }
         self.icon = json["icon"].stringValue
+        self.iconGrey = json["iconGrey"].stringValue
         self.menuName = json["menuName"].stringValue
         self.path = json["path"].stringValue
         self.menuId = json["menuId"].stringValue
         self.name = json["name"].stringValue
         self.code = json["code"].stringValue
+        self.clickFlag = json["clickFlag"].intValue
     }
 }
 
@@ -1192,32 +1202,28 @@ class profitInfoModel {
 class shareHoldersModel {
     var id: String?
     var name: String?
-    var percent: String?
+    var shRatio: String?
     var relatedNum: Int?
-    var type: String?//类型 2公司 1个人
+    var category: String?//类型 2公司 1个人
     init(json: JSON) {
         self.id = json["id"].stringValue
         self.name = json["name"].stringValue
-        self.percent = json["percent"].stringValue
+        self.shRatio = json["shRatio"].stringValue
         self.relatedNum = json["relatedNum"].intValue
-        self.type = json["type"].stringValue
+        self.category = json["category"].stringValue
     }
 }
 
 //主要人员
 class staffInfosModel {
-    var count: Int?
-    var entityId: String?
-    var id: String?//人员ID
+    var orgId: String?//人员ID
     var name: String?
     var positionName: String?
     var relatedNum: Int?
     var logo: String?
     init(json: JSON) {
         self.logo = json["logo"].stringValue
-        self.count = json["count"].intValue
-        self.entityId = json["entityId"].stringValue
-        self.id = json["id"].stringValue
+        self.orgId = json["orgId"].stringValue
         self.name = json["name"].stringValue
         self.positionName = json["positionName"].stringValue
         self.relatedNum = json["relatedNum"].intValue
@@ -1227,14 +1233,14 @@ class staffInfosModel {
 //曾用名
 class namesUsedBeforeModel {
     var endTime: String?
-    var entityId: String?
-    var entityName: String?
+    var orgId: String?
+    var orgName: String?
     var startTime: String?
     init(json: JSON) {
         self.startTime = json["startTime"].stringValue
         self.endTime = json["endTime"].stringValue
-        self.entityId = json["entityId"].stringValue
-        self.entityName = json["entityName"].stringValue
+        self.orgId = json["orgId"].stringValue
+        self.orgName = json["orgName"].stringValue
     }
 }
 
@@ -1409,7 +1415,9 @@ class basicInfoModel {
     var regCap: String?
     var scale: String?
     var usCreditCode: String?
+    var regCapCur: String?
     init(json: JSON) {
+        self.regCapCur = json["regCapCur"].stringValue
         self.actCap = json["actCap"].stringValue
         self.actCapCur = json["actCapCur"].stringValue
         self.incDate = json["incDate"].stringValue
@@ -1472,5 +1480,20 @@ class leaderListModel {
         self.leaderCategory = json["leaderCategory"].stringValue
         self.leaderId = json["leaderId"].stringValue
         self.name = json["name"].stringValue
+    }
+}
+
+class contactInfoCountModel {
+    var addressCount: Int?
+    var emailCount: Int?
+    var phoneCount: Int?
+    var webSiteCount: Int?
+    var wechatCount: Int?
+    init(json: JSON) {
+        self.addressCount = json["addressCount"].intValue
+        self.emailCount = json["emailCount"].intValue
+        self.phoneCount = json["phoneCount"].intValue
+        self.webSiteCount = json["webSiteCount"].intValue
+        self.wechatCount = json["wechatCount"].intValue
     }
 }

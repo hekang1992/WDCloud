@@ -90,14 +90,14 @@ class PopRateMoneyView: BaseView {
         }
         
         cancelBtn.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(20)
+            make.left.equalToSuperview().offset(15)
             make.bottom.equalToSuperview().offset(-15)
-            make.size.equalTo(CGSize(width: 130, height: 37))
+            make.size.equalTo(CGSize(width: 135.pix(), height: 37))
         }
         moreBtn.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-20)
+            make.right.equalToSuperview().offset(-15)
             make.bottom.equalToSuperview().offset(-15)
-            make.size.equalTo(CGSize(width: 130, height: 37))
+            make.size.equalTo(CGSize(width: 135.pix(), height: 37))
         }
         
         moreBtn.rx.tap.subscribe(onNext: { [weak self] in

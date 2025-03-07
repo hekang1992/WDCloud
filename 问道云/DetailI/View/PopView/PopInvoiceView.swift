@@ -242,29 +242,27 @@ class PopInvoiceView: BaseView {
             make.right.equalToSuperview().offset(-20)
         }
         
-        
-        
         desclabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(fivelabel.snp.bottom).offset(40)
             make.height.equalTo(15)
         }
         cancelBtn.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(22)
+            make.left.equalToSuperview().offset(15)
             make.top.equalTo(desclabel.snp.bottom).offset(10)
-            make.size.equalTo(CGSize(width: 130, height: 37))
+            make.size.equalTo(CGSize(width: 135.pix(), height: 37))
         }
         saveBtn.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-22)
+            make.right.equalToSuperview().offset(-15)
             make.top.equalTo(desclabel.snp.bottom).offset(10)
-            make.size.equalTo(CGSize(width: 130, height: 37))
+            make.size.equalTo(CGSize(width: 135.pix(), height: 37))
         }
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             namelabel.text = model.basicInfo?.orgName ?? ""
             label1.text = model.taxInfo?.taxpayerId ?? ""
-            label2.text = model.firmInfo?.entityAddress ?? ""
+            label2.text = model.taxInfo?.registerAddress ?? ""
             label3.text = model.taxInfo?.phone ?? ""
             label4.text = "--"
             label5.text = "--"

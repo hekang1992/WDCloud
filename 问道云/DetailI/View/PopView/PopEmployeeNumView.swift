@@ -79,7 +79,7 @@ class PopEmployeeNumView: BaseView {
         cancelBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-15)
-            make.size.equalTo(CGSize(width: 130, height: 37))
+            make.size.equalTo(CGSize(width: 130, height: 40.pix()))
         }
         
         model.asObservable().compactMap { $0?.employees?.annualReports ?? [] }.bind(to: tableView.rx.items(cellIdentifier: "EmployeeNumViewCell", cellType: EmployeeNumViewCell.self)) { row, model, cell in

@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import RxRelay
 
 class CompanyDetailHeadView: BaseView {
-
+    var model = BehaviorRelay<DataModel?>(value: nil)
     //展开简介按钮
     var moreBtnBlock: (() -> Void)?
     //点击了曾用名
@@ -26,7 +27,12 @@ class CompanyDetailHeadView: BaseView {
     //人员点击
     var staffInfosBlock: ((staffInfosModel) -> Void)?
     
-    
+    //电话点击
+    var oneBlock: (() -> Void)?
+    var twoBlock: (() -> Void)?
+    var threeBlock: (() -> Void)?
+    var fourBlock: (() -> Void)?
+    var fiveBlock: (() -> Void)?
     
     lazy var oneHeadView: CompanyOneHeadView = {
         let oneHeadView = CompanyOneHeadView()
@@ -47,6 +53,21 @@ class CompanyDetailHeadView: BaseView {
     
     lazy var twoHeadView: CompanyTwoHeadView = {
         let twoHeadView = CompanyTwoHeadView()
+        twoHeadView.oneBlock = { [weak self] in
+            self?.oneBlock?()
+        }
+        twoHeadView.twoBlock = { [weak self] in
+            self?.twoBlock?()
+        }
+        twoHeadView.threeBlock = { [weak self] in
+            self?.threeBlock?()
+        }
+        twoHeadView.fourBlock = { [weak self] in
+            self?.fourBlock?()
+        }
+        twoHeadView.fiveBlock = { [weak self] in
+            self?.fiveBlock?()
+        }
         return twoHeadView
     }()
     
@@ -86,17 +107,17 @@ class CompanyDetailHeadView: BaseView {
         addSubview(stockView)
         oneHeadView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
-            make.height.equalTo(210)
+            make.height.equalTo(220)
         }
         twoHeadView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(oneHeadView.snp.bottom)
-            make.height.equalTo(40)
+            make.height.equalTo(34)
         }
         threeHeadView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(twoHeadView.snp.bottom)
-            make.height.equalTo(160)
+            make.height.equalTo(0)
         }
         fourHeadView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
@@ -130,10 +151,35 @@ class CompanyDetailHeadView: BaseView {
                 }
             }else {
                 oneHeadView.snp.updateConstraints { make in
-                    make.height.equalTo(210)
+                    make.height.equalTo(220)
                 }
             }
         }
+        
+        model.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            let shareHolders = model.shareHolders ?? []
+            let srMgmtInfos = model.srMgmtInfos ?? []
+            threeHeadView.lineView.isHidden = false
+            if !shareHolders.isEmpty && !srMgmtInfos.isEmpty {
+                threeHeadView.snp.updateConstraints { make in
+                    make.height.equalTo(160)
+                }
+            }else if !shareHolders.isEmpty && srMgmtInfos.isEmpty {
+                threeHeadView.snp.updateConstraints { make in
+                    make.height.equalTo(86)
+                }
+            }else if shareHolders.isEmpty && !srMgmtInfos.isEmpty {
+                threeHeadView.snp.updateConstraints { make in
+                    make.height.equalTo(72)
+                }
+            }else {
+                threeHeadView.lineView.isHidden = true
+                threeHeadView.snp.updateConstraints { make in
+                    make.height.equalTo(0)
+                }
+            }
+        }).disposed(by: disposeBag)
         
     }
     

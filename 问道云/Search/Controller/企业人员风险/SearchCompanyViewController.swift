@@ -188,10 +188,12 @@ class SearchCompanyViewController: WDBaseViewController {
         }
         
         //企业ID回调
-        companyListView.entityIdBlock = { [weak self] entityId, entityName in
+        companyListView.entityIdBlock = { [weak self] model in
             let companyDetailVc = CompanyBothViewController()
-            companyDetailVc.enityId.accept(entityId)
-            companyDetailVc.companyName.accept(entityName)
+            let enityId = model.orgInfo?.orgId ?? ""
+            let companyName = model.orgInfo?.orgName ?? ""
+            companyDetailVc.enityId.accept(enityId)
+            companyDetailVc.companyName.accept(companyName)
             self?.navigationController?.pushViewController(companyDetailVc, animated: true)
         }
         
@@ -441,7 +443,7 @@ extension SearchCompanyViewController {
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功!")
+                        ToastViewConfig.showToast(message: "删除成功")
                         self.companyView.searchView.isHidden = true
                         self.companyView.searchView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
@@ -471,7 +473,7 @@ extension SearchCompanyViewController {
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功!")
+                        ToastViewConfig.showToast(message: "删除成功")
                         self.companyView.historyView.isHidden = true
                         self.companyView.historyView.snp.updateConstraints({ make in
                             make.height.equalTo(0)

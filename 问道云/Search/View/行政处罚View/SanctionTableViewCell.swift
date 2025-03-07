@@ -240,7 +240,7 @@ class SanctionTableViewCell: BaseViewCell {
             timeView.label2.textColor = .init(cssStr: "#333333")
             timeView.label2.text = model.incorporationTime ?? ""
             
-            let riskOne = String(model.count ?? 0)
+            let riskOne = String(model.count ?? "0")
             self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: riskOne, fullText: "共\(riskOne)条\(model.navHeadTitleStr ?? "")相关记录", font: .regularFontOfSize(size: 12))
             
         }).disposed(by: disposeBag)

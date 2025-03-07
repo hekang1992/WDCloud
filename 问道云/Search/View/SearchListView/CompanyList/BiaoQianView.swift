@@ -8,7 +8,8 @@
 import UIKit
 
 enum ShowTimeType {
-    case show
+    case showTime
+    case showImage
     case hide
 }
 
@@ -20,7 +21,7 @@ class BiaoQianView: BaseView {
     
     lazy var label1: UILabel = {
         let label1 = UILabel()
-        label1.font = .regularFontOfSize(size: 12)
+        label1.font = .regularFontOfSize(size: 11)
         label1.textColor = .init(cssStr: "#9FA4AD")
         label1.textAlignment = .center
         return label1
@@ -29,7 +30,7 @@ class BiaoQianView: BaseView {
     lazy var label2: UILabel = {
         let label2 = UILabel()
         label2.numberOfLines = 0
-        label2.font = .mediumFontOfSize(size: 13)
+        label2.font = .mediumFontOfSize(size: 12)
         label2.textColor = .init(cssStr: "#547AFF")
         label2.textAlignment = .center
         return label2
@@ -51,12 +52,18 @@ class BiaoQianView: BaseView {
         return lineView
     }()
     
+    lazy var iconImageView: UIImageView = {
+        let iconImageView = UIImageView()
+        iconImageView.image = UIImage(named: "hagnyeimagede")
+        return iconImageView
+    }()
+    
     init(frame: CGRect, enmu: ShowTimeType) {
         super.init(frame: frame)
-        addSubview(label1)
         addSubview(label2)
         addSubview(lineView)
-        if enmu == .show {
+        if enmu == .showTime {
+            addSubview(label1)
             addSubview(timeLabel)
             label1.snp.makeConstraints { make in
                 make.left.equalToSuperview().offset(15)
@@ -68,34 +75,32 @@ class BiaoQianView: BaseView {
                 make.centerY.equalTo(label1.snp.centerY)
                 make.height.equalTo(10)
             }
-            label2.snp.makeConstraints { make in
+        }else if enmu == .showImage {
+            addSubview(iconImageView)
+            iconImageView.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()
-                make.left.equalToSuperview()
-                make.bottom.equalToSuperview()
-            }
-            lineView.snp.makeConstraints { make in
-                make.centerY.equalToSuperview()
-                make.size.equalTo(CGSize(width: 0.5, height: 10))
-                make.right.equalToSuperview()
+                make.top.equalToSuperview()
+                make.size.equalTo(CGSize(width: 37, height: 16))
             }
         }else {
+            addSubview(label1)
             label1.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()
                 make.left.equalToSuperview()
                 make.top.equalToSuperview()
                 make.height.equalTo(16.5)
             }
-            label2.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.left.equalToSuperview()
-                make.bottom.equalToSuperview()
-                make.height.equalTo(18.5)
-            }
-            lineView.snp.makeConstraints { make in
-                make.centerY.equalToSuperview()
-                make.size.equalTo(CGSize(width: 0.5, height: 10))
-                make.right.equalToSuperview()
-            }
+        }
+        label2.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.height.equalTo(18.5)
+        }
+        lineView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.size.equalTo(CGSize(width: 0.5, height: 10))
+            make.right.equalToSuperview()
         }
     }
     

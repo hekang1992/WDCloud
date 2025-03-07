@@ -81,7 +81,7 @@ class CompanyLawListView: BaseView {
         numLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(15)
             make.left.equalToSuperview().offset(12)
-            make.height.equalTo(18)
+            make.height.equalTo(20)
         }
         oneBtn.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(50)

@@ -23,6 +23,13 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
     //点击了小标签的展开和收起
     var moreClickBlcok: ((CompanyModel) -> Void)?
     
+    //电话点击
+    var oneBlock: (() -> Void)?
+    var twoBlock: (() -> Void)?
+    var threeBlock: (() -> Void)?
+    var fourBlock: (() -> Void)?
+    var fiveBlock: (() -> Void)?
+    
     static let identifier = "MyCollectionSpecialReusableView"
     
     lazy var headView: CompanyDetailHeadView = {
@@ -30,6 +37,21 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
         headView.moreClickBlcok = { [weak self] model in
             guard let self = self else { return }
             self.moreClickBlcok?(model)
+        }
+        headView.oneBlock = { [weak self] in
+            self?.oneBlock?()
+        }
+        headView.twoBlock = { [weak self] in
+            self?.twoBlock?()
+        }
+        headView.threeBlock = { [weak self] in
+            self?.threeBlock?()
+        }
+        headView.fourBlock = { [weak self] in
+            self?.fourBlock?()
+        }
+        headView.fiveBlock = { [weak self] in
+            self?.fiveBlock?()
         }
         return headView
     }()
@@ -52,6 +74,7 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
+            headView.model.accept(model)
             //icon
             headView.oneHeadView.model.accept(model)
             let companyName = model.basicInfo?.orgName ?? ""
@@ -95,10 +118,13 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             //曾用名
             headView.historyNameBtnBlock = { [weak self] in
                 guard let self = self else { return }
-                let popNameView = PopHistoryNameView(frame: self.bounds)
+                let popNameView = PopHistoryNameView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 300))
                 let alertVc = TYAlertController(alert: popNameView, preferredStyle: .alert)
-                if let modelArray = model.namesUsedBefore {
+                if let modelArray = model.namesHis, modelArray.count > 0 {
                     popNameView.modelArray.accept(modelArray)
+                }else {
+                    ToastViewConfig.showToast(message: "暂无曾用名")
+                    return
                 }
                 //获取控制器
                 let vc = ViewControllerUtils.findViewController(from: self)
@@ -111,7 +137,7 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
                 popNameView.block = { model in
                     vc?.dismiss(animated: true, completion: {
                         let companyVc = CompanyBothViewController()
-                        companyVc.enityId.accept(model.entityId ?? "")
+                        companyVc.enityId.accept(model.orgId ?? "")
                         vc?.navigationController?.pushViewController(companyVc, animated: true)
                     })
                 }
@@ -145,17 +171,17 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             }
             
             //法定代表人
-            headView.oneHeadView.nameView.label2.text = model.firmInfo?.legalPerson?.legalName ?? ""
+            headView.oneHeadView.nameView.label2.text = model.leaderVec?.leaderList?.first?.name ?? ""
             //注册资本
-            let moneyStr = model.firmInfo?.registerCapital ?? ""
-            let unit = model.firmInfo?.registerCapitalCurrency ?? ""
+            let moneyStr = model.basicInfo?.regCap ?? ""
+            let unit = model.basicInfo?.regCapCur ?? ""
             headView.oneHeadView.moneyView.label2.text = moneyStr + unit
             //成立时间
-            headView.oneHeadView.timeView.label2.text = model.firmInfo?.incorporationTime ?? ""
+            headView.oneHeadView.timeView.label2.text = model.basicInfo?.incDate ?? ""
             //行业
-            headView.oneHeadView.oneView.label2.text = model.firmInfo?.industry?.first ?? ""
+            headView.oneHeadView.oneView.label2.text = model.basicInfo?.industry?.first?.name ?? ""
             //规模
-            headView.oneHeadView.twoView.label2.text = model.firmInfo?.scale ?? "--"
+            headView.oneHeadView.twoView.label2.text = model.basicInfo?.scale ?? "--"
             //员工
             headView.oneHeadView.threeView.timeLabel.text = model.employees?.lastYear ?? ""
             headView.oneHeadView.threeView.label2.text = "\(model.employees?.lastNumber ?? 0)人"
@@ -172,9 +198,9 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             //主要股东
             headView.threeHeadView.dataModel.accept(model)
             headView.threeHeadView.shareHoldersBlock = { model in
-                let type = model.type ?? ""
+                let category = model.category ?? ""
                 let vc = ViewControllerUtils.findViewController(from: self)
-                if type == "2" {
+                if category == "1" {
                     let companyVc = CompanyBothViewController()
                     companyVc.enityId.accept(model.id ?? "")
                     vc?.navigationController?.pushViewController(companyVc, animated: true)
@@ -190,12 +216,15 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             headView.threeHeadView.staffInfosBlock = { model in
                 let vc = ViewControllerUtils.findViewController(from: self)
                 let legalName = model.name ?? ""
-                let personNumber = model.id ?? ""
+                let personNumber = model.orgId ?? ""
                 let peopleDetailVc = PeopleBothViewController()
                 peopleDetailVc.personId.accept(personNumber)
                 peopleDetailVc.peopleName.accept(legalName)
                 vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }
+            
+            //电话官网公众号邮箱地址
+            headView.twoHeadView.model.accept(model)
             
             //常用服务
             headView.sixHeadView.dataModel = model

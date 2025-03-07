@@ -145,7 +145,7 @@ class SearchCompanyDeadbeatCell: BaseViewCell {
             let serchStr = model.searchStr ?? ""
             nameLabel.attributedText = GetRedStrConfig.getRedStr(from: serchStr, fullText: name)
             
-            let count = String(model.count ?? 0)
+            let count = String(model.count ?? "0")
             numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条失信记录", font: .regularFontOfSize(size: 13))
             
             let legalName = model.legalName ?? ""

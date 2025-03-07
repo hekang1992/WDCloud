@@ -141,7 +141,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(nameLabel.snp.bottom).offset(3)
             make.width.equalTo(SCREEN_WIDTH - 80)
-            make.height.equalTo(18)
+            make.height.equalTo(20)
         }
         
         moneyView.snp.makeConstraints { make in
@@ -434,7 +434,7 @@ extension TwoCompanyNormalListCell {
                 lab.font = .regularFontOfSize(size: 12)
                 lab.textColor = UIColor(cssStr: "#ECF2FF")
                 lab.backgroundColor = UIColor(cssStr: "#93B2F5")
-                lab.layer.cornerRadius = 2
+                lab.layer.cornerRadius = 3
                 lab.layer.allowsEdgeAntialiasing = true
                 lab.textAlignment = .center
                 lab.text = "\(tags)"

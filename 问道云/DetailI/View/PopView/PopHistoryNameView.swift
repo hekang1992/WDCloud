@@ -80,11 +80,11 @@ class PopHistoryNameView: BaseView {
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
             make.left.equalToSuperview().offset(10)
-            make.height.equalTo(50)
+            make.height.equalTo(50.pix())
         }
         
         modelArray.compactMap { $0 }.asObservable().bind(to: tableView.rx.items(cellIdentifier: "HistoryNameCell", cellType: HistoryNameCell.self)) { row, model, cell in
-            cell.nameLabel.text = model.entityName ?? ""
+            cell.nameLabel.text = model.orgName ?? ""
             let startTime = model.startTime ?? ""
             let endTime = model.endTime ?? ""
             cell.backgroundColor = .clear

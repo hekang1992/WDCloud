@@ -78,7 +78,7 @@ class CompanyDetailGDCell: UICollectionViewCell {
             guard let self = self, let model = model else { return }
             mlabel.text = model.name ?? ""
             
-            let percent = model.percent ?? ""
+            let percent = model.shRatio ?? ""
             mlabel1.attributedText = GetRedStrConfig.getRedStr(from: percent, fullText: "持股比例\(percent)", colorStr: "#333333")
             mlabel1.font = .regularFontOfSize(size: 11)
             
@@ -175,7 +175,7 @@ class DetailPeopleInfoCell: UICollectionViewCell {
             icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (24, 24)))
             mlabel.text = model.name ?? "--"
             mlabel1.text = model.positionName ?? "--"
-            let count = String(model.count ?? 0)
+            let count = String(model.relatedNum ?? 0)
             mlabel2.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "关联企业\(count)家", colorStr: "#333333", font: .mediumFontOfSize(size: 11))
         }).disposed(by: disposeBag)
     }

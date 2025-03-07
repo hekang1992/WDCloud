@@ -107,7 +107,7 @@ class SearchMonitoringViewCell: BaseViewCell {
         }
         addBtn.snp.makeConstraints { make in
             make.centerY.equalTo(ctImageView.snp.centerY)
-            make.height.equalTo(18)
+            make.height.equalTo(20)
             make.right.equalToSuperview().offset(-14)
         }
         menuBtn.snp.makeConstraints { make in

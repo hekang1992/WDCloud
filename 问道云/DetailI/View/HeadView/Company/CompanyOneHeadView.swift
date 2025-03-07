@@ -24,6 +24,7 @@ class CompanyOneHeadView: BaseView {
     //发票抬头弹窗
     var invoiceBlock: (() -> Void)?
     
+    
     lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")
@@ -122,8 +123,8 @@ class CompanyOneHeadView: BaseView {
     }()
     
     lazy var oneView: BiaoQianView = {
-        let oneView = BiaoQianView(frame: .zero, enmu: .hide)
-        oneView.label1.text = "行业"
+        let oneView = BiaoQianView(frame: .zero, enmu: .showImage)
+        oneView.iconImageView.image = UIImage(named: "hagnyeimagede")
         oneView.label2.textColor = .init(cssStr: "#547AFF")
         oneView.lineView.isHidden = false
         oneView.isUserInteractionEnabled = true
@@ -131,8 +132,8 @@ class CompanyOneHeadView: BaseView {
     }()
     
     lazy var twoView: BiaoQianView = {
-        let twoView = BiaoQianView(frame: .zero, enmu: .hide)
-        twoView.label1.text = "规模"
+        let twoView = BiaoQianView(frame: .zero, enmu: .showImage)
+        twoView.iconImageView.image = UIImage(named: "guimodeimage")
         twoView.label2.textColor = .init(cssStr: "#333333")
         twoView.lineView.isHidden = false
         twoView.isUserInteractionEnabled = true
@@ -140,7 +141,7 @@ class CompanyOneHeadView: BaseView {
     }()
     
     lazy var threeView: BiaoQianView = {
-        let threeView = BiaoQianView(frame: .zero, enmu: .show)
+        let threeView = BiaoQianView(frame: .zero, enmu: .showTime)
         threeView.label1.text = "员工"
         threeView.label2.textColor = .init(cssStr: "#333333")
         threeView.lineView.isHidden = false
@@ -149,7 +150,7 @@ class CompanyOneHeadView: BaseView {
     }()
     
     lazy var fourView: BiaoQianView = {
-        let fourView = BiaoQianView(frame: .zero, enmu: .show)
+        let fourView = BiaoQianView(frame: .zero, enmu: .showTime)
         fourView.label1.text = "营业收入"
         fourView.label2.textColor = .init(cssStr: "#333333")
         fourView.lineView.isHidden = false
@@ -158,7 +159,7 @@ class CompanyOneHeadView: BaseView {
     }()
     
     lazy var fiveView: BiaoQianView = {
-        let fiveView = BiaoQianView(frame: .zero, enmu: .show)
+        let fiveView = BiaoQianView(frame: .zero, enmu: .showTime)
         fiveView.label1.text = "利润总额"
         fiveView.label2.textColor = .init(cssStr: "#333333")
         fiveView.lineView.isHidden = false
@@ -167,7 +168,7 @@ class CompanyOneHeadView: BaseView {
     }()
     
     lazy var sixView: BiaoQianView = {
-        let sixView = BiaoQianView(frame: .zero, enmu: .show)
+        let sixView = BiaoQianView(frame: .zero, enmu: .showTime)
         sixView.label1.text = "总资产"
         sixView.label2.textColor = .init(cssStr: "#333333")
         sixView.lineView.isHidden = true
@@ -181,7 +182,7 @@ class CompanyOneHeadView: BaseView {
         return tlineView
     }()
     
-    var tagArray = BehaviorRelay<[String]>(value: [])
+    var tagArray = BehaviorRelay<[String]?>(value: nil)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -241,8 +242,8 @@ class CompanyOneHeadView: BaseView {
         tagListView.snp.makeConstraints { make in
             make.left.equalTo(historyNamesButton.snp.left)
             make.top.equalTo(historyNamesButton.snp.bottom).offset(6)
-            make.right.equalToSuperview().offset(-20)
-            make.height.equalTo(15)
+            make.width.equalTo(SCREEN_WIDTH - 70)
+            make.height.equalTo(20)
         }
         desLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16.5)
@@ -328,12 +329,6 @@ class CompanyOneHeadView: BaseView {
             make.top.equalTo(scrollView.snp.bottom).offset(5)
         }
         
-        //标签
-        tagArray.asObservable().subscribe(onNext: { [weak self] texts in
-            guard let self = self else { return }
-            setupScrollView(tagScrollView: tagListView, tagArray: texts)
-        }).disposed(by: disposeBag)
-        
         //简介点击展开
         moreButton.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
@@ -355,14 +350,28 @@ class CompanyOneHeadView: BaseView {
             self.invoiceBlock?()
         }).disposed(by: disposeBag)
         
+        //行业类型
         oneView.rx.tapGesture().when(.recognized).subscribe(onNext: { [self]_ in
-            ToastViewConfig.showToast(message: model.value?.firmInfo?.industry?.first ?? "")
+            let industryView = PopIndustryView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 250))
+            if let model = model.value {
+                let titles = model.basicInfo?.industry?.map { $0.name ?? "" }
+                industryView.titles.accept(titles ?? [])
+            }
+            let alertVc = TYAlertController(alert: industryView, preferredStyle: .alert)
+            
+            let vc = ViewControllerUtils.findViewController(from: self)
+            vc?.present(alertVc!, animated: true)
+            
+            industryView.cancelBtn.rx.tap.subscribe(onNext: {
+                vc?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+            
         }).disposed(by: self.disposeBag)
         
         //员工
         threeView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
-            let employeeView = PopEmployeeNumView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+            let employeeView = PopEmployeeNumView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 400))
             employeeView.ctImageView.image = UIImage(named: "员工人数")
             let alertVc = TYAlertController(alert: employeeView, preferredStyle: .alert)
             
@@ -382,7 +391,7 @@ class CompanyOneHeadView: BaseView {
         //收入
         fourView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
-            let employeeView = PopRateMoneyView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), type: "0")
+            let employeeView = PopRateMoneyView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 400), type: "0")
             employeeView.ctImageView.image = UIImage(named: "营业收入")
             let alertVc = TYAlertController(alert: employeeView, preferredStyle: .alert)
             
@@ -413,7 +422,7 @@ class CompanyOneHeadView: BaseView {
         //利润
         fiveView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
-            let employeeView = PopRateMoneyView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), type: "1")
+            let employeeView = PopRateMoneyView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 400), type: "1")
             employeeView.ctImageView.image = UIImage(named: "利润总额")
             let alertVc = TYAlertController(alert: employeeView, preferredStyle: .alert)
             
@@ -444,7 +453,7 @@ class CompanyOneHeadView: BaseView {
         //总资产
         sixView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
-            let employeeView = PopRateMoneyView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), type: "2")
+            let employeeView = PopRateMoneyView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 400), type: "2")
             employeeView.ctImageView.image = UIImage(named: "利润总额")
             let alertVc = TYAlertController(alert: employeeView, preferredStyle: .alert)
             
@@ -472,6 +481,12 @@ class CompanyOneHeadView: BaseView {
             
         }).disposed(by: disposeBag)
         
+        //标签
+        tagArray.asObservable().subscribe(onNext: { [weak self] texts in
+            guard let self = self, let texts = texts, texts.count > 0  else { return }
+            setupScrollView(tagScrollView: tagListView, tagArray: texts)
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -491,7 +506,7 @@ extension CompanyOneHeadView {
         }
         let maxWidth = self.tagListView.frame.width
         let openButtonWidth: CGFloat = 40 // 展开按钮宽度
-        let buttonHeight: CGFloat = 20 // 标签高度
+        let buttonHeight: CGFloat = 18 // 标签高度
         let buttonSpacing: CGFloat = 5 // 标签之间的间距
         var numberOfLine: CGFloat = 1 // 标签总行数
         var lastRight: CGFloat = 0 // 标签的左边距
@@ -582,7 +597,7 @@ extension CompanyOneHeadView {
                 lab.textColor = UIColor(cssStr: "#ECF2FF")
                 lab.backgroundColor = UIColor(cssStr: "#93B2F5")
                 lab.layer.masksToBounds = true
-                lab.layer.cornerRadius = 2
+                lab.layer.cornerRadius = 3
                 lab.layer.allowsEdgeAntialiasing = true
                 lab.textAlignment = .center
                 lab.text = "\(tags)"
@@ -618,7 +633,7 @@ extension CompanyOneHeadView {
     // 按钮点击事件
     @objc func didOpenTags(_ sender: UIButton) {
         companyModel.isOpenTag.toggle() // 切换展开/收起状态
-        setupScrollView(tagScrollView: tagListView, tagArray: tagArray.value) // 重新设置标签
+        setupScrollView(tagScrollView: tagListView, tagArray: tagArray.value ?? []) // 重新设置标签
         self.moreClickBlcok?(companyModel)
     }
     

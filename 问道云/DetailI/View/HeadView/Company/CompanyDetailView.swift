@@ -16,6 +16,9 @@ class CompanyDetailView: BaseView {
     //item的数据模型
     var model = BehaviorRelay<DataModel?>(value: nil)
     
+    //数字角标
+    var numModel = BehaviorRelay<DataModel?>(value: nil)
+    
     //头部的数据模型
     var headModel = BehaviorRelay<DataModel?>(value: nil)
     
@@ -206,6 +209,9 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
                 let model = item.children?[indexPath.row]
                 cell.model.accept(model)
             }
+            if let items = self.numModel.value?.items?[indexPath.section - 1], let item = items.items?[indexPath.row] {
+                cell.numModel.accept(item)
+            }
             return cell
         }
     }
@@ -214,8 +220,10 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section != 0 {
             if let items = self.model.value?.items?.first, let item = items.children?[indexPath.section - 1], let model = item.children?[indexPath.row] {
-                print("model=======\(model.menuName ?? "")")
-                self.cellBlock?(model)
+                let clickFlag = model.clickFlag ?? 0
+                if clickFlag != 1 {
+                    self.cellBlock?(model)
+                }
             }
         }
     }
@@ -260,6 +268,18 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
     //头部的title高度
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
+            let model = headModel.value
+            let shareHolders = model?.shareHolders ?? []
+            let srMgmtInfos = model?.srMgmtInfos ?? []
+            if !shareHolders.isEmpty && !srMgmtInfos.isEmpty {
+                self.headHeight = 906
+            }else if !shareHolders.isEmpty && srMgmtInfos.isEmpty {
+                self.headHeight = 906 - 70
+            }else if shareHolders.isEmpty && !srMgmtInfos.isEmpty {
+                self.headHeight = 906 - 90
+            }else {
+                self.headHeight = 906 - 160
+            }
             if let headModel = self.headModel.value, let stockModel = headModel.stockInfo?.first, let key = stockModel.key, !key.isEmpty {
                 return CGSize(width: collectionView.bounds.width, height: headHeight)
             }else {

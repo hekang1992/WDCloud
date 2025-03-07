@@ -108,6 +108,7 @@ class CompanyThreeHeadView: BaseView {
         
         addSubview(lineView)
         
+        //主要股东
         shareholderView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(86)
@@ -129,6 +130,7 @@ class CompanyThreeHeadView: BaseView {
             make.bottom.equalToSuperview().offset(-4)
         }
         
+        //主要人员
         peopleView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(shareholderView.snp.bottom)
@@ -154,8 +156,37 @@ class CompanyThreeHeadView: BaseView {
         lineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.height.equalTo(4)
-            make.top.equalTo(peopleView.snp.bottom).offset(6)
+            make.bottom.equalToSuperview()
         }
+        
+        dataModel.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            let shareHolders = model.shareHolders ?? []
+            let srMgmtInfos = model.srMgmtInfos ?? []
+            shareholderView.isHidden = shareHolders.isEmpty
+            peopleView.isHidden = srMgmtInfos.isEmpty
+            if shareHolders.isEmpty {
+                shareholderView.snp.updateConstraints { make in
+                    make.height.equalTo(0)
+                }
+            }else {
+                shareholderView.snp.updateConstraints { make in
+                    make.height.equalTo(86)
+                }
+            }
+            
+            if srMgmtInfos.isEmpty {
+                peopleView.snp.updateConstraints { make in
+                    make.height.equalTo(0)
+                }
+            }else {
+                peopleView.snp.updateConstraints { make in
+                    make.height.equalTo(70)
+                }
+            }
+            
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -168,7 +199,7 @@ extension CompanyThreeHeadView: UICollectionViewDelegateFlowLayout, UICollection
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let model = self.dataModel.value
         if collectionView == self.pcollectionView {
-            return model?.staffInfos?.count ?? 0
+            return model?.srMgmtInfos?.count ?? 0
         }else {
             return model?.shareHolders?.count ?? 0
         }
@@ -178,9 +209,9 @@ extension CompanyThreeHeadView: UICollectionViewDelegateFlowLayout, UICollection
         let model = self.dataModel.value
         if collectionView == self.pcollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailPeopleInfoCell", for: indexPath) as? DetailPeopleInfoCell
-            if let staffInfosModel = model?.staffInfos?[indexPath.row] {
+            if let staffInfosModel = model?.srMgmtInfos?[indexPath.row] {
                 cell?.model.accept(staffInfosModel)
-                self.twoNumlabel.text = String(model?.staffInfos?.count ?? 0)
+                self.twoNumlabel.text = String(model?.srMgmtInfos?.count ?? 0)
             }
             return cell ?? UICollectionViewCell()
         }else {
@@ -196,9 +227,9 @@ extension CompanyThreeHeadView: UICollectionViewDelegateFlowLayout, UICollection
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == self.pcollectionView {
-            return CGSize(width: 100, height: 56.5)
+            return CGSize(width: 100.pix(), height: 57)
         }else {
-            return CGSize(width: 100, height: 69.5)
+            return CGSize(width: 100.pix(), height: 70)
         }
     }
     
@@ -206,7 +237,7 @@ extension CompanyThreeHeadView: UICollectionViewDelegateFlowLayout, UICollection
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = self.dataModel.value
         if collectionView == self.pcollectionView {
-            if let staffInfosModel = model?.staffInfos?[indexPath.row] {
+            if let staffInfosModel = model?.srMgmtInfos?[indexPath.row] {
                 self.staffInfosBlock?(staffInfosModel)
             }
         }else {

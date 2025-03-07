@@ -467,7 +467,7 @@ extension SearchAssetFreezeViewController: HGSegmentedPageViewControllerDelegate
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功!")
+                        ToastViewConfig.showToast(message: "删除成功")
                         self.oneView.searchView.isHidden = true
                         self.oneView.searchView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
@@ -497,7 +497,7 @@ extension SearchAssetFreezeViewController: HGSegmentedPageViewControllerDelegate
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功!")
+                        ToastViewConfig.showToast(message: "删除成功")
                         self.oneView.historyView.isHidden = true
                         self.oneView.historyView.snp.updateConstraints({ make in
                             make.height.equalTo(0)

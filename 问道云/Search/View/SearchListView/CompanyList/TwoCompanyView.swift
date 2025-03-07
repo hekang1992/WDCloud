@@ -19,7 +19,7 @@ class TwoCompanyView: BaseView {
     //人物回调
     var peopleBlock: ((pageDataModel) -> Void)?
     //企业ID回调
-    var entityIdBlock: ((String, String) -> Void)?
+    var entityIdBlock: ((pageDataModel) -> Void)?
     //人员查看更多
     var moreBtnBlock: (() -> Void)?
     
@@ -42,7 +42,7 @@ class TwoCompanyView: BaseView {
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .clear
         tableView.estimatedRowHeight = 60
         tableView.delegate = self
         tableView.dataSource = self
@@ -115,7 +115,7 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 cell?.modelArray = pageDataModel
                 return cell ?? UITableViewCell()
             }else {
-                let pageDataModel = dataModel?.pageData?[indexPath.row]
+                let pageDataModel = self.dataModelArray?[indexPath.row]
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
                 pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
                 cell?.selectionStyle = .none
@@ -140,7 +140,7 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 return cell ?? UITableViewCell()
             }
         }else {
-            let pageDataModel = dataModel?.pageData?[indexPath.row]
+            let pageDataModel = self.dataModelArray?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
             pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
             cell?.backgroundColor = .clear
@@ -202,22 +202,21 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let model = self.dataModelArray?[indexPath.row] {
-            self.entityIdBlock?(model.orgInfo?.orgId ?? "", model.orgInfo?.orgName ?? "")
+            self.entityIdBlock?(model)
         }
     }
     
     func peopleHeadView() -> UIView {
         let moreBtn = UIButton(type: .custom)
-        moreBtn.setImage(UIImage(named: "blueImagemore"), for: .normal)
-        moreBtn.setTitle("查看更多", for: .normal)
+        moreBtn.setImage(UIImage(named: "chakanmoreimge"), for: .normal)
         moreBtn.titleLabel?.font = .regularFontOfSize(size: 12)
         moreBtn.setTitleColor(.init(cssStr: "#3F96FF"), for: .normal)
         moreBtn.layoutButtonEdgeInsets(style: .right, space: 2)
+        
         let numLabel = UILabel()
         numLabel.font = .mediumFontOfSize(size: 12)
         numLabel.textColor = .init(cssStr: "#666666")
         numLabel.textAlignment = .left
-        
         let num = String(dataModel?.bossList?.totalNum ?? 0)
         
         let headView = UIView()

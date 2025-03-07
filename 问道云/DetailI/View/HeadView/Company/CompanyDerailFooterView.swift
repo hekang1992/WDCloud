@@ -71,28 +71,26 @@ class CompanyDerailFooterView: BaseView {
         backBtn.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(20)
             make.top.equalToSuperview().offset(11)
-            make.size.equalTo(CGSize(width: 50, height: 45))
+            make.size.equalTo(CGSize(width: 50.pix(), height: 45.pix()))
         }
         backBtn1.snp.makeConstraints { make in
             make.top.equalTo(backBtn.snp.top)
             make.left.equalTo(backBtn.snp.right).offset(30)
-            make.size.equalTo(CGSize(width: 50, height: 45))
+            make.size.equalTo(CGSize(width: 50.pix(), height: 45.pix()))
         }
         backBtn2.snp.makeConstraints { make in
             make.top.equalTo(backBtn.snp.top)
             make.left.equalTo(backBtn1.snp.right).offset(30)
-            make.size.equalTo(CGSize(width: 50, height: 45))
+            make.size.equalTo(CGSize(width: 50.pix(), height: 45.pix()))
         }
         backBtn3.snp.makeConstraints { make in
             make.top.equalTo(backBtn.snp.top)
-            make.left.equalToSuperview().offset(SCREEN_WIDTH - 135)
-            make.height.equalTo(45)
-            make.width.equalTo(115)
+            make.left.equalToSuperview().offset(SCREEN_WIDTH - 135.pix())
+            make.height.equalTo(45.pix())
+            make.width.equalTo(115.pix())
         }
         
     }
-    
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

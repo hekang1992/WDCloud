@@ -461,7 +461,7 @@ extension SearchRiskViewController {
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功!")
+                        ToastViewConfig.showToast(message: "删除成功")
                         self.riskView.searchView.isHidden = true
                         self.riskView.searchView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
@@ -491,7 +491,7 @@ extension SearchRiskViewController {
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功!")
+                        ToastViewConfig.showToast(message: "删除成功")
                         self.riskView.historyView.isHidden = true
                         self.riskView.historyView.snp.updateConstraints({ make in
                             make.height.equalTo(0)

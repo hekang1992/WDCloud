@@ -55,7 +55,7 @@ class HistoryListViewCell: BaseViewCell {
         timelabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-22)
-            make.height.equalTo(18)
+            make.height.equalTo(20)
         }
         namelabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()

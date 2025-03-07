@@ -174,8 +174,9 @@ class SearchCompanyShareholderCell: BaseViewCell {
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(nameLabel.snp.bottom).offset(3)
             make.width.equalTo(SCREEN_WIDTH - 80)
-            make.height.equalTo(15)
+            make.height.equalTo(20)
         }
+        
         grayView.snp.makeConstraints { make in
             make.top.equalTo(tagListView.snp.bottom).offset(6)
             make.centerX.equalToSuperview()
@@ -320,7 +321,7 @@ extension SearchCompanyShareholderCell {
         }
         let maxWidth = self.tagListView.frame.width
         let openButtonWidth: CGFloat = 40 // 展开按钮宽度
-        let buttonHeight: CGFloat = 20 // 标签高度
+        let buttonHeight: CGFloat = 18 // 标签高度
         let buttonSpacing: CGFloat = 5 // 标签之间的间距
         var numberOfLine: CGFloat = 1 // 标签总行数
         var lastRight: CGFloat = 0 // 标签的左边距
@@ -411,7 +412,7 @@ extension SearchCompanyShareholderCell {
                 lab.textColor = UIColor(cssStr: "#ECF2FF")
                 lab.backgroundColor = UIColor(cssStr: "#93B2F5")
                 lab.layer.masksToBounds = true
-                lab.layer.cornerRadius = 2
+                lab.layer.cornerRadius = 3
                 lab.layer.allowsEdgeAntialiasing = true
                 lab.textAlignment = .center
                 lab.text = "\(tags)"

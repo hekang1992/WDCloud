@@ -69,7 +69,7 @@ extension CompanyBothViewController: JXSegmentedViewDelegate {
         segmentedDataSource.isTitleColorGradientEnabled = true
         segmentedDataSource.titleSelectedColor = UIColor(cssStr: "#333333")!
         segmentedDataSource.titleNormalColor = UIColor(cssStr: "#999999")!
-        segmentedDataSource.titleNormalFont = .mediumFontOfSize(size: 15)
+        segmentedDataSource.titleNormalFont = .mediumFontOfSize(size: 16)
         segmentedDataSource.titleSelectedFont = segmentedDataSource.titleNormalFont
         segmentedDataSource.isTitleColorGradientEnabled = true
         segmentedView.dataSource = segmentedDataSource
@@ -78,7 +78,7 @@ extension CompanyBothViewController: JXSegmentedViewDelegate {
         // 设置指示器
         let indicator = JXSegmentedIndicatorLineView()
         indicator.indicatorWidth = 16
-        indicator.indicatorHeight = 2
+        indicator.indicatorHeight = 4
         indicator.indicatorColor = UIColor.init(cssStr: "#547AFF")!
         segmentedView.indicators = [indicator]
         self.headView.headTitleView.addSubview(segmentedView)

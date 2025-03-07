@@ -397,7 +397,7 @@ extension SearchPeopleViewController {
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功!")
+                        ToastViewConfig.showToast(message: "删除成功")
                         self.peopleView.searchView.isHidden = true
                         self.peopleView.searchView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
@@ -427,7 +427,7 @@ extension SearchPeopleViewController {
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功!")
+                        ToastViewConfig.showToast(message: "删除成功")
                         self.peopleView.historyView.isHidden = true
                         self.peopleView.historyView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
