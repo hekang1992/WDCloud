@@ -964,9 +964,13 @@ class labelsModel {
 class riskInfoModel {
     var content: String?
     var riskTime: String?
+    var relevaRiskCnt: Int?
+    var selfRiskCnt: Int?
     init(json: JSON) {
         self.content = json["content"].stringValue
         self.riskTime = json["riskTime"].stringValue
+        self.relevaRiskCnt = json["relevaRiskCnt"].intValue
+        self.selfRiskCnt = json["selfRiskCnt"].intValue
     }
 }
 

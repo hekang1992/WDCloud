@@ -172,7 +172,8 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
             }
             companyVc.moreBtnBlock = { [weak self] in
                 guard let self = self else { return }
-                segmentedView(segmentedView, didSelectedItemAt: 1)
+                segmentedView.defaultSelectedIndex = 1
+                segmentedView.reloadData()
             }
             return companyVc
         }else if index == 1 {

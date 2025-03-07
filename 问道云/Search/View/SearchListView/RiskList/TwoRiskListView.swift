@@ -12,7 +12,10 @@ class TwoRiskListView: BaseView {
     
     var dataModel = BehaviorRelay<DataModel?>(value: nil)
     
-    var dataModelArray = BehaviorRelay<[itemsModel]?>(value: nil)
+    var dataModelArray = BehaviorRelay<[pageDataModel]?>(value: nil)
+    
+    //企业ID回调
+    var entityIdBlock: ((pageDataModel) -> Void)?
     
     //被搜索的文字,根据这个文字,去给cell的namelabel加上颜色
     var searchWordsRelay = BehaviorRelay<String?>(value: nil)
@@ -64,8 +67,8 @@ class TwoRiskListView: BaseView {
 extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        let dataModel = self.dataModel.value
-        if let entityData = dataModel?.entityData, let personData = dataModel?.personData, let enItems = entityData.items, let perItems = personData.items, !enItems.isEmpty, !perItems.isEmpty  {
+        let bossList = dataModel.value?.bossList?.items ?? []
+        if !bossList.isEmpty {
             return 2
         }else {
             return 1
@@ -73,26 +76,26 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let dataModel = self.dataModel.value
-        if let entityData = dataModel?.entityData, let personData = dataModel?.personData, let enItems = entityData.items, let perItems = personData.items, !enItems.isEmpty, !perItems.isEmpty  {
+        let bossList = dataModel.value?.bossList?.items ?? []
+        if !bossList.isEmpty {
             if section == 0 {
                 return 1
             }else {
-                return self.dataModelArray.value?.count ?? 0
+                return dataModelArray.value?.count ?? 0
             }
         }else {
-            return self.dataModelArray.value?.count ?? 0
+            return dataModelArray.value?.count ?? 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dataModel = self.dataModel.value
-        if let entityData = dataModel?.entityData, let personData = dataModel?.personData, let enItems = entityData.items, let perItems = personData.items, !enItems.isEmpty, !perItems.isEmpty  {
+        let bossList = dataModel.value?.bossList?.items ?? []
+        if !bossList.isEmpty {
             if indexPath.section == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TwoRiskListPeopleCell") as? TwoRiskListPeopleCell
                 cell?.backgroundColor = .clear
                 cell?.selectionStyle = .none
-                let modelArray = dataModel?.personData?.items ?? []
+                let modelArray = dataModel.value?.bossList?.items ?? []
                 cell?.modelArray.accept(modelArray)
                 return cell ?? UITableViewCell()
             }else {
@@ -113,6 +116,7 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
             cell?.model.accept(model)
             return cell ?? UITableViewCell()
         }
+      
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -120,71 +124,102 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let dataModel = self.dataModel.value
-        if let entityData = dataModel?.entityData, let personData = dataModel?.personData, let enItems = entityData.items, let perItems = personData.items, !enItems.isEmpty, !perItems.isEmpty  {
-            let numStr: String
+        let headView = UIView()
+        let bossList = dataModel.value?.bossList?.items ?? []
+        if !bossList.isEmpty {
             if section == 0 {
-                numStr = String(dataModel?.personData?.total ?? 0)
-            } else {
-                numStr = String(dataModel?.entityData?.total ?? 0)
+                let peopleView = self.peopleHeadView()
+                headView.addSubview(peopleView)
+                peopleView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                return headView
+            }else {
+                let companyView = self.companyHeadView()
+                headView.addSubview(companyView)
+                companyView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                return headView
             }
-            let headView = UIView()
-            let numLabel = UILabel()
-            numLabel.font = .mediumFontOfSize(size: 12)
-            numLabel.textColor = .init(cssStr: "#666666")
-            numLabel.textAlignment = .left
-            headView.backgroundColor = .init(cssStr: "#F3F3F3")
-            headView.addSubview(numLabel)
-            // 设置搜索的总结果
-            numLabel.attributedText = GetRedStrConfig.getRedStr(from: numStr, fullText: "搜索到\(numStr)条结果", font: .mediumFontOfSize(size: 12))
-            numLabel.snp.makeConstraints { make in
-                make.centerY.equalToSuperview()
-                make.height.equalTo(25)
-                make.left.equalToSuperview().offset(10)
-            }
-            return headView
         }else {
-            let numStr = String(dataModel?.entityData?.total ?? 0)
-            let headView = UIView()
-            let numLabel = UILabel()
-            numLabel.font = .mediumFontOfSize(size: 12)
-            numLabel.textColor = .init(cssStr: "#666666")
-            numLabel.textAlignment = .left
-            headView.backgroundColor = .init(cssStr: "#F3F3F3")
-            headView.addSubview(numLabel)
-            // 设置搜索的总结果
-            numLabel.attributedText = GetRedStrConfig.getRedStr(from: numStr, fullText: "搜索到\(numStr)条结果", font: .mediumFontOfSize(size: 12))
-            numLabel.snp.makeConstraints { make in
-                make.centerY.equalToSuperview()
-                make.height.equalTo(25)
-                make.left.equalToSuperview().offset(10)
+            let companyView = self.companyHeadView()
+            headView.addSubview(companyView)
+            companyView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
             }
             return headView
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = ViewControllerUtils.findViewController(from: self)
-        let dataModel = self.dataModel.value
-        if let entityData = dataModel?.entityData, let personData = dataModel?.personData, let enItems = entityData.items, let perItems = personData.items, !enItems.isEmpty, !perItems.isEmpty  {
-            if indexPath.section == 0 {
-                return
-            }else {
-                let model = dataModelArray.value?[indexPath.row]
-                let riskDetailVc = CompanyRiskDetailViewController()
-                riskDetailVc.name = model?.entityName ?? ""
-                riskDetailVc.enityId = model?.entityId ?? ""
-                riskDetailVc.logo = model?.logo ?? ""
-                vc?.navigationController?.pushViewController(riskDetailVc, animated: true)
-            }
-        }else {
-            let model = dataModelArray.value?[indexPath.row]
-            let riskDetailVc = CompanyRiskDetailViewController()
-            riskDetailVc.name = model?.entityName ?? ""
-            riskDetailVc.enityId = model?.entityId ?? ""
-            riskDetailVc.logo = model?.logo ?? ""
-            vc?.navigationController?.pushViewController(riskDetailVc, animated: true)
+        if let model = self.dataModelArray.value?[indexPath.row] {
+            self.entityIdBlock?(model)
         }
+    }
+    
+}
+
+extension TwoRiskListView {
+    
+    func peopleHeadView() -> UIView {
+        let numLabel = UILabel()
+        numLabel.font = .mediumFontOfSize(size: 12)
+        numLabel.textColor = .init(cssStr: "#666666")
+        numLabel.textAlignment = .left
+        
+        let num = String(dataModel.value?.bossList?.totalNum ?? 0)
+        
+        let headView = UIView()
+        headView.backgroundColor = .init(cssStr: "#F3F3F3")
+        headView.addSubview(numLabel)
+        //搜索的总结果
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: num, fullText: "搜索到\(num)位相关人员", font: .mediumFontOfSize(size: 12))
+        numLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.height.equalTo(25)
+            make.left.equalToSuperview().offset(10)
+        }
+        
+        return headView
+    }
+    
+    func companyHeadView() -> UIView {
+        let countModel = dataModel.value?.pageMeta
+        let numStr = countModel?.totalNum ?? 0
+        let num = String(countModel?.totalNum ?? 0)
+        let headView = UIView()
+        
+        let numLabel = UILabel()
+        numLabel.font = .mediumFontOfSize(size: 12)
+        numLabel.textColor = .init(cssStr: "#666666")
+        numLabel.textAlignment = .left
+        
+        let pageLabel = UILabel()
+        pageLabel.font = .mediumFontOfSize(size: 12)
+        pageLabel.textColor = .init(cssStr: "#666666")
+        pageLabel.textAlignment = .right
+        
+        headView.backgroundColor = .init(cssStr: "#F3F3F3")
+        headView.addSubview(numLabel)
+        
+        //搜索的总结果
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: num, fullText: "搜索到\(num)条结果", font: .mediumFontOfSize(size: 12))
+        numLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.height.equalTo(25)
+            make.left.equalToSuperview().offset(10)
+        }
+        //搜到共多少页
+        let result = Int(ceil(Double(numStr) / Double(20)))
+        headView.addSubview(pageLabel)
+        pageLabel.text = "第\(countModel?.index ?? 0)/\(result)页"
+        pageLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.height.equalTo(25)
+            make.right.equalToSuperview().offset(-10)
+        }
+        return headView
     }
     
 }

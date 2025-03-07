@@ -26,7 +26,7 @@ class SearchRiskViewController: WDBaseViewController {
     var pageIndex: Int = 1
     var entityArea: String = ""//公司时候的地区
     var entityIndustry: String = ""//公司时候的行业
-    var allArray: [itemsModel] = []//公司时候加载更多
+    var allArray: [pageDataModel] = []//公司时候加载更多
     
     //人员搜索参数
     var entityPeopleArea: String = ""//公司时候的地区
@@ -194,6 +194,16 @@ class SearchRiskViewController: WDBaseViewController {
         addMenuWithPeopleView()
         //网络请求
         getDataInfo()
+        
+        //企业ID回调
+        twoRiskListView.entityIdBlock = { [weak self] model in
+            let riskDetailVc = CompanyRiskDetailViewController()
+            riskDetailVc.enityId = model.orgInfo?.orgId ?? ""
+            riskDetailVc.name = model.orgInfo?.orgName ?? ""
+            riskDetailVc.logo = model.orgInfo?.logo ?? ""
+            self?.navigationController?.pushViewController(riskDetailVc, animated: true)
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -356,7 +366,7 @@ extension SearchRiskViewController {
                 listView.nameLabel.text = model.personname ?? ""
             }
             listView.timeLabel.text = model.createhourtime ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22)))
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             self.riskView.historyView.addSubview(listView)
             listView.snp.makeConstraints { make in
                 make.height.equalTo(40)
@@ -416,7 +426,7 @@ extension SearchRiskViewController {
                 self.navigationController?.pushViewController(riskDetailVc, animated: true)
             }
             listView.nameLabel.text = model.name ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22)))
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             self.riskView.hotWordsView.addSubview(listView)
             listView.snp.updateConstraints { make in
                 make.height.equalTo(40)
@@ -516,7 +526,7 @@ extension SearchRiskViewController {
                 if let self = self,
                    let model = success.data,
                    let code = success.code,
-                   code == 200, let total = model.entityData?.total {
+                   code == 200, let total = model.pageMeta?.totalNum {
                     self.riskView.isHidden = true
                     self.twoRiskListView.isHidden = false
                     if pageIndex == 1 {
@@ -524,7 +534,7 @@ extension SearchRiskViewController {
                         self.allArray.removeAll()
                     }
                     pageIndex += 1
-                    let pageData = model.entityData?.items ?? []
+                    let pageData = model.pageData ?? []
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
@@ -541,8 +551,8 @@ extension SearchRiskViewController {
                     self.twoRiskListView.searchWordsRelay.accept(self.searchWordsRelay.value)
                     self.twoRiskListView.tableView.reloadData()
                     //根据数据刷新按钮文字
-                    let companyNum = String(model.entityData?.total ?? 0)
-                    let peopleNum = String(model.personData?.total ?? 0)
+                    let companyNum = String(model.pageMeta?.totalNum ?? 0)
+                    let peopleNum = String(model.bossList?.totalNum ?? 0)
                     self.companyBtn.setTitle("企业 \(companyNum)", for: .normal)
                     self.peopleBtn.setTitle("人员 \(peopleNum)", for: .normal)
                     self.companyBtn.isHidden = false

@@ -407,7 +407,7 @@ extension SearchCompanyViewController {
                 self.navigationController?.pushViewController(companyDetailVc, animated: true)
             }
             listView.nameLabel.text = model.name ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22)))
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             self.companyView.hotWordsView.addSubview(listView)
             listView.snp.updateConstraints { make in
                 make.height.equalTo(40)

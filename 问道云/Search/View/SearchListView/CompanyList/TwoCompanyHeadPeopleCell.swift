@@ -37,7 +37,7 @@ class TwoCompanyHeadPeopleCell: UITableViewCell {
         collectionView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(100)
-            make.bottom.equalToSuperview().offset(-12)
+            make.bottom.equalToSuperview()
         }
     }
     

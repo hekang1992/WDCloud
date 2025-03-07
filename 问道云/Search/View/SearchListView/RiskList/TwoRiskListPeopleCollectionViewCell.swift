@@ -17,75 +17,118 @@ class TwoRiskListPeopleCollectionViewCell: UICollectionViewCell {
     
     lazy var bgView: UIView = {
         let bgView = UIView()
-        bgView.layer.cornerRadius = 4
         bgView.backgroundColor = .init(cssStr: "#F8F8F8")
+        bgView.layer.cornerRadius = 4
         return bgView
     }()
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
-        ctImageView.layer.cornerRadius = 4
         return ctImageView
     }()
     
-    lazy var namelabel: UILabel = {
-        let namelabel = UILabel()
-        namelabel.textColor = UIColor.init(cssStr: "#333333")
-        namelabel.textAlignment = .left
-        namelabel.font = .mediumFontOfSize(size: 13)
-        return namelabel
+    lazy var nameLabel: UILabel = {
+        let nameLabel = UILabel()
+        nameLabel.textColor = .init(cssStr: "#333333")
+        nameLabel.font = .mediumFontOfSize(size: 15)
+        nameLabel.textAlignment = .left
+        return nameLabel
     }()
     
-    lazy var numlabel: UILabel = {
-        let numlabel = UILabel()
-        numlabel.textColor = UIColor.init(cssStr: "#999999")
-        numlabel.textAlignment = .left
-        numlabel.font = .mediumFontOfSize(size: 11)
-        return numlabel
+    lazy var numLabel: UILabel = {
+        let numLabel = UILabel()
+        numLabel.textColor = .init(cssStr: "#999999")
+        numLabel.font = .regularFontOfSize(size: 11)
+        numLabel.textAlignment = .left
+        return numLabel
+    }()
+    
+    lazy var oneListView: CompanyListView = {
+        let oneListView = CompanyListView()
+        return oneListView
+    }()
+    
+    lazy var twoListView: CompanyListView = {
+        let twoListView = CompanyListView()
+        return twoListView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(bgView)
         bgView.addSubview(ctImageView)
-        bgView.addSubview(namelabel)
-        bgView.addSubview(numlabel)
-        
+        bgView.addSubview(nameLabel)
+        bgView.addSubview(numLabel)
+        bgView.addSubview(oneListView)
+        bgView.addSubview(twoListView)
         bgView.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(9)
+            make.top.equalToSuperview().offset(2)
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(9.5)
-            make.size.equalTo(CGSize(width: 153, height: 88))
+            make.width.equalTo(153.pix())
         }
-        
         ctImageView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(7)
             make.top.equalToSuperview().offset(8.5)
+            make.left.equalToSuperview().offset(7)
             make.size.equalTo(CGSize(width: 35, height: 35))
         }
-        
-        namelabel.snp.makeConstraints { make in
-            make.left.equalTo(ctImageView.snp.right).offset(5)
+        nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(7.5)
-            make.right.equalToSuperview().offset(-4)
+            make.left.equalTo(ctImageView.snp.right).offset(5)
+            make.height.equalTo(21)
         }
-        numlabel.snp.makeConstraints { make in
-            make.left.equalTo(namelabel.snp.left)
-            make.right.equalTo(namelabel.snp.right)
-            make.top.equalTo(namelabel.snp.bottom).offset(1)
+        numLabel.snp.makeConstraints { make in
+            make.left.equalTo(nameLabel.snp.left)
+            make.top.equalTo(nameLabel.snp.bottom).offset(1)
             make.height.equalTo(15)
+        }
+        oneListView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.top.equalTo(ctImageView.snp.bottom).offset(6.5)
+            make.height.equalTo(15)
+            make.right.equalToSuperview()
+        }
+        twoListView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.top.equalTo(oneListView.snp.bottom).offset(0.5)
+            make.height.equalTo(15)
+            make.right.equalToSuperview()
         }
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            
-            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (35, 35)))
-            
-            namelabel.text = model.name ?? ""
-            
-            let count = String(model.relevanceCount ?? 0)
-            numlabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "TA有\(count)家企业")
-            
+            let name = model.name ?? ""
+            let count = String(model.orgCount ?? 0)
+            ctImageView.image = UIImage.imageOfText(name, size: (35, 35))
+            nameLabel.text = name
+            numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "TA有\(count)家企业", font: .regularFontOfSize(size: 11))
+            let provinceStatList = model.provinceStatList ?? []
+            if !provinceStatList.isEmpty {
+                if provinceStatList.count == 1 {
+                    let model = provinceStatList[0]
+                    let province = model.province ?? ""
+                    let count = String(model.count ?? 0)
+                    let repOrgName = model.repOrgName ?? ""
+                    oneListView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "\(province)\(count)家")
+                    oneListView.nameLabel.text = repOrgName
+                }else {
+                    let model = provinceStatList[0]
+                    let province = model.province ?? ""
+                    let count = String(model.count ?? 0)
+                    let repOrgName = model.repOrgName ?? ""
+                    oneListView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "\(province)\(count)家", font: .regularFontOfSize(size: 11))
+                    oneListView.nameLabel.text = repOrgName
+                    
+                    let model1 = provinceStatList[1]
+                    let province1 = model1.province ?? ""
+                    let count1 = String(model1.count ?? 0)
+                    let repOrgName1 = model1.repOrgName ?? ""
+                    twoListView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count1, fullText: "\(province1)\(count1)家", font: .regularFontOfSize(size: 11))
+                    twoListView.nameLabel.text = repOrgName1
+                }
+            }
         }).disposed(by: disposeBag)
+        
     }
     
     required init?(coder: NSCoder) {

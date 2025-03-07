@@ -42,7 +42,7 @@ class TwoCompanyView: BaseView {
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .white
         tableView.estimatedRowHeight = 60
         tableView.delegate = self
         tableView.dataSource = self
@@ -111,7 +111,6 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             if indexPath.section == 0 {
                 let pageDataModel = dataModel?.bossList?.items
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyHeadPeopleCell") as? TwoCompanyHeadPeopleCell
-                cell?.backgroundColor = .clear
                 cell?.selectionStyle = .none
                 cell?.modelArray = pageDataModel
                 return cell ?? UITableViewCell()
@@ -119,7 +118,6 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 let pageDataModel = dataModel?.pageData?[indexPath.row]
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
                 pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
-                cell?.backgroundColor = .clear
                 cell?.selectionStyle = .none
                 cell?.model.accept(pageDataModel)
                 cell?.addressBlock = { [weak self] model in
@@ -215,7 +213,6 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
         moreBtn.titleLabel?.font = .regularFontOfSize(size: 12)
         moreBtn.setTitleColor(.init(cssStr: "#3F96FF"), for: .normal)
         moreBtn.layoutButtonEdgeInsets(style: .right, space: 2)
-        
         let numLabel = UILabel()
         numLabel.font = .mediumFontOfSize(size: 12)
         numLabel.textColor = .init(cssStr: "#666666")
@@ -243,7 +240,6 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
         moreBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.moreBtnBlock?()
         }).disposed(by: disposeBag)
-        
         return headView
     }
     

@@ -303,7 +303,7 @@ extension SearchPeopleViewController {
             }
             listView.nameLabel.text = model.personname ?? ""
             listView.timeLabel.text = model.createhourtime ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22)))
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             self.peopleView.historyView.addSubview(listView)
             listView.snp.makeConstraints { make in
                 make.height.equalTo(40)
@@ -362,7 +362,7 @@ extension SearchPeopleViewController {
                 self.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }
             listView.nameLabel.text = model.name ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22)))
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             self.peopleView.hotWordsView.addSubview(listView)
             listView.snp.updateConstraints { make in
                 make.height.equalTo(40)
