@@ -17,11 +17,11 @@ class DueDiligenceTwoView: BaseView {
         return oneImageView
     }()
     
-    lazy var threeImageView: UIImageView = {
-        let threeImageView = UIImageView()
-        threeImageView.isUserInteractionEnabled = true
-        threeImageView.image = UIImage(named: "startjinzhiimge")
-        return threeImageView
+    lazy var clickBtn: UIButton = {
+        let clickBtn = UIButton()
+        clickBtn.setBackgroundImage(UIImage(named: "startjinzhiimge"), for: .normal)
+        clickBtn.adjustsImageWhenHighlighted = false
+        return clickBtn
     }()
     
     lazy var oneView: UIView = {
@@ -105,7 +105,7 @@ class DueDiligenceTwoView: BaseView {
         oneView.addSubview(fourListView)
         oneView.addSubview(fiveListView)
         oneView.addSubview(sixListView)
-        addSubview(threeImageView)
+        addSubview(clickBtn)
         
         oneImageView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset((SCREEN_WIDTH - 325) * 0.5)
@@ -148,7 +148,7 @@ class DueDiligenceTwoView: BaseView {
             make.right.equalToSuperview()
             make.size.equalTo(CGSize(width: 154.pix(), height: 78.pix()))
         }
-        threeImageView.snp.makeConstraints { make in
+        clickBtn.snp.makeConstraints { make in
             make.centerX.equalTo(oneImageView.snp.centerX)
             make.size.equalTo(CGSize(width: 118, height: 44))
             make.bottom.equalToSuperview().offset(-50)

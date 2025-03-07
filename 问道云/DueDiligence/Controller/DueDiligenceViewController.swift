@@ -45,7 +45,7 @@ class DueDiligenceViewController: WDBaseViewController {
     private lazy var cocsciew: UIScrollView = createCocsciew()
     private var segmurce: JXSegmentedTitleDataSource!
     private var listVCArray = [WDBaseViewController]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,7 +64,12 @@ class DueDiligenceViewController: WDBaseViewController {
         //添加子控制器
         setupViewControllers()
         headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.popLogin()
+            if IS_LOGIN {
+                let settingVc = DueDiligenceSettingViewController()
+                self?.navigationController?.pushViewController(settingVc, animated: true)
+            }else {
+                self?.popLogin()
+            }
         }).disposed(by: disposeBag)
     }
 }
@@ -89,12 +94,15 @@ extension DueDiligenceViewController: JXSegmentedViewDelegate {
         listVCArray.forEach { $0.view.removeFromSuperview() }
         listVCArray.removeAll()
         cocsciew.addSubview(oneVc.view)
+        oneVc.nav = self.navigationController
         listVCArray.append(oneVc)
         
         cocsciew.addSubview(twoVc.view)
+        twoVc.nav = self.navigationController
         listVCArray.append(twoVc)
         
         cocsciew.addSubview(threeVc.view)
+        threeVc.nav = self.navigationController
         listVCArray.append(threeVc)
         
         updateViewControllersLayout()

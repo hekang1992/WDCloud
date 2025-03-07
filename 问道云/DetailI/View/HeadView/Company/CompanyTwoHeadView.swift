@@ -161,27 +161,27 @@ class CompanyTwoHeadView: BaseView {
             
             oneBtn.rx.tap.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                self.oneBlock?()
+               
             }).disposed(by: disposeBag)
             
             twoBtn.rx.tap.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                self.twoBlock?()
+                
             }).disposed(by: disposeBag)
             
             threeBtn.rx.tap.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                self.threeBlock?()
+                
             }).disposed(by: disposeBag)
             
             fourBtn.rx.tap.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                self.fourBlock?()
+                
             }).disposed(by: disposeBag)
             
             fiveBtn.rx.tap.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                self.fiveBlock?()
+                
             }).disposed(by: disposeBag)
             
         }).disposed(by: disposeBag)

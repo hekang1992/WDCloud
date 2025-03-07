@@ -9,6 +9,8 @@ import UIKit
 
 class TwoDueDiligenceViewController: WDBaseViewController {
     
+    weak var nav: UINavigationController?
+    
     var headGrand: Bool? {
         didSet {
             guard let headGrand = headGrand else { return }
@@ -70,7 +72,7 @@ class TwoDueDiligenceViewController: WDBaseViewController {
                 guard let self = self else { return }
                 let searchVc = SearchDueDiligenceViewController()
                 searchVc.ddNumber = ddonenumber
-                self.navigationController?.pushViewController(searchVc, animated: true)
+                nav?.pushViewController(searchVc, animated: true)
             }).disposed(by: disposeBag)
         
         twoView.block = { [weak self] ddnumber in
@@ -79,10 +81,9 @@ class TwoDueDiligenceViewController: WDBaseViewController {
             self.ddtwonumber = num
         }
         
-        twoView.threeImageView
+        twoView.clickBtn
             .rx
-            .tapGesture()
-            .when(.recognized)
+            .tap
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 let searchVc = SearchDueDiligenceViewController()

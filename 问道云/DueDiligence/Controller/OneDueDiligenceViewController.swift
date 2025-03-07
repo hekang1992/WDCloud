@@ -32,6 +32,8 @@ class OneDueDiligenceViewController: WDBaseViewController {
     
     var ddtwonumber: String = "11"
     
+    weak var nav: UINavigationController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,7 +60,7 @@ class OneDueDiligenceViewController: WDBaseViewController {
                 guard let self = self else { return }
                 let searchVc = SearchDueDiligenceViewController()
                 searchVc.ddNumber = ddonenumber
-                self.navigationController?.pushViewController(searchVc, animated: true)
+                nav?.pushViewController(searchVc, animated: true)
             }).disposed(by: disposeBag)
         
         
@@ -66,10 +68,9 @@ class OneDueDiligenceViewController: WDBaseViewController {
             self?.ddtwonumber = ddnumber
         }
         
-        twoView.threeImageView
+        twoView.clickBtn
             .rx
-            .tapGesture()
-            .when(.recognized)
+            .tap
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 let searchVc = SearchDueDiligenceViewController()

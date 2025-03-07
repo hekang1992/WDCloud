@@ -9,6 +9,8 @@ import UIKit
 
 class ThreeDueDiligenceViewController: WDBaseViewController {
     
+    weak var nav: UINavigationController?
+    
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         ctImageView.isUserInteractionEnabled = true
