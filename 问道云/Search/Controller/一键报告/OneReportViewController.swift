@@ -178,7 +178,8 @@ extension OneReportViewController {
     private func getOneReportInfo() {
         ViewHud.addLoadView()
         let man = RequestManager()
-        let dict = ["entityid": orgInfo?.orgId ?? ""]
+        let dict = ["entityId": orgInfo?.orgId ?? "",
+                    "entityType": 1] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerreport/reportlist",
                        method: .get) { [weak self] result in
@@ -195,5 +196,7 @@ extension OneReportViewController {
             }
         }
     }
+    
+    
     
 }

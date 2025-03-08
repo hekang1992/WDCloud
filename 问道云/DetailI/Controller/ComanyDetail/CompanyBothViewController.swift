@@ -75,6 +75,7 @@ extension CompanyBothViewController: JXSegmentedViewDelegate {
         segmentedView.dataSource = segmentedDataSource
         segmentedView.backgroundColor = .white
         segmentedView.delegate = self
+        
         // 设置指示器
         let indicator = JXSegmentedIndicatorLineView()
         indicator.indicatorWidth = 16

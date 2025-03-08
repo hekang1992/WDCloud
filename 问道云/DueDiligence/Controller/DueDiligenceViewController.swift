@@ -129,7 +129,7 @@ extension DueDiligenceViewController: JXSegmentedViewDelegate {
         segmentedView.delegate = self
         segmentedView.backgroundColor = .clear
         segmurce = JXSegmentedTitleDataSource()
-        segmurce.titles = ["基础班", "专业版", "定制版"]
+        segmurce.titles = ["基础版", "专业版", "定制版"]
         segmurce.isTitleColorGradientEnabled = true
         segmurce.titleSelectedFont = .mediumFontOfSize(size: 15)
         segmurce.titleNormalFont = .regularFontOfSize(size: 15)

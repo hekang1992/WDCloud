@@ -20,6 +20,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
     var dateType: String = ""
     var itemtype: String = "1"
     var allArray: [statisticRiskDtosModel]?
+    var mainHeadView: CompanyRiskDetailHeadView?
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
@@ -506,13 +507,18 @@ extension MySelfRiskDetailViewController {
         self.oneItemView.numLabel.text = String(model.highLevelCnt ?? 0)
         self.twoItemView.numLabel.text = String(model.lowLevelCnt ?? 0)
         self.threeItemView.numLabel.text = String(model.tipLevelCnt ?? 0)
-        //法律风险数据
-//        if self.itemtype == "2" {
-//            let modelArray = model.items ?? []
-//            self.lawView.modelArray.accept(modelArray)
-//            self.lawView.numLabel.text = "案件信息(\(count))"
-//        }
-//        self.lawView.tableView.reloadData()
+        //头部信息
+        let monitorFlag = model.monitorFlag ?? 0
+        if monitorFlag != 0 {
+            let startTime = model.monitorStartDate ?? ""
+            let endTime = model.monitorEndDate ?? ""
+            mainHeadView?.timeLabel.text = "监控周期:\(startTime) - \(endTime)"
+            mainHeadView?.tagLabel.text = model.groupName ?? ""
+            mainHeadView?.tagLabel.isHidden = false
+        }else {
+            mainHeadView?.timeLabel.text = "未监控"
+            mainHeadView?.tagLabel.isHidden = true
+        }
     }
     
 }

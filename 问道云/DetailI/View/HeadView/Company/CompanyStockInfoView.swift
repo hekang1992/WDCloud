@@ -24,49 +24,49 @@ class StockViewModel {
 let jsonData1 = JSON([
     "imageUrl": "重大事项",
     "nameUrl": "企业简介",
-    "wenUrl": "/listed-company/company-profile"
+    "wenUrl": "/listed-company/home"
 ])
 
 let jsonData2 = JSON([
     "imageUrl": "证券信息",
     "nameUrl": "证券信息",
-    "wenUrl": "/listed-company/securities-information"
+    "wenUrl": "/listed-company/home"
 ])
 
 let jsonData3 = JSON([
     "imageUrl": "财务指标",
     "nameUrl": "财务指标",
-    "wenUrl": "/listed-company/financial-indicator"
+    "wenUrl": "/listed-company/home"
 ])
 
 let jsonData4 = JSON([
     "imageUrl": "董监高",
     "nameUrl": "董监高信息",
-    "wenUrl": "/listed-company/dong-jian-gao-info"
+    "wenUrl": "/listed-company/home"
 ])
 
 let jsonData5 = JSON([
     "imageUrl": "股东持股情况",
     "nameUrl": "主要股东",
-    "wenUrl": "/listed-company/top-ten-shareholders"
+    "wenUrl": "/listed-company/home"
 ])
 
 let jsonData6 = JSON([
     "imageUrl": "公司公告",
     "nameUrl": "公告大全",
-    "wenUrl": "/listed-company/listing-announcement"
+    "wenUrl": "/listed-company/home"
 ])
 
 let jsonData7 = JSON([
     "imageUrl": "新闻舆情",
     "nameUrl": "新闻舆情",
-    "wenUrl": "/listed-company/enterprise-opinion"
+    "wenUrl": "/listed-company/home"
 ])
 
 let jsonData8 = JSON([
     "imageUrl": "联系信息",
     "nameUrl": "联系信息",
-    "wenUrl": "/listed-company/contact-information"
+    "wenUrl": "/listed-company/home"
 ])
 
 let model1 = StockViewModel(json: jsonData1)
@@ -208,7 +208,7 @@ class CompanyStockInfoView: BaseView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: itemWidth, height: 22)
-        layout.minimumLineSpacing = 5
+        layout.minimumLineSpacing = 3
         layout.minimumInteritemSpacing = 0
         let collectView = UICollectionView(
             frame: .zero, collectionViewLayout: layout)
@@ -344,11 +344,6 @@ class CompanyStockInfoView: BaseView {
             make.top.equalTo(itemView8.snp.bottom).offset(10)
             make.height.equalTo(55)
         }
-//        tlineView.snp.makeConstraints { make in
-//            make.left.right.equalToSuperview()
-//            make.height.equalTo(4)
-//            make.top.equalTo(collectionView.snp.bottom).offset(6.5)
-//        }
         
         modelArrayRx.accept(modelArray)
         
@@ -409,6 +404,27 @@ class CompanyStockInfoView: BaseView {
                 self.itemView7.numLabel.text = valueModel.volumeOfBusiness ?? ""
                 self.itemView8.numLabel.text = valueModel.yClosePrice
             }
+        }).disposed(by: disposeBag)
+        
+        
+        collectionView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
+            guard let self = self else { return }
+            let index = indexPath.row
+            let model = self.modelArray[index]
+            let vc = ViewControllerUtils.findViewController(from: self)
+            let webVc = WebPageViewController()
+            let url = model.wenUrl
+            let entityld = self.dataModel.value?.basicInfo?.orgId ?? ""
+            let stockCode = self.dataModel.value?.stockInfo?.first?.value?.shareCode ?? ""
+            let firmname = self.dataModel.value?.basicInfo?.orgName ?? ""
+            let dict = ["selectedKey": String(index),
+                        "entityId": entityld,
+                        "stockCode": stockCode,
+                        "firmname": firmname]
+            let pageUrl = base_url + url
+            let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+            webVc.pageUrl.accept(webUrl)
+            vc?.navigationController?.pushViewController(webVc, animated: true)
         }).disposed(by: disposeBag)
         
     }
@@ -523,12 +539,5 @@ class DetailStockViewCell: UICollectionViewCell {
         }).disposed(by: disposeBag)
         
     }
-    
-//    func setUI(with data: StockItem) {
-//        titleLabel.text = data.title
-//        imv.image = .init(named: data.imageName)
-//    }
-    
-    
-    
+
 }

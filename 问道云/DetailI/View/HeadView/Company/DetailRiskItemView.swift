@@ -8,12 +8,18 @@
 import UIKit
 
 class DetailRiskItemView: BaseView {
+    
+    lazy var clickBtn: UIButton = {
+        let clickBtn = UIButton(type: .custom)
+        return clickBtn
+    }()
 
     lazy var bgView: UIView = {
         let bgView = UIView()
         bgView.backgroundColor = .init(cssStr: "#FFF7F6")
         bgView.layer.cornerRadius = 2
         bgView.layer.masksToBounds = true
+        bgView.isUserInteractionEnabled = true
         return bgView
     }()
     
@@ -56,10 +62,11 @@ class DetailRiskItemView: BaseView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(bgView)
-        addSubview(namelabel)
-        addSubview(numLabel)
-        addSubview(descLabel)
-        addSubview(timeLabel)
+        bgView.addSubview(namelabel)
+        bgView.addSubview(numLabel)
+        bgView.addSubview(descLabel)
+        bgView.addSubview(timeLabel)
+        addSubview(clickBtn)
         bgView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.height.equalTo(60)
@@ -85,6 +92,13 @@ class DetailRiskItemView: BaseView {
             make.height.equalTo(13)
             make.top.equalTo(descLabel.snp.bottom).offset(8)
         }
+        clickBtn.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+//        clickBtn.rx.tap.subscribe(onNext: { [weak self] in
+//            guard let self = self else { return }
+//        }).disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {

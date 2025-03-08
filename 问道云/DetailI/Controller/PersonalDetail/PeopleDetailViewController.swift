@@ -170,7 +170,7 @@ extension PeopleDetailViewController {
         //tags
         self.homeHeadView.tagArray.accept(model.tags ?? [])
         //desc
-        let descInfo = model.resume ?? ""
+        let descInfo = model.basicInfo?.resume ?? ""
         self.homeHeadView.desLabel.text = "简介: \(descInfo)"
         
         infoView.desLabel.text = "简介: \(descInfo)"

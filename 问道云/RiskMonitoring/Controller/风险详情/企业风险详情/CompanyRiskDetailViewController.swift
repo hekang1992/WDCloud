@@ -147,6 +147,7 @@ extension CompanyRiskDetailViewController: JXPagingViewDelegate {
             oneRiskVc.enityId = enityId ?? ""
             oneRiskVc.name = name ?? ""
             oneRiskVc.logo = logo ?? ""
+            oneRiskVc.mainHeadView = homeHeadView
             return oneRiskVc
         }else if index == 1 {
             let twoRiskVc = UnioRiskDetailViewController()

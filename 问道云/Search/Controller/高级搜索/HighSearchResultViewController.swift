@@ -51,9 +51,8 @@ class HighSearchResultViewController: WDBaseViewController {
     }()
     
     //参数
-    var dict: [String: Any] = ["pageSize": 20]
-    //搜索参数
     var pageIndex: Int = 1
+    var dict = [String: Any]()
     //关键词
     var keyword: [String: String]?
     //精准度
@@ -108,6 +107,7 @@ class HighSearchResultViewController: WDBaseViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
         addHeadView(from: headView)
         view.backgroundColor = .white
         view.addSubview(numLabel)
@@ -129,6 +129,25 @@ class HighSearchResultViewController: WDBaseViewController {
             make.top.equalTo(scrollView.snp.bottom).offset(1)
             make.left.right.bottom.equalToSuperview()
         }
+        self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            pageIndex = 1
+            getHighSearchInfo()
+        })
+        
+        //添加上拉加载更多
+        self.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            getHighSearchInfo()
+        })
+        
+        getHighSearchInfo()
+    }
+    
+    private func getHighSearchInfo() {
+        ViewHud.addLoadView()
+        let man = RequestManager()
+        dict = ["pageSize": 20, "pageIndex": pageIndex]
         if let keyword = keyword {
             dict.merge(keyword, uniquingKeysWith: { (current, new) in
                 return current
@@ -209,43 +228,23 @@ class HighSearchResultViewController: WDBaseViewController {
                 return current
             })
         }
-        dict.merge(["pageIndex": pageIndex]) { (current, new) in
-            return current
-        }
-        
-        self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
-            guard let self = self else { return }
-            pageIndex = 1
-            getHighSearchInfo()
-        })
-        
-        //添加上拉加载更多
-        self.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
-            guard let self = self else { return }
-            getHighSearchInfo()
-        })
-        
-        getHighSearchInfo()
-    }
-    
-    private func getHighSearchInfo() {
-        ViewHud.addLoadView()
-        let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org-list/search",
                        method: .post) { [weak self] result in
             ViewHud.hideLoadView()
+            self?.tableView.mj_header?.endRefreshing()
+            self?.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
                 if let self = self,
                    let model = success.data,
                    let total = model.pageMeta?.totalNum {
                     self.dataModel = model
-                    if pageIndex == 1 {
-                        pageIndex = 1
+                    if self.pageIndex == 1 {
+                        self.pageIndex = 1
                         self.allArray.removeAll()
                     }
-                    pageIndex += 1
+                    self.pageIndex += 1
                     let pageData = model.pageData ?? []
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {

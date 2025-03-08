@@ -66,8 +66,8 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             let promptLabels = model.labels?.compactMap { $0.name } ?? []
             let riskLabels = model.warnLabels?.compactMap{ $0.name } ?? []
             headView.oneHeadView.tagArray.accept(promptLabels + riskLabels)
-            //简介
-            let descInfo = model.firmInfo?.businessScope ?? ""
+            //简介bas
+            let descInfo = model.basicInfo?.resume ?? ""
             headView.oneHeadView.desLabel.text = "简介: \(descInfo)"
             infoView.desLabel.text = "简介: \(descInfo)"
             headView.moreBtnBlock = { [weak self] in
@@ -173,7 +173,8 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             //总资产
             headView.oneHeadView.sixView.timeLabel.text = model.assetInfo?.lastYear ?? ""
             headView.oneHeadView.sixView.label2.text = String(model.assetInfo?.lastAmount ?? 0)
-            
+            //电话个数
+            headView.twoHeadView.model.accept(model)
             //主要股东
             headView.threeHeadView.dataModel.accept(model)
             headView.threeHeadView.shareHoldersBlock = { model in
@@ -201,9 +202,6 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
                 peopleDetailVc.peopleName.accept(legalName)
                 vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }
-            
-            //电话官网公众号邮箱地址
-            headView.twoHeadView.model.accept(model)
             
             //常用服务
             headView.sixHeadView.dataModel = model
@@ -290,9 +288,13 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             
         }).disposed(by: disposeBag)
         
-        phoneEmailModel.asObservable().subscribe(onNext: { [weak self] model in
+        
+        
+        phoneEmailModel
+            .asObservable()
+            .subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            headView.twoHeadView.model.accept(model)
+            headView.twoHeadView.emailModel.accept(model)
         }).disposed(by: disposeBag)
     }
     

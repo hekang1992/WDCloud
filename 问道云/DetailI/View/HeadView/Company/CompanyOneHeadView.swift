@@ -334,24 +334,47 @@ class CompanyOneHeadView: BaseView {
             guard let self = self else { return }
             self.moreBtnBlock?()
         }).disposed(by: disposeBag)
+        
         //点击了曾用名
         historyNamesButton.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.historyNameBtnBlock?()
         }).disposed(by: disposeBag)
+        
         //企业码
         numlabel.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
             self.companyCodeBlock?()
         }).disposed(by: disposeBag)
+        
         //发票抬头
         invoiceTitleButton.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.invoiceBlock?()
         }).disposed(by: disposeBag)
         
+        //点击了法定代表人
+        nameView.rx
+            .tapGesture()
+            .when(.recognized).subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                if let peopleModel = self.model.value?.leaderVec?.leaderList?.first {
+                    let vc = ViewControllerUtils.findViewController(from: self)
+                    let personId = peopleModel.leaderId ?? ""
+                    let peopleName = peopleModel.name ?? ""
+                    let peopleDetailVc = PeopleBothViewController()
+                    peopleDetailVc.personId.accept(personId)
+                    peopleDetailVc.peopleName.accept(peopleName)
+                    vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
+                }
+        }).disposed(by: disposeBag)
+        
         //行业类型
-        oneView.rx.tapGesture().when(.recognized).subscribe(onNext: { [self]_ in
+        oneView.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
             let industryView = PopIndustryView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 250))
             if let model = model.value {
                 let titles = model.basicInfo?.industry?.map { $0.name ?? "" }
@@ -369,7 +392,10 @@ class CompanyOneHeadView: BaseView {
         }).disposed(by: self.disposeBag)
         
         //员工
-        threeView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+        threeView.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
             let employeeView = PopEmployeeNumView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 400))
             employeeView.ctImageView.image = UIImage(named: "员工人数")

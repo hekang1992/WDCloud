@@ -300,6 +300,8 @@
 		73D4E3F92D73404F005C73D8 /* BothCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D4E3F82D73404F005C73D8 /* BothCompanyViewController.swift */; };
 		73D4E3FB2D734059005C73D8 /* BothPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D4E3FA2D734059005C73D8 /* BothPeopleViewController.swift */; };
 		73D50B872D16ACEC00EF081A /* FocusCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D50B862D16ACEC00EF081A /* FocusCompanyViewController.swift */; };
+		73DE1D1F2D7BF3E200C554B1 /* PhoneEmailListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DE1D1E2D7BF3E200C554B1 /* PhoneEmailListView.swift */; };
+		73DE1D212D7BF72200C554B1 /* PhoneEmailNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DE1D202D7BF72200C554B1 /* PhoneEmailNameView.swift */; };
 		73E306D22D154E9E00D18943 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73E306D12D154E9D00D18943 /* Launch Screen.storyboard */; };
 		73E306DF2D156C0800D18943 /* MyQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E306DE2D156C0800D18943 /* MyQRCodeView.swift */; };
 		73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E56BE02D1274630015BF34 /* TwoTicketView.swift */; };
@@ -685,6 +687,8 @@
 		73D4E3F82D73404F005C73D8 /* BothCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothCompanyViewController.swift; sourceTree = "<group>"; };
 		73D4E3FA2D734059005C73D8 /* BothPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothPeopleViewController.swift; sourceTree = "<group>"; };
 		73D50B862D16ACEC00EF081A /* FocusCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCompanyViewController.swift; sourceTree = "<group>"; };
+		73DE1D1E2D7BF3E200C554B1 /* PhoneEmailListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneEmailListView.swift; sourceTree = "<group>"; };
+		73DE1D202D7BF72200C554B1 /* PhoneEmailNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneEmailNameView.swift; sourceTree = "<group>"; };
 		73E306D12D154E9D00D18943 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		73E306D32D15521800D18943 /* 问道云.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "问道云.entitlements"; sourceTree = "<group>"; };
 		73E306D42D1552FC00D18943 /* WechatOpenSDK-XCFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "WechatOpenSDK-XCFramework.xcframework"; path = "Pods/WechatOpenSDK-XCFramework/WechatOpenSDK-XCFramework.xcframework"; sourceTree = "<group>"; };
@@ -1530,6 +1534,8 @@
 				73B362422D3793F9003BD911 /* PopRateMoneyView.swift */,
 				734334982D7AA31F006AE608 /* PopIndustryView.swift */,
 				7343349A2D7AFA40006AE608 /* PopPhoneEmailView.swift */,
+				73DE1D1E2D7BF3E200C554B1 /* PhoneEmailListView.swift */,
+				73DE1D202D7BF72200C554B1 /* PhoneEmailNameView.swift */,
 			);
 			path = PopView;
 			sourceTree = "<group>";
@@ -2162,6 +2168,7 @@
 				73B362492D37A642003BD911 /* PeopleBothViewController.swift in Sources */,
 				7335F6EA2D0ADA050074985F /* MyDownloadSearchView.swift in Sources */,
 				73A21DEE2D0C32A600FC4C49 /* DiligenceView.swift in Sources */,
+				73DE1D1F2D7BF3E200C554B1 /* PhoneEmailListView.swift in Sources */,
 				7340E1B42D5DC54B008FD5C7 /* SearchPeopleLoanDefaultViewController.swift in Sources */,
 				7325A7C22CFEEE6E0043C196 /* WDRiskViewController.swift in Sources */,
 				73C752482D1CF72F00C47187 /* FocusCompanyViewNormalCell.swift in Sources */,
@@ -2367,6 +2374,7 @@
 				73C36A812D2D1BAA00D6DC46 /* SearchHotWordsListView.swift in Sources */,
 				734896EA2D3A429500B028FE /* RiskUnioViewCell.swift in Sources */,
 				739527F82D633EB60020589C /* OneDueDiligenceViewController.swift in Sources */,
+				73DE1D212D7BF72200C554B1 /* PhoneEmailNameView.swift in Sources */,
 				73EABF922D320F460052F4AB /* TwoRiskListView.swift in Sources */,
 				737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,

@@ -112,7 +112,6 @@ class DataModel {
      */
     var personId: String?//个人ID
     var personName: String?//个人名字
-    var resume: String?//个人描述
     var shareholderList: [shareholderListModel]?//合作伙伴
     var tags: [String]?
     //风险
@@ -134,6 +133,10 @@ class DataModel {
     var highLevelCnt: Int?
     var lowLevelCnt: Int?
     var tipLevelCnt: Int?
+    var monitorStartDate: String?
+    var monitorEndDate: String?
+    var monitorFlag: Int?
+    var groupName: String?
     var statisticRiskDtos: [statisticRiskDtosModel]?
     /**
      监控设置模型
@@ -163,6 +166,10 @@ class DataModel {
     var emailList: [emailListModel]?
     var wechatList: [wechatListModel]?
     init(json: JSON) {
+        self.groupName = json["groupName"].stringValue
+        self.monitorFlag = json["monitorFlag"].intValue
+        self.monitorStartDate = json["monitorStartDate"].stringValue
+        self.monitorEndDate = json["monitorEndDate"].stringValue
         self.phoneList = json["phoneList"].arrayValue.map { phoneListModel(json: $0) }
         self.addressList = json["addressList"].arrayValue.map { addressListModel(json: $0) }
         self.websitesList = json["websitesList"].arrayValue.map { websitesListModel(json: $0) }
@@ -222,7 +229,6 @@ class DataModel {
         self.shareholderList = json["shareholderList"].arrayValue.map { shareholderListModel(json: $0) }
         self.personId = json["personId"].stringValue
         self.personName = json["personName"].stringValue
-        self.resume = json["resume"].stringValue
         self.labels = json["labels"].arrayValue.map { promptLabelsModel(json: $0) }
         self.assetInfo = assetInfoModel(json: json["assetInfo"])
         self.taxInfo = taxInfoModel(json: json["taxInfo"])
@@ -1428,7 +1434,9 @@ class basicInfoModel {
     var scale: String?
     var usCreditCode: String?
     var regCapCur: String?
+    var resume: String?//描述
     init(json: JSON) {
+        self.resume = json["resume"].stringValue
         self.regCapCur = json["regCapCur"].stringValue
         self.actCap = json["actCap"].stringValue
         self.actCapCur = json["actCapCur"].stringValue
@@ -1529,25 +1537,31 @@ class addressListModel {
     var lat: String?
     var orgCount: String?
     var type: String?
+    var source: String?
     init(json: JSON) {
         self.address = json["address"].stringValue
         self.lng = json["lng"].stringValue
         self.lat = json["lat"].stringValue
         self.orgCount = json["orgCount"].stringValue
         self.type = json["type"].stringValue
+        self.source = json["source"].stringValue
     }
 }
 
 class websitesListModel {
     var website: String?
     var year: String?
-    var icpFlag: String?
     var orgCount: String?
+    var source: String?
+    var icpFlag: Bool?
+    var owFlag: Bool?
     init(json: JSON) {
         self.website = json["website"].stringValue
         self.year = json["year"].stringValue
-        self.icpFlag = json["icpFlag"].stringValue
         self.orgCount = json["orgCount"].stringValue
+        self.source = json["source"].stringValue
+        self.icpFlag = json["icpFlag"].boolValue
+        self.owFlag = json["owFlag"].boolValue
     }
 }
 

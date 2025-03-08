@@ -13,7 +13,8 @@ class HighSearchViewCell: UITableViewCell {
         didSet {
             guard let model = model else { return }
             let companyName = model.orgInfo?.orgName ?? ""
-            logoImageView.image = UIImage.imageOfText(companyName, size: (27, 27))
+            let logoColor = model.orgInfo?.logoColor ?? ""
+            logoImageView.image = UIImage.imageOfText(companyName, size: (27, 27), bgColor: UIColor.init(cssStr: logoColor)!)
             nameLabel.text = companyName
         }
     }

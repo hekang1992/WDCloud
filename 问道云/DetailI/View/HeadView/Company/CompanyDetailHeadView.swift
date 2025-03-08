@@ -27,13 +27,6 @@ class CompanyDetailHeadView: BaseView {
     //人员点击
     var staffInfosBlock: ((staffInfosModel) -> Void)?
     
-    //电话点击
-    var oneBlock: (() -> Void)?
-    var twoBlock: (() -> Void)?
-    var threeBlock: (() -> Void)?
-    var fourBlock: (() -> Void)?
-    var fiveBlock: (() -> Void)?
-    
     lazy var oneHeadView: CompanyOneHeadView = {
         let oneHeadView = CompanyOneHeadView()
         oneHeadView.moreBtnBlock = { [weak self] in
@@ -145,6 +138,7 @@ class CompanyDetailHeadView: BaseView {
             guard let self = self, let model = model else { return }
             let shareHolders = model.shareHolders ?? []
             let srMgmtInfos = model.srMgmtInfos ?? []
+            fourHeadView.model.accept(model)
             threeHeadView.lineView.isHidden = false
             if !shareHolders.isEmpty && !srMgmtInfos.isEmpty {
                 threeHeadView.snp.updateConstraints { make in

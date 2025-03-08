@@ -19,14 +19,8 @@ class CompanyTwoHeadView: BaseView {
 //        refreshBtn.titleLabel?.font = .regularFontOfSize(size: 10)
 //        return refreshBtn
 //    }()
-    
     var model = BehaviorRelay<DataModel?>(value: nil)
-    
-    var oneBlock: (() -> Void)?
-    var twoBlock: (() -> Void)?
-    var threeBlock: (() -> Void)?
-    var fourBlock: (() -> Void)?
-    var fiveBlock: (() -> Void)?
+    var emailModel = BehaviorRelay<DataModel?>(value: nil)
     
     lazy var oneBtn: UIButton = {
         let oneBtn = UIButton(type: .custom)
@@ -159,33 +153,34 @@ class CompanyTwoHeadView: BaseView {
                 fiveBtn.isEnabled = true
                 fiveBtn.setImage(UIImage(named: "addressicogray"), for: .normal)
             }
-            
-            oneBtn.rx.tap.subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.getPhoneInfo()
-            }).disposed(by: disposeBag)
-            
-            twoBtn.rx.tap.subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.getPhoneInfo()
-            }).disposed(by: disposeBag)
-            
-            threeBtn.rx.tap.subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.getPhoneInfo()
-            }).disposed(by: disposeBag)
-            
-            fourBtn.rx.tap.subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.getPhoneInfo()
-            }).disposed(by: disposeBag)
-            
-            fiveBtn.rx.tap.subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.getPhoneInfo()
-            }).disposed(by: disposeBag)
-            
         }).disposed(by: disposeBag)
+        
+        
+        oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.getPhoneInfo()
+        }).disposed(by: disposeBag)
+        
+        twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.getPhoneInfo()
+        }).disposed(by: disposeBag)
+        
+        threeBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.getPhoneInfo()
+        }).disposed(by: disposeBag)
+        
+        fourBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.getPhoneInfo()
+        }).disposed(by: disposeBag)
+        
+        fiveBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.getPhoneInfo()
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -200,7 +195,7 @@ extension CompanyTwoHeadView {
     private func getPhoneInfo() {
         let phoneView = PopPhoneEmailView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 610))
         let alertVc = TYAlertController(alert: phoneView, preferredStyle: .actionSheet)!
-        if let model = self.model.value {
+        if let model = self.emailModel.value {
             phoneView.model.accept(model)
         }
         let vc = ViewControllerUtils.findViewController(from: self)

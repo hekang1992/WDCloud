@@ -6,8 +6,11 @@
 //  风险追踪
 
 import UIKit
+import RxRelay
 
 class CompanyFourHeadView: BaseView {
+    
+    var model = BehaviorRelay<DataModel?>(value: nil)
 
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
@@ -92,10 +95,56 @@ class CompanyFourHeadView: BaseView {
             make.width.equalTo(105)
             make.right.equalToSuperview().offset(-5)
         }
+        
+        oneRiskView.clickBtn
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.goRiskDetailInfo()
+        }).disposed(by: disposeBag)
+        
+        twoRiskView.clickBtn
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.goRiskDetailInfo()
+        }).disposed(by: disposeBag)
+        
+        threeRiskView.clickBtn
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.goRiskDetailInfo()
+        }).disposed(by: disposeBag)
+        
+        fourRiskView.clickBtn
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.goRiskDetailInfo()
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+extension CompanyFourHeadView {
+    
+    private func goRiskDetailInfo() {
+        let model = self.model.value
+        let riskDetailVc = CompanyRiskDetailViewController()
+        riskDetailVc.enityId = model?.basicInfo?.orgId ?? ""
+        riskDetailVc.name = model?.basicInfo?.orgName ?? ""
+        let vc = ViewControllerUtils.findViewController(from: self)
+        vc?.navigationController?.pushViewController(riskDetailVc, animated: true)
     }
     
 }

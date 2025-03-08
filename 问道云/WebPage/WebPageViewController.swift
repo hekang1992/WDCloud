@@ -107,7 +107,6 @@ class WebPageViewController: WDBaseViewController {
             webView.load(URLRequest(url: url))
         }
         print("pageurl=====\(webUrl)")
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -30,7 +30,6 @@ class CompanyRiskDetailHeadView: BaseView {
         timeLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
         timeLabel.textAlignment = .left
         timeLabel.font = .mediumFontOfSize(size: 12)
-        timeLabel.text = "监控周期:"
         return timeLabel
     }()
     
@@ -43,6 +42,7 @@ class CompanyRiskDetailHeadView: BaseView {
     
     lazy var tagLabel: PaddedLabel = {
         let tagLabel = PaddedLabel()
+        tagLabel.isHidden = true
         tagLabel.textColor = .init(cssStr: "#FF7D00")!
         tagLabel.backgroundColor = .init(cssStr: "#FFEEDE")!
         tagLabel.font = .regularFontOfSize(size: 10)
