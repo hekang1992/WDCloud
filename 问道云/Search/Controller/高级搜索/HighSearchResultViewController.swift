@@ -140,7 +140,10 @@ class HighSearchResultViewController: WDBaseViewController {
             guard let self = self else { return }
             getHighSearchInfo()
         })
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getHighSearchInfo()
     }
     

@@ -257,24 +257,24 @@ extension PeopleDetailTwoViewController {
             case .success(let success):
                 if let model = success.data,
                    let code = success.code,
-                   code == 200/*, let total = model.total*/ {
+                   code == 200, let total = model.totalNum {
                     if pageNum == 1 {
                         self.pageNum = 1
                         self.allArray.removeAll()
                     }
                     self.pageNum += 1
-                    let rows = model.data ?? []
+                    let rows = model.dataList ?? []
                     self.allArray.append(contentsOf: rows)
-//                    if self.allArray.count != total {
-//                        self.tableView.mj_footer?.isHidden = false
-//                    }else {
-//                        self.tableView.mj_footer?.isHidden = true
-//                    }
-//                    if total != 0 {
-//                        self.emptyView.removeFromSuperview()
-//                    }else {
-//                        self.addNodataView(from: self.whiteView)
-//                    }
+                    if self.allArray.count != total {
+                        self.tableView.mj_footer?.isHidden = false
+                    }else {
+                        self.tableView.mj_footer?.isHidden = true
+                    }
+                    if total != 0 {
+                        self.emptyView.removeFromSuperview()
+                    }else {
+                        self.addNodataView(from: self.whiteView)
+                    }
                     self.tableView.reloadData()
                 }else {
                     self.addNodataView(from: self.whiteView)
@@ -342,8 +342,8 @@ extension PeopleDetailTwoViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
         let companyDetailVc = CompanyBothViewController()
-        companyDetailVc.enityId.accept(model.entityId ?? "")
-        companyDetailVc.companyName.accept(model.relateEntityName ?? "")
+        companyDetailVc.enityId.accept(model.orgId ?? "")
+        companyDetailVc.companyName.accept(model.orgName ?? "")
         self.navigationController?.pushViewController(companyDetailVc, animated: true)
     }
     

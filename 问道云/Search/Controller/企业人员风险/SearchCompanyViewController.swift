@@ -197,13 +197,13 @@ class SearchCompanyViewController: WDBaseViewController {
             self?.navigationController?.pushViewController(companyDetailVc, animated: true)
         }
         
-        //网络请求
-        getDataInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("企业===============企业")
+        //网络请求
+        getDataInfo()
     }
 }
 

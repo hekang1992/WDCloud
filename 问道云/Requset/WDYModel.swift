@@ -48,9 +48,11 @@ class DataModel {
     var combotypenumber: String?
     var combonumber: Int?//多少天
     var total: Int?//列表总个数
+    var totalNum: Int?
     var isDistributor: String?//是否是分销商
     var rows: [rowsModel]?
     var data: [rowsModel]?
+    var dataList: [rowsModel]?
     var ordernumber: String?
     var dataid: String?
     var firmname: String?
@@ -169,6 +171,8 @@ class DataModel {
     var emailList: [emailListModel]?
     var wechatList: [wechatListModel]?
     init(json: JSON) {
+        self.totalNum = json["totalNum"].intValue
+        self.dataList = json["dataList"].arrayValue.map { rowsModel(json: $0) }
         self.resume = json["resume"].stringValue
         self.monitorInfo = monitorInfoModel(json: json["monitorInfo"])
         self.groupName = json["groupName"].stringValue
@@ -719,7 +723,10 @@ class rowsModel {
     var type: String?//1企业 2个人
     var searchContent: String?
     var relateEntityName: String?
-    var workAs: String?
+    var shareholderFlag: Bool?
+    var legalFlag: Bool?
+    var percent: String?
+    var positionName: String?
     var regStatus: String?
     var firmnumber: String?
     var items: [itemsModel]?
@@ -802,7 +809,10 @@ class rowsModel {
         self.personname = json["personname"].stringValue
         self.firmnumber = json["firmnumber"].stringValue
         self.regStatus = json["regStatus"].stringValue
-        self.workAs = json["workAs"].stringValue
+        self.shareholderFlag = json["shareholderFlag"].boolValue
+        self.legalFlag = json["legalFlag"].boolValue
+        self.percent = json["percent"].stringValue
+        self.positionName = json["positionName"].stringValue
         self.relateEntityName = json["relateEntityName"].stringValue
         self.eid = json["id"].stringValue
         self.searchContent = json["searchContent"].stringValue

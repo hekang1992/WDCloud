@@ -97,11 +97,12 @@ class CompanyDetailView: BaseView {
         collectionView.snp.makeConstraints { make in
             make.top.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
-            make.bottom.equalToSuperview().offset(-90)
+            make.bottom.equalToSuperview().offset(-70)
         }
         footerView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(90)
+            make.width.equalTo(SCREEN_WIDTH)
+            make.left.bottom.equalToSuperview()
+            make.height.equalTo(70)
         }
         scrollView.snp.makeConstraints { make in
             make.left.top.equalToSuperview()

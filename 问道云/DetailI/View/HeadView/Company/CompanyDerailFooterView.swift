@@ -48,7 +48,7 @@ class CompanyDerailFooterView: BaseView {
         backBtn3.setImage(UIImage(named: "添加关注"), for: .normal)
         backBtn3.titleLabel?.font = .mediumFontOfSize(size: 15)
         backBtn3.setTitleColor(UIColor.init(cssStr: "#FFFFFF"), for: .normal)
-        backBtn3.backgroundColor = UIColor.init(cssStr: "#547AFF")
+        backBtn3.backgroundColor = UIColor.init(cssStr: "#3F96FF")
         backBtn3.layer.cornerRadius = 4
         backBtn3.layer.masksToBounds = true
         return backBtn3
@@ -71,23 +71,23 @@ class CompanyDerailFooterView: BaseView {
         backBtn.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(20)
             make.top.equalToSuperview().offset(11)
-            make.size.equalTo(CGSize(width: 50.pix(), height: 45.pix()))
+            make.size.equalTo(CGSize(width: 50.pix(), height: 40.pix()))
         }
         backBtn1.snp.makeConstraints { make in
             make.top.equalTo(backBtn.snp.top)
             make.left.equalTo(backBtn.snp.right).offset(30)
-            make.size.equalTo(CGSize(width: 50.pix(), height: 45.pix()))
+            make.size.equalTo(CGSize(width: 50.pix(), height: 40.pix()))
         }
         backBtn2.snp.makeConstraints { make in
             make.top.equalTo(backBtn.snp.top)
             make.left.equalTo(backBtn1.snp.right).offset(30)
-            make.size.equalTo(CGSize(width: 50.pix(), height: 45.pix()))
+            make.size.equalTo(CGSize(width: 50.pix(), height: 40.pix()))
         }
         backBtn3.snp.makeConstraints { make in
             make.top.equalTo(backBtn.snp.top)
-            make.left.equalToSuperview().offset(SCREEN_WIDTH - 135.pix())
+            make.left.equalTo(backBtn2.snp.right).offset(30)
             make.height.equalTo(45.pix())
-            make.width.equalTo(115.pix())
+            make.right.equalToSuperview().offset(-20)
         }
         
     }
@@ -98,10 +98,10 @@ class CompanyDerailFooterView: BaseView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        backBtn.layoutButtonEdgeInsets(style: .top, space: 2)
-        backBtn1.layoutButtonEdgeInsets(style: .top, space: 2)
-        backBtn2.layoutButtonEdgeInsets(style: .top, space: 2)
-        backBtn3.layoutButtonEdgeInsets(style: .left, space: 2)
+        backBtn.layoutButtonEdgeInsets(style: .top, space: 3)
+        backBtn1.layoutButtonEdgeInsets(style: .top, space: 3)
+        backBtn2.layoutButtonEdgeInsets(style: .top, space: 3)
+        backBtn3.layoutButtonEdgeInsets(style: .left, space: 3)
     }
 
 }

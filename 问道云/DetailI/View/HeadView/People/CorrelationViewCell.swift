@@ -103,15 +103,36 @@ class CorrelationViewCell: BaseViewCell {
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            
             let logo = model.logo ?? ""
             let orgName = model.orgName ?? ""
-            
-            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (40, 40)))
-            
-            namelabel.text = orgName
+            statusLabel.text = model.regStatus ?? ""
+            TagsLabelColorConfig.nameLabelColor(from: statusLabel)
+            //是否是股东
+            let shareholderFlag = model.shareholderFlag ?? true
+            //持股比例
+            let percent = model.percent ?? ""
+            //是否法人
+            let legalFlag = model.legalFlag ?? true
             //职位
-            let originalString = model.workAs ?? ""
+            let positionName = model.positionName ?? ""
+            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (40, 40), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
+            namelabel.text = orgName
+            statusLabel.text = model.regStatus ?? ""
+            TagsLabelColorConfig.nameLabelColor(from: statusLabel)
+            var title: String = ""
+            if shareholderFlag {
+                title = "股东(\(percent))"
+            }
+            
+            if legalFlag {
+                title += "、法定代表人"
+            }
+            
+            if !positionName.isEmpty {
+                title += "、\(positionName)"
+            }
+            //职位
+            let originalString = title
             let attributedString = NSMutableAttributedString(string: originalString)
             // 定义要查找的范围
             let pattern = "\\(([^)]+)\\)" // 正则表达式，匹配括号内的内容
@@ -124,13 +145,9 @@ class CorrelationViewCell: BaseViewCell {
                 attributedString.addAttribute(.foregroundColor, value: UIColor.init(cssStr: "#F55B5B")!, range: range) // 设置颜色
             }
             workLabel.attributedText = attributedString
-            
-            statusLabel.text = model.regStatus ?? ""
-            TagsLabelColorConfig.nameLabelColor(from: statusLabel)
         }).disposed(by: disposeBag)
         
     }
-    
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

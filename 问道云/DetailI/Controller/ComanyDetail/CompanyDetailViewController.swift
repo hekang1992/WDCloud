@@ -77,8 +77,15 @@ class CompanyDetailViewController: WDBaseViewController {
         
         //关注
         companyDetailView.footerView.backBtn3.rx.tap.subscribe(onNext: { [weak self] in
-            guard let self = self else { return }
-            
+            guard let self = self, let model = self.headModel.value else { return }
+            let followStatus = model.followInfo?.followStatus ?? 0
+            if followStatus == 1 || followStatus == 3 {
+                //添加关注
+                addFocus(from: model)
+            }else {
+                //取消关注
+                cancelFocus(from: model)
+            }
         }).disposed(by: disposeBag)
         
         //获取企业详情item菜单
@@ -94,7 +101,6 @@ class CompanyDetailViewController: WDBaseViewController {
     }
     
 }
-
 
 extension CompanyDetailViewController {
     
@@ -245,9 +251,63 @@ extension CompanyDetailViewController {
         
     }
     
-    //刷新企业详情底部,是否监控,是否关注 1 未关注；2 已关注；3 已取关
+    //添加关注
+    private func addFocus(from model: DataModel) {
+        ViewHud.addLoadView()
+        let man = RequestManager()
+        let entityId = model.basicInfo?.orgId ?? ""
+        let dict = ["entityId": entityId, "followTargetType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/add-or-cancel",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    if let self = self {
+                        model.followInfo?.followStatus = 2
+                        refreshFooterInfo(form: model)
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //取消关注
+    private func cancelFocus(from model: DataModel) {
+        ShowAlertManager.showAlert(title: "取消关注", message: "是否取消关注?", confirmAction: {
+            ViewHud.addLoadView()
+            let man = RequestManager()
+            let entityId = model.basicInfo?.orgId ?? ""
+            let dict = ["entityId": entityId, "followTargetType": "1"]
+            man.requestAPI(params: dict,
+                           pageUrl: "/operation/follow/add-or-cancel",
+                           method: .post) { [weak self] result in
+                ViewHud.hideLoadView()
+                switch result {
+                case .success(let success):
+                    if success.code == 200 {
+                        if let self = self {
+                            model.followInfo?.followStatus = 1
+                            refreshFooterInfo(form: model)
+                        }
+                    }
+                    break
+                case .failure(_):
+                    break
+                }
+            }
+        })
+    }
+    
+    //刷新企业详情底部,是否监控 0 1, 是否关注 1 未关注；2 已关注；3 已取关
     private func refreshFooterInfo(form model: DataModel) {
         let monitorStatus = model.monitorInfo?.monitorStatus ?? 0
+        let followStatus = model.followInfo?.followStatus ?? 0
+        //监控
         if monitorStatus == 0 {
             companyDetailView.footerView.backBtn2.setTitle("添加监控", for: .normal)
             companyDetailView.footerView.backBtn2.setImage(UIImage(named: "添加监控"), for: .normal)
@@ -255,6 +315,19 @@ extension CompanyDetailViewController {
             companyDetailView.footerView.backBtn2.setTitle("已监控", for: .normal)
             companyDetailView.footerView.backBtn2.setImage(UIImage(named: "addminjiakong"), for: .normal)
         }
+        //关注
+        if followStatus == 1 || followStatus == 3 {
+            companyDetailView.footerView.backBtn3.setTitle("关注", for: .normal)
+            companyDetailView.footerView.backBtn3.setImage(UIImage(named: "添加关注"), for: .normal)
+            companyDetailView.footerView.backBtn3.backgroundColor = UIColor.init(cssStr: "#3F96FF")
+            companyDetailView.footerView.backBtn3.setTitleColor(UIColor.init(cssStr: "#FFFFFF"), for: .normal)
+        }else {
+            companyDetailView.footerView.backBtn3.setTitle("已关注", for: .normal)
+            companyDetailView.footerView.backBtn3.setImage(UIImage(named: "关注成功"), for: .normal)
+            companyDetailView.footerView.backBtn3.backgroundColor = UIColor.init(cssStr: "#EAF1FF")
+            companyDetailView.footerView.backBtn3.setTitleColor(UIColor.init(cssStr: "#3F96FF"), for: .normal)
+        }
+        
     }
 }
 
