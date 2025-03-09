@@ -493,3 +493,23 @@ extension WDBaseViewController {
     }
     
 }
+
+extension WDBaseViewController {
+    
+    // 判断字符串是否仅包含拼音（字母）
+    func containsPinyin(_ text: String) -> Bool {
+        let regex = "^[a-zA-Z]+$"  // 仅包含字母的字符串
+        return text.range(of: regex, options: .regularExpression) != nil
+    }
+    
+    // 判断字符串是否仅包含中文字符
+    func containsOnlyChinese(_ text: String) -> Bool {
+        for scalar in text.unicodeScalars {
+            if (0x4E00...0x9FA5).contains(scalar.value) == false {
+                return false // 如果包含非中文字符，返回 false
+            }
+        }
+        return true // 如果全是中文字符
+    }
+    
+}

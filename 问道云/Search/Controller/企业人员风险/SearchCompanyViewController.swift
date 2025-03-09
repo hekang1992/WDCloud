@@ -162,7 +162,7 @@ class SearchCompanyViewController: WDBaseViewController {
             let longitude = Double(model.orgInfo?.regAddr?.lng ?? "0.0") ?? 0.0
             let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let locationVc = CompanyLocationViewController(location: location)
-            locationVc.name = model.orgInfo?.regAddr?.content ?? ""
+            locationVc.name = model.orgInfo?.orgName ?? ""
             self?.navigationController?.pushViewController(locationVc, animated: true)
         }
         

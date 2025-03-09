@@ -144,7 +144,7 @@ extension PeopleActivityViewController {
     private func getActivityInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["personId": personId,
+        let dict = ["personNumber": personId,
                     "pageNum": pageIndex,
                     "pageSize": "20"] as [String : Any]
         man.requestAPI(params: dict,

@@ -68,13 +68,24 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             headView.oneHeadView.tagArray.accept(promptLabels + riskLabels)
             //简介bas
             let descInfo = model.basicInfo?.resume ?? ""
+            
             headView.oneHeadView.desLabel.text = "简介: \(descInfo)"
-            infoView.desLabel.text = "简介: \(descInfo)"
+            
+            let attributedString = NSMutableAttributedString(string: "简介: \(descInfo)")
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 5
+            attributedString.addAttribute(
+                .paragraphStyle,
+                value: paragraphStyle,
+                range: NSRange(location: 0, length: attributedString.length)
+            )
+            infoView.desLabel.attributedText = attributedString
             headView.moreBtnBlock = { [weak self] in
                 guard let self = self else { return }
                 keyWindow?.addSubview(infoView)
                 infoView.snp.makeConstraints { make in
-                    make.left.right.equalToSuperview()
+                    make.left.bottom.equalToSuperview()
+                    make.width.equalTo(SCREEN_WIDTH)
                     make.top.equalTo(self.headView.oneHeadView.desLabel.snp.top)
                 }
                 UIView.animate(withDuration: 0.25) {

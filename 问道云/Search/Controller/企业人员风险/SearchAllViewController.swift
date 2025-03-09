@@ -77,8 +77,30 @@ class SearchAllViewController: WDBaseViewController {
         //获取行业数据
         getAllIndustryInfo()
         
+        // 监听 UITextField 的文本变化
+        self.searchHeadView.searchTx.rx.text.orEmpty
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if self.containsOnlyChinese(text) == true {
+                    print("自动打印中文：\(text)")
+                    if selectIndex == 0 {
+                        companyVc.searchWords = text
+                    }else if selectIndex == 1 {
+                        peopleVc.searchWords = text
+                    }else if selectIndex == 2 {
+                        riskVc.searchWords = text
+                    }else {
+                        
+                    }
+                }
+                else if self.containsPinyin(text) == true {
+                    // 拼音不打印，什么都不做
+                }
+            })
+            .disposed(by: disposeBag)
+        
         self.searchHeadView.searchTx
-            .rx.controlEvent(.editingChanged)
+            .rx.controlEvent(.editingDidEndOnExit)
             .withLatestFrom(self.searchHeadView.searchTx.rx.text.orEmpty)
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }

@@ -228,7 +228,7 @@ class PopPhoneEmailView: BaseView {
             make.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
             make.top.equalTo(wechatView.snp.bottom)
-            make.bottom.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview()
         }
         
         model.asObservable().subscribe(onNext: { [weak self] model in

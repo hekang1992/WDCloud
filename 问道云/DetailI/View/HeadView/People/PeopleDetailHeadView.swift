@@ -315,7 +315,7 @@ class PeopleDetailHeadView: BaseView {
         moreButton.snp.makeConstraints { make in
             make.centerY.equalTo(desLabel.snp.centerY)
             make.left.equalTo(desLabel.snp.right).offset(10)
-            make.size.equalTo(CGSize(width: 24, height: 16.5))
+            make.size.equalTo(CGSize(width: 24.pix(), height: 16.5))
         }
         onelineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()

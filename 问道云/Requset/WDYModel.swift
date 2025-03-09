@@ -107,11 +107,14 @@ class DataModel {
     var leaderVec: leaderVecModel?
     //基本信息
     var basicInfo: basicInfoModel?
+    //是否被监控
+    var monitorInfo: monitorInfoModel?
     /**
      个人详情数据模型
      */
     var personId: String?//个人ID
     var personName: String?//个人名字
+    var resume: String?//个人简介
     var shareholderList: [shareholderListModel]?//合作伙伴
     var tags: [String]?
     //风险
@@ -166,6 +169,8 @@ class DataModel {
     var emailList: [emailListModel]?
     var wechatList: [wechatListModel]?
     init(json: JSON) {
+        self.resume = json["resume"].stringValue
+        self.monitorInfo = monitorInfoModel(json: json["monitorInfo"])
         self.groupName = json["groupName"].stringValue
         self.monitorFlag = json["monitorFlag"].intValue
         self.monitorStartDate = json["monitorStartDate"].stringValue
@@ -715,7 +720,7 @@ class rowsModel {
     var searchContent: String?
     var relateEntityName: String?
     var workAs: String?
-    var entityStatus: String?
+    var regStatus: String?
     var firmnumber: String?
     var items: [itemsModel]?
     var legalName: String?
@@ -796,7 +801,7 @@ class rowsModel {
         self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
         self.personname = json["personname"].stringValue
         self.firmnumber = json["firmnumber"].stringValue
-        self.entityStatus = json["entityStatus"].stringValue
+        self.regStatus = json["regStatus"].stringValue
         self.workAs = json["workAs"].stringValue
         self.relateEntityName = json["relateEntityName"].stringValue
         self.eid = json["id"].stringValue
@@ -938,7 +943,7 @@ class pageDataModel {
     var riskInfo: riskInfoModel?
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
     var labels: [labelsModel]?
-    var followStatus: String?//是否被关注
+    var followStatus: String?//是否被关注 1 没有关注 2 被关注
     var orgInfo: orgInfoModel?
     var leaderVec: leaderVecModel?
     init(json: JSON) {
@@ -1596,5 +1601,12 @@ class wechatListModel {
         self.year = json["year"].stringValue
         self.source = json["source"].stringValue
         self.orgCount = json["orgCount"].stringValue
+    }
+}
+
+class monitorInfoModel {
+    var monitorStatus: Int?
+    init(json: JSON) {
+        self.monitorStatus = json["monitorStatus"].intValue
     }
 }

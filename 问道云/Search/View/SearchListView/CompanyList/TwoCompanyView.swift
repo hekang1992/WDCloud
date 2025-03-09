@@ -302,13 +302,14 @@ extension TwoCompanyView {
         }
     }
     
+    //添加关注
     private func addFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
         let man = RequestManager()
         ViewHud.addLoadView()
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
-                       pageUrl: "/operation/follow/save",
+                       pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { result in
             ViewHud.hideLoadView()
             switch result {
@@ -329,14 +330,14 @@ extension TwoCompanyView {
         }
     }
     
+    //取消关注
     private func deleteFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
         let man = RequestManager()
         ViewHud.addLoadView()
-        var dataIds = [model.firmInfo?.entityId ?? ""]
-        let dict = ["ids": dataIds,
-                    "followTargetType": "1"] as [String : Any]
+        let dict = ["entityId": model.orgInfo?.orgId ?? "",
+                    "followTargetType": "1"]
         man.requestAPI(params: dict,
-                       pageUrl: "/operation/follow/batchCancel",
+                       pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { result in
             ViewHud.hideLoadView()
             switch result {

@@ -19,9 +19,8 @@ class TwoCompanyNormalListCell: BaseViewCell {
     var phoneBlock: ((pageDataModel) -> Void)?
     //人物点击
     var peopleBlock: ((pageDataModel) -> Void)?
-    
+    //搜索数据列表模型
     var model = BehaviorRelay<pageDataModel?>(value: nil)
-    
     //是否点击了展开是收起
     var companyModel = CompanyModel(isOpenTag: false)
     
@@ -226,6 +225,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
             //小标签
             self.tagArray = model.labels?.compactMap { $0.name ?? "" } ?? []
             setupScrollView(tagScrollView: tagListView, tagArray: tagArray)
+            //是否被关注
             let followStatus = model.followStatus ?? ""
             if followStatus == "1" {
                 focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)

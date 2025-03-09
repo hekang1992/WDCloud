@@ -27,6 +27,7 @@ class CorrelationViewCell: BaseViewCell {
         let namelabel = UILabel()
         namelabel.textColor = UIColor.init(cssStr: "#333333")
         namelabel.textAlignment = .left
+        namelabel.numberOfLines = 0
         namelabel.font = .mediumFontOfSize(size: 15)
         return namelabel
     }()
@@ -58,22 +59,30 @@ class CorrelationViewCell: BaseViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(lineView)
+        contentView.addSubview(statusLabel)
         contentView.addSubview(ctImageView)
         contentView.addSubview(namelabel)
         contentView.addSubview(mlabel)
         contentView.addSubview(workLabel)
-        contentView.addSubview(statusLabel)
+        contentView.addSubview(lineView)
+        
         ctImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.left.equalToSuperview().offset(12)
             make.size.equalTo(CGSize(width: 40, height: 40))
             make.bottom.equalToSuperview().offset(-27)
         }
+        
+        statusLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(19)
+            make.right.equalToSuperview().offset(-12)
+            make.height.equalTo(15)
+        }
+        
         namelabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(19)
             make.left.equalTo(ctImageView.snp.right).offset(8)
-            make.height.equalTo(20)
+            make.width.equalTo(220.pix())
         }
         
         mlabel.snp.makeConstraints { make in
@@ -86,11 +95,6 @@ class CorrelationViewCell: BaseViewCell {
             make.height.equalTo(15)
             make.left.equalTo(mlabel.snp.right)
         }
-        statusLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(namelabel.snp.centerY)
-            make.right.equalToSuperview().offset(-12)
-            make.height.equalTo(15)
-        }
         
         lineView.snp.makeConstraints { make in
             make.height.equalTo(4)
@@ -100,9 +104,12 @@ class CorrelationViewCell: BaseViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             
-            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.relateEntityName ?? "", size: (40, 40)))
+            let logo = model.logo ?? ""
+            let orgName = model.orgName ?? ""
             
-            namelabel.text = model.relateEntityName ?? ""
+            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (40, 40)))
+            
+            namelabel.text = orgName
             //职位
             let originalString = model.workAs ?? ""
             let attributedString = NSMutableAttributedString(string: originalString)
@@ -118,7 +125,7 @@ class CorrelationViewCell: BaseViewCell {
             }
             workLabel.attributedText = attributedString
             
-            statusLabel.text = model.entityStatus ?? ""
+            statusLabel.text = model.regStatus ?? ""
             TagsLabelColorConfig.nameLabelColor(from: statusLabel)
         }).disposed(by: disposeBag)
         

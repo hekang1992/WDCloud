@@ -9,10 +9,14 @@ import UIKit
 
 class CompanyDescInfoView: BaseView {
     
-    lazy var oneBgView: UIView = {
-        let oneBgView = UIView()
-        oneBgView.backgroundColor = .init(cssStr: "#000000")?.withAlphaComponent(0.25)
-        return oneBgView
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.delegate = self
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.backgroundColor = .init(cssStr: "#000000")?.withAlphaComponent(0.25)
+        return scrollView
     }()
     
     lazy var whiteView: UIView = {
@@ -48,19 +52,19 @@ class CompanyDescInfoView: BaseView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(oneBgView)
-        addSubview(whiteView)
-        addSubview(desLabel)
-        addSubview(icon)
-        addSubview(mlabel)
-        oneBgView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        addSubview(scrollView)
+        scrollView.addSubview(whiteView)
+        scrollView.addSubview(desLabel)
+        scrollView.addSubview(icon)
+        scrollView.addSubview(mlabel)
+        scrollView.snp.makeConstraints { make in
+            make.top.left.bottom.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
         }
         desLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16.5)
-            make.right.equalToSuperview().offset(-17)
+            make.width.equalTo(SCREEN_WIDTH - 30)
             make.top.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-1000)
         }
         icon.snp.makeConstraints { make in
             make.top.equalTo(desLabel.snp.bottom).offset(18)
@@ -71,9 +75,11 @@ class CompanyDescInfoView: BaseView {
             make.centerY.equalTo(icon.snp.centerY)
             make.width.equalTo(SCREEN_WIDTH - 57)
             make.left.equalTo(icon.snp.right).offset(7)
+            make.bottom.equalToSuperview().offset(-10)
         }
         whiteView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
+            make.top.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
             make.bottom.equalTo(mlabel.snp.bottom).offset(10)
         }
         
@@ -83,4 +89,14 @@ class CompanyDescInfoView: BaseView {
         fatalError("init(coder:) has not been implemented")
     }
 
+}
+
+extension CompanyDescInfoView: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 0 {
+            scrollView.contentOffset.y = 0
+        }
+    }
+    
 }

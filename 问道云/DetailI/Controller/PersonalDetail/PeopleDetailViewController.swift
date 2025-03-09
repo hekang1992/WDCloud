@@ -90,7 +90,7 @@ extension PeopleDetailViewController {
     private func getPeopleRiskInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["personId": personId]
+        let dict = ["personNumber": personId]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew",
                        method: .get) { [weak self] result in
@@ -140,11 +140,12 @@ extension PeopleDetailViewController {
         homeHeadView.desclabel.text = model.entityRiskEventInfo?.dynamiccontent ?? ""
     }
     
+    //获取个人头部信息
     private func getPeopleHeadInfo() {
         let dict = [String: Any]()
         let man = RequestManager()
         ViewHud.addLoadView()
-        let pageUrl = "/firminfo/person/search/\(personId)"
+        let pageUrl = "/firminfo/v2/person/search/\(personId)"
         man.requestAPI(params: dict,
                        pageUrl: pageUrl,
                        method: .get) { [weak self] result in
@@ -170,7 +171,7 @@ extension PeopleDetailViewController {
         //tags
         self.homeHeadView.tagArray.accept(model.tags ?? [])
         //desc
-        let descInfo = model.basicInfo?.resume ?? ""
+        let descInfo = model.resume ?? ""
         self.homeHeadView.desLabel.text = "简介: \(descInfo)"
         
         infoView.desLabel.text = "简介: \(descInfo)"

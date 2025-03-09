@@ -44,10 +44,12 @@ class CompanyDetailViewController: WDBaseViewController {
             }
             self.pushWebPage(from: pageUrl)
         }
+        
         //回到首页
         companyDetailView.footerView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.navigationController?.popToRootViewController(animated: true)
         }).disposed(by: disposeBag)
+        
         //一键报告
         companyDetailView.footerView.backBtn1.rx.tap.subscribe(onNext: { [weak self] in
             let oneRpVc = OneReportViewController()
@@ -61,9 +63,23 @@ class CompanyDetailViewController: WDBaseViewController {
             }
             self?.navigationController?.pushViewController(oneRpVc, animated: true)
         }).disposed(by: disposeBag)
-        //添加监控
+        
+        //添加监控 0 未监控; 1 已监控
+        companyDetailView.footerView.backBtn2.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = self.headModel.value else { return }
+            let monitorStatus = model.monitorInfo?.monitorStatus ?? 0
+            if monitorStatus == 0 {//未监控->去监控
+                self.addMonitoring(from: model)
+            }else {//已监控->取消监控
+                self.cancelMonitoring(from: model)
+            }
+        }).disposed(by: disposeBag)
         
         //关注
+        companyDetailView.footerView.backBtn3.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            
+        }).disposed(by: disposeBag)
         
         //获取企业详情item菜单
         getCompanyDetailItemInfo()
@@ -158,14 +174,16 @@ extension CompanyDetailViewController {
         let dict = ["orgId": enityId]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org/overview",
-                       method: .get) { result in
+                       method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {
             case .success(let success):
-                if let model = success.data,
+                if let self = self,
+                   let model = success.data,
                     let code = success.code,
                     code == 200 {
                     self.headModel.accept(model)
+                    self.refreshFooterInfo(form: model)
                     self.companyDetailView.headModel.accept(model)
                     self.companyDetailView.collectionView.reloadData()
                 }
@@ -198,6 +216,46 @@ extension CompanyDetailViewController {
         }
     }
     
+    //添加监控
+    private func addMonitoring(from model: DataModel) {
+        let man = RequestManager()
+        let dict = ["orgId": model.basicInfo?.orgId ?? "",
+                    "groupId": ""]
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    if let self = self, let model = success.data {
+                        
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //取消监控
+    private func cancelMonitoring(from model: DataModel) {
+        
+    }
+    
+    //刷新企业详情底部,是否监控,是否关注 1 未关注；2 已关注；3 已取关
+    private func refreshFooterInfo(form model: DataModel) {
+        let monitorStatus = model.monitorInfo?.monitorStatus ?? 0
+        if monitorStatus == 0 {
+            companyDetailView.footerView.backBtn2.setTitle("添加监控", for: .normal)
+            companyDetailView.footerView.backBtn2.setImage(UIImage(named: "添加监控"), for: .normal)
+        }else {
+            companyDetailView.footerView.backBtn2.setTitle("已监控", for: .normal)
+            companyDetailView.footerView.backBtn2.setImage(UIImage(named: "addminjiakong"), for: .normal)
+        }
+    }
 }
 
 

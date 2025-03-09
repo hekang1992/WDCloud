@@ -238,6 +238,7 @@ class PeopleDetailTwoViewController: WDBaseViewController {
 
 extension PeopleDetailTwoViewController {
     
+    //获取关联企业信息
     private func getCorrelationInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
@@ -246,7 +247,7 @@ extension PeopleDetailTwoViewController {
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/person/relatedEntity",
+                       pageUrl: "/firminfo/v2/person/related-org",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             guard let self = self else { return }
@@ -256,7 +257,7 @@ extension PeopleDetailTwoViewController {
             case .success(let success):
                 if let model = success.data,
                    let code = success.code,
-                   code == 200, let total = model.total {
+                   code == 200/*, let total = model.total*/ {
                     if pageNum == 1 {
                         self.pageNum = 1
                         self.allArray.removeAll()
@@ -264,17 +265,16 @@ extension PeopleDetailTwoViewController {
                     self.pageNum += 1
                     let rows = model.data ?? []
                     self.allArray.append(contentsOf: rows)
-                    if self.allArray.count != total {
-                        self.tableView.mj_footer?.isHidden = false
-                    }else {
-                        self.tableView.mj_footer?.isHidden = true
-                    }
-                    if total != 0 {
-                        self.emptyView.removeFromSuperview()
-                        self.noNetView.removeFromSuperview()
-                    }else {
-                        self.addNodataView(from: self.whiteView)
-                    }
+//                    if self.allArray.count != total {
+//                        self.tableView.mj_footer?.isHidden = false
+//                    }else {
+//                        self.tableView.mj_footer?.isHidden = true
+//                    }
+//                    if total != 0 {
+//                        self.emptyView.removeFromSuperview()
+//                    }else {
+//                        self.addNodataView(from: self.whiteView)
+//                    }
                     self.tableView.reloadData()
                 }else {
                     self.addNodataView(from: self.whiteView)
@@ -292,7 +292,7 @@ extension PeopleDetailTwoViewController {
         ViewHud.addLoadView()
         let dict = ["personId": personId]
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/person/relatedEntityCount",
+                       pageUrl: "/firminfo/v2/person/related-org-count",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {
