@@ -33,7 +33,6 @@
 		730CEE002D54AE2C002DE9DF /* SearchMonitoringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDFF2D54AE2C002DE9DF /* SearchMonitoringViewController.swift */; };
 		730CEE022D54BE83002DE9DF /* SearchMonitoringViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEE012D54BE83002DE9DF /* SearchMonitoringViewCell.swift */; };
 		730DB4192D6C2475007B49B6 /* MonitoringSolutionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730DB4182D6C2475007B49B6 /* MonitoringSolutionViewController.swift */; };
-		730DB4222D6D8856007B49B6 /* Pods_问道云.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 730DB4202D6D8856007B49B6 /* Pods_问道云.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD802D01A55900770009 /* OrderListViewCell.swift */; };
 		7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */; };
 		7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */; };
@@ -47,7 +46,6 @@
 		7325A7C22CFEEE6E0043C196 /* WDRiskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7C12CFEEE6E0043C196 /* WDRiskViewController.swift */; };
 		7325A7C42CFEEE8B0043C196 /* WDDiligenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7C32CFEEE8B0043C196 /* WDDiligenceViewController.swift */; };
 		7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7C52CFEEE9A0043C196 /* WDCenterViewController.swift */; };
-		7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7C72CFEEF780043C196 /* Config.swift */; };
 		7325A7CB2CFEF2E70043C196 /* WDLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7CA2CFEF2E70043C196 /* WDLoginViewController.swift */; };
 		7325A7CD2CFEFA130043C196 /* APIUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7CC2CFEFA0B0043C196 /* APIUrl.swift */; };
 		7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */; };
@@ -248,6 +246,9 @@
 		73B362552D37B9BC003BD911 /* PeopleDetailOneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362542D37B9BC003BD911 /* PeopleDetailOneViewController.swift */; };
 		73B362572D37B9CB003BD911 /* PeopleDetailTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362562D37B9CB003BD911 /* PeopleDetailTwoViewController.swift */; };
 		73B362592D37B9D4003BD911 /* PeopleDetailThreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362582D37B9D4003BD911 /* PeopleDetailThreeViewController.swift */; };
+		73B3FA692D7EB9700077766F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3FA682D7EB9700077766F /* Extensions.swift */; };
+		73B3FA6B2D7EB9A60077766F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3FA6A2D7EB9A60077766F /* Constants.swift */; };
+		73B3FA6F2D7EBA3E0077766F /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3FA6E2D7EBA3E0077766F /* Utilities.swift */; };
 		73BDABA22D1E973200D93691 /* MembershipListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA12D1E973200D93691 /* MembershipListViewController.swift */; };
 		73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BDABA32D1EA73100D93691 /* MembershipListView.swift */; };
 		73C007092D643786003C3CE1 /* DueDiligenceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C007082D643786003C3CE1 /* DueDiligenceListView.swift */; };
@@ -374,7 +375,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				730DB4222D6D8856007B49B6 /* Pods_问道云.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,7 +382,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		68995903FB3663C128436F79 /* Pods____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		730384472D606572008AA7C3 /* MyOpinionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOpinionViewCell.swift; sourceTree = "<group>"; };
 		730384492D60731C008AA7C3 /* MyOpinioDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOpinioDetailViewController.swift; sourceTree = "<group>"; };
 		7303844B2D609006008AA7C3 /* ServiceCenterViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCenterViewCell.swift; sourceTree = "<group>"; };
@@ -409,7 +408,6 @@
 		730CEDFF2D54AE2C002DE9DF /* SearchMonitoringViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMonitoringViewController.swift; sourceTree = "<group>"; };
 		730CEE012D54BE83002DE9DF /* SearchMonitoringViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMonitoringViewCell.swift; sourceTree = "<group>"; };
 		730DB4182D6C2475007B49B6 /* MonitoringSolutionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringSolutionViewController.swift; sourceTree = "<group>"; };
-		730DB4202D6D8856007B49B6 /* Pods_问道云.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_问道云.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7314AD802D01A55900770009 /* OrderListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewCell.swift; sourceTree = "<group>"; };
 		7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketViewController.swift; sourceTree = "<group>"; };
 		7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketView.swift; sourceTree = "<group>"; };
@@ -421,12 +419,10 @@
 		7325A7B52CFEECDD0043C196 /* WDBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDBaseViewController.swift; sourceTree = "<group>"; };
 		7325A7B72CFEECF00043C196 /* WDNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDNavigationController.swift; sourceTree = "<group>"; };
 		7325A7B92CFEED0F0043C196 /* WDTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDTabBarController.swift; sourceTree = "<group>"; };
-		7325A7BB2CFEEE060043C196 /* Pods_问道云.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_问道云.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7325A7BF2CFEEE5F0043C196 /* WDHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDHomeViewController.swift; sourceTree = "<group>"; };
 		7325A7C12CFEEE6E0043C196 /* WDRiskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDRiskViewController.swift; sourceTree = "<group>"; };
 		7325A7C32CFEEE8B0043C196 /* WDDiligenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDDiligenceViewController.swift; sourceTree = "<group>"; };
 		7325A7C52CFEEE9A0043C196 /* WDCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDCenterViewController.swift; sourceTree = "<group>"; };
-		7325A7C72CFEEF780043C196 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7325A7CA2CFEF2E70043C196 /* WDLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDLoginViewController.swift; sourceTree = "<group>"; };
 		7325A7CC2CFEFA0B0043C196 /* APIUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIUrl.swift; sourceTree = "<group>"; };
 		7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WDLoginConfig.swift; sourceTree = "<group>"; };
@@ -635,6 +631,9 @@
 		73B362542D37B9BC003BD911 /* PeopleDetailOneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetailOneViewController.swift; sourceTree = "<group>"; };
 		73B362562D37B9CB003BD911 /* PeopleDetailTwoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetailTwoViewController.swift; sourceTree = "<group>"; };
 		73B362582D37B9D4003BD911 /* PeopleDetailThreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetailThreeViewController.swift; sourceTree = "<group>"; };
+		73B3FA682D7EB9700077766F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		73B3FA6A2D7EB9A60077766F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		73B3FA6E2D7EBA3E0077766F /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		73BDABA12D1E973200D93691 /* MembershipListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListViewController.swift; sourceTree = "<group>"; };
 		73BDABA32D1EA73100D93691 /* MembershipListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipListView.swift; sourceTree = "<group>"; };
 		73C007082D643786003C3CE1 /* DueDiligenceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDiligenceListView.swift; sourceTree = "<group>"; };
@@ -822,7 +821,6 @@
 				7325A7822CFEE5240043C196 /* Products */,
 				1704BF539669D5C8F403B1DD /* Pods */,
 				C61455D1CEA19ADD364A1DEF /* Frameworks */,
-				7325A7D62CFF059E0043C196 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -841,6 +839,7 @@
 				7325A79E2CFEE58D0043C196 /* Assets.xcassets */,
 				7325A79D2CFEE58D0043C196 /* AppDelegate.swift */,
 				73E306D12D154E9D00D18943 /* Launch Screen.storyboard */,
+				736E976F2D22A258009CC0DF /* ApplePay */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -850,17 +849,12 @@
 			children = (
 				73E306D32D15521800D18943 /* 问道云.entitlements */,
 				7325A79C2CFEE58D0043C196 /* Main */,
-				7325A7AF2CFEE7D90043C196 /* Config */,
+				73B3FA672D7EB9330077766F /* Common */,
+				73B3FA702D7EBB990077766F /* Resources */,
 				7325A7AC2CFEE7B20043C196 /* BaseVc */,
 				7325A7B02CFEE7E30043C196 /* Requset */,
 				73CFEB902D0056DD00B2FE1B /* WebPage */,
-				7325A7C92CFEF1F20043C196 /* Login */,
-				730DB4152D6C0A06007B49B6 /* Home */,
-				73FC5E382D5C32CE001D0DEF /* Search */,
-				7325A7AB2CFEE6E20043C196 /* RiskMonitoring */,
-				7325A7AA2CFEE6DF0043C196 /* DueDiligence */,
-				7325A7A92CFEE6C70043C196 /* Center */,
-				73807D4A2D33697000F8B90D /* DetailI */,
+				73B3FA712D7EBC200077766F /* Modules */,
 			);
 			path = "问道云";
 			sourceTree = "<group>";
@@ -904,23 +898,6 @@
 			path = BaseVc;
 			sourceTree = "<group>";
 		};
-		7325A7AF2CFEE7D90043C196 /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				7325A7E72D0008AF0043C196 /* OC */,
-				736E976F2D22A258009CC0DF /* ApplePay */,
-				7325A7E32CFFF8EE0043C196 /* loading.json */,
-				730488022D2A64B90024265C /* refreshloading.json */,
-				7325A7C72CFEEF780043C196 /* Config.swift */,
-				7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */,
-				7330CB812D23E65900778D54 /* ContactManager.swift */,
-				730488002D2A64410024265C /* WDRefreshHeader.swift */,
-				73807D482D32C93C00F8B90D /* Networkmanager.swift */,
-				7342CF542D7815C3005157A0 /* ServerDataManager.swift */,
-			);
-			path = Config;
-			sourceTree = "<group>";
-		};
 		7325A7B02CFEE7E30043C196 /* Requset */ = {
 			isa = PBXGroup;
 			children = (
@@ -955,26 +932,13 @@
 		7325A7D32CFEFCAA0043C196 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7325A7D42CFEFCC40043C196 /* LoginView.swift */,
-				7325A7D92CFF0BE10043C196 /* CodeView.swift */,
-				7325A7DB2CFF0DBE0043C196 /* PasswordLoginView.swift */,
-				7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */,
-				730487F42D2932640024265C /* BindPhoneView.swift */,
-				73C89F122D74047D0002C3C9 /* PopAgainLoginView.swift */,
+				7325A7E72D0008AF0043C196 /* CodeView */,
+				73B3FA612D7EB1750077766F /* LoginView */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		7325A7D62CFF059E0043C196 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				7325A7BB2CFEEE060043C196 /* Pods_问道云.framework */,
-				730DB4202D6D8856007B49B6 /* Pods_问道云.framework */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
-		7325A7E72D0008AF0043C196 /* OC */ = {
+		7325A7E72D0008AF0043C196 /* CodeView */ = {
 			isa = PBXGroup;
 			children = (
 				7325A7E82D0008D10043C196 /* WLUnitField.h */,
@@ -983,9 +947,8 @@
 				7325A7EB2D0008D10043C196 /* WLUnitFieldTextPosition.m */,
 				7325A7EC2D0008D10043C196 /* WLUnitFieldTextRange.h */,
 				7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */,
-				7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */,
 			);
-			path = OC;
+			path = CodeView;
 			sourceTree = "<group>";
 		};
 		7340E1662D5CB930008FD5C7 /* 实际控制人 */ = {
@@ -1138,30 +1101,13 @@
 			path = "对外投资";
 			sourceTree = "<group>";
 		};
-		734896D32D39ED7600B028FE /* 风险详情 */ = {
+		734896D32D39ED7600B028FE /* DetailVc */ = {
 			isa = PBXGroup;
 			children = (
 				734896E12D3A08DB00B028FE /* 企业风险详情 */,
 				734896E22D3A08EC00B028FE /* 人员风险详情 */,
 			);
-			path = "风险详情";
-			sourceTree = "<group>";
-		};
-		734896D62D39EDCD00B028FE /* RiskView */ = {
-			isa = PBXGroup;
-			children = (
-				734896D72D39EDDF00B028FE /* RiskDetailView.swift */,
-				734896DF2D39F30C00B028FE /* RiskDetailHeadView.swift */,
-				734896E52D3A2FE300B028FE /* RiskNumView.swift */,
-				734896E72D3A329E00B028FE /* RiskDetailViewCell.swift */,
-				734896E92D3A429500B028FE /* RiskUnioViewCell.swift */,
-				730CEDF22D530924002DE9DF /* RiskUnioHeadView.swift */,
-				730CEDF72D53590B002DE9DF /* CompanyLawListView.swift */,
-				730CEDF92D5446C8002DE9DF /* CompanyLawCellHeadView.swift */,
-				730CEDFB2D544EF6002DE9DF /* CompanyLawCell.swift */,
-				730CEDFD2D546080002DE9DF /* CompanyLawDetailCell.swift */,
-			);
-			path = RiskView;
+			path = DetailVc;
 			sourceTree = "<group>";
 		};
 		734896E12D3A08DB00B028FE /* 企业风险详情 */ = {
@@ -1187,47 +1133,47 @@
 			path = "人员风险详情";
 			sourceTree = "<group>";
 		};
-		734F4EA12D702F5A000D701F /* 日报 */ = {
+		734F4EA12D702F5A000D701F /* DayVc */ = {
 			isa = PBXGroup;
 			children = (
 				73868A402D55F53700CE107D /* DailyReportViewController.swift */,
 				73D4E3EC2D733D0B005C73D8 /* DailyCompanyViewController.swift */,
 				73D4E3EA2D733D00005C73D8 /* DailyPeopleViewController.swift */,
 			);
-			path = "日报";
+			path = DayVc;
 			sourceTree = "<group>";
 		};
-		734F4EA22D702F62000D701F /* 周报 */ = {
+		734F4EA22D702F62000D701F /* WeekVc */ = {
 			isa = PBXGroup;
 			children = (
 				73868A422D55F54E00CE107D /* WeekReportViewController.swift */,
 				73D4E3EE2D73401B005C73D8 /* WeekCompanyViewController.swift */,
 				73D4E3F02D734026005C73D8 /* WeekPeopleViewController.swift */,
 			);
-			path = "周报";
+			path = WeekVc;
 			sourceTree = "<group>";
 		};
-		734F4EA32D702F66000D701F /* 月报 */ = {
+		734F4EA32D702F66000D701F /* MonthVc */ = {
 			isa = PBXGroup;
 			children = (
 				73868A442D55F55A00CE107D /* MonthReportViewController.swift */,
 				73D4E3F62D734042005C73D8 /* MonthCompanyViewController.swift */,
 				73D4E3F42D734038005C73D8 /* MonthPeopleViewController.swift */,
 			);
-			path = "月报";
+			path = MonthVc;
 			sourceTree = "<group>";
 		};
-		734F4EA42D702F6A000D701F /* 全部 */ = {
+		734F4EA42D702F6A000D701F /* BothVc */ = {
 			isa = PBXGroup;
 			children = (
 				73868A462D55F56600CE107D /* BothReportViewController.swift */,
 				73D4E3F82D73404F005C73D8 /* BothCompanyViewController.swift */,
 				73D4E3FA2D734059005C73D8 /* BothPeopleViewController.swift */,
 			);
-			path = "全部";
+			path = BothVc;
 			sourceTree = "<group>";
 		};
-		734F4EA52D702F88000D701F /* 设置搜索 */ = {
+		734F4EA52D702F88000D701F /* SearchSettingVc */ = {
 			isa = PBXGroup;
 			children = (
 				7325A7C12CFEEE6E0043C196 /* WDRiskViewController.swift */,
@@ -1237,7 +1183,7 @@
 				735A3F6E2D65B6FA00448268 /* MinitoringMessagePushViewController.swift */,
 				730DB4182D6C2475007B49B6 /* MonitoringSolutionViewController.swift */,
 			);
-			path = "设置搜索";
+			path = SearchSettingVc;
 			sourceTree = "<group>";
 		};
 		735A3F702D65B9A000448268 /* 风控秘笈 */ = {
@@ -1387,7 +1333,6 @@
 		73807D572D33806B00F8B90D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				734896D62D39EDCD00B028FE /* RiskView */,
 				73B3623B2D374209003BD911 /* PopView */,
 				73B3623A2D3741F6003BD911 /* HeadView */,
 			);
@@ -1460,12 +1405,12 @@
 		73A21DE52D0C2E0800FC4C49 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				734F4EA12D702F5A000D701F /* 日报 */,
-				734F4EA22D702F62000D701F /* 周报 */,
-				734F4EA32D702F66000D701F /* 月报 */,
-				734F4EA42D702F6A000D701F /* 全部 */,
-				734896D32D39ED7600B028FE /* 风险详情 */,
-				734F4EA52D702F88000D701F /* 设置搜索 */,
+				734F4EA12D702F5A000D701F /* DayVc */,
+				734F4EA22D702F62000D701F /* WeekVc */,
+				734F4EA32D702F66000D701F /* MonthVc */,
+				734F4EA42D702F6A000D701F /* BothVc */,
+				734896D32D39ED7600B028FE /* DetailVc */,
+				734F4EA52D702F88000D701F /* SearchSettingVc */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1484,6 +1429,16 @@
 				733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */,
 				734F4EAA2D715D48000D701F /* PopBuyVipView.swift */,
 				73C770702D731E140031016F /* RiskHaveDataView.swift */,
+				734896D72D39EDDF00B028FE /* RiskDetailView.swift */,
+				734896DF2D39F30C00B028FE /* RiskDetailHeadView.swift */,
+				734896E52D3A2FE300B028FE /* RiskNumView.swift */,
+				734896E72D3A329E00B028FE /* RiskDetailViewCell.swift */,
+				734896E92D3A429500B028FE /* RiskUnioViewCell.swift */,
+				730CEDF22D530924002DE9DF /* RiskUnioHeadView.swift */,
+				730CEDF72D53590B002DE9DF /* CompanyLawListView.swift */,
+				730CEDF92D5446C8002DE9DF /* CompanyLawCellHeadView.swift */,
+				730CEDFB2D544EF6002DE9DF /* CompanyLawCell.swift */,
+				730CEDFD2D546080002DE9DF /* CompanyLawDetailCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1574,6 +1529,58 @@
 			path = People;
 			sourceTree = "<group>";
 		};
+		73B3FA612D7EB1750077766F /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7D42CFEFCC40043C196 /* LoginView.swift */,
+				7325A7D92CFF0BE10043C196 /* CodeView.swift */,
+				7325A7DB2CFF0DBE0043C196 /* PasswordLoginView.swift */,
+				7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */,
+				730487F42D2932640024265C /* BindPhoneView.swift */,
+				73C89F122D74047D0002C3C9 /* PopAgainLoginView.swift */,
+			);
+			path = LoginView;
+			sourceTree = "<group>";
+		};
+		73B3FA672D7EB9330077766F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				73B3FA6E2D7EBA3E0077766F /* Utilities.swift */,
+				73B3FA682D7EB9700077766F /* Extensions.swift */,
+				73B3FA6A2D7EB9A60077766F /* Constants.swift */,
+				73807D482D32C93C00F8B90D /* Networkmanager.swift */,
+				7330CB812D23E65900778D54 /* ContactManager.swift */,
+				7325A7CE2CFEFA510043C196 /* WDLoginConfig.swift */,
+				730488002D2A64410024265C /* WDRefreshHeader.swift */,
+				7342CF542D7815C3005157A0 /* ServerDataManager.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		73B3FA702D7EBB990077766F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7E32CFFF8EE0043C196 /* loading.json */,
+				730488022D2A64B90024265C /* refreshloading.json */,
+				7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		73B3FA712D7EBC200077766F /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				7325A7C92CFEF1F20043C196 /* Login */,
+				730DB4152D6C0A06007B49B6 /* Home */,
+				7325A7AB2CFEE6E20043C196 /* RiskMonitoring */,
+				7325A7AA2CFEE6DF0043C196 /* DueDiligence */,
+				7325A7A92CFEE6C70043C196 /* Center */,
+				73FC5E382D5C32CE001D0DEF /* Search */,
+				73807D4A2D33697000F8B90D /* DetailI */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
 		73C36A6F2D2D04E900D6DC46 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1595,13 +1602,13 @@
 			path = "高级搜索";
 			sourceTree = "<group>";
 		};
-		73CC03782D685FD60022F794 /* 高级搜索View */ = {
+		73CC03782D685FD60022F794 /* AdvancedSearchView */ = {
 			isa = PBXGroup;
 			children = (
 				73CC03792D685FED0022F794 /* HighSearchView.swift */,
 				7342CF562D78456B005157A0 /* HighSearchViewCell.swift */,
 			);
-			path = "高级搜索View";
+			path = AdvancedSearchView;
 			sourceTree = "<group>";
 		};
 		73CFEB902D0056DD00B2FE1B /* WebPage */ = {
@@ -1762,9 +1769,9 @@
 			children = (
 				73C36A6F2D2D04E900D6DC46 /* SearchView */,
 				73E9717A2D2FCF4600F12B15 /* SearchListView */,
-				73CC03782D685FD60022F794 /* 高级搜索View */,
-				73FC5E5A2D5C811F001D0DEF /* 查老赖View */,
-				73FC5E592D5C8111001D0DEF /* 查股东View */,
+				73CC03782D685FD60022F794 /* AdvancedSearchView */,
+				73FC5E5A2D5C811F001D0DEF /* SearchDefaultersView */,
+				73FC5E592D5C8111001D0DEF /* SearchShareholdersView */,
 				73FC5E582D5C80EC001D0DEF /* 行政处罚View */,
 				73FC5E572D5C80E1001D0DEF /* 一键报告View */,
 				73FC5E562D5C80D5001D0DEF /* 法律法规View */,
@@ -1865,23 +1872,23 @@
 			path = "行政处罚View";
 			sourceTree = "<group>";
 		};
-		73FC5E592D5C8111001D0DEF /* 查股东View */ = {
+		73FC5E592D5C8111001D0DEF /* SearchShareholdersView */ = {
 			isa = PBXGroup;
 			children = (
 				73FC5E412D5C3C07001D0DEF /* SearchPeopleShareholderCell.swift */,
 				73FC5E432D5C3C25001D0DEF /* SearchCompanyShareholderCell.swift */,
 			);
-			path = "查股东View";
+			path = SearchShareholdersView;
 			sourceTree = "<group>";
 		};
-		73FC5E5A2D5C811F001D0DEF /* 查老赖View */ = {
+		73FC5E5A2D5C811F001D0DEF /* SearchDefaultersView */ = {
 			isa = PBXGroup;
 			children = (
 				73FC5E512D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift */,
 				73FC5E532D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift */,
 				73FC5E5F2D5C995D001D0DEF /* SearchPeopleDeadbeatDetailTableViewCell.swift */,
 			);
-			path = "查老赖View";
+			path = SearchDefaultersView;
 			sourceTree = "<group>";
 		};
 		73FC5E612D5CA9A4001D0DEF /* 债券违约 */ = {
@@ -1913,7 +1920,6 @@
 				73460D182D154CC100EC9408 /* Security.framework */,
 				73460D162D154CB900EC9408 /* CoreGraphics.framework */,
 				73460D142D154C6900EC9408 /* WechatOpenSDK.framework */,
-				68995903FB3663C128436F79 /* Pods____.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2114,6 +2120,7 @@
 				73C7524E2D1D5A3100C47187 /* FocusSearchViewController.swift in Sources */,
 				73807D4E2D3369C500F8B90D /* CompanyBothViewController.swift in Sources */,
 				73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */,
+				73B3FA6B2D7EB9A60077766F /* Constants.swift in Sources */,
 				735A3F6D2D6572B000448268 /* SearchOneReportCell.swift in Sources */,
 				7340E18F2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift in Sources */,
 				73D4E3F72D734042005C73D8 /* MonthCompanyViewController.swift in Sources */,
@@ -2185,6 +2192,7 @@
 				738043382D27A9F5009B25F8 /* AddGroupPeopleViewController.swift in Sources */,
 				73807D522D336A0B00F8B90D /* CompanyActivityViewController.swift in Sources */,
 				73E306DF2D156C0800D18943 /* MyQRCodeView.swift in Sources */,
+				73B3FA692D7EB9700077766F /* Extensions.swift in Sources */,
 				739527F02D62CB360020589C /* DataErrorCorrectionViewController.swift in Sources */,
 				7335F6EE2D0AE24E0074985F /* MyDownloadViewNormalCell.swift in Sources */,
 				73460D112D150DD400EC9408 /* DeleteAccountViewController.swift in Sources */,
@@ -2213,6 +2221,7 @@
 				73807D472D32C8B200F8B90D /* LaunchViewController.swift in Sources */,
 				739DCA1A2D670E87009CFC78 /* PropertyThreePeopleViewController.swift in Sources */,
 				73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */,
+				73B3FA6F2D7EBA3E0077766F /* Utilities.swift in Sources */,
 				734896DA2D39F1AC00B028FE /* MySelfRiskDetailViewController.swift in Sources */,
 				735A3F6B2D65698200448268 /* SearchOneReportViewController.swift in Sources */,
 				73FC5E542D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift in Sources */,
@@ -2348,7 +2357,6 @@
 				73FC5E4E2D5C78E2001D0DEF /* SearchCompanyDeadbeatViewController.swift in Sources */,
 				73EABF9A2D323C460052F4AB /* RiskListPeopleView.swift in Sources */,
 				73C6B1A72D34EC8900CD3816 /* CompanyDetailHeadView.swift in Sources */,
-				7325A7C82CFEEF7B0043C196 /* Config.swift in Sources */,
 				7342CF552D7815C3005157A0 /* ServerDataManager.swift in Sources */,
 				7340E1882D5CD374008FD5C7 /* SearchCompanyAssetSeizureViewController.swift in Sources */,
 				736E97852D22A7A0009CC0DF /* ApplePayConfig.swift in Sources */,
@@ -2432,7 +2440,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "问道云/Config/OC/问道云-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "问道云/Resources/问道云-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2476,7 +2484,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "问道云/Config/OC/问道云-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "问道云/Resources/问道云-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

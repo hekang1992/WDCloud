@@ -66,11 +66,9 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             let promptLabels = model.labels?.compactMap { $0.name } ?? []
             let riskLabels = model.warnLabels?.compactMap{ $0.name } ?? []
             headView.oneHeadView.tagArray.accept(promptLabels + riskLabels)
-            //简介bas
+            //简介
             let descInfo = model.basicInfo?.resume ?? ""
-            
             headView.oneHeadView.desLabel.text = "简介: \(descInfo)"
-            
             let attributedString = NSMutableAttributedString(string: "简介: \(descInfo)")
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 5

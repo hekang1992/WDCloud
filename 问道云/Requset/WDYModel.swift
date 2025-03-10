@@ -12,7 +12,6 @@ class BaseModel {
     var code: Int?
     var msg: String?
     var data: DataModel?
-    
     var rows: [rowsModel]?
     var datas: [rowsModel]?//搜索的数组
     var total: Int?
@@ -1404,7 +1403,9 @@ class threelevelitemsModel {
 }
 
 
-///新模型数据
+/**
+ 新模型数据
+ */
 class statisticRiskDtosModel {
     var itemId: String?//ID
     var haveSon: String?//是否有下一级
