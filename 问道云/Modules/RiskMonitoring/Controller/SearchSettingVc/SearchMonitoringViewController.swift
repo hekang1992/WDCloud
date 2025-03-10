@@ -160,8 +160,7 @@ class SearchMonitoringViewController: WDBaseViewController {
         
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
-            pageNum = 1
-            getSearchListInfo(from: self.searchTx.text ?? "")
+            getListInfo()
         })
         
         //添加上拉加载更多
@@ -185,9 +184,13 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("搜索文字:\(textField.text ?? "")")
         textField.resignFirstResponder()
-        self.pageNum = 1
-        getSearchListInfo(from: textField.text ?? "")
+        getListInfo()
         return true
+    }
+    
+    private func getListInfo() {
+        self.pageNum = 1
+        getSearchListInfo(from: self.searchTx.text ?? "")
     }
     
     //搜索监控列表
@@ -370,7 +373,7 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
                     ToastViewConfig.showToast(message: "监控成功")
                 }else if code == 702 {
                     //弹窗提示购买会员
-                    popVipView()
+                    popVipView(from: 1, entityId: entityid, entityName: firmname, menuId: groupnumber)
                 }
                 break
             case .failure(_):
@@ -387,12 +390,14 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
                                          listView: MonitoringListView) {
         ViewHud.addLoadView()
         let personId = peopleModel.personId ?? ""
+        let personName = peopleModel.personName ?? ""
         let customerId = GetSaveLoginInfoConfig.getCustomerNumber()
         let groupId = self.groupnumber ?? ""
         let man = RequestManager()
         let dict = ["personId": personId,
                     "customerId": customerId,
-                    "groupId": groupId]
+                    "groupId": groupId,
+                    "personName": personName]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { [weak self] result in
@@ -407,7 +412,7 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
                     ToastViewConfig.showToast(message: "监控成功")
                 }else if code == 702 {
                     //弹窗提示购买会员
-                    popVipView()
+                    popVipView(from: 2, entityId: personId, entityName: personName, menuId: groupId)
                 }
                 break
             case .failure(_):
@@ -419,7 +424,7 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
     //取消人员监控
     
     //权限不够,弹窗提示会员
-    private func popVipView() {
+    private func popVipView(from entityType: Int, entityId: String, entityName: String, menuId: String) {
         let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
         buyVipView.cancelBlock = { [weak self] in
             self?.dismiss(animated: true)
@@ -428,6 +433,14 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
             //跳转购买单次会员
             self?.dismiss(animated: true, completion: {
                 let oneVc = BuyOneVipViewController()
+                oneVc.entityType = entityType
+                oneVc.entityId = entityId
+                oneVc.entityName = entityName
+                oneVc.menuId = menuId
+                //刷新列表
+                oneVc.refreshBlock = { [weak self] in
+                    self?.getListInfo()
+                }
                 self?.navigationController?.pushViewController(oneVc, animated: true)
             })
         }

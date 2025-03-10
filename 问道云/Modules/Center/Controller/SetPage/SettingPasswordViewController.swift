@@ -69,6 +69,7 @@ class SettingPasswordViewController: WDBaseViewController {
     lazy var passtwoTx: UITextField = {
         let passtwoTx = UITextField()
         passtwoTx.keyboardType = .default
+        passtwoTx.isSecureTextEntry = true
         let attrString = NSMutableAttributedString(string: "请再次输入密码", attributes: [
             .foregroundColor: UIColor.init(cssStr: "#9FA4AD") as Any,
             .font: UIFont.regularFontOfSize(size: 14)
@@ -91,7 +92,7 @@ class SettingPasswordViewController: WDBaseViewController {
         sureBtn.setTitleColor(.white, for: .normal)
         sureBtn.setTitle("完成", for: .normal)
         sureBtn.backgroundColor = UIColor.init(cssStr: "#307CFF")
-        sureBtn.titleLabel?.font = .regularFontOfSize(size: 14)
+        sureBtn.titleLabel?.font = .regularFontOfSize(size: 15)
         sureBtn.layer.cornerRadius = 3
         return sureBtn
     }()
@@ -190,8 +191,8 @@ class SettingPasswordViewController: WDBaseViewController {
         view.addSubview(sureBtn)
         sureBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-96)
-            make.size.equalTo(CGSize(width: 285, height: 40))
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-40)
+            make.size.equalTo(CGSize(width: 285.pix(), height: 45.pix()))
         }
         
         //验证码
@@ -225,8 +226,9 @@ class SettingPasswordViewController: WDBaseViewController {
         //闭眼
         eyeBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.eyeBtn.isSelected.toggle()
-            if let mimaTx = self?.passoneTx, let eyeBtn = self?.eyeBtn {
+            if let mimaTx = self?.passoneTx, let againTx = self?.passtwoTx, let eyeBtn = self?.eyeBtn {
                 mimaTx.isSecureTextEntry = !eyeBtn.isSelected
+                againTx.isSecureTextEntry = !eyeBtn.isSelected
             }
         }).disposed(by: disposeBag)
         
@@ -288,7 +290,8 @@ extension SettingPasswordViewController {
     func getCode() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["phone": self.phonelabel.text ?? ""]
+        let dict = ["phone": self.phonelabel.text ?? "",
+                    "sendType": "2"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in

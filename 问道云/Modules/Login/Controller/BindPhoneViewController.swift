@@ -51,7 +51,7 @@ extension BindPhoneViewController {
     func getCodeInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["phone": self.bindView.phoneTx.text ?? ""]
+        let dict = ["phone": self.bindView.phoneTx.text ?? "", "sendType": "4"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in

@@ -19,6 +19,14 @@ class BuyOneVipViewController: WDBaseViewController {
     
     var modelArray: [rowsModel]?
     
+    var menuId: String = ""
+    var entityType: Int = 0
+    var entityId: String = ""
+    var entityName: String = ""
+    
+    //返回是否需要刷新列表
+    var refreshBlock: (() -> Void)?
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "购买服务"
@@ -150,7 +158,6 @@ class BuyOneVipViewController: WDBaseViewController {
         buyBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             if sureBtn.isSelected {
-                self.appleById = self.modelArray?.first?.appleById ?? 0
                 self.buyInfo()
             }else {
                 ToastViewConfig.showToast(message: "请先确认《问道云会员服务协议》")
@@ -162,7 +169,7 @@ class BuyOneVipViewController: WDBaseViewController {
             norBtn.isSelected = true
             proBtn.isSelected = false
             self.buyBtn.setTitle(moneyStr, for: .normal)
-            self.appleById = self.modelArray?.first?.appleById ?? 0
+            self.appleById = self.modelArray?.first?.combonumber ?? 0
         }).disposed(by: disposeBag)
         
         proBtn.rx.tap.subscribe(onNext: { [weak self] in
@@ -170,7 +177,7 @@ class BuyOneVipViewController: WDBaseViewController {
             norBtn.isSelected = false
             proBtn.isSelected = true
             self.buyBtn.setTitle(money1Str, for: .normal)
-            self.appleById = self.modelArray?.last?.appleById ?? 0
+            self.appleById = self.modelArray?.last?.combonumber ?? 0
         }).disposed(by: disposeBag)
         
         //获取套餐信息
@@ -186,15 +193,31 @@ class BuyOneVipViewController: WDBaseViewController {
         let dict = ["combonumber": String(combonumber),
                     "ordertype": "4",
                     "phonenumber": phonenumber,
-                    "quantity": "1"]
+                    "quantity": "1",
+                    "entityType": entityType,
+                    "entityId": entityId,
+                    "entityName": entityName] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/addorder-single",
                        method: .post) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {
             case .success(let success):
+                if success.code == 200 {
+                    let combonumber = String(success.data?.appleById ?? 0)
+                    let orderNumberID = success.data?.ordernumber ?? ""
+                    self?.toApplePay(form: combonumber, orderNumberID: orderNumberID, complete: { [weak self] in
+                        //添加监控
+                        guard let self = self else { return }
+                        if entityType == 1 {//企业
+                            addCompanyMonitoring()
+                        }else {//人员
+                            addPeopleMonitoring()
+                        }
+                    })
+                }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }
@@ -213,12 +236,13 @@ class BuyOneVipViewController: WDBaseViewController {
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    if let modelArray = success.rows {
+                    if let modelArray = success.data?.rows {
                         self.modelArray = modelArray
+                        self.appleById = self.modelArray?.first?.combonumber ?? 0
                     }
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }
@@ -233,4 +257,62 @@ extension BuyOneVipViewController {
         sureBtn.layoutButtonEdgeInsets(style: .left, space: 5)
     }
     
+    //企业添加监控
+    private func addCompanyMonitoring() {
+        ViewHud.addLoadView()
+        let entityid = entityId
+        let firmname = entityName
+        let groupnumber = menuId
+        let dict = ["orgId": entityid,
+                    "groupId": groupnumber,
+                    "firmname": firmname] as [String : Any]
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                let code = success.code ?? 0
+                if code == 200 {
+                    self?.refreshBlock?()
+                    ToastViewConfig.showToast(message: "监控成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //人员监控
+    private func addPeopleMonitoring() {
+        ViewHud.addLoadView()
+        let personId = entityId
+        let personName = entityName
+        let customerId = GetSaveLoginInfoConfig.getCustomerNumber()
+        let groupId = menuId
+        let man = RequestManager()
+        let dict = ["personId": personId,
+                    "customerId": customerId,
+                    "groupId": groupId,
+                    "personName": personName]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                let code = success.code ?? 0
+                if code == 200 {
+                    self?.refreshBlock?()
+                    ToastViewConfig.showToast(message: "监控成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
 }

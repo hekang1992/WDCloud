@@ -98,8 +98,9 @@ extension SettingViewController {
             .rx
             .tapGesture()
             .when(.recognized)
-            .subscribe(onNext: {_ in
-                ToastViewConfig.showToast(message: "第三方")
+            .subscribe(onNext: { [weak self] _ in
+                let pageUrl = base_url + "/sfxy.pdf"
+                self?.pushWebPage(from: pageUrl)
             }).disposed(by: disposeBag)
         
         settingView.sixListView.bgView

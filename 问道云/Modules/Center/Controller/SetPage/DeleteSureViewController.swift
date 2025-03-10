@@ -256,7 +256,8 @@ extension DeleteSureViewController {
     func getCodeInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["phone": self.numLabel.text ?? ""]
+        let dict = ["phone": self.numLabel.text ?? "",
+                    "sendType": "3"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in

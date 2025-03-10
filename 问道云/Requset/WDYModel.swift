@@ -45,7 +45,8 @@ class DataModel {
     var startTime: String?
     var comboname: String?
     var combotypenumber: String?
-    var combonumber: Int?//多少天
+    var combonumber: Int?
+    var appleById: Int?
     var total: Int?//列表总个数
     var totalNum: Int?
     var isDistributor: String?//是否是分销商
@@ -170,6 +171,7 @@ class DataModel {
     var emailList: [emailListModel]?
     var wechatList: [wechatListModel]?
     init(json: JSON) {
+        self.appleById = json["appleById"].intValue
         self.totalNum = json["totalNum"].intValue
         self.dataList = json["dataList"].arrayValue.map { rowsModel(json: $0) }
         self.resume = json["resume"].stringValue
