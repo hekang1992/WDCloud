@@ -18,6 +18,9 @@ class CompanyDetailViewController: WDBaseViewController {
     //头部的数据模型
     var headModel = BehaviorRelay<DataModel?>(value: nil)
     
+    //是否刷新上一个页面
+    var refreshBlock: ((Int) -> Void)?
+    
     lazy var companyDetailView: CompanyDetailView = {
         let companyDetailView = CompanyDetailView()
         companyDetailView.backgroundColor = .white
@@ -267,6 +270,7 @@ extension CompanyDetailViewController {
                     if let self = self {
                         model.followInfo?.followStatus = 2
                         refreshFooterInfo(form: model)
+                        self.refreshBlock?(2)
                     }
                 }
                 break
@@ -293,6 +297,7 @@ extension CompanyDetailViewController {
                         if let self = self {
                             model.followInfo?.followStatus = 1
                             refreshFooterInfo(form: model)
+                            self.refreshBlock?(1)
                         }
                     }
                     break

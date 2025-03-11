@@ -345,7 +345,7 @@ extension MyCollectionSpecialReusableView {
             case .success(let success):
                 if success.code == 200 {
                     vc.dismiss(animated: true)
-                    ToastViewConfig.showToast(message: "添加成功!")
+                    ToastViewConfig.showToast(message: "添加成功")
                 }else {
                     ToastViewConfig.showToast(message: success.msg ?? "")
                 }

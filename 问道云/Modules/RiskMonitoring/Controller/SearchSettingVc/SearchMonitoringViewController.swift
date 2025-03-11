@@ -32,11 +32,6 @@ class SearchMonitoringViewController: WDBaseViewController {
         return groupView
     }()
     
-    lazy var buyVipView: PopBuyVipView = {
-        let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
-        return buyVipView
-    }()
-    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "搜索监控企业"

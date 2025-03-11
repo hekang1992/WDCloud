@@ -271,12 +271,12 @@ class SettingPasswordViewController: WDBaseViewController {
             let twoPass = PasswordConfig.isPasswordValid(self?.passtwoTx.text ?? "")
             if onePass && twoPass {
                 if onePass != twoPass {
-                    ToastViewConfig.showToast(message: "密码不正确!")
+                    ToastViewConfig.showToast(message: "密码不正确")
                 }else {
                     self?.setPasswordInfo()
                 }
             }else {
-                ToastViewConfig.showToast(message: "密码格式不符合!")
+                ToastViewConfig.showToast(message: "密码格式不符合")
             }
         }).disposed(by: disposeBag)
         
@@ -338,7 +338,7 @@ extension SettingPasswordViewController {
             ViewHud.hideLoadView()
             switch result {
             case .success(_):
-                ToastViewConfig.showToast(message: "密码设置成功!")
+                ToastViewConfig.showToast(message: "密码设置成功")
                 self?.navigationController?.popToRootViewController(animated: true)
                 break
             case .failure(_):

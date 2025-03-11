@@ -184,7 +184,10 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
             
             vc.payBlock = { [weak self] in
                 self?.getBuymoreinfo()
-                ShowAlertManager.showAlert(title: "支付结果", message: "您已经支付成功,感谢您的支持!")
+                self?.refreshToke()
+                DispatchQueue.main.async {
+                    ShowAlertManager.showAlert(title: "支付结果", message: "您已经支付成功,感谢您的支持")
+                }
             }
         }
         
@@ -202,16 +205,38 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
 
 extension MembershipCenterViewController {
     
+    //刷新refreshToke
+    func refreshToke() {
+        let man = RequestManager()
+        let userid = GetSaveLoginInfoConfig.getUserID()
+        let customernumber = GetSaveLoginInfoConfig.getPhoneNumber()
+        let dict = ["userid": userid, "customernumber": customernumber]
+        man.requestAPI(params: dict,
+                       pageUrl: "/auth/refreshcustomerreflogin",
+                       method: .post) { result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    let access_token = success.data?.access_token ?? ""
+                    UserDefaults.standard.setValue(access_token, forKey: WDY_SESSIONID)
+                    UserDefaults.standard.synchronize()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
     //获取会员类型
     func getBuymoreinfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/enterpriseclientbm/buymoreinfo",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):

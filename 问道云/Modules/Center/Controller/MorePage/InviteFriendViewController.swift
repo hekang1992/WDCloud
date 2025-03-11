@@ -204,7 +204,7 @@ extension InviteFriendViewController {
     
     private func shareContent(title: String, description: String, thumbImageName: String, webpageUrl: String, scene: Int32) {
         guard WXApi.isWXAppInstalled() else {
-            ToastViewConfig.showToast(message: "您尚未安装微信，请先完成安装后再尝试分享!")
+            ToastViewConfig.showToast(message: "您尚未安装微信，请先完成安装后再尝试分享")
             return
         }
         guard let thumbImage = UIImage(named: thumbImageName) else {

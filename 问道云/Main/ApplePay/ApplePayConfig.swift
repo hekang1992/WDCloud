@@ -18,7 +18,7 @@ class ApplePayConfig {
         }
         
         if !DYFStore.canMakePayments() {
-            ToastViewConfig.showToast(message: "您的设备无法或不支持付款!")
+            ToastViewConfig.showToast(message: "您的设备无法或不支持付款")
             return
         }
         

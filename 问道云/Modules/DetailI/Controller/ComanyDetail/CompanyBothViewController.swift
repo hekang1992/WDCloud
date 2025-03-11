@@ -17,6 +17,9 @@ class CompanyBothViewController: WDBaseViewController {
     //企业名称
     var companyName = BehaviorRelay<String>(value: "")
     
+    //是否刷新搜索列表页面
+    var refreshBlock: ((Int) -> Void)?
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.headTitleView.isHidden = false

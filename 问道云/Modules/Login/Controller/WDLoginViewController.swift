@@ -113,7 +113,7 @@ extension WDLoginViewController {
         //        //是否支持一键登录
         //        let isOneLogin = manager.shouldQuickLogin()
         //        if !isOneLogin {
-        //            ToastViewConfig.showToast(message: "您的设备不支持一键登录功能!")
+        //            ToastViewConfig.showToast(message: "您的设备不支持一键登录功能")
         //        }else {
         //            self.oneTouchLoginInfo(from: manager)
         //        }

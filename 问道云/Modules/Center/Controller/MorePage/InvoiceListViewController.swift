@@ -63,7 +63,7 @@ class InvoiceListViewController: WDBaseViewController {
             let kaihu = "开户银行: \(model.bankname ?? "")"
             let bank = "银行账户: \(model.bankfullname ?? "")"
             UIPasteboard.general.string = "\(name)\n\(shuihao)\n\(dizhi)\n\(phone)\n\(kaihu)\n\(bank)"
-            ToastViewConfig.showToast(message: "复制成功!")
+            ToastViewConfig.showToast(message: "复制成功")
         }
         
         listView.shareBlock = { model in

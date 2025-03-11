@@ -25,6 +25,11 @@ class WDBaseViewController: UIViewController {
         return noNetView
     }()
     
+    lazy var buyVipView: PopBuyVipView = {
+        let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+        return buyVipView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -394,7 +399,6 @@ extension WDBaseViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/addorder",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -409,6 +413,7 @@ extension WDBaseViewController {
                 }
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }

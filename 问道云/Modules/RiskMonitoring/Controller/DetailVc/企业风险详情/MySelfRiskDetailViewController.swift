@@ -402,11 +402,11 @@ class MySelfRiskDetailViewController: WDBaseViewController {
                 if let startDate = dateFormatter.date(from: startTime),
                    let endDate = dateFormatter.date(from: endTime) {
                     if startDate > endDate {
-                        ToastViewConfig.showToast(message: "时间格式不正确!")
+                        ToastViewConfig.showToast(message: "时间格式不正确")
                         return
                     }
                 } else {
-                    ToastViewConfig.showToast(message: "时间格式不正确!")
+                    ToastViewConfig.showToast(message: "时间格式不正确")
                     return
                 }
                 self?.startDateRelay.accept(self?.startTime)

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import TYAlertController
 
 class OneReportViewController: WDBaseViewController {
     
@@ -46,8 +47,7 @@ class OneReportViewController: WDBaseViewController {
         addHeadView(from: headView)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            make.left.bottom.right.equalToSuperview()
             make.top.equalTo(headView.snp.bottom).offset(5)
         }
         
@@ -118,6 +118,7 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         cell.twoblock = { [weak self] model in
+            guard let self = self else { return }
             let authFlag = model.authflag ?? 0
             let reportType = model.reporttype ?? 0
             if reportType == 3 {
@@ -133,10 +134,13 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
                 return
             }
             if authFlag == 0 {
-                let memVc = MembershipCenterViewController()
-                self?.navigationController?.pushViewController(memVc, animated: true)
+                let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+                buyVipView.cancelBlock = { [weak self] in
+                    self?.dismiss(animated: true)
+                }
+                self.present(alertVc, animated: true)
             }else {
-                self?.getReportInfo(from: model)
+                self.getReportInfo(from: model)
             }
         }
         return cell

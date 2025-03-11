@@ -207,7 +207,7 @@ extension AddInvoiceViewController: UITableViewDelegate {
             case .success(let success):
                 if success.code == 200 {
                     self?.navigationController?.popViewController(animated: true)
-                    ToastViewConfig.showToast(message: "添加成功!")
+                    ToastViewConfig.showToast(message: "添加成功")
                 }
                 break
             case .failure(_):

@@ -159,11 +159,11 @@ class FocusCompanyViewController: WDBaseViewController {
                 if let startDate = dateFormatter.date(from: startTime),
                    let endDate = dateFormatter.date(from: endTime) {
                     if startDate > endDate {
-                        ToastViewConfig.showToast(message: "时间格式不正确!")
+                        ToastViewConfig.showToast(message: "时间格式不正确")
                         return
                     }
                 } else {
-                    ToastViewConfig.showToast(message: "时间格式不正确!")
+                    ToastViewConfig.showToast(message: "时间格式不正确")
                     return
                 }
                 self?.startDateRelay.accept(self?.startTime)
@@ -199,7 +199,7 @@ class FocusCompanyViewController: WDBaseViewController {
                     self.cancelFocusInfo(from: selectedDataids)
                 })
             }else {
-                ToastViewConfig.showToast(message: "请先选择需要取消关注的对象!")
+                ToastViewConfig.showToast(message: "请先选择需要取消关注的对象")
             }
         }).disposed(by: disposeBag)
         
@@ -211,7 +211,7 @@ class FocusCompanyViewController: WDBaseViewController {
                     self.movePopFocus(from: selectedDataids)
                 })
             }else {
-                ToastViewConfig.showToast(message: "请先选择需要移动的对象!")
+                ToastViewConfig.showToast(message: "请先选择需要移动的对象")
             }
         }).disposed(by: disposeBag)
         

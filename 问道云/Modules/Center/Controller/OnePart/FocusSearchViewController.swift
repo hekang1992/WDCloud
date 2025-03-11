@@ -284,7 +284,7 @@ extension FocusSearchViewController {
     
     //取消关注
     func deleteFocusInfo(from btn: UIButton, model: rowsModel) {
-        ToastViewConfig.showToast(message: "暂不支持!")
+        ToastViewConfig.showToast(message: "暂不支持")
     }
     
 }

@@ -43,7 +43,7 @@ class UserCenterView: BaseView {
             let phone = GetPhoneNumberManager.getPhoneNum()
             phoneLabel.text = PhoneNumberFormatter.formatPhoneNumber(phoneNumber: phone)
         }else {
-            phoneLabel.text = "暂未登录,请登录!"
+            phoneLabel.text = "暂未登录,请登录"
         }
         return phoneLabel
     }()

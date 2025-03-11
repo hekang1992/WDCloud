@@ -106,7 +106,8 @@ extension AppDelegate: WXApiDelegate {
                             let phone = model.userinfo?.userinfo?.sysUser?.phonenumber ?? ""
                             let token = model.userinfo?.access_token ?? ""
                             let customernumber = model.userinfo?.customernumber ?? ""
-                            WDLoginConfig.saveLoginInfo(phone, token, customernumber)
+                            let userID = model.userinfo?.userid ?? ""
+                            WDLoginConfig.saveLoginInfo(phone, token, customernumber, userID)
                         }
                         NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
                     }

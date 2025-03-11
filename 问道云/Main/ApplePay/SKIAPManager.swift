@@ -288,7 +288,7 @@ open class SKIAPManager: NSObject, DYFStoreReceiptVerifierDelegate {
     public func verifyReceiptDidFinish(_ verifier: DYFStoreReceiptVerifier, didReceiveData data: [String : Any]) {
         DYFStoreLog("data: \(data)")
         self.sk_hideLoading()
-        ToastViewConfig.showToast(message: "购买成功!")
+//        ToastViewConfig.showToast(message: "购买成功")
         
         DispatchQueue.main.asyncAfter(delay: 1.2) {
             let info = self.purchaseInfo!
@@ -334,7 +334,7 @@ open class SKIAPManager: NSObject, DYFStoreReceiptVerifierDelegate {
             return
         }
         
-        self.sk_showTipsMessage("Fail to purchase product!")
+        self.sk_showTipsMessage("Fail to purchase product")
         
         DispatchQueue.main.asyncAfter(delay: 1.2) {
             let info = self.purchaseInfo!

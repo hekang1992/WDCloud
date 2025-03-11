@@ -130,13 +130,13 @@ class WDHomeViewController: WDBaseViewController {
             let searchVc = SearchAllViewController()
             if IS_LOGIN {
                 let type = model.type ?? ""
+                searchVc.searchHeadView.searchTx.text = model.name ?? ""
+                searchVc.searchHeadView.searchTx.placeholder = model.name ?? ""
                 if type == "1" {
                     searchVc.selectIndex = 0
-                    searchVc.searchHeadView.searchTx.text = model.name ?? ""
                     self?.navigationController?.pushViewController(searchVc, animated: true)
                 }else {
                     searchVc.selectIndex = 1
-                    searchVc.searchHeadView.searchTx.text = model.name ?? ""
                     self?.navigationController?.pushViewController(searchVc, animated: true)
                 }
             }else {
