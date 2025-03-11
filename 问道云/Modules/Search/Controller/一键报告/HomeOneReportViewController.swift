@@ -8,24 +8,31 @@
 import UIKit
 
 class HomeOneReportViewController: WDBaseViewController {
+    
+    lazy var headImageView: UIImageView = {
+        let headImageView = UIImageView()
+        headImageView.image = UIImage(named: "onereportbgimage")
+        return headImageView
+    }()
 
     lazy var headView: HeadView = {
-        let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
+        let headView = HeadView(frame: .zero, typeEnum: .none)
         headView.titlelabel.text = "一键报告"
-        headView.titlelabel.textColor = .black
-        headView.bgView.backgroundColor = .white
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.lineView.isHidden = true
+        headView.titlelabel.textColor = .white
+        headView.bgView.backgroundColor = .clear
+        headView.backBtn.setImage(UIImage(named: "whitebackimge"), for: .normal)
         return headView
     }()
     
     lazy var searchView: HomeItemSearchView = {
         let searchView = HomeItemSearchView()
-        let attrString = NSMutableAttributedString(string: "请输入关键词", attributes: [
+        let attrString = NSMutableAttributedString(string: "请输入要搜索的企业", attributes: [
             .foregroundColor: UIColor.init(cssStr: "#999999") as Any,
             .font: UIFont.mediumFontOfSize(size: 14)
         ])
         searchView.searchTx.attributedPlaceholder = attrString
-        searchView.backgroundColor = .white
+        searchView.backgroundColor = .clear
         return searchView
     }()
     
@@ -51,11 +58,18 @@ class HomeOneReportViewController: WDBaseViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
+        view.addSubview(headImageView)
         addHeadView(from: headView)
         view.addSubview(searchView)
         view.addSubview(ctImageView)
         view.addSubview(footerView)
         view.addSubview(coverView)
+        
+        headImageView.snp.makeConstraints { make in
+            make.left.top.right.equalToSuperview()
+            make.height.equalTo(156.pix())
+        }
+        
         searchView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(headView.snp.bottom).offset(1)
@@ -63,7 +77,7 @@ class HomeOneReportViewController: WDBaseViewController {
         }
         ctImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(searchView.snp.bottom).offset(5)
+            make.top.equalTo(searchView.snp.bottom).offset(8)
             make.size.equalTo(CGSize(width: 337, height: 524))
         }
         footerView.snp.makeConstraints { make in
@@ -76,7 +90,6 @@ class HomeOneReportViewController: WDBaseViewController {
             make.top.equalTo(headView.snp.bottom).offset(1)
             make.height.equalTo(50)
         }
-        
         
         coverView
             .rx

@@ -14,7 +14,7 @@ class HomeOneReportCell: BaseViewCell {
     
     var block: ((itemsModel) -> Void)?
     
-    var twoblock: ((String) -> Void)?
+    var twoblock: ((itemsModel) -> Void)?
     
     var name: String? {
         didSet {
@@ -125,12 +125,12 @@ class HomeOneReportCell: BaseViewCell {
         oneBtn.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
             make.left.equalToSuperview().offset(20)
-            make.size.equalTo(CGSize(width: 162, height: 30))
+            make.size.equalTo(CGSize(width: 162.pix(), height: 30.pix()))
         }
         twoBtn.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
             make.right.equalToSuperview().offset(-20)
-            make.size.equalTo(CGSize(width: 162, height: 30))
+            make.size.equalTo(CGSize(width: 162.pix(), height: 30.pix()))
         }
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
@@ -138,20 +138,13 @@ class HomeOneReportCell: BaseViewCell {
             desclabel.text = model.descprtion ?? ""
             let templatepath = model.templatepath ?? ""
             let authflag = model.authflag ?? 0
-            let reporttype = model.reporttype ?? 0
             if templatepath.isEmpty {
                 twoBtn.setTitle("联系客服", for: .normal)
             }else {
                 if authflag == 0 {
-                    twoBtn.setTitle("生成报告", for: .normal)
+                    twoBtn.setTitle("购买VIP", for: .normal)
                 }else {
-                    if reporttype == 1 {
-                        twoBtn.setTitle("购买VIP", for: .normal)
-                    } else if reporttype == 2 {
-                        twoBtn.setTitle("购买SVIP", for: .normal)
-                    } else if reporttype == 3 {
-                        twoBtn.setTitle("联系客服", for: .normal)
-                    }
+                    twoBtn.setTitle("生成报告", for: .normal)
                 }
             }
         }).disposed(by: disposeBag)
@@ -163,8 +156,8 @@ class HomeOneReportCell: BaseViewCell {
         }).disposed(by: disposeBag)
         
         twoBtn.rx.tap.subscribe(onNext: { [weak self] in
-            if let self = self {
-                self.twoblock?(self.twoBtn.titleLabel?.text ?? "")
+            if let self = self, let model = self.model.value {
+                self.twoblock?(model)
             }
         }).disposed(by: disposeBag)
     }

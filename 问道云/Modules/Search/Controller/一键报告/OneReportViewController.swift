@@ -12,7 +12,7 @@ class OneReportViewController: WDBaseViewController {
     var orgInfo: orgInfoModel?
     
     var modelArray: [rowsModel]?
-
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "一键报告"
@@ -38,10 +38,10 @@ class OneReportViewController: WDBaseViewController {
         }
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         addHeadView(from: headView)
         view.addSubview(tableView)
@@ -117,24 +117,26 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
                 return
             }
         }
-        cell.twoblock = { [weak self] name in
-            if name.contains("购买") {
+        cell.twoblock = { [weak self] model in
+            let authFlag = model.authflag ?? 0
+            let reportType = model.reporttype ?? 0
+            if reportType == 3 {
+                if let phoneURL = URL(string: "tel://\(4006326699)") {
+                    if UIApplication.shared.canOpenURL(phoneURL) {
+                        UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
+                    } else {
+                        print("无法拨打电话")
+                    }
+                } else {
+                    print("无效的电话号码")
+                }
+                return
+            }
+            if authFlag == 0 {
                 let memVc = MembershipCenterViewController()
                 self?.navigationController?.pushViewController(memVc, animated: true)
-            } else if name == "联系客服" {
-                if let phoneURL = URL(string: "tel://\(4006326699)") {
-                        if UIApplication.shared.canOpenURL(phoneURL) {
-                            UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
-                        } else {
-                            print("无法拨打电话")
-                        }
-                    } else {
-                        print("无效的电话号码")
-                    }
-            } else if name == "生成报告" {
-                if let model = model {
-                    self?.getReportInfo(from: model)
-                }
+            }else {
+                self?.getReportInfo(from: model)
             }
         }
         return cell

@@ -71,7 +71,8 @@ class SearchOneReportCell: BaseViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             let name = model.orgInfo?.orgName ?? ""
-            ctImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (30, 30)))
+            let logoColor = model.orgInfo?.logoColor ?? ""
+            ctImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (30, 30), bgColor: UIColor.init(cssStr: logoColor)!))
             mlabel.text = name
         }).disposed(by: disposeBag)
     }

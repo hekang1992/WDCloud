@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import HGSegmentedPageViewController
 import RxRelay
 import RxSwift
 import MJRefresh
@@ -19,7 +18,7 @@ class SearchOneReportViewController: WDBaseViewController {
     var dataModel: DataModel?
     var ddNumber: String = "1"
     var allArray: [pageDataModel] = []
-
+    
     //热搜
     var hotWordsArray = BehaviorRelay<[rowsModel]?>(value: nil)
     
@@ -122,43 +121,50 @@ class SearchOneReportViewController: WDBaseViewController {
             }
         }
         
-        //搜索
+        // 监听 UITextField 的文本变化
         self.searchView.searchTx
-            .rx
-            .controlEvent(.editingChanged)
-            .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
+            .rx.text.orEmpty
             .distinctUntilChanged()
-            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] keywords in
+            .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
-                if keywords.isEmpty {
+                if self.containsOnlyChinese(text) == true {
+                    if text.isEmpty {
+                        return
+                    }
+                    if text.isEmpty {
+                        oneView.isHidden = false
+                    }else {
+                        oneView.isHidden = true
+                    }
+                    self.pageIndex = 1
+                    self.keywords = text
+                    getOneReportInfo()
+                }
+                else if self.containsPinyin(text) == true {
+                    // 拼音不打印，什么都不做
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        self.searchView.searchTx
+            .rx.controlEvent(.editingDidEndOnExit)
+            .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if text.isEmpty {
+                    return
+                }
+                if text.isEmpty {
                     oneView.isHidden = false
                 }else {
                     oneView.isHidden = true
                 }
                 self.pageIndex = 1
-                self.keywords = keywords
+                self.keywords = text
                 getOneReportInfo()
-            }).disposed(by: disposeBag)
-        
-        self.searchView.searchTx
-            .rx
-            .controlEvent(.editingDidEndOnExit)
-            .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
-            .distinctUntilChanged()
-            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] keywords in
-                guard let self = self else { return }
-                if keywords.isEmpty {
-                    oneView.isHidden = false
-                }else {
-                    oneView.isHidden = true
-                }
-                self.pageIndex = 1
-                self.keywords = keywords
-                getOneReportInfo()
-            }).disposed(by: disposeBag)
-        
+            })
+            .disposed(by: disposeBag)
+
         //最近搜索
         getlastSearch()
         //浏览历史
@@ -380,7 +386,6 @@ extension SearchOneReportViewController {
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
                 guard let self = self else { return }
-                let type = model.type ?? ""
                 self.searchView.searchTx.text = model.name ?? ""
                 self.searchView.searchTx.becomeFirstResponder()
             }
@@ -463,7 +468,7 @@ extension SearchOneReportViewController {
             }
         })
     }
-
+    
 }
 
 extension SearchOneReportViewController: UITableViewDelegate, UITableViewDataSource {

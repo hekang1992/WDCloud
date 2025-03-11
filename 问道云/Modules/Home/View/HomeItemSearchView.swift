@@ -27,6 +27,7 @@ class HomeItemSearchView: BaseView {
         searchTx.font = UIFont.mediumFontOfSize(size: 14)
         searchTx.textColor = UIColor.init(cssStr: "#333333")
         searchTx.clearButtonMode = .whileEditing
+        searchTx.returnKeyType = .search
         return searchTx
     }()
     
