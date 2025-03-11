@@ -169,7 +169,19 @@ extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigat
         }else if method == "enable_landscape" {
             enableLandscape()
         }else if method == "open_pdf_url" {
-            
+            if let url = URL(string: arg ?? "") {
+                self.webView.load(URLRequest(url: url))
+            }
+        }else if method == "to_ent_info" {
+            let companyDetailVc = CompanyBothViewController()
+            let enityId = arg ?? ""
+            companyDetailVc.enityId.accept(enityId)
+            self.navigationController?.pushViewController(companyDetailVc, animated: true)
+        }else if method == "to_person_info" {
+            let peopleDetailVc = PeopleBothViewController()
+            let personId = arg ?? ""
+            peopleDetailVc.personId.accept(personId)
+            self.navigationController?.pushViewController(peopleDetailVc, animated: true)
         }
         return ""
     }
