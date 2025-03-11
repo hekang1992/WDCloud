@@ -61,14 +61,14 @@ class RiskListPeopleView: BaseView {
 extension RiskListPeopleView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataModel.value?.personData?.items?.count ?? 0
+        return dataModel.value?.items?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TwoRiskListOnlyPeopleCell") as? TwoRiskListOnlyPeopleCell
         cell?.backgroundColor = .clear
         cell?.selectionStyle = .none
-        let model = dataModel.value?.personData?.items?[indexPath.row]
+        let model = dataModel.value?.items?[indexPath.row]
         model?.searchStr = self.searchWordsRelay.value ?? ""
         cell?.model.accept(model)
         return cell ?? UITableViewCell()
@@ -79,7 +79,7 @@ extension RiskListPeopleView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let numStr = String(dataModel.value?.personData?.total ?? 0)
+        let numStr = String(dataModel.value?.total ?? 0)
         let headView = UIView()
         let numLabel = UILabel()
         numLabel.font = .mediumFontOfSize(size: 12)

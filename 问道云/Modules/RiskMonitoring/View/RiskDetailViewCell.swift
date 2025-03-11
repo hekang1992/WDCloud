@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import RxRelay
 
 class RiskDetailViewCell: BaseViewCell {
+    
+    var model = BehaviorRelay<statisticRiskDtosModel?>(value: nil)
     
     lazy var grayView: UIView = {
         let grayView = UIView()
@@ -20,7 +23,7 @@ class RiskDetailViewCell: BaseViewCell {
         whiteView.backgroundColor = .white
         return whiteView
     }()
-
+    
     lazy var namelabel: UILabel = {
         let namelabel = UILabel()
         namelabel.textColor = UIColor.init(cssStr: "#333333")
@@ -121,6 +124,52 @@ class RiskDetailViewCell: BaseViewCell {
             make.left.equalTo(lowLabel.snp.right).offset(4.5)
             make.height.equalTo(15)
         }
+        
+        model.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            namelabel.text = model.itemName ?? ""
+            numlabel.text = "共\(model.totalCnt ?? 0)条"
+            let highLevelCnt = model.highLevelCnt ?? 0
+            let lowLevelCnt = model.lowLevelCnt ?? 0
+            let tipLevelCnt = model.tipLevelCnt ?? 0
+            if highLevelCnt == 0 {
+                highLabel.isHidden = true
+                highLabel.snp.makeConstraints({ make in
+                    make.left.equalTo(self.namelabel.snp.right)
+                })
+            }else {
+                highLabel.isHidden = false
+                highLabel.text = "高风险(\(model.highLevelCnt ?? 0))"
+                highLabel.snp.makeConstraints({ make in
+                    make.left.equalTo(self.namelabel.snp.right).offset(4.5)
+                })
+            }
+            if lowLevelCnt == 0 {
+                lowLabel.isHidden = true
+                lowLabel.snp.makeConstraints({ make in
+                    make.left.equalTo(self.highLabel.snp.right)
+                })
+            }else {
+                lowLabel.isHidden = false
+                lowLabel.text = "低风险(\(model.lowLevelCnt ?? 0))"
+                lowLabel.snp.makeConstraints({ make in
+                    make.left.equalTo(self.highLabel.snp.right).offset(4.5)
+                })
+            }
+            if tipLevelCnt == 0 {
+                hitLabel.isHidden = true
+                hitLabel.snp.makeConstraints({ make in
+                    make.left.equalTo(self.lowLabel.snp.right)
+                })
+            }else {
+                hitLabel.isHidden = false
+                hitLabel.text = "提示(\(model.tipLevelCnt ?? 0))"
+                hitLabel.snp.makeConstraints({ make in
+                    make.left.equalTo(self.lowLabel.snp.right).offset(4.5)
+                })
+            }
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {

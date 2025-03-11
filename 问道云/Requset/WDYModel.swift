@@ -1414,7 +1414,7 @@ class statisticRiskDtosModel {
     var itemName: String?//名字
     var highLevelCnt: Int?//高风险
     var lowLevelCnt: Int?//低风险
-    var tipLevelCnt: Int?//低风险
+    var tipLevelCnt: Int?//提示
     var totalCnt: Int?//总共
     var orgId: String?//
     var orgName: String?//

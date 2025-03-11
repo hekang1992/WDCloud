@@ -64,13 +64,10 @@ class TwoRiskListOnlyPeopleCell: BaseViewCell {
         return twoNumLabel
     }()
     
-    lazy var moreLabel: UILabel = {
-        let moreLabel = UILabel()
-        moreLabel.text = "点击查看更多"
-        moreLabel.textAlignment = .right
-        moreLabel.textColor = .init(cssStr: "#547AFF")
-        moreLabel.font = .mediumFontOfSize(size: 12)
-        return moreLabel
+    lazy var moreBtn: UIButton = {
+        let moreBtn = UIButton(type: .custom)
+        moreBtn.setImage(UIImage(named: "chakanmoreimge"), for: .normal)
+        return moreBtn
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -82,7 +79,7 @@ class TwoRiskListOnlyPeopleCell: BaseViewCell {
         contentView.addSubview(numlabel)
         contentView.addSubview(oneNumLabel)
         contentView.addSubview(twoNumLabel)
-        contentView.addSubview(moreLabel)
+        contentView.addSubview(moreBtn)
         ctImageView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(12)
             make.top.equalToSuperview().offset(9)
@@ -119,9 +116,9 @@ class TwoRiskListOnlyPeopleCell: BaseViewCell {
             make.height.equalTo(16.5)
         }
         
-        moreLabel.snp.makeConstraints { make in
+        moreBtn.snp.makeConstraints { make in
             make.centerY.equalTo(oneNumLabel.snp.centerY)
-            make.right.equalToSuperview().offset(-25)
+            make.right.equalToSuperview().offset(-20)
             make.height.equalTo(16.5)
         }
         
@@ -134,10 +131,13 @@ class TwoRiskListOnlyPeopleCell: BaseViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             
-            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (40, 40)))
+            let personName = model.personName ?? ""
+            let logoColor = model.logoColor ?? ""
+            
+            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(personName, size: (40, 40), bgColor: UIColor.init(cssStr: logoColor) ?? .random()))
             
             //匹配文字
-            self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: model.name ?? "", colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))
+            self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: personName, colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))
             
             let count = String(model.relevanceCount ?? 0)
             numlabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业", font: .mediumFontOfSize(size: 11))

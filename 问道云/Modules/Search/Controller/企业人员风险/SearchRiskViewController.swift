@@ -249,7 +249,7 @@ extension SearchRiskViewController {
                 guard let self = self else { return }
                 let group = DispatchGroup()
                 //最近搜索
-//                ViewHud.addLoadView()
+                //                ViewHud.addLoadView()
                 group.enter()
                 getlastSearch {
                     group.leave()
@@ -267,7 +267,7 @@ extension SearchRiskViewController {
                 
                 // 所有任务完成后的通知
                 group.notify(queue: .main) {
-//                    ViewHud.hideLoadView()
+                    //                    ViewHud.hideLoadView()
                     self.completeBlock?()
                 }
             }).disposed(by: disposeBag)
@@ -575,7 +575,7 @@ extension SearchRiskViewController {
                     "pageNum": pageIndex,
                     "pageSize": 20,
                     "type": "2"] as [String : Any]
-//        let man = RequestManager()
+        //        let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/getRiskData",
@@ -588,7 +588,8 @@ extension SearchRiskViewController {
                 if let self = self,
                    let model = success.data,
                    let code = success.code,
-                   code == 200, let total = model.personData?.total {
+                   code == 200,
+                   let total = model.total {
                     self.riskView.isHidden = true
                     self.listPeopleView.isHidden = false
                     if pageIndex == 1 {
@@ -597,7 +598,7 @@ extension SearchRiskViewController {
                         self.allPeopleArray.removeAll()
                     }
                     pageIndex += 1
-                    let pageData = model.personData?.items ?? []
+                    let pageData = model.items ?? []
                     self.allPeopleArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()

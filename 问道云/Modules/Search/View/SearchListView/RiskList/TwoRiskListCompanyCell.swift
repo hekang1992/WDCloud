@@ -91,10 +91,10 @@ class TwoRiskListCompanyCell: BaseViewCell {
         return twoNumLabel
     }()
     
-    lazy var moreImageView: UIImageView = {
-        let moreImageView = UIImageView()
-        moreImageView.image = UIImage(named: "moreidanjiimage")
-        return moreImageView
+    lazy var moreBtn: UIButton = {
+        let moreBtn = UIButton(type: .custom)
+        moreBtn.setImage(UIImage(named: "chakanmoreimge"), for: .normal)
+        return moreBtn
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -109,7 +109,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
         contentView.addSubview(lineView)
         contentView.addSubview(oneNumLabel)
         contentView.addSubview(twoNumLabel)
-        contentView.addSubview(moreImageView)
+        contentView.addSubview(moreBtn)
         
         ctImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
@@ -176,11 +176,10 @@ class TwoRiskListCompanyCell: BaseViewCell {
             make.height.equalTo(16.5)
         }
         
-        moreImageView.snp.makeConstraints { make in
+        moreBtn.snp.makeConstraints { make in
             make.centerY.equalTo(oneNumLabel.snp.centerY)
             make.right.equalToSuperview().offset(-15)
             make.height.equalTo(16.5)
-            make.width.equalTo(85.5)
         }
         
         model.asObservable().subscribe(onNext: { [weak self] model in

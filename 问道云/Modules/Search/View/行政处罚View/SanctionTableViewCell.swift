@@ -93,7 +93,7 @@ class SanctionTableViewCell: BaseViewCell {
     
     lazy var moreImageView: UIImageView = {
         let moreImageView = UIImageView()
-        moreImageView.image = UIImage(named: "moreidanjiimage")
+        moreImageView.image = UIImage(named: "chakanmoreimge")
         return moreImageView
     }()
     
@@ -222,7 +222,7 @@ class SanctionTableViewCell: BaseViewCell {
         moreImageView.snp.makeConstraints { make in
             make.centerY.equalTo(oneNumLabel.snp.centerY)
             make.right.equalToSuperview().offset(-15)
-            make.size.equalTo(CGSize(width: 85.5, height: 16.5))
+            make.height.equalTo(16.5)
         }
         
         model.asObservable().subscribe(onNext: { [weak self] model in
