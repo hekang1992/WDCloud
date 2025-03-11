@@ -163,6 +163,16 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                     self?.focusInfo(from: model, cell: cell)
                 }
             }
+            //跳转风险扫描
+            cell?.riskBlock = { [weak self] model in
+                guard let self = self else { return }
+                let vc = ViewControllerUtils.findViewController(from: self)
+                let riskDetailVc = CompanyRiskDetailViewController()
+                riskDetailVc.name = model.orgInfo?.orgName ?? ""
+                riskDetailVc.enityId = model.orgInfo?.orgId ?? ""
+                riskDetailVc.logo = model.orgInfo?.logo ?? ""
+                vc?.navigationController?.pushViewController(riskDetailVc, animated: true)
+            }
             return cell ?? UITableViewCell()
         }
     }

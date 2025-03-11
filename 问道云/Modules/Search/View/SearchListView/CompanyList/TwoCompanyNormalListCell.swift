@@ -19,6 +19,8 @@ class TwoCompanyNormalListCell: BaseViewCell {
     var phoneBlock: ((pageDataModel) -> Void)?
     //人物点击
     var peopleBlock: ((pageDataModel) -> Void)?
+    //风险扫描点击
+    var riskBlock: ((pageDataModel) -> Void)?
     //搜索数据列表模型
     var model = BehaviorRelay<pageDataModel?>(value: nil)
     //是否点击了展开是收起
@@ -110,6 +112,34 @@ class TwoCompanyNormalListCell: BaseViewCell {
         return focusBtn
     }()
     
+    lazy var redView: UIView = {
+        let redView = UIView()
+        redView.layer.cornerRadius = 2
+        redView.layer.masksToBounds = true
+        redView.backgroundColor = .init(cssStr: "#F55B5B")?.withAlphaComponent(0.05)
+        return redView
+    }()
+    
+    lazy var riskImageView: UIImageView = {
+        let riskImageView = UIImageView()
+        riskImageView.image = UIImage(named: "riskiamgeicon")
+        return riskImageView
+    }()
+    
+    lazy var rightImageView: UIImageView = {
+        let rightImageView = UIImageView()
+        rightImageView.image = UIImage(named: "righticonimage")
+        return rightImageView
+    }()
+    
+    lazy var riskTimeLabel: UILabel = {
+        let riskTimeLabel = UILabel()
+        riskTimeLabel.textColor = .init(cssStr: "#666666")
+        riskTimeLabel.font = .regularFontOfSize(size: 12)
+        riskTimeLabel.textAlignment = .left
+        return riskTimeLabel
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(bgView)
@@ -119,6 +149,10 @@ class TwoCompanyNormalListCell: BaseViewCell {
         contentView.addSubview(nameView)
         contentView.addSubview(moneyView)
         contentView.addSubview(timeView)
+        contentView.addSubview(redView)
+        redView.addSubview(riskImageView)
+        redView.addSubview(rightImageView)
+        redView.addSubview(riskTimeLabel)
         contentView.addSubview(lineView)
         contentView.addSubview(addressimageView)
         contentView.addSubview(websiteimageView)
@@ -162,7 +196,27 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.height.equalTo(36)
             make.right.equalToSuperview()
         }
-        
+        redView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(10)
+            make.top.equalTo(timeView.snp.bottom)
+            make.height.equalTo(0)
+        }
+        riskImageView.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 57, height: 13))
+            make.left.equalToSuperview().offset(6)
+            make.centerY.equalToSuperview()
+        }
+        rightImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.size.equalTo(CGSize(width: 12, height: 12))
+            make.right.equalToSuperview().offset(-7)
+        }
+        riskTimeLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(riskImageView.snp.right).offset(10.5)
+            make.height.equalTo(16.5)
+        }
         bgView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.bottom.equalToSuperview().offset(-5)
@@ -204,6 +258,8 @@ class TwoCompanyNormalListCell: BaseViewCell {
             let logo = model.orgInfo?.logo ?? ""
             let companyName = model.orgInfo?.orgName ?? ""
             let logoColor = model.orgInfo?.logoColor ?? ""
+            let riskTime = model.riskInfo?.riskTime ?? ""
+            let content =  model.riskInfo?.content ?? ""
             //logo
             self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (40, 40), bgColor: UIColor.init(cssStr: logoColor)!))
             
@@ -281,6 +337,30 @@ class TwoCompanyNormalListCell: BaseViewCell {
                 }
             }
             
+            if let riskInfo = model.riskInfo,
+               let riskTime = riskInfo.riskTime,
+                !riskTime.isEmpty {
+                self.redView.isHidden = false
+                self.redView.snp.updateConstraints { make in
+                    make.top.equalTo(self.timeView.snp.bottom).offset(7)
+                    make.height.equalTo(30)
+                }
+                self.lineView.snp.updateConstraints { make in
+                    make.top.equalTo(self.tagListView.snp.bottom).offset(91)
+                }
+                riskTimeLabel.text = riskTime + content
+            }else {
+                self.redView.isHidden = true
+                self.redView.snp.updateConstraints { make in
+                    make.top.equalTo(self.timeView.snp.bottom)
+                    make.height.equalTo(0)
+                }
+                self.lineView.snp.updateConstraints { make in
+                    make.top.equalTo(self.tagListView.snp.bottom).offset(49.5)
+                }
+                riskTimeLabel.text = ""
+            }
+            
         }).disposed(by: disposeBag)
         
         //地址点击
@@ -321,6 +401,17 @@ class TwoCompanyNormalListCell: BaseViewCell {
                     self.peopleBlock?(model)
                 }
             }).disposed(by: disposeBag)
+        
+        //风险扫描点击
+        redView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                if let self = self, let model = self.model.value {
+                    self.riskBlock?(model)
+                }
+        }).disposed(by: disposeBag)
         
         focusBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self, let model = self.model.value else { return }

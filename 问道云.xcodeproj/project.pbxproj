@@ -161,6 +161,8 @@
 		735A3F6F2D65B6FA00448268 /* MinitoringMessagePushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A3F6E2D65B6FA00448268 /* MinitoringMessagePushViewController.swift */; };
 		735A3F722D65B9F000448268 /* RiskTipsCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A3F712D65B9F000448268 /* RiskTipsCenterViewController.swift */; };
 		735A3F752D65BE6300448268 /* SearchJobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A3F742D65BE6300448268 /* SearchJobViewController.swift */; };
+		73654B1B2D7FCBF90004E408 /* Pods_问道云.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73654B1A2D7FCBF90004E408 /* Pods_问道云.framework */; };
+		73654B1C2D7FCBF90004E408 /* Pods_问道云.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 73654B1A2D7FCBF90004E408 /* Pods_问道云.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		736A40D92D223AEB0065FD9D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A40D82D223AEB0065FD9D /* StoreKit.framework */; };
 		736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */; };
 		736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97792D22A61E009CC0DF /* SKExtensions.swift */; };
@@ -375,6 +377,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				73654B1C2D7FCBF90004E408 /* Pods_问道云.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,6 +549,7 @@
 		735A3F6E2D65B6FA00448268 /* MinitoringMessagePushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinitoringMessagePushViewController.swift; sourceTree = "<group>"; };
 		735A3F712D65B9F000448268 /* RiskTipsCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskTipsCenterViewController.swift; sourceTree = "<group>"; };
 		735A3F742D65BE6300448268 /* SearchJobViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchJobViewController.swift; sourceTree = "<group>"; };
+		73654B1A2D7FCBF90004E408 /* Pods_问道云.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_问道云.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		736A40D82D223AEB0065FD9D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYFStoreReceiptVerifier.swift; sourceTree = "<group>"; };
 		736E97792D22A61E009CC0DF /* SKExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKExtensions.swift; sourceTree = "<group>"; };
@@ -763,6 +767,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				736A40D92D223AEB0065FD9D /* StoreKit.framework in Frameworks */,
+				73654B1B2D7FCBF90004E408 /* Pods_问道云.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1914,6 +1919,7 @@
 		C61455D1CEA19ADD364A1DEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73654B1A2D7FCBF90004E408 /* Pods_问道云.framework */,
 				736A40D82D223AEB0065FD9D /* StoreKit.framework */,
 				73E306D42D1552FC00D18943 /* WechatOpenSDK-XCFramework.xcframework */,
 				73460D1A2D154CCB00EC9408 /* WebKit.framework */,

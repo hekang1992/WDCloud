@@ -14,6 +14,8 @@ import DropMenuBar
 
 class SearchRiskViewController: WDBaseViewController {
     
+    private var man = RequestManager()
+    
     var completeBlock: (() -> Void)?
     
     //城市数据
@@ -219,14 +221,13 @@ extension SearchRiskViewController {
     private func getDataInfo() {
         //搜索
         self.searchWordsRelay
-            .debounce(.milliseconds(1000),
+            .debounce(.milliseconds(800),
                       scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if !text.isEmpty {
                     self.pageIndex = 1
-                    //                    self.searchListInfo()
                     self.buttonTapped(companyBtn)
                 }else {
                     self.pageIndex = 1
@@ -236,6 +237,7 @@ extension SearchRiskViewController {
                     self.listPeopleView.isHidden = true
                     self.companyBtn.isHidden = true
                     self.peopleBtn.isHidden = true
+                    self.tableView.reloadData()
                 }
             }).disposed(by: disposeBag)
         
@@ -573,7 +575,7 @@ extension SearchRiskViewController {
                     "pageNum": pageIndex,
                     "pageSize": 20,
                     "type": "2"] as [String : Any]
-        let man = RequestManager()
+//        let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/getRiskData",

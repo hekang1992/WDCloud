@@ -15,6 +15,8 @@ import MapKit
 
 class SearchCompanyViewController: WDBaseViewController {
     
+    private var man = RequestManager()
+    
     var completeBlock: (() -> Void)?
     
     //人员查看更多
@@ -197,13 +199,14 @@ class SearchCompanyViewController: WDBaseViewController {
             self?.navigationController?.pushViewController(companyDetailVc, animated: true)
         }
         
+        //网络请求
+        getDataInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("企业===============企业")
-        //网络请求
-        getDataInfo()
+        
     }
 }
 
@@ -212,20 +215,21 @@ extension SearchCompanyViewController {
     private func getDataInfo() {
         //更新搜索文字
         self.searchWordsRelay
-            .debounce(.milliseconds(1000),
+            .debounce(.milliseconds(800),
                       scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if !text.isEmpty {
                     self.pageIndex = 1
-                    self.searchListInfo()
                 }else {
                     self.pageIndex = 1
                     self.allArray.removeAll()
                     self.companyView.isHidden = false
                     self.companyListView.isHidden = true
+                    self.tableView.reloadData()
                 }
+                self.searchListInfo()
             }).disposed(by: disposeBag)
         
         self.searchWordsRelay
@@ -236,7 +240,7 @@ extension SearchCompanyViewController {
                 guard let self = self else { return }
                 let group = DispatchGroup()
                 //最近搜索
-//                ViewHud.addLoadView()
+                //                ViewHud.addLoadView()
                 group.enter()
                 getlastSearch {
                     group.leave()
@@ -254,7 +258,7 @@ extension SearchCompanyViewController {
                 
                 // 所有任务完成后的通知
                 group.notify(queue: .main) {
-//                    ViewHud.hideLoadView()
+                    //                    ViewHud.hideLoadView()
                     self.completeBlock?()
                 }
             }).disposed(by: disposeBag)
@@ -495,11 +499,10 @@ extension SearchCompanyViewController {
                     "region": entityArea,
                     "pageIndex": pageIndex,
                     "pageSize": 20] as [String : Any]
-        let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
-                       pageUrl: "/entity/v2/org-list",
-                       method: .get) { [weak self] result in
+                        pageUrl: "/entity/v2/org-list",
+                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.companyListView.tableView.mj_header?.endRefreshing()
             self?.companyListView.tableView.mj_footer?.endRefreshing()
@@ -508,14 +511,15 @@ extension SearchCompanyViewController {
                 if let self = self,
                    let model = success.data,
                    let code = success.code,
-                   code == 200, let total = model.pageMeta?.totalNum {
+                   code == 200,
+                   let total = model.pageMeta?.totalNum {
                     self.companyView.isHidden = true
                     self.companyListView.isHidden = false
-                    if pageIndex == 1 {
-                        pageIndex = 1
+                    if self.pageIndex == 1 {
+                        self.pageIndex = 1
                         self.allArray.removeAll()
                     }
-                    pageIndex += 1
+                    self.pageIndex += 1
                     let pageData = model.pageData ?? []
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {

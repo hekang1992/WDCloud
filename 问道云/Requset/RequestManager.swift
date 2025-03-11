@@ -94,12 +94,19 @@ extension APIService: TargetType {
     }
 }
 
-class RequestManager: NSObject {
+class RequestManager {
     
+    private var currentRequest: Cancellable? // 用于保存当前的请求
     private let provider = MoyaProvider<APIService>()
     
     private func requestData(target: APIService, completion: @escaping (Result<BaseModel, Error>) -> Void) {
-        provider.request(target) { result in
+        // 取消上一次的请求
+        if let lastRequest = currentRequest {
+            lastRequest.cancel()
+            print("🔴 上一次请求已取消")
+        }
+        print("🟢 发起新的请求: \(target)")
+        currentRequest = provider.request(target) { result in
             switch result {
             case .success(let response):
                 do {

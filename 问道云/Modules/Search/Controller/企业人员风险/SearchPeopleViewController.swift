@@ -14,6 +14,8 @@ import DropMenuBar
 
 class SearchPeopleViewController: WDBaseViewController {
     
+    private var man = RequestManager()
+    
     var completeBlock: (() -> Void)?
     
     //城市数据
@@ -168,20 +170,21 @@ extension SearchPeopleViewController {
     
     private func getDataInfo() {
         self.searchWordsRelay
-            .debounce(.milliseconds(1000),
+            .debounce(.milliseconds(800),
                       scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if !text.isEmpty {
                     self.pageIndex = 1
-                    self.searchListInfo()
                 }else {
                     self.pageIndex = 1
                     self.allArray.removeAll()
                     self.peopleView.isHidden = false
                     self.twoPeopleListView.isHidden = true
+                    self.tableView.reloadData()
                 }
+                self.searchListInfo()
             }).disposed(by: disposeBag)
         
         self.searchWordsRelay
@@ -448,7 +451,7 @@ extension SearchPeopleViewController {
                     "orgArea": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
-        let man = RequestManager()
+//        let man = RequestManager()
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/person/boss-search",

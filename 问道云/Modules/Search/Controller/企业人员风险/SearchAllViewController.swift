@@ -78,7 +78,8 @@ class SearchAllViewController: WDBaseViewController {
         getAllIndustryInfo()
         
         // 监听 UITextField 的文本变化
-        self.searchHeadView.searchTx.rx.text.orEmpty
+        self.searchHeadView.searchTx
+            .rx.text.orEmpty
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if self.containsOnlyChinese(text) == true {
