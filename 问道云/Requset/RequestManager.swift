@@ -128,6 +128,8 @@ class RequestManager {
         let code = baseModel.code ?? 0
         if code == 200  {
             completion(.success(baseModel))
+        }else if code == 400 {
+            completion(.success(baseModel))
         }else if code == 401 {
             WDLoginConfig.removeLoginInfo()
             ShowAgainLoginConfig.againLoginView()
