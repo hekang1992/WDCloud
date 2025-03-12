@@ -163,6 +163,7 @@
 		735A3F752D65BE6300448268 /* SearchJobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A3F742D65BE6300448268 /* SearchJobViewController.swift */; };
 		73654B1B2D7FCBF90004E408 /* Pods_问道云.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73654B1A2D7FCBF90004E408 /* Pods_问道云.framework */; };
 		73654B1C2D7FCBF90004E408 /* Pods_问道云.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 73654B1A2D7FCBF90004E408 /* Pods_问道云.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		73654B1F2D8186BC0004E408 /* PopPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73654B1E2D8186BC0004E408 /* PopPrivacyView.swift */; };
 		736A40D92D223AEB0065FD9D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736A40D82D223AEB0065FD9D /* StoreKit.framework */; };
 		736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */; };
 		736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97792D22A61E009CC0DF /* SKExtensions.swift */; };
@@ -550,6 +551,7 @@
 		735A3F712D65B9F000448268 /* RiskTipsCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskTipsCenterViewController.swift; sourceTree = "<group>"; };
 		735A3F742D65BE6300448268 /* SearchJobViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchJobViewController.swift; sourceTree = "<group>"; };
 		73654B1A2D7FCBF90004E408 /* Pods_问道云.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_问道云.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		73654B1E2D8186BC0004E408 /* PopPrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopPrivacyView.swift; sourceTree = "<group>"; };
 		736A40D82D223AEB0065FD9D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		736E97782D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYFStoreReceiptVerifier.swift; sourceTree = "<group>"; };
 		736E97792D22A61E009CC0DF /* SKExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKExtensions.swift; sourceTree = "<group>"; };
@@ -856,8 +858,9 @@
 				7325A79C2CFEE58D0043C196 /* Main */,
 				73B3FA672D7EB9330077766F /* Common */,
 				73B3FA702D7EBB990077766F /* Resources */,
-				7325A7AC2CFEE7B20043C196 /* BaseVc */,
 				7325A7B02CFEE7E30043C196 /* Requset */,
+				7325A7AC2CFEE7B20043C196 /* BaseVc */,
+				73654B1D2D81865E0004E408 /* PopView */,
 				73CFEB902D0056DD00B2FE1B /* WebPage */,
 				73B3FA712D7EBC200077766F /* Modules */,
 			);
@@ -1207,6 +1210,22 @@
 			path = "求职监测";
 			sourceTree = "<group>";
 		};
+		73654B1D2D81865E0004E408 /* PopView */ = {
+			isa = PBXGroup;
+			children = (
+				73B3623C2D374222003BD911 /* PopHistoryNameView.swift */,
+				73B3623E2D375189003BD911 /* PopInvoiceView.swift */,
+				73B362402D377C28003BD911 /* PopEmployeeNumView.swift */,
+				73B362422D3793F9003BD911 /* PopRateMoneyView.swift */,
+				734334982D7AA31F006AE608 /* PopIndustryView.swift */,
+				7343349A2D7AFA40006AE608 /* PopPhoneEmailView.swift */,
+				73DE1D1E2D7BF3E200C554B1 /* PhoneEmailListView.swift */,
+				73DE1D202D7BF72200C554B1 /* PhoneEmailNameView.swift */,
+				73654B1E2D8186BC0004E408 /* PopPrivacyView.swift */,
+			);
+			path = PopView;
+			sourceTree = "<group>";
+		};
 		736E976F2D22A258009CC0DF /* ApplePay */ = {
 			isa = PBXGroup;
 			children = (
@@ -1338,7 +1357,6 @@
 		73807D572D33806B00F8B90D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				73B3623B2D374209003BD911 /* PopView */,
 				73B3623A2D3741F6003BD911 /* HeadView */,
 			);
 			path = View;
@@ -1483,21 +1501,6 @@
 				73B3624E2D37A7CD003BD911 /* Company */,
 			);
 			path = HeadView;
-			sourceTree = "<group>";
-		};
-		73B3623B2D374209003BD911 /* PopView */ = {
-			isa = PBXGroup;
-			children = (
-				73B3623C2D374222003BD911 /* PopHistoryNameView.swift */,
-				73B3623E2D375189003BD911 /* PopInvoiceView.swift */,
-				73B362402D377C28003BD911 /* PopEmployeeNumView.swift */,
-				73B362422D3793F9003BD911 /* PopRateMoneyView.swift */,
-				734334982D7AA31F006AE608 /* PopIndustryView.swift */,
-				7343349A2D7AFA40006AE608 /* PopPhoneEmailView.swift */,
-				73DE1D1E2D7BF3E200C554B1 /* PhoneEmailListView.swift */,
-				73DE1D202D7BF72200C554B1 /* PhoneEmailNameView.swift */,
-			);
-			path = PopView;
 			sourceTree = "<group>";
 		};
 		73B3624E2D37A7CD003BD911 /* Company */ = {
@@ -2214,6 +2217,7 @@
 				737416422D0FD0D000E6CD23 /* InvoiceListView.swift in Sources */,
 				7325A7BA2CFEED0F0043C196 /* WDTabBarController.swift in Sources */,
 				7340E1D02D5DE62D008FD5C7 /* SearchPeopleBeneficialOwnerViewController.swift in Sources */,
+				73654B1F2D8186BC0004E408 /* PopPrivacyView.swift in Sources */,
 				7352B22E2D3548DF00B5391B /* CompanyDerailFooterView.swift in Sources */,
 				73EF03D92D312B330070F850 /* TwoPeopleNormalListCell.swift in Sources */,
 				730487F72D2A525D0024265C /* HomeHeadView.swift in Sources */,

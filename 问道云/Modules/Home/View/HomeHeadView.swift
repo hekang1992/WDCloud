@@ -127,7 +127,7 @@ class HomeHeadView: BaseView {
             make.height.equalTo(233)
         }
         iconImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(StatusHeightManager.statusBarHeight)
+            make.top.equalToSuperview().offset(StatusHeightManager.statusBarHeight + 5)
             make.size.equalTo(CGSize(width: 99, height: 25))
             make.left.equalToSuperview().offset(15.5)
         }

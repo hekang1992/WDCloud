@@ -113,6 +113,21 @@ extension WDBaseViewController {
         return allArray
     }
     
+    func getLawGroupMenuInfo(from modelArray: [lawNatureListModel]) -> [ItemModel]{
+        var allArray = [ItemModel]()
+        let model1 = ItemModel(text: "全部", currentID: "", isSelect: true)!
+        for rowmodel in modelArray {
+            let model = ItemModel(
+                text: (rowmodel.key ?? "") + "" + "(\(String(rowmodel.count ?? 0)))",
+                currentID: rowmodel.key,
+                isSelect: false
+            )!
+            allArray.append(model)
+        }
+        allArray.insert(model1, at: 0)
+        return allArray
+    }
+    
     //获取地区
     func getRegionInfo(from modelArray: [rowsModel]) -> [ItemModel] {
         var twoList: [ItemModel] = []
@@ -368,10 +383,6 @@ extension WDBaseViewController {
         datePickerView.pickerStyle = customStyle
         datePickerView.show()
     }
-    
-#warning("以后会删掉,,重新弄的")
-    //下拉订单状态选择
-    
 }
 
 

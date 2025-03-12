@@ -13,16 +13,11 @@ class HomeLawsViewCell: BaseViewCell {
         didSet {
             guard let model = model else { return }
             namelabel.text = model.title ?? ""
-            qlabel.text = model.formulatingAuthority ?? ""
-            wlabel.text = model.lawCategory ?? ""
-            elabel.text = "--"
-            let entryIntoForceTime = model.entryIntoForceTime ?? ""
-            if entryIntoForceTime.isEmpty {
-                rlabel.text = "--"
-            }else {
-                rlabel.text = entryIntoForceTime
-            }
-            tlabel.text = model.timeliness ?? ""
+            qlabel.text = model.formulating_authority ?? ""
+            wlabel.text = model.law_category ?? ""
+            elabel.text = model.publish_date ?? ""
+            rlabel.text = model.entry_into_force_time ?? ""
+            tlabel.text = model.announcement_title ?? ""
             let timeliness = model.timeliness ?? ""
             taglabel.text = timeliness
             if timeliness.contains("有效") {
@@ -39,6 +34,7 @@ class HomeLawsViewCell: BaseViewCell {
         let namelabel = UILabel()
         namelabel.textColor = UIColor.init(cssStr: "#333333")
         namelabel.textAlignment = .left
+        namelabel.numberOfLines = 0
         namelabel.font = .mediumFontOfSize(size: 14)
         return namelabel
     }()
@@ -168,10 +164,15 @@ class HomeLawsViewCell: BaseViewCell {
         contentView.addSubview(tlabel)
         contentView.addSubview(taglabel)
         contentView.addSubview(ctImageView)
+        taglabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(12)
+            make.right.equalToSuperview().offset(-20)
+            make.height.equalTo(15)
+        }
         namelabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(12)
             make.top.equalToSuperview().offset(9)
-            make.height.equalTo(20)
+            make.right.equalToSuperview().offset(-65)
         }
         onelabel.snp.makeConstraints { make in
             make.left.equalTo(namelabel.snp.left)
@@ -223,9 +224,9 @@ class HomeLawsViewCell: BaseViewCell {
             make.height.equalTo(18.5)
         }
         tlabel.snp.makeConstraints { make in
-            make.centerY.equalTo(fivelabel.snp.centerY)
+            make.top.equalTo(fivelabel.snp.top)
             make.left.equalTo(fivelabel.snp.right)
-            make.height.equalTo(18.5)
+            make.right.equalToSuperview().offset(-15)
             make.bottom.equalToSuperview().offset(-15.5)
         }
         taglabel.snp.makeConstraints { make in

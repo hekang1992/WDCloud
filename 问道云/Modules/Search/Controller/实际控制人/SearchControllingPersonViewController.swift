@@ -108,7 +108,7 @@ class SearchControllingPersonViewController: WDBaseViewController {
         self.oneView.lastSearchTextBlock = { [weak self] keywords in
             self?.searchView.searchTx.text = keywords
             self?.searchKey.accept(keywords)
-            if keywords.isEmpty {
+            if !keywords.isEmpty {
                 self?.oneView.isHidden = false
                 //最近搜索
                 self?.getlastSearch()

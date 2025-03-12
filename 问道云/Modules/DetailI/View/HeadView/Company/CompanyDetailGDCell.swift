@@ -150,7 +150,7 @@ class DetailPeopleInfoCell: UICollectionViewCell {
         icon.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(7)
             make.left.equalToSuperview().offset(6)
-            make.size.equalTo(CGSize(width: 24, height: 24))
+            make.size.equalTo(CGSize(width: 26, height: 26))
         }
         mlabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(5)

@@ -35,6 +35,9 @@ class CompanyBothViewController: WDBaseViewController {
     lazy var companyDetailVc: CompanyDetailViewController = {
         let companyDetailVc = CompanyDetailViewController()
         companyDetailVc.enityId = self.enityId.value
+        companyDetailVc.refreshBlock = { [weak self] index in
+            self?.refreshBlock?(index)
+        }
         return companyDetailVc
     }()
     

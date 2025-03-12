@@ -152,19 +152,31 @@ class SearchRiskViewController: WDBaseViewController {
             self?.lastSearchTextBlock?(searchStr)
         }
         
-        //添加下拉刷新
+        //添加下拉刷新企业
         self.twoRiskListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.pageIndex = 1
             self.searchListInfo()
         })
         
-        //添加上拉加载更多
+        //添加上拉加载更多企业
         self.twoRiskListView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.searchListInfo()
         })
         
+        //添加下拉刷新人员
+        self.twoRiskListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.pageIndex = 1
+            self.searchPeopleListinfo()
+        })
+        
+        //添加上拉加载更多人员
+        self.twoRiskListView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.searchPeopleListinfo()
+        })
         
         view.addSubview(companyBtn)
         view.addSubview(peopleBtn)
@@ -221,7 +233,7 @@ extension SearchRiskViewController {
     private func getDataInfo() {
         //搜索
         self.searchWordsRelay
-            .debounce(.milliseconds(800),
+            .debounce(.milliseconds(500),
                       scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
@@ -576,11 +588,11 @@ extension SearchRiskViewController {
                     "pageSize": 20,
                     "type": "2"] as [String : Any]
         //        let man = RequestManager()
-        ViewHud.addLoadView()
+//        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/getRiskData",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+//            ViewHud.hideLoadView()
             self?.listPeopleView.tableView.mj_header?.endRefreshing()
             self?.listPeopleView.tableView.mj_footer?.endRefreshing()
             switch result {

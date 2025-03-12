@@ -55,7 +55,6 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             riskSecondVc.itemsModel.accept(model1)
             riskSecondVc.listmodel.accept(model2)
             riskSecondVc.dateType = self.dateType
-            riskSecondVc.itemtype = self.itemtype
             riskSecondVc.logo = self.logo
             riskSecondVc.name = self.name
             riskSecondVc.entityid = self.enityId
@@ -66,7 +65,6 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             let riskSecondVc = ComanyRiskMoreDetailViewController()
             riskSecondVc.itemsModel.accept(model)
             riskSecondVc.dateType = self.dateType
-            riskSecondVc.itemtype = self.itemtype
             riskSecondVc.logo = self.logo
             riskSecondVc.name = self.name
             riskSecondVc.entityid = self.enityId
@@ -547,12 +545,14 @@ extension MySelfRiskDetailViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.allArray?[indexPath.row]
         let riskSecondVc = ComanyRiskMoreDetailViewController()
         riskSecondVc.dateType = self.dateType
-        riskSecondVc.itemtype = self.itemtype
         riskSecondVc.logo = self.logo
-        riskSecondVc.name = self.name
+        riskSecondVc.name = self.name 
         riskSecondVc.entityid = self.enityId
+        riskSecondVc.itemnumber = model?.itemId ?? ""
+        riskSecondVc.historyFlag = "0"
         self.navigationController?.pushViewController(riskSecondVc, animated: true)
     }
     

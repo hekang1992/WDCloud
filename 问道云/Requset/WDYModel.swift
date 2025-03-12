@@ -170,7 +170,11 @@ class DataModel {
     var websitesList: [websitesListModel]?
     var emailList: [emailListModel]?
     var wechatList: [wechatListModel]?
+    var lawNatureList: [lawNatureListModel]?
+    var timelinessList: [lawNatureListModel]?
     init(json: JSON) {
+        self.timelinessList = json["timelinessList"].arrayValue.map { lawNatureListModel(json: $0) }
+        self.lawNatureList = json["lawNatureList"].arrayValue.map { lawNatureListModel(json: $0) }
         self.appleById = json["appleById"].intValue
         self.totalNum = json["totalNum"].intValue
         self.dataList = json["dataList"].arrayValue.map { rowsModel(json: $0) }
@@ -422,10 +426,12 @@ class itemsModel {
     var pdfUrl: String?
     var ossUrl: String?
     var title: String?
-    var formulatingAuthority: String?
-    var lawCategory: String?
-    var entryIntoForceTime: String?
+    var formulating_authority: String?
+    var law_category: String?
+    var publish_date: String?
     var timeliness: String?
+    var announcement_title: String?
+    var entry_into_force_time: String?
     var forshort: String?
     var descprtion: String?
     var templatepath: String?
@@ -446,6 +452,8 @@ class itemsModel {
     var orgCount: Int?
     var provinceStatList: [provinceStatListModel]?
     init(json: JSON) {
+        self.announcement_title = json["announcement_title"].stringValue
+        self.entry_into_force_time = json["entry_into_force_time"].stringValue
         self.provinceStatList = json["provinceStatList"].arrayValue.map { provinceStatListModel(json: $0) }
         self.orgCount = json["orgCount"].intValue
         self.logoColor = json["logoColor"].stringValue
@@ -472,9 +480,9 @@ class itemsModel {
         self.count = json["count"].stringValue
         self.ossUrl = json["ossUrl"].stringValue
         self.timeliness = json["timeliness"].stringValue
-        self.entryIntoForceTime = json["entryIntoForceTime"].stringValue
-        self.lawCategory = json["lawCategory"].stringValue
-        self.formulatingAuthority = json["formulatingAuthority"].stringValue
+        self.publish_date = json["publish_date"].stringValue
+        self.law_category = json["law_category"].stringValue
+        self.formulating_authority = json["formulating_authority"].stringValue
         self.title = json["title"].stringValue
         self.pdfUrl = json["pdfUrl"].stringValue
         self.publishTime = json["publishTime"].stringValue
@@ -1621,5 +1629,14 @@ class monitorInfoModel {
     var monitorStatus: Int?
     init(json: JSON) {
         self.monitorStatus = json["monitorStatus"].intValue
+    }
+}
+
+class lawNatureListModel {
+    var key: String?
+    var count: Int?
+    init(json: JSON) {
+        self.key = json["key"].stringValue
+        self.count = json["count"].intValue
     }
 }

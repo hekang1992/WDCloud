@@ -242,7 +242,7 @@ class CompanyOneHeadView: BaseView {
         tagListView.snp.makeConstraints { make in
             make.left.equalTo(historyNamesButton.snp.left)
             make.top.equalTo(historyNamesButton.snp.bottom).offset(6)
-            make.width.equalTo(SCREEN_WIDTH - 70)
+            make.right.equalToSuperview().offset(-15)
             make.height.equalTo(20)
         }
         desLabel.snp.makeConstraints { make in
@@ -508,11 +508,12 @@ class CompanyOneHeadView: BaseView {
         }).disposed(by: disposeBag)
         
         //标签
-        tagArray.asObservable().subscribe(onNext: { [weak self] texts in
-            guard let self = self, let texts = texts, texts.count > 0  else { return }
-            setupScrollView(tagScrollView: tagListView, tagArray: texts)
-        }).disposed(by: disposeBag)
-        
+        DispatchQueue.main.async {
+            self.tagArray.asObservable().subscribe(onNext: { [weak self] texts in
+                guard let self = self, let texts = texts, texts.count > 0  else { return }
+                setupScrollView(tagScrollView: tagListView, tagArray: texts)
+            }).disposed(by: self.disposeBag)
+        }
     }
     
     @MainActor required init?(coder: NSCoder) {

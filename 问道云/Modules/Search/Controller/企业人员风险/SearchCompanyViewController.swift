@@ -14,7 +14,7 @@ import RxSwift
 import MapKit
 
 class SearchCompanyViewController: WDBaseViewController {
-    
+        
     private var man = RequestManager()
     
     var completeBlock: (() -> Void)?
@@ -196,6 +196,11 @@ class SearchCompanyViewController: WDBaseViewController {
             let companyName = model.orgInfo?.orgName ?? ""
             companyDetailVc.enityId.accept(enityId)
             companyDetailVc.companyName.accept(companyName)
+            companyDetailVc.refreshBlock = { [weak self] index in
+                guard let self = self else { return }
+                self.pageIndex = 1
+                self.searchListInfo()
+            }
             self?.navigationController?.pushViewController(companyDetailVc, animated: true)
         }
         
@@ -215,13 +220,14 @@ extension SearchCompanyViewController {
     private func getDataInfo() {
         //更新搜索文字
         self.searchWordsRelay
-            .debounce(.milliseconds(800),
+            .debounce(.milliseconds(500),
                       scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if !text.isEmpty {
                     self.pageIndex = 1
+                    self.searchListInfo()
                 }else {
                     self.pageIndex = 1
                     self.allArray.removeAll()
@@ -229,7 +235,6 @@ extension SearchCompanyViewController {
                     self.companyListView.isHidden = true
                     self.tableView.reloadData()
                 }
-                self.searchListInfo()
             }).disposed(by: disposeBag)
         
         self.searchWordsRelay

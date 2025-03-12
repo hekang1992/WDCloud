@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import TYAlertController
+
+let CLICK_PRIVACY = "CLICK_PRIVACY"
 
 class LaunchViewController: WDBaseViewController {
     
@@ -24,8 +27,6 @@ class LaunchViewController: WDBaseViewController {
         return priImageView
     }()
     
-    var isShow: Bool = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,7 +35,39 @@ class LaunchViewController: WDBaseViewController {
         homeBgImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        NetworkManager.shared.startListening()
+        let clickStr = UserDefaults.standard.object(forKey: CLICK_PRIVACY) as? String ?? ""
+        if clickStr == "1" {
+            NetworkManager.shared.startListening()
+        }else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                self.showAlertPrivacyView()
+            }
+        }
+        
+    }
+    
+}
+
+extension LaunchViewController {
+    
+    private func showAlertPrivacyView() {
+        let popView = PopPrivacyView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400.pix()))
+        let alertVc = TYAlertController(alert: popView, preferredStyle: .alert)!
+        self.present(alertVc, animated: true)
+        
+        popView.cancelBtn.rx.tap.subscribe(onNext: {
+            exit(0)
+        }).disposed(by: disposeBag)
+        
+        popView.sureBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.savePrivacyInfo()
+            NetworkManager.shared.startListening()
+        }).disposed(by: disposeBag)
+    }
+    
+    private func savePrivacyInfo() {
+        UserDefaults.standard.setValue("1", forKey: CLICK_PRIVACY)
+        UserDefaults.standard.synchronize()
     }
     
 }

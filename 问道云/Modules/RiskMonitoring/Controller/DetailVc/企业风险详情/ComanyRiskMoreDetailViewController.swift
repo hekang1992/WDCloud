@@ -56,12 +56,9 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
     
     var entityid: String = ""
     var itemnumber: String = ""
-    var itemtype: String = ""
+    var historyFlag: String = ""
     var dateType: String = ""
-    var caseproperty: String = ""
-    var casetype: String = ""
     var pageNum: Int = 1
-    var pageSize: Int = 20
     
     lazy var whiteView: UIView = {
         let whiteView = UIView()
@@ -85,13 +82,6 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        let model = itemsModel.value
-        itemnumber = model?.itemnumber ?? ""
-        if model?.caseproperty != "" {
-            caseproperty = model?.caseproperty ?? ""
-        }else {
-            caseproperty = listmodel.value?.caseproperty ?? ""
-        }
         headView.titlelabel.text = "企业风险信息"
         addHeadView(from: headView)
         view.addSubview(riskHeadView)
@@ -134,16 +124,13 @@ extension ComanyRiskMoreDetailViewController {
     private func getDetailInfo() {
         let man = RequestManager()
         ViewHud.addLoadView()
-        let dict = ["entityid": entityid,
-                    "itemnumber": itemnumber,
-                    "itemtype": itemtype,
-                    "dateType": dateType,
-                    "caseproperty": caseproperty,
-                    "casetype": casetype,
+        let dict = ["orgId": entityid,
+                    "itemId": itemnumber,
+                    "historyFlag": historyFlag,
                     "pageNum": pageNum,
-                    "pageSize": pageSize] as [String : Any]
+                    "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "riskmonitor/riskmonitoring/riskDynamicsberefining",
+                       pageUrl: "/entity/risk/queryOrgRiskList",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             self?.tableView.mj_header?.endRefreshing()

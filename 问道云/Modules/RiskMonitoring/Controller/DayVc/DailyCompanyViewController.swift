@@ -157,7 +157,6 @@ extension DailyCompanyViewController: UITableViewDataSource, UITableViewDelegate
         cell.moreBlock = { [weak self] in
             guard let self = self else { return }
             let alertVc = TYAlertController(alert: monitorView, preferredStyle: .actionSheet)!
-            alertVc.backgoundTapDismissEnable = true
             monitorView.block1 = { [weak self] in
                 self?.dismiss(animated: true)
             }

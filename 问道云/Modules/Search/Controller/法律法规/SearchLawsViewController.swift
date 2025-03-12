@@ -34,21 +34,30 @@ class SearchLawsViewController: WDBaseViewController {
         return searchView
     }()
     
+    lazy var oneView: OneCompanyView = {
+        let oneView = OneCompanyView()
+        return oneView
+    }()
+    
     //请求参数
     var pageNum: Int = 1
     var pageSize: Int = 20
     var allArray: [itemsModel] = []
     var shareSearchKey: String = ""
     var model: DataModel?
+    var lawNature: String = ""
+    var timeliness: String = ""
     
-    var oneItemArray = BehaviorRelay<[itemsModel]>(value: [])
-    var twoItemArray = BehaviorRelay<[itemsModel]>(value: [])
+    var oneItemArray = BehaviorRelay<[lawNatureListModel]?>(value: nil)
+    var twoItemArray = BehaviorRelay<[lawNatureListModel]?>(value: nil)
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.register(HomeLawsViewCell.self, forCellReuseIdentifier: "HomeLawsViewCell")
+        tableView.isHidden = true
+        tableView.register(HomeLawsViewCell.self,
+                           forCellReuseIdentifier: "HomeLawsViewCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
@@ -88,9 +97,8 @@ class SearchLawsViewController: WDBaseViewController {
         }).disposed(by: disposeBag)
         
         
-        let oneMenu = MenuAction(title: "效力位阶", style: .typeCustom)!
-        let twoMenu = MenuAction(title: "时效性", style: .typeCustom)!
-        
+        let oneMenu = MenuAction(title: "效力位阶", style: .typeList)!
+        let twoMenu = MenuAction(title: "时效性", style: .typeList)!
         let menuView = DropMenuBar(action: [oneMenu, twoMenu])!
         menuView.backgroundColor = .white
         view.addSubview(menuView)
@@ -99,6 +107,39 @@ class SearchLawsViewController: WDBaseViewController {
             make.height.equalTo(34)
             make.top.equalTo(searchView.snp.bottom)
             make.width.equalTo(SCREEN_WIDTH)
+        }
+        
+        oneItemArray.asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self, let modelArray = modelArray else { return }
+            let regionArray = getLawGroupMenuInfo(from: modelArray)
+            oneMenu.listDataSource = regionArray
+        }).disposed(by: disposeBag)
+        
+        
+        twoItemArray.asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self, let modelArray = modelArray else { return }
+            let regionArray = getLawGroupMenuInfo(from: modelArray)
+            twoMenu.listDataSource = regionArray
+        }).disposed(by: disposeBag)
+        
+        oneMenu.didSelectedMenuResult = { [weak self] index, model, grand in
+            guard let self = self else { return }
+            self.pageNum = 1
+            self.lawNature = model?.currentID ?? ""
+            self.getNoticeListInfo()
+        }
+        twoMenu.didSelectedMenuResult = { [weak self] index, model, grand in
+            guard let self = self else { return }
+            self.pageNum = 1
+            self.timeliness = model?.currentID ?? ""
+            self.getNoticeListInfo()
+        }
+        
+        //oneview
+        view.addSubview(oneView)
+        oneView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(self.searchView.snp.bottom)
         }
 
         view.addSubview(tableView)
@@ -119,8 +160,46 @@ class SearchLawsViewController: WDBaseViewController {
             getNoticeListInfo()
         })
         self.addNodataView(from: self.tableView)
-        getOneMenuInfo()
-        getTwoMenuInfo()
+        
+        //删除最近搜索
+        self.oneView.searchView.deleteBtn
+            .rx
+            .tap.subscribe(onNext: { [weak self] in
+                self?.deleteSearchInfo()
+            }).disposed(by: disposeBag)
+        
+        //删除浏览历史
+        self.oneView.historyView.deleteBtn
+            .rx
+            .tap.subscribe(onNext: { [weak self] in
+                self?.deleteHistoryInfo()
+            }).disposed(by: disposeBag)
+        
+        //点击最近搜索
+        self.oneView.lastSearchTextBlock = { [weak self] keywords in
+            self?.searchView.searchTx.text = keywords
+            if !keywords.isEmpty {
+                self?.oneView.isHidden = false
+                //最近搜索
+                self?.getlastSearch()
+                //浏览历史
+                self?.getBrowsingHistory()
+                //热搜
+                self?.getHotWords()
+                self?.pageNum = 1
+                self?.getNoticeListInfo()
+            }else {
+                self?.oneView.isHidden = true
+            }
+        }
+        
+        //最近搜索
+        self.getlastSearch()
+        //浏览历史
+        self.getBrowsingHistory()
+        //热搜
+        self.getHotWords()
+        
     }
 
 }
@@ -166,7 +245,9 @@ extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
         ViewHud.addLoadView()
         let dict = ["pageNum": pageNum,
                     "pageSize": pageSize,
-                    "title": shareSearchKey] as [String : Any]
+                    "title": self.searchView.searchTx.text ?? "",
+                    "lawNature": lawNature,
+                    "timeliness": timeliness] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/firminfo/laws/list", method: .get) { [weak self] result in
             ViewHud.hideLoadView()
@@ -180,6 +261,8 @@ extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
                         pageNum = 1
                         self.allArray.removeAll()
                     }
+                    self.oneItemArray.accept(model.lawNatureList ?? [])
+                    self.twoItemArray.accept(model.timelinessList ?? [])
                     pageNum += 1
                     let pageData = model.items ?? []
                     self.allArray.append(contentsOf: pageData)
@@ -194,6 +277,13 @@ extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
                         self.tableView.mj_footer?.isHidden = true
                     }
                     self.tableView.reloadData()
+                    if total > 0 {
+                        self.oneView.isHidden = true
+                        self.tableView.isHidden = false
+                    }else {
+                        self.oneView.isHidden = false
+                        self.tableView.isHidden = true
+                    }
                 }
                 break
             case .failure(_):
@@ -212,35 +302,244 @@ extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension SearchLawsViewController {
     
-    //效力
-    private func getOneMenuInfo() {
+    //最近搜索
+    private func getlastSearch() {
         let man = RequestManager()
-        let dict = ["code": "ztbgglx"]
-        man.requestAPI(params: dict, pageUrl: "/firminfo/intellectualpropertys/getcategoryofworks", method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        let dict = ["searchType": "",
+                    "moduleId": "03"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/searchRecord/query",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            guard let self = self else { return }
             switch result {
             case .success(let success):
-                if let self = self {
-                    
+                if let rows = success.data?.data {
+                    reloadSearchUI(data: rows)
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }
     }
     
-    //时效性
-    private func getTwoMenuInfo() {
+    //最近搜索UI刷新
+    func reloadSearchUI(data: [rowsModel]) {
+        var strArray: [String] = []
+        if data.count > 0 {
+            for model in data {
+                strArray.append(model.searchContent ?? "")
+            }
+            self.oneView.searchView.tagListView.removeAllTags()
+            self.oneView.searchView.tagListView.addTags(strArray)
+            self.oneView.searchView.isHidden = false
+            self.oneView.layoutIfNeeded()
+            let height = self.oneView.searchView.tagListView.frame.height
+            self.oneView.searchView.snp.updateConstraints { make in
+                make.height.equalTo(30 + height + 20)
+            }
+        } else {
+            self.oneView.searchView.isHidden = true
+            self.oneView.searchView.snp.updateConstraints { make in
+                make.height.equalTo(0)
+            }
+        }
+        self.oneView.layoutIfNeeded()
+    }
+    
+    //浏览历史
+    private func getBrowsingHistory() {
         let man = RequestManager()
-        let dict = ["code": "ztbzbfs"]
-        man.requestAPI(params: dict, pageUrl: "/firminfo/intellectualpropertys/getcategoryofworks", method: .get) { [weak self] result in
+        ViewHud.addLoadView()
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let dict = ["customernumber": customernumber,
+                    "viewrecordtype": "",
+                    "moduleId": "03",
+                    "pageNum": "1",
+                    "pageSize": "20"]
+        man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
-                
+                guard let self = self else { return }
+                if let rows = success.data?.rows {
+                    readHistoryUI(data: rows)
+                }
                 break
-            case .failure(let failure):
+            case .failure(_):
+                
                 break
             }
         }
     }
+    
+    //UI刷新
+    func readHistoryUI(data: [rowsModel]) {
+        for (index, model) in data.enumerated() {
+            let listView = CommonSearchListView()
+            listView.block = { [weak self] in
+                guard let self = self else { return }
+                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
+                var dict: [String: String]
+                let type = model.viewrecordtype ?? ""
+                if type == "1" {
+                    dict = ["firmname": model.firmname ?? "",
+                            "entityId": model.firmnumber ?? "",
+                            "isPerson": "0"]
+                }else {
+                    dict = ["personName": model.name ?? "",
+                            "personNumber": model.eid ?? "",
+                            "isPerson": "1"]
+                }
+                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                self.pushWebPage(from: webUrl)
+            }
+            listView.nameLabel.text = model.firmname ?? ""
+            listView.timeLabel.text = model.createhourtime ?? ""
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22)))
+            self.oneView.historyView.addSubview(listView)
+            listView.snp.makeConstraints { make in
+                make.height.equalTo(40)
+                make.width.equalTo(SCREEN_WIDTH)
+                make.left.equalToSuperview()
+                make.top.equalTo(self.oneView.historyView.lineView.snp.bottom).offset(40 * index)
+            }
+        }
+        
+        self.oneView.historyView.snp.updateConstraints { make in
+            if data.count != 0 {
+                self.oneView.historyView.isHidden = false
+                make.height.equalTo((data.count) * 40 + 30)
+            } else {
+                self.oneView.historyView.isHidden = true
+                make.height.equalTo(0)
+            }
+        }
+        self.oneView.layoutIfNeeded()
+    }
+    
+    //热搜
+    private func getHotWords() {
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        let dict = ["moduleId": "03"]
+        man.requestAPI(params: dict,
+                       pageUrl: browser_hotwords,
+                       method: .get) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    hotsWordsUI(data: model.data ?? [])
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //UI刷新
+    func hotsWordsUI(data: [rowsModel]) {
+        for (index, model) in data.enumerated() {
+            let listView = CommonSearchListView()
+            listView.block = { [weak self] in
+                guard let self = self else { return }
+                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
+                var dict: [String: String]
+                let type = model.type ?? ""
+                if type == "1" {
+                    dict = ["firmname": model.name ?? "",
+                            "entityId": model.eid ?? "",
+                            "isPerson": "0"]
+                }else {
+                    dict = ["personName": model.name ?? "",
+                            "personNumber": model.eid ?? "",
+                            "isPerson": "1"]
+                }
+                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                self.pushWebPage(from: webUrl)
+            }
+            listView.nameLabel.text = model.name ?? ""
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22)))
+            self.oneView.hotWordsView.addSubview(listView)
+            listView.snp.updateConstraints { make in
+                make.height.equalTo(40)
+                make.left.right.equalToSuperview()
+                make.top.equalTo(self.oneView.hotWordsView.lineView.snp.bottom).offset(40 * index)
+            }
+        }
+        
+        self.oneView.hotWordsView.snp.updateConstraints { make in
+            if data.count != 0 {
+                self.oneView.hotWordsView.isHidden = false
+                make.height.equalTo((data.count) * 40 + 30)
+            } else {
+                self.oneView.hotWordsView.isHidden = true
+                make.height.equalTo(0)
+            }
+        }
+        self.oneView.layoutIfNeeded()
+    }
+    
+    //删除最近搜索
+    private func deleteSearchInfo() {
+        ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
+            let man = RequestManager()
+            ViewHud.addLoadView()
+            let dict = ["searchType": "",
+                        "moduleId": "03"]
+            man.requestAPI(params: dict,
+                           pageUrl: "/operation/searchRecord/clear",
+                           method: .post) { result in
+                ViewHud.hideLoadView()
+                switch result {
+                case .success(let success):
+                    if success.code == 200 {
+                        ToastViewConfig.showToast(message: "删除成功")
+                        self.oneView.searchView.isHidden = true
+                        self.oneView.searchView.snp.updateConstraints({ make in
+                            make.height.equalTo(0)
+                        })
+                    }
+                    break
+                case .failure(_):
+                    break
+                }
+            }
+        })
+    }
+    
+    //删除浏览历史
+    private func deleteHistoryInfo() {
+        ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
+            let man = RequestManager()
+            ViewHud.addLoadView()
+            let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+            let dict = ["customernumber": customernumber,
+                        "moduleId": "03",
+                        "viewrecordtype": ""]
+            man.requestAPI(params: dict,
+                           pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
+                           method: .get) { result in
+                ViewHud.hideLoadView()
+                switch result {
+                case .success(let success):
+                    if success.code == 200 {
+                        ToastViewConfig.showToast(message: "删除成功")
+                        self.oneView.historyView.isHidden = true
+                        self.oneView.historyView.snp.updateConstraints({ make in
+                            make.height.equalTo(0)
+                        })
+                    }
+                    break
+                case .failure(_):
+                    break
+                }
+            }
+        })
+    }
+    
 }

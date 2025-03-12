@@ -54,7 +54,7 @@ class FocusPeopleViewController: WDBaseViewController {
         view.addSubview(menuView)
         menuView.snp.makeConstraints { make in
             make.left.equalToSuperview()
-            make.height.equalTo(26)
+            make.height.equalTo(34)
             make.top.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
         }

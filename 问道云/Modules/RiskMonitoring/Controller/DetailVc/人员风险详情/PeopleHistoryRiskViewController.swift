@@ -54,7 +54,6 @@ class PeopleHistoryRiskViewController: WDBaseViewController {
             riskSecondVc.itemsModel.accept(model1)
             riskSecondVc.listmodel.accept(model2)
             riskSecondVc.dateType = self.dateType
-            riskSecondVc.itemtype = self.itemtype
             riskSecondVc.logo = self.logo
             riskSecondVc.name = self.name
             riskSecondVc.entityid = self.enityId
@@ -65,7 +64,6 @@ class PeopleHistoryRiskViewController: WDBaseViewController {
             let riskSecondVc = ComanyRiskMoreDetailViewController()
             riskSecondVc.itemsModel.accept(model)
             riskSecondVc.dateType = self.dateType
-            riskSecondVc.itemtype = self.itemtype
             riskSecondVc.logo = self.logo
             riskSecondVc.name = self.name
             riskSecondVc.entityid = self.enityId
@@ -566,7 +564,6 @@ extension PeopleHistoryRiskViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let riskSecondVc = ComanyRiskMoreDetailViewController()
         riskSecondVc.dateType = self.dateType
-        riskSecondVc.itemtype = self.itemtype
         riskSecondVc.logo = self.logo
         riskSecondVc.name = self.name
         riskSecondVc.entityid = self.enityId

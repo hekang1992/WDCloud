@@ -170,13 +170,14 @@ extension SearchPeopleViewController {
     
     private func getDataInfo() {
         self.searchWordsRelay
-            .debounce(.milliseconds(800),
+            .debounce(.milliseconds(500),
                       scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if !text.isEmpty {
                     self.pageIndex = 1
+                    self.searchListInfo()
                 }else {
                     self.pageIndex = 1
                     self.allArray.removeAll()
@@ -184,7 +185,6 @@ extension SearchPeopleViewController {
                     self.twoPeopleListView.isHidden = true
                     self.tableView.reloadData()
                 }
-                self.searchListInfo()
             }).disposed(by: disposeBag)
         
         self.searchWordsRelay

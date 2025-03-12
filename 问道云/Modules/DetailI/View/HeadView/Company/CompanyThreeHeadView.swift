@@ -62,7 +62,8 @@ class CompanyThreeHeadView: BaseView {
     
     lazy var oneImageView: UIImageView = {
         let oneImageView = UIImageView()
-        oneImageView.image = UIImage(named: "maingudongicon")
+        oneImageView.contentMode = .scaleAspectFit
+        oneImageView.image = UIImage(named: "gudongicon")
         return oneImageView
     }()
     
@@ -84,7 +85,8 @@ class CompanyThreeHeadView: BaseView {
     
     lazy var twoImageView: UIImageView = {
         let twoImageView = UIImageView()
-        twoImageView.image = UIImage(named: "mainpeopicon")
+        twoImageView.contentMode = .scaleAspectFit
+        twoImageView.image = UIImage(named: "rnoemapeopicon")
         return twoImageView
     }()
     
@@ -94,15 +96,31 @@ class CompanyThreeHeadView: BaseView {
         return lineView
     }()
     
+    lazy var oneView: UIView = {
+        let oneView = UIView()
+        oneView.backgroundColor = .init(cssStr: "#F7F8FC")
+        oneView.layer.cornerRadius = 2
+        return oneView
+    }()
+    
+    lazy var twoView: UIView = {
+        let twoView = UIView()
+        twoView.backgroundColor = .init(cssStr: "#F7F8FC")
+        twoView.layer.cornerRadius = 2
+        return twoView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(shareholderView)
-        shareholderView.addSubview(oneImageView)
+        shareholderView.addSubview(oneView)
+        oneView.addSubview(oneImageView)
         oneImageView.addSubview(onenumlabel)
         shareholderView.addSubview(collectionView)
         
         addSubview(peopleView)
-        peopleView.addSubview(twoImageView)
+        peopleView.addSubview(twoView)
+        twoView.addSubview(twoImageView)
         twoImageView.addSubview(twoNumlabel)
         peopleView.addSubview(pcollectionView)
         
@@ -113,10 +131,16 @@ class CompanyThreeHeadView: BaseView {
             make.left.right.top.equalToSuperview()
             make.height.equalTo(86)
         }
-        oneImageView.snp.makeConstraints { make in
+        oneView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: 17, height: 70))
             make.left.equalToSuperview().offset(12)
+            make.top.equalToSuperview().offset(7)
+            make.width.equalTo(17)
+        }
+        oneImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(16)
+            make.size.equalTo(CGSize(width: 17, height: 26))
         }
         collectionView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -127,7 +151,7 @@ class CompanyThreeHeadView: BaseView {
         onenumlabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 17, height: 14))
-            make.bottom.equalToSuperview().offset(-4)
+            make.top.equalTo(oneImageView.snp.bottom).offset(2)
         }
         
         //主要人员
@@ -136,10 +160,16 @@ class CompanyThreeHeadView: BaseView {
             make.top.equalTo(shareholderView.snp.bottom)
             make.height.equalTo(68)
         }
-        twoImageView.snp.makeConstraints { make in
+        twoView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(4)
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: 17, height: 57))
             make.left.equalToSuperview().offset(12)
+            make.width.equalTo(17)
+        }
+        twoImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(8.5)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: 17, height: 27))
         }
         pcollectionView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -150,7 +180,7 @@ class CompanyThreeHeadView: BaseView {
         twoNumlabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 17, height: 14))
-            make.bottom.equalToSuperview().offset(-0.5)
+            make.top.equalTo(twoImageView.snp.bottom).offset(2)
         }
         
         lineView.snp.makeConstraints { make in
