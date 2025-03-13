@@ -530,11 +530,11 @@ extension SearchRiskViewController {
                     "pageSize": 20,
                     "type": "1"] as [String : Any]
         let man = RequestManager()
-//        ViewHud.addLoadView()
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/getRiskData",
                        method: .get) { [weak self] result in
-//            ViewHud.hideLoadView()
+            ViewHud.hideLoadView()
             self?.twoRiskListView.tableView.mj_header?.endRefreshing()
             self?.twoRiskListView.tableView.mj_footer?.endRefreshing()
             switch result {

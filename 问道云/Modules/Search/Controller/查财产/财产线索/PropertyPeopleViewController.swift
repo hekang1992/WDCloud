@@ -7,14 +7,30 @@
 
 import UIKit
 import RxRelay
+import JXPagingView
 
 class PropertyPeopleViewController: WDBaseViewController {
     
     //城市数据
     var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
-    var entityArea: String = ""//公司时候的地区
+    var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
     
-    var keyWords = BehaviorRelay<String>(value: "")
+    var listViewDidScrollCallback: ((UIScrollView) -> Void)?
+    
+    //被搜索的关键词
+    var searchWordsRelay = BehaviorRelay<String>(value: "")
+    
+    var searchWords: String? {
+        didSet {
+            guard let searchWords = searchWords else { return }
+            searchWordsRelay.accept(searchWords)
+        }
+    }
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        return tableView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,15 +38,22 @@ class PropertyPeopleViewController: WDBaseViewController {
         // Do any additional setup after loading the view.
     }
     
+}
+
+extension PropertyPeopleViewController: JXPagingViewListViewDelegate {
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func listView() -> UIView {
+        return view
+    }
+    
+    func listViewDidScrollCallback(callback: @escaping (UIScrollView) -> ()) {
+        self.listViewDidScrollCallback = callback
+    }
+    
+    func listScrollView() -> UIScrollView { tableView }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        listViewDidScrollCallback?(scrollView)
+    }
     
 }

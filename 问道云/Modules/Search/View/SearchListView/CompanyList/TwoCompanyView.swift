@@ -60,6 +60,7 @@ class TwoCompanyView: BaseView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isSkeletonable = true
         addSubview(whiteView)
         whiteView.addSubview(tableView)
         whiteView.snp.makeConstraints { make in
@@ -69,11 +70,6 @@ class TwoCompanyView: BaseView {
             make.top.equalToSuperview().offset(32)
             make.left.right.bottom.equalToSuperview()
         }
-        
-        let gradient = SkeletonGradient(baseColor: UIColor.midnightBlue)
-
-        let animation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
-        tableView.showAnimatedGradientSkeleton(usingGradient: gradient, animation: animation)
         
         print("检查骨架屏是否激活========\(tableView.sk.isSkeletonActive)")
         print("检查是否支持骨架屏=========\(tableView.isSkeletonable)")

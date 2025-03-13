@@ -24,6 +24,7 @@
 		730488112D2A97F00024265C /* HomeVideoListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730488102D2A97F00024265C /* HomeVideoListViewCell.swift */; };
 		730488132D2BD2090024265C /* HomeBannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730488122D2BD2090024265C /* HomeBannerViewCell.swift */; };
 		730488152D2BD2380024265C /* HomeItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730488142D2BD2380024265C /* HomeItemViewCell.swift */; };
+		73090B6F2D82DE7900041457 /* PropertyHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73090B6E2D82DE7900041457 /* PropertyHeadView.swift */; };
 		730CEDF32D530924002DE9DF /* RiskUnioHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDF22D530924002DE9DF /* RiskUnioHeadView.swift */; };
 		730CEDF52D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDF42D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift */; };
 		730CEDF82D53590B002DE9DF /* CompanyLawListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDF72D53590B002DE9DF /* CompanyLawListView.swift */; };
@@ -402,6 +403,7 @@
 		730488102D2A97F00024265C /* HomeVideoListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVideoListViewCell.swift; sourceTree = "<group>"; };
 		730488122D2BD2090024265C /* HomeBannerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBannerViewCell.swift; sourceTree = "<group>"; };
 		730488142D2BD2380024265C /* HomeItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItemViewCell.swift; sourceTree = "<group>"; };
+		73090B6E2D82DE7900041457 /* PropertyHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyHeadView.swift; sourceTree = "<group>"; };
 		730CEDF22D530924002DE9DF /* RiskUnioHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskUnioHeadView.swift; sourceTree = "<group>"; };
 		730CEDF42D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComanyRiskMoreDetailViewController.swift; sourceTree = "<group>"; };
 		730CEDF72D53590B002DE9DF /* CompanyLawListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLawListView.swift; sourceTree = "<group>"; };
@@ -1394,6 +1396,7 @@
 		739DCA112D670CDC009CFC78 /* 财产线索 */ = {
 			isa = PBXGroup;
 			children = (
+				73090B6E2D82DE7900041457 /* PropertyHeadView.swift */,
 				739DCA052D66E001009CFC78 /* PropertyOneViewController.swift */,
 				739DCA0D2D66FAA1009CFC78 /* PropertyCompanyViewController.swift */,
 				739DCA0F2D66FAAB009CFC78 /* PropertyPeopleViewController.swift */,
@@ -2355,6 +2358,7 @@
 				73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */,
 				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,
 				73C0070F2D644F55003C3CE1 /* DueDiligenceTwoView.swift in Sources */,
+				73090B6F2D82DE7900041457 /* PropertyHeadView.swift in Sources */,
 				7374163A2D0ED72600E6CD23 /* WechatPushViewController.swift in Sources */,
 				7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */,
 				73C36A812D2D1BAA00D6DC46 /* SearchHotWordsListView.swift in Sources */,

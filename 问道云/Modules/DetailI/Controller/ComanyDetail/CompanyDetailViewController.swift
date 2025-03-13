@@ -212,11 +212,21 @@ extension CompanyDetailViewController {
                        pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
                        method: .post) { [weak self] result in
             ViewHud.hideLoadView()
+            guard let self = self else { return }
             switch result {
             case .success(let success):
-                if success.code == 200 {
-                    if let self = self, let model = success.data {
-                        
+                let code = success.code ?? 0
+                if code == 200 {
+                    model.monitorInfo?.monitorStatus = 1
+                    refreshFooterInfo(form: model)
+                    ToastViewConfig.showToast(message: "监控成功")
+                }else if code == 702 {
+                    //弹窗提示购买会员
+                    let entityid = model.basicInfo?.orgId ?? ""
+                    let firmname = model.basicInfo?.orgName ?? ""
+                    popVipView(from: 1, entityId: entityid, entityName: firmname, menuId: "") { [weak self] in
+                        model.monitorInfo?.monitorStatus = 1
+                        self?.refreshFooterInfo(form: model)
                     }
                 }
                 break
@@ -248,6 +258,7 @@ extension CompanyDetailViewController {
                         model.followInfo?.followStatus = 2
                         refreshFooterInfo(form: model)
                         self.refreshBlock?(2)
+                        ToastViewConfig.showToast(message: "关注成功")
                     }
                 }
                 break
@@ -275,6 +286,7 @@ extension CompanyDetailViewController {
                             model.followInfo?.followStatus = 1
                             refreshFooterInfo(form: model)
                             self.refreshBlock?(1)
+                            ToastViewConfig.showToast(message: "取消关注成功")
                         }
                     }
                     break

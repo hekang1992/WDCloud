@@ -347,7 +347,7 @@ extension SearchCompanyShareholderCell {
         for tags in tagArray {
             let tag = "\(tags)"
             let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 12)])
-            var width = titleSize.width
+            var width = titleSize.width + 5
             if tags.contains("展开") {
                 width = openButtonWidth
             }
@@ -362,7 +362,7 @@ extension SearchCompanyShareholderCell {
             for tags in tagArray {
                 let tag = "\(tags)"
                 let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 12)])
-                var width = titleSize.width
+                var width = titleSize.width + 5
                 if tags.contains("展开") {
                     width = openButtonWidth
                 }
@@ -420,7 +420,7 @@ extension SearchCompanyShareholderCell {
                 tagScrollView.addSubview(lab)
                 
                 let titleSize = (lab.text! as NSString).size(withAttributes: [.font: lab.font!])
-                let width = titleSize.width + 10  // 增加左右 padding
+                let width = titleSize.width + 5  // 增加左右 padding
                 
                 if width + lastRight > maxWidth {
                     numberOfLine += 1

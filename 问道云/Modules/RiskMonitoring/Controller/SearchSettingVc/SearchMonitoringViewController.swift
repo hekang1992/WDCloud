@@ -373,7 +373,9 @@ extension SearchMonitoringViewController {
                     ToastViewConfig.showToast(message: "监控成功")
                 }else if code == 702 {
                     //弹窗提示购买会员
-                    popVipView(from: 1, entityId: entityid, entityName: firmname, menuId: groupnumber)
+                    popVipView(from: 1, entityId: entityid, entityName: firmname, menuId: groupnumber) {
+                        
+                    }
                 }
                 break
             case .failure(_):
@@ -412,7 +414,9 @@ extension SearchMonitoringViewController {
                     ToastViewConfig.showToast(message: "监控成功")
                 }else if code == 702 {
                     //弹窗提示购买会员
-                    popVipView(from: 2, entityId: personId, entityName: personName, menuId: groupId)
+                    self.popVipView(from: 2, entityId: personId, entityName: personName, menuId: groupId) {
+                        self.getListInfo()
+                    }
                 }
                 break
             case .failure(_):
@@ -424,34 +428,6 @@ extension SearchMonitoringViewController {
     //取消人员监控
     
     //权限不够,弹窗提示会员
-    private func popVipView(from entityType: Int, entityId: String, entityName: String, menuId: String) {
-        let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
-        buyVipView.cancelBlock = { [weak self] in
-            self?.dismiss(animated: true)
-        }
-        buyVipView.buyOneBlock = { [weak self] in
-            //跳转购买单次会员
-            self?.dismiss(animated: true, completion: {
-                let oneVc = BuyOneVipViewController()
-                oneVc.entityType = entityType
-                oneVc.entityId = entityId
-                oneVc.entityName = entityName
-                oneVc.menuId = menuId
-                //刷新列表
-                oneVc.refreshBlock = { [weak self] in
-                    self?.getListInfo()
-                }
-                self?.navigationController?.pushViewController(oneVc, animated: true)
-            })
-        }
-        buyVipView.buyVipBlock = { [weak self] in
-            //跳转购买会员
-            self?.dismiss(animated: true, completion: {
-                let memVc = MembershipCenterViewController()
-                self?.navigationController?.pushViewController(memVc, animated: true)
-            })
-        }
-        self.present(alertVc, animated: true)
-    }
+    
     
 }

@@ -7,9 +7,9 @@
 
 import UIKit
 import RxRelay
+import RxSwift
 import JXPagingView
 import JXSegmentedView
-import RxSwift
 
 class SearchAllViewController: WDBaseViewController {
     

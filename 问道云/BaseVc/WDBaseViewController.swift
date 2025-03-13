@@ -10,6 +10,7 @@ import RxSwift
 import DropMenuBar
 import BRPickerView
 import Kingfisher
+import TYAlertController
 
 class WDBaseViewController: UIViewController {
     
@@ -526,6 +527,36 @@ extension WDBaseViewController {
             }
         }
         return true // 如果全是中文字符
+    }
+    
+    func popVipView(from entityType: Int, entityId: String, entityName: String, menuId: String, complete: @escaping () -> Void) {
+        let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+        buyVipView.cancelBlock = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+        buyVipView.buyOneBlock = { [weak self] in
+            //跳转购买单次会员
+            self?.dismiss(animated: true, completion: {
+                let oneVc = BuyOneVipViewController()
+                oneVc.entityType = entityType
+                oneVc.entityId = entityId
+                oneVc.entityName = entityName
+                oneVc.menuId = menuId
+                //刷新列表
+                oneVc.refreshBlock = {
+                    complete()
+                }
+                self?.navigationController?.pushViewController(oneVc, animated: true)
+            })
+        }
+        buyVipView.buyVipBlock = { [weak self] in
+            //跳转购买会员
+            self?.dismiss(animated: true, completion: {
+                let memVc = MembershipCenterViewController()
+                self?.navigationController?.pushViewController(memVc, animated: true)
+            })
+        }
+        self.present(alertVc, animated: true)
     }
     
 }

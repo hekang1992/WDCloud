@@ -3,11 +3,12 @@
 //  问道云
 //
 //  Created by Andrew on 2025/1/10.
-//  不带风险扫描的cell
+//
 
 import UIKit
 import RxRelay
 import TagListView
+import SkeletonView
 
 class TwoCompanyNormalListCell: BaseViewCell {
     
@@ -38,12 +39,14 @@ class TwoCompanyNormalListCell: BaseViewCell {
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
+        ctImageView.isSkeletonable = true
         ctImageView.layer.cornerRadius = 3
         return ctImageView
     }()
     
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
+        nameLabel.isSkeletonable = true
         nameLabel.font = .mediumFontOfSize(size: 14)
         nameLabel.textColor = .init(cssStr: "#333333")
         nameLabel.textAlignment = .left
@@ -52,6 +55,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
     
     lazy var tagListView: UIScrollView = {
         let tagListView = UIScrollView()
+        tagListView.isSkeletonable = true
         return tagListView
     }()
     
@@ -59,6 +63,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         let nameView = BiaoQianView(frame: .zero, enmu: .hide)
         nameView.label1.text = "法定代表人"
         nameView.lineView.isHidden = false
+        nameView.isSkeletonable = true
         return nameView
     }()
     
@@ -66,17 +71,20 @@ class TwoCompanyNormalListCell: BaseViewCell {
         let moneyView = BiaoQianView(frame: .zero, enmu: .hide)
         moneyView.label1.text = "注册资本"
         moneyView.lineView.isHidden = false
+        moneyView.isSkeletonable = true
         return moneyView
     }()
     
     lazy var timeView: BiaoQianView = {
         let timeView = BiaoQianView(frame: .zero, enmu: .hide)
         timeView.label1.text = "成立时间"
+        timeView.isSkeletonable = true
         return timeView
     }()
     
     lazy var lineView: UIView = {
         let lineView = UIView()
+        lineView.isSkeletonable = true
         lineView.backgroundColor = .init(cssStr: "#EBEBEB")
         return lineView
     }()
@@ -86,6 +94,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         addressimageView.image = UIImage(named: "adressimageicon")
         addressimageView.contentMode = .scaleAspectFill
         addressimageView.isUserInteractionEnabled = true
+        addressimageView.isSkeletonable = true
         return addressimageView
     }()
     
@@ -94,6 +103,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         websiteimageView.image = UIImage(named: "guanwangimage")
         websiteimageView.contentMode = .scaleAspectFill
         websiteimageView.isUserInteractionEnabled = true
+        websiteimageView.isSkeletonable = true
         return websiteimageView
     }()
     
@@ -102,6 +112,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         phoneimageView.image = UIImage(named: "dianhuaimageicon")
         phoneimageView.contentMode = .scaleAspectFill
         phoneimageView.isUserInteractionEnabled = true
+        phoneimageView.isSkeletonable = true
         return phoneimageView
     }()
     
@@ -109,6 +120,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         let focusBtn = UIButton(type: .custom)
         focusBtn.adjustsImageWhenHighlighted = false
         focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+        focusBtn.isSkeletonable = true
         return focusBtn
     }()
     
@@ -117,6 +129,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         redView.layer.cornerRadius = 2
         redView.layer.masksToBounds = true
         redView.backgroundColor = .init(cssStr: "#F55B5B")?.withAlphaComponent(0.05)
+        redView.isSkeletonable = true
         return redView
     }()
     
@@ -140,8 +153,15 @@ class TwoCompanyNormalListCell: BaseViewCell {
         return riskTimeLabel
     }()
     
+    lazy var footView: UIView = {
+        let footView = UIView()
+        footView.backgroundColor = .init(cssStr: "#F8F8F8")
+        return footView
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        isSkeletonable = true
         contentView.addSubview(bgView)
         contentView.addSubview(ctImageView)
         contentView.addSubview(nameLabel)
@@ -158,6 +178,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         contentView.addSubview(websiteimageView)
         contentView.addSubview(phoneimageView)
         contentView.addSubview(focusBtn)
+        contentView.addSubview(footView)
         ctImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(11)
             make.left.equalToSuperview().offset(10)
@@ -168,6 +189,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.top.equalTo(ctImageView.snp.top).offset(-1)
             make.height.equalTo(20)
             make.left.equalTo(ctImageView.snp.right).offset(8)
+            make.right.equalToSuperview().offset(-55)
         }
         
         tagListView.snp.makeConstraints { make in
@@ -227,7 +249,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.left.equalToSuperview()
             make.top.equalTo(tagListView.snp.bottom).offset(49.5)
             make.height.equalTo(0.5)
-            make.bottom.equalToSuperview().offset(-38)
+            make.bottom.equalToSuperview().offset(-42)
         }
         focusBtn.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-15.5)
@@ -252,7 +274,10 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.size.equalTo(CGSize(width: 47, height: 21))
             make.right.equalTo(websiteimageView.snp.left).offset(-8)
         }
-        
+        footView.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(4)
+        }
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             let logo = model.orgInfo?.logo ?? ""
@@ -434,7 +459,7 @@ extension TwoCompanyNormalListCell {
         for view in tagScrollView.subviews {
             view.removeFromSuperview()
         }
-        let maxWidth = SCREEN_WIDTH - 60
+        let maxWidth = SCREEN_WIDTH - 80
         let openButtonWidth: CGFloat = 40 // 展开按钮宽度
         let buttonHeight: CGFloat = 18 // 标签高度
         let buttonSpacing: CGFloat = 5 // 标签之间的间距
@@ -462,7 +487,7 @@ extension TwoCompanyNormalListCell {
         for tags in tagArray {
             let tag = "\(tags)"
             let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 12)])
-            var width = titleSize.width
+            var width = titleSize.width + 5
             if tags.contains("展开") {
                 width = openButtonWidth
             }
@@ -477,7 +502,7 @@ extension TwoCompanyNormalListCell {
             for tags in tagArray {
                 let tag = "\(tags)"
                 let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.regularFontOfSize(size: 12)])
-                var width = titleSize.width
+                var width = titleSize.width + 5
                 if tags.contains("展开") {
                     width = openButtonWidth
                 }
@@ -534,7 +559,7 @@ extension TwoCompanyNormalListCell {
                 tagScrollView.addSubview(lab)
                 
                 let titleSize = (lab.text! as NSString).size(withAttributes: [.font: lab.font!])
-                let width = titleSize.width + 10  // 增加左右 padding
+                let width = titleSize.width + 5  // 增加左右 padding
                 
                 if width + lastRight > maxWidth {
                     numberOfLine += 1

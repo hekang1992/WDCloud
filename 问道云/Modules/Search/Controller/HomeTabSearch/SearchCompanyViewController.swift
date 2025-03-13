@@ -85,6 +85,10 @@ class SearchCompanyViewController: WDBaseViewController {
         companyListView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        companyListView.tableView.isSkeletonable = true
+        companyListView.tableView.showAnimatedGradientSkeleton() // 显示骨架屏
+        
         companyListView.moreBtnBlock = { [weak self] in
             self?.moreBtnBlock?()
         }
@@ -216,6 +220,7 @@ class SearchCompanyViewController: WDBaseViewController {
     }
 }
 
+/** 网络数据请求 */
 extension SearchCompanyViewController {
     
     private func getDataInfo() {
@@ -228,8 +233,6 @@ extension SearchCompanyViewController {
                 guard let self = self else { return }
                 if !text.isEmpty {
                     self.pageIndex = 1
-                    self.companyView.isHidden = true
-                    self.companyListView.isHidden = false
                     self.searchListInfo()
                 }else {
                     self.pageIndex = 1
@@ -507,11 +510,11 @@ extension SearchCompanyViewController {
                     "region": entityArea,
                     "pageIndex": pageIndex,
                     "pageSize": 20] as [String : Any]
-//        ViewHud.addLoadView()
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                         pageUrl: "/entity/v2/org-list",
                         method: .get) { [weak self] result in
-//            ViewHud.hideLoadView()
+            ViewHud.hideLoadView()
             self?.companyListView.tableView.mj_header?.endRefreshing()
             self?.companyListView.tableView.mj_footer?.endRefreshing()
             switch result {
