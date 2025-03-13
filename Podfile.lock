@@ -68,6 +68,7 @@ PODS:
   - RxSwift (6.6.0)
   - SAMKeychain (1.5.3)
   - SevenSwitch (2.1.0)
+  - SkeletonView (1.30.4)
   - SnapKit (5.7.1)
   - SwiftyJSON (5.0.2)
   - TagListView (1.4.1)
@@ -100,6 +101,7 @@ DEPENDENCIES:
   - RxSwift (~> 6.6.0)
   - SAMKeychain (~> 1.5.3)
   - SevenSwitch (~> 2.1.0)
+  - SkeletonView (~> 1.30.4)
   - SnapKit (~> 5.7.1)
   - SwiftyJSON (~> 5.0.2)
   - TagListView (~> 1.4.1)
@@ -138,6 +140,7 @@ SPEC REPOS:
     - RxSwift
     - SAMKeychain
     - SevenSwitch
+    - SkeletonView
     - SnapKit
     - SwiftyJSON
     - TagListView
@@ -176,6 +179,7 @@ SPEC CHECKSUMS:
   RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SevenSwitch: 5543327829b7bec5b29b73bad5f3cc3f92c1736d
+  SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
@@ -186,6 +190,6 @@ SPEC CHECKSUMS:
   WechatOpenSDK: 290989072e87b79d52225a01bb4e5e58f6f88593
   ZXSDK-Noidfa: f3cc8e4b6b4775df301489ae0792b727e193e7d3
 
-PODFILE CHECKSUM: 7ce9f5df8d854d8a680c9aac3b81bf7c3d475c51
+PODFILE CHECKSUM: f3d073bebc239f89df1b974b9fa880a42fda51d5
 
 COCOAPODS: 1.16.2

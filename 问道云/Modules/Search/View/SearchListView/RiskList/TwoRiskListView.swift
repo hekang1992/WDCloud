@@ -37,8 +37,8 @@ class TwoRiskListView: BaseView {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
-        tableView.register(TwoRiskListPeopleCell.self, forCellReuseIdentifier: "TwoRiskListPeopleCell")
         tableView.register(TwoRiskListCompanyCell.self, forCellReuseIdentifier: "TwoRiskListCompanyCell")
+        tableView.register(TwoRiskListPeopleCell.self, forCellReuseIdentifier: "TwoRiskListPeopleCell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
@@ -105,6 +105,16 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                 let model = dataModelArray.value?[indexPath.row]
                 model?.searchStr = self.searchWordsRelay.value ?? ""
                 cell?.model.accept(model)
+                cell?.focusBlock = { [weak self] in
+                    if let self = self, let model = model, let cell = cell {
+                        let followStatus = model.followStatus ?? ""
+                        if followStatus == "1" {
+                            addFocusInfo(from: model, cell: cell)
+                        }else {
+                            deleteFocusInfo(from: model, cell: cell)
+                        }
+                    }
+                }
                 return cell ?? UITableViewCell()
             }
         }else {
@@ -114,6 +124,16 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
             cell?.backgroundColor = .clear
             cell?.selectionStyle = .none
             cell?.model.accept(model)
+            cell?.focusBlock = { [weak self] in
+                if let self = self, let model = model, let cell = cell {
+                    let followStatus = model.followStatus ?? ""
+                    if followStatus == "1" {
+                        addFocusInfo(from: model, cell: cell)
+                    }else {
+                        deleteFocusInfo(from: model, cell: cell)
+                    }
+                }
+            }
             return cell ?? UITableViewCell()
         }
       
@@ -220,6 +240,66 @@ extension TwoRiskListView {
             make.right.equalToSuperview().offset(-10)
         }
         return headView
+    }
+    
+}
+
+extension TwoRiskListView {
+    
+    //添加关注
+    private func addFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        let dict = ["entityId": model.orgInfo?.orgId ?? "",
+                    "followTargetType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/add-or-cancel",
+                       method: .post) { result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.followStatus = "2"
+                    if let specificCell = cell as? TwoRiskListCompanyCell {
+                        specificCell.focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+                    }else if let otherCell = cell as? TwoCompanyNormalListCell {
+                        otherCell.focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+                    }
+                    ToastViewConfig.showToast(message: "关注成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //取消关注
+    private func deleteFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        let dict = ["entityId": model.orgInfo?.orgId ?? "",
+                    "followTargetType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/add-or-cancel",
+                       method: .post) { result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.followStatus = "1"
+                    if let specificCell = cell as? TwoRiskListCompanyCell {
+                        specificCell.focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+                    }else if let otherCell = cell as? TwoCompanyNormalListCell {
+                        otherCell.focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+                    }
+                    ToastViewConfig.showToast(message: "取消关注成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

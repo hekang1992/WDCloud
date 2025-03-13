@@ -87,6 +87,23 @@ class HomeVideoListViewController: WDBaseViewController {
         print("将要显示========讲堂")
     }
     
+}
+
+extension HomeVideoListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return nil
+    }
+    
+}
+
+/** 网络数据请求 */
+extension HomeVideoListViewController {
+    
     func getHomeVieoListInfo(from pageNum: Int) {
         let dict = ["pageNum": pageNum,
                     "pageSize": 10,
@@ -123,18 +140,6 @@ class HomeVideoListViewController: WDBaseViewController {
                 break
             }
         }
-    }
-    
-}
-
-extension HomeVideoListViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.01
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return nil
     }
     
 }

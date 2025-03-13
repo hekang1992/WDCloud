@@ -11,6 +11,8 @@ import TagListView
 
 class TwoRiskListCompanyCell: BaseViewCell {
     
+    var focusBlock: (() -> Void)?
+    
     //是否点击了展开是收起
     var companyModel = CompanyModel(isOpenTag: false)
     
@@ -97,6 +99,12 @@ class TwoRiskListCompanyCell: BaseViewCell {
         return moreBtn
     }()
     
+    lazy var focusBtn: UIButton = {
+        let focusBtn = UIButton(type: .custom)
+        focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+        return focusBtn
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(bgView)
@@ -110,6 +118,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
         contentView.addSubview(oneNumLabel)
         contentView.addSubview(twoNumLabel)
         contentView.addSubview(moreBtn)
+        contentView.addSubview(focusBtn)
         
         ctImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
@@ -181,6 +190,11 @@ class TwoRiskListCompanyCell: BaseViewCell {
             make.right.equalToSuperview().offset(-15)
             make.height.equalTo(16.5)
         }
+        focusBtn.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(13)
+            make.right.equalToSuperview().offset(-12)
+            make.height.equalTo(14)
+        }
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
@@ -188,7 +202,12 @@ class TwoRiskListCompanyCell: BaseViewCell {
             let companyName = model.orgInfo?.orgName ?? ""
             let logoColor = model.orgInfo?.logoColor ?? ""
             let logo = model.orgInfo?.logo ?? ""
-            
+            let followStatus = model.followStatus ?? ""
+            if followStatus == "1" {
+                focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+            }else {
+                focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+            }
             self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (32, 32), bgColor: UIColor.init(cssStr: logoColor)!))
             
             //匹配文字
@@ -208,6 +227,10 @@ class TwoRiskListCompanyCell: BaseViewCell {
             self.tagArray = tagArray
             setupScrollView(tagScrollView: tagListView, tagArray: tagArray)
             
+        }).disposed(by: disposeBag)
+        
+        focusBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.focusBlock?()
         }).disposed(by: disposeBag)
         
     }

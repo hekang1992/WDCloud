@@ -6,12 +6,13 @@
 //  企业搜索
 
 import UIKit
-import JXPagingView
-import RxRelay
-import DropMenuBar
-import MJRefresh
-import RxSwift
 import MapKit
+import RxRelay
+import RxSwift
+import MJRefresh
+import DropMenuBar
+import JXPagingView
+import SkeletonView
 
 class SearchCompanyViewController: WDBaseViewController {
         
@@ -227,6 +228,8 @@ extension SearchCompanyViewController {
                 guard let self = self else { return }
                 if !text.isEmpty {
                     self.pageIndex = 1
+                    self.companyView.isHidden = true
+                    self.companyListView.isHidden = false
                     self.searchListInfo()
                 }else {
                     self.pageIndex = 1
@@ -504,11 +507,11 @@ extension SearchCompanyViewController {
                     "region": entityArea,
                     "pageIndex": pageIndex,
                     "pageSize": 20] as [String : Any]
-        ViewHud.addLoadView()
+//        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                         pageUrl: "/entity/v2/org-list",
                         method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+//            ViewHud.hideLoadView()
             self?.companyListView.tableView.mj_header?.endRefreshing()
             self?.companyListView.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -540,6 +543,8 @@ extension SearchCompanyViewController {
                     self.companyListView.dataModel = model
                     self.companyListView.dataModelArray = self.allArray
                     self.companyListView.searchWordsRelay.accept(self.searchWordsRelay.value)
+                    self.companyListView.tableView.hideSkeleton()
+                    self.companyListView.tableView.reloadData()
                 }
                 break
             case .failure(_):

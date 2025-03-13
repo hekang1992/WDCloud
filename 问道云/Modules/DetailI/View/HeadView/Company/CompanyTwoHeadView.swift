@@ -20,8 +20,7 @@ class CompanyTwoHeadView: BaseView {
 //        return refreshBtn
 //    }()
     var model = BehaviorRelay<DataModel?>(value: nil)
-    var emailModel = BehaviorRelay<DataModel?>(value: nil)
-    
+    var emailModel: DataModel?
     lazy var oneBtn: UIButton = {
         let oneBtn = UIButton(type: .custom)
         oneBtn.setImage(UIImage(named: "dephoneicon"), for: .normal)
@@ -193,11 +192,34 @@ extension CompanyTwoHeadView {
     
     //获取电话信息
     private func getPhoneInfo() {
+        if let emailModel = self.emailModel {
+            self.popModel(from: emailModel)
+        }else {
+            let man = RequestManager()
+            let dict = ["orgId": model.value?.basicInfo?.orgId ?? ""]
+            man.requestAPI(params: dict,
+                           pageUrl: "/firminfo/v2/bus-reg-info/contact-info",
+                           method: .get) { result in
+                switch result {
+                case .success(let success):
+                    if success.code == 200 {
+                        if let model = success.data {
+                            self.emailModel = model
+                            self.popModel(from: model)
+                        }
+                    }
+                    break
+                case .failure(_):
+                    break
+                }
+            }
+        }
+    }
+    
+    private func popModel(from model: DataModel) {
         let phoneView = PopPhoneEmailView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 610))
         let alertVc = TYAlertController(alert: phoneView, preferredStyle: .actionSheet)!
-        if let model = self.emailModel.value {
-            phoneView.model.accept(model)
-        }
+        phoneView.model.accept(model)
         let vc = ViewControllerUtils.findViewController(from: self)
         vc?.present(alertVc, animated: true)
     }

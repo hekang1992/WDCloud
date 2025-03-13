@@ -194,6 +194,7 @@ extension WeekCompanyViewController: UITableViewDataSource, UITableViewDelegate 
     
 }
 
+/** 网络数据请求 */
 extension WeekCompanyViewController {
     
     func getCompanyInfo() {

@@ -47,28 +47,6 @@ class BindPhoneViewController: WDBaseViewController {
 
 extension BindPhoneViewController {
     
-    //获取验证码
-    func getCodeInfo() {
-        let man = RequestManager()
-        ViewHud.addLoadView()
-        let dict = ["phone": self.bindView.phoneTx.text ?? "", "sendType": "4"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/messageVerification/sendcode",
-                       method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                ToastViewConfig.showToast(message: success.msg ?? "")
-                bindView.sendCodeBtn.isEnabled = false
-                codeTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
     @objc func updateTime() {
         if codeTime > 0 {
             codeTime -= 1
@@ -84,6 +62,11 @@ extension BindPhoneViewController {
         self.bindView.sendCodeBtn.setTitle("Resend", for: .normal)
         codeTime = 60
     }
+
+}
+
+/** 网络数据请求 */
+extension BindPhoneViewController {
     
     //绑定手机号
     func bindPhone() {
@@ -112,6 +95,28 @@ extension BindPhoneViewController {
                     self.view.endEditing(true)
                     NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
                 }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //获取验证码
+    func getCodeInfo() {
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        let dict = ["phone": self.bindView.phoneTx.text ?? "", "sendType": "4"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/messageVerification/sendcode",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                ToastViewConfig.showToast(message: success.msg ?? "")
+                bindView.sendCodeBtn.isEnabled = false
+                codeTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
                 break
             case .failure(_):
                 break

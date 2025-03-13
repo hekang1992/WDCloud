@@ -194,6 +194,7 @@ extension MonthCompanyViewController: UITableViewDataSource, UITableViewDelegate
     
 }
 
+/** 网络数据请求 */
 extension MonthCompanyViewController {
     
     func getCompanyInfo() {

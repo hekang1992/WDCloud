@@ -16,7 +16,6 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
     
     //头部数据模型
     var model = BehaviorRelay<DataModel?>(value: nil)
-    var phoneEmailModel = BehaviorRelay<DataModel?>(value: nil)
     
     //风险模型
     var riskModel = BehaviorRelay<DataModel?>(value: nil)
@@ -295,14 +294,6 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             
         }).disposed(by: disposeBag)
         
-        
-        
-        phoneEmailModel
-            .asObservable()
-            .subscribe(onNext: { [weak self] model in
-            guard let self = self, let model = model else { return }
-            headView.twoHeadView.emailModel.accept(model)
-        }).disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {

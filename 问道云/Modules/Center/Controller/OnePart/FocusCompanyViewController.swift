@@ -191,6 +191,14 @@ class FocusCompanyViewController: WDBaseViewController {
             self.addNewGroup()
         }).disposed(by: disposeBag)
         
+        companyView.modelBlock = { [weak self] model in
+            guard let self = self else { return }
+            let detailVc = CompanyBothViewController()
+            detailVc.enityId.accept(model.entityid ?? "")
+            detailVc.companyName.accept(model.followtargetname ?? "")
+            navController?.pushViewController(detailVc, animated: true)
+        }
+        
         companyView.footerView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             let selectedDataids = companyView.selectedDataIds

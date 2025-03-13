@@ -965,7 +965,9 @@ class pageDataModel {
     var followStatus: String?//是否被关注 1 没有关注 2 被关注
     var orgInfo: orgInfoModel?
     var leaderVec: leaderVecModel?
+    var regAddr: regAddrModel?
     init(json: JSON) {
+        self.regAddr = regAddrModel(json: json["regAddr"])
         self.orgInfo = orgInfoModel(json: json["orgInfo"])
         self.followStatus = json["followStatus"].stringValue
         self.searchStr = json["searchStr"].stringValue
@@ -988,7 +990,9 @@ class orgInfoModel {
     var website: String?
     var regAddr: regAddrModel?
     var logoColor: String?
+    var usCreditCode: String?
     init(json: JSON) {
+        self.usCreditCode = json["usCreditCode"].stringValue
         self.logo = json["logo"].stringValue
         self.logoColor = json["logoColor"].stringValue
         self.incDate = json["incDate"].stringValue

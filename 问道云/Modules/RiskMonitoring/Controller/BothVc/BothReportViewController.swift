@@ -143,7 +143,7 @@ extension BothReportViewController: JXSegmentedListContainerViewListDelegate, JX
     
 }
 
-
+/** 网络数据请求 */
 extension BothReportViewController {
     
     private func getNumInfo() {

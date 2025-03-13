@@ -119,6 +119,7 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
     
 }
 
+/** 网络数据请求 */
 extension ComanyRiskMoreDetailViewController {
     
     private func getDetailInfo() {

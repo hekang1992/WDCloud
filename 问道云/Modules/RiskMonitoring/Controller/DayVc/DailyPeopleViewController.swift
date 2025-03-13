@@ -195,6 +195,7 @@ extension DailyPeopleViewController: UITableViewDataSource, UITableViewDelegate 
     
 }
 
+/** 网络数据请求 */
 extension DailyPeopleViewController {
     
     func getPeopleInfo() {

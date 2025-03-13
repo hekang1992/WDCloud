@@ -193,6 +193,7 @@ extension DailyCompanyViewController: UITableViewDataSource, UITableViewDelegate
     
 }
 
+/** 网络数据请求 */
 extension DailyCompanyViewController {
     
     func getCompanyInfo() {

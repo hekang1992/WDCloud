@@ -99,34 +99,11 @@ class CompanyDetailViewController: WDBaseViewController {
         getCompanyHeadInfo()
         //获取风险动态
         getCompanyRiskInfo()
-        //获取电话,官网,公众号,邮箱,地址信息
-        getBasePhoneInfo()
     }
     
 }
 
 extension CompanyDetailViewController {
-    
-    //获取电话,官网,公众号,邮箱,地址信息
-    private func getBasePhoneInfo() {
-        let man = RequestManager()
-        let dict = ["orgId": enityId]
-        man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/v2/bus-reg-info/contact-info",
-                       method: .get) { result in
-            switch result {
-            case .success(let success):
-                if success.code == 200 {
-                    if let model = success.data {
-                        self.companyDetailView.phoneEmailModel.accept(model)
-                    }
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
     
     //获取企业详情item
     private func getCompanyDetailItemInfo() {

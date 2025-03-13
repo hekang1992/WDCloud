@@ -451,6 +451,7 @@ class PeopleMySelfRiskViewController: WDBaseViewController {
     
 }
 
+/** 网络数据请求 */
 extension PeopleMySelfRiskViewController {
     
     //显示和隐藏

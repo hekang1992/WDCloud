@@ -10,7 +10,7 @@ import RxRelay
 
 class SearchInvoiceCell: BaseViewCell {
     
-    var model = BehaviorRelay<rowsModel?>(value: nil)
+    var model = BehaviorRelay<pageDataModel?>(value: nil)
 
     lazy var iconImageView: UIImageView = {
         let iconImageView = UIImageView()
@@ -59,8 +59,9 @@ class SearchInvoiceCell: BaseViewCell {
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            iconImageView.image = UIImage.imageOfText(model.entityName ?? "", size: (40, 40), cornerRadius: 4)
-            mlabel.text = model.entityName ?? ""
+            let logoColor = model.orgInfo?.logoColor ?? ""
+            iconImageView.image = UIImage.imageOfText(model.orgInfo?.orgName ?? "", size: (40, 40), bgColor: UIColor.init(cssStr: logoColor)!)
+            mlabel.text = model.orgInfo?.orgName ?? ""
         }).disposed(by: disposeBag)
     }
     

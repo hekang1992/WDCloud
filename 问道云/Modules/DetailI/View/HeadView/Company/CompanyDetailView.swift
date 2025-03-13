@@ -38,9 +38,6 @@ class CompanyDetailView: BaseView {
     
     var headHeight: Double = 906
     
-    //电话邮箱地址弹窗
-    var phoneEmailModel = BehaviorRelay<DataModel?>(value: nil)
-    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -239,7 +236,6 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
         }
         if indexPath.section == 0 {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MyCollectionSpecialReusableView.identifier, for: indexPath) as! MyCollectionSpecialReusableView
-#warning("待定======点击小标签刷新头部高度")
             headerView.headView.moreClickBlcok = { model in
                 if model.isOpenTag {
                     self.headHeight = 921
@@ -257,9 +253,6 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
             }
             if let riskModel = self.riskModel.value {
                 headerView.riskModel.accept(riskModel)
-            }
-            if let phoneEmailModel = self.phoneEmailModel.value {
-                headerView.phoneEmailModel.accept(phoneEmailModel)
             }
             return headerView
         }else {

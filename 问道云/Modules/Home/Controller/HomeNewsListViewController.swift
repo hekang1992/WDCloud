@@ -90,6 +90,22 @@ class HomeNewsListViewController: WDBaseViewController {
         super.viewWillAppear(animated)
         print("将要显示========头条")
     }
+}
+
+extension HomeNewsListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return nil
+    }
+    
+}
+
+/** 网络数据请求 */
+extension HomeNewsListViewController {
     
     func getHomeNewsInfo(from pageNum: Int) {
         let dict = ["pageNum": pageNum,
@@ -127,18 +143,6 @@ class HomeNewsListViewController: WDBaseViewController {
                 break
             }
         }
-    }
-    
-}
-
-extension HomeNewsListViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.01
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return nil
     }
     
 }

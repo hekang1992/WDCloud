@@ -53,27 +53,6 @@ extension ForgetPasswordViewController {
         }).disposed(by: disposeBag)
     }
     
-    func getCodeInfo() {
-        let man = RequestManager()
-        ViewHud.addLoadView()
-        let dict = ["phone": self.forgetView.phoneTx.text ?? "", "sendType": "2"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/messageVerification/sendcode",
-                       method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                ToastViewConfig.showToast(message: success.msg ?? "")
-                forgetView.sendCodeBtn.isEnabled = false
-                codeTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
     @objc func updateTime() {
         if codeTime > 0 {
             codeTime -= 1
@@ -89,6 +68,11 @@ extension ForgetPasswordViewController {
         self.forgetView.sendCodeBtn.setTitle("Resend", for: .normal)
         codeTime = 60
     }
+    
+}
+
+/** 网络数据请求 */
+extension ForgetPasswordViewController {
     
     func submitPasswordInfo() {
         let man = RequestManager()
@@ -110,4 +94,26 @@ extension ForgetPasswordViewController {
             }
         }
     }
+    
+    func getCodeInfo() {
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        let dict = ["phone": self.forgetView.phoneTx.text ?? "", "sendType": "2"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/messageVerification/sendcode",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                ToastViewConfig.showToast(message: success.msg ?? "")
+                forgetView.sendCodeBtn.isEnabled = false
+                codeTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
 }

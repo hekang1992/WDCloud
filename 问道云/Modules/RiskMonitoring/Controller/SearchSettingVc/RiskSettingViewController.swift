@@ -156,6 +156,7 @@ class RiskSettingViewController: WDBaseViewController {
 
 }
 
+/** 网络数据请求 */
 extension RiskSettingViewController {
     
     private func getVipInfo() {

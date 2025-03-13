@@ -194,6 +194,7 @@ extension BothCompanyViewController: UITableViewDataSource, UITableViewDelegate 
     
 }
 
+/** 网络数据请求 */
 extension BothCompanyViewController {
     
     func getCompanyInfo() {

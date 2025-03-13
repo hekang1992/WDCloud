@@ -62,6 +62,10 @@ extension PasswordLoginViewController {
             self?.loginInfo()
         }).disposed(by: disposeBag)
     }
+}
+
+/** 网络数据请求 */
+extension PasswordLoginViewController {
     
     //密码登录
     func loginInfo() {

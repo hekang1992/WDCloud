@@ -12,6 +12,8 @@ import RxGesture
 
 class AddInvoiceViewController: WDBaseViewController {
     
+    private var man = RequestManager()
+    
     lazy var model1 = DescModel(title: "名称", descTitle: "单位名称（必填）")
     lazy var model2 = DescModel(title: "税号", descTitle: "15-20位数字和字母（必填）")
     lazy var model3 = DescModel(title: "地址", descTitle: "单位地址信息")
@@ -30,7 +32,7 @@ class AddInvoiceViewController: WDBaseViewController {
     var searchStr = BehaviorRelay<String>(value: "")
     
     //返回的搜索数组
-    var modelArray = BehaviorRelay<[rowsModel]>(value: [])
+    var modelArray = BehaviorRelay<[pageDataModel]>(value: [])
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .none)
@@ -98,7 +100,8 @@ class AddInvoiceViewController: WDBaseViewController {
         }
         
         self.searchStr
-            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(800),
+                      scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .filter { !$0.isEmpty }
             .subscribe(onNext: { [weak self] text in
@@ -114,12 +117,13 @@ class AddInvoiceViewController: WDBaseViewController {
             cell.selectionStyle = .none
         }.disposed(by: disposeBag)
         
-        tableView.rx.modelSelected(rowsModel.self).subscribe(onNext: { [weak self] model in
-            self?.tableView.isHidden = true
-            self?.addView.modelArray.value[0].text.accept(model.entityName ?? "")
-            self?.addView.modelArray.value[1].text.accept(model.usCreditCode ?? "")
-            self?.addView.modelArray.value[2].text.accept(model.registerAddress ?? "")
-            self?.addView.modelArray.value[3].text.accept(model.phone ?? "")
+        tableView.rx.modelSelected(pageDataModel.self).subscribe(onNext: { [weak self] model in
+            guard let self = self else { return }
+            self.tableView.isHidden = true
+            self.addView.modelArray.value[0].text.accept(model.orgInfo?.orgName ?? "")
+            self.addView.modelArray.value[1].text.accept(model.orgInfo?.usCreditCode ?? "")
+            self.addView.modelArray.value[2].text.accept(model.regAddr?.content ?? "")
+            self.addView.modelArray.value[3].text.accept(model.orgInfo?.phone ?? "")
         }).disposed(by: disposeBag)
         
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
@@ -154,18 +158,20 @@ extension AddInvoiceViewController: UITableViewDelegate {
     
     //搜索公司税务信息
     func searchInfo(from searchStr: String) {
-        let dict = ["keywords": searchStr]
-        let man = RequestManager()
+        let dict = ["keyword": searchStr,
+                    "matchType": "1",
+                    "queryBoss": false,
+                    "pageSize": 20] as [String : Any]
         ViewHud.addLoadView()
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/entity/search",
+                       pageUrl: "/entity/v2/org-list",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
             switch result {
             case .success(let success):
-                if let data = success.datas, data.count > 0 {
+                if let model = success.data, let pageData = model.pageData, pageData.count > 0 {
                     self?.tableView.isHidden = false
-                    self?.modelArray.accept(data)
+                    self?.modelArray.accept(pageData)
                 }else {
                     self?.tableView.isHidden = true
                     self?.modelArray.accept([])

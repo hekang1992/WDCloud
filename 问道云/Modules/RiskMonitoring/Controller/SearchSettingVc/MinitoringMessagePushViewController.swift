@@ -399,29 +399,6 @@ class MinitoringMessagePushViewController: WDBaseViewController {
 
 extension MinitoringMessagePushViewController {
     
-    //获取用户监控设置
-    func getUserSettingInfo() {
-        ViewHud.addLoadView()
-        let man = RequestManager()
-        let dict = [String: Any]()
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/monitor-config/getRiskMonitorConfig",
-                       method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
-            switch result {
-            case .success(let success):
-                if success.code == 200 {
-                    if let self = self, let model = success.data {
-                        refreshUI(from: model)
-                    }
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
     func refreshUI(from model: DataModel) {
         let startTime = formatTimeString(model.startTime ?? "", from: "HH:mm:ss", to: "HH:mm")
         let endTime = formatTimeString(model.endTime ?? "", from: "HH:mm:ss", to: "HH:mm")
@@ -532,4 +509,31 @@ extension MinitoringMessagePushViewController {
     }
 
     
+}
+
+/** 网络数据请求*/
+extension MinitoringMessagePushViewController {
+    
+    //获取用户监控设置
+    func getUserSettingInfo() {
+        ViewHud.addLoadView()
+        let man = RequestManager()
+        let dict = [String: Any]()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-config/getRiskMonitorConfig",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    if let self = self, let model = success.data {
+                        refreshUI(from: model)
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
 }

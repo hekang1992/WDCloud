@@ -76,6 +76,17 @@ extension WDLoginViewController {
         self.navigationController?.pushViewController(passwordVc, animated: true)
     }
     
+    func pushCodeVc() {
+        let codeVc = GetCodeViewController()
+        codeVc.phoneStr = self.loginView.phoneTx.text ?? ""
+        self.navigationController?.pushViewController(codeVc, animated: true)
+    }
+    
+}
+
+/** 网络数据请求 */
+extension WDLoginViewController {
+    
     //获取验证码
     func getCodeInfo() {
         let man = RequestManager()
@@ -96,16 +107,6 @@ extension WDLoginViewController {
             }
         }
     }
-    
-    func pushCodeVc() {
-        let codeVc = GetCodeViewController()
-        codeVc.phoneStr = self.loginView.phoneTx.text ?? ""
-        self.navigationController?.pushViewController(codeVc, animated: true)
-    }
-    
-}
-
-extension WDLoginViewController {
     
     private func oneLogin() {
         //        let manager = NTESQuickLoginManager.sharedInstance()

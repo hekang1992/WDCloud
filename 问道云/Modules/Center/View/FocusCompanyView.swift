@@ -30,6 +30,8 @@ import RxDataSources
 
 class FocusCompanyView: BaseView {
     
+    var modelBlock: ((customerFollowListModel) -> Void)?
+    
     var isSectionCollapsed: [Bool] = []
     
     var dataModel = BehaviorRelay<DataModel?>(value: nil)
@@ -369,12 +371,9 @@ extension FocusCompanyView: UITableViewDelegate, UITableViewDataSource {
                 self.footerView.allBtn.setImage(UIImage(named: "Checkb_sel"), for: .normal)
             }
         }else {
-            let vc = ViewControllerUtils.findViewController(from: self)
-            let model = self.modelArray.value[indexPath.section].customerFollowList?[indexPath.row]
-            let detailVc = CompanyBothViewController()
-            detailVc.enityId.accept(model?.entityid ?? "")
-            detailVc.companyName.accept(model?.followtargetname ?? "")
-            vc?.navigationController?.pushViewController(detailVc, animated: true)
+            if let model = self.modelArray.value[indexPath.section].customerFollowList?[indexPath.row] {
+                self.modelBlock?(model)
+            }
         }
     }
     

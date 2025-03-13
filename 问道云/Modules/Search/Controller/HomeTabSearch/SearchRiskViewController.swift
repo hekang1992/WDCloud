@@ -33,7 +33,7 @@ class SearchRiskViewController: WDBaseViewController {
     //人员搜索参数
     var entityPeopleArea: String = ""//公司时候的地区
     var entityPeopleIndustry: String = ""//公司时候的行业
-    var allPeopleArray: [itemsModel] = []//公司时候加载更多
+    var allPeopleArray: [itemsModel] = []//人员时候加载更多
     
     //被搜索的关键词
     var searchWordsRelay = BehaviorRelay<String>(value: "")
@@ -166,14 +166,14 @@ class SearchRiskViewController: WDBaseViewController {
         })
         
         //添加下拉刷新人员
-        self.twoRiskListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+        self.listPeopleView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.pageIndex = 1
             self.searchPeopleListinfo()
         })
         
         //添加上拉加载更多人员
-        self.twoRiskListView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+        self.listPeopleView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.searchPeopleListinfo()
         })
@@ -230,8 +230,10 @@ class SearchRiskViewController: WDBaseViewController {
 //数据请求
 extension SearchRiskViewController {
     
+    
+    
+    //搜索
     private func getDataInfo() {
-        //搜索
         self.searchWordsRelay
             .debounce(.milliseconds(500),
                       scheduler: MainScheduler.instance)
@@ -528,11 +530,11 @@ extension SearchRiskViewController {
                     "pageSize": 20,
                     "type": "1"] as [String : Any]
         let man = RequestManager()
-        ViewHud.addLoadView()
+//        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/getRiskData",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+//            ViewHud.hideLoadView()
             self?.twoRiskListView.tableView.mj_header?.endRefreshing()
             self?.twoRiskListView.tableView.mj_footer?.endRefreshing()
             switch result {

@@ -182,86 +182,7 @@ extension SearchMonitoringViewController: UITextFieldDelegate {
         getListInfo()
         return true
     }
-    
-    private func getListInfo() {
-        self.pageNum = 1
-        getSearchListInfo(from: self.searchTx.text ?? "")
-    }
-    
-    //搜索监控列表
-    private func getSearchListInfo(from targetStr: String) {
-        let dict = ["entityName": targetStr,
-                    "pageNum": pageNum,
-                    "pageSize": 20] as [String : Any]
-        let man = RequestManager()
-        ViewHud.addLoadView()
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/monitortarget/riskInquiryEntity",
-                       method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
-            self?.tableView.mj_header?.endRefreshing()
-            self?.tableView.mj_footer?.endRefreshing()
-            switch result {
-            case .success(let success):
-                if let self = self,
-                   let model = success.data,
-                   let code = success.code,
-                   code == 200,
-                   let total = model.total {
-                    if pageNum == 1 {
-                        pageNum = 1
-                        self.allArray.removeAll()
-                    }
-                    pageNum += 1
-                    let pageData = model.rows ?? []
-                    self.allArray.append(contentsOf: pageData)
-                    if total != 0 {
-                        self.tableView.isHidden = false
-                        self.descImageView.isHidden = true
-                        self.emptyView.removeFromSuperview()
-                        self.noNetView.removeFromSuperview()
-                    }else {
-                        self.tableView.isHidden = true
-                        self.descImageView.isHidden = false
-                        self.addNodataView(from: self.tableView)
-                    }
-                    if self.allArray.count != total {
-                        self.tableView.mj_footer?.isHidden = false
-                    }else {
-                        self.tableView.mj_footer?.isHidden = true
-                    }
-                    self.tableView.reloadData()
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
-    //查询监控分组
-    func getMonitoringGroupInfo(complete: @escaping () -> Void) {
-        let man = RequestManager()
-        ViewHud.addLoadView()
-        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
-        let dict = ["customernumber": customernumber]
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/monitorgroup/selectMonitorGroup",
-                       method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
-            switch result {
-            case .success(let success):
-                if let model = success.data {
-                    self?.groupArray = model.rows ?? []
-                }
-                break
-            case .failure(_):
-                break
-            }
-            complete()
-        }
-    }
-    
+
 }
 
 extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSource {
@@ -341,6 +262,90 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
             })
         }
         self.present(alertVc, animated: true)
+    }
+    
+}
+
+/** 网络数据请求*/
+extension SearchMonitoringViewController {
+    
+    private func getListInfo() {
+        self.pageNum = 1
+        getSearchListInfo(from: self.searchTx.text ?? "")
+    }
+    
+    //搜索监控列表
+    private func getSearchListInfo(from targetStr: String) {
+        let dict = ["entityName": targetStr,
+                    "pageNum": pageNum,
+                    "pageSize": 20] as [String : Any]
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitortarget/riskInquiryEntity",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            self?.tableView.mj_header?.endRefreshing()
+            self?.tableView.mj_footer?.endRefreshing()
+            switch result {
+            case .success(let success):
+                if let self = self,
+                   let model = success.data,
+                   let code = success.code,
+                   code == 200,
+                   let total = model.total {
+                    if pageNum == 1 {
+                        pageNum = 1
+                        self.allArray.removeAll()
+                    }
+                    pageNum += 1
+                    let pageData = model.rows ?? []
+                    self.allArray.append(contentsOf: pageData)
+                    if total != 0 {
+                        self.tableView.isHidden = false
+                        self.descImageView.isHidden = true
+                        self.emptyView.removeFromSuperview()
+                        self.noNetView.removeFromSuperview()
+                    }else {
+                        self.tableView.isHidden = true
+                        self.descImageView.isHidden = false
+                        self.addNodataView(from: self.tableView)
+                    }
+                    if self.allArray.count != total {
+                        self.tableView.mj_footer?.isHidden = false
+                    }else {
+                        self.tableView.mj_footer?.isHidden = true
+                    }
+                    self.tableView.reloadData()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //查询监控分组
+    func getMonitoringGroupInfo(complete: @escaping () -> Void) {
+        let man = RequestManager()
+        ViewHud.addLoadView()
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let dict = ["customernumber": customernumber]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitorgroup/selectMonitorGroup",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    self?.groupArray = model.rows ?? []
+                }
+                break
+            case .failure(_):
+                break
+            }
+            complete()
+        }
     }
     
     //添加企业监控
@@ -448,5 +453,5 @@ extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSo
         }
         self.present(alertVc, animated: true)
     }
+    
 }
-

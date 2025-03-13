@@ -143,7 +143,7 @@ extension DailyReportViewController: JXSegmentedListContainerViewListDelegate, J
     
 }
 
-
+/** 网络数据请求 */
 extension DailyReportViewController {
     
     private func getNumInfo() {

@@ -194,6 +194,7 @@ extension BothPeopleViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
+/** 网络数据请求 */
 extension BothPeopleViewController {
     
     func getPeopleInfo() {

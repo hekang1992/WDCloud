@@ -50,7 +50,6 @@ class GetCodeViewController: WDBaseViewController {
 
 extension GetCodeViewController {
     
-    
     @objc func updateTime() {
         if codeTime > 0 {
             codeTime -= 1
@@ -66,6 +65,10 @@ extension GetCodeViewController {
         self.codeView.resendBtn.setTitle("Resend", for: .normal)
         codeTime = 60
     }
+}
+
+/** 网络数据请求 */
+extension GetCodeViewController {
     
     //获取验证码
     func getCodeInfo() {

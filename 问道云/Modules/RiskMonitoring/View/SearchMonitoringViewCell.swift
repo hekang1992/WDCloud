@@ -112,7 +112,7 @@ class SearchMonitoringViewCell: BaseViewCell {
         }
         menuBtn.snp.makeConstraints { make in
             make.centerY.equalTo(ctImageView.snp.centerY)
-            make.size.equalTo(CGSize(width: 62, height: 18))
+            make.size.equalTo(CGSize(width: 62.pix(), height: 18))
             make.right.equalTo(addBtn.snp.left).offset(-5)
         }
         stackView.snp.makeConstraints { make in

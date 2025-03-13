@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import SkeletonView
 
 class TwoCompanyView: BaseView {
     
@@ -25,11 +26,7 @@ class TwoCompanyView: BaseView {
     
     var dataModel: DataModel?
     
-    var dataModelArray: [pageDataModel]? {
-        didSet {
-            self.tableView.reloadData()
-        }
-    }
+    var dataModelArray: [pageDataModel]?
     
     //被搜索的文字,根据这个文字,去给cell的namelabel加上颜色
     var searchWordsRelay = BehaviorRelay<String?>(value: nil)
@@ -72,6 +69,15 @@ class TwoCompanyView: BaseView {
             make.top.equalToSuperview().offset(32)
             make.left.right.bottom.equalToSuperview()
         }
+        
+        let gradient = SkeletonGradient(baseColor: UIColor.midnightBlue)
+
+        let animation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .leftRight)
+        tableView.showAnimatedGradientSkeleton(usingGradient: gradient, animation: animation)
+        
+        print("检查骨架屏是否激活========\(tableView.sk.isSkeletonActive)")
+        print("检查是否支持骨架屏=========\(tableView.isSkeletonable)")
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -113,12 +119,14 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyHeadPeopleCell") as? TwoCompanyHeadPeopleCell
                 cell?.selectionStyle = .none
                 cell?.modelArray = pageDataModel
+                cell?.isSkeletonable = true
                 return cell ?? UITableViewCell()
             }else {
                 let pageDataModel = self.dataModelArray?[indexPath.row]
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
                 pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
                 cell?.selectionStyle = .none
+                cell?.isSkeletonable = true
                 cell?.model.accept(pageDataModel)
                 cell?.addressBlock = { [weak self] model in
                     self?.addressBlock?(model)
@@ -144,6 +152,7 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
             pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
             cell?.backgroundColor = .clear
+            cell?.isSkeletonable = true
             cell?.selectionStyle = .none
             cell?.model.accept(pageDataModel)
             cell?.addressBlock = { [weak self] model in
@@ -366,5 +375,16 @@ extension TwoCompanyView {
                 break
             }
         }
+    }
+}
+
+// MARK: - SkeletonTableViewDataSource
+extension TwoCompanyView: SkeletonTableViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "TwoCompanyNormalListCell"
+    }
+
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
     }
 }

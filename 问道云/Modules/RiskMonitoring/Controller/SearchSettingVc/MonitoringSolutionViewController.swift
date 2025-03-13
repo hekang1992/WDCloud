@@ -155,28 +155,6 @@ class MonitoringSolutionViewController: WDBaseViewController {
         getUserSettingInfo()
     }
     
-    //更新监控方案
-    private func updateInfo(from listArray: [String]) {
-        let liststr = listArray.joined()
-        let man = RequestManager()
-        let dict = ["pushOffset": liststr]
-        ViewHud.addLoadView()
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/monitor-config/updateRiskMonitorConfig",
-                       method: .post) { result in
-            ViewHud.hideLoadView()
-            switch result {
-            case .success(let success):
-                if success.code == 200 {
-                    ToastViewConfig.showToast(message: "更新监控方案成功")
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
 }
 
 extension MonitoringSolutionViewController: UITableViewDelegate, UITableViewDataSource {
@@ -338,7 +316,31 @@ extension MonitoringSolutionViewController: UITableViewDelegate, UITableViewData
     
 }
 
+/** 网络数据请求*/
 extension MonitoringSolutionViewController {
+    
+    //更新监控方案
+    private func updateInfo(from listArray: [String]) {
+        let liststr = listArray.joined()
+        let man = RequestManager()
+        let dict = ["pushOffset": liststr]
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-config/updateRiskMonitorConfig",
+                       method: .post) { result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    ToastViewConfig.showToast(message: "更新监控方案成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
     
     private func getUserSettingInfo() {
         let dict = [String: Any]()

@@ -194,6 +194,7 @@ extension MonthPeopleViewController: UITableViewDataSource, UITableViewDelegate 
     
 }
 
+/** 网络数据请求 */
 extension MonthPeopleViewController {
     
     func getPeopleInfo() {

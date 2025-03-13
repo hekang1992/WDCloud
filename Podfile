@@ -66,4 +66,6 @@ target '问道云' do
   
   pod 'GTExtensionSDK', "~> 3.0.3"
   
+  pod 'SkeletonView', '~> 1.30.4'
+  
 end
