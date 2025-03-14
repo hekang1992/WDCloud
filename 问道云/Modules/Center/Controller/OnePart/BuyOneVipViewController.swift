@@ -277,6 +277,7 @@ extension BuyOneVipViewController {
                 let code = success.code ?? 0
                 if code == 200 {
                     self?.refreshBlock?()
+                    self?.navigationController?.popViewController(animated: true)
                     ToastViewConfig.showToast(message: "监控成功")
                 }
                 break
@@ -307,6 +308,7 @@ extension BuyOneVipViewController {
                 let code = success.code ?? 0
                 if code == 200 {
                     self?.refreshBlock?()
+                    self?.navigationController?.popViewController(animated: true)
                     ToastViewConfig.showToast(message: "监控成功")
                 }
                 break

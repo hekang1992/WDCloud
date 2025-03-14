@@ -30,7 +30,7 @@ class DiligenceListViewController: WDBaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .white
         view.addSubview(oneImageView)
         view.addSubview(twoImageView)
         view.addSubview(threeImageView)

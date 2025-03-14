@@ -6,12 +6,12 @@
 //
 
 import UIKit
-import JXSegmentedView
-import MJRefresh
-import RxRelay
-import TYAlertController
-import SwiftyJSON
 import RxSwift
+import RxRelay
+import MJRefresh
+import SwiftyJSON
+import JXSegmentedView
+import TYAlertController
 
 class DailyPeopleViewController: WDBaseViewController {
     
@@ -73,6 +73,11 @@ class DailyPeopleViewController: WDBaseViewController {
             getGroupInfo()
             getPeopleInfo()
         })
+        dailyView.tableView.isSkeletonable = true
+        dailyView.tableView.showAnimatedGradientSkeleton()
+        
+        print("检查骨架屏是否激活========\(dailyView.tableView.sk.isSkeletonActive)")
+        print("检查是否支持骨架屏=========\(dailyView.tableView.isSkeletonable)")
         
     }
     
@@ -241,6 +246,7 @@ extension DailyPeopleViewController {
                         }else {
                             self.dailyView.tableView.mj_footer?.isHidden = true
                         }
+                        self.dailyView.tableView.hideSkeleton()
                         self.dailyView.tableView.reloadData()
                     }
                 }

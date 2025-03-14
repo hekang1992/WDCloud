@@ -73,6 +73,8 @@ class MonthCompanyViewController: WDBaseViewController {
             getCompanyInfo()
         })
         
+        dailyView.tableView.isSkeletonable = true
+        dailyView.tableView.showAnimatedGradientSkeleton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -240,6 +242,7 @@ extension MonthCompanyViewController {
                         }else {
                             self.dailyView.tableView.mj_footer?.isHidden = true
                         }
+                        self.dailyView.tableView.hideSkeleton()
                         self.dailyView.tableView.reloadData()
                     }
                 }

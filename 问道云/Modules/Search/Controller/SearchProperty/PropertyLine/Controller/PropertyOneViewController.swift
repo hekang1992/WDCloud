@@ -19,7 +19,7 @@ class PropertyOneViewController: WDBaseViewController {
     
     var segmentedView: JXSegmentedView!
     
-    let titles = ["企业", "人员"]
+    let titles = ["企业", "自然人"]
     
     var JXTableHeaderViewHeight: Int = Int(StatusHeightManager.navigationBarHeight + 50)
     
@@ -123,10 +123,10 @@ extension PropertyOneViewController: JXPagingViewDelegate, JXSegmentedViewDelega
         segmentedViewDataSource = JXSegmentedTitleDataSource()
         segmentedViewDataSource.titles = titles
         segmentedViewDataSource.isTitleColorGradientEnabled = true
-        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#547AFF")!
-        segmentedViewDataSource.titleNormalColor = UIColor.init(cssStr: "#666666")!
-        segmentedViewDataSource.titleNormalFont = UIFont.mediumFontOfSize(size: 15)
-        segmentedViewDataSource.titleSelectedFont = UIFont.mediumFontOfSize(size: 15)
+        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#333333")!
+        segmentedViewDataSource.titleNormalColor = UIColor.init(cssStr: "#9FA4AD")!
+        segmentedViewDataSource.titleNormalFont = .regularFontOfSize(size: 15)
+        segmentedViewDataSource.titleSelectedFont = .mediumFontOfSize(size: 15)
         
         //指示器和指示器颜色
         segmentedView = JXSegmentedView(frame: CGRect(x: 0, y: 100, width: SCREEN_WIDTH, height: CGFloat(JXheightForHeaderInSection)))
@@ -135,7 +135,7 @@ extension PropertyOneViewController: JXPagingViewDelegate, JXSegmentedViewDelega
         segmentedView.dataSource = segmentedViewDataSource
         segmentedView.defaultSelectedIndex = selectIndex
         let lineView = JXSegmentedIndicatorLineView()
-        lineView.indicatorColor = UIColor.init(cssStr: "#547AFF ")!
+        lineView.indicatorColor = UIColor.init(cssStr: "#547AFF")!
         lineView.indicatorWidth = 18
         lineView.indicatorHeight = 3
         segmentedView.indicators = [lineView]
@@ -176,10 +176,8 @@ extension PropertyOneViewController: JXPagingViewDelegate, JXSegmentedViewDelega
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
-            
             return companyVc
         }else{
-            
             return peopleVc
         }
     }

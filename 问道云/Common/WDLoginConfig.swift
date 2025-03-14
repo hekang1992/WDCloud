@@ -39,7 +39,6 @@ class WDLoginConfig: NSObject {
         UserDefaults.standard.setValue("", forKey: WDY_SESSIONID)
         UserDefaults.standard.setValue("", forKey: WDY_CUSTOMERNUMBER)
         UserDefaults.standard.setValue("", forKey: WDY_USER_ID)
-        UserDefaults.standard.setValue("", forKey: CLICK_PRIVACY)
         UserDefaults.standard.synchronize()
     }
     

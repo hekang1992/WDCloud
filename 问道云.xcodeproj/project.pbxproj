@@ -227,6 +227,7 @@
 		739DCA262D671B45009CFC78 /* MyOneSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA252D671B45009CFC78 /* MyOneSettingViewController.swift */; };
 		739DCA282D671B4E009CFC78 /* MyTwoSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA272D671B4E009CFC78 /* MyTwoSettingViewController.swift */; };
 		739DCA2B2D67362B009CFC78 /* MyPropertySettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA2A2D67362B009CFC78 /* MyPropertySettingCell.swift */; };
+		73A0509B2D83CCA700208602 /* PropertyListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */; };
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
 		73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE02D0C06E700FC4C49 /* SettingView.swift */; };
 		73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */; };
@@ -616,6 +617,7 @@
 		739DCA252D671B45009CFC78 /* MyOneSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOneSettingViewController.swift; sourceTree = "<group>"; };
 		739DCA272D671B4E009CFC78 /* MyTwoSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTwoSettingViewController.swift; sourceTree = "<group>"; };
 		739DCA2A2D67362B009CFC78 /* MyPropertySettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPropertySettingCell.swift; sourceTree = "<group>"; };
+		73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListViewCell.swift; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		73A21DE02D0C06E700FC4C49 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
@@ -1381,38 +1383,36 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		739DCA022D66D24E009CFC78 /* 查财产 */ = {
+		739DCA022D66D24E009CFC78 /* SearchProperty */ = {
 			isa = PBXGroup;
 			children = (
 				739DCA032D66DF6F009CFC78 /* PropertyTabBarController.swift */,
-				739DCA112D670CDC009CFC78 /* 财产线索 */,
-				739DCA122D670CF2009CFC78 /* 线索监控 */,
-				739DCA142D670D03009CFC78 /* 监控列表 */,
-				739DCA132D670D01009CFC78 /* 我的 */,
+				739DCA112D670CDC009CFC78 /* PropertyLine */,
+				739DCA122D670CF2009CFC78 /* PropertyMonitoring */,
+				739DCA142D670D03009CFC78 /* MonitoringList */,
+				739DCA132D670D01009CFC78 /* PropertyCenter */,
 			);
-			path = "查财产";
+			path = SearchProperty;
 			sourceTree = "<group>";
 		};
-		739DCA112D670CDC009CFC78 /* 财产线索 */ = {
+		739DCA112D670CDC009CFC78 /* PropertyLine */ = {
 			isa = PBXGroup;
 			children = (
-				73090B6E2D82DE7900041457 /* PropertyHeadView.swift */,
-				739DCA052D66E001009CFC78 /* PropertyOneViewController.swift */,
-				739DCA0D2D66FAA1009CFC78 /* PropertyCompanyViewController.swift */,
-				739DCA0F2D66FAAB009CFC78 /* PropertyPeopleViewController.swift */,
+				73A050992D83CC7400208602 /* View */,
+				73A050982D83CC7200208602 /* Controller */,
 			);
-			path = "财产线索";
+			path = PropertyLine;
 			sourceTree = "<group>";
 		};
-		739DCA122D670CF2009CFC78 /* 线索监控 */ = {
+		739DCA122D670CF2009CFC78 /* PropertyMonitoring */ = {
 			isa = PBXGroup;
 			children = (
 				739DCA072D66E009009CFC78 /* PropertyTwoViewController.swift */,
 			);
-			path = "线索监控";
+			path = PropertyMonitoring;
 			sourceTree = "<group>";
 		};
-		739DCA132D670D01009CFC78 /* 我的 */ = {
+		739DCA132D670D01009CFC78 /* PropertyCenter */ = {
 			isa = PBXGroup;
 			children = (
 				739DCA0B2D66E01A009CFC78 /* PropertyFourViewController.swift */,
@@ -1422,10 +1422,10 @@
 				739DCA1D2D671669009CFC78 /* MyCollectionPropertyViewController.swift */,
 				739DCA212D671A6E009CFC78 /* MyVipUseViewController.swift */,
 			);
-			path = "我的";
+			path = PropertyCenter;
 			sourceTree = "<group>";
 		};
-		739DCA142D670D03009CFC78 /* 监控列表 */ = {
+		739DCA142D670D03009CFC78 /* MonitoringList */ = {
 			isa = PBXGroup;
 			children = (
 				739DCA092D66E012009CFC78 /* PropertyThreeViewController.swift */,
@@ -1434,7 +1434,26 @@
 				739DCA192D670E87009CFC78 /* PropertyThreePeopleViewController.swift */,
 				739DCA1B2D67133E009CFC78 /* SearchAddPropertyViewController.swift */,
 			);
-			path = "监控列表";
+			path = MonitoringList;
+			sourceTree = "<group>";
+		};
+		73A050982D83CC7200208602 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				739DCA052D66E001009CFC78 /* PropertyOneViewController.swift */,
+				739DCA0D2D66FAA1009CFC78 /* PropertyCompanyViewController.swift */,
+				739DCA0F2D66FAAB009CFC78 /* PropertyPeopleViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		73A050992D83CC7400208602 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				73090B6E2D82DE7900041457 /* PropertyHeadView.swift */,
+				73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		73A21DE52D0C2E0800FC4C49 /* Controller */ = {
@@ -1752,7 +1771,7 @@
 				73FC5E462D5C3C53001D0DEF /* SearchRegulations */,
 				73654B232D818E0B0004E408 /* HighSearch */,
 				73654B222D818DB00004E408 /* HomeTabSearch */,
-				739DCA022D66D24E009CFC78 /* 查财产 */,
+				739DCA022D66D24E009CFC78 /* SearchProperty */,
 				73FC5E492D5C3C80001D0DEF /* 查股东 */,
 				73FC5E4A2D5C784E001D0DEF /* 查老赖 */,
 				73FC5E682D5CADA4001D0DEF /* 查诉讼 */,
@@ -2270,6 +2289,7 @@
 				734334932D798C1F006AE608 /* CompanyListView.swift in Sources */,
 				73D4E3FB2D734059005C73D8 /* BothPeopleViewController.swift in Sources */,
 				730488112D2A97F00024265C /* HomeVideoListViewCell.swift in Sources */,
+				73A0509B2D83CCA700208602 /* PropertyListViewCell.swift in Sources */,
 				7340E19B2D5CD4D0008FD5C7 /* SearchCourtNoticeViewController.swift in Sources */,
 				734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */,
 				73C36A732D2D08CB00D6DC46 /* SearchCompanyViewController.swift in Sources */,

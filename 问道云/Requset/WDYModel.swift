@@ -135,6 +135,7 @@ class DataModel {
     var riskList: riskListModel?
     var minutesList: [minutesListModel]?
     var entityName: String?
+    var logoUrl: String?
     var highLevelCnt: Int?
     var lowLevelCnt: Int?
     var tipLevelCnt: Int?
@@ -172,7 +173,22 @@ class DataModel {
     var wechatList: [wechatListModel]?
     var lawNatureList: [lawNatureListModel]?
     var timelinessList: [lawNatureListModel]?
+    var monitor: Bool?
+    var monitorListId: String?
+    var cluesDataList: [cluesDataListModel]?
+    var personPage: personPageModel?
+    var companyPage: companyPageModel?
+    var entityId: String?
+    var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
     init(json: JSON) {
+        self.logoUrl = json["logoUrl"].stringValue
+        self.searchStr = json["searchStr"].stringValue
+        self.entityId = json["entityId"].stringValue
+        self.companyPage = companyPageModel(json: json["companyPage"])
+        self.personPage = personPageModel(json: json["personPage"])
+        self.cluesDataList = json["cluesDataList"].arrayValue.map { cluesDataListModel(json: $0) }
+        self.monitorListId = json["monitorListId"].stringValue
+        self.monitor = json["monitor"].boolValue
         self.timelinessList = json["timelinessList"].arrayValue.map { lawNatureListModel(json: $0) }
         self.lawNatureList = json["lawNatureList"].arrayValue.map { lawNatureListModel(json: $0) }
         self.appleById = json["appleById"].intValue
@@ -1642,5 +1658,40 @@ class lawNatureListModel {
     init(json: JSON) {
         self.key = json["key"].stringValue
         self.count = json["count"].intValue
+    }
+}
+
+class personPageModel {
+    var total: Int?
+    var data: [DataModel]?
+    init(json: JSON) {
+        self.total = json["total"].intValue
+        self.data = json["data"].arrayValue.map { DataModel(json: $0) }
+    }
+}
+
+class companyPageModel {
+    var total: Int?
+    var data: [DataModel]?
+    init(json: JSON) {
+        self.total = json["total"].intValue
+        self.data = json["data"].arrayValue.map { DataModel(json: $0) }
+    }
+}
+
+class cluesDataListModel {
+    var clueDirectionName: String?
+    var clueDirectionAbout: String?
+    var typeNum: String?
+    var typeTotalCount: String?
+    var typeTotalValuation: String?
+    var totalValuationUnit: String?
+    init(json: JSON) {
+        self.clueDirectionName = json["clueDirectionName"].stringValue
+        self.clueDirectionAbout = json["clueDirectionAbout"].stringValue
+        self.typeNum = json["typeNum"].stringValue
+        self.typeTotalCount = json["typeTotalCount"].stringValue
+        self.typeTotalValuation = json["typeTotalValuation"].stringValue
+        self.totalValuationUnit = json["totalValuationUnit"].stringValue
     }
 }

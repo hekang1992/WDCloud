@@ -6,97 +6,9 @@
 //  监控cell
 
 import UIKit
+import SkeletonView
 
 class MonitoringCell: BaseViewCell {
-    
-    var companyModel: rowsModel? {
-        didSet {
-            guard let model = companyModel else { return }
-            let logo = model.logo ?? ""
-            
-            let orgName = model.orgName ?? ""
-            
-            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (30, 30), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
-            namelabel.text = orgName
-            
-            let orgStatus = model.orgStatus ?? ""
-            typeLabel.text = orgStatus
-            TagsLabelColorConfig.nameLabelColor(from: typeLabel)
-            
-            tagLabel.text = model.groupName ?? ""
-            
-            let startDate = model.startDate ?? ""
-            let endDate = model.endDate ?? ""
-            timeDetailLabel.text = "\(startDate)至\(endDate)"
-            
-            let total = model.totalRiskCnt ?? 0
-            let curTotal = model.curRiskCnt ?? 0
-            numLabel.text = "\(curTotal)/\(total)条"
-            
-            let total1 = model.totalHighRiskCnt ?? 0
-            let curTotal1 = model.curHighRiskCnt ?? 0
-            highLabel.text = "高风险\(curTotal1)/\(total1)"
-            
-            let total2 = model.totalLowRiskCnt ?? 0
-            let curTotal2 = model.curLowRiskCnt ?? 0
-            lowLabel.text = "低风险\(curTotal2)/\(total2)"
-            
-            let total3 = model.totalTipRiskCnt ?? 0
-            let curTotal3 = model.curTipRiskCnt ?? 0
-            hintLabel.text = "提示\(curTotal3)/\(total3)"
-            
-            let recentRisk = model.recentRisk ?? ""
-            riskLabel.text = !recentRisk.isEmpty ? recentRisk : "暂无动态"
-        }
-    }
-    
-    var peopleModel: rowsModel? {
-        didSet {
-            guard let model = peopleModel else { return }
-            let logo = model.logo ?? ""
-            let personName = model.personName ?? ""
-            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(personName, size: (30, 30), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
-            namelabel.text = personName
-            
-            let orgStatus = model.orgStatus ?? ""
-            if orgStatus.isEmpty {
-                typeLabel.text = ""
-                typeLabel.isHidden = true
-                tagLabel.snp.makeConstraints { make in
-                    make.left.equalTo(namelabel.snp.left)
-                }
-            }else {
-                typeLabel.text = orgStatus
-                typeLabel.isHidden = false
-                TagsLabelColorConfig.nameLabelColor(from: typeLabel)
-            }
-            
-            tagLabel.text = model.groupName ?? ""
-            
-            let startDate = model.startDate ?? ""
-            let endDate = model.endDate ?? ""
-            timeDetailLabel.text = "\(startDate)至\(endDate)"
-            
-            let total = model.totalRiskCnt ?? 0
-            let curTotal = model.curRiskCnt ?? 0
-            numLabel.text = "\(curTotal)/\(total)条"
-            
-            let total1 = model.totalHighRiskCnt ?? 0
-            let curTotal1 = model.curHighRiskCnt ?? 0
-            highLabel.text = "高风险\(curTotal1)/\(total1)"
-            
-            let total2 = model.totalLowRiskCnt ?? 0
-            let curTotal2 = model.curLowRiskCnt ?? 0
-            lowLabel.text = "低风险\(curTotal2)/\(total2)"
-            
-            let total3 = model.totalTipRiskCnt ?? 0
-            let curTotal3 = model.curTipRiskCnt ?? 0
-            hintLabel.text = "提示\(curTotal3)/\(total3)"
-            
-            let recentRisk = model.recentRisk ?? ""
-            riskLabel.text = !recentRisk.isEmpty ? recentRisk : "暂无动态"
-        }
-    }
     
     var moreBlock: (() -> Void)?
     
@@ -108,12 +20,14 @@ class MonitoringCell: BaseViewCell {
     
     lazy var lineView: UIView = {
         let lineView = UIView()
+        lineView.isHidden = true
         lineView.backgroundColor = .init(cssStr: "#F1F1F1")
         return lineView
     }()
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
+        ctImageView.isSkeletonable = true
         return ctImageView
     }()
     
@@ -122,6 +36,7 @@ class MonitoringCell: BaseViewCell {
         namelabel.textColor = UIColor.init(cssStr: "#333333")
         namelabel.textAlignment = .left
         namelabel.numberOfLines = 0
+        namelabel.isSkeletonable = true
         namelabel.font = .mediumFontOfSize(size: 15)
         return namelabel
     }()
@@ -136,8 +51,6 @@ class MonitoringCell: BaseViewCell {
 
     lazy var tagLabel: PaddedLabel = {
         let tagLabel = PaddedLabel()
-        tagLabel.textColor = .init(cssStr: "#FF7D00")!
-        tagLabel.backgroundColor = .init(cssStr: "#FFEEDE")!
         tagLabel.font = .regularFontOfSize(size: 10)
         tagLabel.layer.cornerRadius = 2.5
         tagLabel.layer.masksToBounds = true
@@ -146,6 +59,7 @@ class MonitoringCell: BaseViewCell {
     
     lazy var moreBtn: UIButton = {
         let moreBtn = UIButton(type: .custom)
+        moreBtn.isSkeletonable = true
         moreBtn.setImage(UIImage(named: "moreniacion"), for: .normal)
         return moreBtn
     }()
@@ -156,6 +70,7 @@ class MonitoringCell: BaseViewCell {
         timeLabel.textAlignment = .left
         timeLabel.textColor = .init(cssStr: "#9FA4AD")
         timeLabel.text = "监控周期:"
+        timeLabel.isSkeletonable = true
         return timeLabel
     }()
     
@@ -164,6 +79,7 @@ class MonitoringCell: BaseViewCell {
         timeDetailLabel.font = .regularFontOfSize(size: 12)
         timeDetailLabel.textAlignment = .left
         timeDetailLabel.textColor = .init(cssStr: "#333333")
+        timeDetailLabel.isSkeletonable = true
         return timeDetailLabel
     }()
     
@@ -173,6 +89,7 @@ class MonitoringCell: BaseViewCell {
         todayLabel.textAlignment = .left
         todayLabel.textColor = .init(cssStr: "#9FA4AD")
         todayLabel.text = "今日/累计事件:"
+//        todayLabel.isSkeletonable = true
         return todayLabel
     }()
     
@@ -181,6 +98,7 @@ class MonitoringCell: BaseViewCell {
         numLabel.textAlignment = .left
         numLabel.textColor = .init(cssStr: "#333333")
         numLabel.font = .regularFontOfSize(size: 12)
+        numLabel.isSkeletonable = true
         return numLabel
     }()
     
@@ -189,6 +107,7 @@ class MonitoringCell: BaseViewCell {
         highLabel.textAlignment = .left
         highLabel.textColor = .init(cssStr: "#FF4D4F")
         highLabel.font = .regularFontOfSize(size: 12)
+        highLabel.isSkeletonable = true
         return highLabel
     }()
     
@@ -197,6 +116,7 @@ class MonitoringCell: BaseViewCell {
         lowLabel.textAlignment = .left
         lowLabel.textColor = .init(cssStr: "#FF7D00")
         lowLabel.font = .regularFontOfSize(size: 12)
+        lowLabel.isSkeletonable = true
         return lowLabel
     }()
     
@@ -205,17 +125,20 @@ class MonitoringCell: BaseViewCell {
         hintLabel.textAlignment = .left
         hintLabel.textColor = .init(cssStr: "#547AFF")
         hintLabel.font = .regularFontOfSize(size: 12)
+        hintLabel.isSkeletonable = true
         return hintLabel
     }()
     
     lazy var dImageView: UIImageView = {
         let dImageView = UIImageView()
+        dImageView.isSkeletonable = true
         dImageView.image = UIImage(named: "lastnewsimage")
         return dImageView
     }()
     
     lazy var riskLabel: UILabel = {
         let riskLabel = UILabel()
+        riskLabel.isSkeletonable = true
         riskLabel.font = .regularFontOfSize(size: 12)
         riskLabel.textAlignment = .left
         riskLabel.textColor = .init(cssStr: "#333333")
@@ -224,6 +147,7 @@ class MonitoringCell: BaseViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        isSkeletonable = true
         contentView.addSubview(ctImageView)
         contentView.addSubview(namelabel)
         contentView.addSubview(typeLabel)
@@ -249,6 +173,7 @@ class MonitoringCell: BaseViewCell {
             make.top.equalTo(ctImageView.snp.top)
             make.left.equalTo(ctImageView.snp.right).offset(5)
             make.right.equalToSuperview().offset(-40)
+            make.height.equalTo(21)
         }
         moreBtn.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-15)
@@ -308,7 +233,7 @@ class MonitoringCell: BaseViewCell {
         }
         dImageView.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(7)
-            make.left.equalToSuperview().offset(15)
+            make.left.equalToSuperview().offset(10)
             make.size.equalTo(CGSize(width: 46, height: 11))
         }
         riskLabel.snp.makeConstraints { make in
@@ -329,4 +254,100 @@ class MonitoringCell: BaseViewCell {
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    var companyModel: rowsModel? {
+        didSet {
+            guard let model = companyModel else { return }
+            lineView.isHidden = false
+            let logo = model.logo ?? ""
+            
+            let orgName = model.orgName ?? ""
+            
+            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (30, 30), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
+            namelabel.text = orgName
+            
+            let orgStatus = model.orgStatus ?? ""
+            typeLabel.text = orgStatus
+            TagsLabelColorConfig.nameLabelColor(from: typeLabel)
+            
+            tagLabel.text = model.groupName ?? ""
+            tagLabel.textColor = .init(cssStr: "#FF7D00")!
+            tagLabel.backgroundColor = .init(cssStr: "#FFEEDE")!
+            
+            let startDate = model.startDate ?? ""
+            let endDate = model.endDate ?? ""
+            timeDetailLabel.text = "\(startDate)至\(endDate)"
+            
+            let total = model.totalRiskCnt ?? 0
+            let curTotal = model.curRiskCnt ?? 0
+            numLabel.text = "\(curTotal)/\(total)条"
+            
+            let total1 = model.totalHighRiskCnt ?? 0
+            let curTotal1 = model.curHighRiskCnt ?? 0
+            highLabel.text = "高风险\(curTotal1)/\(total1)"
+            
+            let total2 = model.totalLowRiskCnt ?? 0
+            let curTotal2 = model.curLowRiskCnt ?? 0
+            lowLabel.text = "低风险\(curTotal2)/\(total2)"
+            
+            let total3 = model.totalTipRiskCnt ?? 0
+            let curTotal3 = model.curTipRiskCnt ?? 0
+            hintLabel.text = "提示\(curTotal3)/\(total3)"
+            
+            let recentRisk = model.recentRisk ?? ""
+            riskLabel.text = !recentRisk.isEmpty ? recentRisk : "暂无动态"
+        }
+    }
+    
+    var peopleModel: rowsModel? {
+        didSet {
+            guard let model = peopleModel else { return }
+            lineView.isHidden = false
+            let logo = model.logo ?? ""
+            let personName = model.personName ?? ""
+            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(personName, size: (30, 30), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
+            namelabel.text = personName
+            
+            let orgStatus = model.orgStatus ?? ""
+            if orgStatus.isEmpty {
+                typeLabel.text = ""
+                typeLabel.isHidden = true
+                tagLabel.snp.makeConstraints { make in
+                    make.left.equalTo(namelabel.snp.left)
+                }
+            }else {
+                typeLabel.text = orgStatus
+                typeLabel.isHidden = false
+                TagsLabelColorConfig.nameLabelColor(from: typeLabel)
+            }
+            
+            tagLabel.text = model.groupName ?? ""
+            tagLabel.textColor = .init(cssStr: "#FF7D00")!
+            tagLabel.backgroundColor = .init(cssStr: "#FFEEDE")!
+            
+            let startDate = model.startDate ?? ""
+            let endDate = model.endDate ?? ""
+            timeDetailLabel.text = "\(startDate)至\(endDate)"
+            
+            let total = model.totalRiskCnt ?? 0
+            let curTotal = model.curRiskCnt ?? 0
+            numLabel.text = "\(curTotal)/\(total)条"
+            
+            let total1 = model.totalHighRiskCnt ?? 0
+            let curTotal1 = model.curHighRiskCnt ?? 0
+            highLabel.text = "高风险\(curTotal1)/\(total1)"
+            
+            let total2 = model.totalLowRiskCnt ?? 0
+            let curTotal2 = model.curLowRiskCnt ?? 0
+            lowLabel.text = "低风险\(curTotal2)/\(total2)"
+            
+            let total3 = model.totalTipRiskCnt ?? 0
+            let curTotal3 = model.curTipRiskCnt ?? 0
+            hintLabel.text = "提示\(curTotal3)/\(total3)"
+            
+            let recentRisk = model.recentRisk ?? ""
+            riskLabel.text = !recentRisk.isEmpty ? recentRisk : "暂无动态"
+        }
+    }
+    
 }

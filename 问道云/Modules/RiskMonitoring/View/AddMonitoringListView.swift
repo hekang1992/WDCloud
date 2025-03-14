@@ -29,7 +29,11 @@ class AddMonitoringListView: BaseView {
 //                listView.checkButton.isSelected = model.isClickMonitoring
                 listView.setContentHuggingPriority(.defaultLow, for: .vertical)
                 stackView.addArrangedSubview(listView)
-                listView.checkButton.rx.tap.subscribe(onNext: { [weak self] in
+                listView.checkButton
+                    .rx
+                    .tap
+                    .take(1)
+                    .subscribe(onNext: { [weak self] in
                     guard let self = self else { return }
                     self.block?(model, listView)
                 }).disposed(by: disposeBag)
@@ -99,8 +103,8 @@ class MonitoringListView: UIView {
     
     lazy var checkButton: UIButton = {
         let checkButton = UIButton()
-        checkButton.setImage(UIImage(named: "addjiankongqiye"), for: .selected)
-        checkButton.setImage(UIImage(named: "agreenorimage"), for: .normal)
+        checkButton.setImage(UIImage(named: "agreeselimage"), for: .selected)
+        checkButton.setImage(UIImage(named: "addjiankongqiye"), for: .normal)
         checkButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         checkButton.contentEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
         return checkButton
