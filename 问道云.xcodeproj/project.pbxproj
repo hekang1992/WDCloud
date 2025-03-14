@@ -2423,6 +2423,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "问道云-测试版";
 				INFOPLIST_KEY_NSCameraUsageDescription = "我们希望访问您的相机以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相机，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "需要访问您的文档文件夹以选择PDF文件,提交发票.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "我们希望访问您的相册以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相册，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
@@ -2468,6 +2469,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "问道云-测试版";
 				INFOPLIST_KEY_NSCameraUsageDescription = "我们希望访问您的相机以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相机，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "需要访问您的文档文件夹以选择PDF文件,提交发票.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "我们希望访问您的相册以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相册，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";

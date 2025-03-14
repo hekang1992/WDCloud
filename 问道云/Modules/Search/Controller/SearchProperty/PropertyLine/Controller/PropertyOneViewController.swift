@@ -72,6 +72,7 @@ class PropertyOneViewController: WDBaseViewController {
         // 监听 UITextField 的文本变化
         self.headView.searchHeadView.searchTx
             .rx.text.orEmpty
+//            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if self.containsOnlyChinese(text) == true {
@@ -79,9 +80,9 @@ class PropertyOneViewController: WDBaseViewController {
                     if !text.isEmpty {
                         self.oneView.isHidden = true
                         if selectIndex == 0 {
-                            companyVc.searchWords = text
+                            companyVc.searchWordsRelay.accept(text)
                         }else {
-                            peopleVc.searchWords = text
+                            companyVc.searchWordsRelay.accept(text)
                         }
                     }else {
                         self.oneView.isHidden = false
@@ -99,9 +100,9 @@ class PropertyOneViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if selectIndex == 0 {
-                    companyVc.searchWords = text
+                    companyVc.searchWordsRelay.accept(text)
                 }else {
-                    peopleVc.searchWords = text
+                    companyVc.searchWordsRelay.accept(text)
                 }
             })
             .disposed(by: disposeBag)
@@ -176,6 +177,14 @@ extension PropertyOneViewController: JXPagingViewDelegate, JXSegmentedViewDelega
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
+            companyVc.blockModel = { [weak self] model in
+                guard let self = self else { return }
+                let peopleCount = model.personPage?.total ?? 0
+                let companyCount = model.companyPage?.total ?? 0
+                let titles = ["企业\(companyCount)", "自然人\(peopleCount)"]
+                self.segmentedViewDataSource.titles = titles
+                self.segmentedView.reloadData()
+            }
             return companyVc
         }else{
             return peopleVc
@@ -185,30 +194,12 @@ extension PropertyOneViewController: JXPagingViewDelegate, JXSegmentedViewDelega
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         selectIndex = index
         if index == 0 {
-            self.companyVc.searchWords = self.headView.searchHeadView.searchTx
-                .text ?? ""
+            self.companyVc.searchWordsRelay.accept(self.headView.searchHeadView.searchTx
+                .text ?? "")
         }else {
-            self.peopleVc.searchWords = self.headView.searchHeadView.searchTx
-                .text ?? ""
+            self.peopleVc.searchWordsRelay.accept(self.headView.searchHeadView.searchTx
+                .text ?? "")
         }
-    }
-    
-}
-
-extension PropertyOneViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let searchText = textField.text ?? ""
-        if searchText.isEmpty {
-            textField.text = textField.placeholder
-        }
-        if selectIndex == 0 {
-            companyVc.searchWords = textField.text
-        }else {
-            peopleVc.searchWords = textField.text
-        }
-        textField.resignFirstResponder()
-        return true
     }
     
 }

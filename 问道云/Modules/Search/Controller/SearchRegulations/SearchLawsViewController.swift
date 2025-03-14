@@ -242,7 +242,7 @@ extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
     
     //获取公告信息
     private func getNoticeListInfo() {
-        ViewHud.addLoadView()
+        
         let dict = ["pageNum": pageNum,
                     "pageSize": pageSize,
                     "title": self.searchView.searchTx.text ?? "",
@@ -250,7 +250,7 @@ extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
                     "timeliness": timeliness] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/firminfo/laws/list", method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -305,13 +305,13 @@ extension SearchLawsViewController {
     //最近搜索
     private func getlastSearch() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["searchType": "",
                     "moduleId": "03"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -352,7 +352,7 @@ extension SearchLawsViewController {
     //浏览历史
     private func getBrowsingHistory() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "",
@@ -360,7 +360,7 @@ extension SearchLawsViewController {
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -423,7 +423,7 @@ extension SearchLawsViewController {
     //热搜
     private func getHotWords() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["moduleId": "03"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
@@ -488,13 +488,13 @@ extension SearchLawsViewController {
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let dict = ["searchType": "",
                         "moduleId": "03"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -516,7 +516,7 @@ extension SearchLawsViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
                         "moduleId": "03",
@@ -524,7 +524,7 @@ extension SearchLawsViewController {
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
                            method: .get) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

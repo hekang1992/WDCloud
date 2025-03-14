@@ -684,14 +684,14 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
 extension MyTwoSettingViewController {
     
     private func getUserSettingInfo() {
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/monitor_settings/configs",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):

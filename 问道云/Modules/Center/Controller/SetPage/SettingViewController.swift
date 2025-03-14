@@ -65,9 +65,9 @@ extension SettingViewController {
             .subscribe(onNext: { [weak self] _ in
                 ShowAlertManager.showAlert(title: "提示", message: "是否确认清除缓存?", confirmAction: {
                     GetCacheConfig.clearCache()
-                    ViewHud.addLoadView()
+                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        ViewHud.hideLoadView()
+                        
                         ToastViewConfig.showToast(message: "清理缓存成功")
                         self?.settingView.threeListView.rightlabel.text = "0.00MB"
                     }
@@ -170,12 +170,12 @@ extension SettingViewController {
     //退出账号
     func logout() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = [String: Any]()
         man.requestAPI(params: dict,
                        pageUrl: "/auth/logout",
                        method: .delete) { result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(_):
                 WDLoginConfig.removeLoginInfo()

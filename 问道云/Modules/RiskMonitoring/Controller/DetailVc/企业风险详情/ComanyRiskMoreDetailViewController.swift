@@ -124,7 +124,7 @@ extension ComanyRiskMoreDetailViewController {
     
     private func getDetailInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["orgId": entityid,
                     "itemId": itemnumber,
                     "historyFlag": historyFlag,
@@ -133,7 +133,7 @@ extension ComanyRiskMoreDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/queryOrgRiskList",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

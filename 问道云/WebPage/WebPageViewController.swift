@@ -8,8 +8,11 @@
 import UIKit
 import RxRelay
 @preconcurrency import WebKit
+import UniformTypeIdentifiers
 
 class WebPageViewController: WDBaseViewController {
+    
+    var completionHandler: (([URL]?) -> Void)?
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .none)
@@ -26,16 +29,18 @@ class WebPageViewController: WDBaseViewController {
             injectionTime: .atDocumentStart,
             forMainFrameOnly: false
         )
+        config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
+        config.setValue(true, forKey: "allowUniversalAccessFromFileURLs")
         config.userContentController.addUserScript(cookieScript)
         let webView = WKWebView(frame: .zero, configuration: config)
-        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
         webView.scrollView.bounces = false
         webView.scrollView.alwaysBounceVertical = false
-        webView.scrollView.contentInsetAdjustmentBehavior = .never
         webView.scrollView.showsVerticalScrollIndicator = false
         webView.scrollView.showsHorizontalScrollIndicator = false
-        webView.navigationDelegate = self
-        webView.uiDelegate = self
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
         return webView
     }()
     
@@ -119,7 +124,7 @@ class WebPageViewController: WDBaseViewController {
 }
 
 extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigationDelegate {
-    
+
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         print("message:\(message.name)")
     }
@@ -141,20 +146,19 @@ extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigat
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        ViewHud.addLoadView()
         DispatchQueue.main.asyncAfter(delay: 60) {
-            ViewHud.hideLoadView()
+            
         }
         print("开始加载======开始加载")
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        ViewHud.hideLoadView()
+        
         print("结束加载======结束加载")
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        ViewHud.hideLoadView()
+        
         print("加载失败======加载失败")
     }
     
@@ -221,4 +225,24 @@ extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigat
             UIDevice.current.setValue(value, forKey: "orientation")
         }
     }
+}
+
+// 暂时不用，先留着吧
+extension WebPageViewController: UIDocumentPickerDelegate {
+    
+    func openFolder() {
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.pdf, .xml])
+        documentPicker.delegate = self
+        present(documentPicker, animated: true, completion: nil)
+    }
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        print(urls)
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        // 用户取消了选择
+        print("User cancelled folder selection")
+    }
+    
 }

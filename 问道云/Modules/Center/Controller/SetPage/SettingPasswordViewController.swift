@@ -289,13 +289,13 @@ extension SettingPasswordViewController {
     //获取验证码
     func getCode() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["phone": self.phonelabel.text ?? "",
                     "sendType": "2"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -328,14 +328,14 @@ extension SettingPasswordViewController {
     //设置密码
     func setPasswordInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["code": self.codeTx.text ?? "",
                     "phone": self.phonelabel.text ?? "",
                     "password": self.passoneTx.text ?? ""]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/resetpassword",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(_):
                 ToastViewConfig.showToast(message: "密码设置成功")

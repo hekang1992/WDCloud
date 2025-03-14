@@ -91,7 +91,7 @@ extension RiskTipsCenterViewController: UITableViewDelegate, UITableViewDataSour
     
     
     private func getListInfo() {
-        ViewHud.addLoadView()
+        
         let dict = ["pageNum": pageNum,
                     "type": type,
                     "pulishstate": pulishstate,
@@ -100,7 +100,7 @@ extension RiskTipsCenterViewController: UITableViewDelegate, UITableViewDataSour
         man.requestAPI(params: dict,
                        pageUrl: "/operation/webnews/list",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let self = self, let code = success.code, code == 200 {

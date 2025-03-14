@@ -246,11 +246,11 @@ extension AddGroupPeopleViewController {
             return
         }
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerinfo/addsubaccount",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {

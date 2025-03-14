@@ -150,7 +150,7 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
 extension OneReportViewController {
     
     private func getReportInfo(from model: itemsModel) {
-        ViewHud.addLoadView()
+        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let reportnumber = model.reportnumber ?? ""
         let entityid = orgInfo?.orgId ?? ""
@@ -163,7 +163,7 @@ extension OneReportViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/reportinfo/getTestFive",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(_):
                 let downVc = MyDownloadViewController()
@@ -182,14 +182,14 @@ extension OneReportViewController {
     
     //获取一键报告信息
     private func getOneReportInfo() {
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["entityId": orgInfo?.orgId ?? "",
                     "entityType": 1] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerreport/reportlist",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let self = self, let datas = success.datas {

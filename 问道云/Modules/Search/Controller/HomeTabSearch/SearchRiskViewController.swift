@@ -263,7 +263,7 @@ extension SearchRiskViewController {
                 guard let self = self else { return }
                 let group = DispatchGroup()
                 //最近搜索
-                //                ViewHud.addLoadView()
+                //                
                 group.enter()
                 getlastSearch {
                     group.leave()
@@ -281,7 +281,7 @@ extension SearchRiskViewController {
                 
                 // 所有任务完成后的通知
                 group.notify(queue: .main) {
-                    //                    ViewHud.hideLoadView()
+                    //                    
                     self.completeBlock?()
                 }
             }).disposed(by: disposeBag)
@@ -467,13 +467,13 @@ extension SearchRiskViewController {
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let dict = ["searchType": "",
                         "moduleId": "05"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -495,7 +495,7 @@ extension SearchRiskViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["moduleId": "05",
                         "viewrecordtype": "",
@@ -503,7 +503,7 @@ extension SearchRiskViewController {
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
                            method: .get) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -530,11 +530,11 @@ extension SearchRiskViewController {
                     "pageSize": 20,
                     "type": "1"] as [String : Any]
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/getRiskData",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.twoRiskListView.tableView.mj_header?.endRefreshing()
             self?.twoRiskListView.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -590,11 +590,11 @@ extension SearchRiskViewController {
                     "pageSize": 20,
                     "type": "2"] as [String : Any]
         //        let man = RequestManager()
-//        ViewHud.addLoadView()
+//        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/getRiskData",
                        method: .get) { [weak self] result in
-//            ViewHud.hideLoadView()
+//            
             self?.listPeopleView.tableView.mj_header?.endRefreshing()
             self?.listPeopleView.tableView.mj_footer?.endRefreshing()
             switch result {

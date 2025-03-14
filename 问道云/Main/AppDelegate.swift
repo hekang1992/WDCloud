@@ -85,11 +85,9 @@ extension AppDelegate: WXApiDelegate {
     private func wechatLogin(from authorizationCode: String) {
         let dict = ["code": authorizationCode]
         let man = RequestManager()
-        ViewHud.addLoadView()
         man.uploadDataAPI(params: dict,
                           pageUrl: "/auth/wechatlogin",
                           method: .post) { result in
-            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {

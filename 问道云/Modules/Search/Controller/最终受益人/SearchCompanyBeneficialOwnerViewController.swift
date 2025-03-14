@@ -76,7 +76,7 @@ extension SearchCompanyBeneficialOwnerViewController {
     
     //搜索股东===公司
     private func getSearchCompanyInfo() {
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["firmname": self.keyWords.value,
                     "pageNum": pageNum,
@@ -84,7 +84,7 @@ extension SearchCompanyBeneficialOwnerViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/basicinformation/getactualcontroller",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

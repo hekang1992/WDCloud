@@ -110,11 +110,11 @@ extension CompanyDetailViewController {
         let dict = ["moduleType": "2",
                     "entityId": enityId] as [String: Any]
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customermenu/customerMenuTree",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -134,11 +134,11 @@ extension CompanyDetailViewController {
         let dict = ["entityName": "2",
                     "entityId": enityId] as [String: Any]
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/operatingstate/getprestatistics",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -156,12 +156,12 @@ extension CompanyDetailViewController {
     //获取企业详情头部信息
     private func getCompanyHeadInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["orgId": enityId]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org/overview",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let self = self,
@@ -183,12 +183,12 @@ extension CompanyDetailViewController {
     //获取风险详情数据
     private func getCompanyRiskInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["entityId": enityId]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew",
                        method: .get) { result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let model = success.data, let code = success.code, code == 200 {
@@ -207,11 +207,11 @@ extension CompanyDetailViewController {
         let man = RequestManager()
         let dict = ["orgId": model.basicInfo?.orgId ?? "",
                     "groupId": ""]
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -243,14 +243,14 @@ extension CompanyDetailViewController {
     
     //添加关注
     private func addFocus(from model: DataModel) {
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let entityId = model.basicInfo?.orgId ?? ""
         let dict = ["entityId": entityId, "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -271,14 +271,14 @@ extension CompanyDetailViewController {
     //取消关注
     private func cancelFocus(from model: DataModel) {
         ShowAlertManager.showAlert(title: "取消关注", message: "是否取消关注?", confirmAction: {
-            ViewHud.addLoadView()
+            
             let man = RequestManager()
             let entityId = model.basicInfo?.orgId ?? ""
             let dict = ["entityId": entityId, "followTargetType": "1"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/follow/add-or-cancel",
                            method: .post) { [weak self] result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

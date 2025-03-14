@@ -199,7 +199,7 @@ extension DailyCompanyViewController: UITableViewDataSource, UITableViewDelegate
 extension DailyCompanyViewController {
     
     func getCompanyInfo() {
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["reportTermType": "day",
                     "groupId": groupId,
@@ -208,7 +208,7 @@ extension DailyCompanyViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/queryRiskMonitorOrg",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.dailyView.tableView.mj_header?.endRefreshing()
             self?.dailyView.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -314,7 +314,7 @@ extension DailyCompanyViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/cancelRiskMonitorOrg",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {

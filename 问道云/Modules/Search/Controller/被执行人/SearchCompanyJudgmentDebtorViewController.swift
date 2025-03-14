@@ -185,7 +185,7 @@ class SearchCompanyJudgmentDebtorViewController: WDBaseViewController {
 extension SearchCompanyJudgmentDebtorViewController {
     
     private func getSearchPeopleInfo() {
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["keywords": self.keyWords.value,
                     "type": "2",
@@ -194,7 +194,7 @@ extension SearchCompanyJudgmentDebtorViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/cooperation/getPersonAgainst",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

@@ -183,7 +183,7 @@ extension SearchCompanyCourtNoticeViewController {
         if keyWords.value.isEmpty {
             return
         }
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["type": type,
                     "entityIndustry": entityIndustry,
@@ -194,7 +194,7 @@ extension SearchCompanyCourtNoticeViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/illegalPunish/getCourtAnnouncement",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

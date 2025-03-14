@@ -76,7 +76,7 @@ extension SearchCompanyShareholderViewController {
     
     //搜索股东===公司
     private func getSearchCompanyInfo() {
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["keywords": self.keyWords.value,
                     "pageNum": pageNum,
@@ -84,7 +84,7 @@ extension SearchCompanyShareholderViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/entity/shareholder/search",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

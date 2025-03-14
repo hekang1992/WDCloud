@@ -214,7 +214,7 @@ extension MembershipCenterViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/auth/refreshcustomerreflogin",
                        method: .post) { result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -253,12 +253,12 @@ extension MembershipCenterViewController {
     //获取套餐信息
     func getPriceInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let emptyDict = [String: Any]()
         man.requestAPI(params: emptyDict,
                        pageUrl: "/operation/combo/selectmember",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let model = success.data {

@@ -164,12 +164,12 @@ extension SearchTaxViolationViewController: HGSegmentedPageViewControllerDelegat
     //获取所有城市数据
     func getAllRegionInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let emptyDict = [String: Any]()
         man.requestAPI(params: emptyDict,
                        pageUrl: "/operation/ajax/areaTree",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let self = self, let modelArray = success.data?.data {
@@ -185,12 +185,12 @@ extension SearchTaxViolationViewController: HGSegmentedPageViewControllerDelegat
     //获取行业数据
     func getAllIndustryInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let emptyDict = [String: Any]()
         man.requestAPI(params: emptyDict,
                        pageUrl: "/operation/ajax/industryTree",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let self = self, let modelArray = success.data?.data {
@@ -258,13 +258,13 @@ extension SearchTaxViolationViewController: HGSegmentedPageViewControllerDelegat
     //最近搜索
     private func getlastSearch() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["searchType": "",
                     "moduleId": "17"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -305,7 +305,7 @@ extension SearchTaxViolationViewController: HGSegmentedPageViewControllerDelegat
     //浏览历史
     private func getBrowsingHistory() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "",
@@ -313,7 +313,7 @@ extension SearchTaxViolationViewController: HGSegmentedPageViewControllerDelegat
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -383,7 +383,7 @@ extension SearchTaxViolationViewController: HGSegmentedPageViewControllerDelegat
     //热搜
     private func getHotWords() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["moduleId": "17"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
@@ -451,13 +451,13 @@ extension SearchTaxViolationViewController: HGSegmentedPageViewControllerDelegat
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let dict = ["searchType": "",
                         "moduleId": "17"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -479,7 +479,7 @@ extension SearchTaxViolationViewController: HGSegmentedPageViewControllerDelegat
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
                         "moduleId": "17",
@@ -487,7 +487,7 @@ extension SearchTaxViolationViewController: HGSegmentedPageViewControllerDelegat
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
                            method: .get) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

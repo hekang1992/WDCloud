@@ -148,7 +148,7 @@ class HighSearchResultViewController: WDBaseViewController {
     }
     
     private func getHighSearchInfo() {
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         dict = ["pageSize": 20, "pageIndex": pageIndex]
         if let keyword = keyword {
@@ -234,7 +234,7 @@ class HighSearchResultViewController: WDBaseViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org-list/search",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

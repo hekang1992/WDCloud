@@ -251,7 +251,7 @@ extension SearchCompanyViewController {
                 guard let self = self else { return }
                 let group = DispatchGroup()
                 //最近搜索
-                //                ViewHud.addLoadView()
+                //                
                 group.enter()
                 getlastSearch {
                     group.leave()
@@ -269,7 +269,7 @@ extension SearchCompanyViewController {
                 
                 // 所有任务完成后的通知
                 group.notify(queue: .main) {
-                    //                    ViewHud.hideLoadView()
+                    //                    
                     self.completeBlock?()
                 }
             }).disposed(by: disposeBag)
@@ -449,12 +449,12 @@ extension SearchCompanyViewController {
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let dict = ["searchType": "2", "moduleId": "01"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -476,7 +476,7 @@ extension SearchCompanyViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
                         "moduleId": "01",
@@ -484,7 +484,7 @@ extension SearchCompanyViewController {
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
                            method: .get) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -510,11 +510,11 @@ extension SearchCompanyViewController {
                     "region": entityArea,
                     "pageIndex": pageIndex,
                     "pageSize": 20] as [String : Any]
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                         pageUrl: "/entity/v2/org-list",
                         method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.companyListView.tableView.mj_header?.endRefreshing()
             self?.companyListView.tableView.mj_footer?.endRefreshing()
             switch result {

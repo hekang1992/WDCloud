@@ -70,13 +70,13 @@ extension PasswordLoginViewController {
     //密码登录
     func loginInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["username": self.passView.phoneTx.text ?? "",
                     "password": self.passView.passTx.text ?? ""]
         man.requestAPI(params: dict,
                        pageUrl: "/auth/customerlogin",
                        method: .post) { result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 //保存登录信息和跳转到首页

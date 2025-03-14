@@ -183,7 +183,7 @@ extension SearchCompanyAssetSeizureViewController {
         if keyWords.value.isEmpty {
             return
         }
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["type": type,
                     "entityIndustry": entityIndustry,
@@ -194,7 +194,7 @@ extension SearchCompanyAssetSeizureViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/illegalPunish/getAssetsSeizure",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

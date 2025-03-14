@@ -11,10 +11,13 @@ import RxSwift
 import DropMenuBar
 import JXPagingView
 import MJRefresh
+import SkeletonView
 
 class PropertyCompanyViewController: WDBaseViewController {
     
     private let man = RequestManager()
+    
+    var blockModel: ((DataModel) -> Void)?
     
     //城市数据
     var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
@@ -24,13 +27,6 @@ class PropertyCompanyViewController: WDBaseViewController {
     
     //被搜索的关键词
     var searchWordsRelay = BehaviorRelay<String>(value: "")
-    
-    var searchWords: String? {
-        didSet {
-            guard let searchWords = searchWords else { return }
-            searchWordsRelay.accept(searchWords)
-        }
-    }
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -61,19 +57,12 @@ class PropertyCompanyViewController: WDBaseViewController {
         
         // Do any additional setup after loading the view.
         self.searchWordsRelay
-            .debounce(.milliseconds(500),
-                      scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
-                if !text.isEmpty {
-                    self.pageIndex = 1
-                    self.searchListInfo()
-                }else {
-                    self.pageIndex = 1
-                    self.allArray.removeAll()
-                    self.tableView.reloadData()
-                }
+                self.pageIndex = 1
+                self.searchListInfo()
+                self.tableView.reloadData()
             }).disposed(by: disposeBag)
         
         //添加下拉筛选
@@ -90,7 +79,6 @@ class PropertyCompanyViewController: WDBaseViewController {
             self.pageIndex = 1
             self.searchListInfo()
         }
-        
         
         let industryMenu = MenuAction(title: "行业", style: .typeList)!
         self.industryModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
@@ -131,8 +119,10 @@ class PropertyCompanyViewController: WDBaseViewController {
             guard let self = self else { return }
             searchListInfo()
         })
-        
-        
+        tableView.isSkeletonable = true
+        tableView.showAnimatedGradientSkeleton()
+        print("检查骨架屏是否激活========\(tableView.sk.isSkeletonActive)")
+        print("检查是否支持骨架屏=========\(tableView.isSkeletonable)")
     }
     
 }
@@ -151,7 +141,13 @@ extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSou
         numLabel.font = .regularFontOfSize(size: 12)
         numLabel.textAlignment = .left
         let count = String(self.dataModel?.companyPage?.total ?? 0)
-        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)个企业有财产线索")
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)个企业有财产线索", font: .regularFontOfSize(size: 12))
+        headView.addSubview(numLabel)
+        numLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview().offset(12)
+            make.height.equalTo(22)
+        }
         return headView
     }
     
@@ -164,12 +160,21 @@ extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSou
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         let model = self.allArray[indexPath.row]
-        model.searchStr = searchWords
+        model.searchStr = self.searchWordsRelay.value
         cell.model = model
         return cell
         
     }
+}
 
+extension PropertyCompanyViewController: SkeletonTableViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "PropertyListViewCell"
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
 }
 
 /** 网络数据请求 */
@@ -177,21 +182,23 @@ extension PropertyCompanyViewController {
     
     //财产线索列表
     private func searchListInfo() {
-        let dict = ["keyWords": searchWords ?? "",
-                    "searchType": "1",
+        let dict = ["keyWords": self.searchWordsRelay.value,
+                    "searchType": "0",
                     "industryCode": entityIndustry,
                     "areaCode": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
-        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/property/clues/search/findPropertySearchList",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            self?.tableView.mj_header?.endRefreshing()
+            self?.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    if let self = self, let model = success.data, let total = model.total {
+                    if let self = self, let model = success.data, let total = model.companyPage?.total {
+                        self.dataModel = model
+                        self.blockModel?(model)
                         if pageIndex == 1 {
                             self.allArray.removeAll()
                         }
@@ -208,8 +215,10 @@ extension PropertyCompanyViewController {
                         }else {
                             self.tableView.mj_footer?.isHidden = true
                         }
-                        self.tableView.reloadData()
-                        
+                        DispatchQueue.main.async {
+                            self.tableView.hideSkeleton()
+                            self.tableView.reloadData()
+                        }
                     }
                 }
                 break

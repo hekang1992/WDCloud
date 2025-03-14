@@ -73,14 +73,14 @@ extension GetCodeViewController {
     //获取验证码
     func getCodeInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["phone": self.phoneStr,
                     "sendType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in
             guard let self = self else { return }
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 ToastViewConfig.showToast(message: success.msg ?? "")
@@ -96,13 +96,13 @@ extension GetCodeViewController {
     //验证码登录
     func getLoginInfo(from code: String) {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["phone": self.phoneStr,
                     "code": code]
         man.requestAPI(params: dict,
                        pageUrl: "/auth/loginmessage",
                        method: .post) { result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 //保存登录信息和跳转到首页

@@ -320,13 +320,13 @@ extension TwoCompanyView {
     //添加关注
     private func addFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -348,13 +348,13 @@ extension TwoCompanyView {
     //取消关注
     private func deleteFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -381,6 +381,6 @@ extension TwoCompanyView: SkeletonTableViewDataSource {
     }
 
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
 }

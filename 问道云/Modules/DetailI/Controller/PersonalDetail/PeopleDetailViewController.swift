@@ -89,12 +89,12 @@ extension PeopleDetailViewController {
     //获取风险详情数据
     private func getPeopleRiskInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["personNumber": personId]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let model = success.data, let code = success.code, code == 200 {
@@ -144,12 +144,12 @@ extension PeopleDetailViewController {
     private func getPeopleHeadInfo() {
         let dict = [String: Any]()
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let pageUrl = "/firminfo/v2/person/search/\(personId)"
         man.requestAPI(params: dict,
                        pageUrl: pageUrl,
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let model = success.data {

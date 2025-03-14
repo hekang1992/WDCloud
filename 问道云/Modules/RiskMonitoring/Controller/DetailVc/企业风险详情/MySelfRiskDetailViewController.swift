@@ -469,7 +469,7 @@ extension MySelfRiskDetailViewController {
     //获取风险信息
     private func getRiskDetailInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["orgId": enityId,
                     "functionType": functionType,
                     "itemType": itemtype,
@@ -477,7 +477,7 @@ extension MySelfRiskDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk-monitor/statisticOrgRisk",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):

@@ -290,14 +290,14 @@ extension NoticeAllViewController: UITableViewDelegate, UITableViewDataSource {
     
     //获取公告信息
     private func getNoticeListInfo() {
-        ViewHud.addLoadView()
+        
         let dict = ["pageNum": pageNum,
                     "pageSize": pageSize,
                     "shareSearchKey": shareSearchKey,
                     "publishDate": isChoiceDate] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/firminfo/listingAnnouncement/getListingAnnouncementPage", method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

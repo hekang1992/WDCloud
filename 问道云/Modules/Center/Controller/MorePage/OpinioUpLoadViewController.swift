@@ -351,7 +351,7 @@ class OpinioUpLoadViewController: WDBaseViewController {
 extension OpinioUpLoadViewController: UITextViewDelegate {
     
     func submitInfo() {
-        ViewHud.addLoadView()
+        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let question = self.oneStr.value
         let tel = self.phone.value
@@ -369,7 +369,7 @@ extension OpinioUpLoadViewController: UITextViewDelegate {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/operationFeedback",
                        method: .post) { result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -495,12 +495,12 @@ extension OpinioUpLoadViewController: UIImagePickerControllerDelegate, UINavigat
     
     func uploadImage(image: UIImage) {
         // 在这里实现图片上传逻辑
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["orgnumber": "200"]
         let data = image.jpegData(compressionQuality: 0.8)!
         man.uploadImageAPI(params: dict, pageUrl: "/file/upload", data: data, method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let self = self,

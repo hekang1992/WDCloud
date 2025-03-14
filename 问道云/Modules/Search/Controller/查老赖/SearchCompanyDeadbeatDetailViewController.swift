@@ -207,14 +207,14 @@ class SearchCompanyDeadbeatDetailViewController: WDBaseViewController {
 extension SearchCompanyDeadbeatDetailViewController {
     
     private func getDetailInfo() {
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["entityId": self.model?.entityId ?? "",
                     "type": "2"]
         man.requestAPI(params: dict,
                        pageUrl: pageUrl,
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let self = self, let model = success.data {

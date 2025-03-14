@@ -73,14 +73,14 @@ extension BindPhoneViewController {
         let phone = self.bindView.phoneTx.text ?? ""
         let code = self.bindView.codeTx.text ?? ""
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["code": code,
                     "phone": phone,
                     "wechatopenid": wechatopenid]
         man.requestAPI(params: dict,
                        pageUrl: "/auth/wechatBinding",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -105,12 +105,12 @@ extension BindPhoneViewController {
     //获取验证码
     func getCodeInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["phone": self.bindView.phoneTx.text ?? "", "sendType": "4"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):

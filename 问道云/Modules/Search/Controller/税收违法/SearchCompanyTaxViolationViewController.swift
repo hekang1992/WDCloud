@@ -181,7 +181,7 @@ extension SearchCompanyTaxViolationViewController {
         if keyWords.value.isEmpty {
             return
         }
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["type": type,
                     "entityIndustry": entityIndustry,
@@ -192,7 +192,7 @@ extension SearchCompanyTaxViolationViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/illegalPunish/getTaxViolation",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

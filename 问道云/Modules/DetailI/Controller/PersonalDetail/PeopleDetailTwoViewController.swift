@@ -241,7 +241,7 @@ extension PeopleDetailTwoViewController {
     //获取关联企业信息
     private func getCorrelationInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["personId": personId,
                     "holdType": holdType,
                     "pageNum": pageNum,
@@ -249,7 +249,7 @@ extension PeopleDetailTwoViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/person/related-org",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             self.tableView.mj_header?.endRefreshing()
             self.tableView.mj_footer?.endRefreshing()
@@ -289,12 +289,12 @@ extension PeopleDetailTwoViewController {
     
     private func getNumInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["personId": personId]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/person/related-org-count",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let model = success.data {

@@ -51,9 +51,9 @@ class UserAllOrderSController: WDBaseViewController {
         self.orderView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             getCombotype {}
-            ViewHud.addLoadView()
+            
             getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate) {
-                ViewHud.hideLoadView()
+                
             }
         })
         getGroupInfo()
@@ -79,9 +79,9 @@ class UserAllOrderSController: WDBaseViewController {
         leixing1.didSelectedMenuResult = { [weak self] index, model, granted in
             guard let self = self else { return }
             combotypenumber = Int(model?.currentID ?? "0") ?? 0
-            ViewHud.addLoadView()
+            
             getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate) {
-                ViewHud.hideLoadView()
+                
             }
         }
         let leixing2 = MenuAction(title: "订单状态", style: .typeList)!
@@ -90,9 +90,9 @@ class UserAllOrderSController: WDBaseViewController {
         leixing2.didSelectedMenuResult = { [weak self] index, model, granted in
             guard let self = self else { return }
             orderstate = model?.currentID ?? ""
-            ViewHud.addLoadView()
+            
             getOrderInfo(form: combotypenumber, pageNum: 1, orderstate: orderstate) {
-                ViewHud.hideLoadView()
+                
             }
         }
         
@@ -118,7 +118,7 @@ class UserAllOrderSController: WDBaseViewController {
 extension UserAllOrderSController {
     
     func getGroupInfo() {
-        ViewHud.addLoadView()
+        
         let group = DispatchGroup()
         
         group.enter()
@@ -132,7 +132,7 @@ extension UserAllOrderSController {
         }
         
         group.notify(queue: .main) {
-            ViewHud.hideLoadView()
+            
             print("All requests completed.")
         }
     }
@@ -150,7 +150,7 @@ extension UserAllOrderSController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/myorder",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             self.orderView.tableView.mj_header?.endRefreshing()
             self.orderView.tableView.mj_footer?.endRefreshing()

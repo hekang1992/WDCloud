@@ -97,16 +97,20 @@ extension APIService: TargetType {
 class RequestManager {
     
     private var currentRequest: Cancellable? // 用于保存当前的请求
+    
     private let provider = MoyaProvider<APIService>()
     
     private func requestData(target: APIService, completion: @escaping (Result<BaseModel, Error>) -> Void) {
         // 取消上一次的请求
+        ViewHud.addLoadView()
         if let lastRequest = currentRequest {
+            ViewHud.hideLoadView()
             lastRequest.cancel()
             print("🔴 上一次请求已取消")
         }
         print("🟢 发起新的请求: \(target)")
         currentRequest = provider.request(target) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let response):
                 do {
@@ -117,7 +121,6 @@ class RequestManager {
                     completion(.failure(error))
                 }
             case .failure(let error):
-                ViewHud.hideLoadView()
                 completion(.failure(error))
             }
         }

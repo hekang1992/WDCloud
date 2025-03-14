@@ -189,7 +189,7 @@ class SearchOneReportViewController: WDBaseViewController {
 extension SearchOneReportViewController {
     
     private func getOneReportInfo() {
-        ViewHud.addLoadView()
+        
         let dict = ["pageIndex": pageIndex,
                     "pageSize": 20,
                     "keyword": keywords,
@@ -198,7 +198,7 @@ extension SearchOneReportViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org-list",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -245,13 +245,13 @@ extension SearchOneReportViewController {
     //最近搜索
     private func getlastSearch() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["searchType": "",
                     "moduleId": "09"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -292,7 +292,7 @@ extension SearchOneReportViewController {
     //浏览历史
     private func getBrowsingHistory() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "",
@@ -300,7 +300,7 @@ extension SearchOneReportViewController {
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -361,7 +361,7 @@ extension SearchOneReportViewController {
     //热搜
     private func getHotWords() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["moduleId": "09"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
@@ -415,13 +415,13 @@ extension SearchOneReportViewController {
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let dict = ["searchType": "",
                         "moduleId": "09"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -443,7 +443,7 @@ extension SearchOneReportViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
                         "moduleId": "09",
@@ -451,7 +451,7 @@ extension SearchOneReportViewController {
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
                            method: .get) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

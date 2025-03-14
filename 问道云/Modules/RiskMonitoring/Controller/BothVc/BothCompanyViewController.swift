@@ -200,7 +200,7 @@ extension BothCompanyViewController: UITableViewDataSource, UITableViewDelegate 
 extension BothCompanyViewController {
     
     func getCompanyInfo() {
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["reportTermType": "",
                     "groupId": groupId,
@@ -209,7 +209,7 @@ extension BothCompanyViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/queryRiskMonitorOrg",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.dailyView.tableView.mj_header?.endRefreshing()
             self?.dailyView.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -315,7 +315,7 @@ extension BothCompanyViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/cancelRiskMonitorOrg",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {

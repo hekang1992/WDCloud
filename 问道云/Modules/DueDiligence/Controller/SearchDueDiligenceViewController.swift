@@ -130,7 +130,7 @@ class SearchDueDiligenceViewController: WDBaseViewController {
 extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func getDueListInfo() {
-        ViewHud.addLoadView()
+        
         let dict = ["pageIndex": pageIndex,
                     "pageSize": 20,
                     "keyword": keywords,
@@ -139,7 +139,7 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org-list",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -222,7 +222,7 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
     }
     
     private func startDueDiligence(form model: pageDataModel) {
-        ViewHud.addLoadView()
+        
         let firmnumber = model.orgInfo?.orgId ?? ""
         let firmname = model.orgInfo?.orgName ?? ""
         let registeredcapital = model.orgInfo?.regCap ?? ""
@@ -242,7 +242,7 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
                     "customernumber": customernumber]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/dd/ddFirm/saveFirm", method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let self = self,

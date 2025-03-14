@@ -400,7 +400,7 @@ class AddCompanyViewController: WDBaseViewController {
 extension AddCompanyViewController {
     
     private func leftInfo() {
-        ViewHud.addLoadView()
+        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let entityid = self.threeTx.text ?? ""
         let addtype = "1"
@@ -411,7 +411,7 @@ extension AddCompanyViewController {
                     "phone": phone]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/operation/operationAddentity/add", method: .post) { result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -425,7 +425,7 @@ extension AddCompanyViewController {
     }
     
     private func rightInfo() {
-        ViewHud.addLoadView()
+        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let entityname = self.cTx.text ?? ""
         let addtype = "2"
@@ -438,7 +438,7 @@ extension AddCompanyViewController {
                     "phone": phone]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/operation/operationAddentity/add", method: .post) { result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {

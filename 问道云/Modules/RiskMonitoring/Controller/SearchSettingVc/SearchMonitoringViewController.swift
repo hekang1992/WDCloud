@@ -280,11 +280,11 @@ extension SearchMonitoringViewController {
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitortarget/riskInquiryEntity",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -328,13 +328,13 @@ extension SearchMonitoringViewController {
     //查询监控分组
     func getMonitoringGroupInfo(complete: @escaping () -> Void) {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitorgroup/selectMonitorGroup",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -357,11 +357,11 @@ extension SearchMonitoringViewController {
                     "groupId": groupnumber,
                     "firmname": firmname] as [String : Any]
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -390,7 +390,7 @@ extension SearchMonitoringViewController {
     private func addMonitoringPeopleInfo(from model: rowsModel,
                                          peopleModel: riskMonitorPersonDtoListModel,
                                          listView: MonitoringListView) {
-        ViewHud.addLoadView()
+        
         let personId = peopleModel.personId ?? ""
         let personName = peopleModel.personName ?? ""
         let customerId = GetSaveLoginInfoConfig.getCustomerNumber()
@@ -403,7 +403,7 @@ extension SearchMonitoringViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):

@@ -200,7 +200,7 @@ extension BothPeopleViewController: UITableViewDataSource, UITableViewDelegate {
 extension BothPeopleViewController {
     
     func getPeopleInfo() {
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["termType": "",
                     "groupId": groupId,
@@ -209,7 +209,7 @@ extension BothPeopleViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/queryRiskMonitorPerson",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.dailyView.tableView.mj_header?.endRefreshing()
             self?.dailyView.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -315,7 +315,7 @@ extension BothPeopleViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/cancelRiskMonitorPerson",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {

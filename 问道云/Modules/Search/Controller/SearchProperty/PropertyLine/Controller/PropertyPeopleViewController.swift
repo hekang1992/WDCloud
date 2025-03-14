@@ -24,13 +24,6 @@ class PropertyPeopleViewController: WDBaseViewController {
     //被搜索的关键词
     var searchWordsRelay = BehaviorRelay<String>(value: "")
     
-    var searchWords: String? {
-        didSet {
-            guard let searchWords = searchWords else { return }
-            searchWordsRelay.accept(searchWords)
-        }
-    }
-    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         return tableView
@@ -47,8 +40,6 @@ class PropertyPeopleViewController: WDBaseViewController {
         
         // Do any additional setup after loading the view.
         self.searchWordsRelay
-            .debounce(.milliseconds(500),
-                      scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
@@ -111,17 +102,17 @@ extension PropertyPeopleViewController {
     
     //财产线索列表
     private func searchListInfo() {
-        let dict = ["keyWords": searchWords ?? "",
+        let dict = ["keyWords": self.searchWordsRelay.value,
                     "searchType": "2",
                     "industryCode": entityIndustry,
                     "areaCode": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/property/clues/search/findPropertySearchList",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {

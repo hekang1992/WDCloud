@@ -192,13 +192,13 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
     //最近搜索
     private func getlastSearch() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["searchType": "",
                     "moduleId": "03"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -239,7 +239,7 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
     //浏览历史
     private func getBrowsingHistory() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "",
@@ -247,7 +247,7 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -310,7 +310,7 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
     //热搜
     private func getHotWords() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let dict = ["moduleId": "03"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
@@ -376,13 +376,13 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let dict = ["searchType": "",
                         "moduleId": "03"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -404,7 +404,7 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            ViewHud.addLoadView()
+            
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
                         "moduleId": "03",
@@ -412,7 +412,7 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
                            method: .get) { result in
-                ViewHud.hideLoadView()
+                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

@@ -182,7 +182,7 @@ extension SearchCompanyExternalGuaranteeViewController {
         if keyWords.value.isEmpty {
             return
         }
-        ViewHud.addLoadView()
+        
         let man = RequestManager()
         let dict = ["type": type,
                     "entityIndustry": entityIndustry,
@@ -193,7 +193,7 @@ extension SearchCompanyExternalGuaranteeViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/illegalPunish/getExternalGuarantees",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

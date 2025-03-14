@@ -56,7 +56,7 @@ extension OneTicketViewController {
     //获取列表信息
     func getListInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "pageNum": pageNum,
@@ -64,7 +64,7 @@ extension OneTicketViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/invoiceRecord/selecinvoicerise",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             self.oneTicketView.tableView.mj_header?.endRefreshing()
             self.oneTicketView.tableView.mj_footer?.endRefreshing()

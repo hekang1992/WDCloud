@@ -106,7 +106,7 @@ extension PeopleUnioRiskViewController {
     //获取关联风险
     private func getUnioRiskInfo() {
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["functionType": functionType,
                     "relevaCompType": relevaCompType,
@@ -116,7 +116,7 @@ extension PeopleUnioRiskViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk-monitor/statisticPersonRisk",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             guard let self = self else { return }
             switch result {
             case .success(let success):

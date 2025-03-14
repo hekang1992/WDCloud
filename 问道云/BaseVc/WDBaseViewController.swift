@@ -425,7 +425,7 @@ extension WDBaseViewController {
                 }
                 break
             case .failure(_):
-                ViewHud.hideLoadView()
+                
                 break
             }
         }

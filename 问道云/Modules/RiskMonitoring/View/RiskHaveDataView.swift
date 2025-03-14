@@ -46,7 +46,7 @@ extension DailyCompanyViewController: SkeletonTableViewDataSource {
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
 }
 
@@ -56,7 +56,7 @@ extension DailyPeopleViewController: SkeletonTableViewDataSource {
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
 }
 
@@ -66,7 +66,7 @@ extension WeekCompanyViewController: SkeletonTableViewDataSource {
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
 }
 
@@ -76,7 +76,7 @@ extension WeekPeopleViewController: SkeletonTableViewDataSource {
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
 }
 
@@ -86,7 +86,7 @@ extension MonthCompanyViewController: SkeletonTableViewDataSource {
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
 }
 
@@ -97,7 +97,7 @@ extension MonthPeopleViewController: SkeletonTableViewDataSource {
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
 }
 
@@ -107,7 +107,7 @@ extension BothCompanyViewController: SkeletonTableViewDataSource {
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
 }
 
@@ -118,7 +118,7 @@ extension BothPeopleViewController: SkeletonTableViewDataSource {
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
 }
 

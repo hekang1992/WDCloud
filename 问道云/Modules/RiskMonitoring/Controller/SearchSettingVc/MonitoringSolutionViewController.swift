@@ -324,11 +324,11 @@ extension MonitoringSolutionViewController {
         let liststr = listArray.joined()
         let man = RequestManager()
         let dict = ["pushOffset": liststr]
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-config/updateRiskMonitorConfig",
                        method: .post) { result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -345,11 +345,11 @@ extension MonitoringSolutionViewController {
     private func getUserSettingInfo() {
         let dict = [String: Any]()
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-config/getRiskMonitorConfig",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {

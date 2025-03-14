@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import SkeletonView
 
 class PropertyListViewCell: BaseViewCell {
     
     lazy var logoImageView: UIImageView = {
         let logoImageView = UIImageView()
+        logoImageView.isSkeletonable = true
         return logoImageView
     }()
     
@@ -19,12 +21,14 @@ class PropertyListViewCell: BaseViewCell {
         namelabel.textColor = UIColor.init(cssStr: "#333333")
         namelabel.textAlignment = .left
         namelabel.font = .mediumFontOfSize(size: 15)
+        namelabel.isSkeletonable = true
         return namelabel
     }()
     
     lazy var monitoringBtn: UIButton = {
         let monitoringBtn = UIButton(type: .custom)
         monitoringBtn.setImage(UIImage(named: "propertymongijan"), for: .normal)
+        monitoringBtn.isSkeletonable = true
         return monitoringBtn
     }()
     
@@ -33,6 +37,7 @@ class PropertyListViewCell: BaseViewCell {
         coverView.backgroundColor = .init(cssStr: "#F2F8FF")
         coverView.layer.cornerRadius = 2
         coverView.layer.masksToBounds = true
+        coverView.isSkeletonable = true
         return coverView
     }()
     
@@ -65,17 +70,19 @@ class PropertyListViewCell: BaseViewCell {
     lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")
+        lineView.isSkeletonable = true
         return lineView
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        isSkeletonable = true
         contentView.addSubview(logoImageView)
         contentView.addSubview(namelabel)
         contentView.addSubview(monitoringBtn)
         contentView.addSubview(coverView)
         coverView.addSubview(desclabel)
-        contentView.addSubview(collectionView)
+//        contentView.addSubview(collectionView)
         contentView.addSubview(lineView)
         logoImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
@@ -104,14 +111,14 @@ class PropertyListViewCell: BaseViewCell {
             make.left.equalToSuperview().offset(6.5)
             make.size.equalTo(CGSize(width: 65, height: 18.5))
         }
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(coverView.snp.bottom)
-            make.left.equalToSuperview().offset(10)
-            make.right.equalToSuperview()
-            make.height.equalTo(0)
-        }
+//        collectionView.snp.makeConstraints { make in
+//            make.top.equalTo(coverView.snp.bottom)
+//            make.left.equalToSuperview().offset(10)
+//            make.right.equalToSuperview()
+//            make.height.equalTo(1)
+//        }
         lineView.snp.makeConstraints { make in
-            make.top.equalTo(collectionView.snp.bottom).offset(14)
+            make.top.equalTo(coverView.snp.bottom).offset(14)
             make.left.right.equalToSuperview()
             make.height.equalTo(5)
             make.bottom.equalToSuperview()
@@ -125,6 +132,7 @@ class PropertyListViewCell: BaseViewCell {
     var model: DataModel? {
         didSet {
             guard let model = model else { return }
+            
             let companyName = model.entityName ?? ""
             
             let logoUrl = model.logoUrl ?? ""

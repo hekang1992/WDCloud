@@ -162,11 +162,11 @@ extension AddInvoiceViewController: UITableViewDelegate {
                     "matchType": "1",
                     "queryBoss": false,
                     "pageSize": 20] as [String : Any]
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org-list",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if let model = success.data, let pageData = model.pageData, pageData.count > 0 {
@@ -204,11 +204,11 @@ extension AddInvoiceViewController: UITableViewDelegate {
                     "defaultstate": defaultstate,
                     "contact": customernumber] as [String : Any]
         let man = RequestManager()
-        ViewHud.addLoadView()
+        
         man.requestAPI(params: dict,
                        pageUrl: "/operation/invoiceriseit/add",
                        method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
+            
             switch result {
             case .success(let success):
                 if success.code == 200 {
