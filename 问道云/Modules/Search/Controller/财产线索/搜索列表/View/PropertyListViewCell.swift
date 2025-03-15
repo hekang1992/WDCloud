@@ -10,6 +10,9 @@ import SkeletonView
 
 class PropertyListViewCell: BaseViewCell {
     
+    //监控block
+    var monitoringBlock: (() -> Void)?
+    
     lazy var logoImageView: UIImageView = {
         let logoImageView = UIImageView()
         logoImageView.isSkeletonable = true
@@ -153,6 +156,10 @@ class PropertyListViewCell: BaseViewCell {
             make.height.equalTo(5)
             make.bottom.equalToSuperview()
         }
+        
+        monitoringBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.monitoringBlock?()
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -183,8 +190,8 @@ class PropertyListViewCell: BaseViewCell {
                 monitoringBtn.setImage(UIImage(named: "propertymongijan"), for: .normal)
             }
             
-            numLabel.attributedText = GetRedStrConfig.getRedStr(from: "0", fullText: "当前财产线索0条,", colorStr: "#FF4D4F")
-            moneyLabel.attributedText = GetRedStrConfig.getRedStr(from: "0", fullText: "预估价值0万元", colorStr: "#FF4D4F")
+            numLabel.attributedText = GetRedStrConfig.getRedStr(from: "0", fullText: "当前财产线索0条,", colorStr: "#FF4D4F", font: UIFont.regularFontOfSize(size: 13))
+            moneyLabel.attributedText = GetRedStrConfig.getRedStr(from: "0", fullText: "预估价值0万元", colorStr: "#FF4D4F", font: UIFont.regularFontOfSize(size: 13))
             
             let cluesDataList = model.cluesDataList ?? []
             if cluesDataList.isEmpty {
@@ -214,7 +221,6 @@ extension PropertyListViewCell: UICollectionViewDelegate, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PropertyLineListViewCell", for: indexPath) as! PropertyLineListViewCell
         let model = self.model?.cluesDataList?[indexPath.row]
         cell.model = model
-        cell.backgroundColor = .random()
         return cell
     }
     

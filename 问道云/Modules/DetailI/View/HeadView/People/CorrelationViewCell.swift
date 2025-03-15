@@ -76,7 +76,7 @@ class CorrelationViewCell: BaseViewCell {
         statusLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(19)
             make.right.equalToSuperview().offset(-12)
-            make.height.equalTo(15)
+            make.height.equalTo(18.pix())
         }
         
         namelabel.snp.makeConstraints { make in

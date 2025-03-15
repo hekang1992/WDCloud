@@ -207,11 +207,9 @@ extension CompanyDetailViewController {
         let man = RequestManager()
         let dict = ["orgId": model.basicInfo?.orgId ?? "",
                     "groupId": ""]
-        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
                        method: .post) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -238,19 +236,38 @@ extension CompanyDetailViewController {
     
     //取消监控
     private func cancelMonitoring(from model: DataModel) {
-        
+        ShowAlertManager.showAlert(title: "取消监控", message: "是否取消监控?", confirmAction: {
+            let man = RequestManager()
+            let dict = ["orgId": model.basicInfo?.orgId ?? "",
+                        "groupId": ""]
+            man.requestAPI(params: dict,
+                           pageUrl: "/entity/monitor-org/cancelRiskMonitorOrg",
+                           method: .post) { [weak self] result in
+                switch result {
+                case .success(let success):
+                    if success.code == 200 {
+                        if let self = self {
+                            model.monitorInfo?.monitorStatus = 0
+                            refreshFooterInfo(form: model)
+                            ToastViewConfig.showToast(message: "取消监控成功")
+                        }
+                    }
+                    break
+                case .failure(_):
+                    break
+                }
+            }
+        })
     }
     
     //添加关注
     private func addFocus(from model: DataModel) {
-        
         let man = RequestManager()
         let entityId = model.basicInfo?.orgId ?? ""
         let dict = ["entityId": entityId, "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -271,14 +288,12 @@ extension CompanyDetailViewController {
     //取消关注
     private func cancelFocus(from model: DataModel) {
         ShowAlertManager.showAlert(title: "取消关注", message: "是否取消关注?", confirmAction: {
-            
             let man = RequestManager()
             let entityId = model.basicInfo?.orgId ?? ""
             let dict = ["entityId": entityId, "followTargetType": "1"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/follow/add-or-cancel",
                            method: .post) { [weak self] result in
-                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

@@ -1,5 +1,5 @@
 //
-//  PropertyCompanyViewController.swift
+//  SearchCompanyControllingPersonViewController.swift
 //  问道云
 //
 //  Created by Andrew on 2025/2/20.
@@ -13,16 +13,10 @@ import JXPagingView
 import MJRefresh
 import SkeletonView
 
-class PropertyCompanyViewController: WDBaseViewController {
+class SearchCompanyControllingPersonViewController: WDBaseViewController {
     
     private let man = RequestManager()
-    
-    var blockModel: ((DataModel) -> Void)?
-    
-    //城市数据
-    var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
-    var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
-    
+
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
     //被搜索的关键词
@@ -47,8 +41,6 @@ class PropertyCompanyViewController: WDBaseViewController {
     
     //搜索参数
     var pageIndex: Int = 1
-    var entityArea: String = ""//地区
-    var entityIndustry: String = ""//行业
     var allArray: [DataModel] = []//加载更多
     var dataModel: DataModel?
     
@@ -66,48 +58,9 @@ class PropertyCompanyViewController: WDBaseViewController {
                 }
             }).disposed(by: disposeBag)
         
-        //添加下拉筛选
-        let regionMenu = MenuAction(title: "全国", style: .typeList)!
-        self.regionModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
-            guard let self = self else { return }
-            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
-            regionMenu.listDataSource = regionArray
-        }).disposed(by: disposeBag)
-        
-        regionMenu.didSelectedMenuResult = { [weak self] index, model, grand in
-            guard let self = self else { return }
-            self.entityArea = model?.currentID ?? ""
-            self.pageIndex = 1
-            self.searchListInfo()
-        }
-        
-        let industryMenu = MenuAction(title: "行业", style: .typeList)!
-        self.industryModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
-            guard let self = self else { return }
-            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
-            regionMenu.listDataSource = regionArray
-        }).disposed(by: disposeBag)
-        
-        industryMenu.didSelectedMenuResult = { [weak self] index, model, grand in
-            guard let self = self else { return }
-            self.entityArea = model?.currentID ?? ""
-            self.pageIndex = 1
-            self.searchListInfo()
-        }
-        
-        let menuView = DropMenuBar(action: [regionMenu, industryMenu])!
-        menuView.backgroundColor = .white
-        view.addSubview(menuView)
-        menuView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.top.equalToSuperview().offset(1)
-            make.height.equalTo(30)
-        }
-        
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(menuView.snp.bottom).offset(1)
-            make.left.right.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
@@ -128,7 +81,7 @@ class PropertyCompanyViewController: WDBaseViewController {
     
 }
 
-extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchCompanyControllingPersonViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25
@@ -175,7 +128,7 @@ extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSou
     }
 }
 
-extension PropertyCompanyViewController: SkeletonTableViewDataSource {
+extension SearchCompanyControllingPersonViewController: SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "PropertyListViewCell"
     }
@@ -186,18 +139,15 @@ extension PropertyCompanyViewController: SkeletonTableViewDataSource {
 }
 
 /** 网络数据请求 */
-extension PropertyCompanyViewController {
+extension SearchCompanyControllingPersonViewController {
     
     //财产线索列表
     private func searchListInfo() {
         let dict = ["keyWords": self.searchWordsRelay.value,
-                    "searchType": "0",
-                    "industryCode": entityIndustry,
-                    "areaCode": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/property/clues/search/findPropertySearchList",
+                       pageUrl: "/firminfo/v2/home-page/actual/org-page",
                        method: .post) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
@@ -206,7 +156,6 @@ extension PropertyCompanyViewController {
                 if success.code == 200 {
                     if let self = self, let model = success.data, let total = model.companyPage?.total {
                         self.dataModel = model
-                        self.blockModel?(model)
                         if pageIndex == 1 {
                             self.allArray.removeAll()
                         }
@@ -262,7 +211,7 @@ extension PropertyCompanyViewController {
     
 }
 
-extension PropertyCompanyViewController: JXPagingViewListViewDelegate {
+extension SearchCompanyControllingPersonViewController: JXPagingViewListViewDelegate {
     
     func listView() -> UIView {
         return view

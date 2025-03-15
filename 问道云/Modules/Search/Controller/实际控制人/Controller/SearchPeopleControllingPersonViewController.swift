@@ -1,5 +1,5 @@
 //
-//  PropertyCompanyViewController.swift
+//  SearchPeopleControllingPersonViewController.swift
 //  问道云
 //
 //  Created by Andrew on 2025/2/20.
@@ -13,15 +13,11 @@ import JXPagingView
 import MJRefresh
 import SkeletonView
 
-class PropertyCompanyViewController: WDBaseViewController {
+class SearchPeopleControllingPersonViewController: WDBaseViewController {
     
     private let man = RequestManager()
     
     var blockModel: ((DataModel) -> Void)?
-    
-    //城市数据
-    var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
-    var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
@@ -32,7 +28,7 @@ class PropertyCompanyViewController: WDBaseViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.register(PropertyListViewCell.self, forCellReuseIdentifier: "PropertyListViewCell")
+        tableView.register(SearchContorlPeopleViewCell.self, forCellReuseIdentifier: "SearchContorlPeopleViewCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
@@ -47,9 +43,7 @@ class PropertyCompanyViewController: WDBaseViewController {
     
     //搜索参数
     var pageIndex: Int = 1
-    var entityArea: String = ""//地区
-    var entityIndustry: String = ""//行业
-    var allArray: [DataModel] = []//加载更多
+    var allArray: [itemsModel] = []//加载更多
     var dataModel: DataModel?
     
     override func viewDidLoad() {
@@ -66,48 +60,9 @@ class PropertyCompanyViewController: WDBaseViewController {
                 }
             }).disposed(by: disposeBag)
         
-        //添加下拉筛选
-        let regionMenu = MenuAction(title: "全国", style: .typeList)!
-        self.regionModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
-            guard let self = self else { return }
-            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
-            regionMenu.listDataSource = regionArray
-        }).disposed(by: disposeBag)
-        
-        regionMenu.didSelectedMenuResult = { [weak self] index, model, grand in
-            guard let self = self else { return }
-            self.entityArea = model?.currentID ?? ""
-            self.pageIndex = 1
-            self.searchListInfo()
-        }
-        
-        let industryMenu = MenuAction(title: "行业", style: .typeList)!
-        self.industryModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
-            guard let self = self else { return }
-            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
-            regionMenu.listDataSource = regionArray
-        }).disposed(by: disposeBag)
-        
-        industryMenu.didSelectedMenuResult = { [weak self] index, model, grand in
-            guard let self = self else { return }
-            self.entityArea = model?.currentID ?? ""
-            self.pageIndex = 1
-            self.searchListInfo()
-        }
-        
-        let menuView = DropMenuBar(action: [regionMenu, industryMenu])!
-        menuView.backgroundColor = .white
-        view.addSubview(menuView)
-        menuView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.top.equalToSuperview().offset(1)
-            make.height.equalTo(30)
-        }
-        
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(menuView.snp.bottom).offset(1)
-            make.left.right.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
@@ -128,7 +83,7 @@ class PropertyCompanyViewController: WDBaseViewController {
     
 }
 
-extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchPeopleControllingPersonViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25
@@ -141,8 +96,8 @@ extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSou
         numLabel.textColor = UIColor.init(cssStr: "#666666")
         numLabel.font = .regularFontOfSize(size: 12)
         numLabel.textAlignment = .left
-        let count = String(self.dataModel?.companyPage?.total ?? 0)
-        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)个企业有财产线索", font: .regularFontOfSize(size: 12))
+        let count = String(self.dataModel?.total ?? 0)
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)位相关人员", font: .regularFontOfSize(size: 12))
         headView.addSubview(numLabel)
         numLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -157,27 +112,28 @@ extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PropertyListViewCell", for: indexPath) as! PropertyListViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchContorlPeopleViewCell", for: indexPath) as! SearchContorlPeopleViewCell
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         let model = self.allArray[indexPath.row]
         model.searchStr = self.searchWordsRelay.value
-        cell.model = model
-        cell.monitoringBlock = { [weak self] in
-            self?.monitroingInfo(from: model)
-        }
+        cell.model.accept(model)
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        print("公司名称=====\(model.entityName ?? "")")
+        let detailVc = ContorlDetailViewViewController()
+        let entityId = model.personId ?? ""
+        detailVc.entityId = entityId
+        detailVc.entityCategory = "2"
+        self.navigationController?.pushViewController(detailVc, animated: true)
     }
 }
 
-extension PropertyCompanyViewController: SkeletonTableViewDataSource {
+extension SearchPeopleControllingPersonViewController: SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "PropertyListViewCell"
+        return "SearchContorlPeopleViewCell"
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -186,32 +142,29 @@ extension PropertyCompanyViewController: SkeletonTableViewDataSource {
 }
 
 /** 网络数据请求 */
-extension PropertyCompanyViewController {
+extension SearchPeopleControllingPersonViewController {
     
-    //财产线索列表
+    //实际控制人
     private func searchListInfo() {
-        let dict = ["keyWords": self.searchWordsRelay.value,
-                    "searchType": "0",
-                    "industryCode": entityIndustry,
-                    "areaCode": entityArea,
+        let dict = ["keywords": self.searchWordsRelay.value,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/property/clues/search/findPropertySearchList",
-                       method: .post) { [weak self] result in
+                       pageUrl: "/firminfo/v2/home-page/actual/person",
+                       method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    if let self = self, let model = success.data, let total = model.companyPage?.total {
+                    if let self = self, let model = success.data, let total = model.total {
                         self.dataModel = model
                         self.blockModel?(model)
                         if pageIndex == 1 {
                             self.allArray.removeAll()
                         }
                         pageIndex += 1
-                        let pageData = model.companyPage?.data ?? []
+                        let pageData = model.items ?? []
                         self.allArray.append(contentsOf: pageData)
                         if total != 0 {
                             self.emptyView.removeFromSuperview()
@@ -262,7 +215,7 @@ extension PropertyCompanyViewController {
     
 }
 
-extension PropertyCompanyViewController: JXPagingViewListViewDelegate {
+extension SearchPeopleControllingPersonViewController: JXPagingViewListViewDelegate {
     
     func listView() -> UIView {
         return view

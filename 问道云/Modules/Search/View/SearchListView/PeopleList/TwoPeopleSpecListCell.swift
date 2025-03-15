@@ -197,7 +197,7 @@ extension TwoPeopleSpecListCell: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TwoPeopleCoopViewCell", for: indexPath) as! TwoPeopleCoopViewCell
         let model = self.model.value?.shareholderList?[indexPath.row]
-        cell.model1.accept(model)
+        cell.model.accept(model)
         return cell
     }
     

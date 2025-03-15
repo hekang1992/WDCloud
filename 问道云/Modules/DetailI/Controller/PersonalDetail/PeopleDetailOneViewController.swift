@@ -105,7 +105,7 @@ extension PeopleDetailOneViewController: UICollectionViewDelegateFlowLayout, UIC
         let newArray = Array(modelArray.dropLast())[indexPath.section]
         let model = newArray.children?[indexPath.row]
         let oneUrl = base_url + (model?.path ?? "")
-        pageUrl = oneUrl + "?" + "personNumber=\(personId)"
+        pageUrl = oneUrl + "?" + "personId=\(personId)"
         self.pushWebPage(from: pageUrl)
     }
     

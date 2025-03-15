@@ -147,7 +147,7 @@ class ToastViewConfig {
     static func showToast(message: String) {
         ToastView.appearance().font = UIFont.boldSystemFont(ofSize: 20)
         let toast = Toast(text: message, duration: 1.0)
-        if let window = UIApplication.shared.windows.first {
+        if UIApplication.shared.windows.first != nil {
             let centerY = SCREEN_HEIGHT * 0.5
             ToastView.appearance().bottomOffsetPortrait = centerY
             ToastView.appearance().bottomOffsetLandscape = centerY

@@ -464,7 +464,7 @@ extension PeopleDetailHeadView: UICollectionViewDelegate, UICollectionViewDataSo
         if collectionView == self.pcollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TwoPeopleCoopViewCell", for: indexPath) as! TwoPeopleCoopViewCell
             let model = self.model.value?.shareholderList?[indexPath.row]
-            cell.model1.accept(model)
+            cell.model.accept(model)
             return cell
         }else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompanyDetailCommonServiceCell", for: indexPath) as! CompanyDetailCommonServiceCell

@@ -64,6 +64,10 @@
 		7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */; };
 		7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E92D0008D10043C196 /* WLUnitField.m */; };
 		732926972D85313700E93F96 /* PropertyLineListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732926962D85313700E93F96 /* PropertyLineListViewCell.swift */; };
+		7329269B2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329269A2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift */; };
+		7329269D2D85698F00E93F96 /* ContorlPeopleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329269C2D85698E00E93F96 /* ContorlPeopleListView.swift */; };
+		7329269F2D857B0D00E93F96 /* ContorlDetailViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329269E2D857B0D00E93F96 /* ContorlDetailViewViewController.swift */; };
+		732926A12D857C4100E93F96 /* ContorlDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732926A02D857C4100E93F96 /* ContorlDetailViewCell.swift */; };
 		7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */; };
 		7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */; };
 		7330CB822D23E65900778D54 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB812D23E65900778D54 /* ContactManager.swift */; };
@@ -452,6 +456,10 @@
 		7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLUnitFieldTextRange.m; sourceTree = "<group>"; };
 		7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "问道云-Bridging-Header.h"; sourceTree = "<group>"; };
 		732926962D85313700E93F96 /* PropertyLineListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineListViewCell.swift; sourceTree = "<group>"; };
+		7329269A2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContorlPeopleViewCell.swift; sourceTree = "<group>"; };
+		7329269C2D85698E00E93F96 /* ContorlPeopleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContorlPeopleListView.swift; sourceTree = "<group>"; };
+		7329269E2D857B0D00E93F96 /* ContorlDetailViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContorlDetailViewViewController.swift; sourceTree = "<group>"; };
+		732926A02D857C4100E93F96 /* ContorlDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContorlDetailViewCell.swift; sourceTree = "<group>"; };
 		7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateMembershipViewController.swift; sourceTree = "<group>"; };
 		7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateMembershipView.swift; sourceTree = "<group>"; };
 		7330CB812D23E65900778D54 /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
@@ -984,12 +992,32 @@
 			path = "Tab切换";
 			sourceTree = "<group>";
 		};
-		7340E1662D5CB930008FD5C7 /* 实际控制人 */ = {
+		732926982D8566A400E93F96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7329269A2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift */,
+				7329269C2D85698E00E93F96 /* ContorlPeopleListView.swift */,
+				732926A02D857C4100E93F96 /* ContorlDetailViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		732926992D8566AB00E93F96 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				7340E1672D5CBB36008FD5C7 /* SearchControllingPersonViewController.swift */,
 				7340E1692D5CBB4D008FD5C7 /* SearchPeopleControllingPersonViewController.swift */,
 				7340E16B2D5CBB5A008FD5C7 /* SearchCompanyControllingPersonViewController.swift */,
+				7329269E2D857B0D00E93F96 /* ContorlDetailViewViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7340E1662D5CB930008FD5C7 /* 实际控制人 */ = {
+			isa = PBXGroup;
+			children = (
+				732926982D8566A400E93F96 /* View */,
+				732926992D8566AB00E93F96 /* Controller */,
 			);
 			path = "实际控制人";
 			sourceTree = "<group>";
@@ -2134,6 +2162,7 @@
 				73C7524E2D1D5A3100C47187 /* FocusSearchViewController.swift in Sources */,
 				73807D4E2D3369C500F8B90D /* CompanyBothViewController.swift in Sources */,
 				73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */,
+				7329269F2D857B0D00E93F96 /* ContorlDetailViewViewController.swift in Sources */,
 				73B3FA6B2D7EB9A60077766F /* Constants.swift in Sources */,
 				735A3F6D2D6572B000448268 /* SearchOneReportCell.swift in Sources */,
 				7340E18F2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift in Sources */,
@@ -2340,6 +2369,7 @@
 				739DCA0A2D66E012009CFC78 /* PropertyThreeViewController.swift in Sources */,
 				7340E19D2D5CD52A008FD5C7 /* SearchCompanyCourtNoticeViewController.swift in Sources */,
 				73B3329A2D30CF5100934773 /* CompanyLocationViewController.swift in Sources */,
+				7329269D2D85698F00E93F96 /* ContorlPeopleListView.swift in Sources */,
 				73C36A752D2D08DA00D6DC46 /* SearchRiskViewController.swift in Sources */,
 				739DCA042D66DF6F009CFC78 /* PropertyTabBarController.swift in Sources */,
 				73EDE9DF2D599F8400A0A7E3 /* NoticeAllViewController.swift in Sources */,
@@ -2395,6 +2425,7 @@
 				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,
 				73C0070F2D644F55003C3CE1 /* DueDiligenceTwoView.swift in Sources */,
 				73090B6F2D82DE7900041457 /* PropertyHeadView.swift in Sources */,
+				7329269B2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift in Sources */,
 				7374163A2D0ED72600E6CD23 /* WechatPushViewController.swift in Sources */,
 				7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */,
 				73C36A812D2D1BAA00D6DC46 /* SearchHotWordsListView.swift in Sources */,
@@ -2407,6 +2438,7 @@
 				73868A452D55F55A00CE107D /* MonthReportViewController.swift in Sources */,
 				7340E16C2D5CBB5A008FD5C7 /* SearchCompanyControllingPersonViewController.swift in Sources */,
 				734056A92D38E34C009C9C96 /* CorrelationViewCell.swift in Sources */,
+				732926A12D857C4100E93F96 /* ContorlDetailViewCell.swift in Sources */,
 				730384482D606572008AA7C3 /* MyOpinionViewCell.swift in Sources */,
 				73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */,
 				7340E1732D5CC6C5008FD5C7 /* SearchCompanyEnvironmentalPenaltyViewController.swift in Sources */,

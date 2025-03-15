@@ -48,11 +48,10 @@ class DataModel {
     var combonumber: Int?
     var appleById: Int?
     var total: Int?//列表总个数
-    var totalNum: Int?
+    var orgTotal: Int?
     var isDistributor: String?//是否是分销商
     var rows: [rowsModel]?
     var data: [rowsModel]?
-    var dataList: [rowsModel]?
     var ordernumber: String?
     var dataid: String?
     var firmname: String?
@@ -181,6 +180,7 @@ class DataModel {
     var entityId: String?
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
     init(json: JSON) {
+        self.orgTotal = json["orgTotal"].intValue
         self.logoUrl = json["logoUrl"].stringValue
         self.searchStr = json["searchStr"].stringValue
         self.entityId = json["entityId"].stringValue
@@ -192,8 +192,6 @@ class DataModel {
         self.timelinessList = json["timelinessList"].arrayValue.map { lawNatureListModel(json: $0) }
         self.lawNatureList = json["lawNatureList"].arrayValue.map { lawNatureListModel(json: $0) }
         self.appleById = json["appleById"].intValue
-        self.totalNum = json["totalNum"].intValue
-        self.dataList = json["dataList"].arrayValue.map { rowsModel(json: $0) }
         self.resume = json["resume"].stringValue
         self.monitorInfo = monitorInfoModel(json: json["monitorInfo"])
         self.groupName = json["groupName"].stringValue
@@ -376,6 +374,7 @@ class itemsModel {
     var groupnumber: String?
     var shareholderList: [shareholderListModel]?//合作伙伴信息
     var listCompany: [listCompanyModel]?//自己公司列表数据
+    var monitor: Bool?//是否监控
     
     //风险数据公司
     var entityStatus: String?//经营状态
@@ -468,6 +467,7 @@ class itemsModel {
     var orgCount: Int?
     var provinceStatList: [provinceStatListModel]?
     init(json: JSON) {
+        self.monitor = json["monitor"].boolValue
         self.announcement_title = json["announcement_title"].stringValue
         self.entry_into_force_time = json["entry_into_force_time"].stringValue
         self.provinceStatList = json["provinceStatList"].arrayValue.map { provinceStatListModel(json: $0) }
@@ -596,7 +596,13 @@ class listCompanyModel {
     var orgName: String?
     var province: String?
     var percent: Double?
+    var entityName: String?
+    var shrInfo: String?
+    var positions: String?
     init(json: JSON) {
+        self.positions = json["positions"].stringValue
+        self.shrInfo = json["shrInfo"].stringValue
+        self.entityName = json["entityName"].stringValue
         self.orgName = json["orgName"].stringValue
         self.province = json["province"].stringValue
         self.count = json["count"].intValue
@@ -606,13 +612,15 @@ class listCompanyModel {
 
 class shareholderListModel {
     var count: Int?
-    var entityName: String?
+    var orgName: String?
     var personId: Int?
     var personName: String?
     var name: String?
+    var logoColor: String?
     init(json: JSON) {
+        self.logoColor = json["logoColor"].stringValue
         self.count = json["count"].intValue
-        self.entityName = json["entityName"].stringValue
+        self.orgName = json["orgName"].stringValue
         self.personId = json["personId"].intValue
         self.personName = json["personName"].stringValue
         self.name = json["name"].stringValue
@@ -789,7 +797,13 @@ class rowsModel {
     var personName: String?
     var monitorCnt: Int?
     var appleById: Int?//单项付费ID
+    var leaderVec: leaderVecModel?
+    var regCap: String?
+    var incDate: String?
     init(json: JSON) {
+        self.incDate = json["incDate"].stringValue
+        self.regCap = json["regCap"].stringValue
+        self.leaderVec = leaderVecModel(json: json["leaderVec"])
         self.appleById = json["appleById"].intValue
         self.monitorCnt = json["monitorCnt"].intValue
         self.personId = json["personId"].stringValue

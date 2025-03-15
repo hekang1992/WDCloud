@@ -128,7 +128,7 @@ extension PeopleDetailThreeViewController: UICollectionViewDelegateFlowLayout, U
         let newArray = Array(modelArray.suffix(1))[indexPath.section]
         let model = newArray.children?[indexPath.row]
         let oneUrl = base_url + (model?.path ?? "")
-        pageUrl = oneUrl + "?" + "personNumber=\(personId)"
+        pageUrl = oneUrl + "?" + "personId=\(personId)"
         self.pushWebPage(from: pageUrl)
     }
     

@@ -13,7 +13,7 @@ class TwoPeopleCoopViewCell: UICollectionViewCell {
     
     let disposeBag = DisposeBag()
     
-    var model1 = BehaviorRelay<shareholderListModel?>(value: nil)
+    var model = BehaviorRelay<shareholderListModel?>(value: nil)
     
     lazy var bgView: UIView = {
         let bgView = UIView()
@@ -92,18 +92,19 @@ class TwoPeopleCoopViewCell: UICollectionViewCell {
             make.left.equalTo(icon.snp.left)
             make.top.equalTo(icon.snp.bottom).offset(5)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-4)
+            make.bottom.equalToSuperview()
         }
         
-        model1.subscribe(onNext: { [weak self] data in
-            guard let self = self, let data = data else { return }
-            self.icon.kf.setImage(with: URL(string: ""), placeholder: UIImage.imageOfText(data.personName ?? "", size: (26, 26)))
-            self.nameLabel.text = data.personName ?? ""
+        model.subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            let logoColor = model.logoColor ?? ""
+            self.icon.kf.setImage(with: URL(string: ""), placeholder: UIImage.imageOfText(model.personName ?? "", size: (26, 26), bgColor: UIColor.init(cssStr: logoColor)!))
+            self.nameLabel.text = model.personName ?? ""
             
-            let companyCountText = String(data.count ?? 0)
+            let companyCountText = String(model.count ?? 0)
             let fullText = "合作\(companyCountText)次"
             numLabel.attributedText = GetRedStrConfig.getRedStr(from: companyCountText, fullText: fullText, font: .regularFontOfSize(size: 10))
-            companyLabel.text = data.entityName ?? ""
+            companyLabel.text = model.orgName ?? ""
         }).disposed(by: disposeBag)
         
         

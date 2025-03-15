@@ -6,62 +6,44 @@
 //
 
 import UIKit
-import HGSegmentedPageViewController
 import RxRelay
 import RxSwift
+import JXPagingView
+import JXSegmentedView
 
 class SearchControllingPersonViewController: WDBaseViewController {
     
-    //参数
-    var searchKey = BehaviorRelay<String>(value: "")
-
+    var backBlock: (() -> Void)?
+    
+    var segmentedViewDataSource: JXSegmentedTitleDataSource!
+    
+    var segmentedView: JXSegmentedView!
+    
+    let titles = ["自然人", "企业"]
+    
+    var JXTableHeaderViewHeight: Int = Int(StatusHeightManager.navigationBarHeight + 50)
+    
+    var JXheightForHeaderInSection: Int = 40
+    
+    lazy var pagingView: JXPagingView = preferredPagingView()
+    
+    var model = BehaviorRelay<rowsModel?>(value: nil)
+    
+    let segmentedDataSource = JXSegmentedTitleDataSource()
+    
     //热搜
     var hotWordsArray = BehaviorRelay<[rowsModel]?>(value: nil)
     
-    lazy var oneView: OneCompanyView = {
-        let oneView = OneCompanyView()
-        return oneView
-    }()
-    
-    lazy var headView: HeadView = {
-        let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
-        headView.titlelabel.text = "实际控制人"
-        headView.titlelabel.textColor = .black
-        headView.bgView.backgroundColor = .white
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+    lazy var headView: PropertyHeadView = {
+        let headView = PropertyHeadView()
+        headView.headView.titlelabel.text = "实际控制人"
         return headView
     }()
     
-    lazy var searchView: HomeItemSearchView = {
-        let searchView = HomeItemSearchView()
-        let attrString = NSMutableAttributedString(string: "请输入您想搜索的股东名称", attributes: [
-            .foregroundColor: UIColor.init(cssStr: "#999999") as Any,
-            .font: UIFont.mediumFontOfSize(size: 14)
-        ])
-        searchView.searchTx.attributedPlaceholder = attrString
-        searchView.backgroundColor = .white
-        return searchView
-    }()
-    
-    lazy var segmentedPageViewController: HGSegmentedPageViewController = {
-        let segmentedPageViewController = HGSegmentedPageViewController()
-        segmentedPageViewController.categoryView.alignment = .center
-        segmentedPageViewController.categoryView.itemSpacing = 25
-        segmentedPageViewController.categoryView.topBorder.isHidden = true
-        segmentedPageViewController.categoryView.itemWidth = SCREEN_WIDTH * 0.25
-        segmentedPageViewController.categoryView.vernierWidth = 15
-        segmentedPageViewController.categoryView.titleNomalFont = .mediumFontOfSize(size: 14)
-        segmentedPageViewController.categoryView.titleSelectedFont = .mediumFontOfSize(size: 14)
-        segmentedPageViewController.categoryView.titleNormalColor = .init(cssStr: "#9FA4AD")
-        segmentedPageViewController.categoryView.titleSelectedColor = .init(cssStr: "#333333")
-        segmentedPageViewController.categoryView.vernier.backgroundColor = .init(cssStr: "#547AFF")
-        segmentedPageViewController.delegate = self
-        return segmentedPageViewController
-    }()
-    
-    lazy var companyVc: SearchCompanyControllingPersonViewController = {
-        let companyVc = SearchCompanyControllingPersonViewController()
-        return companyVc
+    lazy var oneView: OneCompanyView = {
+        let oneView = OneCompanyView()
+        oneView.backgroundColor = .white
+        return oneView
     }()
     
     lazy var peopleVc: SearchPeopleControllingPersonViewController = {
@@ -69,25 +51,79 @@ class SearchControllingPersonViewController: WDBaseViewController {
         return peopleVc
     }()
     
+    lazy var companyVc: SearchCompanyControllingPersonViewController = {
+        let companyVc = SearchCompanyControllingPersonViewController()
+        return companyVc
+    }()
+    
+    var selectIndex: Int = 0
+    
+    var isShowKeyboard: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        addHeadView(from: headView)
-        view.addSubview(searchView)
-        searchView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(1)
-            make.height.equalTo(50)
-        }
-        //设置
-        addSegmentedPageViewController()
-        setupPageViewControllers()
-        //oneview
+        //添加
+        addSegmentedView()
+    
+        //最近搜索
+        self.getlastSearch()
+        
+        //浏览历史
+        self.getBrowsingHistory()
+        
+        //热搜
+        self.getHotWords()
+        
+        // 监听 UITextField 的文本变化
+        self.headView.searchHeadView.searchTx
+            .rx.text.orEmpty
+            .debounce(.milliseconds(600), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if self.containsOnlyChinese(text) == true {
+                    print("自动打印中文：\(text)")
+                    if !text.isEmpty {
+                        self.oneView.isHidden = true
+                        if selectIndex == 0 {
+                            peopleVc.searchWordsRelay.accept(text)
+                        }else {
+                            companyVc.searchWordsRelay.accept(text)
+                        }
+                        //最近搜索
+                        self.getlastSearch()
+                        //浏览历史
+                        self.getBrowsingHistory()
+                        //热搜
+                        self.getHotWords()
+                    }else {
+                        self.oneView.isHidden = false
+                    }
+                }
+                else if self.containsPinyin(text) == true {
+                    // 拼音不打印，什么都不做
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        self.headView.searchHeadView.searchTx
+            .rx.controlEvent(.editingDidEndOnExit)
+            .withLatestFrom(self.headView.searchHeadView.searchTx.rx.text.orEmpty)
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if selectIndex == 0 {
+                    peopleVc.searchWordsRelay.accept(text)
+                }else {
+                    companyVc.searchWordsRelay.accept(text)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         view.addSubview(oneView)
         oneView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(self.searchView.snp.bottom)
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(self.headView.snp.bottom)
         }
         
         //删除最近搜索
@@ -106,99 +142,127 @@ class SearchControllingPersonViewController: WDBaseViewController {
         
         //点击最近搜索
         self.oneView.lastSearchTextBlock = { [weak self] keywords in
-            self?.searchView.searchTx.text = keywords
-            self?.searchKey.accept(keywords)
+            self?.headView.searchHeadView.searchTx.text = keywords
             if !keywords.isEmpty {
-                self?.oneView.isHidden = false
+                self?.oneView.isHidden = true
                 //最近搜索
                 self?.getlastSearch()
                 //浏览历史
                 self?.getBrowsingHistory()
                 //热搜
                 self?.getHotWords()
+                if self?.selectIndex == 0 {
+                    self?.peopleVc.searchWordsRelay.accept(keywords)
+                }else {
+                    self?.companyVc.searchWordsRelay.accept(keywords)
+                }
             }else {
-                self?.oneView.isHidden = true
+                self?.oneView.isHidden = false
             }
         }
-        
-        //搜索
-        self.searchView.searchTx
-            .rx
-            .controlEvent(.editingChanged)
-            .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
-            .distinctUntilChanged()
-            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] keywords in
-                if keywords.isEmpty {
-                    self?.oneView.isHidden = false
-                    //最近搜索
-                    self?.getlastSearch()
-                    //浏览历史
-                    self?.getBrowsingHistory()
-                    //热搜
-                    self?.getHotWords()
-                }else {
-                    self?.oneView.isHidden = true
-                }
-                self?.searchKey.accept(keywords)
-            }).disposed(by: disposeBag)
-    
-        //最近搜索
-        self.getlastSearch()
-        //浏览历史
-        self.getBrowsingHistory()
-        //热搜
-        self.getHotWords()
         
     }
     
 }
 
-extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDelegate {
+extension SearchControllingPersonViewController: JXPagingViewDelegate, JXSegmentedViewDelegate {
     
-    private func addSegmentedPageViewController() {
-        self.addChild(self.segmentedPageViewController)
-        self.view.addSubview(self.segmentedPageViewController.view)
-        self.segmentedPageViewController.didMove(toParent: self)
-        self.segmentedPageViewController.view.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(self.searchView.snp.bottom)
+    private func addSegmentedView() {
+        //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
+        segmentedViewDataSource = JXSegmentedTitleDataSource()
+        segmentedViewDataSource.titles = titles
+        segmentedViewDataSource.isTitleColorGradientEnabled = true
+        segmentedViewDataSource.titleSelectedColor = UIColor.init(cssStr: "#333333")!
+        segmentedViewDataSource.titleNormalColor = UIColor.init(cssStr: "#9FA4AD")!
+        segmentedViewDataSource.titleNormalFont = .regularFontOfSize(size: 15)
+        segmentedViewDataSource.titleSelectedFont = .mediumFontOfSize(size: 15)
+        
+        //指示器和指示器颜色
+        segmentedView = JXSegmentedView(frame: CGRect(x: 0, y: 100, width: SCREEN_WIDTH, height: CGFloat(JXheightForHeaderInSection)))
+        segmentedView.backgroundColor = UIColor.white
+        segmentedView.delegate = self
+        segmentedView.dataSource = segmentedViewDataSource
+        segmentedView.defaultSelectedIndex = selectIndex
+        let lineView = JXSegmentedIndicatorLineView()
+        lineView.indicatorColor = UIColor.init(cssStr: "#547AFF")!
+        lineView.indicatorWidth = 18
+        lineView.indicatorHeight = 3
+        segmentedView.indicators = [lineView]
+        
+        view.addSubview(pagingView)
+        pagingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
+        segmentedView.listContainer = pagingView.listContainerView
+        //距离高度禁止
+        pagingView.pinSectionHeaderVerticalOffset = JXTableHeaderViewHeight
     }
     
-    private func setupPageViewControllers() {
-        let titles: [String] = ["自然人", "企业"]
-        segmentedPageViewController.pageViewControllers = [peopleVc, companyVc]
-        segmentedPageViewController.selectedPage = 0
-        self.segmentedPageViewController.categoryView.titles = titles
-        self.segmentedPageViewController.view.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(self.searchView.snp.bottom)
-        }
+    //一定要加上这句代码,否则不会下拉刷新
+    func preferredPagingView() -> JXPagingView {
+        return JXPagingListRefreshView(delegate: self)
     }
     
-    func segmentedPageViewControllerWillTransition(toPage page: Int) {
-        self.searchKey.asObservable()
-            .subscribe(onNext: { [weak self] keyWords in
-            guard let self = self else { return }
-            if page == 0 {
-                peopleVc.keyWords.accept(keyWords)
-            }else {
-                companyVc.keyWords.accept(keyWords)
+    func tableHeaderViewHeight(in pagingView: JXPagingView) -> Int {
+        return JXTableHeaderViewHeight
+    }
+    
+    func tableHeaderView(in pagingView: JXPagingView) -> UIView {
+        return headView
+    }
+    
+    func heightForPinSectionHeader(in pagingView: JXPagingView) -> Int {
+        return JXheightForHeaderInSection
+    }
+    
+    func viewForPinSectionHeader(in pagingView: JXPagingView) -> UIView {
+        return segmentedView
+    }
+    
+    func numberOfLists(in pagingView: JXPagingView) -> Int {
+        return titles.count
+    }
+    
+    func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
+        if index == 0 {
+            peopleVc.blockModel = { [weak self] model in
+                guard let self = self else { return }
+                let peopleCount = model.total ?? 0
+                let companyCount = model.orgTotal ?? 0
+                let titles = ["自然人\(peopleCount)", "企业\(companyCount)"]
+                self.segmentedViewDataSource.titles = titles
+                self.segmentedView.reloadData()
             }
-        }).disposed(by: disposeBag)
+            return peopleVc
+        }else{
+            return companyVc
+        }
     }
+    
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        selectIndex = index
+        if index == 0 {
+            self.peopleVc.searchWordsRelay.accept(self.headView.searchHeadView.searchTx
+                .text ?? "")
+        }else {
+            self.companyVc.searchWordsRelay.accept(self.headView.searchHeadView.searchTx
+                .text ?? "")
+        }
+    }
+    
+}
+
+/** 网络数据请求 */
+extension SearchControllingPersonViewController {
     
     //最近搜索
     private func getlastSearch() {
         let man = RequestManager()
-        
         let dict = ["searchType": "",
-                    "moduleId": "03"]
+                    "moduleId": "40"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -243,7 +307,7 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "",
-                    "moduleId": "03",
+                    "moduleId": "40",
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
@@ -311,7 +375,7 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
     private func getHotWords() {
         let man = RequestManager()
         
-        let dict = ["moduleId": "03"]
+        let dict = ["moduleId": "40"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
                        method: .get) { [weak self] result in
@@ -378,7 +442,7 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
             let man = RequestManager()
             
             let dict = ["searchType": "",
-                        "moduleId": "03"]
+                        "moduleId": "40"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
@@ -407,7 +471,7 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
             
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
-                        "moduleId": "03",
+                        "moduleId": "40",
                         "viewrecordtype": ""]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
@@ -429,5 +493,4 @@ extension SearchControllingPersonViewController: HGSegmentedPageViewControllerDe
             }
         })
     }
-
 }

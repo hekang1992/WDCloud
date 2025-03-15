@@ -59,13 +59,13 @@ class SearchBeneficialOwnerViewController: WDBaseViewController {
         return segmentedPageViewController
     }()
     
-    lazy var companyVc: SearchCompanyControllingPersonViewController = {
-        let companyVc = SearchCompanyControllingPersonViewController()
+    lazy var companyVc: SearchCompanyBeneficialOwnerViewController = {
+        let companyVc = SearchCompanyBeneficialOwnerViewController()
         return companyVc
     }()
     
-    lazy var peopleVc: SearchPeopleControllingPersonViewController = {
-        let peopleVc = SearchPeopleControllingPersonViewController()
+    lazy var peopleVc: SearchPeopleBeneficialOwnerViewController = {
+        let peopleVc = SearchPeopleBeneficialOwnerViewController()
         return peopleVc
     }()
     
