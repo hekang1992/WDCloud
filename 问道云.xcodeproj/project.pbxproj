@@ -63,6 +63,7 @@
 		7325A7EE2D0008D10043C196 /* WLUnitFieldTextPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7EB2D0008D10043C196 /* WLUnitFieldTextPosition.m */; };
 		7325A7EF2D0008D10043C196 /* WLUnitFieldTextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */; };
 		7325A7F02D0008D10043C196 /* WLUnitField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E92D0008D10043C196 /* WLUnitField.m */; };
+		732926972D85313700E93F96 /* PropertyLineListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732926962D85313700E93F96 /* PropertyLineListViewCell.swift */; };
 		7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */; };
 		7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */; };
 		7330CB822D23E65900778D54 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB812D23E65900778D54 /* ContactManager.swift */; };
@@ -228,6 +229,7 @@
 		739DCA282D671B4E009CFC78 /* MyTwoSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA272D671B4E009CFC78 /* MyTwoSettingViewController.swift */; };
 		739DCA2B2D67362B009CFC78 /* MyPropertySettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA2A2D67362B009CFC78 /* MyPropertySettingCell.swift */; };
 		73A0509B2D83CCA700208602 /* PropertyListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */; };
+		73A0509D2D84321C00208602 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 73A0509C2D84321C00208602 /* index.html */; };
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
 		73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE02D0C06E700FC4C49 /* SettingView.swift */; };
 		73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */; };
@@ -449,6 +451,7 @@
 		7325A7EC2D0008D10043C196 /* WLUnitFieldTextRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLUnitFieldTextRange.h; sourceTree = "<group>"; };
 		7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WLUnitFieldTextRange.m; sourceTree = "<group>"; };
 		7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "问道云-Bridging-Header.h"; sourceTree = "<group>"; };
+		732926962D85313700E93F96 /* PropertyLineListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineListViewCell.swift; sourceTree = "<group>"; };
 		7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateMembershipViewController.swift; sourceTree = "<group>"; };
 		7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateMembershipView.swift; sourceTree = "<group>"; };
 		7330CB812D23E65900778D54 /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
@@ -618,6 +621,7 @@
 		739DCA272D671B4E009CFC78 /* MyTwoSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTwoSettingViewController.swift; sourceTree = "<group>"; };
 		739DCA2A2D67362B009CFC78 /* MyPropertySettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPropertySettingCell.swift; sourceTree = "<group>"; };
 		73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListViewCell.swift; sourceTree = "<group>"; };
+		73A0509C2D84321C00208602 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		73A21DE02D0C06E700FC4C49 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
@@ -854,6 +858,7 @@
 		7325A79C2CFEE58D0043C196 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				73A0509C2D84321C00208602 /* index.html */,
 				7325A79F2CFEE58D0043C196 /* Info.plist */,
 				7325A79E2CFEE58D0043C196 /* Assets.xcassets */,
 				7325A79D2CFEE58D0043C196 /* AppDelegate.swift */,
@@ -969,6 +974,14 @@
 				7325A7ED2D0008D10043C196 /* WLUnitFieldTextRange.m */,
 			);
 			path = CodeView;
+			sourceTree = "<group>";
+		};
+		732926952D852AE000E93F96 /* Tab切换 */ = {
+			isa = PBXGroup;
+			children = (
+				739DCA032D66DF6F009CFC78 /* PropertyTabBarController.swift */,
+			);
+			path = "Tab切换";
 			sourceTree = "<group>";
 		};
 		7340E1662D5CB930008FD5C7 /* 实际控制人 */ = {
@@ -1383,36 +1396,36 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		739DCA022D66D24E009CFC78 /* SearchProperty */ = {
+		739DCA022D66D24E009CFC78 /* 财产线索 */ = {
 			isa = PBXGroup;
 			children = (
-				739DCA032D66DF6F009CFC78 /* PropertyTabBarController.swift */,
-				739DCA112D670CDC009CFC78 /* PropertyLine */,
-				739DCA122D670CF2009CFC78 /* PropertyMonitoring */,
-				739DCA142D670D03009CFC78 /* MonitoringList */,
-				739DCA132D670D01009CFC78 /* PropertyCenter */,
+				732926952D852AE000E93F96 /* Tab切换 */,
+				739DCA112D670CDC009CFC78 /* 搜索列表 */,
+				739DCA122D670CF2009CFC78 /* 线索监控 */,
+				739DCA142D670D03009CFC78 /* 监控列表 */,
+				739DCA132D670D01009CFC78 /* 我的 */,
 			);
-			path = SearchProperty;
+			path = "财产线索";
 			sourceTree = "<group>";
 		};
-		739DCA112D670CDC009CFC78 /* PropertyLine */ = {
+		739DCA112D670CDC009CFC78 /* 搜索列表 */ = {
 			isa = PBXGroup;
 			children = (
 				73A050992D83CC7400208602 /* View */,
 				73A050982D83CC7200208602 /* Controller */,
 			);
-			path = PropertyLine;
+			path = "搜索列表";
 			sourceTree = "<group>";
 		};
-		739DCA122D670CF2009CFC78 /* PropertyMonitoring */ = {
+		739DCA122D670CF2009CFC78 /* 线索监控 */ = {
 			isa = PBXGroup;
 			children = (
 				739DCA072D66E009009CFC78 /* PropertyTwoViewController.swift */,
 			);
-			path = PropertyMonitoring;
+			path = "线索监控";
 			sourceTree = "<group>";
 		};
-		739DCA132D670D01009CFC78 /* PropertyCenter */ = {
+		739DCA132D670D01009CFC78 /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
 				739DCA0B2D66E01A009CFC78 /* PropertyFourViewController.swift */,
@@ -1422,10 +1435,10 @@
 				739DCA1D2D671669009CFC78 /* MyCollectionPropertyViewController.swift */,
 				739DCA212D671A6E009CFC78 /* MyVipUseViewController.swift */,
 			);
-			path = PropertyCenter;
+			path = "我的";
 			sourceTree = "<group>";
 		};
-		739DCA142D670D03009CFC78 /* MonitoringList */ = {
+		739DCA142D670D03009CFC78 /* 监控列表 */ = {
 			isa = PBXGroup;
 			children = (
 				739DCA092D66E012009CFC78 /* PropertyThreeViewController.swift */,
@@ -1434,7 +1447,7 @@
 				739DCA192D670E87009CFC78 /* PropertyThreePeopleViewController.swift */,
 				739DCA1B2D67133E009CFC78 /* SearchAddPropertyViewController.swift */,
 			);
-			path = MonitoringList;
+			path = "监控列表";
 			sourceTree = "<group>";
 		};
 		73A050982D83CC7200208602 /* Controller */ = {
@@ -1452,6 +1465,7 @@
 			children = (
 				73090B6E2D82DE7900041457 /* PropertyHeadView.swift */,
 				73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */,
+				732926962D85313700E93F96 /* PropertyLineListViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1771,7 +1785,7 @@
 				73FC5E462D5C3C53001D0DEF /* SearchRegulations */,
 				73654B232D818E0B0004E408 /* HighSearch */,
 				73654B222D818DB00004E408 /* HomeTabSearch */,
-				739DCA022D66D24E009CFC78 /* SearchProperty */,
+				739DCA022D66D24E009CFC78 /* 财产线索 */,
 				73FC5E492D5C3C80001D0DEF /* 查股东 */,
 				73FC5E4A2D5C784E001D0DEF /* 查老赖 */,
 				73FC5E682D5CADA4001D0DEF /* 查诉讼 */,
@@ -1986,6 +2000,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73A0509D2D84321C00208602 /* index.html in Resources */,
 				730488032D2A64B90024265C /* refreshloading.json in Resources */,
 				73E306D22D154E9E00D18943 /* Launch Screen.storyboard in Resources */,
 				7325A7A42CFEE58D0043C196 /* Assets.xcassets in Resources */,
@@ -2129,6 +2144,7 @@
 				7340E1A92D5CD604008FD5C7 /* SearchJudicialAuctioniewViewController.swift in Sources */,
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
 				73950F732D55A93A005AD034 /* PopMonitoringGroupView.swift in Sources */,
+				732926972D85313700E93F96 /* PropertyLineListViewCell.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				73B362572D37B9CB003BD911 /* PeopleDetailTwoViewController.swift in Sources */,
 				739DCA262D671B45009CFC78 /* MyOneSettingViewController.swift in Sources */,

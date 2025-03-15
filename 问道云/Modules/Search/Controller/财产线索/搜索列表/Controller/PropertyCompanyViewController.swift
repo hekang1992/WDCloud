@@ -61,8 +61,9 @@ class PropertyCompanyViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 self.pageIndex = 1
-                self.searchListInfo()
-                self.tableView.reloadData()
+                if !text.isEmpty {
+                    self.searchListInfo()
+                }
             }).disposed(by: disposeBag)
         
         //添加下拉筛选
@@ -215,7 +216,7 @@ extension PropertyCompanyViewController {
                         }else {
                             self.tableView.mj_footer?.isHidden = true
                         }
-                        DispatchQueue.main.async {
+                        DispatchQueue.main.asyncAfter(delay: 0.25) {
                             self.tableView.hideSkeleton()
                             self.tableView.reloadData()
                         }

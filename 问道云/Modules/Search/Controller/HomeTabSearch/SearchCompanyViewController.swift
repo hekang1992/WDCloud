@@ -226,7 +226,7 @@ extension SearchCompanyViewController {
     private func getDataInfo() {
         //更新搜索文字
         self.searchWordsRelay
-            .debounce(.milliseconds(500),
+            .debounce(.milliseconds(600),
                       scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
@@ -546,8 +546,10 @@ extension SearchCompanyViewController {
                     self.companyListView.dataModel = model
                     self.companyListView.dataModelArray = self.allArray
                     self.companyListView.searchWordsRelay.accept(self.searchWordsRelay.value)
-                    self.companyListView.tableView.hideSkeleton()
-                    self.companyListView.tableView.reloadData()
+                    DispatchQueue.main.asyncAfter(delay: 0.25) {
+                        self.companyListView.tableView.hideSkeleton()
+                        self.companyListView.tableView.reloadData()
+                    }
                 }
                 break
             case .failure(_):

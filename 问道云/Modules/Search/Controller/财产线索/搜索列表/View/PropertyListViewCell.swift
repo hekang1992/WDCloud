@@ -50,20 +50,38 @@ class PropertyListViewCell: BaseViewCell {
         return desclabel
     }()
     
+    lazy var numLabel: UILabel = {
+        let numLabel = UILabel()
+        numLabel.textColor = .init(cssStr: "#3F96FF")
+        numLabel.textAlignment = .left
+        numLabel.font = .regularFontOfSize(size: 13)
+        return numLabel
+    }()
+    
+    lazy var moneyLabel: UILabel = {
+        let moneyLabel = UILabel()
+        moneyLabel.textColor = .init(cssStr: "#3F96FF")
+        moneyLabel.textAlignment = .left
+        moneyLabel.font = .regularFontOfSize(size: 13)
+        return moneyLabel
+    }()
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 4
+        layout.minimumInteritemSpacing = 4
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .random()
-        collectionView.register(HomeItemViewCell.self, forCellWithReuseIdentifier: "HomeItemViewCell")
+        collectionView.backgroundColor = .white
+        collectionView.register(PropertyLineListViewCell.self, forCellWithReuseIdentifier: "PropertyLineListViewCell")
         collectionView.isPagingEnabled = true
         collectionView.delegate = self
+        collectionView.dataSource = self
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isSkeletonable = true
         return collectionView
     }()
     
@@ -82,7 +100,9 @@ class PropertyListViewCell: BaseViewCell {
         contentView.addSubview(monitoringBtn)
         contentView.addSubview(coverView)
         coverView.addSubview(desclabel)
-//        contentView.addSubview(collectionView)
+        coverView.addSubview(numLabel)
+        coverView.addSubview(moneyLabel)
+        contentView.addSubview(collectionView)
         contentView.addSubview(lineView)
         logoImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
@@ -111,14 +131,24 @@ class PropertyListViewCell: BaseViewCell {
             make.left.equalToSuperview().offset(6.5)
             make.size.equalTo(CGSize(width: 65, height: 18.5))
         }
-//        collectionView.snp.makeConstraints { make in
-//            make.top.equalTo(coverView.snp.bottom)
-//            make.left.equalToSuperview().offset(10)
-//            make.right.equalToSuperview()
-//            make.height.equalTo(1)
-//        }
+        numLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(desclabel.snp.right).offset(2)
+            make.height.equalTo(18.5)
+        }
+        moneyLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(numLabel.snp.right).offset(2)
+            make.height.equalTo(18.5)
+        }
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(coverView.snp.bottom)
+            make.left.equalToSuperview().offset(10)
+            make.right.equalToSuperview()
+            make.height.equalTo(0)
+        }
         lineView.snp.makeConstraints { make in
-            make.top.equalTo(coverView.snp.bottom).offset(14)
+            make.top.equalTo(collectionView.snp.bottom).offset(10)
             make.left.right.equalToSuperview()
             make.height.equalTo(5)
             make.bottom.equalToSuperview()
@@ -132,6 +162,8 @@ class PropertyListViewCell: BaseViewCell {
     var model: DataModel? {
         didSet {
             guard let model = model else { return }
+            
+            self.collectionView.reloadData()
             
             let companyName = model.entityName ?? ""
             
@@ -150,15 +182,44 @@ class PropertyListViewCell: BaseViewCell {
             }else {
                 monitoringBtn.setImage(UIImage(named: "propertymongijan"), for: .normal)
             }
+            
+            numLabel.attributedText = GetRedStrConfig.getRedStr(from: "0", fullText: "当前财产线索0条,", colorStr: "#FF4D4F")
+            moneyLabel.attributedText = GetRedStrConfig.getRedStr(from: "0", fullText: "预估价值0万元", colorStr: "#FF4D4F")
+            
+            let cluesDataList = model.cluesDataList ?? []
+            if cluesDataList.isEmpty {
+                collectionView.snp.updateConstraints { make in
+                    make.top.equalTo(coverView.snp.bottom)
+                    make.height.equalTo(0)
+                }
+            }else {
+                collectionView.snp.updateConstraints { make in
+                    make.top.equalTo(coverView.snp.bottom).offset(8)
+                    make.height.equalTo(80)
+                }
+            }
         }
     }
     
 }
 
-extension PropertyListViewCell: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+extension PropertyListViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let count = self.model?.cluesDataList?.count ?? 0
+        return count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PropertyLineListViewCell", for: indexPath) as! PropertyLineListViewCell
+        let model = self.model?.cluesDataList?[indexPath.row]
+        cell.model = model
+        cell.backgroundColor = .random()
+        return cell
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 97, height: 80)
+        return CGSize(width: 100, height: 80)
     }
     
 }

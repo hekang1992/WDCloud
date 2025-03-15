@@ -112,6 +112,10 @@ class WebPageViewController: WDBaseViewController {
             webView.load(URLRequest(url: url))
         }
         print("pageurl=====\(webUrl)")
+        //        if let htmlPath = Bundle.main.path(forResource: "index", ofType: "html") {
+        //            let htmlURL = URL(fileURLWithPath: htmlPath)
+        //            webView.loadFileURL(htmlURL, allowingReadAccessTo: htmlURL)
+        //        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -124,7 +128,7 @@ class WebPageViewController: WDBaseViewController {
 }
 
 extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigationDelegate {
-
+    
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         print("message:\(message.name)")
     }

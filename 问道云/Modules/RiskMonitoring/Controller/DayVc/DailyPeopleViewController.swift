@@ -246,8 +246,10 @@ extension DailyPeopleViewController {
                         }else {
                             self.dailyView.tableView.mj_footer?.isHidden = true
                         }
-                        self.dailyView.tableView.hideSkeleton()
-                        self.dailyView.tableView.reloadData()
+                        DispatchQueue.main.asyncAfter(delay: 0.25) {
+                            self.dailyView.tableView.hideSkeleton()
+                            self.dailyView.tableView.reloadData()
+                        }
                     }
                 }
                 break

@@ -204,7 +204,6 @@ extension HomeHeadView: TYCyclePagerViewDelegate, TYCyclePagerViewDataSource {
         let model = self.bannerModelArray?[index]
         cell.ipoImgaView.kf.setImage(with: URL(string: model?.banner ?? ""))
         return cell
-        
     }
     
     func pagerView(_ pageView: TYCyclePagerView, didSelectedItemCell cell: UICollectionViewCell, at index: Int) {

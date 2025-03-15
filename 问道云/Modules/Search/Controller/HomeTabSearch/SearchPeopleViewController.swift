@@ -170,7 +170,7 @@ extension SearchPeopleViewController {
     
     private func getDataInfo() {
         self.searchWordsRelay
-            .debounce(.milliseconds(500),
+            .debounce(.milliseconds(600),
                       scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
