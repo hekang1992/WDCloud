@@ -35,6 +35,8 @@
 		730CEE022D54BE83002DE9DF /* SearchMonitoringViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEE012D54BE83002DE9DF /* SearchMonitoringViewCell.swift */; };
 		730DB4192D6C2475007B49B6 /* MonitoringSolutionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730DB4182D6C2475007B49B6 /* MonitoringSolutionViewController.swift */; };
 		7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7314AD802D01A55900770009 /* OrderListViewCell.swift */; };
+		731B28A02D869D5A0007C6BB /* PopMoreLegalListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731B289F2D869D5A0007C6BB /* PopMoreLegalListView.swift */; };
+		731B28A22D86A3D70007C6BB /* PopMoreLegalListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731B28A12D86A3D70007C6BB /* PopMoreLegalListViewCell.swift */; };
 		7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */; };
 		7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */; };
 		7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A79D2CFEE58D0043C196 /* AppDelegate.swift */; };
@@ -421,6 +423,8 @@
 		730CEE012D54BE83002DE9DF /* SearchMonitoringViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMonitoringViewCell.swift; sourceTree = "<group>"; };
 		730DB4182D6C2475007B49B6 /* MonitoringSolutionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringSolutionViewController.swift; sourceTree = "<group>"; };
 		7314AD802D01A55900770009 /* OrderListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewCell.swift; sourceTree = "<group>"; };
+		731B289F2D869D5A0007C6BB /* PopMoreLegalListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopMoreLegalListView.swift; sourceTree = "<group>"; };
+		731B28A12D86A3D70007C6BB /* PopMoreLegalListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopMoreLegalListViewCell.swift; sourceTree = "<group>"; };
 		7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketViewController.swift; sourceTree = "<group>"; };
 		7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketView.swift; sourceTree = "<group>"; };
 		7325A7812CFEE5240043C196 /* 问道云.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "问道云.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -998,6 +1002,8 @@
 				7329269A2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift */,
 				7329269C2D85698E00E93F96 /* ContorlPeopleListView.swift */,
 				732926A02D857C4100E93F96 /* ContorlDetailViewCell.swift */,
+				731B289F2D869D5A0007C6BB /* PopMoreLegalListView.swift */,
+				731B28A12D86A3D70007C6BB /* PopMoreLegalListViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2351,6 +2357,7 @@
 				73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */,
 				73C770712D731E140031016F /* RiskHaveDataView.swift in Sources */,
 				734334992D7AA31F006AE608 /* PopIndustryView.swift in Sources */,
+				731B28A02D869D5A0007C6BB /* PopMoreLegalListView.swift in Sources */,
 				7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */,
 				73B362532D37B704003BD911 /* PeopleDetailHeadView.swift in Sources */,
 				73868A412D55F53700CE107D /* DailyReportViewController.swift in Sources */,
@@ -2419,6 +2426,7 @@
 				73EABF942D321B6F0052F4AB /* TwoRiskListPeopleCell.swift in Sources */,
 				73C89F1B2D76E2350002C3C9 /* PeopleHistoryRiskViewController.swift in Sources */,
 				73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */,
+				731B28A22D86A3D70007C6BB /* PopMoreLegalListViewCell.swift in Sources */,
 				7325A7C62CFEEE9A0043C196 /* WDCenterViewController.swift in Sources */,
 				733B5FFE2D574D3D00ADE7C5 /* HomeNavSearchView.swift in Sources */,
 				73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */,

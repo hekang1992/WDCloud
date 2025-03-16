@@ -800,7 +800,9 @@ class rowsModel {
     var leaderVec: leaderVecModel?
     var regCap: String?
     var incDate: String?
+    var shr: String?//
     init(json: JSON) {
+        self.shr = json["shr"].stringValue
         self.incDate = json["incDate"].stringValue
         self.regCap = json["regCap"].stringValue
         self.leaderVec = leaderVecModel(json: json["leaderVec"])

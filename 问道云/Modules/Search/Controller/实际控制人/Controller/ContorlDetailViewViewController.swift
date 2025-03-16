@@ -132,4 +132,14 @@ extension ContorlDetailViewViewController: UITableViewDelegate, UITableViewDataS
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.allArray[indexPath.row]
+        let comanyDetailVc = CompanyBothViewController()
+        let enityId = model.orgId ?? ""
+        let companyName = model.orgName ?? ""
+        comanyDetailVc.enityId.accept(enityId)
+        comanyDetailVc.companyName.accept(companyName)
+        self.navigationController?.pushViewController(comanyDetailVc, animated: true)
+    }
+    
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import TYAlertController
 
 class ContorlDetailViewCell: BaseViewCell {
     
@@ -40,6 +41,7 @@ class ContorlDetailViewCell: BaseViewCell {
         legalNameLabel.textColor = .init(cssStr: "#3F96FF")
         legalNameLabel.textAlignment = .left
         legalNameLabel.font = .regularFontOfSize(size: 12)
+        legalNameLabel.isUserInteractionEnabled = true
         return legalNameLabel
     }()
     
@@ -77,6 +79,23 @@ class ContorlDetailViewCell: BaseViewCell {
         return timeLabel
     }()
     
+    lazy var descLabel: UILabel = {
+        let descLabel = UILabel()
+        descLabel.text = "最终受益股份:"
+        descLabel.font = .regularFontOfSize(size: 11)
+        descLabel.textColor = .init(cssStr: "#999999")
+        descLabel.textAlignment = .left
+        return descLabel
+    }()
+    
+    lazy var rateLabel: UILabel = {
+        let rateLabel = UILabel()
+        rateLabel.textColor = .init(cssStr: "#F55B5B")
+        rateLabel.textAlignment = .left
+        rateLabel.font = .regularFontOfSize(size: 11)
+        return rateLabel
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(logoImageView)
@@ -89,6 +108,8 @@ class ContorlDetailViewCell: BaseViewCell {
         contentView.addSubview(lineView2)
         contentView.addSubview(timeLabel)
         contentView.addSubview(lineView3)
+        contentView.addSubview(descLabel)
+        contentView.addSubview(rateLabel)
         
         logoImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(12.5)
@@ -138,14 +159,31 @@ class ContorlDetailViewCell: BaseViewCell {
             make.left.equalTo(lineView2.snp.right).offset(7)
             make.height.equalTo(16.5)
         }
-        
         lineView3.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(timeLabel.snp.bottom).offset(10.5)
             make.left.equalToSuperview().offset(17)
-            make.bottom.equalToSuperview().offset(-32.5)
+        }
+        descLabel.snp.makeConstraints { make in
+            make.top.equalTo(legalNameLabel.snp.bottom).offset(8)
+            make.left.equalTo(legalNameLabel.snp.left)
+            make.height.equalTo(15.5)
+            make.bottom.equalToSuperview().offset(-8.5)
+        }
+        rateLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(descLabel.snp.centerY)
+            make.left.equalTo(descLabel.snp.right).offset(5)
+            make.height.equalTo(15.5)
         }
         
+        legalNameLabel
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self, let model = model else { return }
+                self.popMoreListViewInfo(from: model)
+            }).disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
@@ -172,6 +210,27 @@ class ContorlDetailViewCell: BaseViewCell {
             
             let timeStr = model.incDate ?? ""
             timeLabel.text = timeStr
+            
+            let shr = model.shr ?? ""
+            rateLabel.text = "\(shr)%"
         }
     }
+}
+
+extension ContorlDetailViewCell {
+    
+    //多个法定代表人弹窗
+    private func popMoreListViewInfo(from model: rowsModel) {
+        let vc = ViewControllerUtils.findViewController(from: self)
+        let popMoreListView = PopMoreLegalListView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
+        let leaderList = model.leaderVec?.leaderList ?? []
+        popMoreListView.descLabel.text = "法定代表人\(leaderList.count)"
+        popMoreListView.dataList = leaderList
+        let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
+        popMoreListView.closeBlock = {
+            vc?.dismiss(animated: true)
+        }
+        vc?.present(alertVc, animated: true)
+    }
+    
 }
