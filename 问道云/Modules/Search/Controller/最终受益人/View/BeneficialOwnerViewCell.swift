@@ -169,6 +169,15 @@ class BeneficialOwnerViewCell: BaseViewCell {
                     make.bottom.equalToSuperview().offset(-115)
                 }
             }
+            
+            //是否被监控
+            let monitor = model.monitor ?? true
+            if monitor {
+                monitoringBtn.setImage(UIImage(named: "havejiankong"), for: .normal)
+            }else {
+                monitoringBtn.setImage(UIImage(named: "jiankonganniu"), for: .normal)
+            }
+            
             collectionView.reloadData()
         }).disposed(by: disposeBag)
         
