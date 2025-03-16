@@ -28,7 +28,7 @@ class SearchPeopleBeneficialOwnerViewController: WDBaseViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.register(SearchContorlPeopleViewCell.self, forCellReuseIdentifier: "SearchContorlPeopleViewCell")
+        tableView.register(BeneficialOwnerViewCell.self, forCellReuseIdentifier: "BeneficialOwnerViewCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
@@ -113,7 +113,7 @@ extension SearchPeopleBeneficialOwnerViewController: UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchContorlPeopleViewCell", for: indexPath) as! SearchContorlPeopleViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BeneficialOwnerViewCell", for: indexPath) as! BeneficialOwnerViewCell
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         let model = self.allArray[indexPath.row]
@@ -134,7 +134,7 @@ extension SearchPeopleBeneficialOwnerViewController: UITableViewDelegate, UITabl
 
 extension SearchPeopleBeneficialOwnerViewController: SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "SearchContorlPeopleViewCell"
+        return "BeneficialOwnerViewCell"
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {

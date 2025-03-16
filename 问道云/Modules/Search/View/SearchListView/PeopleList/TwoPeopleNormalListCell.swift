@@ -56,7 +56,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
         cooperationLabel.textColor = .init(cssStr: "#999999")
         cooperationLabel.font = .regularFontOfSize(size: 13)
         cooperationLabel.textAlignment = .left
-        cooperationLabel.text = "TA的合作伙伴: 暂无数据"
+        cooperationLabel.text = "TA的合作伙伴: 暂无合作伙伴信息"
         return cooperationLabel
     }()
     

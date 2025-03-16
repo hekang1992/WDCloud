@@ -20,6 +20,7 @@ class ContorlDetailViewCell: BaseViewCell {
         nameLabel.font = .mediumFontOfSize(size: 14)
         nameLabel.textColor = .init(cssStr: "#333333")
         nameLabel.textAlignment = .left
+        nameLabel.numberOfLines = 0
         return nameLabel
     }()
     
@@ -119,7 +120,7 @@ class ContorlDetailViewCell: BaseViewCell {
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(11.5)
             make.left.equalTo(logoImageView.snp.right).offset(8)
-            make.height.equalTo(20)
+            make.right.equalToSuperview().offset(-70)
         }
         tagLabel.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-15.5)

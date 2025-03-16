@@ -48,7 +48,7 @@ class PopMoreLegalListView: BaseView {
     }()
     
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.register(PopMoreLegalListViewCell.self, forCellReuseIdentifier: "PopMoreLegalListViewCell")

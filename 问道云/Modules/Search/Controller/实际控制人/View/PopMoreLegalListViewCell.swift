@@ -28,15 +28,15 @@ class PopMoreLegalListViewCell: BaseViewCell {
         contentView.addSubview(ctImageView)
         contentView.addSubview(nameLabel)
         ctImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.top.equalToSuperview().offset(5)
             make.left.equalToSuperview().offset(20)
             make.size.equalTo(CGSize(width: 25, height: 25))
         }
         nameLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.centerY.equalTo(ctImageView.snp.centerY)
             make.left.equalTo(ctImageView.snp.right).offset(10)
             make.right.equalToSuperview().offset(-5)
-            make.bottom.equalToSuperview().offset(-1)
+            make.bottom.equalToSuperview()
         }
     }
     

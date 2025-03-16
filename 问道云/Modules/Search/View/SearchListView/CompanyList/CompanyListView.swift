@@ -38,9 +38,9 @@ class CompanyListView: BaseView {
         
         nameLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.left.equalTo(numLabel.snp.right).offset(12)
             make.right.equalToSuperview().offset(-12)
             make.height.equalTo(18.5)
+            make.bottom.equalToSuperview()
         }
     }
     
