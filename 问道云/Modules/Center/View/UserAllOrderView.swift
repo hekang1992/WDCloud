@@ -23,6 +23,7 @@ class UserAllOrderView: BaseView {
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(OrderListViewCell.self, forCellReuseIdentifier: "OrderListViewCell")
         return tableView

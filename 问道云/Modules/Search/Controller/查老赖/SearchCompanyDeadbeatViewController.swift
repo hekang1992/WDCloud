@@ -30,6 +30,7 @@ class SearchCompanyDeadbeatViewController: WDBaseViewController {
         tableView.register(SearchCompanyDeadbeatCell.self, forCellReuseIdentifier: "SearchCompanyDeadbeatCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.delegate = self

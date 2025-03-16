@@ -277,6 +277,7 @@ class TwoTicketView: BaseView {
         tableView.backgroundColor = .init(cssStr: "#F5F5F5")
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(TwoTicketCell.self, forCellReuseIdentifier: "TwoTicketCell")
         if #available(iOS 15.0, *) {

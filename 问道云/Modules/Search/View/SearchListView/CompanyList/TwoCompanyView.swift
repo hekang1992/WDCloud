@@ -43,10 +43,11 @@ class TwoCompanyView: BaseView {
         tableView.estimatedRowHeight = 60
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.showsHorizontalScrollIndicator = false
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         //头部人员cell
         tableView.register(TwoCompanyHeadPeopleCell.self, forCellReuseIdentifier: "TwoCompanyHeadPeopleCell")
         //公司cell

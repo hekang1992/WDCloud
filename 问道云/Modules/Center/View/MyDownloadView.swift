@@ -37,6 +37,7 @@ class MyDownloadView: BaseView {
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(MyDownloadViewNormalCell.self, forCellReuseIdentifier: "MyDownloadViewNormalCell")
         tableView.register(MyDownloadViewEditCell.self, forCellReuseIdentifier: "MyDownloadViewEditCell")

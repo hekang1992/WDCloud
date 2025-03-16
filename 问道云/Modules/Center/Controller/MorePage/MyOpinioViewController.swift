@@ -25,6 +25,7 @@ class MyOpinioViewController: WDBaseViewController {
         tableView.register(MyOpinionViewCell.self, forCellReuseIdentifier: "MyOpinionViewCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         if #available(iOS 15.0, *) {

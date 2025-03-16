@@ -227,6 +227,7 @@ class OpenTicketView: BaseView {
         tableView.backgroundColor = .init(cssStr: "#F4F7FB")
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(OneCell.self, forCellReuseIdentifier: "OneCell")
         tableView.register(TwoCell.self, forCellReuseIdentifier: "TwoCell")

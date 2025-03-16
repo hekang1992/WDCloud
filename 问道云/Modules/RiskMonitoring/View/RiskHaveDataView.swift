@@ -19,8 +19,9 @@ class RiskHaveDataView: BaseView {
         tableView.estimatedRowHeight = 80
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.showsHorizontalScrollIndicator = false
+        
         tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }

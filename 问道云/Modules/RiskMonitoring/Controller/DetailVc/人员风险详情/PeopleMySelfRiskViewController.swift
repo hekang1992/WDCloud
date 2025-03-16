@@ -39,6 +39,7 @@ class PeopleMySelfRiskViewController: WDBaseViewController {
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(RiskDetailViewCell.self, forCellReuseIdentifier: "RiskDetailViewCell")
         return tableView

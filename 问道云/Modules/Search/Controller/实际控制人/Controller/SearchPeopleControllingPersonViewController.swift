@@ -31,6 +31,7 @@ class SearchPeopleControllingPersonViewController: WDBaseViewController {
         tableView.register(SearchContorlPeopleViewCell.self, forCellReuseIdentifier: "SearchContorlPeopleViewCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.delegate = self
@@ -181,30 +182,6 @@ extension SearchPeopleControllingPersonViewController {
                             self.tableView.reloadData()
                         }
                     }
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
-    //添加监控
-    private func monitroingInfo(from model: DataModel) {
-        let entityId = model.entityId ?? ""
-        let entityName = model.entityName ?? ""
-        let entityType = "1"
-        let man = RequestManager()
-        let dict = ["entityId": entityId,
-                    "entityName": entityName,
-                    "entityType": entityType]
-        man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/monitor",
-                       method: .post) { result in
-            switch result {
-            case .success(let success):
-                if success.code == 200 {
-                    
                 }
                 break
             case .failure(_):

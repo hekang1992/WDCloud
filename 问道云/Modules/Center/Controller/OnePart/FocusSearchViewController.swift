@@ -166,6 +166,7 @@ class FocusSearchViewController: WDBaseViewController {
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        
         tableView.register(SearchFocusCell.self, forCellReuseIdentifier: "SearchFocusCell")
         return tableView
     }()

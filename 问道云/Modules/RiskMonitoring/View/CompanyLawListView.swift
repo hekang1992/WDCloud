@@ -64,6 +64,7 @@ class CompanyLawListView: BaseView {
         tableView.backgroundColor = .clear
         tableView.register(CompanyLawCell.self, forCellReuseIdentifier: "CompanyLawCell")
         tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.delegate = self
         tableView.dataSource = self

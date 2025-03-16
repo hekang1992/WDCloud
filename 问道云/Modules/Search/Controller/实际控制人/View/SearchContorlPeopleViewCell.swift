@@ -169,11 +169,12 @@ class SearchContorlPeopleViewCell: BaseViewCell {
             
             let shareholderList = model.shareholderList ?? []
             if shareholderList.isEmpty {
-                descLabel.text = "TA的合作伙伴：暂无合作伙伴信息"
+                descLabel.text = "TA的合作伙伴: 暂无合作伙伴信息"
                 stackView.snp.updateConstraints { make in
                     make.bottom.equalToSuperview().offset(-35)
                 }
             }else {
+                descLabel.text = "TA的合作伙伴:"
                 stackView.snp.updateConstraints { make in
                     make.bottom.equalToSuperview().offset(-115)
                 }

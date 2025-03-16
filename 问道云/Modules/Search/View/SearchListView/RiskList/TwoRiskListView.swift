@@ -33,10 +33,11 @@ class TwoRiskListView: BaseView {
         tableView.estimatedRowHeight = 60
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.showsHorizontalScrollIndicator = false
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         tableView.register(TwoRiskListCompanyCell.self, forCellReuseIdentifier: "TwoRiskListCompanyCell")
         tableView.register(TwoRiskListPeopleCell.self, forCellReuseIdentifier: "TwoRiskListPeopleCell")
         if #available(iOS 15.0, *) {

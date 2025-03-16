@@ -22,6 +22,7 @@ class AddInvoiceView: BaseView {
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(AddInvoiceViewCell.self, forCellReuseIdentifier: "AddInvoiceViewCell")
         return tableView

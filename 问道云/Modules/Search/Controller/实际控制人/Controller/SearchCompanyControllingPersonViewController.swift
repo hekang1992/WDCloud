@@ -29,6 +29,7 @@ class SearchCompanyControllingPersonViewController: WDBaseViewController {
         tableView.register(PropertyListViewCell.self, forCellReuseIdentifier: "PropertyListViewCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.delegate = self

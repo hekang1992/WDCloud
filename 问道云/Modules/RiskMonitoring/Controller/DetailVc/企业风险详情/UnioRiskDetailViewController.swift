@@ -35,6 +35,7 @@ class UnioRiskDetailViewController: WDBaseViewController {
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(RiskUnioViewCell.self, forCellReuseIdentifier: "RiskUnioViewCell")
         return tableView

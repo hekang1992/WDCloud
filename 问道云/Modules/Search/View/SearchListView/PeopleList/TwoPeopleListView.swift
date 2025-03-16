@@ -32,10 +32,11 @@ class TwoPeopleListView: BaseView {
         tableView.estimatedRowHeight = 60
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.showsHorizontalScrollIndicator = false
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         tableView.register(TwoPeopleSpecListCell.self, forCellReuseIdentifier: "TwoPeopleSpecListCell")
         tableView.register(TwoPeopleNormalListCell.self, forCellReuseIdentifier: "TwoPeopleNormalListCell")
         if #available(iOS 15.0, *) {

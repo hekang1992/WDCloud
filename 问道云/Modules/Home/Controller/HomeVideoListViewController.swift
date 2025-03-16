@@ -30,6 +30,7 @@ class HomeVideoListViewController: WDBaseViewController {
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(HomeVideoListViewCell.self, forCellReuseIdentifier: "HomeVideoListViewCell")
         return tableView

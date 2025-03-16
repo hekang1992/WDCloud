@@ -25,6 +25,7 @@ class SearchCompanyShareholderViewController: WDBaseViewController {
         tableView.register(SearchCompanyShareholderCell.self, forCellReuseIdentifier: "SearchCompanyShareholderCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.delegate = self
