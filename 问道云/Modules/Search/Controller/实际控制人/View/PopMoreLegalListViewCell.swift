@@ -19,6 +19,7 @@ class PopMoreLegalListViewCell: BaseViewCell {
         nameLabel.textColor = .init(cssStr: "#333333")
         nameLabel.font = .regularFontOfSize(size: 14)
         nameLabel.textAlignment = .left
+        nameLabel.numberOfLines = 0
         return nameLabel
     }()
     
@@ -34,7 +35,8 @@ class PopMoreLegalListViewCell: BaseViewCell {
         nameLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalTo(ctImageView.snp.right).offset(10)
-            make.height.equalTo(25)
+            make.right.equalToSuperview().offset(-5)
+            make.bottom.equalToSuperview().offset(-1)
         }
     }
     

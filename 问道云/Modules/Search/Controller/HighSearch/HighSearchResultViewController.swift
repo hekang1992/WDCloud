@@ -7,6 +7,7 @@
 
 import UIKit
 import MJRefresh
+import SkeletonView
 
 class HighSearchResultViewController: WDBaseViewController {
     
@@ -140,11 +141,9 @@ class HighSearchResultViewController: WDBaseViewController {
             guard let self = self else { return }
             getHighSearchInfo()
         })
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         getHighSearchInfo()
+        tableView.isSkeletonable = true
+        tableView.showAnimatedGradientSkeleton()
     }
     
     private func getHighSearchInfo() {
@@ -234,7 +233,6 @@ class HighSearchResultViewController: WDBaseViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org-list/search",
                        method: .post) { [weak self] result in
-            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -260,14 +258,16 @@ class HighSearchResultViewController: WDBaseViewController {
                     }else {
                         self.tableView.mj_footer?.isHidden = true
                     }
-                    self.tableView.reloadData()
+                    DispatchQueue.main.asyncAfter(delay: 0.25) {
+                        self.tableView.hideSkeleton()
+                        self.tableView.reloadData()
+                    }
                 }
                 break
             case .failure(_):
                 break
             }
         }
-        
     }
     
 }
@@ -317,6 +317,16 @@ extension HighSearchResultViewController {
     
 }
 
+extension HighSearchResultViewController: SkeletonTableViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "HighSearchViewCell"
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
+}
+
 extension HighSearchResultViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -349,7 +359,85 @@ extension HighSearchResultViewController: UITableViewDelegate, UITableViewDataSo
         let cell = tableView.dequeueReusableCell(withIdentifier: "HighSearchViewCell", for: indexPath) as! HighSearchViewCell
         cell.selectionStyle = .none
         cell.model = model
+        cell.focusBlock = { [weak self] in
+            if let self = self {
+                let followStatus = model.followStatus ?? ""
+                if followStatus == "1" {
+                    addFocusInfo(from: model, cell: cell)
+                }else {
+                    deleteFocusInfo(from: model, cell: cell)
+                }
+            }
+        }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.allArray[indexPath.row]
+        let companyDetailVc = CompanyBothViewController()
+        let enityId = model.orgInfo?.orgId ?? ""
+        let companyName = model.orgInfo?.orgName ?? ""
+        companyDetailVc.enityId.accept(enityId)
+        companyDetailVc.companyName.accept(companyName)
+        companyDetailVc.refreshBlock = { [weak self] index in
+            self?.pageIndex = 1
+            self?.getHighSearchInfo()
+        }
+        self.navigationController?.pushViewController(companyDetailVc, animated: true)
+    }
+    
+}
+
+/** 网络数据请求 */
+extension HighSearchResultViewController {
+    
+    //添加关注
+    private func addFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        let man = RequestManager()
+        let dict = ["entityId": model.orgInfo?.orgId ?? "",
+                    "followTargetType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/add-or-cancel",
+                       method: .post) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.followStatus = "2"
+                    if let specificCell = cell as? HighSearchViewCell {
+                        specificCell.focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+                    }
+                    ToastViewConfig.showToast(message: "关注成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //取消关注
+    private func deleteFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        let man = RequestManager()
+        
+        let dict = ["entityId": model.orgInfo?.orgId ?? "",
+                    "followTargetType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/add-or-cancel",
+                       method: .post) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.followStatus = "1"
+                    if let specificCell = cell as? HighSearchViewCell {
+                        specificCell.focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+                    }
+                    ToastViewConfig.showToast(message: "取消关注成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

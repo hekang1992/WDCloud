@@ -168,7 +168,7 @@ class PushLoginConfig {
 //电话号码*******
 class PhoneNumberFormatter {
     static func formatPhoneNumber(phoneNumber: String) -> String {
-        if phoneNumber.count == 11 {
+        if phoneNumber.count > 10 {
             let start = phoneNumber.prefix(3)
             let end = phoneNumber.suffix(3)
             let masked = String(repeating: "*", count: phoneNumber.count - 6)

@@ -79,6 +79,7 @@ class SearchControllingPersonViewController: WDBaseViewController {
         // 监听 UITextField 的文本变化
         self.headView.searchHeadView.searchTx
             .rx.text.orEmpty
+            .distinctUntilChanged()
             .debounce(.milliseconds(600), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
@@ -110,6 +111,7 @@ class SearchControllingPersonViewController: WDBaseViewController {
         self.headView.searchHeadView.searchTx
             .rx.controlEvent(.editingDidEndOnExit)
             .withLatestFrom(self.headView.searchHeadView.searchTx.rx.text.orEmpty)
+            .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if selectIndex == 0 {
@@ -145,12 +147,6 @@ class SearchControllingPersonViewController: WDBaseViewController {
             self?.headView.searchHeadView.searchTx.text = keywords
             if !keywords.isEmpty {
                 self?.oneView.isHidden = true
-                //最近搜索
-                self?.getlastSearch()
-                //浏览历史
-                self?.getBrowsingHistory()
-                //热搜
-                self?.getHotWords()
                 if self?.selectIndex == 0 {
                     self?.peopleVc.searchWordsRelay.accept(keywords)
                 }else {
