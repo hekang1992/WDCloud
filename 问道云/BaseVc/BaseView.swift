@@ -120,7 +120,7 @@ class HeadView: UIView {
         }
         titlelabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.left.equalTo(backBtn.snp.right).offset(10)
+            make.left.equalTo(backBtn.snp.right).offset(30)
             make.centerY.equalTo(backBtn.snp.centerY)
             make.height.equalTo(20)
         }
@@ -132,18 +132,18 @@ class HeadView: UIView {
         }
         oneBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
-            make.right.equalToSuperview().offset(-14)
-            make.height.equalTo(25)
+            make.right.equalToSuperview().offset(-12.pix())
+            make.height.equalTo(25.pix())
         }
         twoBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
             make.right.equalTo(oneBtn.snp.left).offset(-5)
-            make.height.equalTo(25)
+            make.height.equalTo(25.pix())
         }
         threeBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
             make.right.equalTo(twoBtn.snp.left).offset(-5)
-            make.height.equalTo(25)
+            make.height.equalTo(25.pix())
         }
         lineView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()

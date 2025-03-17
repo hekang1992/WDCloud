@@ -140,7 +140,7 @@ extension DonateMembershipViewController: JXSegmentedViewDelegate {
         let indicator = JXSegmentedIndicatorLineView()
         indicator.indicatorWidth = 22
         indicator.indicatorHeight = 4
-        indicator.lineStyle = .lengthen
+        indicator.lineStyle = .normal
         indicator.indicatorColor = UIColor.init(cssStr: "#547AFF")!
         return indicator
     }
@@ -151,7 +151,7 @@ extension DonateMembershipViewController: JXSegmentedViewDelegate {
         segmentedView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(donateView.ctImageView.snp.bottom).offset(60)
-            make.height.equalTo(44)
+            make.height.equalTo(40)
         }
         cocsciew.frame = CGRectMake(0, StatusHeightManager.navigationBarHeight + 240, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 240)
     }

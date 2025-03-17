@@ -9,11 +9,11 @@ import UIKit
 
 class HomeNoticeListCell: BaseViewCell {
     
-    var model: itemsModel? {
+    var model: rowsModel? {
         didSet {
             guard let model = model else { return }
-            nameLabel.text = model.shareShortCode ?? ""
-            numLabel.text = "(\(model.shareCode ?? ""))"
+            nameLabel.text = model.stockShortName ?? ""
+            numLabel.text = "(\(model.stockCode ?? ""))"
             contentLabel.text = model.title ?? ""
             timeLabel.text = model.publishTime ?? ""
         }

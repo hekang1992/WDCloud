@@ -87,6 +87,8 @@
 		733B5FFE2D574D3D00ADE7C5 /* HomeNavSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FFD2D574D3D00ADE7C5 /* HomeNavSearchView.swift */; };
 		733D2F492D87C0DE0019C697 /* CompanyShareholderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733D2F482D87C0DE0019C697 /* CompanyShareholderViewCell.swift */; };
 		733D2F4B2D87CFF00019C697 /* ShareholdeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733D2F4A2D87CFF00019C697 /* ShareholdeDetailViewController.swift */; };
+		733D2F4F2D87F5370019C697 /* PopShareholdePhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733D2F4E2D87F5370019C697 /* PopShareholdePhoneView.swift */; };
+		733D2F512D87F7260019C697 /* ShareholdePhoneViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733D2F502D87F7260019C697 /* ShareholdePhoneViewCell.swift */; };
 		734056A92D38E34C009C9C96 /* CorrelationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */; };
 		734056AB2D38FE53009C9C96 /* DetailRiskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734056AA2D38FE53009C9C96 /* DetailRiskItemView.swift */; };
 		7340E1682D5CBB36008FD5C7 /* SearchControllingPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1672D5CBB36008FD5C7 /* SearchControllingPersonViewController.swift */; };
@@ -485,6 +487,8 @@
 		733B5FFD2D574D3D00ADE7C5 /* HomeNavSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavSearchView.swift; sourceTree = "<group>"; };
 		733D2F482D87C0DE0019C697 /* CompanyShareholderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyShareholderViewCell.swift; sourceTree = "<group>"; };
 		733D2F4A2D87CFF00019C697 /* ShareholdeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareholdeDetailViewController.swift; sourceTree = "<group>"; };
+		733D2F4E2D87F5370019C697 /* PopShareholdePhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopShareholdePhoneView.swift; sourceTree = "<group>"; };
+		733D2F502D87F7260019C697 /* ShareholdePhoneViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareholdePhoneViewCell.swift; sourceTree = "<group>"; };
 		734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrelationViewCell.swift; sourceTree = "<group>"; };
 		734056AA2D38FE53009C9C96 /* DetailRiskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRiskItemView.swift; sourceTree = "<group>"; };
 		7340E1672D5CBB36008FD5C7 /* SearchControllingPersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllingPersonViewController.swift; sourceTree = "<group>"; };
@@ -1077,6 +1081,8 @@
 				73FC5E412D5C3C07001D0DEF /* SearchPeopleShareholderCell.swift */,
 				73FC5E432D5C3C25001D0DEF /* SearchCompanyShareholderCell.swift */,
 				733D2F482D87C0DE0019C697 /* CompanyShareholderViewCell.swift */,
+				733D2F4E2D87F5370019C697 /* PopShareholdePhoneView.swift */,
+				733D2F502D87F7260019C697 /* ShareholdePhoneViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2161,6 +2167,7 @@
 				7340E1D62D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift in Sources */,
 				733D2F4B2D87CFF00019C697 /* ShareholdeDetailViewController.swift in Sources */,
 				73FC5E652D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift in Sources */,
+				733D2F512D87F7260019C697 /* ShareholdePhoneViewCell.swift in Sources */,
 				739DCA182D670E7E009CFC78 /* PropertyThreeCompanyViewController.swift in Sources */,
 				73B3624B2D37A653003BD911 /* PeopleDetailViewController.swift in Sources */,
 				735A3F6F2D65B6FA00448268 /* MinitoringMessagePushViewController.swift in Sources */,
@@ -2403,6 +2410,7 @@
 				730488072D2A72200024265C /* HomeHeadTabView.swift in Sources */,
 				730487FD2D2A5C7D0024265C /* HomeNewsListViewController.swift in Sources */,
 				7340E17C2D5CCFEE008FD5C7 /* SearchPeopleTaxViolationViewController.swift in Sources */,
+				733D2F4F2D87F5370019C697 /* PopShareholdePhoneView.swift in Sources */,
 				7325A7DE2CFF0E6A0043C196 /* PasswordLoginViewController.swift in Sources */,
 				73E56BE12D1274630015BF34 /* TwoTicketView.swift in Sources */,
 				7303844E2D60961A008AA7C3 /* ServiceCenterDetailViewController.swift in Sources */,

@@ -224,7 +224,7 @@ extension SearchPeopleShareholderCell {
             label.textAlignment = .left
             label.font = .regularFontOfSize(size: 13)
             let name = model.entityName ?? ""
-            let persent = PercentageConfig.formatToPercentage(value: model.percent ?? 0.0)
+            let persent = model.percent ?? ""
             label.attributedText = GetRedStrConfig.getRedStr(from: "\(persent)", fullText: "\(name) (\(persent))")
             label.setContentHuggingPriority(.defaultLow, for: .vertical)
             stackView.addArrangedSubview(label)

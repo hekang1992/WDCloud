@@ -18,7 +18,7 @@ class NoticeAllViewController: WDBaseViewController {
         headView.titlelabel.text = "公告大全"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setBackgroundImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
     }()
     
@@ -45,11 +45,13 @@ class NoticeAllViewController: WDBaseViewController {
         return scrollView
     }()
     
-    var items: [String] = ["全部", "沪京深", "IPO申报", "上市辅导", "港股", "新三板", "债券", "基金"]
+    var items: [String] = ["全部", "上交所", "深交所", "北交所", "港交所", "其他"]
     
     var buttons: [UIButton] = []
     
     var previousButton: UIButton?
+    
+    private let man = RequestManager()
     
     //请求参数
     var startDateRelay = BehaviorRelay<String?>(value: nil)//开始时间
@@ -59,8 +61,8 @@ class NoticeAllViewController: WDBaseViewController {
     var isChoiceDate: String = ""
     var shareSearchKey: String = ""
     var pageNum: Int = 1
-    var pageSize: Int = 20
-    var allArray: [itemsModel] = []
+    var allArray: [rowsModel] = []
+    var tradingMarket: String = ""
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -94,20 +96,20 @@ class NoticeAllViewController: WDBaseViewController {
         covreView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(searchView.snp.bottom)
-            make.height.equalTo(35)
+            make.height.equalTo(40)
         }
         scrollView.snp.makeConstraints { make in
             make.center.equalTo(covreView)
             make.left.equalToSuperview().offset(2)
             make.top.equalToSuperview().offset(2.5)
-            make.height.equalTo(30)
+            make.height.equalTo(35)
         }
         self.searchView.searchTx
             .rx
             .controlEvent(.editingChanged)
             .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
             .distinctUntilChanged()
-            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] keywords in
                 self?.pageNum = 1
                 self?.shareSearchKey = keywords
@@ -129,8 +131,8 @@ class NoticeAllViewController: WDBaseViewController {
             buttons.append(button) // 将按钮添加到数组中
             // 设置按钮的约束
             button.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(5)
-                make.height.equalTo(22)
+                make.centerY.equalToSuperview()
+                make.height.equalTo(25)
                 if let previousButton = previousButton {
                     make.left.equalTo(previousButton.snp.right).offset(9)
                 } else {
@@ -147,6 +149,7 @@ class NoticeAllViewController: WDBaseViewController {
         if let firstBtn = buttons.first {
             buttonTapped(firstBtn)
         }
+        
         let timeMenu = MenuAction(title: "时间", style: .typeCustom)!
         let menuView = DropMenuBar(action: [timeMenu])!
         menuView.backgroundColor = .white
@@ -263,6 +266,22 @@ class NoticeAllViewController: WDBaseViewController {
         // 设置被点击按钮的样式
         sender.backgroundColor = .init(cssStr: "#547AFF")
         sender.setTitleColor(.white, for: .normal)
+        let title = sender.titleLabel?.text ?? ""
+        if title == "全部" {
+            self.tradingMarket = ""
+        }else if title == "上交所" {
+            self.tradingMarket = "SSE"
+        }else if title == "深交所" {
+            self.tradingMarket = "SZ"
+        }else if title == "北交所" {
+            self.tradingMarket = "BSE"
+        }else if title == "港交所" {
+            self.tradingMarket = "HKEX"
+        }else if title == "其他" {
+            self.tradingMarket = "OTHER"
+        }
+        self.pageNum = 1
+        self.getNoticeListInfo()
     }
 
 }
@@ -289,16 +308,27 @@ extension NoticeAllViewController: UITableViewDelegate, UITableViewDataSource {
         return nil
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.allArray[indexPath.row]
+        let pageUrl = model.announcementLink ?? ""
+        self.pushWebPage(from: pageUrl)
+    }
+    
+}
+
+/** 网络数据请求 */
+extension NoticeAllViewController {
+    
     //获取公告信息
     private func getNoticeListInfo() {
-        
         let dict = ["pageNum": pageNum,
-                    "pageSize": pageSize,
-                    "shareSearchKey": shareSearchKey,
-                    "publishDate": isChoiceDate] as [String : Any]
-        let man = RequestManager()
-        man.requestAPI(params: dict, pageUrl: "/firminfo/listingAnnouncement/getListingAnnouncementPage", method: .get) { [weak self] result in
-            
+                    "pageSize": 20,
+                    "keywords": shareSearchKey,
+                    "tradingMarket": tradingMarket,
+                    "publishTime": isChoiceDate] as [String : Any]
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/v2/listing/ipo-anno/es",
+                       method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -309,7 +339,7 @@ extension NoticeAllViewController: UITableViewDelegate, UITableViewDataSource {
                         self.allArray.removeAll()
                     }
                     pageNum += 1
-                    let pageData = model.items ?? []
+                    let pageData = model.rows ?? []
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
@@ -328,12 +358,6 @@ extension NoticeAllViewController: UITableViewDelegate, UITableViewDataSource {
                 break
             }
         }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.allArray[indexPath.row]
-        let pageUrl = model.pdfUrl ?? ""
-        self.pushWebPage(from: pageUrl)
     }
     
 }

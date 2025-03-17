@@ -34,7 +34,7 @@ class SearchSanctionViewController: WDBaseViewController {
         headView.titlelabel.text = "行政处罚"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setBackgroundImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
     }()
     

@@ -192,7 +192,7 @@ class MonitoringCell: BaseViewCell {
         }
         timeLabel.snp.makeConstraints { make in
             make.top.equalTo(tagLabel.snp.bottom).offset(6)
-            make.left.equalTo(namelabel.snp.left)
+            make.left.equalTo(ctImageView.snp.left)
             make.size.equalTo(CGSize(width: 58.pix(), height: 17))
         }
         timeDetailLabel.snp.makeConstraints { make in
@@ -202,7 +202,7 @@ class MonitoringCell: BaseViewCell {
         }
         todayLabel.snp.makeConstraints { make in
             make.top.equalTo(timeLabel.snp.bottom).offset(4)
-            make.left.equalTo(namelabel.snp.left)
+            make.left.equalTo(ctImageView.snp.left)
             make.size.equalTo(CGSize(width: 88.pix(), height: 17))
         }
         numLabel.snp.makeConstraints { make in

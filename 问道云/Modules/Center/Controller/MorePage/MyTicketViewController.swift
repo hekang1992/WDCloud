@@ -23,7 +23,7 @@ class DescTicketView: UIView {
         addSubview(bgImageView)
         bgImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 311, height: 450))
+            make.size.equalTo(CGSize(width: 311.pix(), height: 450.pix()))
         }
     }
     
@@ -43,7 +43,7 @@ class MyTicketViewController: WDBaseViewController {
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
-        headView.oneBtn.setImage(UIImage(named: "kaipiaoshuoming"), for: .normal)
+        headView.oneBtn.setBackgroundImage(UIImage(named: "kaipiaoshuoming"), for: .normal)
         headView.titlelabel.text = "发票列表"
         return headView
     }()
@@ -108,8 +108,8 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
         segmurce = JXSegmentedTitleDataSource()
         segmurce.titles = ["发票申请", "发票记录"]
         segmurce.isTitleColorGradientEnabled = true
-        segmurce.titleSelectedFont = .mediumFontOfSize(size: 14)
-        segmurce.titleNormalFont = .regularFontOfSize(size: 14)
+        segmurce.titleSelectedFont = .mediumFontOfSize(size: 15)
+        segmurce.titleNormalFont = .regularFontOfSize(size: 15)
         segmurce.titleNormalColor = UIColor.init(cssStr: "#666666")!
         segmurce.titleSelectedColor = UIColor.init(cssStr: "#547AFF")!
         segmentedView.dataSource = segmurce
@@ -131,9 +131,9 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
     
     private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
         let indicator = JXSegmentedIndicatorLineView()
-        indicator.indicatorWidth = JXSegmentedViewAutomaticDimension
-        indicator.indicatorHeight = 2
-        indicator.lineStyle = .lengthen
+        indicator.indicatorWidth = 15
+        indicator.indicatorHeight = 4
+        indicator.lineStyle = .normal
         indicator.indicatorColor = UIColor.init(cssStr: "#547AFF")!
         return indicator
     }
@@ -143,10 +143,10 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
         ticketView.addSubview(cocsciew)
         segmentedView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(12)
-            make.height.equalTo(32)
+            make.top.equalTo(headView.snp.bottom)
+            make.height.equalTo(40)
         }
-        cocsciew.frame = CGRectMake(0, 44, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44)
+        cocsciew.frame = CGRectMake(0, 40, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 40)
     }
     
     func setupViewControllers() {

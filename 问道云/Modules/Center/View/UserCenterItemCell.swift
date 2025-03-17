@@ -40,7 +40,8 @@ class UserCenterItemCell: UICollectionViewCell {
         desclabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(iconImageView.snp.bottom).offset(4)
-            make.height.equalTo(16.5)
+            make.left.equalToSuperview()
+            make.height.equalTo(16.5.pix())
         }
         
         model.asObservable().subscribe(onNext: { [weak self] title in

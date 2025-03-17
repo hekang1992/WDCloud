@@ -22,7 +22,7 @@ class MembershipCenterViewController: WDBaseViewController {
         headView.titlelabel.text = "会员中心"
         headView.lineView.isHidden = true
         headView.bgView.backgroundColor = .clear
-        headView.oneBtn.setImage(UIImage(named: "wodediingdan"), for: .normal)
+        headView.oneBtn.setBackgroundImage(UIImage(named: "wodediingdan"), for: .normal)
         return headView
     }()
     
@@ -89,7 +89,7 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
             self.memView.desclabel.textColor = UIColor.init(cssStr: "#999999")
             self.headView.titlelabel.textColor = .init(cssStr: "#333333")
             self.headView.backBtn.setImage(UIImage(named: "backimage"), for: .normal)
-            self.headView.oneBtn.setImage(UIImage(named: "wodediingdan"), for: .normal)
+            self.headView.oneBtn.setBackgroundImage(UIImage(named: "wodediingdan"), for: .normal)
         }else if index == 1 {
             UIView.transition(with: self.memView.ctImageView,
                               duration: 0.5,
@@ -101,7 +101,7 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
             self.memView.desclabel.textColor = UIColor.init(cssStr: "#999999")
             self.headView.titlelabel.textColor = .init(cssStr: "#333333")
             self.headView.backBtn.setImage(UIImage(named: "backimage"), for: .normal)
-            self.headView.oneBtn.setImage(UIImage(named: "wodediingdan"), for: .normal)
+            self.headView.oneBtn.setBackgroundImage(UIImage(named: "wodediingdan"), for: .normal)
         }else {
             UIView.transition(with: self.memView.ctImageView,
                               duration: 0.5,
@@ -113,7 +113,7 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
             self.memView.desclabel.textColor = UIColor.init(cssStr: "#3F1C00")
             self.headView.titlelabel.textColor = .white
             self.headView.backBtn.setImage(UIImage(named: "whitebackimge"), for: .normal)
-            self.headView.oneBtn.setImage(UIImage(named: "whiteorderimge"), for: .normal)
+            self.headView.oneBtn.setBackgroundImage(UIImage(named: "whiteorderimge"), for: .normal)
         }
     }
     
@@ -151,7 +151,7 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
         let indicator = JXSegmentedIndicatorLineView()
         indicator.indicatorWidth = 22
         indicator.indicatorHeight = 4
-        indicator.lineStyle = .lengthen
+        indicator.lineStyle = .normal
         indicator.indicatorColor = UIColor.init(cssStr: "#547AFF")!
         return indicator
     }
@@ -162,7 +162,7 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
         segmentedView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(memView.ctImageView.snp.bottom)
-            make.height.equalTo(44)
+            make.height.equalTo(40)
         }
         cocsciew.frame = CGRectMake(0, StatusHeightManager.navigationBarHeight + 76 + 44, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 44 - 76)
     }

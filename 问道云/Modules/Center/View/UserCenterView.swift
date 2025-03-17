@@ -262,8 +262,8 @@ class UserCenterView: BaseView {
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 20
-        layout.minimumInteritemSpacing = (SCREEN_WIDTH - 300) / 3
+        layout.minimumLineSpacing = 24.pix()
+        layout.minimumInteritemSpacing = (SCREEN_WIDTH - 100 - 192.pix()) / 3
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(UserCenterItemCell.self, forCellWithReuseIdentifier: "UserCenterItemCell")
         return collectionView
@@ -380,12 +380,12 @@ class UserCenterView: BaseView {
         setBtn.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(SCREEN_WIDTH - 20)
             make.centerY.equalTo(phoneLabel.snp.centerY)
-            make.size.equalTo(CGSize(width: 20, height: 20))
+            make.size.equalTo(CGSize(width: 20.pix(), height: 20.pix()))
         }
         cameraBtn.snp.makeConstraints { make in
             make.right.equalTo(setBtn.snp.left).offset(-9)
             make.centerY.equalTo(phoneLabel.snp.centerY)
-            make.size.equalTo(CGSize(width: 20, height: 20))
+            make.size.equalTo(CGSize(width: 20.pix(), height: 20.pix()))
         }
         whiteView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -418,7 +418,7 @@ class UserCenterView: BaseView {
             make.left.equalTo(whiteView.snp.left)
             make.centerX.equalToSuperview()
             make.top.equalTo(ctImageView.snp.bottom).offset(8)
-            make.height.equalTo(115)
+            make.height.equalTo(115.pix())
         }
         stackViewVertical.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -442,19 +442,19 @@ class UserCenterView: BaseView {
             make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset(20)
             make.top.equalTo(whiteView1.snp.bottom).offset(8)
-            make.height.equalTo(234.5)
+            make.height.equalTo(240.pix())
             make.bottom.equalToSuperview().offset(-10)
         }
         morelabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(15.5)
-            make.top.equalToSuperview().offset(7.5)
+            make.top.equalToSuperview().offset(10)
             make.height.equalTo(20)
         }
         collectionView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(20)
+            make.left.equalToSuperview().offset(30)
             make.bottom.equalToSuperview()
-            make.top.equalTo(morelabel.snp.bottom).offset(13.5)
+            make.top.equalTo(morelabel.snp.bottom).offset(16.pix())
         }
         
         modelArray.asObservable().bind(to: collectionView.rx.items(cellIdentifier: "UserCenterItemCell", cellType: UserCenterItemCell.self)) { row, model, cell in
@@ -485,7 +485,7 @@ class UserCenterView: BaseView {
 extension UserCenterView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 52, height: 43.5)
+        return CGSize(width: 48.pix(), height: 43.5.pix())
     }
     
     override func layoutSubviews() {
@@ -543,7 +543,7 @@ class UserBuyButton: UIButton {
         }
         
         customLabel1.snp.makeConstraints { make in
-            make.top.equalTo(customLabel.snp.bottom).offset(3)
+            make.top.equalTo(customLabel.snp.bottom).offset(3.pix())
             make.left.equalToSuperview().offset(15)
             make.height.equalTo(15)
         }
@@ -556,7 +556,7 @@ class UserBuyButton: UIButton {
         customImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-17.5)
-            make.size.equalTo(CGSize(width: 30, height: 30))
+            make.size.equalTo(CGSize(width: 30.pix(), height: 30.pix()))
         }
         
     }

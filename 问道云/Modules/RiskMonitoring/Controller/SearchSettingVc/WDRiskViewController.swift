@@ -93,15 +93,15 @@ class WDRiskViewController: WDBaseViewController {
         segmentedView.dataSource = segmentedViewDataSource
         let indicator = JXSegmentedIndicatorLineView()
         indicator.indicatorColor = UIColor.init(cssStr: "#FFFFFF")!
-        indicator.lineStyle = .lengthen
-        indicator.indicatorHeight = 2
+        indicator.lineStyle = .normal
+        indicator.indicatorHeight = 4
         indicator.indicatorWidth = 15
         segmentedView.indicators = [indicator]
         ctImageView.addSubview(segmentedView)
         segmentedView.snp.makeConstraints { make in
             make.top.equalTo(headView.snp.bottom).offset(18)
             make.left.right.equalToSuperview()
-            make.height.equalTo(32)
+            make.height.equalTo(40)
         }
         segmentedView.listContainer = listContainerView
         view.addSubview(listContainerView)
@@ -112,7 +112,7 @@ class WDRiskViewController: WDBaseViewController {
         super.viewDidLayoutSubviews()
         listContainerView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(52)
+            make.top.equalTo(headView.snp.bottom).offset(60)
         }
     }
     

@@ -70,12 +70,12 @@ class MembershipCenterView: BaseView {
         bgImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.size.equalTo(CGSize(width: 345, height: 63))
+            make.size.equalTo(CGSize(width: 345.pix(), height: 63.pix()))
         }
         iconImageView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(14)
-            make.top.equalToSuperview().offset(14)
-            make.size.equalTo(CGSize(width: 36, height: 36))
+            make.left.equalToSuperview().offset(14.pix())
+            make.top.equalToSuperview().offset(14.pix())
+            make.size.equalTo(CGSize(width: 36.pix(), height: 36.pix()))
         }
         phonelabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(14)
@@ -90,7 +90,7 @@ class MembershipCenterView: BaseView {
         vipImageView.snp.makeConstraints { make in
             make.right.equalToSuperview()
             make.top.equalToSuperview()
-            make.size.equalTo(CGSize(width: 55, height: 22))
+            make.size.equalTo(CGSize(width: 55.pix(), height: 22.pix()))
         }
         vipTypeModel.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }

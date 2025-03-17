@@ -16,7 +16,7 @@ class DueDiligenceViewController: WDBaseViewController {
         headView.lineView.isHidden = true
         headView.titlelabel.textColor = .white
         headView.bgView.backgroundColor = .clear
-        headView.oneBtn.setImage(UIImage(named: "shezhianniuimage"), for: .normal)
+        headView.oneBtn.setBackgroundImage(UIImage(named: "shezhianniuimage"), for: .normal)
         headView.backBtn.isHidden = true
         return headView
     }()
@@ -82,7 +82,7 @@ extension DueDiligenceViewController: JXSegmentedViewDelegate {
         segmentedView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(headView.snp.bottom).offset(18)
-            make.height.equalTo(32)
+            make.height.equalTo(40)
         }
         cocsciew.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
@@ -146,8 +146,8 @@ extension DueDiligenceViewController: JXSegmentedViewDelegate {
     private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
         let indicator = JXSegmentedIndicatorLineView()
         indicator.indicatorWidth = 30
-        indicator.indicatorHeight = 2
-        indicator.lineStyle = .lengthen
+        indicator.indicatorHeight = 4
+        indicator.lineStyle = .normal
         indicator.indicatorColor = .white
         return indicator
     }

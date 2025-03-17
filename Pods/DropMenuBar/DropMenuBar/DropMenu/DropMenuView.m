@@ -264,7 +264,6 @@
             if (self.action.didSelectedMenuResult) {
                 self.action.didSelectedMenuResult(self.secondSelectRow, self.twoListDataSource[self.secondSelectRow], YES);
             }
-            
         }else {
             [self resetActionTitle:selectModel selectRow:indexPath.row];
             if (self.action.didSelectedMenuResult) {
@@ -293,7 +292,7 @@
         adjustFrame.origin.y = 0;
         tableView.frame = adjustFrame;
 #warning 我自己新增的
-        if (_oneListDataSource.count < 7) {
+        if (_oneListDataSource.count < 8) {
             CGFloat rowHeight = 44.0;
             CGFloat totalHeight = rowHeight * (CGFloat)[_oneListDataSource count];
             CGRect tableViewFrame = tableView.frame;

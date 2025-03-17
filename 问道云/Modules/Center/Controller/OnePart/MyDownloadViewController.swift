@@ -40,7 +40,7 @@ class MyDownloadViewController: WDBaseViewController {
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "我的下载"
-        headView.oneBtn.setImage(UIImage(named: "delete_icon"), for: .normal)
+        headView.oneBtn.setBackgroundImage(UIImage(named: "delete_icon"), for: .normal)
         return headView
     }()
     

@@ -53,9 +53,8 @@ class WeekReportViewController: WDBaseViewController {
         
         //配置指示器
         let indicator = JXSegmentedIndicatorLineView()
-        indicator.indicatorWidth = JXSegmentedViewAutomaticDimension
-        indicator.lineStyle = .lengthen
-        indicator.indicatorHeight = 2
+        indicator.lineStyle = .normal
+        indicator.indicatorHeight = 4
         indicator.indicatorWidth = 15
         indicator.indicatorColor = UIColor.init(cssStr: "#3849F7")!
         segmentedDataSource.isTitleColorGradientEnabled = true
@@ -67,7 +66,7 @@ class WeekReportViewController: WDBaseViewController {
         //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
         segmentedView.dataSource = segmentedDataSource
         segmentedView.indicators = [indicator]
-        segmentedView.frame = CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 32)
+        segmentedView.frame = CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 40)
         view.addSubview(segmentedView)
         
         segmentedView.listContainer = listContainerView

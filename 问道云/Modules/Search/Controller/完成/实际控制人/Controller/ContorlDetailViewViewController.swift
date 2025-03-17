@@ -20,7 +20,7 @@ class ContorlDetailViewViewController: WDBaseViewController {
         headView.titlelabel.text = "作为实际控制人企业"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setBackgroundImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
     }()
     

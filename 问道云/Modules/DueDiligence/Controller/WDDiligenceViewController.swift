@@ -16,7 +16,7 @@ class WDDiligenceViewController: WDBaseViewController {
         headView.lineView.isHidden = true
         headView.titlelabel.textColor = .white
         headView.bgView.backgroundColor = .clear
-        headView.oneBtn.setImage(UIImage(named: "shezhianniuimage"), for: .normal)
+        headView.oneBtn.setBackgroundImage(UIImage(named: "shezhianniuimage"), for: .normal)
         headView.backBtn.isHidden = true
         return headView
     }()
@@ -121,8 +121,8 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
     private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
         let indicator = JXSegmentedIndicatorLineView()
         indicator.indicatorWidth = 30
-        indicator.indicatorHeight = 2
-        indicator.lineStyle = .lengthen
+        indicator.indicatorHeight = 4
+        indicator.lineStyle = .normal
         indicator.indicatorColor = .white
         return indicator
     }

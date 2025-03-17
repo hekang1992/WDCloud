@@ -75,7 +75,7 @@ extension CompanyBothViewController: JXSegmentedViewDelegate {
         segmentedDataSource.isTitleColorGradientEnabled = true
         segmentedDataSource.titleSelectedColor = UIColor(cssStr: "#333333")!
         segmentedDataSource.titleNormalColor = UIColor(cssStr: "#999999")!
-        segmentedDataSource.titleNormalFont = .mediumFontOfSize(size: 16)
+        segmentedDataSource.titleNormalFont = .mediumFontOfSize(size: 15)
         segmentedDataSource.titleSelectedFont = segmentedDataSource.titleNormalFont
         segmentedDataSource.isTitleColorGradientEnabled = true
         segmentedView.dataSource = segmentedDataSource

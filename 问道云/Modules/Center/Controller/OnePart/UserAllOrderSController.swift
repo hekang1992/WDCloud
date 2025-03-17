@@ -27,7 +27,7 @@ class UserAllOrderSController: WDBaseViewController {
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "我的订单"
-        headView.oneBtn.setImage(UIImage(named: "kaipiaoimage"), for: .normal)
+        headView.oneBtn.setBackgroundImage(UIImage(named: "kaipiaoimage"), for: .normal)
         return headView
     }()
     

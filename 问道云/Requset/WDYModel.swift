@@ -392,6 +392,7 @@ class itemsModel {
     var entityid: String?//公司ID
     var registerCapital: String?//注册资本
     var legalName: String?//法定代表人
+    var legalId: String?
     var incorporationTime: String?//成立时间
     var organizationNumber: String?//组织代码
     var count: String?
@@ -480,6 +481,7 @@ class itemsModel {
     var orgId: String?
     var provinceStatList: [provinceStatListModel]?
     init(json: JSON) {
+        self.legalId = json["legalId"].stringValue
         self.website = json["website"].arrayValue.map { websitesListModel(json: $0) }
         self.phone = json["phone"].arrayValue.map { websitesListModel(json: $0) }
         self.orgAddress = regAddrModel(json: json["orgAddress"])
@@ -619,7 +621,7 @@ class listCompanyModel {
     var count: Int?
     var orgName: String?
     var province: String?
-    var percent: Double?
+    var percent: String?
     var entityName: String?
     var shrInfo: String?
     var positions: String?
@@ -630,7 +632,7 @@ class listCompanyModel {
         self.orgName = json["orgName"].stringValue
         self.province = json["province"].stringValue
         self.count = json["count"].intValue
-        self.percent = json["percent"].doubleValue
+        self.percent = json["percent"].stringValue
     }
 }
 
@@ -829,7 +831,17 @@ class rowsModel {
     var listCompany: [listCompanyModel]?
     var shareholderList: [shareholderListModel]?
     var monitor: Bool?
+    var publishTime: String?
+    var category: String?
+    var announcementLink: String?
+    var stockShortName: String?
+    var stockCode: String?
     init(json: JSON) {
+        self.stockCode = json["stockCode"].stringValue
+        self.category = json["category"].stringValue
+        self.announcementLink = json["announcementLink"].stringValue
+        self.stockShortName = json["stockShortName"].stringValue
+        self.publishTime = json["publishTime"].stringValue
         self.monitor = json["monitor"].boolValue
         self.shareholderList = json["shareholderList"].arrayValue.map { shareholderListModel(json: $0) }
         self.listCompany = json["listCompany"].arrayValue.map { listCompanyModel(json: $0) }

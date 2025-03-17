@@ -13,6 +13,7 @@ import MJRefresh
 import DropMenuBar
 import JXPagingView
 import SkeletonView
+import TYAlertController
 
 class SearchCompanyViewController: WDBaseViewController {
         
@@ -191,6 +192,17 @@ class SearchCompanyViewController: WDBaseViewController {
         
         //点击电话回调
         companyListView.phoneBlock = { [weak self] model in
+            
+//            let popMoreListView = PopShareholdePhoneView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
+//            let leaderList = model.phone ?? []
+//            popMoreListView.descLabel.text = "电话号码\(leaderList.count)"
+//            popMoreListView.dataList = leaderList
+//            let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
+//            popMoreListView.closeBlock = {
+//                self?.dismiss(animated: true)
+//            }
+//            self?.present(alertVc, animated: true)
+            
             self?.makePhoneCall(phoneNumber: model.orgInfo?.phone ?? "")
         }
         

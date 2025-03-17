@@ -150,20 +150,35 @@ extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigat
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        ViewHud.addLoadView()
         DispatchQueue.main.asyncAfter(delay: 60) {
-            
+            ViewHud.hideLoadView()
         }
         print("开始加载======开始加载")
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        
+        ViewHud.hideLoadView()
         print("结束加载======结束加载")
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        
+        ViewHud.hideLoadView()
         print("加载失败======加载失败")
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        ViewHud.hideLoadView()
+        print("网站无法打开，错误: \(error.localizedDescription)")
+        DispatchQueue.main.asyncAfter(delay: 0.25) {
+            self.showAlert(message: "无法打开网站，请检查网络或URL是否正确")
+        }
+    }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "提示", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func callByWeb(method: String?, arg: String?) -> String? {

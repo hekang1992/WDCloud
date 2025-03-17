@@ -30,7 +30,7 @@ class BuyOneVipViewController: WDBaseViewController {
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "购买服务"
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setBackgroundImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
     }()
     

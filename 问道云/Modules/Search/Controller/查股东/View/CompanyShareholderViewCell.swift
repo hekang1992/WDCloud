@@ -6,7 +6,9 @@
 //
 
 import UIKit
+import MapKit
 import RxRelay
+import TYAlertController
 
 class CompanyShareholderViewCell: BaseViewCell {
     
@@ -350,15 +352,30 @@ class CompanyShareholderViewCell: BaseViewCell {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
+                guard let self = self, let model = self.model.value else { return }
+                let vc = ViewControllerUtils.findViewController(from: self)
+                let latitude = Double(model.orgAddress?.lat ?? "0.0") ?? 0.0
+                let longitude = Double(model.orgAddress?.lng ?? "0.0") ?? 0.0
+                let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                let locationVc = CompanyLocationViewController(location: location)
+                locationVc.name = model.orgName ?? ""
+                vc?.navigationController?.pushViewController(locationVc, animated: true)
         }).disposed(by: disposeBag)
         
-        websiteLabel
+        websiteimageView
             .rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
+                let vc = ViewControllerUtils.findViewController(from: self)
+                let webVc = WebPageViewController()
+                var pageUrl = self.model.value?.website?.first?.value ?? ""
+                if !pageUrl.hasPrefix("http://") && !pageUrl.hasPrefix("https://") {
+                    pageUrl = "http://" + pageUrl
+                }
+                webVc.pageUrl.accept(pageUrl)
+                vc?.navigationController?.pushViewController(webVc, animated: true)
         }).disposed(by: disposeBag)
         
         phoneimageView
@@ -366,7 +383,23 @@ class CompanyShareholderViewCell: BaseViewCell {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
+                guard let self = self, let model = self.model.value else { return }
+                popMoreListViewInfo(from: model)
+        }).disposed(by: disposeBag)
+        
+        nameView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self, let model = self.model.value else { return }
+                let vc = ViewControllerUtils.findViewController(from: self)
+                let peopleDetailVc = PeopleBothViewController()
+                let personId = model.legalId ?? ""
+                let peopleName = model.legalName ?? ""
+                peopleDetailVc.personId.accept(personId)
+                peopleDetailVc.peopleName.accept(peopleName)
+                vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
         }).disposed(by: disposeBag)
         
     }
@@ -377,6 +410,20 @@ class CompanyShareholderViewCell: BaseViewCell {
 }
 
 extension CompanyShareholderViewCell {
+    
+    //多个法定代表人弹窗
+    private func popMoreListViewInfo(from model: itemsModel) {
+        let vc = ViewControllerUtils.findViewController(from: self)
+        let popMoreListView = PopShareholdePhoneView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
+        let leaderList = model.phone ?? []
+        popMoreListView.descLabel.text = "电话号码\(leaderList.count)"
+        popMoreListView.dataList = leaderList
+        let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
+        popMoreListView.closeBlock = {
+            vc?.dismiss(animated: true)
+        }
+        vc?.present(alertVc, animated: true)
+    }
     
     func configure(with dynamiccontent: [relatedOrgListModel]) {
         // 清空之前的 labels

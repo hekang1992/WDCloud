@@ -124,10 +124,10 @@ extension SearchPeopleShareholderViewController: UITableViewDelegate, UITableVie
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        let detailVc = ContorlDetailViewViewController()
-        let entityId = model.personId ?? ""
-        detailVc.entityId = entityId
-        detailVc.entityCategory = "2"
+        let detailVc = ShareholdeDetailViewController()
+//        let entityId = model.personId ?? ""
+//        detailVc.entityId = entityId
+//        detailVc.entityCategory = "2"
         self.navigationController?.pushViewController(detailVc, animated: true)
     }
 }

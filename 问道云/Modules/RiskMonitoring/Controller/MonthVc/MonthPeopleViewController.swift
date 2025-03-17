@@ -98,7 +98,7 @@ class MonthPeopleViewController: WDBaseViewController {
 extension MonthPeopleViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return 30.pix()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -134,13 +134,13 @@ extension MonthPeopleViewController: UITableViewDataSource, UITableViewDelegate 
             self.popGroupView(from: groupBtn)
         }).disposed(by: disposeBag)
         groupBtn.setTitleColor(.init(cssStr: "#547AFF"), for: .normal)
-        groupBtn.titleLabel?.font = .regularFontOfSize(size: 10)
+        groupBtn.titleLabel?.font = .regularFontOfSize(size: 12)
         groupBtn.setImage(UIImage(named: "downgrayimge"), for: .normal)
         headView.addSubview(groupBtn)
         groupBtn.snp.makeConstraints { make in
-            make.left.equalTo(SCREEN_WIDTH - 62)
             make.height.equalTo(14.pix())
             make.centerY.equalTo(twoLabel.snp.centerY)
+            make.right.equalToSuperview().offset(-10)
         }
         groupBtn.layoutButtonEdgeInsets(style: .right, space: 2)
         return headView
@@ -259,6 +259,7 @@ extension MonthPeopleViewController {
                         make.width.equalTo(SCREEN_WIDTH)
                     }
                     self.noNetView.refreshBlock = { [weak self] in
+                        self?.pageNum = 1
                         self?.getPeopleInfo()
                     }
                 }
