@@ -62,7 +62,7 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
         segmentedView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(headView.snp.bottom).offset(18)
-            make.height.equalTo(32)
+            make.height.equalTo(40)
         }
         cocsciew.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
@@ -120,7 +120,7 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
     
     private func createSegmentedIndicator() -> JXSegmentedIndicatorLineView {
         let indicator = JXSegmentedIndicatorLineView()
-        indicator.indicatorWidth = 30
+        indicator.indicatorWidth = 15
         indicator.indicatorHeight = 4
         indicator.lineStyle = .normal
         indicator.indicatorColor = .white

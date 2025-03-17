@@ -136,13 +136,13 @@ class WDCenterViewController: WDBaseViewController {
         
         //赠送会员
         self.centerView.zengsongBtn.rx.tap.subscribe(onNext: { [weak self] in
-            guard let self = self, let model = model else { return }
             if IS_LOGIN {
+                guard let self = self, let model = model else { return }
                 let donateVc = DonateMembershipViewController()
                 donateVc.vipTypeModel.accept(model)
                 self.navigationController?.pushViewController(donateVc, animated: true)
             }else {
-                self.popLogin()
+                self?.popLogin()
             }
         }).disposed(by: disposeBag)
         

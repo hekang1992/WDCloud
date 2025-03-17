@@ -47,7 +47,7 @@ class RiskNoLoginView: BaseView {
         }
         iconImageView3.snp.makeConstraints { make in
             make.centerX.equalTo(iconImageView1.snp.centerX)
-            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-40)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-25)
             make.size.equalTo(CGSize(width: 119.pix(), height: 43.pix()))
         }
         iconImageView3

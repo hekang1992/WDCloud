@@ -24,6 +24,7 @@ class BiaoQianView: BaseView {
         label1.font = .regularFontOfSize(size: 11)
         label1.textColor = .init(cssStr: "#9FA4AD")
         label1.textAlignment = .center
+        label1.isSkeletonable = true
         return label1
     }()
     

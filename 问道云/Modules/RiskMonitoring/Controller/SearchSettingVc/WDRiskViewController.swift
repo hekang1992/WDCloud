@@ -28,13 +28,21 @@ class WDRiskViewController: WDBaseViewController {
         headView.backBtn.isHidden = true
         headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
-            let searchVc = SearchMonitoringViewController()
-            self.navigationController?.pushViewController(searchVc, animated: true)
+            if IS_LOGIN {
+                let searchVc = SearchMonitoringViewController()
+                self.navigationController?.pushViewController(searchVc, animated: true)
+            }else {
+                self.popLogin()
+            }
         }).disposed(by: disposeBag)
         headView.twoBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
-            let settingVc = RiskSettingViewController()
-            self.navigationController?.pushViewController(settingVc, animated: true)
+            if IS_LOGIN {
+                let settingVc = RiskSettingViewController()
+                self.navigationController?.pushViewController(settingVc, animated: true)
+            }else {
+                self.popLogin()
+            }
         }).disposed(by: disposeBag)
         return headView
     }()
