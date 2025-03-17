@@ -42,6 +42,12 @@ class PropertyHeadView: BaseView {
             make.top.equalTo(headView.snp.bottom).offset(1)
             make.height.equalTo(50)
         }
+        
+        headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let vc = ViewControllerUtils.findViewController(from: self)
+            vc?.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {

@@ -179,7 +179,9 @@ class DataModel {
     var companyPage: companyPageModel?
     var entityId: String?
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
+    var count: countModel?
     init(json: JSON) {
+        self.count = countModel(json: json["items"])
         self.orgTotal = json["orgTotal"].intValue
         self.logoUrl = json["logoUrl"].stringValue
         self.searchStr = json["searchStr"].stringValue
@@ -375,6 +377,10 @@ class itemsModel {
     var shareholderList: [shareholderListModel]?//合作伙伴信息
     var listCompany: [listCompanyModel]?//自己公司列表数据
     var monitor: Bool?//是否监控
+    var follow: Bool?//是否关注
+    var website: [websitesListModel]?
+    var phone: [websitesListModel]?
+    var orgAddress: regAddrModel?
     
     //风险数据公司
     var entityStatus: String?//经营状态
@@ -391,6 +397,11 @@ class itemsModel {
     var count: String?
     var riskNum1: Int?//成立时间
     var riskNum2: Int?//成立时间
+    var regCap: String?
+    var regCapCur: String?
+    var incDate: String?
+    var relatedOrgCount: Int?
+    var relatedOrgList: [relatedOrgListModel]?
     
     //风险数据人员
     var name: String?//名称
@@ -465,9 +476,22 @@ class itemsModel {
     var value: String?
     var logoColor: String?
     var orgCount: Int?
+    var orgName: String?
+    var orgId: String?
     var provinceStatList: [provinceStatListModel]?
     init(json: JSON) {
+        self.website = json["website"].arrayValue.map { websitesListModel(json: $0) }
+        self.phone = json["phone"].arrayValue.map { websitesListModel(json: $0) }
+        self.orgAddress = regAddrModel(json: json["orgAddress"])
+        self.relatedOrgList = json["relatedOrgList"].arrayValue.map { relatedOrgListModel(json: $0) }
+        self.relatedOrgCount = json["relatedOrgCount"].intValue
+        self.incDate = json["incDate"].stringValue
+        self.regCapCur = json["regCapCur"].stringValue
+        self.regCap = json["regCap"].stringValue
+        self.orgName = json["orgName"].stringValue
+        self.orgId = json["orgId"].stringValue
         self.monitor = json["monitor"].boolValue
+        self.follow = json["follow"].boolValue
         self.announcement_title = json["announcement_title"].stringValue
         self.entry_into_force_time = json["entry_into_force_time"].stringValue
         self.provinceStatList = json["provinceStatList"].arrayValue.map { provinceStatListModel(json: $0) }
@@ -801,7 +825,15 @@ class rowsModel {
     var regCap: String?
     var incDate: String?
     var shr: String?//
+    var searchStr: String?
+    var listCompany: [listCompanyModel]?
+    var shareholderList: [shareholderListModel]?
+    var monitor: Bool?
     init(json: JSON) {
+        self.monitor = json["monitor"].boolValue
+        self.shareholderList = json["shareholderList"].arrayValue.map { shareholderListModel(json: $0) }
+        self.listCompany = json["listCompany"].arrayValue.map { listCompanyModel(json: $0) }
+        self.searchStr = json["searchStr"].stringValue
         self.shr = json["shr"].stringValue
         self.incDate = json["incDate"].stringValue
         self.regCap = json["regCap"].stringValue
@@ -1617,7 +1649,9 @@ class websitesListModel {
     var source: String?
     var icpFlag: Bool?
     var owFlag: Bool?
+    var value: String?
     init(json: JSON) {
+        self.value = json["value"].stringValue
         self.website = json["website"].stringValue
         self.year = json["year"].stringValue
         self.orgCount = json["orgCount"].stringValue
@@ -1709,5 +1743,23 @@ class cluesDataListModel {
         self.typeTotalCount = json["typeTotalCount"].stringValue
         self.typeTotalValuation = json["typeTotalValuation"].stringValue
         self.totalValuationUnit = json["totalValuationUnit"].stringValue
+    }
+}
+
+class countModel {
+    var personCount: Int?
+    var orgCount: Int?
+    init(json: JSON) {
+        self.personCount = json["personCount"].intValue
+        self.orgCount = json["orgCount"].intValue
+    }
+}
+
+class relatedOrgListModel {
+    var orgName: String?
+    var percent: String?
+    init(json: JSON) {
+        self.orgName = json["orgName"].stringValue
+        self.percent = json["percent"].stringValue
     }
 }

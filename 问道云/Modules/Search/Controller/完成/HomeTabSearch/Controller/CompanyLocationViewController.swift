@@ -17,6 +17,7 @@ class CompanyLocationViewController: WDBaseViewController {
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.delegate = self
+        mapView.mapType = .hybrid
         return mapView
     }()
     
@@ -57,7 +58,7 @@ extension CompanyLocationViewController: MKMapViewDelegate {
     
     // 将地图中心定位到指定位置
     func centerMapOnLocation(location: CLLocationCoordinate2D) {
-        let regionRadius: CLLocationDistance = 50
+        let regionRadius: CLLocationDistance = 500
         let coordinateRegion = MKCoordinateRegion(center: location,
                                                   latitudinalMeters: regionRadius,
                                                   longitudinalMeters: regionRadius)

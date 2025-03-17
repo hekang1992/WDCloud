@@ -14,6 +14,7 @@ class SearchPeopleShareholderCell: BaseViewCell {
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
+        ctImageView.isSkeletonable = true
         return ctImageView
     }()
     
@@ -22,6 +23,7 @@ class SearchPeopleShareholderCell: BaseViewCell {
         nameLabel.textColor = UIColor.init(cssStr: "#333333")
         nameLabel.textAlignment = .left
         nameLabel.font = .mediumFontOfSize(size: 15)
+        nameLabel.isSkeletonable = true
         return nameLabel
     }()
     
@@ -30,6 +32,7 @@ class SearchPeopleShareholderCell: BaseViewCell {
         numLabel.textColor = .init(cssStr: "#999999")
         numLabel.font = .regularFontOfSize(size: 13)
         numLabel.textAlignment = .left
+        numLabel.isSkeletonable = true
         return numLabel
     }()
     
@@ -40,6 +43,7 @@ class SearchPeopleShareholderCell: BaseViewCell {
         stackView.alignment = .fill
         stackView.spacing = 4
         stackView.distribution = .fillProportionally
+        stackView.isSkeletonable = true
         return stackView
     }()
     
@@ -48,18 +52,21 @@ class SearchPeopleShareholderCell: BaseViewCell {
         descLabel.text = "TA的合作伙伴："
         descLabel.textColor = .init(cssStr: "#999999")
         descLabel.font = .regularFontOfSize(size: 13)
+        descLabel.isSkeletonable = true
         return descLabel
     }()
     
     lazy var footerView: UIView = {
         let footerView = UIView()
         footerView.backgroundColor = .init(cssStr: "#F8F8F8")
+        footerView.isSkeletonable = true
         return footerView
     }()
     
     lazy var tImageView: UIImageView = {
         let tImageView = UIImageView()
         tImageView.image = UIImage(named: "xiangqingyembtmimage")
+        tImageView.isSkeletonable = true
         return tImageView
     }()
     
@@ -76,11 +83,21 @@ class SearchPeopleShareholderCell: BaseViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(TwoPeopleCoopViewCell.self, forCellWithReuseIdentifier: "TwoPeopleCoopViewCell")
+        collectionView.isSkeletonable = true
         return collectionView
+    }()
+    
+    lazy var monitoringBtn: UIButton = {
+        let monitoringBtn = UIButton(type: .custom)
+        monitoringBtn.isSkeletonable = true
+        monitoringBtn.setImage(UIImage(named: "jiankonganniu"), for: .normal)
+        monitoringBtn.isSkeletonable = true
+        return monitoringBtn
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        isSkeletonable = true
         contentView.addSubview(footerView)
         contentView.addSubview(ctImageView)
         contentView.addSubview(nameLabel)
@@ -89,6 +106,7 @@ class SearchPeopleShareholderCell: BaseViewCell {
         contentView.addSubview(descLabel)
         contentView.addSubview(tImageView)
         contentView.addSubview(collectionView)
+        contentView.addSubview(monitoringBtn)
         ctImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(14)
             make.left.equalToSuperview().offset(11)
@@ -128,6 +146,16 @@ class SearchPeopleShareholderCell: BaseViewCell {
             make.left.equalToSuperview().offset(12)
             make.bottom.equalToSuperview().offset(-6)
         }
+        monitoringBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(nameLabel.snp.centerY)
+            make.left.equalTo(nameLabel.snp.right).offset(6)
+            make.height.equalTo(20)
+        }
+        footerView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(5)
+        }
+        
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model, let name = model.personName, !name.isEmpty else { return }
             
@@ -154,13 +182,28 @@ class SearchPeopleShareholderCell: BaseViewCell {
                     make.bottom.equalToSuperview().offset(-115)
                 }
             }
+            
+            //是否被监控
+            let monitor = model.monitor ?? true
+            if monitor {
+                monitoringBtn.setImage(UIImage(named: "havejiankong"), for: .normal)
+            }else {
+                monitoringBtn.setImage(UIImage(named: "jiankonganniu"), for: .normal)
+            }
+            
             collectionView.reloadData()
         }).disposed(by: disposeBag)
         
-        footerView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(5)
-        }
+        monitoringBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = self.model.value else { return }
+            let monitor = model.monitor ?? true
+            if monitor {//取消监控
+                cancelMonitrongInfo(from: monitoringBtn, model: model)
+            }else {//添加监控
+                addMonitrongInfo(from: monitoringBtn, model: model)
+            }
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -180,7 +223,7 @@ extension SearchPeopleShareholderCell {
             label.textColor = .init(cssStr: "#333333")
             label.textAlignment = .left
             label.font = .regularFontOfSize(size: 13)
-            let name = model.orgName ?? ""
+            let name = model.entityName ?? ""
             let persent = PercentageConfig.formatToPercentage(value: model.percent ?? 0.0)
             label.attributedText = GetRedStrConfig.getRedStr(from: "\(persent)", fullText: "\(name) (\(persent))")
             label.setContentHuggingPriority(.defaultLow, for: .vertical)
@@ -214,6 +257,53 @@ extension SearchPeopleShareholderCell: UICollectionViewDelegate, UICollectionVie
         peopleDetailVc.personId.accept(String(model?.personId ?? 0))
         peopleDetailVc.peopleName.accept(model?.personName ?? "")
         vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
+    }
+    
+}
+
+/** 网络数据请求 */
+extension SearchPeopleShareholderCell {
+    
+    //添加监控
+    private func addMonitrongInfo(from btn: UIButton, model: itemsModel) {
+        let man = RequestManager()
+        let dict = ["personId": model.personId ?? "", "groupId": ""]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
+                       method: .post) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.monitor = true
+                    btn.setImage(UIImage(named: "havejiankong"), for: .normal)
+                    ToastViewConfig.showToast(message: "监控成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //取消监控
+    private func cancelMonitrongInfo(from btn: UIButton, model: itemsModel) {
+        let man = RequestManager()
+        let dict = ["personId": model.personId ?? "", "groupId": ""]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-person/cancelRiskMonitorPerson",
+                       method: .post) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.monitor = false
+                    btn.setImage(UIImage(named: "jiankonganniu"), for: .normal)
+                    ToastViewConfig.showToast(message: "取消监控成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

@@ -1,5 +1,5 @@
 //
-//  SearchPeopleBeneficialOwnerViewController.swift
+//  SearchCompanyShareholderViewController.swift
 //  问道云
 //
 //  Created by Andrew on 2025/2/20.
@@ -8,12 +8,12 @@
 import UIKit
 import RxRelay
 import RxSwift
+import MJRefresh
 import DropMenuBar
 import JXPagingView
-import MJRefresh
 import SkeletonView
 
-class SearchPeopleBeneficialOwnerViewController: WDBaseViewController {
+class SearchCompanyShareholderViewController: WDBaseViewController {
     
     private let man = RequestManager()
     
@@ -28,7 +28,7 @@ class SearchPeopleBeneficialOwnerViewController: WDBaseViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.register(BeneficialOwnerViewCell.self, forCellReuseIdentifier: "BeneficialOwnerViewCell")
+        tableView.register(CompanyShareholderViewCell.self, forCellReuseIdentifier: "CompanyShareholderViewCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
@@ -84,10 +84,10 @@ class SearchPeopleBeneficialOwnerViewController: WDBaseViewController {
     
 }
 
-extension SearchPeopleBeneficialOwnerViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchCompanyShareholderViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25
+        return 30
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -98,12 +98,12 @@ extension SearchPeopleBeneficialOwnerViewController: UITableViewDelegate, UITabl
         numLabel.font = .regularFontOfSize(size: 12)
         numLabel.textAlignment = .left
         let count = String(self.dataModel?.total ?? 0)
-        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)位相关人员", font: .regularFontOfSize(size: 12))
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)个相关企业", font: .regularFontOfSize(size: 12))
         headView.addSubview(numLabel)
         numLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(12)
-            make.height.equalTo(22)
+            make.height.equalTo(25)
         }
         return headView
     }
@@ -113,7 +113,7 @@ extension SearchPeopleBeneficialOwnerViewController: UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BeneficialOwnerViewCell", for: indexPath) as! BeneficialOwnerViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CompanyShareholderViewCell", for: indexPath) as! CompanyShareholderViewCell
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         let model = self.allArray[indexPath.row]
@@ -132,9 +132,9 @@ extension SearchPeopleBeneficialOwnerViewController: UITableViewDelegate, UITabl
     }
 }
 
-extension SearchPeopleBeneficialOwnerViewController: SkeletonTableViewDataSource {
+extension SearchCompanyShareholderViewController: SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "BeneficialOwnerViewCell"
+        return "CompanyShareholderViewCell"
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -143,7 +143,7 @@ extension SearchPeopleBeneficialOwnerViewController: SkeletonTableViewDataSource
 }
 
 /** 网络数据请求 */
-extension SearchPeopleBeneficialOwnerViewController {
+extension SearchCompanyShareholderViewController {
     
     //最终受益人
     private func searchListInfo() {
@@ -151,7 +151,7 @@ extension SearchPeopleBeneficialOwnerViewController {
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/v2/home-page/ubo/person",
+                       pageUrl: "/firminfo/v2/person/org-shareholder/search",
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
@@ -192,7 +192,7 @@ extension SearchPeopleBeneficialOwnerViewController {
     
 }
 
-extension SearchPeopleBeneficialOwnerViewController: JXPagingViewListViewDelegate {
+extension SearchCompanyShareholderViewController: JXPagingViewListViewDelegate {
     
     func listView() -> UIView {
         return view

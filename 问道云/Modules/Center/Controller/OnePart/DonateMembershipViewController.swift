@@ -111,7 +111,7 @@ extension DonateMembershipViewController: JXSegmentedViewDelegate {
         segmentedView.delegate = self
         segmentedView.backgroundColor = .white
         segmurce = JXSegmentedTitleDataSource()
-        segmurce.titles = ["VIP会员", "SVIP会员", "团队套餐"]
+        segmurce.titles = ["VIP会员", "SVIP会员", "团体套餐"]
         segmurce.isTitleColorGradientEnabled = true
         segmurce.titleSelectedFont = .mediumFontOfSize(size: 15)
         segmurce.titleNormalFont = .regularFontOfSize(size: 15)

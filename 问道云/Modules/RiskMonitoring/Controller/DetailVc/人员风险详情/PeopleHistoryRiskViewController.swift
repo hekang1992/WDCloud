@@ -162,7 +162,7 @@ class PeopleHistoryRiskViewController: WDBaseViewController {
         let maskView = UIView()
         maskView.layer.borderWidth = 1
         maskView.layer.borderColor = UIColor.init(cssStr: "#FF0000")?.cgColor
-        maskView.backgroundColor = .init(cssStr: "#FF0000")?.withAlphaComponent(0.05)
+        maskView.backgroundColor = .init(cssStr: "#FF0000")?.withAlphaComponent(0.03)
         return maskView
     }()
     

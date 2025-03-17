@@ -1,5 +1,5 @@
 //
-//  SearchCompanyBeneficialOwnerViewController.swift
+//  SearchPeopleBeneficialOwnerViewController.swift
 //  问道云
 //
 //  Created by Andrew on 2025/2/20.
@@ -8,15 +8,17 @@
 import UIKit
 import RxRelay
 import RxSwift
+import MJRefresh
 import DropMenuBar
 import JXPagingView
-import MJRefresh
 import SkeletonView
 
-class SearchCompanyBeneficialOwnerViewController: WDBaseViewController {
+class SearchPeopleBeneficialOwnerViewController: WDBaseViewController {
     
     private let man = RequestManager()
-
+    
+    var blockModel: ((DataModel) -> Void)?
+    
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
     //被搜索的关键词
@@ -26,7 +28,7 @@ class SearchCompanyBeneficialOwnerViewController: WDBaseViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.register(PropertyListViewCell.self, forCellReuseIdentifier: "PropertyListViewCell")
+        tableView.register(BeneficialOwnerViewCell.self, forCellReuseIdentifier: "BeneficialOwnerViewCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
@@ -42,7 +44,7 @@ class SearchCompanyBeneficialOwnerViewController: WDBaseViewController {
     
     //搜索参数
     var pageIndex: Int = 1
-    var allArray: [DataModel] = []//加载更多
+    var allArray: [itemsModel] = []//加载更多
     var dataModel: DataModel?
     
     override func viewDidLoad() {
@@ -82,7 +84,7 @@ class SearchCompanyBeneficialOwnerViewController: WDBaseViewController {
     
 }
 
-extension SearchCompanyBeneficialOwnerViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchPeopleBeneficialOwnerViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25
@@ -95,8 +97,8 @@ extension SearchCompanyBeneficialOwnerViewController: UITableViewDelegate, UITab
         numLabel.textColor = UIColor.init(cssStr: "#666666")
         numLabel.font = .regularFontOfSize(size: 12)
         numLabel.textAlignment = .left
-        let count = String(self.dataModel?.companyPage?.total ?? 0)
-        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)个企业有财产线索", font: .regularFontOfSize(size: 12))
+        let count = String(self.dataModel?.total ?? 0)
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)位相关人员", font: .regularFontOfSize(size: 12))
         headView.addSubview(numLabel)
         numLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -111,27 +113,28 @@ extension SearchCompanyBeneficialOwnerViewController: UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PropertyListViewCell", for: indexPath) as! PropertyListViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BeneficialOwnerViewCell", for: indexPath) as! BeneficialOwnerViewCell
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         let model = self.allArray[indexPath.row]
         model.searchStr = self.searchWordsRelay.value
-        cell.model = model
-        cell.monitoringBlock = { [weak self] in
-            self?.monitroingInfo(from: model)
-        }
+        cell.model.accept(model)
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        print("公司名称=====\(model.entityName ?? "")")
+        let detailVc = BeneficialDetailViewController()
+        let entityId = model.personId ?? ""
+        detailVc.entityId = entityId
+        detailVc.entityCategory = "2"
+        self.navigationController?.pushViewController(detailVc, animated: true)
     }
 }
 
-extension SearchCompanyBeneficialOwnerViewController: SkeletonTableViewDataSource {
+extension SearchPeopleBeneficialOwnerViewController: SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "PropertyListViewCell"
+        return "BeneficialOwnerViewCell"
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -140,28 +143,29 @@ extension SearchCompanyBeneficialOwnerViewController: SkeletonTableViewDataSourc
 }
 
 /** 网络数据请求 */
-extension SearchCompanyBeneficialOwnerViewController {
+extension SearchPeopleBeneficialOwnerViewController {
     
-    //财产线索列表
+    //最终受益人
     private func searchListInfo() {
-        let dict = ["keyWords": self.searchWordsRelay.value,
+        let dict = ["keywords": self.searchWordsRelay.value,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/v2/home-page/actual/org-page",
-                       method: .post) { [weak self] result in
+                       pageUrl: "/firminfo/v2/home-page/ubo/person",
+                       method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    if let self = self, let model = success.data, let total = model.companyPage?.total {
+                    if let self = self, let model = success.data, let total = model.total {
                         self.dataModel = model
+                        self.blockModel?(model)
                         if pageIndex == 1 {
                             self.allArray.removeAll()
                         }
                         pageIndex += 1
-                        let pageData = model.companyPage?.data ?? []
+                        let pageData = model.items ?? []
                         self.allArray.append(contentsOf: pageData)
                         if total != 0 {
                             self.emptyView.removeFromSuperview()
@@ -186,33 +190,9 @@ extension SearchCompanyBeneficialOwnerViewController {
         }
     }
     
-    //添加监控
-    private func monitroingInfo(from model: DataModel) {
-        let entityId = model.entityId ?? ""
-        let entityName = model.entityName ?? ""
-        let entityType = "1"
-        let man = RequestManager()
-        let dict = ["entityId": entityId,
-                    "entityName": entityName,
-                    "entityType": entityType]
-        man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/monitor",
-                       method: .post) { result in
-            switch result {
-            case .success(let success):
-                if success.code == 200 {
-                    
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
 }
 
-extension SearchCompanyBeneficialOwnerViewController: JXPagingViewListViewDelegate {
+extension SearchPeopleBeneficialOwnerViewController: JXPagingViewListViewDelegate {
     
     func listView() -> UIView {
         return view
