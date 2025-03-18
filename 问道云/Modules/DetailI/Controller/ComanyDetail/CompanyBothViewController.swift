@@ -91,7 +91,7 @@ class CompanyBothViewController: WDBaseViewController {
             moreView.sixBlock = { [weak self] in
                 guard let self = self else { return }
                 self.dismiss(animated: true, completion: {
-                    let activityViewController = UIActivityViewController(activityItems: ["www.baidu.com"], applicationActivities: nil)
+                    let activityViewController = UIActivityViewController(activityItems: ["https://www.wintaocloud.com/"], applicationActivities: nil)
                     if let popoverController = activityViewController.popoverPresentationController {
                         popoverController.sourceView = self.view
                         popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
