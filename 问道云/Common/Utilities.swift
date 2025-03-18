@@ -706,34 +706,40 @@ class TagsLabelColorConfig {
 
 class ShowAgainLoginConfig {
     
+    static var grand: Bool = true
+    
     static let disposeBag = DisposeBag()
     
     static func againLoginView() {
-        let againLoginView = PopAgainLoginView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 300))
-        let alertVc = TYAlertController(alert: againLoginView, preferredStyle: .alert)!
-        let vc = ShowAlertManager.getTopViewController()
-        vc?.present(alertVc, animated: true)
-        
-        againLoginView.cancelBtn.rx.tap.subscribe(onNext: {
-            vc?.dismiss(animated: true, completion: {
-                NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
-            })
-        }).disposed(by: disposeBag)
-        
-        againLoginView.sureBtn.rx.tap.subscribe(onNext: {
-            vc?.dismiss(animated: true, completion: {
-                let loginVc = WDLoginViewController()
-                let rootVc = WDNavigationController(rootViewController: loginVc)
-                rootVc.modalPresentationStyle = .overFullScreen
-                vc?.present(rootVc, animated: true)
-                WDLoginConfig.removeLoginInfo()
-                loginVc.loginView.backBtn.rx.tap.subscribe(onNext: {
-                    loginVc.loginView.phoneTx.resignFirstResponder()
+        if grand {
+            grand = false
+            let againLoginView = PopAgainLoginView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 300))
+            let alertVc = TYAlertController(alert: againLoginView, preferredStyle: .alert)!
+            let vc = ShowAlertManager.getTopViewController()
+            vc?.present(alertVc, animated: true)
+            
+            againLoginView.cancelBtn.rx.tap.subscribe(onNext: {
+                grand = true
+                vc?.dismiss(animated: true, completion: {
                     NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
-                }).disposed(by: disposeBag)
-            })
-        }).disposed(by: disposeBag)
-        
+                })
+            }).disposed(by: disposeBag)
+            
+            againLoginView.sureBtn.rx.tap.subscribe(onNext: {
+                grand = true
+                vc?.dismiss(animated: true, completion: {
+                    let loginVc = WDLoginViewController()
+                    let rootVc = WDNavigationController(rootViewController: loginVc)
+                    rootVc.modalPresentationStyle = .overFullScreen
+                    vc?.present(rootVc, animated: true)
+                    WDLoginConfig.removeLoginInfo()
+                    loginVc.loginView.backBtn.rx.tap.subscribe(onNext: {
+                        loginVc.loginView.phoneTx.resignFirstResponder()
+                        NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
+                    }).disposed(by: disposeBag)
+                })
+            }).disposed(by: disposeBag)
+        }
     }
     
 }
