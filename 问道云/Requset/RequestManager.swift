@@ -103,7 +103,7 @@ class RequestManager {
     private func requestData(target: APIService, completion: @escaping (Result<BaseModel, Error>) -> Void) {
         // 取消上一次的请求
         let pageUrl = target.path
-        if !(pageUrl.contains("searchRecord/query") || pageUrl.contains("clientbrowsecb/selectBrowserecord") || pageUrl.contains("clientbrowsecb/hot-search")) {
+        if !(pageUrl.contains("searchRecord/query") || pageUrl.contains("clientbrowsecb/selectBrowserecord") || pageUrl.contains("clientbrowsecb/hot-search")) || pageUrl.contains("clientbrowsecb/addBrowserecord") {
             ViewHud.addLoadView()
         }
         if let lastRequest = currentRequest {

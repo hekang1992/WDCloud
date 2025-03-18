@@ -37,7 +37,7 @@ class CompanyCollectionCell: UICollectionViewCell {
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "headrightoneicon")
+        ctImageView.image = UIImage(named: "rightHeadLogo")
         ctImageView.contentMode = .scaleAspectFit
         return ctImageView
     }()

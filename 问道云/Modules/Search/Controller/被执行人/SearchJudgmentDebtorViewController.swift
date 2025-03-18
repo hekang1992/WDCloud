@@ -32,7 +32,7 @@ class SearchJudgmentDebtorViewController: WDBaseViewController {
         headView.titlelabel.text = "被执行人"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "rightHeadLogo"), for: .normal)
         return headView
     }()
     

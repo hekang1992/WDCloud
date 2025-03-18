@@ -8,6 +8,7 @@
 import UIKit
 import RxRelay
 import JXSegmentedView
+import TYAlertController
 
 class CompanyBothViewController: WDBaseViewController {
     
@@ -21,10 +22,12 @@ class CompanyBothViewController: WDBaseViewController {
     var refreshBlock: ((Int) -> Void)?
     
     lazy var headView: HeadView = {
-        let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
+        let headView = HeadView(frame: .zero, typeEnum: .threeBtn)
         headView.headTitleView.isHidden = false
         headView.titlelabel.isHidden = true
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "moreniacion"), for: .normal)
+        headView.twoBtn.setImage(UIImage(named: "rightheadsearch"), for: .normal)
+        headView.threeBtn.setImage(UIImage(named: "rightHeadLogo"), for: .normal)
         return headView
     }()
     
@@ -46,14 +49,69 @@ class CompanyBothViewController: WDBaseViewController {
         activityDetailVc.enityId = self.enityId.value
         return activityDetailVc
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         addHeadView(from: headView)
-        
+        headView.oneBlock = { [weak self] in
+            guard let self = self else { return }
+            let moreView = PopRightMoreView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 300))
+            let alertVc = TYAlertController(alert: moreView, preferredStyle: .actionSheet)!
+            self.present(alertVc, animated: true)
+            
+            moreView.cancelBlock = { [weak self] in
+                self?.dismiss(animated: true)
+            }
+            moreView.oneBlock = { [weak self] in
+                self?.dismiss(animated: true)
+                ToastViewConfig.showToast(message: "尽请期待")
+            }
+            moreView.twoBlock = { [weak self] in
+                self?.dismiss(animated: true, completion: {
+                    let downloadVc = MyDownloadViewController()
+                    self?.navigationController?.pushViewController(downloadVc, animated: true)
+                })
+            }
+            moreView.threeBlock = { [weak self] in
+                self?.dismiss(animated: true, completion: {
+                    let errorVc = DataErrorCorrectionViewController()
+                    self?.navigationController?.pushViewController(errorVc, animated: true)
+                })
+            }
+            moreView.fourBlock = { [weak self] in
+                self?.dismiss(animated: true, completion: {
+                    self?.navigationController?.popToRootViewController(animated: true)
+                })
+            }
+            moreView.fiveBlock = { [weak self] in
+                self?.dismiss(animated: true)
+            }
+            moreView.sixBlock = { [weak self] in
+                guard let self = self else { return }
+                self.dismiss(animated: true, completion: {
+                    let activityViewController = UIActivityViewController(activityItems: ["www.baidu.com"], applicationActivities: nil)
+                    if let popoverController = activityViewController.popoverPresentationController {
+                        popoverController.sourceView = self.view
+                        popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                        popoverController.permittedArrowDirections = .down
+                    }
+                    self.present(activityViewController, animated: true, completion: nil)
+                })
+                
+            }
+            
+        }
+        headView.twoBlock = { [weak self] in
+            guard let self = self else { return }
+            let searchVc = SearchAllViewController()
+            searchVc.searchHeadView.searchTx.placeholder = self.companyName.value
+            self.navigationController?.pushViewController(searchVc, animated: false)
+        }
         setheadUI()
+        //新增浏览历史
+        addHistoryInfo()
         companyDetailVc.intBlock = { [weak self] contentY in
             guard let self = self else { return }
             if contentY >= 200 {
@@ -66,6 +124,26 @@ class CompanyBothViewController: WDBaseViewController {
             }
         }
     }
+    
+    private func addHistoryInfo() {
+        let firmnumber = enityId.value
+        let firmname = companyName.value
+        let dict = ["viewrecordtype": "1",
+                    "firmnumber": firmnumber,
+                    "firmname": firmname] as [String : Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/clientbrowsecb/addBrowserecord",
+                       method: .post) { result in
+            switch result {
+            case .success(_):
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
 }
 
 extension CompanyBothViewController: JXSegmentedViewDelegate {

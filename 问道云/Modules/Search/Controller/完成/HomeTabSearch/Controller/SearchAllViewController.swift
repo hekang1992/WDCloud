@@ -115,7 +115,6 @@ class SearchAllViewController: WDBaseViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
     }
     
 }
@@ -189,7 +188,9 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 guard let self = self else { return }
                 if self.isShowKeyboard {
                     self.isShowKeyboard = false
-                    self.searchHeadView.searchTx.becomeFirstResponder()
+                    DispatchQueue.main.asyncAfter(delay: 0.5) {
+                        self.searchHeadView.searchTx.becomeFirstResponder()
+                    }
                 }
             }
             companyVc.moreBtnBlock = { [weak self] in
@@ -208,7 +209,9 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 guard let self = self else { return }
                 if self.isShowKeyboard {
                     self.isShowKeyboard = false
-                    self.searchHeadView.searchTx.becomeFirstResponder()
+                    DispatchQueue.main.asyncAfter(delay: 0.5) {
+                        self.searchHeadView.searchTx.becomeFirstResponder()
+                    }
                 }
             }
             return peopleVc
@@ -222,7 +225,9 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 guard let self = self else { return }
                 if self.isShowKeyboard {
                     self.isShowKeyboard = false
-                    self.searchHeadView.searchTx.becomeFirstResponder()
+                    DispatchQueue.main.asyncAfter(delay: 0.5) {
+                        self.searchHeadView.searchTx.becomeFirstResponder()
+                    }
                 }
             }
             return riskVc
@@ -304,3 +309,4 @@ extension SearchAllViewController {
     }
     
 }
+

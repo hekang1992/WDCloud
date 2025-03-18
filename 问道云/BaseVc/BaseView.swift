@@ -29,7 +29,11 @@ enum NavRightType {
 }
 
 //导航栏headview
-class HeadView: UIView {
+class HeadView: BaseView {
+    
+    var oneBlock: (() -> Void)?
+    var twoBlock: (() -> Void)?
+    var threeBlock: (() -> Void)?
     
     lazy var backBtn: UIButton = {
         let backBtn = UIButton(type: .custom)
@@ -132,23 +136,35 @@ class HeadView: UIView {
         }
         oneBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
-            make.right.equalToSuperview().offset(-12.pix())
+            make.right.equalToSuperview().offset(-9.pix())
             make.height.equalTo(25.pix())
         }
         twoBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
-            make.right.equalTo(oneBtn.snp.left).offset(-5)
+            make.right.equalTo(oneBtn.snp.left).offset(-2)
             make.height.equalTo(25.pix())
         }
         threeBtn.snp.makeConstraints { make in
             make.centerY.equalTo(backBtn.snp.centerY)
-            make.right.equalTo(twoBtn.snp.left).offset(-5)
+            make.right.equalTo(twoBtn.snp.left).offset(-2)
             make.height.equalTo(25.pix())
         }
         lineView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
             make.height.equalTo(1)
         }
+        
+        oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.oneBlock?()
+        }).disposed(by: disposeBag)
+        
+        twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.twoBlock?()
+        }).disposed(by: disposeBag)
+        
+        threeBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.threeBlock?()
+        }).disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {

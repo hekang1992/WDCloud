@@ -234,7 +234,7 @@ class SearchCompanyViewController: WDBaseViewController {
 
 /** 网络数据请求 */
 extension SearchCompanyViewController {
-    
+
     private func getDataInfo() {
         //更新搜索文字
         self.searchWordsRelay

@@ -36,7 +36,7 @@ class CompanyDescInfoView: BaseView {
 
     lazy var icon: UIImageView = {
         let icon = UIImageView()
-        icon.image = UIImage(named: "headrightoneicon")
+        icon.image = UIImage(named: "rightHeadLogo")
         return icon
     }()
     

@@ -18,7 +18,7 @@ class NoticeAllViewController: WDBaseViewController {
         headView.titlelabel.text = "公告大全"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "rightHeadLogo"), for: .normal)
         return headView
     }()
     

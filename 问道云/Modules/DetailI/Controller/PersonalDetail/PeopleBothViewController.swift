@@ -21,7 +21,7 @@ class PeopleBothViewController: WDBaseViewController {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.headTitleView.isHidden = false
         headView.titlelabel.isHidden = true
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "rightHeadLogo"), for: .normal)
         return headView
     }()
     
@@ -48,7 +48,7 @@ class PeopleBothViewController: WDBaseViewController {
         addHeadView(from: headView)
         
         setheadUI()
-        
+        addHistoryInfo()
         peopleDetailVc.intBlock = { [weak self] contentY in
             guard let self = self else { return  }
             if contentY >= 200 {
@@ -61,6 +61,26 @@ class PeopleBothViewController: WDBaseViewController {
             }
         }
     }
+    
+    private func addHistoryInfo() {
+        let firmnumber = personId.value
+        let firmname = peopleName.value
+        let dict = ["viewrecordtype": "2",
+                    "personnumber": firmnumber,
+                    "personname": firmname] as [String : Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/clientbrowsecb/addBrowserecord",
+                       method: .post) { result in
+            switch result {
+            case .success(_):
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
 }
 
 extension PeopleBothViewController: JXSegmentedViewDelegate {

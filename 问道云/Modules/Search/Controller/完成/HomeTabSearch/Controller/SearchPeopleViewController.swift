@@ -275,7 +275,9 @@ extension SearchPeopleViewController {
                     "moduleId": "02",
                     "pageNum": "1",
                     "pageSize": "20"]
-        man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/clientbrowsecb/selectBrowserecord",
+                       method: .get) { [weak self] result in
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -304,9 +306,10 @@ extension SearchPeopleViewController {
                 peopleDetailVc.peopleName.accept(peopleName)
                 self.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }
-            listView.nameLabel.text = model.personname ?? ""
+            let personname = model.personname ?? ""
+            listView.nameLabel.text = personname
             listView.timeLabel.text = model.createhourtime ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(personname, size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             self.peopleView.historyView.addSubview(listView)
             listView.snp.makeConstraints { make in
                 make.height.equalTo(40)

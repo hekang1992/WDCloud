@@ -36,7 +36,7 @@ class SearchMonitoringViewController: WDBaseViewController {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "搜索监控企业"
         headView.bgView.backgroundColor = .clear
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "rightHeadLogo"), for: .normal)
         return headView
     }()
     

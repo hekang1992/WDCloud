@@ -82,6 +82,7 @@ class UserCenterView: BaseView {
     lazy var cameraBtn: UIButton = {
         let cameraBtn = UIButton(type: .custom)
         cameraBtn.adjustsImageWhenHighlighted = false
+        cameraBtn.isHidden = true
         cameraBtn.setImage(UIImage(named: "saoyisao"), for: .normal)
         return cameraBtn
     }()

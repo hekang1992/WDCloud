@@ -34,7 +34,7 @@ class SearchStartCourtNoticeViewController: WDBaseViewController {
         headView.titlelabel.text = "开庭公告"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
-        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "rightHeadLogo"), for: .normal)
         return headView
     }()
     

@@ -64,6 +64,8 @@
 		7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */; };
 		7325A7E42CFFF8EE0043C196 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 7325A7E32CFFF8EE0043C196 /* loading.json */; };
 		7325A7E62D0000040043C196 /* GetCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E52D0000040043C196 /* GetCodeViewController.swift */; };
+		732861762D896D90004CC775 /* FadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732861752D896D90004CC775 /* FadeTransition.swift */; };
+		732861782D89749C004CC775 /* PopRightMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732861772D89749C004CC775 /* PopRightMoreView.swift */; };
 		732926972D85313700E93F96 /* PropertyLineListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732926962D85313700E93F96 /* PropertyLineListViewCell.swift */; };
 		7329269B2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329269A2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift */; };
 		7329269D2D85698F00E93F96 /* ContorlPeopleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329269C2D85698E00E93F96 /* ContorlPeopleListView.swift */; };
@@ -457,6 +459,8 @@
 		7325A7E32CFFF8EE0043C196 /* loading.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		7325A7E52D0000040043C196 /* GetCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCodeViewController.swift; sourceTree = "<group>"; };
 		7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "问道云-Bridging-Header.h"; sourceTree = "<group>"; };
+		732861752D896D90004CC775 /* FadeTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeTransition.swift; sourceTree = "<group>"; };
+		732861772D89749C004CC775 /* PopRightMoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopRightMoreView.swift; sourceTree = "<group>"; };
 		732926962D85313700E93F96 /* PropertyLineListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineListViewCell.swift; sourceTree = "<group>"; };
 		7329269A2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContorlPeopleViewCell.swift; sourceTree = "<group>"; };
 		7329269C2D85698E00E93F96 /* ContorlPeopleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContorlPeopleListView.swift; sourceTree = "<group>"; };
@@ -1346,6 +1350,7 @@
 				73DE1D1E2D7BF3E200C554B1 /* PhoneEmailListView.swift */,
 				73DE1D202D7BF72200C554B1 /* PhoneEmailNameView.swift */,
 				73654B1E2D8186BC0004E408 /* PopPrivacyView.swift */,
+				732861772D89749C004CC775 /* PopRightMoreView.swift */,
 			);
 			path = PopView;
 			sourceTree = "<group>";
@@ -1458,6 +1463,7 @@
 				73807D4D2D3369C500F8B90D /* CompanyBothViewController.swift */,
 				73807D4F2D3369D100F8B90D /* CompanyDetailViewController.swift */,
 				73807D512D336A0B00F8B90D /* CompanyActivityViewController.swift */,
+				732861752D896D90004CC775 /* FadeTransition.swift */,
 			);
 			path = ComanyDetail;
 			sourceTree = "<group>";
@@ -2176,6 +2182,7 @@
 				739DCA162D670E73009CFC78 /* PropertyThreeBothViewController.swift in Sources */,
 				73D4E3F52D734038005C73D8 /* MonthPeopleViewController.swift in Sources */,
 				73D4E3F92D73404F005C73D8 /* BothCompanyViewController.swift in Sources */,
+				732861762D896D90004CC775 /* FadeTransition.swift in Sources */,
 				739DCA1E2D671669009CFC78 /* MyCollectionPropertyViewController.swift in Sources */,
 				7340E1CE2D5DE622008FD5C7 /* SearchCompanyBeneficialOwnerViewController.swift in Sources */,
 				739DCA062D66E001009CFC78 /* PropertyOneViewController.swift in Sources */,
@@ -2214,6 +2221,7 @@
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				73B362572D37B9CB003BD911 /* PeopleDetailTwoViewController.swift in Sources */,
 				739DCA262D671B45009CFC78 /* MyOneSettingViewController.swift in Sources */,
+				732861782D89749C004CC775 /* PopRightMoreView.swift in Sources */,
 				730CEDFA2D5446C8002DE9DF /* CompanyLawCellHeadView.swift in Sources */,
 				73EF03DB2D31339A0070F850 /* TwoPeopleCoopViewCell.swift in Sources */,
 				736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */,
