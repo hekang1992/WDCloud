@@ -93,8 +93,7 @@ class SearchAllViewController: WDBaseViewController {
                     }else {
                         
                     }
-                }
-                else if self.containsPinyin(text) == true {
+                }else if self.containsPinyin(text) == true {
                     // 拼音不打印，什么都不做
                 }
             })

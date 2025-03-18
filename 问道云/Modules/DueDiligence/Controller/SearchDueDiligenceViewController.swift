@@ -10,7 +10,7 @@ import RxSwift
 import MJRefresh
 
 class SearchDueDiligenceViewController: WDBaseViewController {
-    
+    private let man = RequestManager()
     //参数
     var pageIndex: Int = 1
     var keywords: String = ""
@@ -99,19 +99,33 @@ class SearchDueDiligenceViewController: WDBaseViewController {
             .rx
             .controlEvent(.editingChanged)
             .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
-            .distinctUntilChanged()
-            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] keywords in
                 guard let self = self else { return }
                 if keywords.isEmpty {
                     bgView.isHidden = false
-                }else {
-//                    bgView.isHidden = true
                 }
-                self.pageIndex = 1
-                self.keywords = keywords
-                getDueListInfo()
+                if self.containsOnlyChinese(keywords) == true {
+                    self.pageIndex = 1
+                    self.keywords = keywords
+                    getDueListInfo()
+                }else if self.containsPinyin(keywords) == true {
+                    // 拼音不打印，什么都不做
+                }
             }).disposed(by: disposeBag)
+        
+        self.searchView.searchTx
+            .rx.controlEvent(.editingDidEnd)
+            .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
+            .subscribe(onNext: { [weak self] keywords in
+                guard let self = self else { return }
+                self.pageIndex = 1
+                if self.keywords != keywords {
+                    self.keywords = keywords
+                    getDueListInfo()
+                }
+            })
+            .disposed(by: disposeBag)
         
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
@@ -124,6 +138,10 @@ class SearchDueDiligenceViewController: WDBaseViewController {
             getDueListInfo()
         })
         
+        DispatchQueue.main.asyncAfter(delay: 0.5) {
+            self.searchView.searchTx.becomeFirstResponder()
+        }
+        
     }
     
 }
@@ -131,16 +149,13 @@ class SearchDueDiligenceViewController: WDBaseViewController {
 extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func getDueListInfo() {
-        
         let dict = ["pageIndex": pageIndex,
                     "pageSize": 20,
                     "keyword": keywords,
                     "matchType": 1] as [String : Any]
-        let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org-list",
                        method: .get) { [weak self] result in
-            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -223,47 +238,37 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
     }
     
     private func startDueDiligence(form model: pageDataModel) {
-        
-        let firmnumber = model.orgInfo?.orgId ?? ""
-        let firmname = model.orgInfo?.orgName ?? ""
-        let registeredcapital = model.orgInfo?.regCap ?? ""
-        let firmstate = model.orgInfo?.regStatusLabel ?? ""
-        let legalperson = model.legalPerson?.legalName ?? ""
+        let orgId = model.orgInfo?.orgId ?? ""
+        let orgName = model.orgInfo?.orgName ?? ""
         let ddnumber = ddNumber
-        let entitystatus = model.labels?.first?.name ?? ""
-        let registerCapitalCurrency = model.firmInfo?.registerCapitalCurrency ?? ""
-        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
-        let dict = ["firmnumber": firmnumber,
-                    "firmname": firmname,
-                    "registeredcapital": "\(registeredcapital)\(registerCapitalCurrency)",
-                    "firmstate": firmstate,
-                    "legalperson": legalperson,
-                    "ddnumber": ddnumber,
-                    "entitystatus": entitystatus,
-                    "customernumber": customernumber]
+        let dict = ["orgId": orgId,
+                    "orgName": orgName,
+                    "ddNumber": ddnumber]
         let man = RequestManager()
-        man.requestAPI(params: dict, pageUrl: "/dd/ddFirm/saveFirm", method: .post) { [weak self] result in
-            
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/dd-org/start",
+                       method: .post) { [weak self] result in
             switch result {
             case .success(let success):
                 if let self = self,
                    let code = success.code,
                    code == 200 {
-                    var pageUrl: String = ""
-                    if ddnumber == "1" {
-                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-basic&entityId=\(firmnumber)&customernumber=\(customernumber)"
-                    } else if ddnumber == "6" {
-                        pageUrl = base_url + "/due-diligence/form-fill?type=badAsset&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("basic")"
-                    } else if ddnumber == "7" {
-                        pageUrl = base_url + "/due-diligence/form-fill?type=corporateLoan&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("basic")"
-                    } else if ddnumber == "11" {
-                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-professions&entityId=\(firmnumber)&customernumber=\(customernumber)"
-                    } else if ddnumber == "16" {
-                        pageUrl = base_url + "/due-diligence/form-fill?page-type=badAsset&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("pro")"
-                    } else if ddnumber == "17" {
-                        pageUrl = base_url + "/due-diligence/form-fill?page-type=corporateLoan&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("pro")"
-                    }
-                    self.pushWebPage(from: pageUrl)
+                    ToastViewConfig.showToast(message: "尽调成功")
+//                    var pageUrl: String = ""
+//                    if ddnumber == "1" {
+//                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-basic&entityId=\(firmnumber)&customernumber=\(customernumber)"
+//                    } else if ddnumber == "6" {
+//                        pageUrl = base_url + "/due-diligence/form-fill?type=badAsset&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("basic")"
+//                    } else if ddnumber == "7" {
+//                        pageUrl = base_url + "/due-diligence/form-fill?type=corporateLoan&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("basic")"
+//                    } else if ddnumber == "11" {
+//                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-professions&entityId=\(firmnumber)&customernumber=\(customernumber)"
+//                    } else if ddnumber == "16" {
+//                        pageUrl = base_url + "/due-diligence/form-fill?page-type=badAsset&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("pro")"
+//                    } else if ddnumber == "17" {
+//                        pageUrl = base_url + "/due-diligence/form-fill?page-type=corporateLoan&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("pro")"
+//                    }
+//                    self.pushWebPage(from: pageUrl)
                 }
                 break
             case .failure(_):

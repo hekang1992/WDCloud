@@ -7,32 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6336616B-6564-4329-8608-190F5FD8D115"
+            uuid = "0B17BFEB-4720-468B-941E-6CAC8DDAB3A3"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x95ee;&#x9053;&#x4e91;/Modules/Search/Controller/&#x5b9e;&#x9645;&#x63a7;&#x5236;&#x4eba;/SearchControllingPersonViewController.swift"
+            filePath = "&#x95ee;&#x9053;&#x4e91;/Modules/DueDiligence/View/DueDiligenceTwoView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "51EDA16F-CF15-44A2-87EF-3EFDDC1ED3F6"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x95ee;&#x9053;&#x4e91;/Modules/Login/View/CodeView/WLUnitField.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "689"
-            endingLineNumber = "689"
-            landmarkName = "-unmarkText"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "clickListView(from:type:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

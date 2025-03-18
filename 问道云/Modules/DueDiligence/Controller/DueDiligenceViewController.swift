@@ -127,6 +127,7 @@ extension DueDiligenceViewController: JXSegmentedViewDelegate {
     private func createSegmentedView() -> JXSegmentedView {
         let segmentedView = JXSegmentedView()
         segmentedView.delegate = self
+        segmentedView.defaultSelectedIndex = 1
         segmentedView.backgroundColor = .clear
         segmurce = JXSegmentedTitleDataSource()
         segmurce.titles = ["基础版", "专业版", "定制版"]

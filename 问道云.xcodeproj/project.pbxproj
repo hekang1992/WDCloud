@@ -269,7 +269,6 @@
 		73C007092D643786003C3CE1 /* DueDiligenceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C007082D643786003C3CE1 /* DueDiligenceListView.swift */; };
 		73C0070B2D644C6E003C3CE1 /* DueDiligenceOneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C0070A2D644C6E003C3CE1 /* DueDiligenceOneView.swift */; };
 		73C0070D2D644EE1003C3CE1 /* SearchDueDiligenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C0070C2D644EE1003C3CE1 /* SearchDueDiligenceViewController.swift */; };
-		73C0070F2D644F55003C3CE1 /* DueDiligenceTwoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C0070E2D644F55003C3CE1 /* DueDiligenceTwoView.swift */; };
 		73C007112D6459AF003C3CE1 /* SearchDueDiligenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C007102D6459AF003C3CE1 /* SearchDueDiligenceView.swift */; };
 		73C007132D6460C5003C3CE1 /* DueDiligenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C007122D6460C5003C3CE1 /* DueDiligenceCell.swift */; };
 		73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */; };
@@ -667,7 +666,6 @@
 		73C007082D643786003C3CE1 /* DueDiligenceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDiligenceListView.swift; sourceTree = "<group>"; };
 		73C0070A2D644C6E003C3CE1 /* DueDiligenceOneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDiligenceOneView.swift; sourceTree = "<group>"; };
 		73C0070C2D644EE1003C3CE1 /* SearchDueDiligenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDueDiligenceViewController.swift; sourceTree = "<group>"; };
-		73C0070E2D644F55003C3CE1 /* DueDiligenceTwoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDiligenceTwoView.swift; sourceTree = "<group>"; };
 		73C007102D6459AF003C3CE1 /* SearchDueDiligenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDueDiligenceView.swift; sourceTree = "<group>"; };
 		73C007122D6460C5003C3CE1 /* DueDiligenceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDiligenceCell.swift; sourceTree = "<group>"; };
 		73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHotWordsCell.swift; sourceTree = "<group>"; };
@@ -1630,7 +1628,6 @@
 				73A21DED2D0C32A600FC4C49 /* DiligenceView.swift */,
 				73C007082D643786003C3CE1 /* DueDiligenceListView.swift */,
 				73C0070A2D644C6E003C3CE1 /* DueDiligenceOneView.swift */,
-				73C0070E2D644F55003C3CE1 /* DueDiligenceTwoView.swift */,
 				73C007102D6459AF003C3CE1 /* SearchDueDiligenceView.swift */,
 				73C007122D6460C5003C3CE1 /* DueDiligenceCell.swift */,
 			);
@@ -2469,7 +2466,6 @@
 				733B5FFE2D574D3D00ADE7C5 /* HomeNavSearchView.swift in Sources */,
 				73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */,
 				7325A7B42CFEE9520043C196 /* RequestManager.swift in Sources */,
-				73C0070F2D644F55003C3CE1 /* DueDiligenceTwoView.swift in Sources */,
 				73090B6F2D82DE7900041457 /* PropertyHeadView.swift in Sources */,
 				7329269B2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift in Sources */,
 				7374163A2D0ED72600E6CD23 /* WechatPushViewController.swift in Sources */,

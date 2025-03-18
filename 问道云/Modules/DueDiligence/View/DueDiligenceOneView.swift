@@ -135,11 +135,9 @@ class DueDiligenceOneView: BaseView {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                ToastViewConfig.showToast(message: "敬请期待")
-                return
                 guard let self = self else { return }
                 self.removeLayer()
-                self.clickListView(from: twoListView, type: "2")
+                self.clickListView(from: twoListView, type: "6")
             }).disposed(by: disposeBag)
         
         threeListView
@@ -147,11 +145,9 @@ class DueDiligenceOneView: BaseView {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                ToastViewConfig.showToast(message: "敬请期待")
-                return
                 guard let self = self else { return }
                 self.removeLayer()
-                self.clickListView(from: threeListView, type: "3")
+                self.clickListView(from: threeListView, type: "7")
             }).disposed(by: disposeBag)
         
         fourListView
@@ -159,11 +155,9 @@ class DueDiligenceOneView: BaseView {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                ToastViewConfig.showToast(message: "敬请期待")
-                return
                 guard let self = self else { return }
                 self.removeLayer()
-                self.clickListView(from: fourListView, type: "4")
+                self.clickListView(from: fourListView, type: "3")
             }).disposed(by: disposeBag)
     }
     
