@@ -45,6 +45,7 @@ PODS:
   - IQKeyboardManagerSwift (6.5.16)
   - JXPagingView/Paging (2.1.3)
   - JXSegmentedView (1.4.1)
+  - KeenCodeUnit (1.0.3)
   - Kingfisher (7.11.0)
   - lottie-ios (4.3.4)
   - Masonry (1.1.0)
@@ -91,6 +92,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift (~> 6.5.16)
   - JXPagingView/Paging (~> 2.1.3)
   - JXSegmentedView (~> 1.4.1)
+  - KeenCodeUnit (~> 1.0.3)
   - Kingfisher (~> 7.11.0)
   - lottie-ios (~> 4.3.4)
   - MJRefresh (~> 3.7.9)
@@ -128,6 +130,7 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - JXPagingView
     - JXSegmentedView
+    - KeenCodeUnit
     - Kingfisher
     - lottie-ios
     - Masonry
@@ -167,6 +170,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
   JXPagingView: afdd2e9af09c90160dd232b970d603cc6e7ddd0e
   JXSegmentedView: cd73555ce2134d1656db2cb383ba9c2f36fb5078
+  KeenCodeUnit: 6e763d076e039a6df1c68fe1526d396268128005
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
   lottie-ios: 3d98679b41fa6fd6aff2352b3953dbd3df8a397e
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
@@ -190,6 +194,6 @@ SPEC CHECKSUMS:
   WechatOpenSDK: 290989072e87b79d52225a01bb4e5e58f6f88593
   ZXSDK-Noidfa: f3cc8e4b6b4775df301489ae0792b727e193e7d3
 
-PODFILE CHECKSUM: f3d073bebc239f89df1b974b9fa880a42fda51d5
+PODFILE CHECKSUM: 6f978069511f73af4d46dabbaa9251d898f052fe
 
 COCOAPODS: 1.16.2

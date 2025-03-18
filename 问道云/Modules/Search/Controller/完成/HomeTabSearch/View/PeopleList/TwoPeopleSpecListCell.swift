@@ -14,8 +14,6 @@ class TwoPeopleSpecListCell: BaseViewCell {
     
     var lastView: CompanyListView?//记录公司列表信息的最后一个
     
-    var height: Float = 0
-    
     lazy var bgView: UIView = {
         let bgView = UIView()
         bgView.backgroundColor = .white

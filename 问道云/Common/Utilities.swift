@@ -582,7 +582,7 @@ class CountdownTimer {
     }
 }
 
-class NoCopyTextField: WLUnitField {
+class NoCopyTextField: UITextField {
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         // 如果是复制操作，直接返回false来禁止执行
         if action == #selector(UIResponder.copy(_:)) {

@@ -12,8 +12,6 @@ class TwoPeopleNormalListCell: BaseViewCell {
     
     var model = BehaviorRelay<itemsModel?>(value: nil)
     
-    var height: Float = 0
-    
     lazy var bgView: UIView = {
         let bgView = UIView()
         bgView.backgroundColor = .white

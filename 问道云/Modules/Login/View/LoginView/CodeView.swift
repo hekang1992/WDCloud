@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import KeenCodeUnit
 
 class CodeView: BaseView {
     
@@ -33,18 +34,6 @@ class CodeView: BaseView {
         return pLabel
     }()
     
-    lazy var codeInputView: WLUnitField = {
-        let codeInputView = WLUnitField(inputUnitCount: 6)
-        codeInputView.borderRadius = 5
-        codeInputView.borderWidth = 0.5
-        codeInputView.trackTintColor = UIColor.init(cssStr: "#547AFF")
-        codeInputView.cursorColor = UIColor.init(cssStr: "#547AFF")
-        codeInputView.textFont = UIFont.mediumFontOfSize(size: 50)
-        codeInputView.textColor = UIColor.init(cssStr: "#27344C")
-        codeInputView.delegate = self
-        return codeInputView
-    }()
-    
     lazy var resendBtn: UIButton = {
         let resendBtn = UIButton(type: .custom)
         resendBtn.setTitleColor(UIColor.init(cssStr: "#BDBDBD"), for: .normal)
@@ -52,12 +41,13 @@ class CodeView: BaseView {
         return resendBtn
     }()
     
+    private var codeUnit: KeenCodeUnit!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(backBtn)
         addSubview(label1)
         addSubview(pLabel)
-        addSubview(codeInputView)
         addSubview(resendBtn)
         
         backBtn.snp.makeConstraints { make in
@@ -75,15 +65,14 @@ class CodeView: BaseView {
             make.top.equalTo(label1.snp.bottom).offset(12)
             make.height.equalTo(17)
         }
-        codeInputView.snp.makeConstraints { make in
-            make.top.equalTo(pLabel.snp.bottom).offset(50)
-            make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(25)
-            make.height.equalTo(67)
-        }
+        let rect = CGRect(x: 10, y: StatusHeightManager.statusBarHeight + 180, width: CGFloat.screenWidth - 20, height: 68)
+        codeUnit = KeenCodeUnit(
+            frame: rect,
+            delegate: self
+        ).addViewTo(self)
         resendBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(codeInputView.snp.bottom).offset(48)
+            make.top.equalTo(codeUnit.snp.bottom).offset(48)
             make.size.equalTo(CGSize(width: 115.pix(), height: 17))
         }
     }
@@ -94,19 +83,23 @@ class CodeView: BaseView {
     
 }
 
-extension CodeView: WLUnitFieldDelegate {
+extension CodeView: KeenCodeUnitDelegate {
     
-    func unitField(_ uniField: WLUnitField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        var codeStr = uniField.text ?? ""
-        if range.location >= codeStr.count {
-            codeStr.append(string)
-        } else {
-            codeStr.replaceSubrange(Range(range, in: codeStr)!, with: string)
+    func attributesOfCodeUnit(for codeUnit: KeenCodeUnit) -> KeenCodeUnitAttributes {
+        var attr = KeenCodeUnitAttributes()
+        attr.style = .splitborder
+        attr.textFont = .mediumFontOfSize(size: 50)
+        attr.isSingleAlive = true
+        attr.borderRadius = 5
+        attr.viewBackColor = .clear
+        return attr
+    }
+    
+    func codeUnit(_ codeUnit: KeenCodeUnit, codeText: String, complete: Bool) {
+        if complete {
+            print("codeText====\(codeText)")
+            self.codeBlock?(codeText)
         }
-        if codeStr.count == 6 {
-            self.codeBlock?(codeStr)
-        }
-        return true
     }
     
 }

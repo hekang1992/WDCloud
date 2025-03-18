@@ -20,6 +20,8 @@ class GetCodeViewController: WDBaseViewController {
         return codeView
     }()
     
+    var grand: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,10 +43,13 @@ class GetCodeViewController: WDBaseViewController {
         }).disposed(by: disposeBag)
         
         self.codeView.codeBlock = { [weak self] code in
-            self?.getLoginInfo(from: code)
+            guard let self = self else { return }
+            if grand {
+                grand = false
+                self.getLoginInfo(from: code)
+            }
         }
     }
-    
     
 }
 
@@ -73,14 +78,12 @@ extension GetCodeViewController {
     //获取验证码
     func getCodeInfo() {
         let man = RequestManager()
-        
         let dict = ["phone": self.phoneStr,
                     "sendType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in
             guard let self = self else { return }
-            
             switch result {
             case .success(let success):
                 ToastViewConfig.showToast(message: success.msg ?? "")
@@ -96,13 +99,11 @@ extension GetCodeViewController {
     //验证码登录
     func getLoginInfo(from code: String) {
         let man = RequestManager()
-        
         let dict = ["phone": self.phoneStr,
                     "code": code]
         man.requestAPI(params: dict,
                        pageUrl: "/auth/loginmessage",
-                       method: .post) { result in
-            
+                       method: .post) { [weak self] result in
             switch result {
             case .success(let success):
                 //保存登录信息和跳转到首页
@@ -116,10 +117,12 @@ extension GetCodeViewController {
                     }
                     NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
                 }else {
+                    self?.grand = true
                     ToastViewConfig.showToast(message: success.msg ?? "")
                 }
                 break
             case .failure(_):
+                self?.grand = true
                 break
             }
         }
