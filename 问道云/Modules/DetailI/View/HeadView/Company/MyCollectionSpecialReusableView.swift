@@ -20,6 +20,12 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
     //风险模型
     var riskModel = BehaviorRelay<DataModel?>(value: nil)
     
+    //常用服务模型
+    var childrenArrayModel = BehaviorRelay<[childrenModel]?>(value: nil)
+    
+    //图谱模型
+    var mapArrayModel = BehaviorRelay<[childrenModel]?>(value: nil)
+    
     //点击了小标签的展开和收起
     var moreClickBlcok: ((CompanyModel) -> Void)?
     
@@ -213,46 +219,17 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             
             //常用服务
             headView.sixHeadView.dataModel = model
-            headView.sixHeadView.oneItems = [
-                .init(imageResource: "itemoneicon",
-                      path: "\(base_url)/business-situation/make-tender"),
-                
-                .init(imageResource: "itemtwoicon",
-                      path: "\(base_url)/litigation-risk/judicial-action"),
-                
-                .init(imageResource: "itemthreeicon",
-                      path: "\(base_url)/basic-information/property-clues"),
-                
-                .init(imageResource: "itemfouricon",
-                      path: ""),
-                
-                .init(imageResource: "itemfiveicon",
-                      path: "")
-            ]
+            childrenArrayModel.asObservable().subscribe(onNext: { [weak self] modelArray in
+                guard let self = self, let modelArray = modelArray else { return }
+                headView.sixHeadView.oneItems = modelArray
+            }).disposed(by: disposeBag)
+            
             
             //问道图谱
-            headView.sixHeadView.twoItems = [
-                .init(imageResource: "picone",
-                      path: "\(base_url)/enterprise-chart/enterprise-atlas"),
-                
-                .init(imageResource: "pictwo",
-                      path: "\(base_url)/enterprise-chart/equity-chart"),
-                
-                .init(imageResource: "picthree",
-                      path: "\(base_url)/enterprise-chart/relationship-graph"),
-                
-                .init(imageResource: "picfouric",
-                      path: "\(base_url)/enterprise-chart/actual-controller"),
-                
-                .init(imageResource: "picfiveicon",
-                      path: "\(base_url)/enterprise-chart/beneficiary-person"),
-                
-                .init(imageResource: "picsixicon",
-                      path: "\(base_url)/enterprise-chart/external-investment"),
-                
-                .init(imageResource: "picsevicon",
-                      path: "\(base_url)/enterprise-chart/structure-chart")
-            ]
+            mapArrayModel.asObservable().subscribe(onNext: { [weak self] modelArray in
+                guard let self = self, let modelArray = modelArray else { return }
+                headView.sixHeadView.twoItems = modelArray
+            }).disposed(by: disposeBag)
             
             //股票信息
             if let stockInfo = model.stockInfo, !stockInfo.isEmpty {
@@ -289,8 +266,18 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             headView.fourHeadView.fourRiskView.timeLabel.text = model.map4?.risktime ?? ""
 
             //动态
-            headView.fiveHeadView.timelabel.text = model.entityRiskEventInfo?.riskTime ?? ""
-            headView.fiveHeadView.desclabel.text = model.entityRiskEventInfo?.dynamiccontent ?? ""
+            let time = model.entityRiskEventInfo?.riskTime ?? ""
+            let dynamiccontent = model.entityRiskEventInfo?.dynamiccontent ?? ""
+            if time.isEmpty {
+                headView.fiveHeadView.timelabel.text = "--"
+            }else {
+                headView.fiveHeadView.timelabel.text = time
+            }
+            if dynamiccontent.isEmpty {
+                headView.fiveHeadView.desclabel.text = "--"
+            }else {
+                headView.fiveHeadView.desclabel.text = dynamiccontent
+            }
             
         }).disposed(by: disposeBag)
         

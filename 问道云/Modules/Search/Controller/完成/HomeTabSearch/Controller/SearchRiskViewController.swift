@@ -169,13 +169,13 @@ class SearchRiskViewController: WDBaseViewController {
         self.listPeopleView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.pageIndex = 1
-            self.searchPeopleListinfo()
+            self.searchPeopleListinfo(from: true)
         })
         
         //添加上拉加载更多人员
         self.listPeopleView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
             guard let self = self else { return }
-            self.searchPeopleListinfo()
+            self.searchPeopleListinfo(from: true)
         })
         
         view.addSubview(companyBtn)
@@ -230,8 +230,6 @@ class SearchRiskViewController: WDBaseViewController {
 //数据请求
 extension SearchRiskViewController {
     
-    
-    
     //搜索
     private func getDataInfo() {
         self.searchWordsRelay
@@ -243,6 +241,7 @@ extension SearchRiskViewController {
                 if !text.isEmpty {
                     self.pageIndex = 1
                     self.buttonTapped(companyBtn)
+                    self.searchPeopleListinfo(from: false)
                 }else {
                     self.pageIndex = 1
                     self.allArray.removeAll()
@@ -473,7 +472,6 @@ extension SearchRiskViewController {
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
-                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -568,9 +566,7 @@ extension SearchRiskViewController {
                     self.twoRiskListView.tableView.reloadData()
                     //根据数据刷新按钮文字
                     let companyNum = String(model.pageMeta?.totalNum ?? 0)
-                    let peopleNum = String(model.bossList?.totalNum ?? 0)
                     self.companyBtn.setTitle("企业 \(companyNum)", for: .normal)
-                    self.peopleBtn.setTitle("人员 \(peopleNum)", for: .normal)
                     self.companyBtn.isHidden = false
                     self.peopleBtn.isHidden = false
                 }
@@ -582,19 +578,16 @@ extension SearchRiskViewController {
     }
     
     //只搜索人员
-    func searchPeopleListinfo() {
+    func searchPeopleListinfo(from grand: Bool) {
         let dict = ["keywords": searchWords ?? "",
                     "industryType": entityIndustry,
                     "region": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20,
                     "type": "2"] as [String : Any]
-        //        let man = RequestManager()
-//        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/getRiskData",
                        method: .get) { [weak self] result in
-//            
             self?.listPeopleView.tableView.mj_header?.endRefreshing()
             self?.listPeopleView.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -604,8 +597,13 @@ extension SearchRiskViewController {
                    let code = success.code,
                    code == 200,
                    let total = model.total {
-                    self.riskView.isHidden = true
-                    self.listPeopleView.isHidden = false
+                    if grand {
+                        self.riskView.isHidden = true
+                        self.listPeopleView.isHidden = false
+                    }else {
+                        self.riskView.isHidden = false
+                        self.listPeopleView.isHidden = true
+                    }
                     if pageIndex == 1 {
                         pageIndex = 1
                         self.getlastSearch{}
@@ -629,7 +627,7 @@ extension SearchRiskViewController {
                     self.listPeopleView.searchWordsRelay.accept(self.searchWordsRelay.value)
                     self.listPeopleView.tableView.reloadData()
                     //根据数据刷新按钮文字
-                    let peopleNum = String(model.personData?.total ?? 0)
+                    let peopleNum = String(model.total ?? 0)
                     self.peopleBtn.setTitle("人员 \(peopleNum)", for: .normal)
                     self.companyBtn.isHidden = false
                     self.peopleBtn.isHidden = false
@@ -656,7 +654,7 @@ extension SearchRiskViewController {
         } else if sender == peopleBtn {
             updateButtonStyles(selectedButton: peopleBtn, unselectedButton: companyBtn)
             self.pageIndex = 1
-            self.searchPeopleListinfo()
+            self.searchPeopleListinfo(from: true)
             self.listPeopleView.isHidden = false
             self.twoRiskListView.isHidden = true
         }
@@ -737,7 +735,7 @@ extension SearchRiskViewController {
             guard let self = self else { return }
             self.entityPeopleArea = model?.currentID ?? ""
             self.pageIndex = 1
-            self.searchPeopleListinfo()
+            self.searchPeopleListinfo(from: true)
         }
         
         let industryMenu = MenuAction(title: "行业", style: .typeList)!
@@ -751,7 +749,7 @@ extension SearchRiskViewController {
             guard let self = self else { return }
             self.entityPeopleIndustry = model?.currentID ?? ""
             self.pageIndex = 1
-            self.searchPeopleListinfo()
+            self.searchPeopleListinfo(from: true)
         }
         
         let menuView = DropMenuBar(action: [regionMenu, industryMenu])!

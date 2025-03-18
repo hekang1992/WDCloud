@@ -66,6 +66,8 @@ class PeopleDetailViewController: WDBaseViewController {
         pagingView.pinSectionHeaderVerticalOffset = 0
         //获取风险数据
         getPeopleRiskInfo()
+        //获取图谱信息
+        getAtlasInfo()
     }
     
     //一定要加上这句代码,否则不会下拉刷新
@@ -84,17 +86,40 @@ class PeopleDetailViewController: WDBaseViewController {
     
 }
 
+/** 网络数据请求*/
 extension PeopleDetailViewController {
+    
+    //获取图谱信息
+    private func getAtlasInfo() {
+        let man = RequestManager()
+        let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+        let dict = ["moduleType": "7",
+                    "appleVersion": appleVersion,
+                    "appType": "apple"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/customermenu/customerMenuTree",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    if success.code == 200 {
+                        self.homeHeadView.oneItems = success.data?.items?.first?.children?.last?.children ?? []
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
     
     //获取风险详情数据
     private func getPeopleRiskInfo() {
         let man = RequestManager()
-        
         let dict = ["personNumber": personId]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data, let code = success.code, code == 200 {
@@ -133,7 +158,7 @@ extension PeopleDetailViewController {
         let fourStr = model.map4?.itemname?.isEmpty ?? true ? "暂无数据" : model.map4!.itemname!
         homeHeadView.fourRiskView.descLabel.text = fourStr
         homeHeadView.fourRiskView.timeLabel.text = model.map4?.risktime ?? ""
-
+        
         //动态
         let timeStr = model.entityRiskEventInfo?.riskTime?.isEmpty ?? true ? "暂无数据" : model.entityRiskEventInfo!.riskTime!
         homeHeadView.timelabel.text = timeStr
@@ -144,12 +169,10 @@ extension PeopleDetailViewController {
     private func getPeopleHeadInfo() {
         let dict = [String: Any]()
         let man = RequestManager()
-        
         let pageUrl = "/firminfo/v2/person/search/\(personId)"
         man.requestAPI(params: dict,
                        pageUrl: pageUrl,
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -205,29 +228,13 @@ extension PeopleDetailViewController {
                     self.homeHeadView.desLabel.alpha = 1
                     self.homeHeadView.moreButton.alpha = 1
                 }
-        }).disposed(by: disposeBag)
-
+            }).disposed(by: disposeBag)
+        
         //合作伙伴
         self.homeHeadView.onenumlabel.text = String(model.shareholderList?.count ?? 0)
         self.homeHeadView.model.accept(model)
         self.homeHeadView.pcollectionView.reloadData()
         
-        //常用服务
-        let firmname = model.firmname ?? ""
-        let personname = model.personName ?? ""
-        self.homeHeadView.oneItems = [
-            .init(imageResource: "peopleicon",
-                  path: "\(base_url)/personal-chart/equity-penetration?firmname=\(firmname)&shareholderName=\(personname)"),
-            
-            .init(imageResource: "gerenguanxitu",
-                  path: "\(base_url)/personal-chart/relationship-graph?firmname=\(firmname)&shareholderName=\(personname)"),
-            
-            .init(imageResource: "shijiguanquna",
-                  path: "\(base_url)/personal-chart/actual-controller?firmname=\(firmname)&legalname=\(personname)"),
-            
-            .init(imageResource: "shouyisuoyouqian",
-                  path: "\(base_url)/personal-chart/beneficial-owner?firmname=\(firmname)&legalname=\(personname)"),
-        ]
     }
     
 }

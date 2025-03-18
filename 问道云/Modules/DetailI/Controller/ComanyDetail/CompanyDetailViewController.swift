@@ -18,6 +18,8 @@ class CompanyDetailViewController: WDBaseViewController {
     //头部的数据模型
     var headModel = BehaviorRelay<DataModel?>(value: nil)
     
+    var childrenArrayModel = BehaviorRelay<[childrenModel]?>(value: nil)
+    
     //是否刷新上一个页面
     var refreshBlock: ((Int) -> Void)?
     
@@ -99,22 +101,67 @@ class CompanyDetailViewController: WDBaseViewController {
         getCompanyHeadInfo()
         //获取风险动态
         getCompanyRiskInfo()
+        //获取常用服务
+        getCommonServiceInfo()
+        //获取图谱
+        getAtlasInfo()
     }
     
 }
 
+/** 网络数据请求 */
 extension CompanyDetailViewController {
+    
+    //获取常用服务
+    private func getCommonServiceInfo() {
+        let man = RequestManager()
+        let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+        let dict = ["moduleType": "6",
+                    "appleVersion": appleVersion,
+                    "appType": "apple"]
+        man.requestAPI(params: dict, pageUrl: "/operation/customermenu/customerMenuTree", method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self.companyDetailView.childrenArrayModel.accept(success.data?.items?.first?.children ?? [])
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //获取图谱
+    private func getAtlasInfo() {
+        let man = RequestManager()
+        let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+        let dict = ["moduleType": "7",
+                    "appleVersion": appleVersion,
+                    "appType": "apple"]
+        man.requestAPI(params: dict, pageUrl: "/operation/customermenu/customerMenuTree", method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    if success.code == 200 {
+                        self.companyDetailView.mapArrayModel.accept(success.data?.items?.first?.children?.first?.children ?? [])
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
     
     //获取企业详情item
     private func getCompanyDetailItemInfo() {
         let dict = ["moduleType": "2",
                     "entityId": enityId] as [String: Any]
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customermenu/customerMenuTree",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -134,7 +181,6 @@ extension CompanyDetailViewController {
         let dict = ["entityName": "2",
                     "entityId": enityId] as [String: Any]
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/operatingstate/getprestatistics",
                        method: .get) { [weak self] result in
@@ -156,12 +202,10 @@ extension CompanyDetailViewController {
     //获取企业详情头部信息
     private func getCompanyHeadInfo() {
         let man = RequestManager()
-        
         let dict = ["orgId": enityId]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org/overview",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if let self = self,
@@ -183,12 +227,10 @@ extension CompanyDetailViewController {
     //获取风险详情数据
     private func getCompanyRiskInfo() {
         let man = RequestManager()
-        
         let dict = ["entityId": enityId]
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew",
                        method: .get) { result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data, let code = success.code, code == 200 {

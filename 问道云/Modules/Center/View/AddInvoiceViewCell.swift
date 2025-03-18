@@ -44,7 +44,7 @@ class AddInvoiceViewCell: BaseViewCell {
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(12)
             make.height.equalTo(18.5)
-            make.width.equalTo(58)
+            make.width.equalTo(58.pix())
         }
         lineView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()

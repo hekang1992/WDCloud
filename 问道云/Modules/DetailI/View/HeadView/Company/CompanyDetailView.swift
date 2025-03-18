@@ -24,6 +24,12 @@ class CompanyDetailView: BaseView {
     
     //风险模型
     var riskModel = BehaviorRelay<DataModel?>(value: nil)
+
+    //常用服务模型
+    var childrenArrayModel = BehaviorRelay<[childrenModel]?>(value: nil)
+    
+    //图谱模型
+    var mapArrayModel = BehaviorRelay<[childrenModel]?>(value: nil)
     
     //返回当前在第几个section
     var intBlock: ((Double) -> Void)?
@@ -253,6 +259,12 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
             }
             if let riskModel = self.riskModel.value {
                 headerView.riskModel.accept(riskModel)
+            }
+            if let childrenArrayModel = self.childrenArrayModel.value {
+                headerView.childrenArrayModel.accept(childrenArrayModel)
+            }
+            if let mapArrayModel = self.mapArrayModel.value {
+                headerView.mapArrayModel.accept(mapArrayModel)
             }
             return headerView
         }else {

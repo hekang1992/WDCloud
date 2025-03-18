@@ -21,7 +21,7 @@ class PeopleBothViewController: WDBaseViewController {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.headTitleView.isHidden = false
         headView.titlelabel.isHidden = true
-        headView.oneBtn.setBackgroundImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
     }()
     

@@ -255,7 +255,6 @@ extension WDHomeViewController {
     //获取首页item
     private func getHomeItemInfo(complete: @escaping ((childrenModel) -> Void)) {
         let man = RequestManager()
-        
         let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
         let dict = ["moduleType": "1",
                     "appleVersion": appleVersion,
@@ -263,7 +262,6 @@ extension WDHomeViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customermenu/customerMenuTree",
                        method: .get) { result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data?.items?.first?.children?.last {

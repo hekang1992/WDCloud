@@ -34,7 +34,7 @@ class SearchEnvironmentalPenaltyViewController: WDBaseViewController {
         headView.titlelabel.text = "环保处罚"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
-        headView.oneBtn.setBackgroundImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
     }()
     

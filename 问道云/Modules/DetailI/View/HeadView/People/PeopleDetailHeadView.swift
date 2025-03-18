@@ -20,7 +20,7 @@ class PeopleDetailHeadView: BaseView {
     var model = BehaviorRelay<DataModel?>(value: nil)
     
     //问道图谱
-    var oneItems: [Item]? {
+    var oneItems: [childrenModel]? {
         didSet {
             altascollectionView.reloadData()
         }
@@ -467,8 +467,10 @@ extension PeopleDetailHeadView: UICollectionViewDelegate, UICollectionViewDataSo
             cell.model.accept(model)
             return cell
         }else {
+            let model = self.oneItems?[indexPath.row]
+            let logoUrl = model?.iconGrey ?? ""
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompanyDetailCommonServiceCell", for: indexPath) as! CompanyDetailCommonServiceCell
-            cell.bgImageView.image = UIImage(named: oneItems?[indexPath.row].imageResource ?? "")
+            cell.bgImageView.kf.setImage(with: URL(string: logoUrl))
             return cell
         }
         

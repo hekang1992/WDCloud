@@ -40,7 +40,7 @@ class CompanyListView: BaseView {
             make.centerY.equalToSuperview()
             make.left.equalTo(numLabel.snp.right).offset(8)
             make.height.equalTo(18.5)
-            make.right.equalToSuperview().offset(-2)
+            make.right.equalToSuperview().offset(-5)
             make.bottom.equalToSuperview()
         }
     }

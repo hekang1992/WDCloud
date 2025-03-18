@@ -16,7 +16,7 @@ class DueDiligenceViewController: WDBaseViewController {
         headView.lineView.isHidden = true
         headView.titlelabel.textColor = .white
         headView.bgView.backgroundColor = .clear
-        headView.oneBtn.setBackgroundImage(UIImage(named: "shezhianniuimage"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "shezhianniuimage"), for: .normal)
         headView.backBtn.isHidden = true
         return headView
     }()

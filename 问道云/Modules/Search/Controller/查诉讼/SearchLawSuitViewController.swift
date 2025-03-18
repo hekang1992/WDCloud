@@ -32,7 +32,7 @@ class SearchLawSuitViewController: WDBaseViewController {
         headView.titlelabel.text = "查诉讼"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
-        headView.oneBtn.setBackgroundImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
     }()
     

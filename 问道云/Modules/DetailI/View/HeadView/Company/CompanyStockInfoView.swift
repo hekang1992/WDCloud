@@ -136,15 +136,15 @@ class CompanyStockInfoView: BaseView {
         return zdLabel
     }()
     
-    lazy var typeLabel: PaddedLabel = {
-        let typeLabel = PaddedLabel()
-        typeLabel.font = .regularFontOfSize(size: 11)
-        typeLabel.textAlignment = .center
-        typeLabel.textColor = .init(cssStr: "#666666")
-        typeLabel.layer.cornerRadius = 1
-        typeLabel.backgroundColor = .init(cssStr: "#F3F3F3")
-        return typeLabel
-    }()
+//    lazy var typeLabel: PaddedLabel = {
+//        let typeLabel = PaddedLabel()
+//        typeLabel.font = .regularFontOfSize(size: 11)
+//        typeLabel.textAlignment = .center
+//        typeLabel.textColor = .init(cssStr: "#666666")
+//        typeLabel.layer.cornerRadius = 1
+//        typeLabel.backgroundColor = .init(cssStr: "#F3F3F3")
+//        return typeLabel
+//    }()
     
     lazy var updateLabel: UILabel = {
         let updateLabel = UILabel()
@@ -240,7 +240,7 @@ class CompanyStockInfoView: BaseView {
         addSubview(jgLabel)
         addSubview(ctImageView)
         addSubview(zdLabel)
-        addSubview(typeLabel)
+//        addSubview(typeLabel)
         addSubview(updateLabel)
         addSubview(itemView1)
         addSubview(itemView2)
@@ -288,11 +288,11 @@ class CompanyStockInfoView: BaseView {
             make.height.equalTo(15)
             make.left.equalTo(ctImageView.snp.right).offset(3)
         }
-        typeLabel.snp.makeConstraints { make in
-            make.height.equalTo(15)
-            make.centerY.equalTo(ctImageView.snp.centerY)
-            make.left.equalTo(zdLabel.snp.right).offset(4)
-        }
+//        typeLabel.snp.makeConstraints { make in
+//            make.height.equalTo(15)
+//            make.centerY.equalTo(ctImageView.snp.centerY)
+//            make.left.equalTo(zdLabel.snp.right).offset(4)
+//        }
         updateLabel.snp.makeConstraints { make in
             make.centerY.equalTo(ctImageView.snp.centerY)
             make.right.equalToSuperview().offset(-13)
@@ -384,14 +384,14 @@ class CompanyStockInfoView: BaseView {
                 
                 self.zdLabel.text = "(\(valueModel.riseFallRatio ?? "--")%)"
                 
-                let listingStatus = model?.stockInfo?.first?.value?.listingStatus ?? ""
-                if listingStatus != "2" {
-                    self.typeLabel.text = "退市"
-                    self.typeLabel.textColor = .init(cssStr: "#666666")
-                }else {
-                    self.typeLabel.text = "上市"
-                    self.typeLabel.textColor = .init(cssStr: "#4DC929")
-                }
+//                let listingStatus = model?.stockInfo?.first?.value?.listingStatus ?? ""
+//                if listingStatus != "2" {
+//                    self.typeLabel.text = "退市"
+//                    self.typeLabel.textColor = .init(cssStr: "#666666")
+//                }else {
+//                    self.typeLabel.text = "上市"
+//                    self.typeLabel.textColor = .init(cssStr: "#4DC929")
+//                }
                 
                 self.updateLabel.text = "\(valueModel.updateDate ?? "")更新"
                 

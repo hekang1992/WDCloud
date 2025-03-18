@@ -7,22 +7,17 @@
 
 import UIKit
 
-struct Item {
-    let imageResource: String
-    var path: String
-}
-
 class CompanySixHeadView: BaseView {
     
     //常用服务
-    var oneItems: [Item]? {
+    var oneItems: [childrenModel]? {
         didSet {
             collectionView.reloadData()
         }
     }
     
     //问道图谱
-    var twoItems: [Item]? {
+    var twoItems: [childrenModel]? {
         didSet {
             pcollectionView.reloadData()
         }
@@ -156,12 +151,16 @@ extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.pcollectionView {
+            let model = self.twoItems?[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompanyDetailCommonPicCell", for: indexPath) as? CompanyDetailCommonServiceCell
-            cell?.bgImageView.image = UIImage(named: twoItems?[indexPath.row].imageResource ?? "")
+            let icon = model?.iconGrey ?? ""
+            cell?.bgImageView.kf.setImage(with: URL(string: icon))
             return cell ?? UICollectionViewCell()
         }else {
+            let model = self.oneItems?[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompanyDetailCommonServiceCell", for: indexPath) as? CompanyDetailCommonServiceCell
-            cell?.bgImageView.image = UIImage(named: oneItems?[indexPath.row].imageResource ?? "")
+            let icon = model?.iconGrey ?? ""
+            cell?.bgImageView.kf.setImage(with: URL(string: icon))
             return cell ?? UICollectionViewCell()
         }
     }

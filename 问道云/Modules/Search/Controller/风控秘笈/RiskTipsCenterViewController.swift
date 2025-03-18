@@ -21,7 +21,7 @@ class RiskTipsCenterViewController: WDBaseViewController {
         headView.titlelabel.text = "风控秘笈"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
-        headView.oneBtn.setBackgroundImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
     }()
     

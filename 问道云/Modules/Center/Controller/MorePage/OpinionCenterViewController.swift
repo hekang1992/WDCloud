@@ -11,7 +11,7 @@ class OpinionCenterViewController: WDBaseViewController {
 
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
-        headView.oneBtn.setBackgroundImage(UIImage(named: "wodeyijianfankui"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "wodeyijianfankui"), for: .normal)
         headView.titlelabel.text = "意见反馈"
         return headView
     }()

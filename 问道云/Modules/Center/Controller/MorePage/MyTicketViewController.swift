@@ -43,7 +43,7 @@ class MyTicketViewController: WDBaseViewController {
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
-        headView.oneBtn.setBackgroundImage(UIImage(named: "kaipiaoshuoming"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "kaipiaoshuoming"), for: .normal)
         headView.titlelabel.text = "发票列表"
         return headView
     }()

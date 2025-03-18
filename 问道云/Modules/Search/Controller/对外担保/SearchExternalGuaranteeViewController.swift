@@ -34,7 +34,7 @@ class SearchExternalGuaranteeViewController: WDBaseViewController {
         headView.titlelabel.text = "对外担保"
         headView.titlelabel.textColor = .black
         headView.bgView.backgroundColor = .white
-        headView.oneBtn.setBackgroundImage(UIImage(named: "headrightoneicon"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "headrightoneicon"), for: .normal)
         return headView
     }()
     

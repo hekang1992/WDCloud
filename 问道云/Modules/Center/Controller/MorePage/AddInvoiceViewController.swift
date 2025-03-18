@@ -123,7 +123,7 @@ class AddInvoiceViewController: WDBaseViewController {
             self.tableView.isHidden = true
             self.addView.modelArray.value[0].text.accept(model.orgInfo?.orgName ?? "")
             self.addView.modelArray.value[1].text.accept(model.orgInfo?.usCreditCode ?? "")
-            self.addView.modelArray.value[2].text.accept(model.regAddr?.content ?? "")
+            self.addView.modelArray.value[2].text.accept(model.orgInfo?.regAddr?.content ?? "")
             self.addView.modelArray.value[3].text.accept(model.orgInfo?.phone ?? "")
         }).disposed(by: disposeBag)
         

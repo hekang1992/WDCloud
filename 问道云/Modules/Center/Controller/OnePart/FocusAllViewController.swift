@@ -15,7 +15,7 @@ class FocusAllViewController: WDBaseViewController {
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .twoBtn)
-        headView.oneBtn.setBackgroundImage(UIImage(named: "santiaogang"), for: .normal)
+        headView.oneBtn.setImage(UIImage(named: "santiaogang"), for: .normal)
         headView.twoBtn.setImage(UIImage(named: "sesachiamge"), for: .normal)
         headView.titlelabel.text = "我的关注"
         return headView
