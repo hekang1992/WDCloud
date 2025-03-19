@@ -54,6 +54,13 @@ class CompanyRiskDetailHeadView: BaseView {
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")
         return lineView
     }()
+    
+    lazy var monitoringBtn: UIButton = {
+        let monitoringBtn = UIButton(type: .custom)
+        monitoringBtn.isHidden = true
+        monitoringBtn.setImage(UIImage(named: "addmonitoring"), for: .normal)
+        return monitoringBtn
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,6 +70,7 @@ class CompanyRiskDetailHeadView: BaseView {
         addSubview(reportBtn)
         addSubview(tagLabel)
         addSubview(lineView)
+        addSubview(monitoringBtn)
         iconImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(StatusHeightManager.navigationBarHeight + 15.5)
             make.left.equalToSuperview().offset(18)
@@ -92,6 +100,12 @@ class CompanyRiskDetailHeadView: BaseView {
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(1)
         }
+        monitoringBtn.snp.makeConstraints { make in
+            make.height.equalTo(19)
+            make.centerY.equalTo(namelabel.snp.centerY)
+            make.right.equalToSuperview().offset(-10)
+        }
+        
         reportBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.reportBtnBlock?()
@@ -127,7 +141,6 @@ class PeopleRiskDetailHeadView: BaseView {
         timeLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
         timeLabel.textAlignment = .left
         timeLabel.font = .mediumFontOfSize(size: 12)
-        timeLabel.text = "监控周期:"
         return timeLabel
     }()
     

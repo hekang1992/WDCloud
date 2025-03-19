@@ -20,6 +20,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
     var dateType: String = ""
     var itemtype: String = "1"
     var allArray: [itemDtoListModel]?
+    //主头部信息
     var mainHeadView: CompanyRiskDetailHeadView?
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
@@ -455,6 +456,31 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             return timeView
         }
         getRiskDetailInfo()
+        
+        //监控点击
+        mainHeadView?.monitoringBtn
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                let man = RequestManager()
+                let dict = ["orgId": self.enityId, "groupId": ""]
+                man.requestAPI(params: dict,
+                               pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
+                               method: .post) { [weak self] result in
+                    switch result {
+                    case .success(let success):
+                        if success.code == 200 {
+                            guard let self = self else { return }
+                            mainHeadView?.monitoringBtn.isHidden = true
+                            ToastViewConfig.showToast(message: "监控成功")
+                        }
+                        break
+                    case .failure(_):
+                        break
+                    }
+                }
+        }).disposed(by: disposeBag)
     }
     
     private func updateSelectedLabel(_ selectedLabel: PaddedLabel?) {
@@ -538,23 +564,30 @@ extension MySelfRiskDetailViewController {
         self.oneItemView.numLabel.text = String(model.highLevelCnt ?? 0)
         self.twoItemView.numLabel.text = String(model.lowLevelCnt ?? 0)
         self.threeItemView.numLabel.text = String(model.tipLevelCnt ?? 0)
-        //头部信息
+        let startTime = model.monitorStartDate ?? ""
+        let endTime = model.monitorEndDate ?? ""
         let monitorFlag = model.monitorFlag ?? 0
-        if monitorFlag != 0 {
-            let startTime = model.monitorStartDate ?? ""
-            let endTime = model.monitorEndDate ?? ""
-            let allTime = "监控周期:\(startTime) - \(endTime)"
-            mainHeadView?.timeLabel.text = allTime
-            mainHeadView?.tagLabel.text = model.groupName ?? ""
-            mainHeadView?.tagLabel.isHidden = false
-            self.monitoringTime = allTime
-            self.groupName = model.groupName ?? ""
-        }else {
-            mainHeadView?.timeLabel.text = "未监控"
-            mainHeadView?.tagLabel.isHidden = true
-        }
+        let groupName = model.groupName ?? ""
+        showOrHideMonitoringInfo(from: monitorFlag, startTime: startTime, endTime: endTime, groupName: groupName)
     }
     
+    //刷新头部监控按钮信息
+    private func showOrHideMonitoringInfo(from monitorFlag: Int, startTime: String, endTime: String, groupName: String) {
+        //头部信息
+        if monitorFlag != 0 {
+            let allTime = "监控周期:\(startTime) - \(endTime)"
+            mainHeadView?.timeLabel.text = allTime
+            mainHeadView?.tagLabel.text = groupName
+            mainHeadView?.tagLabel.isHidden = false
+            self.monitoringTime = allTime
+            self.groupName = groupName
+            mainHeadView?.monitoringBtn.isHidden = true
+        }else {
+            mainHeadView?.timeLabel.text = ""
+            mainHeadView?.tagLabel.isHidden = true
+            mainHeadView?.monitoringBtn.isHidden = false
+        }
+    }
 }
 
 extension MySelfRiskDetailViewController: UITableViewDelegate, UITableViewDataSource {
