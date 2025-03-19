@@ -146,80 +146,80 @@ class TwoTicketCell: BaseViewCell {
         contentView.addSubview(againBtn)
         whiteView.addSubview(typeImageView)
         nameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(15)
+            make.top.equalToSuperview().offset(15.pix())
             make.left.equalToSuperview().offset(25)
-            make.height.equalTo(22.5)
+            make.height.equalTo(22.5.pix())
         }
         oneLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
-            make.top.equalTo(nameLabel.snp.bottom).offset(14)
+            make.top.equalTo(nameLabel.snp.bottom).offset(14.pix())
             make.height.equalTo(18.5)
-            make.width.equalTo(30)
+            make.width.equalTo(30.pix())
         }
         twoLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
-            make.top.equalTo(oneLabel.snp.bottom).offset(6)
+            make.top.equalTo(oneLabel.snp.bottom).offset(6.pix())
             make.height.equalTo(18.5)
-            make.width.equalTo(30)
+            make.width.equalTo(30.pix())
         }
         threeLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
-            make.top.equalTo(twoLabel.snp.bottom).offset(6)
+            make.top.equalTo(twoLabel.snp.bottom).offset(6.pix())
             make.height.equalTo(18.5)
-            make.width.equalTo(62)
+            make.width.equalTo(62.pix())
         }
         fourLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
-            make.top.equalTo(threeLabel.snp.bottom).offset(6)
-            make.height.equalTo(18.5)
-            make.width.equalTo(62)
+            make.top.equalTo(threeLabel.snp.bottom).offset(6.pix())
+            make.height.equalTo(18.5.pix())
+            make.width.equalTo(62.pix())
         }
         headLabel.snp.makeConstraints { make in
             make.centerY.equalTo(oneLabel.snp.centerY)
             make.left.equalTo(oneLabel.snp.right).offset(8)
-            make.height.equalTo(20)
+            make.height.equalTo(20.pix())
             make.right.equalToSuperview().offset(-20)
         }
         taxNumLabel.snp.makeConstraints { make in
             make.centerY.equalTo(twoLabel.snp.centerY)
             make.left.equalTo(twoLabel.snp.right).offset(8)
-            make.height.equalTo(20)
+            make.height.equalTo(20.pix())
             make.right.equalToSuperview().offset(-20)
         }
         timeLabel.snp.makeConstraints { make in
             make.centerY.equalTo(threeLabel.snp.centerY)
             make.left.equalTo(threeLabel.snp.right).offset(6)
-            make.height.equalTo(20)
+            make.height.equalTo(20.pix())
             make.right.equalToSuperview().offset(-20)
         }
         priceLabel.snp.makeConstraints { make in
             make.centerY.equalTo(fourLabel.snp.centerY)
             make.left.equalTo(fourLabel.snp.right).offset(6)
-            make.height.equalTo(20)
+            make.height.equalTo(20.pix())
             make.right.equalToSuperview().offset(-20)
         }
         lineView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset(19)
-            make.height.equalTo(0.5)
-            make.top.equalTo(priceLabel.snp.bottom).offset(7)
-            make.bottom.equalToSuperview().offset(-57.5)
+            make.height.equalTo(1)
+            make.top.equalTo(priceLabel.snp.bottom).offset(7.pix())
+            make.bottom.equalToSuperview().offset(-52)
         }
         openBtn.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-21.5)
-            make.top.equalTo(lineView.snp.bottom).offset(7)
-            make.size.equalTo(CGSize(width: 76, height: 28))
+            make.top.equalTo(lineView.snp.bottom).offset(7.pix())
+            make.size.equalTo(CGSize(width: 77.pix(), height: 28.pix()))
         }
         againBtn.snp.makeConstraints { make in
             make.right.equalTo(openBtn.snp.left).offset(-6)
-            make.top.equalTo(lineView.snp.bottom).offset(7)
-            make.size.equalTo(CGSize(width: 84.5, height: 28))
+            make.top.equalTo(lineView.snp.bottom).offset(7.pix())
+            make.size.equalTo(CGSize(width: 85.pix(), height: 28.pix()))
         }
         whiteView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(11)
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-8)
+            make.bottom.equalToSuperview().offset(-8.pix())
         }
         typeImageView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 80, height: 80))
@@ -253,7 +253,6 @@ class TwoTicketCell: BaseViewCell {
             self.linkBlock?(model)
         }).disposed(by: disposeBag)
         
-        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -277,7 +276,6 @@ class TwoTicketView: BaseView {
         tableView.backgroundColor = .init(cssStr: "#F5F5F5")
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(TwoTicketCell.self, forCellReuseIdentifier: "TwoTicketCell")
         if #available(iOS 15.0, *) {
