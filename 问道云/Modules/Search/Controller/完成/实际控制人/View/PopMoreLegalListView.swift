@@ -130,4 +130,8 @@ extension PopMoreLegalListView: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = ViewControllerUtils.findViewController(from: self)
+    }
+    
 }

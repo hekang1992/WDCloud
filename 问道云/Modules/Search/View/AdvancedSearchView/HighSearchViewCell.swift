@@ -283,15 +283,25 @@ extension HighSearchViewCell {
     //多个法定代表人弹窗
     private func popMoreListViewInfo(from model: pageDataModel) {
         let vc = ViewControllerUtils.findViewController(from: self)
-        let popMoreListView = PopMoreLegalListView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
         let leaderList = model.leaderVec?.leaderList ?? []
-        popMoreListView.descLabel.text = "法定代表人\(leaderList.count)"
-        popMoreListView.dataList = leaderList
-        let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
-        popMoreListView.closeBlock = {
-            vc?.dismiss(animated: true)
+        if leaderList.count > 1 {
+            let popMoreListView = PopMoreLegalListView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
+            popMoreListView.descLabel.text = "法定代表人\(leaderList.count)"
+            popMoreListView.dataList = leaderList
+            let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
+            popMoreListView.closeBlock = {
+                vc?.dismiss(animated: true)
+            }
+            vc?.present(alertVc, animated: true)
+        }else {
+            let personId = model.leaderVec?.leaderList?.first?.leaderId ?? ""
+            let peopleName = model.leaderVec?.leaderList?.first?.name ?? ""
+            let peopleDetailVc = PeopleBothViewController()
+            peopleDetailVc.personId.accept(personId)
+            peopleDetailVc.peopleName.accept(peopleName)
+            vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
         }
-        vc?.present(alertVc, animated: true)
+        
     }
     
 }

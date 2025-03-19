@@ -116,7 +116,8 @@ extension PeopleDetailViewController {
     //获取风险详情数据
     private func getPeopleRiskInfo() {
         let man = RequestManager()
-        let dict = ["entityId": personId, "entityCategory": "1"]
+        let dict = ["entityId": personId,
+                    "entityCategory": "2"]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/riskTracking",
                        method: .get) { [weak self] result in

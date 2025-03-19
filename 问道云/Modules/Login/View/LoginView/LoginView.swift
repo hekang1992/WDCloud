@@ -205,14 +205,14 @@ class LoginView: BaseView {
             make.top.equalTo(yinsiLabel.snp.bottom).offset(32.5)
             make.left.equalToSuperview().offset(30)
         }
-        oneBtn.snp.makeConstraints { make in
-            make.top.equalTo(sendBtn.snp.bottom).offset(32)
-            make.left.equalToSuperview().offset(30)
-            make.size.equalTo(CGSize(width: 74, height: 36))
-        }
+//        oneBtn.snp.makeConstraints { make in
+//            make.top.equalTo(sendBtn.snp.bottom).offset(32)
+//            make.left.equalToSuperview().offset(30)
+//            make.size.equalTo(CGSize(width: 74, height: 36))
+//        }
         mimaBtn.snp.makeConstraints { make in
             make.top.equalTo(sendBtn.snp.bottom).offset(32)
-            make.left.equalTo(oneBtn.snp.right).offset(14)
+            make.left.equalToSuperview().offset(30)
             make.size.equalTo(CGSize(width: 74, height: 36))
         }
         weiBtn.snp.makeConstraints { make in

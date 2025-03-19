@@ -1032,6 +1032,7 @@
 		733D2F432D87AD5F0019C697 /* 完成 */ = {
 			isa = PBXGroup;
 			children = (
+				73FC5E492D5C3C80001D0DEF /* 查股东 */,
 				73654B232D818E0B0004E408 /* HighSearch */,
 				73654B222D818DB00004E408 /* HomeTabSearch */,
 				73FC5E482D5C3C70001D0DEF /* SearchOneReport */,
@@ -1873,7 +1874,6 @@
 			isa = PBXGroup;
 			children = (
 				733D2F432D87AD5F0019C697 /* 完成 */,
-				73FC5E492D5C3C80001D0DEF /* 查股东 */,
 				73FC5E4A2D5C784E001D0DEF /* 查老赖 */,
 				73FC5E682D5CADA4001D0DEF /* 查诉讼 */,
 				73FC5E472D5C3C66001D0DEF /* 行政处罚 */,

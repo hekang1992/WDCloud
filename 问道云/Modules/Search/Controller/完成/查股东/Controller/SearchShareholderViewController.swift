@@ -318,7 +318,6 @@ extension SearchShareholderViewController {
     //浏览历史
     private func getBrowsingHistory() {
         let man = RequestManager()
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "",
@@ -326,7 +325,6 @@ extension SearchShareholderViewController {
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -345,26 +343,32 @@ extension SearchShareholderViewController {
     func readHistoryUI(data: [rowsModel]) {
         for (index, model) in data.enumerated() {
             let listView = CommonSearchListView()
+            let type = model.viewrecordtype ?? ""
             listView.block = { [weak self] in
                 guard let self = self else { return }
                 let pageUrl = "\(base_url)/personal-information/shareholder-situation"
                 var dict: [String: String]
-                let type = model.viewrecordtype ?? ""
                 if type == "1" {
                     dict = ["firmname": model.firmname ?? "",
                             "entityId": model.firmnumber ?? "",
                             "isPerson": "0"]
                 }else {
-                    dict = ["personName": model.name ?? "",
-                            "personNumber": model.eid ?? "",
+                    dict = ["personName": model.personname ?? "",
+                            "personNumber": model.personnumber ?? "",
                             "isPerson": "1"]
                 }
                 let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
                 self.pushWebPage(from: webUrl)
             }
-            listView.nameLabel.text = model.firmname ?? ""
+            var name: String = ""
+            if  type == "1" {
+                name = model.firmname ?? ""
+            }else {
+                name = model.personname ?? ""
+            }
+            listView.nameLabel.text = name
             listView.timeLabel.text = model.createhourtime ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22)))
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             self.oneView.historyView.addSubview(listView)
             listView.snp.makeConstraints { make in
                 make.height.equalTo(40)
