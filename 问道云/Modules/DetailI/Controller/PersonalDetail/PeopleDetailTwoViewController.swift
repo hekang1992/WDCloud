@@ -99,7 +99,6 @@ class PeopleDetailTwoViewController: WDBaseViewController {
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(CorrelationViewCell.self, forCellReuseIdentifier: "CorrelationViewCell")
         return tableView

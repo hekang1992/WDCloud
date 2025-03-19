@@ -47,8 +47,7 @@ class PopHistoryNameView: BaseView {
         tableView.delegate = self
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
-        
+        tableView.showsHorizontalScrollIndicator = false        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(HistoryNameCell.self, forCellReuseIdentifier: "HistoryNameCell")
         return tableView

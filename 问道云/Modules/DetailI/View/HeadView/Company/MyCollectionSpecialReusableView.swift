@@ -245,39 +245,62 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
         riskModel.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             //风险数据
-            headView.fourHeadView.oneRiskView.namelabel.text = model.map1?.name ?? ""
-            headView.fourHeadView.oneRiskView.numLabel.text = model.map1?.sumTotal ?? "0"
-            headView.fourHeadView.oneRiskView.descLabel.text = model.map1?.itemname ?? ""
-            headView.fourHeadView.oneRiskView.timeLabel.text = model.map1?.risktime ?? ""
+            headView.fourHeadView.oneRiskView.namelabel.text = "经营风险"
+            if let model = model.operationRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
+                let count = model.riskCnt ?? ""
+                let descStr = model.riskInfo ?? ""
+                headView.fourHeadView.oneRiskView.numLabel.text = count
+                headView.fourHeadView.oneRiskView.descLabel.text = "\(descStr)(\(count))"
+                headView.fourHeadView.oneRiskView.timeLabel.text = model.riskTime ?? ""
+            }else {
+                headView.fourHeadView.oneRiskView.numLabel.text = "0"
+                headView.fourHeadView.oneRiskView.descLabel.text = "暂无数据"
+                headView.fourHeadView.oneRiskView.timeLabel.text = ""
+            }
             
-            headView.fourHeadView.twoRiskView.namelabel.text = model.map2?.name ?? ""
-            headView.fourHeadView.twoRiskView.numLabel.text = model.map2?.sumTotal ?? "0"
-            headView.fourHeadView.twoRiskView.descLabel.text = model.map2?.itemname ?? ""
-            headView.fourHeadView.twoRiskView.timeLabel.text = model.map2?.risktime ?? ""
+            headView.fourHeadView.twoRiskView.namelabel.text = "法律风险"
+            if let model = model.lawRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
+                let count = model.riskCnt ?? ""
+                let descStr = model.riskInfo ?? ""
+                headView.fourHeadView.twoRiskView.numLabel.text = count
+                headView.fourHeadView.twoRiskView.descLabel.text = "\(descStr)(\(count))"
+                headView.fourHeadView.twoRiskView.timeLabel.text = model.riskTime ?? ""
+            }else {
+                headView.fourHeadView.twoRiskView.numLabel.text = "0"
+                headView.fourHeadView.twoRiskView.descLabel.text = "暂无数据"
+                headView.fourHeadView.twoRiskView.timeLabel.text = ""
+            }
             
-            headView.fourHeadView.threeRiskView.namelabel.text = model.map3?.name ?? ""
-            headView.fourHeadView.threeRiskView.numLabel.text = model.map3?.sumTotal ?? "0"
-            headView.fourHeadView.threeRiskView.descLabel.text = model.map3?.itemname ?? ""
-            headView.fourHeadView.threeRiskView.timeLabel.text = model.map3?.risktime ?? ""
+            headView.fourHeadView.threeRiskView.namelabel.text = "财务风险"
+            if let model = model.financeRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
+                let count = model.riskCnt ?? ""
+                let descStr = model.riskInfo ?? ""
+                headView.fourHeadView.threeRiskView.numLabel.text = count
+                headView.fourHeadView.threeRiskView.descLabel.text = "\(descStr)(\(count))"
+                headView.fourHeadView.threeRiskView.timeLabel.text = model.riskTime ?? ""
+            }else {
+                headView.fourHeadView.threeRiskView.numLabel.text = "0"
+                headView.fourHeadView.threeRiskView.descLabel.text = "暂无数据"
+                headView.fourHeadView.threeRiskView.timeLabel.text = ""
+            }
+    
+            headView.fourHeadView.fourRiskView.namelabel.text = "舆情风险"
+            if let model = model.opinionRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
+                let count = model.riskCnt ?? ""
+                let descStr = model.riskInfo ?? ""
+                headView.fourHeadView.fourRiskView.numLabel.text = count
+                headView.fourHeadView.fourRiskView.descLabel.text = "\(descStr)(\(count))"
+                headView.fourHeadView.fourRiskView.timeLabel.text = model.riskTime ?? ""
+            }else {
+                headView.fourHeadView.fourRiskView.numLabel.text = "0"
+                headView.fourHeadView.fourRiskView.descLabel.text = "暂无数据"
+                headView.fourHeadView.fourRiskView.timeLabel.text = ""
+            }
             
-            headView.fourHeadView.fourRiskView.namelabel.text = model.map4?.name ?? ""
-            headView.fourHeadView.fourRiskView.numLabel.text = model.map4?.sumTotal ?? "0"
-            headView.fourHeadView.fourRiskView.descLabel.text = model.map4?.itemname ?? ""
-            headView.fourHeadView.fourRiskView.timeLabel.text = model.map4?.risktime ?? ""
-
             //动态
-            let time = model.entityRiskEventInfo?.riskTime ?? ""
-            let dynamiccontent = model.entityRiskEventInfo?.dynamiccontent ?? ""
-            if time.isEmpty {
-                headView.fiveHeadView.timelabel.text = "--"
-            }else {
-                headView.fiveHeadView.timelabel.text = time
-            }
-            if dynamiccontent.isEmpty {
-                headView.fiveHeadView.desclabel.text = "--"
-            }else {
-                headView.fiveHeadView.desclabel.text = dynamiccontent
-            }
+            let timeStr = model.riskDynamic?.riskTime?.isEmpty ?? true ? "暂无数据" : model.riskDynamic!.riskTime!
+            headView.fiveHeadView.timelabel.text = timeStr
+            headView.fiveHeadView.desclabel.text = model.riskDynamic?.riskInfo ?? ""
             
         }).disposed(by: disposeBag)
         

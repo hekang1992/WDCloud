@@ -512,8 +512,7 @@ class InvoiceListView: BaseView {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .init(cssStr: "#F4F7FB")
         tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
-        
+        tableView.showsHorizontalScrollIndicator = false        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(InvoiceNormalListCell.self, forCellReuseIdentifier: "InvoiceNormalListCell")
         tableView.register(InvoiceSelectListCell.self, forCellReuseIdentifier: "InvoiceSelectListCell")

@@ -240,17 +240,17 @@ extension SearchPeopleDeadbeatDetailViewController {
                     nameLabel.text = name
                     idLabel.text = "身份证号码: --"
                     descLabel.text = "简介: --"
-                    self.oneRiskView.namelabel.text = model.riskList?.map1?.name ?? ""
-                    self.oneRiskView.numLabel.text = model.riskList?.map1?.sumTotal ?? ""
-                    
-                    self.twoRiskView.namelabel.text = model.riskList?.map2?.name ?? ""
-                    self.twoRiskView.numLabel.text = model.riskList?.map2?.sumTotal ?? ""
-                    
-                    self.threeRiskView.namelabel.text = model.riskList?.map3?.name ?? ""
-                    self.threeRiskView.numLabel.text = model.riskList?.map3?.sumTotal ?? ""
-                    
-                    self.fourRiskView.namelabel.text = model.riskList?.map4?.name ?? ""
-                    self.fourRiskView.numLabel.text = model.riskList?.map4?.sumTotal ?? ""
+//                    self.oneRiskView.namelabel.text = model.riskList?.map1?.name ?? ""
+//                    self.oneRiskView.numLabel.text = model.riskList?.map1?.sumTotal ?? ""
+//                    
+//                    self.twoRiskView.namelabel.text = model.riskList?.map2?.name ?? ""
+//                    self.twoRiskView.numLabel.text = model.riskList?.map2?.sumTotal ?? ""
+//                    
+//                    self.threeRiskView.namelabel.text = model.riskList?.map3?.name ?? ""
+//                    self.threeRiskView.numLabel.text = model.riskList?.map3?.sumTotal ?? ""
+//                    
+//                    self.fourRiskView.namelabel.text = model.riskList?.map4?.name ?? ""
+//                    self.fourRiskView.numLabel.text = model.riskList?.map4?.sumTotal ?? ""
                     if let modelArray = model.minutesList {
                         self.modelArray = modelArray
                         self.tableView.reloadData()

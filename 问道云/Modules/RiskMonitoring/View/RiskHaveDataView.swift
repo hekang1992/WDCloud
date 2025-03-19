@@ -18,8 +18,7 @@ class RiskHaveDataView: BaseView {
         tableView.register(MonitoringCell.self, forCellReuseIdentifier: "MonitoringCell")
         tableView.estimatedRowHeight = 80
         tableView.contentInsetAdjustmentBehavior = .never
-        tableView.rowHeight = UITableView.automaticDimension
-        
+        tableView.rowHeight = UITableView.automaticDimension        
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         if #available(iOS 15.0, *) {

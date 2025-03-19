@@ -29,8 +29,7 @@ class HomeNewsListViewController: WDBaseViewController {
         tableView.delegate = self
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
-        
+        tableView.showsHorizontalScrollIndicator = false        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(HomeNewsListViewCell.self, forCellReuseIdentifier: "HomeNewsListViewCell")
         return tableView

@@ -136,7 +136,6 @@ class OneTicketView: BaseView {
         tableView.backgroundColor = .init(cssStr: "#F5F5F5")
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(OneTicketCell.self, forCellReuseIdentifier: "OneTicketCell")
         if #available(iOS 15.0, *) {

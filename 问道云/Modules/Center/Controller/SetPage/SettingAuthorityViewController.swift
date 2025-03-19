@@ -46,7 +46,6 @@ class SettingAuthorityViewController: WDBaseViewController {
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(AuthViewCell.self, forCellReuseIdentifier: "AuthViewCell")
         return tableView

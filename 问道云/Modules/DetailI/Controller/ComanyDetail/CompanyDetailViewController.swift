@@ -227,9 +227,9 @@ extension CompanyDetailViewController {
     //获取风险详情数据
     private func getCompanyRiskInfo() {
         let man = RequestManager()
-        let dict = ["entityId": enityId]
+        let dict = ["entityId": enityId, "entityCategory": "1"]
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew",
+                       pageUrl: "/entity/risk/riskTracking",
                        method: .get) { result in
             switch result {
             case .success(let success):

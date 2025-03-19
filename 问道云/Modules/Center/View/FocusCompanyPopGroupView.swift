@@ -69,7 +69,6 @@ class FocusCompanyPopGroupView: BaseView {
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        
         tableView.register(FenzuCell.self, forCellReuseIdentifier: "FenzuCell")
         return tableView
     }()

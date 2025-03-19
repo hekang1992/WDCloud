@@ -116,9 +116,9 @@ extension PeopleDetailViewController {
     //获取风险详情数据
     private func getPeopleRiskInfo() {
         let man = RequestManager()
-        let dict = ["personNumber": personId]
+        let dict = ["entityId": personId, "entityCategory": "1"]
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/riskmonitoring/riskTrackingNew",
+                       pageUrl: "/entity/risk/riskTracking",
                        method: .get) { [weak self] result in
             switch result {
             case .success(let success):
@@ -134,35 +134,63 @@ extension PeopleDetailViewController {
     
     //刷新风险数据
     private func refreshRiskUI(from model: DataModel) {
-        homeHeadView.oneRiskView.namelabel.text = model.map1?.name ?? ""
-        homeHeadView.oneRiskView.numLabel.text = model.map1?.sumTotal ?? "0"
-        let oneStr = model.map1?.itemname?.isEmpty ?? true ? "暂无数据" : model.map1!.itemname!
-        homeHeadView.oneRiskView.descLabel.text = oneStr
-        homeHeadView.oneRiskView.timeLabel.text = model.map1?.risktime ?? ""
+        homeHeadView.oneRiskView.namelabel.text = "经营风险"
+        if let model = model.operationRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
+            let count = model.riskCnt ?? ""
+            let descStr = model.riskInfo ?? ""
+            homeHeadView.oneRiskView.numLabel.text = count
+            homeHeadView.oneRiskView.descLabel.text = "\(descStr)(\(count))"
+            homeHeadView.oneRiskView.timeLabel.text = model.riskTime ?? ""
+        }else {
+            homeHeadView.oneRiskView.numLabel.text = "0"
+            homeHeadView.oneRiskView.descLabel.text = "暂无数据"
+            homeHeadView.oneRiskView.timeLabel.text = ""
+        }
         
         
-        homeHeadView.twoRiskView.namelabel.text = model.map2?.name ?? ""
-        homeHeadView.twoRiskView.numLabel.text = model.map2?.sumTotal ?? "0"
-        let twoStr = model.map2?.itemname?.isEmpty ?? true ? "暂无数据" : model.map2!.itemname!
-        homeHeadView.twoRiskView.descLabel.text = twoStr
-        homeHeadView.twoRiskView.timeLabel.text = model.map2?.risktime ?? ""
+        homeHeadView.twoRiskView.namelabel.text = "法律风险"
+        if let model = model.lawRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
+            let count = model.riskCnt ?? ""
+            let descStr = model.riskInfo ?? ""
+            homeHeadView.twoRiskView.numLabel.text = count
+            homeHeadView.twoRiskView.descLabel.text = "\(descStr)(\(count))"
+            homeHeadView.twoRiskView.timeLabel.text = model.riskTime ?? ""
+        }else {
+            homeHeadView.twoRiskView.numLabel.text = "0"
+            homeHeadView.twoRiskView.descLabel.text = "暂无数据"
+            homeHeadView.twoRiskView.timeLabel.text = ""
+        }
         
-        homeHeadView.threeRiskView.namelabel.text = model.map3?.name ?? ""
-        homeHeadView.threeRiskView.numLabel.text = model.map3?.sumTotal ?? "0"
-        let threeStr = model.map3?.itemname?.isEmpty ?? true ? "暂无数据" : model.map3!.itemname!
-        homeHeadView.threeRiskView.descLabel.text = threeStr
-        homeHeadView.threeRiskView.timeLabel.text = model.map3?.risktime ?? ""
+        homeHeadView.threeRiskView.namelabel.text = "财务风险"
+        if let model = model.financeRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
+            let count = model.riskCnt ?? ""
+            let descStr = model.riskInfo ?? ""
+            homeHeadView.threeRiskView.numLabel.text = count
+            homeHeadView.threeRiskView.descLabel.text = "\(descStr)(\(count))"
+            homeHeadView.threeRiskView.timeLabel.text = model.riskTime ?? ""
+        }else {
+            homeHeadView.threeRiskView.numLabel.text = "0"
+            homeHeadView.threeRiskView.descLabel.text = "暂无数据"
+            homeHeadView.threeRiskView.timeLabel.text = ""
+        }
         
-        homeHeadView.fourRiskView.namelabel.text = model.map4?.name ?? ""
-        homeHeadView.fourRiskView.numLabel.text = model.map4?.sumTotal ?? "0"
-        let fourStr = model.map4?.itemname?.isEmpty ?? true ? "暂无数据" : model.map4!.itemname!
-        homeHeadView.fourRiskView.descLabel.text = fourStr
-        homeHeadView.fourRiskView.timeLabel.text = model.map4?.risktime ?? ""
+        homeHeadView.fourRiskView.namelabel.text = "舆情风险"
+        if let model = model.opinionRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
+            let count = model.riskCnt ?? ""
+            let descStr = model.riskInfo ?? ""
+            homeHeadView.fourRiskView.numLabel.text = count
+            homeHeadView.fourRiskView.descLabel.text = "\(descStr)(\(count))"
+            homeHeadView.fourRiskView.timeLabel.text = model.riskTime ?? ""
+        }else {
+            homeHeadView.fourRiskView.numLabel.text = "0"
+            homeHeadView.fourRiskView.descLabel.text = "暂无数据"
+            homeHeadView.fourRiskView.timeLabel.text = ""
+        }
         
         //动态
-        let timeStr = model.entityRiskEventInfo?.riskTime?.isEmpty ?? true ? "暂无数据" : model.entityRiskEventInfo!.riskTime!
+        let timeStr = model.riskDynamic?.riskTime?.isEmpty ?? true ? "暂无数据" : model.riskDynamic!.riskTime!
         homeHeadView.timelabel.text = timeStr
-        homeHeadView.desclabel.text = model.entityRiskEventInfo?.dynamiccontent ?? ""
+        homeHeadView.desclabel.text = model.riskDynamic?.riskInfo ?? ""
     }
     
     //获取个人头部信息

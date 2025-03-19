@@ -40,7 +40,6 @@ class HistoryListView: BaseView {
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(HistoryListViewCell.self, forCellReuseIdentifier: "HistoryListViewCell")
         if #available(iOS 15.0, *) {

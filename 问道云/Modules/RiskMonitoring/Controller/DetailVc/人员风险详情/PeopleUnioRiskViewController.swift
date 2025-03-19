@@ -34,8 +34,7 @@ class PeopleUnioRiskViewController: WDBaseViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
-        
+        tableView.showsHorizontalScrollIndicator = false        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(RiskUnioViewCell.self, forCellReuseIdentifier: "RiskUnioViewCell")
         return tableView

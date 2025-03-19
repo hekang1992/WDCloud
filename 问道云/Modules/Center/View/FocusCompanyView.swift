@@ -81,7 +81,6 @@ class FocusCompanyView: BaseView {
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        
         tableView.backgroundColor = .clear
         tableView.register(FocusCompanyViewNormalCell.self, forCellReuseIdentifier: "FocusCompanyViewNormalCell")
         tableView.register(FocusCompanyEditViewCell.self, forCellReuseIdentifier: "FocusCompanyEditViewCell")

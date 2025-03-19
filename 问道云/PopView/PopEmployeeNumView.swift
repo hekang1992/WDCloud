@@ -43,8 +43,7 @@ class PopEmployeeNumView: BaseView {
         tableView.delegate = self
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
-        
+        tableView.showsHorizontalScrollIndicator = false        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(EmployeeNumViewCell.self, forCellReuseIdentifier: "EmployeeNumViewCell")
         if #available(iOS 15.0, *) {

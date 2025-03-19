@@ -55,8 +55,7 @@ class PopRateMoneyView: BaseView {
         tableView.delegate = self
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
-        
+        tableView.showsHorizontalScrollIndicator = false        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(EmployeeMoneyNumViewCell.self, forCellReuseIdentifier: "EmployeeMoneyNumViewCell")
         if #available(iOS 15.0, *) {

@@ -120,10 +120,11 @@ class DataModel {
     var tags: [String]?
     //风险
     var entityRiskEventInfo: entityRiskEventInfoModel?
-    var map1: map1Model?
-    var map2: map1Model?
-    var map3: map1Model?
-    var map4: map1Model?
+    var operationRisk: map1Model?
+    var lawRisk: map1Model?
+    var financeRisk: map1Model?
+    var opinionRisk: map1Model?
+    var riskDynamic: map1Model?
     
     var riskGrade: riskGradeModel?
     var totalRiskCnt: Int?
@@ -248,10 +249,11 @@ class DataModel {
         self.totaRiskCnt = json["totaRiskCnt"].intValue
         self.riskGrade = riskGradeModel(json: json["riskGrade"])
         self.entityRiskEventInfo = entityRiskEventInfoModel(json: json["entityRiskEventInfo"])
-        self.map1 = map1Model(json: json["map1"])
-        self.map2 = map1Model(json: json["map2"])
-        self.map3 = map1Model(json: json["map3"])
-        self.map4 = map1Model(json: json["map4"])
+        self.operationRisk = map1Model(json: json["operationRisk"])
+        self.lawRisk = map1Model(json: json["lawRisk"])
+        self.financeRisk = map1Model(json: json["financeRisk"])
+        self.opinionRisk = map1Model(json: json["opinionRisk"])
+        self.riskDynamic = map1Model(json: json["riskDynamic"])
         self.all = json["all"].intValue
         self.legal = json["legal"].intValue
         self.staff = json["staff"].intValue
@@ -1428,15 +1430,13 @@ class entityRiskEventInfoModel {
 }
 
 class map1Model {
-    var itemname: String?
-    var risktime: String?
-    var name: String?
-    var sumTotal: String?
+    var riskTime: String?
+    var riskInfo: String?
+    var riskCnt: String?
     init(json: JSON) {
-        self.itemname = json["itemname"].stringValue
-        self.risktime = json["risktime"].stringValue
-        self.name = json["name"].stringValue
-        self.sumTotal = json["sumTotal"].stringValue
+        self.riskTime = json["riskTime"].stringValue
+        self.riskInfo = json["riskInfo"].stringValue
+        self.riskCnt = json["riskCnt"].stringValue
     }
 }
 

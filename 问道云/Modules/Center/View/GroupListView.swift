@@ -109,7 +109,6 @@ class GroupListView: BaseView {
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(GroupListViewCell.self, forCellReuseIdentifier: "GroupListViewCell")
         if #available(iOS 15.0, *) {

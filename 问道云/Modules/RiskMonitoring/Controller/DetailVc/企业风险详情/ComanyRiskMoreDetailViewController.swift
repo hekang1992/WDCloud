@@ -227,7 +227,7 @@ extension ComanyRiskMoreDetailViewController: UITableViewDelegate, UITableViewDa
             }
             namelabel.text = oneModel.riskLevelDesc ?? ""
             let total = String(self.model?.total ?? 0)
-            numlabel.attributedText = GetRedStrConfig.getRedStr(from: total, fullText: "共\(total)条")
+            numlabel.attributedText = GetRedStrConfig.getRedStr(from: total, fullText: "共\(total)条", font: UIFont.regularFontOfSize(size: 11))
             return headView
         }else {
             return nil

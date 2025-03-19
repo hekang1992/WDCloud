@@ -25,8 +25,7 @@ class PeopleActivityViewController: WDBaseViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
-        
+        tableView.showsHorizontalScrollIndicator = false        
         tableView.register(CompanyActivityViewCell.self, forCellReuseIdentifier: "CompanyActivityViewCell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
