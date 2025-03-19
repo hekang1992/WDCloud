@@ -35,7 +35,6 @@ class UnioRiskDetailViewController: WDBaseViewController {
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(RiskUnioViewCell.self, forCellReuseIdentifier: "RiskUnioViewCell")
         return tableView
@@ -77,20 +76,20 @@ extension UnioRiskDetailViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.model?.notRelevaRiskDto?.itemDtoList.count ?? 0
+        return self.model?.relevaRiskItemDtos?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RiskUnioViewCell", for: indexPath) as? RiskUnioViewCell
         cell?.backgroundColor = .clear
         cell?.selectionStyle = .none
-        let model = self.model?.notRelevaRiskDto?.itemDtoList[indexPath.row]
+        let model = self.model?.relevaRiskItemDtos?[indexPath.row]
         cell?.model.accept(model)
         return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.model?.notRelevaRiskDto?.itemDtoList[indexPath.row]
+        let model = self.model?.relevaRiskItemDtos?[indexPath.row]
         let entityId = model?.orgId ?? ""
         let entityName = model?.orgName ?? ""
         let companyDetailVc = CompanyBothViewController()
@@ -107,7 +106,6 @@ extension UnioRiskDetailViewController {
     //获取关联风险
     private func getUnioRiskInfo() {
         let man = RequestManager()
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["functionType": functionType,
                     "relevaCompType": relevaCompType,
@@ -116,22 +114,32 @@ extension UnioRiskDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk-monitor/statisticOrgRisk",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
                 if let model = success.data,
-                   let modelArray = model.notRelevaRiskDto?.itemDtoList,
+                   let modelArray = model.relevaRiskItemDtos,
                     !modelArray.isEmpty {
                     self.model = model
-                    self.refreshUI(from: model)
+                    if self.relevaCompType.isEmpty {
+                        self.refreshUI(from: model)
+                    }
+                    self.emptyView.removeFromSuperview()
                     self.tableView.reloadData()
                 }else {
                     self.addNodataView(from: self.view)
+                    self.emptyView.snp.remakeConstraints { make in
+                        make.top.equalTo(self.tableView.snp.top)
+                        make.left.right.bottom.equalToSuperview()
+                    }
                 }
                 break
             case .failure(_):
                 self.addNodataView(from: self.view)
+                self.emptyView.snp.remakeConstraints { make in
+                    make.top.equalTo(self.tableView.snp.top)
+                    make.left.right.bottom.equalToSuperview()
+                }
                 break
             }
         }
@@ -140,7 +148,7 @@ extension UnioRiskDetailViewController {
     private func refreshUI(from model: DataModel) {
         let oneCount = model.totalCompanyCnt ?? 0
         let twoCount = model.totalRiskCnt ?? 0
-        let descStr = "关联企业总共\(oneCount),累计风险\(twoCount)条"
+        let descStr = "关联企业总共\(oneCount)家, 累计风险\(twoCount)条"
         let attributedText = NSMutableAttributedString(string: descStr)
         let regex = try! NSRegularExpression(pattern: "\\d+")
         let matches = regex.matches(in: descStr, range: NSRange(descStr.startIndex..., in: descStr))
@@ -156,6 +164,12 @@ extension UnioRiskDetailViewController {
         headView.threeView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(model.directorCompanyCnt ?? 0)", fullText: "\(model.directorCompanyCnt ?? 0)家", colorStr: "#1677FF")
         
         headView.fourView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(model.shCompanyCnt ?? 0)", fullText: "\(model.shCompanyCnt ?? 0)家", colorStr: "#1677FF")
+        
+        headView.typeBlock = { [weak self] relevaCompType in
+            self?.relevaCompType = relevaCompType
+            self?.getUnioRiskInfo()
+        }
+        
     }
     
 }

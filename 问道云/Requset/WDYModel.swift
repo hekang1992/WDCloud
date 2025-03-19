@@ -143,6 +143,7 @@ class DataModel {
     var monitorFlag: Int?
     var groupName: String?
     var notRelevaRiskDto: notRelevaRiskDtoModel?
+    var relevaRiskItemDtos: [itemDtoListModel]?
     /**
      监控设置模型
      */
@@ -181,6 +182,7 @@ class DataModel {
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
     var count: countModel?
     init(json: JSON) {
+        self.relevaRiskItemDtos = json["relevaRiskItemDtos"].arrayValue.map { itemDtoListModel(json: $0) }
         self.notRelevaRiskDto = notRelevaRiskDtoModel(json: json["notRelevaRiskDto"])
         self.count = countModel(json: json["items"])
         self.orgTotal = json["orgTotal"].intValue
@@ -1514,6 +1516,7 @@ class itemDtoListModel {
     var financeRiskCnt: Int?//经营风险
     var opinionRiskCnt: Int?//舆情风险
     init(json: JSON) {
+        self.orgId = json["orgId"].stringValue
         self.orgName = json["orgName"].stringValue
         self.orgRelaveType = json["orgRelaveType"].arrayValue.map { $0.stringValue }
         self.itemId = json["itemId"].stringValue
@@ -1791,5 +1794,4 @@ class notRelevaRiskDtoModel {
         self.totalRiskCnt = json["totalRiskCnt"].intValue
         self.itemDtoList = json["itemDtoList"].arrayValue.map { itemDtoListModel(json: $0) }
     }
-    
 }

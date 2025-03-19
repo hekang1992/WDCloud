@@ -100,9 +100,9 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
         riskHeadView.namelabel.text = name
          
         if monitoringTime.isEmpty {
-            riskHeadView.timeLabel.text = "监控周期: 未监控"
+            riskHeadView.timeLabel.text = "监控周期:未监控"
         }else {
-            riskHeadView.timeLabel.text = "监控周期: \(monitoringTime)"
+            riskHeadView.timeLabel.text = "\(monitoringTime)"
         }
         
         if groupName.isEmpty {

@@ -230,7 +230,7 @@ extension BothCompanyViewController {
                             self.emptyView.removeFromSuperview()
                         }else {
                             self.addNodataView(from: self.dailyView.tableView)
-                            self.emptyView.snp.makeConstraints { make in
+                            self.emptyView.snp.remakeConstraints { make in
                                 make.left.equalToSuperview()
                                 make.top.equalToSuperview().offset(64)
                                 make.height.equalTo(SCREEN_HEIGHT)

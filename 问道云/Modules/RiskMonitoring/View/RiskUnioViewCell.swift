@@ -116,7 +116,14 @@ class RiskUnioViewCell: BaseViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             nameLabel.text = model.orgName ?? ""
-            descLabel.text = model.orgRelaveType?.first ?? ""
+            let orgRelaveType = model.orgRelaveType?.first ?? ""
+            if orgRelaveType.isEmpty {
+                descLabel.isHidden = true
+            }else {
+                descLabel.isHidden = false
+                descLabel.text = orgRelaveType
+            }
+            
             numLabel.text = "累计风险: \(model.totalCnt ?? 0)条"
             oneView.nameLabel.text = "经营风险"
             twoView.nameLabel.text = "法律风险"
