@@ -48,7 +48,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         return tableView
     }()
     
-    //法律风险view
+    //法律风险
     lazy var lawView: CompanyLawListView = {
         let lawView = CompanyLawListView()
         lawView.backgroundColor = .white

@@ -112,17 +112,17 @@ class RiskDetailViewCell: BaseViewCell {
         highLabel.snp.makeConstraints { make in
             make.centerY.equalTo(namelabel.snp.centerY)
             make.left.equalTo(namelabel.snp.right).offset(4.5)
-            make.height.equalTo(15)
+            make.height.equalTo(16.pix())
         }
         lowLabel.snp.makeConstraints { make in
             make.centerY.equalTo(namelabel.snp.centerY)
             make.left.equalTo(highLabel.snp.right).offset(4.5)
-            make.height.equalTo(15)
+            make.height.equalTo(16.pix())
         }
         hitLabel.snp.makeConstraints { make in
             make.centerY.equalTo(namelabel.snp.centerY)
             make.left.equalTo(lowLabel.snp.right).offset(4.5)
-            make.height.equalTo(15)
+            make.height.equalTo(16.pix())
         }
         
         model.asObservable().subscribe(onNext: { [weak self] model in

@@ -121,7 +121,7 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
         cell.twoblock = { [weak self] model in
             guard let self = self else { return }
             let authFlag = model.authflag ?? 0
-            let reportType = model.reporttype ?? 0
+            let reportType = model.reportType ?? 0
             if reportType == 3 {
                 if let phoneURL = URL(string: "tel://\(4006326699)") {
                     if UIApplication.shared.canOpenURL(phoneURL) {

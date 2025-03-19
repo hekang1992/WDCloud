@@ -467,7 +467,7 @@ class itemsModel {
     var descprtion: String?
     var templatepath: String?
     var authflag: Int?
-    var reporttype: Int?
+    var reportType: Int?
     var reportnumber: String?
     var riskCount: Int?
     var idCardNumber: String?//身份证
@@ -519,7 +519,7 @@ class itemsModel {
         self.riskCount = json["riskCount"].intValue
         self.reportnumber = json["reportnumber"].stringValue
         self.authflag = json["authflag"].intValue
-        self.reporttype = json["reporttype"].intValue
+        self.reportType = json["reportType"].intValue
         self.templatepath = json["templatepath"].stringValue
         self.descprtion = json["descprtion"].stringValue
         self.forshort = json["forshort"].stringValue

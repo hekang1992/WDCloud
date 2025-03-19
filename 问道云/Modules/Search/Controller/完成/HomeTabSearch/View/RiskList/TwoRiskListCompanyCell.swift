@@ -69,6 +69,35 @@ class TwoRiskListCompanyCell: BaseViewCell {
         return timeView
     }()
     
+    lazy var redView: UIView = {
+        let redView = UIView()
+        redView.layer.cornerRadius = 2
+        redView.layer.masksToBounds = true
+        redView.backgroundColor = .init(cssStr: "#F55B5B")?.withAlphaComponent(0.05)
+        redView.isSkeletonable = true
+        return redView
+    }()
+    
+    lazy var riskImageView: UIImageView = {
+        let riskImageView = UIImageView()
+        riskImageView.image = UIImage(named: "riskiamgeicon")
+        return riskImageView
+    }()
+    
+    lazy var rightImageView: UIImageView = {
+        let rightImageView = UIImageView()
+        rightImageView.image = UIImage(named: "righticonimage")
+        return rightImageView
+    }()
+    
+    lazy var riskTimeLabel: UILabel = {
+        let riskTimeLabel = UILabel()
+        riskTimeLabel.textColor = .init(cssStr: "#666666")
+        riskTimeLabel.font = .regularFontOfSize(size: 12)
+        riskTimeLabel.textAlignment = .left
+        return riskTimeLabel
+    }()
+    
     lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .init(cssStr: "#EBEBEB")
@@ -114,6 +143,10 @@ class TwoRiskListCompanyCell: BaseViewCell {
         contentView.addSubview(nameView)
         contentView.addSubview(moneyView)
         contentView.addSubview(timeView)
+        contentView.addSubview(redView)
+        redView.addSubview(riskImageView)
+        redView.addSubview(rightImageView)
+        redView.addSubview(riskTimeLabel)
         contentView.addSubview(lineView)
         contentView.addSubview(oneNumLabel)
         contentView.addSubview(twoNumLabel)
@@ -157,7 +190,29 @@ class TwoRiskListCompanyCell: BaseViewCell {
             make.top.equalTo(moneyView.snp.top)
             make.height.equalTo(36)
             make.right.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-45)
+        }
+        
+        redView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(10)
+            make.top.equalTo(timeView.snp.bottom)
+            make.height.equalTo(0)
+        }
+        
+        riskImageView.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 57, height: 13))
+            make.left.equalToSuperview().offset(6)
+            make.centerY.equalToSuperview()
+        }
+        rightImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.size.equalTo(CGSize(width: 12, height: 12))
+            make.right.equalToSuperview().offset(-7)
+        }
+        riskTimeLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(riskImageView.snp.right).offset(10.5)
+            make.height.equalTo(16.5)
         }
         
         bgView.snp.makeConstraints { make in
@@ -219,13 +274,38 @@ class TwoRiskListCompanyCell: BaseViewCell {
             
             let relevaRiskCnt = String(model.riskInfo?.relevaRiskCnt ?? 0)
             let selfRiskCnt = String(model.riskInfo?.selfRiskCnt ?? 0)
-            self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(selfRiskCnt)条自身风险", font: .regularFontOfSize(size: 12))
+            self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: selfRiskCnt, fullText: "共\(selfRiskCnt)条自身风险", font: .regularFontOfSize(size: 12))
             self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "\(relevaRiskCnt)条关联风险", font: .regularFontOfSize(size: 12))
             
             //小标签
             let tagArray = model.labels?.compactMap { $0.name ?? "" } ?? []
             self.tagArray = tagArray
             setupScrollView(tagScrollView: tagListView, tagArray: tagArray)
+            
+            let content =  model.riskInfo?.content ?? ""
+            if let riskInfo = model.riskInfo,
+               let riskTime = riskInfo.riskTime,
+                !riskTime.isEmpty {
+                self.redView.isHidden = false
+                self.redView.snp.updateConstraints { make in
+                    make.top.equalTo(self.timeView.snp.bottom).offset(7)
+                    make.height.equalTo(30)
+                }
+                self.lineView.snp.updateConstraints { make in
+                    make.top.equalTo(self.tagListView.snp.bottom).offset(91)
+                }
+                riskTimeLabel.text = riskTime + content
+            }else {
+                self.redView.isHidden = true
+                self.redView.snp.updateConstraints { make in
+                    make.top.equalTo(self.timeView.snp.bottom)
+                    make.height.equalTo(0)
+                }
+                self.lineView.snp.updateConstraints { make in
+                    make.top.equalTo(self.tagListView.snp.bottom).offset(49.5)
+                }
+                riskTimeLabel.text = ""
+            }
             
         }).disposed(by: disposeBag)
         

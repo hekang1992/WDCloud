@@ -493,7 +493,6 @@ extension SearchRiskViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            
             let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["moduleId": "05",
                         "viewrecordtype": "",
@@ -501,7 +500,6 @@ extension SearchRiskViewController {
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
                            method: .get) { result in
-                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -528,11 +526,9 @@ extension SearchRiskViewController {
                     "pageSize": 20,
                     "type": "1"] as [String : Any]
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/getRiskData",
-                       method: .get) { [weak self] result in
-            
+                       method: .get) { [weak self] result in            
             self?.twoRiskListView.tableView.mj_header?.endRefreshing()
             self?.twoRiskListView.tableView.mj_footer?.endRefreshing()
             switch result {

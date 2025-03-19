@@ -19,7 +19,7 @@ class HomeOneReportCell: BaseViewCell {
     var name: String? {
         didSet {
             guard let name = name else { return }
-            nlabel.text = name
+            namelabel.text = name
         }
     }
     
@@ -134,7 +134,7 @@ class HomeOneReportCell: BaseViewCell {
         }
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            namelabel.text = model.forshort ?? ""
+            nlabel.text = model.forshort ?? ""
             desclabel.text = model.descprtion ?? ""
             let templatepath = model.templatepath ?? ""
             let authflag = model.authflag ?? 0
