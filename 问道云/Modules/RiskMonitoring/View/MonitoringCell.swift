@@ -166,85 +166,85 @@ class MonitoringCell: BaseViewCell {
         contentView.addSubview(riskLabel)
         ctImageView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(10.pix())
             make.size.equalTo(CGSize(width: 35.pix(), height: 35.pix()))
         }
         namelabel.snp.makeConstraints { make in
             make.top.equalTo(ctImageView.snp.top)
             make.left.equalTo(ctImageView.snp.right).offset(5)
             make.right.equalToSuperview().offset(-40)
-            make.height.equalTo(21)
+            make.height.equalTo(21.pix())
         }
         moreBtn.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-15)
-            make.top.equalToSuperview().offset(10)
-            make.size.equalTo(CGSize(width: 18, height: 18))
+            make.top.equalToSuperview().offset(10.pix())
+            make.size.equalTo(CGSize(width: 25.pix(), height: 25.pix()))
         }
         typeLabel.snp.makeConstraints { make in
             make.left.equalTo(namelabel.snp.left)
-            make.top.equalTo(namelabel.snp.bottom).offset(4)
-            make.height.equalTo(15)
+            make.top.equalTo(namelabel.snp.bottom).offset(4.pix())
+            make.height.equalTo(15.pix())
         }
         tagLabel.snp.makeConstraints { make in
             make.left.equalTo(typeLabel.snp.right).offset(5)
             make.centerY.equalTo(typeLabel.snp.centerY)
-            make.height.equalTo(15)
+            make.height.equalTo(15.pix())
         }
         timeLabel.snp.makeConstraints { make in
-            make.top.equalTo(tagLabel.snp.bottom).offset(6)
+            make.top.equalTo(tagLabel.snp.bottom).offset(6.pix())
             make.left.equalTo(ctImageView.snp.left)
             make.size.equalTo(CGSize(width: 58.pix(), height: 17))
         }
         timeDetailLabel.snp.makeConstraints { make in
             make.centerY.equalTo(timeLabel.snp.centerY)
-            make.height.equalTo(17)
+            make.height.equalTo(17.pix())
             make.left.equalTo(timeLabel.snp.right)
         }
         todayLabel.snp.makeConstraints { make in
-            make.top.equalTo(timeLabel.snp.bottom).offset(4)
+            make.top.equalTo(timeLabel.snp.bottom).offset(4.pix())
             make.left.equalTo(ctImageView.snp.left)
             make.size.equalTo(CGSize(width: 88.pix(), height: 17))
         }
         numLabel.snp.makeConstraints { make in
             make.centerY.equalTo(todayLabel.snp.centerY)
             make.left.equalTo(todayLabel.snp.right)
-            make.height.equalTo(17)
+            make.height.equalTo(17.pix())
         }
         highLabel.snp.makeConstraints { make in
             make.centerY.equalTo(todayLabel.snp.centerY)
             make.left.equalTo(numLabel.snp.right).offset(5)
-            make.height.equalTo(17)
+            make.height.equalTo(17.pix())
         }
         lowLabel.snp.makeConstraints { make in
             make.centerY.equalTo(todayLabel.snp.centerY)
             make.left.equalTo(highLabel.snp.right).offset(5)
-            make.height.equalTo(17)
+            make.height.equalTo(17.pix())
         }
         hintLabel.snp.makeConstraints { make in
             make.centerY.equalTo(todayLabel.snp.centerY)
             make.left.equalTo(lowLabel.snp.right).offset(5)
-            make.height.equalTo(17)
+            make.height.equalTo(17.pix())
         }
         lineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(highLabel.snp.bottom).offset(6)
+            make.top.equalTo(highLabel.snp.bottom).offset(6.pix())
             make.height.equalTo(1)
-            make.bottom.equalToSuperview().offset(-34)
+            make.bottom.equalToSuperview().offset(-36.pix())
         }
         dImageView.snp.makeConstraints { make in
-            make.top.equalTo(lineView.snp.bottom).offset(7)
+            make.top.equalTo(lineView.snp.bottom).offset(8.pix())
             make.left.equalToSuperview().offset(10)
-            make.size.equalTo(CGSize(width: 46, height: 11))
+            make.size.equalTo(CGSize(width: 46.pix(), height: 11.pix()))
         }
         riskLabel.snp.makeConstraints { make in
             make.centerY.equalTo(dImageView.snp.centerY)
             make.left.equalTo(dImageView.snp.right).offset(6.5)
-            make.height.equalTo(17)
+            make.height.equalTo(17.pix())
         }
         footView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.height.equalTo(6)
+            make.height.equalTo(6.pix())
         }
         moreBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.moreBlock?()
@@ -260,9 +260,8 @@ class MonitoringCell: BaseViewCell {
             guard let model = companyModel else { return }
             lineView.isHidden = false
             let logo = model.logo ?? ""
-            
             let orgName = model.orgName ?? ""
-            
+
             ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (30, 30), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             namelabel.text = orgName
             

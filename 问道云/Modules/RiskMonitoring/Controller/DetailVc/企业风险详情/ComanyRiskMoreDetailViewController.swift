@@ -51,7 +51,7 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
     var itemsModel = BehaviorRelay<itemsModel?>(value: nil)
     var listmodel = BehaviorRelay<threelevelitemsModel?>(value: nil)
     
-    var allArray: [itemsModel] = []
+    var allArray: [rowsModel] = []
     
     var model: DataModel?
     
@@ -152,7 +152,6 @@ extension ComanyRiskMoreDetailViewController {
     
     private func getDetailInfo() {
         let man = RequestManager()
-        
         let dict = ["orgId": orgId,
                     "itemId": itemId,
                     "historyFlag": historyFlag,
@@ -161,7 +160,6 @@ extension ComanyRiskMoreDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/queryOrgRiskList",
                        method: .get) { [weak self] result in
-            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -176,11 +174,10 @@ extension ComanyRiskMoreDetailViewController {
                         self.allArray.removeAll()
                     }
                     pageNum += 1
-                    let pageData = model.items ?? []
+                    let pageData = model.rows ?? []
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
-                        self.noNetView.removeFromSuperview()
                     }else {
                         self.addNodataView(from: self.tableView)
                     }
@@ -228,8 +225,9 @@ extension ComanyRiskMoreDetailViewController: UITableViewDelegate, UITableViewDa
                 make.right.equalTo(rightImageView.snp.left).offset(-4)
                 make.height.equalTo(15)
             }
-            namelabel.text = oneModel.itemname ?? ""
-            numlabel.text = "共\(self.model?.total ?? 0)条"
+            namelabel.text = oneModel.riskLevelDesc ?? ""
+            let total = String(self.model?.total ?? 0)
+            numlabel.attributedText = GetRedStrConfig.getRedStr(from: total, fullText: "共\(total)条")
             return headView
         }else {
             return nil
@@ -244,9 +242,9 @@ extension ComanyRiskMoreDetailViewController: UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = self.allArray[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "CompanyLawDetailCell", for: indexPath) as! CompanyLawDetailCell
-        cell.nameLabel.text = model.itemname ?? ""
-        cell.timelabel.text = model.risktime ?? ""
-        let riskLevel = model.risklevel ?? ""
+        cell.nameLabel.text = model.riskName ?? ""
+        cell.timelabel.text = model.riskTime ?? ""
+        let riskLevel = model.riskLevel ?? ""
         if riskLevel == "3" {
             cell.highLabel.text = "提示"
             cell.highLabel.backgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.05)
@@ -265,11 +263,11 @@ extension ComanyRiskMoreDetailViewController: UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.allArray[indexPath.row]
-        let itemnumber = model.itemnumber ?? "0"
-        let riskdynamicid = model.riskdynamicid ?? ""
-        let pageUrl = "\(base_url)/risk-detail/\(itemnumber)_\(riskdynamicid)"
-        self.pushWebPage(from: pageUrl)
+//        let model = self.allArray[indexPath.row]
+//        let itemnumber = model.riskId ?? "0"
+//        let riskdynamicid = model.riskdynamicid ?? ""
+//        let pageUrl = "\(base_url)/risk-detail/\(itemnumber)_\(riskdynamicid)"
+//        self.pushWebPage(from: pageUrl)
     }
     
 }

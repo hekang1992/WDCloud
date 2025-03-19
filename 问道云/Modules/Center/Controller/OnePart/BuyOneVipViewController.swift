@@ -186,7 +186,6 @@ class BuyOneVipViewController: WDBaseViewController {
     
     //购买
     private func buyInfo() {
-        
         let man = RequestManager()
         let combonumber = self.appleById ?? 0
         let phonenumber = GetSaveLoginInfoConfig.getPhoneNumber()
@@ -200,7 +199,6 @@ class BuyOneVipViewController: WDBaseViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/addorder-single",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -225,13 +223,11 @@ class BuyOneVipViewController: WDBaseViewController {
     
     //获取套餐信息
     private func listInfo() {
-        
         let man = RequestManager()
         let dict = ["serviceType": "4"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/combo/equity-list",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -259,7 +255,6 @@ extension BuyOneVipViewController {
     
     //企业添加监控
     private func addCompanyMonitoring() {
-        
         let entityid = entityId
         let firmname = entityName
         let groupnumber = menuId
@@ -267,11 +262,9 @@ extension BuyOneVipViewController {
                     "groupId": groupnumber,
                     "firmname": firmname] as [String : Any]
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 let code = success.code ?? 0
@@ -289,7 +282,6 @@ extension BuyOneVipViewController {
     
     //人员监控
     private func addPeopleMonitoring() {
-        
         let personId = entityId
         let personName = entityName
         let customerId = GetSaveLoginInfoConfig.getCustomerNumber()
@@ -302,7 +294,6 @@ extension BuyOneVipViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 let code = success.code ?? 0

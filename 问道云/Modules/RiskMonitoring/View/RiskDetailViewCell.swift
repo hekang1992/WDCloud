@@ -52,7 +52,7 @@ class RiskDetailViewCell: BaseViewCell {
         highLabel.textColor = UIColor.init(cssStr: "#F55B5B")
         highLabel.layer.cornerRadius = 2
         highLabel.layer.masksToBounds = true
-        highLabel.font = .regularFontOfSize(size: 9)
+        highLabel.font = .regularFontOfSize(size: 13)
         return highLabel
     }()
     
@@ -62,7 +62,7 @@ class RiskDetailViewCell: BaseViewCell {
         lowLabel.textColor = UIColor.init(cssStr: "#FF7D00")
         lowLabel.layer.cornerRadius = 2
         lowLabel.layer.masksToBounds = true
-        lowLabel.font = .regularFontOfSize(size: 9)
+        lowLabel.font = .regularFontOfSize(size: 13)
         return lowLabel
     }()
     
@@ -72,7 +72,7 @@ class RiskDetailViewCell: BaseViewCell {
         hitLabel.textColor = UIColor.init(cssStr: "#547AFF")
         hitLabel.layer.cornerRadius = 2
         hitLabel.layer.masksToBounds = true
-        hitLabel.font = .regularFontOfSize(size: 9)
+        hitLabel.font = .regularFontOfSize(size: 13)
         return hitLabel
     }()
     
@@ -112,17 +112,17 @@ class RiskDetailViewCell: BaseViewCell {
         highLabel.snp.makeConstraints { make in
             make.centerY.equalTo(namelabel.snp.centerY)
             make.left.equalTo(namelabel.snp.right).offset(4.5)
-            make.height.equalTo(15)
+            make.height.equalTo(18)
         }
         lowLabel.snp.makeConstraints { make in
             make.centerY.equalTo(namelabel.snp.centerY)
             make.left.equalTo(highLabel.snp.right).offset(4.5)
-            make.height.equalTo(15)
+            make.height.equalTo(18)
         }
         hitLabel.snp.makeConstraints { make in
             make.centerY.equalTo(namelabel.snp.centerY)
             make.left.equalTo(lowLabel.snp.right).offset(4.5)
-            make.height.equalTo(15)
+            make.height.equalTo(18)
         }
         
         model.asObservable().subscribe(onNext: { [weak self] model in

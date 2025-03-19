@@ -838,7 +838,17 @@ class rowsModel {
     var announcementLink: String?
     var stockShortName: String?
     var stockCode: String?
+    var riskId: String?
+    var riskName: String?
+    var riskTime: String?
+    var riskLevel: String?
+    var riskLevelDesc: String?
     init(json: JSON) {
+        self.riskId = json["riskId"].stringValue
+        self.riskName = json["riskName"].stringValue
+        self.riskTime = json["riskTime"].stringValue
+        self.riskLevel = json["riskLevel"].stringValue
+        self.riskLevelDesc = json["riskLevelDesc"].stringValue        
         self.stockCode = json["stockCode"].stringValue
         self.category = json["category"].stringValue
         self.announcementLink = json["announcementLink"].stringValue

@@ -281,11 +281,9 @@ extension SearchMonitoringViewController {
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitortarget/riskInquiryEntity",
                        method: .get) { [weak self] result in
-            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -329,13 +327,11 @@ extension SearchMonitoringViewController {
     //查询监控分组
     func getMonitoringGroupInfo(complete: @escaping () -> Void) {
         let man = RequestManager()
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitorgroup/selectMonitorGroup",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -358,11 +354,9 @@ extension SearchMonitoringViewController {
                     "groupId": groupnumber,
                     "firmname": firmname] as [String : Any]
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
                        method: .post) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -375,7 +369,7 @@ extension SearchMonitoringViewController {
                 }else if code == 702 {
                     //弹窗提示购买会员
                     popVipView(from: 1, entityId: entityid, entityName: firmname, menuId: groupnumber) {
-                        
+                        self.getListInfo()
                     }
                 }
                 break
@@ -391,7 +385,6 @@ extension SearchMonitoringViewController {
     private func addMonitoringPeopleInfo(from model: rowsModel,
                                          peopleModel: riskMonitorPersonDtoListModel,
                                          listView: MonitoringListView) {
-        
         let personId = peopleModel.personId ?? ""
         let personName = peopleModel.personName ?? ""
         let customerId = GetSaveLoginInfoConfig.getCustomerNumber()

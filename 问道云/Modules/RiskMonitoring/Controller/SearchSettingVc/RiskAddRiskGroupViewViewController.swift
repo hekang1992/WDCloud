@@ -175,13 +175,11 @@ extension RiskAddRiskGroupViewViewController {
     //查询监控分组
     func getMonitoringGroupInfo() {
         let man = RequestManager()
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitorgroup/selectMonitorGroup",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -209,13 +207,11 @@ extension RiskAddRiskGroupViewViewController {
     }
     
     private func addNewInfo() {
-        
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["groupName": self.addGroupView.tf.text ?? "",
                     "customernumber": customernumber]
-        man.requestAPI(params: dict, pageUrl: "/entity/monitorgroup/addRiskMonitorGroup", method: .post) { [weak self] result in
-            
+        man.requestAPI(params: dict, pageUrl: "/entity/monitorgroup/addRiskMonitorGroup", method: .post) { [weak self] result in            
             switch result {
             case .success(_):
                 guard let self = self else { return }
@@ -232,11 +228,9 @@ extension RiskAddRiskGroupViewViewController {
     func deleteInfo(form model: rowsModel) {
         let groupnumber = model.eid ?? ""
         ShowAlertManager.showAlert(title: "删除提醒", message: "删除该监控方案后，采用该监控方案的对象将使用默认监控方案监控", confirmAction:  {
-            
             let man = RequestManager()
             let dict = ["id": groupnumber]
             man.requestAPI(params: dict, pageUrl: "/entity/monitorgroup/delectMonitorGroup", method: .post) { [weak self] result in
-                
                 switch result {
                 case .success(let success):
                     if let self = self, let code = success.code, code == 200 {
@@ -267,14 +261,12 @@ extension RiskAddRiskGroupViewViewController {
     }
     
     func cmmNewInfo(from model: rowsModel) {
-        
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["groupName": self.addGroupView.tf.text ?? "",
                     "id": model.eid ?? "",
                     "customernumber": customernumber]
         man.requestAPI(params: dict, pageUrl: "/entity/monitorgroup/updateRiskMonitorGroup", method: .post) { [weak self] result in
-            
             switch result {
             case .success(_):
                 guard let self = self else { return }
