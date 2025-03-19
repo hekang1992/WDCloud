@@ -8,6 +8,7 @@
 import UIKit
 import RxRelay
 import MJRefresh
+import SwiftyJSON
 
 class ComanyRiskMoreDetailViewController: WDBaseViewController {
     
@@ -42,7 +43,7 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
         numlabel.font = .regularFontOfSize(size: 11)
         return numlabel
     }()
-    
+
     var name: String = ""
     
     var logo: String = ""
@@ -54,11 +55,14 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
     
     var model: DataModel?
     
-    var entityid: String = ""
-    var itemnumber: String = ""
+    var orgId: String = ""
+    var itemId: String = ""
     var historyFlag: String = ""
     var dateType: String = ""
     var pageNum: Int = 1
+    
+    var monitoringTime: String = ""
+    var groupName: String = ""
     
     lazy var whiteView: UIView = {
         let whiteView = UIView()
@@ -94,8 +98,20 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
         
         riskHeadView.iconImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(name, size: (40, 40)))
         riskHeadView.namelabel.text = name
-        riskHeadView.timeLabel.text = "监控周期:"
+         
+        if monitoringTime.isEmpty {
+            riskHeadView.timeLabel.text = "监控周期: 未监控"
+        }else {
+            riskHeadView.timeLabel.text = "监控周期: \(monitoringTime)"
+        }
         
+        if groupName.isEmpty {
+            riskHeadView.tagLabel.text = ""
+            riskHeadView.tagLabel.isHidden = true
+        }else {
+            riskHeadView.tagLabel.text = groupName
+            riskHeadView.tagLabel.isHidden = false
+        }
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -115,6 +131,17 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
             self.getDetailInfo()
         })
         
+        //跳转一键报告
+        riskHeadView.reportBtnBlock = { [weak self] in
+            guard let self = self else { return }
+            let oneRpVc = OneReportViewController()
+            let json: JSON = ["orgId": orgId,
+                              "orgName": name]
+            let orgInfo = orgInfoModel(json: json)
+            oneRpVc.orgInfo = orgInfo
+            self.navigationController?.pushViewController(oneRpVc, animated: true)
+        }
+        
         getDetailInfo()
     }
     
@@ -126,8 +153,8 @@ extension ComanyRiskMoreDetailViewController {
     private func getDetailInfo() {
         let man = RequestManager()
         
-        let dict = ["orgId": entityid,
-                    "itemId": itemnumber,
+        let dict = ["orgId": orgId,
+                    "itemId": itemId,
                     "historyFlag": historyFlag,
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]

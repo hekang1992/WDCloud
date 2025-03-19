@@ -19,7 +19,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
     var functionType: String = "3"
     var dateType: String = ""
     var itemtype: String = "1"
-    var allArray: [statisticRiskDtosModel]?
+    var allArray: [itemDtoListModel]?
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
@@ -57,7 +57,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
             riskSecondVc.dateType = self.dateType
             riskSecondVc.logo = self.logo
             riskSecondVc.name = self.name
-            riskSecondVc.entityid = self.enityId
+            riskSecondVc.orgId = self.enityId
             self.navigationController?.pushViewController(riskSecondVc, animated: true)
         }
         
@@ -67,7 +67,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
             riskSecondVc.dateType = self.dateType
             riskSecondVc.logo = self.logo
             riskSecondVc.name = self.name
-            riskSecondVc.entityid = self.enityId
+            riskSecondVc.orgId = self.enityId
             self.navigationController?.pushViewController(riskSecondVc, animated: true)
         }
         return lawView
@@ -149,6 +149,14 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         return numLabel
     }()
     
+    lazy var highnumLabel: UILabel = {
+        let highnumLabel = UILabel()
+        highnumLabel.textAlignment = .left
+        highnumLabel.font = .regularFontOfSize(size: 12)
+        highnumLabel.textColor = .init(cssStr: "#333333")
+        return highnumLabel
+    }()
+    
     lazy var timeLabel: UILabel = {
         let timeLabel = UILabel()
         timeLabel.text = "时间筛选"
@@ -204,6 +212,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         // Do any additional setup after loading the view.
         
         view.addSubview(numLabel)
+        view.addSubview(highnumLabel)
         view.addSubview(timeLabel)
         view.addSubview(whiteView)
         whiteView.addSubview(onelabel)
@@ -220,6 +229,11 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         numLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)
             make.left.equalToSuperview().offset(22)
+            make.height.equalTo(25)
+        }
+        highnumLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(2)
+            make.left.equalTo(numLabel.snp.right).offset(1)
             make.height.equalTo(25)
         }
         timeLabel.snp.makeConstraints { make in
@@ -482,7 +496,7 @@ extension HistoryRiskDetailViewController {
             switch result {
             case .success(let success):
                 if let model = success.data {
-                    let modelArray = model.statisticRiskDtos ?? []
+                    let modelArray = model.notRelevaRiskDto?.itemDtoList ?? []
                     self.allArray = modelArray
                     self.tableView.reloadData()
                     self.refreshUI(from: model)
@@ -502,7 +516,9 @@ extension HistoryRiskDetailViewController {
     //数据刷新
     func refreshUI(from model: DataModel) {
         let count = String(model.totalRiskCnt ?? 0)
-        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险:\(count)条", colorStr: "#FF0000")
+        let highcount = String(model.highLevelCnt ?? 0)
+        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计历史风险\(count)条/", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
+        self.highnumLabel.attributedText = GetRedStrConfig.getRedStr(from: highcount, fullText: "历史高风险\(highcount)条", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
         self.oneItemView.numLabel.text = String(model.highLevelCnt ?? 0)
         self.twoItemView.numLabel.text = String(model.lowLevelCnt ?? 0)
         self.threeItemView.numLabel.text = String(model.tipLevelCnt ?? 0)
@@ -568,7 +584,7 @@ extension HistoryRiskDetailViewController: UITableViewDelegate, UITableViewDataS
         riskSecondVc.dateType = self.dateType
         riskSecondVc.logo = self.logo
         riskSecondVc.name = self.name
-        riskSecondVc.entityid = self.enityId
+        riskSecondVc.orgId = self.enityId
         self.navigationController?.pushViewController(riskSecondVc, animated: true)
     }
     

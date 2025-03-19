@@ -19,7 +19,7 @@ class PeopleHistoryRiskViewController: WDBaseViewController {
     var functionType: String = "3"
     var dateType: String = ""
     var itemtype: String = "1"
-    var allArray: [statisticRiskDtosModel]?
+    var allArray: [itemDtoListModel]?
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
@@ -57,7 +57,7 @@ class PeopleHistoryRiskViewController: WDBaseViewController {
             riskSecondVc.dateType = self.dateType
             riskSecondVc.logo = self.logo
             riskSecondVc.name = self.name
-            riskSecondVc.entityid = self.enityId
+            riskSecondVc.orgId = self.enityId
             self.navigationController?.pushViewController(riskSecondVc, animated: true)
         }
         
@@ -67,7 +67,7 @@ class PeopleHistoryRiskViewController: WDBaseViewController {
             riskSecondVc.dateType = self.dateType
             riskSecondVc.logo = self.logo
             riskSecondVc.name = self.name
-            riskSecondVc.entityid = self.enityId
+            riskSecondVc.orgId = self.enityId
             self.navigationController?.pushViewController(riskSecondVc, animated: true)
         }
         return lawView
@@ -482,7 +482,7 @@ extension PeopleHistoryRiskViewController {
             switch result {
             case .success(let success):
                 if let model = success.data {
-                    let modelArray = model.statisticRiskDtos ?? []
+                    let modelArray = model.notRelevaRiskDto?.itemDtoList ?? []
                     self.allArray = modelArray
                     self.tableView.reloadData()
                     self.refreshUI(from: model)
@@ -568,7 +568,7 @@ extension PeopleHistoryRiskViewController: UITableViewDelegate, UITableViewDataS
         riskSecondVc.dateType = self.dateType
         riskSecondVc.logo = self.logo
         riskSecondVc.name = self.name
-        riskSecondVc.entityid = self.enityId
+        riskSecondVc.orgId = self.enityId
         self.navigationController?.pushViewController(riskSecondVc, animated: true)
     }
     

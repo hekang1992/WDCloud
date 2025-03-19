@@ -19,10 +19,13 @@ class MySelfRiskDetailViewController: WDBaseViewController {
     var functionType: String = "1"
     var dateType: String = ""
     var itemtype: String = "1"
-    var allArray: [statisticRiskDtosModel]?
+    var allArray: [itemDtoListModel]?
     var mainHeadView: CompanyRiskDetailHeadView?
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
+    
+    var monitoringTime: String = ""
+    var groupName: String = ""
     
     lazy var whiteView: UIView = {
         let whiteView = UIView()
@@ -40,7 +43,6 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(RiskDetailViewCell.self, forCellReuseIdentifier: "RiskDetailViewCell")
         return tableView
@@ -58,7 +60,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             riskSecondVc.dateType = self.dateType
             riskSecondVc.logo = self.logo
             riskSecondVc.name = self.name
-            riskSecondVc.entityid = self.enityId
+            riskSecondVc.orgId = self.enityId
             self.navigationController?.pushViewController(riskSecondVc, animated: true)
         }
         
@@ -68,7 +70,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             riskSecondVc.dateType = self.dateType
             riskSecondVc.logo = self.logo
             riskSecondVc.name = self.name
-            riskSecondVc.entityid = self.enityId
+            riskSecondVc.orgId = self.enityId
             self.navigationController?.pushViewController(riskSecondVc, animated: true)
         }
         return lawView
@@ -150,6 +152,14 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         return numLabel
     }()
     
+    lazy var highNumLabel: UILabel = {
+        let highNumLabel = UILabel()
+        highNumLabel.textAlignment = .left
+        highNumLabel.font = .regularFontOfSize(size: 12)
+        highNumLabel.textColor = .init(cssStr: "#333333")
+        return highNumLabel
+    }()
+    
     lazy var timeLabel: UILabel = {
         let timeLabel = UILabel()
         timeLabel.text = "时间筛选"
@@ -165,6 +175,14 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         maskView.layer.borderColor = UIColor.init(cssStr: "#FF0000")?.cgColor
         maskView.backgroundColor = .init(cssStr: "#FF0000")?.withAlphaComponent(0.03)
         return maskView
+    }()
+    
+    lazy var totalItemView: RiskNumView = {
+        let totalItemView = RiskNumView()
+        totalItemView.nameLabel.text = "风险数"
+        totalItemView.numLabel.textColor = .init(cssStr: "#FF0000")
+        totalItemView.numLabel.font = .mediumFontOfSize(size: 14)
+        return totalItemView
     }()
     
     lazy var oneItemView: RiskNumView = {
@@ -205,6 +223,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         // Do any additional setup after loading the view.
         
         view.addSubview(numLabel)
+        view.addSubview(highNumLabel)
         view.addSubview(timeLabel)
         view.addSubview(whiteView)
         whiteView.addSubview(onelabel)
@@ -212,6 +231,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         whiteView.addSubview(threelabel)
         whiteView.addSubview(fourlabel)
         view.addSubview(maskView)
+        maskView.addSubview(totalItemView)
         maskView.addSubview(oneItemView)
         maskView.addSubview(twoItemView)
         maskView.addSubview(threeItemView)
@@ -221,6 +241,11 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         numLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)
             make.left.equalToSuperview().offset(22)
+            make.height.equalTo(25)
+        }
+        highNumLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(2)
+            make.left.equalTo(numLabel.snp.right).offset(1)
             make.height.equalTo(25)
         }
         timeLabel.snp.makeConstraints { make in
@@ -264,20 +289,25 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             make.height.equalTo(26)
             make.width.equalTo(labelWidth)
         }
-        
-        twoItemView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 100, height: 61.5))
+        totalItemView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH * 0.25)
         }
         oneItemView.snp.makeConstraints { make in
-            make.right.equalTo(twoItemView.snp.left)
-            make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: 100, height: 61.5))
+            make.left.equalTo(totalItemView.snp.right)
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH * 0.25)
+        }
+        twoItemView.snp.makeConstraints { make in
+            make.left.equalTo(oneItemView.snp.right)
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH * 0.25)
         }
         threeItemView.snp.makeConstraints { make in
             make.left.equalTo(twoItemView.snp.right)
-            make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: 100, height: 61.5))
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH * 0.25)
         }
         
         tableView.snp.makeConstraints { make in
@@ -470,7 +500,6 @@ extension MySelfRiskDetailViewController {
     //获取风险信息
     private func getRiskDetailInfo() {
         let man = RequestManager()
-        
         let dict = ["orgId": enityId,
                     "functionType": functionType,
                     "itemType": itemtype,
@@ -478,12 +507,11 @@ extension MySelfRiskDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk-monitor/statisticOrgRisk",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
                 if let model = success.data {
-                    let modelArray = model.statisticRiskDtos ?? []
+                    let modelArray = model.notRelevaRiskDto?.itemDtoList ?? []
                     self.allArray = modelArray
                     self.tableView.reloadData()
                     self.refreshUI(from: model)
@@ -503,7 +531,10 @@ extension MySelfRiskDetailViewController {
     //数据刷新
     func refreshUI(from model: DataModel) {
         let count = String(model.totalRiskCnt ?? 0)
-        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险:\(count)条", colorStr: "#FF0000")
+        let highcount = String(model.highLevelCnt ?? 0)
+        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险\(count)条/", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
+        self.highNumLabel.attributedText = GetRedStrConfig.getRedStr(from: highcount, fullText: "高风险\(highcount)条", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
+        self.totalItemView.numLabel.text = String(model.totalRiskCnt ?? 0)
         self.oneItemView.numLabel.text = String(model.highLevelCnt ?? 0)
         self.twoItemView.numLabel.text = String(model.lowLevelCnt ?? 0)
         self.threeItemView.numLabel.text = String(model.tipLevelCnt ?? 0)
@@ -512,9 +543,12 @@ extension MySelfRiskDetailViewController {
         if monitorFlag != 0 {
             let startTime = model.monitorStartDate ?? ""
             let endTime = model.monitorEndDate ?? ""
-            mainHeadView?.timeLabel.text = "监控周期:\(startTime) - \(endTime)"
+            let allTime = "监控周期:\(startTime) - \(endTime)"
+            mainHeadView?.timeLabel.text = allTime
             mainHeadView?.tagLabel.text = model.groupName ?? ""
             mainHeadView?.tagLabel.isHidden = false
+            self.monitoringTime = allTime
+            self.groupName = model.groupName ?? ""
         }else {
             mainHeadView?.timeLabel.text = "未监控"
             mainHeadView?.tagLabel.isHidden = true
@@ -547,15 +581,49 @@ extension MySelfRiskDetailViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.allArray?[indexPath.row]
-        let riskSecondVc = ComanyRiskMoreDetailViewController()
-        riskSecondVc.dateType = self.dateType
-        riskSecondVc.logo = self.logo
-        riskSecondVc.name = self.name 
-        riskSecondVc.entityid = self.enityId
-        riskSecondVc.itemnumber = model?.itemId ?? ""
-        riskSecondVc.historyFlag = "0"
-        self.navigationController?.pushViewController(riskSecondVc, animated: true)
+        if let model = self.allArray?[indexPath.row] {
+            checkClickInfo(form: model)
+        }
+    }
+    
+}
+
+/** 网络数据请求 */
+extension MySelfRiskDetailViewController {
+    
+    //判断是否有权限点击
+    private func checkClickInfo(form model: itemDtoListModel) {
+        let itemId = model.itemId ?? ""
+        let entityId = self.enityId
+        let entityName = self.name
+        let man = RequestManager()
+        let dict = ["entityType": "1",
+                    "itemId": itemId,
+                    "entityId": entityId,
+                    "entityName": entityName]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/equity-risk/check",
+                       method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                guard let self = self else { return }
+                if success.code == 200 {
+                    let riskSecondVc = ComanyRiskMoreDetailViewController()
+                    riskSecondVc.dateType = self.dateType
+                    riskSecondVc.logo = self.logo
+                    riskSecondVc.name = self.name
+                    riskSecondVc.orgId = self.enityId
+                    riskSecondVc.itemId = itemId
+                    riskSecondVc.historyFlag = "0"
+                    riskSecondVc.monitoringTime = self.monitoringTime
+                    riskSecondVc.groupName = self.groupName
+                    self.navigationController?.pushViewController(riskSecondVc, animated: true)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

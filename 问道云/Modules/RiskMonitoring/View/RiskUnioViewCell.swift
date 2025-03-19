@@ -10,7 +10,7 @@ import RxRelay
 
 class RiskUnioViewCell: BaseViewCell {
     
-    var model = BehaviorRelay<statisticRiskDtosModel?>(value: nil)
+    var model = BehaviorRelay<itemDtoListModel?>(value: nil)
 
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()

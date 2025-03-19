@@ -142,7 +142,7 @@ class DataModel {
     var monitorEndDate: String?
     var monitorFlag: Int?
     var groupName: String?
-    var statisticRiskDtos: [statisticRiskDtosModel]?
+    var notRelevaRiskDto: notRelevaRiskDtoModel?
     /**
      监控设置模型
      */
@@ -181,6 +181,7 @@ class DataModel {
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
     var count: countModel?
     init(json: JSON) {
+        self.notRelevaRiskDto = notRelevaRiskDtoModel(json: json["notRelevaRiskDto"])
         self.count = countModel(json: json["items"])
         self.orgTotal = json["orgTotal"].intValue
         self.logoUrl = json["logoUrl"].stringValue
@@ -218,7 +219,6 @@ class DataModel {
         self.highLevelCnt = json["highLevelCnt"].intValue
         self.lowLevelCnt = json["lowLevelCnt"].intValue
         self.tipLevelCnt = json["tipLevelCnt"].intValue
-        self.statisticRiskDtos = json["statisticRiskDtos"].arrayValue.map { statisticRiskDtosModel(json: $0) }
         self.orgNum = json["orgNum"].intValue
         self.personNum = json["personNum"].intValue
         self.pushOffset = json["pushOffset"].stringValue
@@ -1042,7 +1042,9 @@ class pageDataModel {
     var orgInfo: orgInfoModel?
     var leaderVec: leaderVecModel?
     var regAddr: regAddrModel?
+    var taxInfo: taxInfoModel?
     init(json: JSON) {
+        self.taxInfo = taxInfoModel(json: json["taxInfo"])
         self.regAddr = regAddrModel(json: json["regAddr"])
         self.orgInfo = orgInfoModel(json: json["orgInfo"])
         self.followStatus = json["followStatus"].stringValue
@@ -1496,7 +1498,7 @@ class threelevelitemsModel {
 /**
  新模型数据
  */
-class statisticRiskDtosModel {
+class itemDtoListModel {
     var itemId: String?//ID
     var haveSon: String?//是否有下一级
     var itemName: String?//名字
@@ -1774,4 +1776,20 @@ class relatedOrgListModel {
         self.orgName = json["orgName"].stringValue
         self.percent = json["percent"].stringValue
     }
+}
+
+class notRelevaRiskDtoModel {
+    var highLevelCnt: Int?
+    var lowLevelCnt: Int?
+    var tipLevelCnt: Int?
+    var totalRiskCnt: Int?
+    var itemDtoList: [itemDtoListModel]
+    init(json: JSON) {
+        self.highLevelCnt = json["highLevelCnt"].intValue
+        self.lowLevelCnt = json["lowLevelCnt"].intValue
+        self.tipLevelCnt = json["tipLevelCnt"].intValue
+        self.totalRiskCnt = json["totalRiskCnt"].intValue
+        self.itemDtoList = json["itemDtoList"].arrayValue.map { itemDtoListModel(json: $0) }
+    }
+    
 }

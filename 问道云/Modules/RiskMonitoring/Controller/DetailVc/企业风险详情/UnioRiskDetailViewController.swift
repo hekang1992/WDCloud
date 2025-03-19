@@ -77,20 +77,20 @@ extension UnioRiskDetailViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.model?.statisticRiskDtos?.count ?? 0
+        return self.model?.notRelevaRiskDto?.itemDtoList.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RiskUnioViewCell", for: indexPath) as? RiskUnioViewCell
         cell?.backgroundColor = .clear
         cell?.selectionStyle = .none
-        let model = self.model?.statisticRiskDtos?[indexPath.row]
+        let model = self.model?.notRelevaRiskDto?.itemDtoList[indexPath.row]
         cell?.model.accept(model)
         return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.model?.statisticRiskDtos?[indexPath.row]
+        let model = self.model?.notRelevaRiskDto?.itemDtoList[indexPath.row]
         let entityId = model?.orgId ?? ""
         let entityName = model?.orgName ?? ""
         let companyDetailVc = CompanyBothViewController()
@@ -121,7 +121,7 @@ extension UnioRiskDetailViewController {
             switch result {
             case .success(let success):
                 if let model = success.data,
-                    let modelArray = model.statisticRiskDtos,
+                   let modelArray = model.notRelevaRiskDto?.itemDtoList,
                     !modelArray.isEmpty {
                     self.model = model
                     self.refreshUI(from: model)

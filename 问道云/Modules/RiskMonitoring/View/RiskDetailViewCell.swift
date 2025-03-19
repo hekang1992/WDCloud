@@ -10,7 +10,7 @@ import RxRelay
 
 class RiskDetailViewCell: BaseViewCell {
     
-    var model = BehaviorRelay<statisticRiskDtosModel?>(value: nil)
+    var model = BehaviorRelay<itemDtoListModel?>(value: nil)
     
     lazy var grayView: UIView = {
         let grayView = UIView()
