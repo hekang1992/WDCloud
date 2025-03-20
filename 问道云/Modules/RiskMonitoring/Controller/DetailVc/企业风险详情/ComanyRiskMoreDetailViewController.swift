@@ -19,6 +19,7 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
     
     lazy var riskHeadView: CompanyRiskDetailHeadView = {
         let riskHeadView = CompanyRiskDetailHeadView()
+        riskHeadView.reportBtn.isHidden = true
         return riskHeadView
     }()
     

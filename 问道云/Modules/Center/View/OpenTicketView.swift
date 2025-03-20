@@ -363,8 +363,10 @@ extension OpenTicketView: UITableViewDelegate, UITableViewDataSource {
                 cell.phoneTx.attributedPlaceholder = attrString
                 if row == 1 {
                     cell.statlabel.isHidden = false
+                    cell.phoneTx.keyboardType = .default
                 }else {
                     cell.statlabel.isHidden = true
+                    cell.phoneTx.keyboardType = .numberPad
                 }
                 let observables = [self.seven, self.eight]
                 if row >= 0 && row < observables.count {

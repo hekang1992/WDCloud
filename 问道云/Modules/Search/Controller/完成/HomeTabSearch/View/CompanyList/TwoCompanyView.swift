@@ -50,8 +50,6 @@ class TwoCompanyView: BaseView {
         tableView.showsHorizontalScrollIndicator = false
         //头部人员cell
         tableView.register(TwoCompanyHeadPeopleCell.self, forCellReuseIdentifier: "TwoCompanyHeadPeopleCell")
-        //公司cell
-//        tableView.register(TwoCompanySpecListCell.self, forCellReuseIdentifier: "TwoCompanySpecListCell")
         tableView.register(TwoCompanyNormalListCell.self, forCellReuseIdentifier: "TwoCompanyNormalListCell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0

@@ -17,6 +17,8 @@ class TwoRiskListView: BaseView {
     //企业ID回调
     var entityIdBlock: ((pageDataModel) -> Void)?
     
+    var peopleBlock: ((pageDataModel) -> Void)?
+    
     //被搜索的文字,根据这个文字,去给cell的namelabel加上颜色
     var searchWordsRelay = BehaviorRelay<String?>(value: nil)
     
@@ -116,6 +118,9 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                 }
+                cell?.peopleBlock = { [weak self] model in
+                    self?.peopleBlock?(model)
+                }
                 return cell ?? UITableViewCell()
             }
         }else {
@@ -134,6 +139,9 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                         deleteFocusInfo(from: model, cell: cell)
                     }
                 }
+            }
+            cell?.peopleBlock = { [weak self] model in
+                self?.peopleBlock?(model)
             }
             return cell ?? UITableViewCell()
         }

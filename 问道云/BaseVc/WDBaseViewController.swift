@@ -559,4 +559,23 @@ extension WDBaseViewController {
         self.present(alertVc, animated: true)
     }
     
+    //弹窗跳转
+    func pushPageWithModel(from model: leaderListModel) {
+        if model.leaderCategory == "2" {
+            let legalName = model.name ?? ""
+            let personNumber = model.leaderId ?? ""
+            let peopleDetailVc = PeopleBothViewController()
+            peopleDetailVc.personId.accept(personNumber)
+            peopleDetailVc.peopleName.accept(legalName)
+            self.navigationController?.pushViewController(peopleDetailVc, animated: true)
+        }else {
+            let legalName = model.name ?? ""
+            let enityId = model.leaderId ?? ""
+            let companyDetailVc = CompanyBothViewController()
+            companyDetailVc.enityId.accept(enityId)
+            companyDetailVc.companyName.accept(legalName)
+            self.navigationController?.pushViewController(companyDetailVc, animated: true)
+        }
+    }
+    
 }

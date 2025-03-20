@@ -11,6 +11,8 @@ import JXPagingView
 
 class PeopleDetailViewController: WDBaseViewController {
     
+    var model: DataModel?
+    
     var personId: String = ""
     
     var intBlock: ((Double) -> Void)?
@@ -79,6 +81,14 @@ class PeopleDetailViewController: WDBaseViewController {
     func preferredTableHeaderView() -> PeopleDetailHeadView {
         JXTableHeaderViewHeight = 385
         let header = PeopleDetailHeadView()
+        header.oneBlock = { [weak self] in
+            let personId = self?.model?.personId ?? ""
+            let personName = self?.model?.personName ?? ""
+            let peopleRiskVc = PeopleRiskDetailViewController()
+            peopleRiskVc.name = personName
+            peopleRiskVc.personId = personId
+            self?.navigationController?.pushViewController(peopleRiskVc, animated: true)
+        }
         //获取个人详情头部信息
         getPeopleHeadInfo()
         return header
@@ -189,7 +199,7 @@ extension PeopleDetailViewController {
         }
         
         //动态
-        let timeStr = model.riskDynamic?.riskTime?.isEmpty ?? true ? "暂无数据" : model.riskDynamic!.riskTime!
+        let timeStr = model.riskDynamic?.riskTime?.isEmpty ?? true ? "" : model.riskDynamic!.riskTime!
         homeHeadView.timelabel.text = timeStr
         homeHeadView.desclabel.text = model.riskDynamic?.riskInfo ?? ""
     }
@@ -205,6 +215,7 @@ extension PeopleDetailViewController {
             switch result {
             case .success(let success):
                 if let model = success.data {
+                    self?.model = model
                     self?.refreshHeadUI(from: model)
                 }
                 break

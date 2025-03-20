@@ -16,7 +16,7 @@ import SkeletonView
 import TYAlertController
 
 class SearchCompanyViewController: WDBaseViewController {
-        
+    
     private var man = RequestManager()
     
     var completeBlock: (() -> Void)?
@@ -179,29 +179,45 @@ class SearchCompanyViewController: WDBaseViewController {
             self?.pushWebPage(from: pageUrl)
         }
         
+        //这里不仅仅是可以点击人员了....还有可能是企业
         companyListView.peopleBlock = { [weak self] model in
             guard let self = self else { return }
-            let peopleModel = model.leaderVec?.leaderList?.first
-            let legalName = peopleModel?.name ?? ""
-            let personNumber = peopleModel?.leaderId ?? ""
-            let peopleDetailVc = PeopleBothViewController()
-            peopleDetailVc.personId.accept(personNumber)
-            peopleDetailVc.peopleName.accept(legalName)
-            self.navigationController?.pushViewController(peopleDetailVc, animated: true)
+            let leaderList = model.leaderVec?.leaderList ?? []
+            if leaderList.count > 1 {
+                let popMoreListView = PopMoreLegalListView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
+                popMoreListView.descLabel.text = "\(model.leaderVec?.leaderTypeName ?? "")\(leaderList.count)"
+                popMoreListView.dataList = leaderList
+                let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
+                popMoreListView.closeBlock = {
+                    self.dismiss(animated: true)
+                }
+                popMoreListView.clickBlock = { [weak self] model in
+                    self?.dismiss(animated: true, completion: {
+                        self?.pushPageWithModel(from: model)
+                    })
+                }
+                self.present(alertVc, animated: true)
+            }else {
+                self.dismiss(animated: true) {
+                    if let peopleModel = model.leaderVec?.leaderList?.first {
+                        self.pushPageWithModel(from: peopleModel)
+                    }
+                }
+            }
         }
         
         //点击电话回调
         companyListView.phoneBlock = { [weak self] model in
             
-//            let popMoreListView = PopShareholdePhoneView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
-//            let leaderList = model.phone ?? []
-//            popMoreListView.descLabel.text = "电话号码\(leaderList.count)"
-//            popMoreListView.dataList = leaderList
-//            let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
-//            popMoreListView.closeBlock = {
-//                self?.dismiss(animated: true)
-//            }
-//            self?.present(alertVc, animated: true)
+            //            let popMoreListView = PopShareholdePhoneView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
+            //            let leaderList = model.phone ?? []
+            //            popMoreListView.descLabel.text = "电话号码\(leaderList.count)"
+            //            popMoreListView.dataList = leaderList
+            //            let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
+            //            popMoreListView.closeBlock = {
+            //                self?.dismiss(animated: true)
+            //            }
+            //            self?.present(alertVc, animated: true)
             
             self?.makePhoneCall(phoneNumber: model.orgInfo?.phone ?? "")
         }
@@ -228,13 +244,12 @@ class SearchCompanyViewController: WDBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("企业===============企业")
-        
     }
 }
 
 /** 网络数据请求 */
 extension SearchCompanyViewController {
-
+    
     private func getDataInfo() {
         //更新搜索文字
         self.searchWordsRelay
@@ -263,7 +278,6 @@ extension SearchCompanyViewController {
                 guard let self = self else { return }
                 let group = DispatchGroup()
                 //最近搜索
-                //                
                 group.enter()
                 getlastSearch {
                     group.leave()
@@ -281,7 +295,7 @@ extension SearchCompanyViewController {
                 
                 // 所有任务完成后的通知
                 group.notify(queue: .main) {
-                    //                    
+                    //
                     self.completeBlock?()
                 }
             }).disposed(by: disposeBag)
@@ -524,8 +538,8 @@ extension SearchCompanyViewController {
                     "pageSize": 20] as [String : Any]
         
         man.requestAPI(params: dict,
-                        pageUrl: "/entity/v2/org-list",
-                        method: .get) { [weak self] result in
+                       pageUrl: "/entity/v2/org-list",
+                       method: .get) { [weak self] result in
             
             self?.companyListView.tableView.mj_header?.endRefreshing()
             self?.companyListView.tableView.mj_footer?.endRefreshing()

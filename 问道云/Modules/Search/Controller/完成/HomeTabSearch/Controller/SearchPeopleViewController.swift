@@ -195,7 +195,6 @@ extension SearchPeopleViewController {
                 guard let self = self else { return }
                 let group = DispatchGroup()
                 //最近搜索
-//                
                 group.enter()
                 getlastSearch {_ in
                     group.leave()
@@ -213,7 +212,7 @@ extension SearchPeopleViewController {
                 
                 // 所有任务完成后的通知
                 group.notify(queue: .main) {
-//                    
+                    //                    
                     self.completeBlock?()
                 }
             }).disposed(by: disposeBag)
@@ -454,7 +453,7 @@ extension SearchPeopleViewController {
                     "orgArea": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
-//        let man = RequestManager()
+        //        let man = RequestManager()
         
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/person/boss-search",

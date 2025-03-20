@@ -283,8 +283,9 @@ class TwoCompanyNormalListCell: BaseViewCell {
             let logo = model.orgInfo?.logo ?? ""
             let companyName = model.orgInfo?.orgName ?? ""
             let logoColor = model.orgInfo?.logoColor ?? ""
-            let riskTime = model.riskInfo?.riskTime ?? ""
             let content =  model.riskInfo?.content ?? ""
+            let leaderTypeName = model.leaderVec?.leaderTypeName ?? ""
+            self.nameView.label1.text = leaderTypeName
             //logo
             self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (40, 40), bgColor: UIColor.init(cssStr: logoColor)!))
             
@@ -292,7 +293,9 @@ class TwoCompanyNormalListCell: BaseViewCell {
             self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: companyName, colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))
             
             //法人
-            self.nameView.label2.text = model.leaderVec?.leaderList?.first?.name ?? ""
+            let leaderList = model.leaderVec?.leaderList ?? []
+            let legalName = leaderList.compactMap { $0.name }.joined(separator: ",")
+            self.nameView.label2.text = legalName
             self.nameView.label2.textColor = .init(cssStr: "#F55B5B")
             
             //注册资本

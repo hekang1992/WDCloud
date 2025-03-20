@@ -15,6 +15,8 @@ class PopMoreLegalListView: BaseView {
         }
     }
     
+    var clickBlock: ((leaderListModel) -> Void)?
+    
     var closeBlock: (() -> Void)?
 
     lazy var bgView: UIView = {
@@ -131,7 +133,9 @@ extension PopMoreLegalListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = ViewControllerUtils.findViewController(from: self)
+        if let model = dataList?[indexPath.row] {
+            self.clickBlock?(model)
+        }
     }
     
 }

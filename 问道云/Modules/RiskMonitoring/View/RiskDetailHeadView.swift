@@ -80,6 +80,7 @@ class CompanyRiskDetailHeadView: BaseView {
             make.top.equalTo(iconImageView.snp.top).offset(-2)
             make.left.equalTo(iconImageView.snp.right).offset(8)
             make.height.equalTo(22.5)
+            make.right.equalToSuperview().offset(-80)
         }
         timeLabel.snp.makeConstraints { make in
             make.top.equalTo(namelabel.snp.bottom).offset(4)

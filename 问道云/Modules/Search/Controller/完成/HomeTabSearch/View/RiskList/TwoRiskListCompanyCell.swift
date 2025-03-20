@@ -13,6 +13,8 @@ class TwoRiskListCompanyCell: BaseViewCell {
     
     var focusBlock: (() -> Void)?
     
+    var peopleBlock: ((pageDataModel) -> Void)?
+    
     //是否点击了展开是收起
     var companyModel = CompanyModel(isOpenTag: false)
     
@@ -268,7 +270,12 @@ class TwoRiskListCompanyCell: BaseViewCell {
             //匹配文字
             self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: companyName, colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))
             
-//            self.nameView.label2.text = model.legalName ?? ""
+            //法人
+            let leaderList = model.leaderVec?.leaderList ?? []
+            let legalName = leaderList.compactMap { $0.name }.joined(separator: ",")
+            self.nameView.label2.text = legalName
+            self.nameView.label2.textColor = .init(cssStr: "#F55B5B")
+            
             self.moneyView.label2.text = model.orgInfo?.regCap ?? ""
             self.timeView.label2.text = model.orgInfo?.incDate ?? ""
             
@@ -312,6 +319,15 @@ class TwoRiskListCompanyCell: BaseViewCell {
         focusBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.focusBlock?()
         }).disposed(by: disposeBag)
+        
+        nameView.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                if let self = self, let model = self.model.value {
+                    self.peopleBlock?(model)
+                }
+            }).disposed(by: disposeBag)
         
     }
     

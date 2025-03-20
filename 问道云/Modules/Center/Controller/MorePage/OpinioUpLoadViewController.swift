@@ -350,15 +350,14 @@ class OpinioUpLoadViewController: WDBaseViewController {
 
 extension OpinioUpLoadViewController: UITextViewDelegate {
     
+    //提交意见反馈信息
     func submitInfo() {
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let question = self.oneStr.value
         let tel = self.phone.value
         let feedbacktype = self.feedbacktype.value
         let feedbacksubtype = self.feedbacksubtype.value
         let pic = self.pics.value.description
-        
         let dict = ["customernumber": customernumber,
                     "question": question,
                     "tel": tel,
@@ -368,11 +367,11 @@ extension OpinioUpLoadViewController: UITextViewDelegate {
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/operationFeedback",
-                       method: .post) { result in
-            
+                       method: .post) { [weak self] result in
             switch result {
             case .success(let success):
                 if success.code == 200 {
+                    self?.navigationController?.popViewController(animated: true)
                     ToastViewConfig.showToast(message: "提交成功")
                 }
                 break

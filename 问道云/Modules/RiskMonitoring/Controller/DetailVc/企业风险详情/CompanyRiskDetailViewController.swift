@@ -110,11 +110,66 @@ class CompanyRiskDetailViewController: WDBaseViewController {
             oneRpVc.orgInfo = orgInfo
             self.navigationController?.pushViewController(oneRpVc, animated: true)
         }
+        
+        //监控点击
+        header.monitoringBtn
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                addMonitoringInfo { }
+        }).disposed(by: disposeBag)
+        
         return header
     }
     
     @objc func changeTableHeaderViewHeight() {
         pagingView.resizeTableHeaderViewHeight(animatable: true)
+    }
+    
+}
+
+/** 网络数据请求 */
+extension CompanyRiskDetailViewController {
+    
+    private func addMonitoringInfo(complete: @escaping (() -> Void)) {
+        let man = RequestManager()
+        let dict = ["orgId": self.enityId ?? "", "groupId": ""]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
+                       method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    guard let self = self else { return }
+                    let endDate = success.data?.endDate ?? ""
+                    let startDate = success.data?.startDate ?? ""
+                    homeHeadView.monitoringBtn.isHidden = true
+                    showOrHideMonitoringInfo(from: 1, startTime: startDate, endTime: endDate, groupName: "默认分组")
+                    ToastViewConfig.showToast(message: "监控成功")
+                    complete()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //刷新头部监控按钮信息
+    private func showOrHideMonitoringInfo(from monitorFlag: Int, startTime: String, endTime: String, groupName: String) {
+        //头部信息
+        if monitorFlag != 0 {
+            let allTime = "监控周期:\(startTime) - \(endTime)"
+            homeHeadView.timeLabel.text = allTime
+            homeHeadView.tagLabel.text = groupName
+            homeHeadView.tagLabel.isHidden = false
+            homeHeadView.monitoringBtn.isHidden = true
+        }else {
+            homeHeadView.timeLabel.text = ""
+            homeHeadView.tagLabel.isHidden = true
+            homeHeadView.monitoringBtn.isHidden = false
+        }
     }
     
 }

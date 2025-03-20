@@ -182,7 +182,11 @@ class DataModel {
     var entityId: String?
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
     var count: countModel?
+    var endDate: String?
+    var startDate: String?
     init(json: JSON) {
+        self.startDate = json["startDate"].stringValue
+        self.endDate = json["endDate"].stringValue
         self.relevaRiskItemDtos = json["relevaRiskItemDtos"].arrayValue.map { itemDtoListModel(json: $0) }
         self.notRelevaRiskDto = notRelevaRiskDtoModel(json: json["notRelevaRiskDto"])
         self.count = countModel(json: json["items"])
@@ -483,8 +487,10 @@ class itemsModel {
     var orgCount: Int?
     var orgName: String?
     var orgId: String?
+    var orgLogo: String?
     var provinceStatList: [provinceStatListModel]?
     init(json: JSON) {
+        self.orgLogo = json["orgLogo"].stringValue
         self.legalId = json["legalId"].stringValue
         self.website = json["website"].arrayValue.map { websitesListModel(json: $0) }
         self.phone = json["phone"].arrayValue.map { websitesListModel(json: $0) }
@@ -1608,7 +1614,11 @@ class regAddrModel {
 
 class leaderVecModel {
     var leaderList: [leaderListModel]?
+    var leaderType: String?
+    var leaderTypeName: String?
     init(json: JSON) {
+        self.leaderType = json["leaderType"].stringValue
+        self.leaderTypeName = json["leaderTypeName"].stringValue
         self.leaderList = json["leaderList"].arrayValue.map { leaderListModel(json: $0) }
     }
 }

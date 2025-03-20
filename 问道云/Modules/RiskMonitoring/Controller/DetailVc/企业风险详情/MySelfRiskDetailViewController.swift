@@ -174,7 +174,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         let maskView = UIView()
         maskView.layer.borderWidth = 1
         maskView.layer.borderColor = UIColor.init(cssStr: "#FF0000")?.cgColor
-        maskView.backgroundColor = .init(cssStr: "#FF0000")?.withAlphaComponent(0.03)
+        maskView.backgroundColor = .init(cssStr: "#FFF7F7")
         return maskView
     }()
     
@@ -260,7 +260,8 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             make.height.equalTo(48)
         }
         maskView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
+            make.left.equalToSuperview().offset(12)
+            make.centerX.equalToSuperview()
             make.top.equalTo(whiteView.snp.bottom)
             make.height.equalTo(61.5)
         }
@@ -293,22 +294,22 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         totalItemView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.top.bottom.equalToSuperview()
-            make.width.equalTo(SCREEN_WIDTH * 0.25)
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
         }
         oneItemView.snp.makeConstraints { make in
             make.left.equalTo(totalItemView.snp.right)
             make.top.bottom.equalToSuperview()
-            make.width.equalTo(SCREEN_WIDTH * 0.25)
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
         }
         twoItemView.snp.makeConstraints { make in
             make.left.equalTo(oneItemView.snp.right)
             make.top.bottom.equalToSuperview()
-            make.width.equalTo(SCREEN_WIDTH * 0.25)
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
         }
         threeItemView.snp.makeConstraints { make in
             make.left.equalTo(twoItemView.snp.right)
             make.top.bottom.equalToSuperview()
-            make.width.equalTo(SCREEN_WIDTH * 0.25)
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
         }
         
         tableView.snp.makeConstraints { make in
@@ -457,30 +458,6 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         }
         getRiskDetailInfo()
         
-        //监控点击
-        mainHeadView?.monitoringBtn
-            .rx
-            .tap
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                let man = RequestManager()
-                let dict = ["orgId": self.enityId, "groupId": ""]
-                man.requestAPI(params: dict,
-                               pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
-                               method: .post) { [weak self] result in
-                    switch result {
-                    case .success(let success):
-                        if success.code == 200 {
-                            guard let self = self else { return }
-                            mainHeadView?.monitoringBtn.isHidden = true
-                            ToastViewConfig.showToast(message: "监控成功")
-                        }
-                        break
-                    case .failure(_):
-                        break
-                    }
-                }
-        }).disposed(by: disposeBag)
     }
     
     private func updateSelectedLabel(_ selectedLabel: PaddedLabel?) {

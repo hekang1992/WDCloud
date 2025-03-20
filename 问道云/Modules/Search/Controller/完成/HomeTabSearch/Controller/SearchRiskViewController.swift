@@ -11,6 +11,7 @@ import RxRelay
 import MJRefresh
 import RxSwift
 import DropMenuBar
+import TYAlertController
 
 class SearchRiskViewController: WDBaseViewController {
     
@@ -218,6 +219,32 @@ class SearchRiskViewController: WDBaseViewController {
             self?.navigationController?.pushViewController(riskDetailVc, animated: true)
         }
         
+        //这里不仅仅是可以点击人员了....还有可能是企业
+        twoRiskListView.peopleBlock = { [weak self] model in
+            guard let self = self else { return }
+            let leaderList = model.leaderVec?.leaderList ?? []
+            if leaderList.count > 1 {
+                let popMoreListView = PopMoreLegalListView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
+                popMoreListView.descLabel.text = "\(model.leaderVec?.leaderTypeName ?? "")\(leaderList.count)"
+                popMoreListView.dataList = leaderList
+                let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
+                popMoreListView.closeBlock = {
+                    self.dismiss(animated: true)
+                }
+                popMoreListView.clickBlock = { [weak self] model in
+                    self?.dismiss(animated: true, completion: {
+                        self?.pushPageWithModel(from: model)
+                    })
+                }
+                self.present(alertVc, animated: true)
+            }else {
+                self.dismiss(animated: true) {
+                    if let peopleModel = model.leaderVec?.leaderList?.first {
+                        self.pushPageWithModel(from: peopleModel)
+                    }
+                }
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -262,7 +289,6 @@ extension SearchRiskViewController {
                 guard let self = self else { return }
                 let group = DispatchGroup()
                 //最近搜索
-                //                
                 group.enter()
                 getlastSearch {
                     group.leave()
@@ -280,7 +306,7 @@ extension SearchRiskViewController {
                 
                 // 所有任务完成后的通知
                 group.notify(queue: .main) {
-                    //                    
+                    //
                     self.completeBlock?()
                 }
             }).disposed(by: disposeBag)
@@ -466,7 +492,6 @@ extension SearchRiskViewController {
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-            
             let dict = ["searchType": "",
                         "moduleId": "05"]
             man.requestAPI(params: dict,
@@ -528,7 +553,7 @@ extension SearchRiskViewController {
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk/getRiskData",
-                       method: .get) { [weak self] result in            
+                       method: .get) { [weak self] result in
             self?.twoRiskListView.tableView.mj_header?.endRefreshing()
             self?.twoRiskListView.tableView.mj_footer?.endRefreshing()
             switch result {

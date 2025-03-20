@@ -222,16 +222,26 @@ extension ContorlDetailViewCell {
     
     //多个法定代表人弹窗
     private func popMoreListViewInfo(from model: rowsModel) {
-        let vc = ViewControllerUtils.findViewController(from: self)
-        let popMoreListView = PopMoreLegalListView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
         let leaderList = model.leaderVec?.leaderList ?? []
-        popMoreListView.descLabel.text = "法定代表人\(leaderList.count)"
-        popMoreListView.dataList = leaderList
-        let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
-        popMoreListView.closeBlock = {
-            vc?.dismiss(animated: true)
+        let vc = ViewControllerUtils.findViewController(from: self)
+        if leaderList.count > 1 {
+            let popMoreListView = PopMoreLegalListView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
+            popMoreListView.descLabel.text = "法定代表人\(leaderList.count)"
+            popMoreListView.dataList = leaderList
+            let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
+            popMoreListView.closeBlock = {
+                vc?.dismiss(animated: true)
+            }
+            vc?.present(alertVc, animated: true)
+        }else {
+            let model = leaderList.first
+            let leaderId = model?.leaderId ?? ""
+            let name = model?.name ?? ""
+            let peopleDetailVc = PeopleBothViewController()
+            peopleDetailVc.peopleName.accept(name)
+            peopleDetailVc.personId.accept(leaderId)
+            vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
         }
-        vc?.present(alertVc, animated: true)
     }
     
 }

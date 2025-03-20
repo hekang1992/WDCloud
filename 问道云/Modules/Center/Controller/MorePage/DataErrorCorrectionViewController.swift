@@ -462,7 +462,6 @@ extension DataErrorCorrectionViewController: UITextViewDelegate {
         let question = question.value
         let tel = self.tel.value
         
-        
         let dict = ["abountfirm": abountfirm,
                     "aboutfunction": aboutfunction,
                     "customernumber": customernumber,
@@ -475,14 +474,13 @@ extension DataErrorCorrectionViewController: UITextViewDelegate {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/operationFeedback",
                        method: .post) { result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     ToastViewConfig.showToast(message: "提交成功")
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }

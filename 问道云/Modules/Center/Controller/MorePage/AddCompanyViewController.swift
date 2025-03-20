@@ -359,8 +359,6 @@ class AddCompanyViewController: WDBaseViewController {
             make.top.equalTo(nuLabel.snp.bottom).offset(6)
         }
         
-        
-        
         oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.threeView.isHidden = false
@@ -400,7 +398,6 @@ class AddCompanyViewController: WDBaseViewController {
 extension AddCompanyViewController {
     
     private func leftInfo() {
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let entityid = self.threeTx.text ?? ""
         let addtype = "1"
@@ -411,21 +408,20 @@ extension AddCompanyViewController {
                     "phone": phone]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/operation/operationAddentity/add", method: .post) { result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     ToastViewConfig.showToast(message: "添加成功")
+                    self.navigationController?.popViewController(animated: true)
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }
     }
     
     private func rightInfo() {
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let entityname = self.cTx.text ?? ""
         let addtype = "2"
@@ -438,14 +434,14 @@ extension AddCompanyViewController {
                     "phone": phone]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/operation/operationAddentity/add", method: .post) { result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     ToastViewConfig.showToast(message: "添加成功")
+                    self.navigationController?.popViewController(animated: true)
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }

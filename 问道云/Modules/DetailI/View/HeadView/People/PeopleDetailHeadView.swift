@@ -19,6 +19,8 @@ class PeopleDetailHeadView: BaseView {
     
     var model = BehaviorRelay<DataModel?>(value: nil)
     
+    var oneBlock: (() -> Void)?
+    
     //问道图谱
     var oneItems: [childrenModel]? {
         didSet {
@@ -95,21 +97,25 @@ class PeopleDetailHeadView: BaseView {
     
     lazy var oneRiskView: DetailRiskItemView = {
         let oneRiskView = DetailRiskItemView()
+        oneRiskView.isUserInteractionEnabled = true
         return oneRiskView
     }()
     
     lazy var twoRiskView: DetailRiskItemView = {
         let twoRiskView = DetailRiskItemView()
+        twoRiskView.isUserInteractionEnabled = true
         return twoRiskView
     }()
     
     lazy var threeRiskView: DetailRiskItemView = {
         let threeRiskView = DetailRiskItemView()
+        threeRiskView.isUserInteractionEnabled = true
         return threeRiskView
     }()
     
     lazy var fourRiskView: DetailRiskItemView = {
         let fourRiskView = DetailRiskItemView()
+        fourRiskView.isUserInteractionEnabled = true
         return fourRiskView
     }()
     
@@ -431,6 +437,19 @@ class PeopleDetailHeadView: BaseView {
             guard let self = self else { return }
             self.moreBtnBlock?()
         }).disposed(by: disposeBag)
+        
+        oneRiskView.block = { [weak self] in
+            self?.oneBlock?()
+        }
+        twoRiskView.block = { [weak self] in
+            self?.oneBlock?()
+        }
+        threeRiskView.block = { [weak self] in
+            self?.oneBlock?()
+        }
+        fourRiskView.block = { [weak self] in
+            self?.oneBlock?()
+        }
         
     }
     

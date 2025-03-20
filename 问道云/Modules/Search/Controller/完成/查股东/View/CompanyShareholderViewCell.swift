@@ -262,7 +262,8 @@ class CompanyShareholderViewCell: BaseViewCell {
             guard let self = self, let model = model else { return }
             let companyName = model.orgName ?? ""
             let logoColor = model.logoColor ?? ""
-            ctImageView.image = UIImage.imageOfText(companyName, size: (40, 40), bgColor: UIColor.init(cssStr: logoColor)!)
+            let orgLogo = URL(string: model.orgLogo ?? "")
+            ctImageView.kf.setImage(with: orgLogo, placeholder: UIImage.imageOfText(companyName, size: (40, 40), bgColor: UIColor.init(cssStr: logoColor)!))
             namelabel.text = companyName
             
             nameView.label2.text = model.legalName ?? ""
