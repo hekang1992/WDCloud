@@ -221,7 +221,7 @@ class WDHomeViewController: WDBaseViewController {
     }
     
     func preferredTableHeaderView() -> HomeHeadView {
-        JXTableHeaderViewHeight = 318 + 28
+        JXTableHeaderViewHeight = 318 + 35
         let header = HomeHeadView()
         //获取首页item
         getHomeItemInfo { [weak self] model in

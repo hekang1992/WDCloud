@@ -128,22 +128,22 @@ class HomeHeadView: BaseView {
         }
         iconImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(StatusHeightManager.statusBarHeight + 5)
-            make.size.equalTo(CGSize(width: 99, height: 25))
+            make.size.equalTo(CGSize(width: 99.pix(), height: 25.pix()))
             make.left.equalToSuperview().offset(15.5)
         }
         vipImageView.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-10)
             make.centerY.equalTo(iconImageView.snp.centerY)
-            make.size.equalTo(CGSize(width: 67, height: 25))
+            make.size.equalTo(CGSize(width: 67.pix(), height: 25.pix()))
         }
         tabView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
-            make.top.equalTo(vipImageView.snp.bottom).offset(35)
-            make.height.equalTo(83.5)
+            make.top.equalTo(vipImageView.snp.bottom).offset(23)
+            make.height.equalTo(85)
         }
         hotsView.snp.makeConstraints { make in
-            make.top.equalTo(tabView.snp.bottom)
+            make.top.equalTo(tabView.snp.bottom).offset(4)
             make.bottom.equalToSuperview()
             make.left.equalToSuperview()
             make.right.equalToSuperview()

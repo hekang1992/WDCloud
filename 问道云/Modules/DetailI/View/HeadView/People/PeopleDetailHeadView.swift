@@ -258,21 +258,25 @@ class PeopleDetailHeadView: BaseView {
             make.height.equalTo(60)
         }
         oneRiskView.snp.makeConstraints { make in
-            make.left.top.bottom.equalToSuperview()
+            make.left.top.equalToSuperview()
+            make.height.equalTo(60)
             make.width.equalTo(105)
         }
         twoRiskView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(60)
             make.left.equalTo(oneRiskView.snp.right).offset(6)
             make.width.equalTo(105)
         }
         threeRiskView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(60)
             make.left.equalTo(twoRiskView.snp.right).offset(6)
             make.width.equalTo(105)
         }
         fourRiskView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(60)
             make.left.equalTo(threeRiskView.snp.right).offset(6)
             make.width.equalTo(105)
             make.right.equalToSuperview().offset(-5)

@@ -32,21 +32,25 @@ class CompanyFourHeadView: BaseView {
     
     lazy var oneRiskView: DetailRiskItemView = {
         let oneRiskView = DetailRiskItemView()
+        oneRiskView.isUserInteractionEnabled = true
         return oneRiskView
     }()
     
     lazy var twoRiskView: DetailRiskItemView = {
         let twoRiskView = DetailRiskItemView()
+        twoRiskView.isUserInteractionEnabled = true
         return twoRiskView
     }()
     
     lazy var threeRiskView: DetailRiskItemView = {
         let threeRiskView = DetailRiskItemView()
+        threeRiskView.isUserInteractionEnabled = true
         return threeRiskView
     }()
     
     lazy var fourRiskView: DetailRiskItemView = {
         let fourRiskView = DetailRiskItemView()
+        fourRiskView.isUserInteractionEnabled = true
         return fourRiskView
     }()
 
@@ -76,57 +80,49 @@ class CompanyFourHeadView: BaseView {
             make.height.equalTo(60)
         }
         oneRiskView.snp.makeConstraints { make in
-            make.left.top.bottom.equalToSuperview()
+            make.left.top.equalToSuperview()
+            make.height.equalTo(60)
             make.width.equalTo(105)
         }
         twoRiskView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(60)
             make.left.equalTo(oneRiskView.snp.right).offset(6)
             make.width.equalTo(105)
         }
         threeRiskView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(60)
             make.left.equalTo(twoRiskView.snp.right).offset(6)
             make.width.equalTo(105)
         }
         fourRiskView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(60)
             make.left.equalTo(threeRiskView.snp.right).offset(6)
             make.width.equalTo(105)
             make.right.equalToSuperview().offset(-5)
         }
         
-        oneRiskView.clickBtn
-            .rx
-            .tap
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.goRiskDetailInfo()
-        }).disposed(by: disposeBag)
+        oneRiskView.block = { [weak self] in
+            guard let self = self else { return }
+            self.goRiskDetailInfo()
+        }
         
-        twoRiskView.clickBtn
-            .rx
-            .tap
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.goRiskDetailInfo()
-        }).disposed(by: disposeBag)
+        twoRiskView.block = { [weak self] in
+            guard let self = self else { return }
+            self.goRiskDetailInfo()
+        }
         
-        threeRiskView.clickBtn
-            .rx
-            .tap
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.goRiskDetailInfo()
-        }).disposed(by: disposeBag)
+        threeRiskView.block = { [weak self] in
+            guard let self = self else { return }
+            self.goRiskDetailInfo()
+        }
         
-        fourRiskView.clickBtn
-            .rx
-            .tap
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.goRiskDetailInfo()
-        }).disposed(by: disposeBag)
+        fourRiskView.block = { [weak self] in
+            guard let self = self else { return }
+            self.goRiskDetailInfo()
+        }
         
     }
     
@@ -141,9 +137,9 @@ extension CompanyFourHeadView {
     private func goRiskDetailInfo() {
         let model = self.model.value
         let riskDetailVc = CompanyRiskDetailViewController()
+        let vc = ViewControllerUtils.findViewController(from: self)
         riskDetailVc.enityId = model?.basicInfo?.orgId ?? ""
         riskDetailVc.name = model?.basicInfo?.orgName ?? ""
-        let vc = ViewControllerUtils.findViewController(from: self)
         vc?.navigationController?.pushViewController(riskDetailVc, animated: true)
     }
     

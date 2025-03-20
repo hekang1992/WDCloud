@@ -171,18 +171,16 @@ extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = ViewControllerUtils.findViewController(from: self)
-        if collectionView == self.pcollectionView {
+        if collectionView == self.pcollectionView {//图谱
             let model = self.twoItems?[indexPath.row]
-            let pageUrl = model?.path ?? ""
-            let dict = ["firmname": dataModel?.firmInfo?.entityName ?? "",
-                        "entityId": dataModel?.firmInfo?.entityId ?? ""]
+            let pageUrl = base_url + "\(model?.path ?? "")"
+            let dict = ["entityId": dataModel?.basicInfo?.orgId ?? ""]
             let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
             vc?.pushWebPage(from: webUrl)
-        }else {
+        }else {//常用服务
             let model = self.oneItems?[indexPath.row]
-            let pageUrl = model?.path ?? ""
-            let dict = ["firmname": dataModel?.firmInfo?.entityName ?? "",
-                        "entityId": dataModel?.firmInfo?.entityId ?? ""]
+            let pageUrl = base_url + "\(model?.path ?? "")"
+            let dict = ["entityId": dataModel?.basicInfo?.orgId ?? ""]
             let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
             vc?.pushWebPage(from: webUrl)
         }

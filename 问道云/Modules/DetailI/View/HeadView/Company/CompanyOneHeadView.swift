@@ -46,6 +46,7 @@ class CompanyOneHeadView: BaseView {
     
     lazy var historyNamesButton: UIButton = {
         let historyNamesButton = UIButton(type: .custom)
+        historyNamesButton.isHidden = true
         historyNamesButton.setImage(UIImage(named: "cengyongmingicon"), for: .normal)
         return historyNamesButton
     }()
@@ -227,7 +228,8 @@ class CompanyOneHeadView: BaseView {
         historyNamesButton.snp.makeConstraints { make in
             make.top.equalTo(namelabel.snp.bottom).offset(4.5)
             make.left.equalTo(namelabel.snp.left)
-            make.size.equalTo(CGSize(width: 49, height: 15))
+            make.height.equalTo(15)
+            make.width.equalTo(49)
         }
         numlabel.snp.makeConstraints { make in
             make.left.equalTo(historyNamesButton.snp.right).offset(5)
@@ -514,6 +516,23 @@ class CompanyOneHeadView: BaseView {
                 setupScrollView(tagScrollView: tagListView, tagArray: texts)
             }).disposed(by: self.disposeBag)
         }
+        
+        model.asObservable().subscribe(onNext: { [weak self] model in
+            guard let self = self, let model = model else { return }
+            let modelArray = model.namesHis ?? []
+            if modelArray.count > 0 {
+                self.historyNamesButton.isHidden = false
+                self.historyNamesButton.snp.updateConstraints { make in
+                    make.width.equalTo(49)
+                }
+            }else {
+                self.historyNamesButton.isHidden = true
+                self.historyNamesButton.snp.updateConstraints { make in
+                    make.width.equalTo(0)
+                }
+            }
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {

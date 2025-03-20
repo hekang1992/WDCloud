@@ -224,7 +224,6 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
                 headView.sixHeadView.oneItems = modelArray
             }).disposed(by: disposeBag)
             
-            
             //问道图谱
             mapArrayModel.asObservable().subscribe(onNext: { [weak self] modelArray in
                 guard let self = self, let modelArray = modelArray else { return }

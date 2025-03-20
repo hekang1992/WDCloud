@@ -21,6 +21,7 @@ class DetailRiskItemView: BaseView {
         bgView.layer.cornerRadius = 2
         bgView.layer.masksToBounds = true
         bgView.isUserInteractionEnabled = true
+        bgView.backgroundColor = .init(cssStr: "#FCEEED")
         return bgView
     }()
     
@@ -69,6 +70,7 @@ class DetailRiskItemView: BaseView {
         bgView.addSubview(timeLabel)
         addSubview(clickBtn)
         bgView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
             make.left.equalToSuperview()
             make.height.equalTo(60)
             make.width.equalTo(105)

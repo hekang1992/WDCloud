@@ -170,7 +170,7 @@ extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigat
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         ViewHud.hideLoadView()
         print("网站无法打开，错误: \(error.localizedDescription)")
-        DispatchQueue.main.asyncAfter(delay: 0.25) {
+        DispatchQueue.main.asyncAfter(delay: 0.15) {
             self.showAlert(message: "无法打开网站，请检查网络或URL是否正确")
         }
     }

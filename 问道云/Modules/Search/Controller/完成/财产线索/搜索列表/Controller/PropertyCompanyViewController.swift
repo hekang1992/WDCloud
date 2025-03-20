@@ -224,7 +224,7 @@ extension PropertyCompanyViewController {
                         }else {
                             self.tableView.mj_footer?.isHidden = true
                         }
-                        DispatchQueue.main.asyncAfter(delay: 0.25) {
+                        DispatchQueue.main.asyncAfter(delay: 0.15) {
                             self.tableView.hideSkeleton()
                             self.tableView.reloadData()
                         }
