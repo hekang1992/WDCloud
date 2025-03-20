@@ -51,6 +51,7 @@ class MembershipCenterView: BaseView {
     
     lazy var vipImageView: UIImageView = {
         let vipImageView = UIImageView()
+        vipImageView.contentMode = .scaleAspectFit
         vipImageView.image = UIImage(named: "centernokai")
         return vipImageView
     }()
@@ -102,7 +103,7 @@ class MembershipCenterView: BaseView {
                 vipImageView.image = UIImage(named: typeStr ?? "")
             }else if userIdentity == "3" {
                 desclabel.text = "\(model.endtime ?? "") 到期"
-                typeStr = (accounttype == 2 || accounttype == 3) ? "tuansone" : "tuanone"
+                typeStr = (accounttype == 2 || accounttype == 3) ? "tuansone" : "tuansvvimage"
                 vipImageView.image = UIImage(named: typeStr ?? "")
             }else {
                 desclabel.text = "众多VIP专享特权等你解锁"

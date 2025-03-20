@@ -109,7 +109,6 @@ class CompanySixHeadView: BaseView {
             make.right.equalToSuperview().offset(-10)
         }
         
-        
         twoView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(oneView.snp.bottom)

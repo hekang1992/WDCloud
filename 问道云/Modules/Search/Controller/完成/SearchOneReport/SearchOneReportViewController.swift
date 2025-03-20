@@ -183,6 +183,7 @@ class SearchOneReportViewController: WDBaseViewController {
             guard let self = self else { return }
             getOneReportInfo()
         })
+        
     }
     
 }
@@ -190,7 +191,6 @@ class SearchOneReportViewController: WDBaseViewController {
 extension SearchOneReportViewController {
     
     private func getOneReportInfo() {
-        
         let dict = ["pageIndex": pageIndex,
                     "pageSize": 20,
                     "keyword": keywords,
@@ -199,7 +199,6 @@ extension SearchOneReportViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org-list",
                        method: .get) { [weak self] result in
-            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -246,13 +245,11 @@ extension SearchOneReportViewController {
     //最近搜索
     private func getlastSearch() {
         let man = RequestManager()
-        
         let dict = ["searchType": "",
                     "moduleId": "09"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -362,7 +359,6 @@ extension SearchOneReportViewController {
     //热搜
     private func getHotWords() {
         let man = RequestManager()
-        
         let dict = ["moduleId": "09"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
@@ -416,13 +412,11 @@ extension SearchOneReportViewController {
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-            
             let dict = ["searchType": "",
                         "moduleId": "09"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
-                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

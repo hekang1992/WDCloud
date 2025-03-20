@@ -2,7 +2,7 @@
 //  PopMoreLegalListView.swift
 //  问道云
 //
-//  Created by 何康 on 2025/3/16.
+//  Created by Andrew on 2025/3/16.
 //  弹出更多的法律代表人信息
 
 import UIKit

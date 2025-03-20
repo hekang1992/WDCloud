@@ -48,7 +48,7 @@ class RiskNoMonitoringView: BaseView {
         }
         iconImageView3.snp.makeConstraints { make in
             make.centerX.equalTo(iconImageView1.snp.centerX)
-            make.top.equalTo(iconImageView2.snp.bottom).offset(111)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-45)
             make.size.equalTo(CGSize(width: 147.pix(), height: 46.pix()))
         }
         iconImageView3.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in

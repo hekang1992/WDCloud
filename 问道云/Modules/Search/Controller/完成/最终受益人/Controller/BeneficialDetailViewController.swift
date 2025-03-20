@@ -2,7 +2,7 @@
 //  BeneficialDetailViewController.swift
 //  问道云
 //
-//  Created by 何康 on 2025/3/15.
+//  Created by Andrew on 2025/3/15.
 //  最终受益人详情
 
 import UIKit

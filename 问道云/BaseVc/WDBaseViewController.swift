@@ -537,7 +537,7 @@ extension WDBaseViewController {
         buyVipView.buyOneBlock = { [weak self] in
             //跳转购买单次会员
             self?.dismiss(animated: true, completion: {
-                let oneVc = BuyOneVipViewController()
+                let oneVc = BuyMonitoringOneVipViewController()
                 oneVc.entityType = entityType
                 oneVc.entityId = entityId
                 oneVc.entityName = entityName

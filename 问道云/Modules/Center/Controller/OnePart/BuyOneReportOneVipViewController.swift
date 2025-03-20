@@ -1,5 +1,5 @@
 //
-//  BuyOneVipViewController.swift
+//  BuyOneReportOneVipViewController.swift
 //  问道云
 //
 //  Created by Andrew on 2025/2/28.
@@ -7,22 +7,24 @@
 
 import UIKit
 
-class BuyOneVipViewController: WDBaseViewController {
+class BuyOneReportOneVipViewController: WDBaseViewController {
     
     var serviceType: String = ""
     
-    var moneyStr = "支付 ¥9 开通风控权益（基础版）"
+    var reportType: String = ""
     
-    var money1Str = "支付 ¥19 开通风控权益（基础版）"
+    var moneyStr = "支付 ¥9 购买报告（基础版）"
+    
+    var money1Str = "支付 ¥19 购买报告（专业版）"
     
     var appleById: Int?
     
     var modelArray: [rowsModel]?
     
-    var menuId: String = ""
     var entityType: Int = 0
     var entityId: String = ""
     var entityName: String = ""
+    var reportnumber: String = ""
     
     //返回是否需要刷新列表
     var refreshBlock: (() -> Void)?
@@ -43,13 +45,13 @@ class BuyOneVipViewController: WDBaseViewController {
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "onebuyimageView")
+        ctImageView.image = UIImage(named: "reportoneimge")
         return ctImageView
     }()
     
     lazy var descImageView: UIImageView = {
         let descImageView = UIImageView()
-        descImageView.image = UIImage(named: "miaoshuoneimage")
+        descImageView.image = UIImage(named: "reportimgedesc")
         return descImageView
     }()
     
@@ -57,22 +59,22 @@ class BuyOneVipViewController: WDBaseViewController {
         let norBtn = UIButton(type: .custom)
         norBtn.isSelected = true
         norBtn.adjustsImageWhenHighlighted = false
-        norBtn.setImage(UIImage(named: "onenormail_nor"), for: .normal)
-        norBtn.setImage(UIImage(named: "onenormail_sel"), for: .selected)
+        norBtn.setImage(UIImage(named: "norreport_nor"), for: .normal)
+        norBtn.setImage(UIImage(named: "norreport_sel"), for: .selected)
         return norBtn
     }()
     
     lazy var proBtn: UIButton = {
         let proBtn = UIButton(type: .custom)
         proBtn.adjustsImageWhenHighlighted = false
-        proBtn.setImage(UIImage(named: "onepromail_nor"), for: .normal)
-        proBtn.setImage(UIImage(named: "onepromail_sel"), for: .selected)
+        proBtn.setImage(UIImage(named: "supreport_nor"), for: .normal)
+        proBtn.setImage(UIImage(named: "supreport_sel"), for: .selected)
         return proBtn
     }()
     
     lazy var bImageView: UIImageView = {
         let bImageView = UIImageView()
-        bImageView.image = UIImage(named: "tipsnoebuyimage")
+        bImageView.image = UIImage(named: "reportimgedesco")
         return bImageView
     }()
     
@@ -120,7 +122,7 @@ class BuyOneVipViewController: WDBaseViewController {
         }
         descImageView.snp.makeConstraints { make in
             make.left.equalTo(ctImageView.snp.left)
-            make.size.equalTo(CGSize(width: 77, height: 13))
+            make.size.equalTo(CGSize(width: 51.pix(), height: 12.pix()))
             make.top.equalTo(ctImageView.snp.bottom).offset(15.5)
         }
         
@@ -205,13 +207,9 @@ class BuyOneVipViewController: WDBaseViewController {
                     let combonumber = String(success.data?.appleById ?? 0)
                     let orderNumberID = success.data?.ordernumber ?? ""
                     self?.toApplePay(form: combonumber, orderNumberID: orderNumberID, complete: { [weak self] in
-                        //添加监控
+                        //生成报告
                         guard let self = self else { return }
-                        if entityType == 1 {//企业
-                            addCompanyMonitoring()
-                        }else {//人员
-                            addPeopleMonitoring()
-                        }
+                        getReportInfo()
                     })
                 }
                 break
@@ -224,7 +222,8 @@ class BuyOneVipViewController: WDBaseViewController {
     //获取套餐信息
     private func listInfo() {
         let man = RequestManager()
-        let dict = ["serviceType": "4"]
+        let dict = ["serviceType": "2",
+                    "reportType": reportType]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/combo/equity-list",
                        method: .get) { [weak self] result in
@@ -246,33 +245,30 @@ class BuyOneVipViewController: WDBaseViewController {
     
 }
 
-extension BuyOneVipViewController {
+extension BuyOneReportOneVipViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         sureBtn.layoutButtonEdgeInsets(style: .left, space: 5)
     }
     
-    //企业添加监控
-    private func addCompanyMonitoring() {
+    private func getReportInfo() {
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let reportnumber = reportnumber
         let entityid = entityId
         let firmname = entityName
-        let groupnumber = menuId
-        let dict = ["orgId": entityid,
-                    "groupId": groupnumber,
-                    "firmname": firmname] as [String : Any]
         let man = RequestManager()
+        let dict = ["customernumber": customernumber,
+                    "reportnumber": reportnumber,
+                    "entityid": entityid,
+                    "firmname": firmname]
         man.requestAPI(params: dict,
-                       pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
-                       method: .post) { [weak self] result in
+                       pageUrl: "/operation/reportinfo/getTestFive",
+                       method: .get) { [weak self] result in
             switch result {
-            case .success(let success):
-                let code = success.code ?? 0
-                if code == 200 {
-                    self?.refreshBlock?()
-                    self?.navigationController?.popViewController(animated: true)
-                    ToastViewConfig.showToast(message: "监控成功")
-                }
+            case .success(_):
+                let downVc = MyDownloadViewController()
+                self?.navigationController?.pushViewController(downVc, animated: true)
                 break
             case .failure(_):
                 break
@@ -280,32 +276,4 @@ extension BuyOneVipViewController {
         }
     }
     
-    //人员监控
-    private func addPeopleMonitoring() {
-        let personId = entityId
-        let personName = entityName
-        let customerId = GetSaveLoginInfoConfig.getCustomerNumber()
-        let groupId = menuId
-        let man = RequestManager()
-        let dict = ["personId": personId,
-                    "customerId": customerId,
-                    "groupId": groupId,
-                    "personName": personName]
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
-                       method: .post) { [weak self] result in
-            switch result {
-            case .success(let success):
-                let code = success.code ?? 0
-                if code == 200 {
-                    self?.refreshBlock?()
-                    self?.navigationController?.popViewController(animated: true)
-                    ToastViewConfig.showToast(message: "监控成功")
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
 }

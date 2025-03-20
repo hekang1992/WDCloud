@@ -140,6 +140,24 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
                 buyVipView.cancelBlock = { [weak self] in
                     self?.dismiss(animated: true)
                 }
+                buyVipView.buyVipBlock = { [weak self] in
+                    self?.dismiss(animated: true, completion: {
+                        let vipVc = MembershipCenterViewController()
+                        self?.navigationController?.pushViewController(vipVc, animated: true)
+                    })
+                }
+                buyVipView.buyOneBlock = { [weak self] in
+                    self?.dismiss(animated: true, completion: {
+                        let oneVipVc = BuyOneReportOneVipViewController()
+                        let reportType = self?.modelArray?[indexPath.section].type ?? ""
+                        oneVipVc.reportType = reportType
+                        oneVipVc.entityType = 1
+                        oneVipVc.entityId = self?.orgInfo?.orgId ?? ""
+                        oneVipVc.entityName = self?.orgInfo?.orgName ?? ""
+                        oneVipVc.reportnumber = model.reportnumber ?? ""
+                        self?.navigationController?.pushViewController(oneVipVc, animated: true)
+                    })
+                }
                 self.present(alertVc, animated: true)
             }else {
                 self.getReportInfo(from: model)
@@ -152,7 +170,6 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
 extension OneReportViewController {
     
     private func getReportInfo(from model: itemsModel) {
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let reportnumber = model.reportnumber ?? ""
         let entityid = orgInfo?.orgId ?? ""
@@ -165,7 +182,6 @@ extension OneReportViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/reportinfo/getTestFive",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(_):
                 let downVc = MyDownloadViewController()
@@ -184,14 +200,12 @@ extension OneReportViewController {
     
     //获取一键报告信息
     private func getOneReportInfo() {
-        
         let man = RequestManager()
         let dict = ["entityId": orgInfo?.orgId ?? "",
                     "entityType": 1] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerreport/reportlist",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if let self = self, let datas = success.datas {
