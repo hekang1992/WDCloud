@@ -9,7 +9,7 @@ import UIKit
 import RxRelay
 
 class MyDownloadView: BaseView {
-
+    
     lazy var searchView: MyDownloadSearchView = {
         let searchView = MyDownloadSearchView()
         return searchView
@@ -29,6 +29,10 @@ class MyDownloadView: BaseView {
     
     var moreBtnBlock: ((rowsModel) -> Void)?//点击...
     
+    var selectedIndexPaths = [IndexPath]() // 存储选中的IndexPath
+    
+    var totalBlock: ((Int) -> Void)?
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.estimatedRowHeight = 80
@@ -36,10 +40,12 @@ class MyDownloadView: BaseView {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false        
+        tableView.showsHorizontalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(MyDownloadViewNormalCell.self, forCellReuseIdentifier: "MyDownloadViewNormalCell")
         tableView.register(MyDownloadViewEditCell.self, forCellReuseIdentifier: "MyDownloadViewEditCell")
+        tableView.delegate = self
+        tableView.dataSource = self
         return tableView
     }()
     
@@ -71,37 +77,6 @@ class MyDownloadView: BaseView {
             make.edges.equalToSuperview()
         }
         
-        tableView.rx.setDelegate(self).disposed(by: disposeBag)
-
-        modelArray.asObservable().bind(to: tableView.rx.items) { [weak self] tableView, index, model in
-            guard let self = self else { return UITableViewCell() }
-            let indexPath = IndexPath(row: index, section: 0)
-            if !self.isDeleteMode.value {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "MyDownloadViewNormalCell", for: indexPath) as! MyDownloadViewNormalCell
-                cell.model.accept(model)
-                cell.selectionStyle = .none
-                cell.backgroundColor = .clear
-                cell.block = { [weak self] model in
-                    if let self = self {
-                        self.moreBtnBlock?(model)
-                    }
-                }
-                return cell
-            }else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "MyDownloadViewEditCell", for: indexPath) as! MyDownloadViewEditCell
-                cell.model = model
-                cell.selectionStyle = .none
-                cell.backgroundColor = .clear
-                return cell
-            }
-        }.disposed(by: disposeBag)
-        
-        
-        tableView.rx.modelSelected(rowsModel.self).subscribe(onNext: { [weak self] model in
-            guard let self = self else { return }
-            self.selectBlock?(model)
-        }).disposed(by: disposeBag)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -110,7 +85,32 @@ class MyDownloadView: BaseView {
     
 }
 
-extension MyDownloadView: UITableViewDelegate {
+extension MyDownloadView: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.modelArray.value.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let isdeleteGrand = self.isDeleteMode.value
+        let model = self.modelArray.value[indexPath.row]
+        if isdeleteGrand {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MyDownloadViewEditCell", for: indexPath) as! MyDownloadViewEditCell
+            cell.model = model
+            let isChecked = self.selectedIndexPaths.contains(indexPath)
+            cell.configureDeleteCell(isChecked: isChecked)
+            cell.selectionStyle = .none
+            return cell
+        }else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MyDownloadViewNormalCell", for: indexPath) as! MyDownloadViewNormalCell
+            cell.model.accept(model)
+            cell.block = { [weak self] model in
+                self?.moreBtnBlock?(model)
+            }
+            cell.selectionStyle = .none
+            return cell
+        }
+    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.01
@@ -120,4 +120,21 @@ extension MyDownloadView: UITableViewDelegate {
         return nil
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let isdeleteGrand = self.isDeleteMode.value
+        let model = self.modelArray.value[indexPath.row]
+        if !isdeleteGrand {
+            self.selectBlock?(model)
+        }else {
+            let cell = tableView.cellForRow(at: indexPath) as! MyDownloadViewEditCell
+            if let index = self.selectedIndexPaths.firstIndex(of: indexPath) {
+                self.selectedIndexPaths.remove(at: index)
+            } else {
+                self.selectedIndexPaths.append(indexPath)
+            }
+            let isChecked = self.selectedIndexPaths.contains(indexPath)
+            cell.configureDeleteCell(isChecked: isChecked)
+            self.totalBlock?(self.selectedIndexPaths.count)
+        }
+    }
 }

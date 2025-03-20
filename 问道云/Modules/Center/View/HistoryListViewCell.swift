@@ -73,14 +73,16 @@ class HistoryListViewCell: BaseViewCell {
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            let personname = model.personname ?? ""
-            if personname.isEmpty {
-                namelabel.text = model.firmname
+            let viewrecordtype = model.viewrecordtype ?? ""
+            var name: String = ""
+            if viewrecordtype == "1" {
+                name = model.firmname ?? ""
             }else {
-                namelabel.text = personname
+                name = model.personname ?? ""
             }
+            namelabel.text = name
             timelabel.text = model.createhourtime
-            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (24, 24)))
+            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (24, 24), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
         }).disposed(by: disposeBag)
         
     }

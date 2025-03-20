@@ -18,7 +18,6 @@ class DetailRiskItemView: BaseView {
 
     lazy var bgView: UIView = {
         let bgView = UIView()
-        bgView.backgroundColor = .random()
         bgView.layer.cornerRadius = 2
         bgView.layer.masksToBounds = true
         bgView.isUserInteractionEnabled = true

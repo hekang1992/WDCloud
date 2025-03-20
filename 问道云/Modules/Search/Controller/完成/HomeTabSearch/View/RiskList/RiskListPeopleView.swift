@@ -10,6 +10,8 @@ import RxRelay
 
 class RiskListPeopleView: BaseView {
     
+    var block: ((itemsModel) -> Void)?
+    
     //被搜索的文字,根据这个文字,去给cell的namelabel加上颜色
     var searchWordsRelay = BehaviorRelay<String?>(value: nil)
     
@@ -17,18 +19,17 @@ class RiskListPeopleView: BaseView {
     
     lazy var whiteView: UIView = {
         let whiteView = UIView()
-        whiteView.backgroundColor = .clear
+        whiteView.backgroundColor = .white
         return whiteView
     }()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .init(cssStr: "#F8F8F8")
+        tableView.backgroundColor = .white
         tableView.estimatedRowHeight = 60
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
@@ -92,10 +93,16 @@ extension RiskListPeopleView: UITableViewDelegate, UITableViewDataSource {
         numLabel.attributedText = GetRedStrConfig.getRedStr(from: numStr, fullText: "搜索到\(numStr)条结果", font: .mediumFontOfSize(size: 12))
         numLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.height.equalTo(25)
+            make.height.equalTo(25.pix())
             make.left.equalToSuperview().offset(10)
         }
         return headView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let model = dataModel.value?.items?[indexPath.row] {
+            self.block?(model)
+        }
     }
     
 }

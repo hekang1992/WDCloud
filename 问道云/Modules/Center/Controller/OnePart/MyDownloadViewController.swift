@@ -36,7 +36,7 @@ class MyDownloadViewController: WDBaseViewController {
     var endTime: String = ""//结束时间
     
     let isDeleteMode = BehaviorRelay<Bool>(value: false) // 控制是否是删除模式
-    
+        
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "我的下载"
@@ -64,6 +64,12 @@ class MyDownloadViewController: WDBaseViewController {
         return sendView
     }()
     
+    lazy var diView: DIBUView = {
+        let diView = DIBUView()
+        diView.isHidden = true
+        return diView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,12 +81,61 @@ class MyDownloadViewController: WDBaseViewController {
             self?.isDeleteMode.accept(!currentMode)
             self?.downloadView.isDeleteMode.accept(!currentMode)
             self?.downloadView.modelArray.accept(self?.allArray ?? [])
+            self?.diView.isHidden = currentMode
+            self?.downloadView.tableView.reloadData()
         }).disposed(by: disposeBag)
         
         view.addSubview(downloadView)
         downloadView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(headView.snp.bottom).offset(0.5)
+        }
+        
+        downloadView.totalBlock = { [weak self] total in
+            let modelArray = self?.allArray ?? []
+            if modelArray.count == total {
+                self?.diView.quanxianBtn.isSelected = true
+            }else {
+                self?.diView.quanxianBtn.isSelected = false
+            }
+        }
+        
+        diView.quanxuanblock = { [weak self] in
+            if let btn = self?.diView.quanxianBtn {
+                if btn.isSelected {
+                    self?.downloadView.selectedIndexPaths.removeAll()
+                    btn.isSelected = false
+                }else {
+                    self?.downloadView.selectedIndexPaths = self?.allArray.enumerated().map({
+                        IndexPath(row: $0.offset, section: 0)
+                    }) ?? []
+                    btn.isSelected = true
+                }
+                self?.downloadView.tableView.reloadData()
+            }
+        }
+        
+        diView.shanchublock = { [weak self] in
+            guard let self = self else { return }
+            if self.downloadView.selectedIndexPaths.count > 0 {
+                ShowAlertManager.showAlert(title: "提示", message: "确定要删除选中的文件?", confirmAction: {
+                    self.deleteArray.removeAll()
+                    for indexPath in self.downloadView.selectedIndexPaths {
+                        self.deleteArray.append(self.allArray[indexPath.row].dataid ?? "")
+                    }
+                    self.deletePdf(from: self.deleteArray)
+                    
+                    print("deleteArray>>>>>>>:\(self.deleteArray.count)")
+                })
+            }else {
+                ToastViewConfig.showToast(message: "请选择您需要删除的文件")
+            }
+        }
+        
+        view.addSubview(diView)
+        diView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(66)
         }
         
         //添加下拉刷新
@@ -96,8 +151,11 @@ class MyDownloadViewController: WDBaseViewController {
         })
         //点击cell
         self.downloadView.selectBlock = { [weak self] model in
-            let filepathH5 = model.filepathH5 ?? ""
-            self?.pushWebPage(from: filepathH5)
+            let isdeleteGrand = self?.isDeleteMode.value ?? true
+            if !isdeleteGrand {
+                let filepathH5 = model.filepathH5 ?? ""
+                self?.pushWebPage(from: filepathH5)
+            }
         }
         //点击更多按钮
         self.downloadView.moreBtnBlock = { [weak self] model in
@@ -273,14 +331,30 @@ extension MyDownloadViewController {
         }
     }
     
+    func shareButtonTapped(from model: rowsModel) {
+        if let pdfURL = URL(string: model.filepathH5 ?? "") {
+            let activityViewController = UIActivityViewController(activityItems: [pdfURL], applicationActivities: nil)
+            if let popoverController = activityViewController.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                popoverController.permittedArrowDirections = .down
+            }
+            present(activityViewController, animated: true, completion: nil)
+        } else {
+            ToastViewConfig.showToast(message: "无效的PDF链接")
+        }
+    }
+}
+
+/** 网络数据请求 */
+extension MyDownloadViewController {
+    
     //获取下拉筛选列表
     func getDownloadTypeList() {
         let man = RequestManager()
-        
         man.requestAPI(params: ["param": "downloadFileType"],
                        pageUrl: "/operation/ajax/querySelect",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 let model = success.data
@@ -295,7 +369,6 @@ extension MyDownloadViewController {
     //获取下载文件
     func getPdfInfo() {
         let man = RequestManager()
-        
         let dict = ["downloadtype": downloadtype,
                     "downloadfilename": downloadfilename,
                     "isChoiceDate": isChoiceDate,
@@ -304,13 +377,13 @@ extension MyDownloadViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/mydownload/customerDownload",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             self.downloadView.tableView.mj_header?.endRefreshing()
             self.downloadView.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
-                if let model = success.data, let total = success.data?.total {
+                if let model = success.data,
+                    let total = success.data?.total {
                     if pageNum == 1 {
                         pageNum = 1
                         self.allArray.removeAll()
@@ -338,6 +411,7 @@ extension MyDownloadViewController {
                         self?.getPdfInfo()
                     }).disposed(by: disposeBag)
                 }
+                self.downloadView.tableView.reloadData()
                 break
             case .failure(_):
                 self.addNodataView(from: self.downloadView.whiteView)
@@ -351,15 +425,15 @@ extension MyDownloadViewController {
     func deletePdf(from dataid: [String]) {
         let dict = ["ids": dataid]
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/operation/mydownload/customerDownload",
                        method: .put) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     self?.dismiss(animated: true, completion: {
+                        self?.diView.quanxianBtn.isSelected = false
+                        self?.diView.isHidden = true
                         self?.pageNum = 1
                         self?.getPdfInfo()
                     })
@@ -374,13 +448,11 @@ extension MyDownloadViewController {
     //重命名
     func changeName(form model: rowsModel) {
         let man = RequestManager()
-        
         let dict = ["dataId": model.dataid ?? "",
                     "downLoadFileName": self.cmmView.tf.text ?? ""]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/mydownload/updateCustomerDownload",
                        method: .put) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -399,14 +471,12 @@ extension MyDownloadViewController {
     //发送邮箱
     func sendEmailInfo(form model: rowsModel) {
         let man = RequestManager()
-        
         let dict = ["dataid": model.dataid ?? "",
                     "emailnumber": self.sendView.tf.text ?? "",
                     "type": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/mydownload/sendingMailbox",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -419,17 +489,4 @@ extension MyDownloadViewController {
         }
     }
     
-    func shareButtonTapped(from model: rowsModel) {
-        if let pdfURL = URL(string: model.filepathH5 ?? "") {
-            let activityViewController = UIActivityViewController(activityItems: [pdfURL], applicationActivities: nil)
-            if let popoverController = activityViewController.popoverPresentationController {
-                popoverController.sourceView = self.view
-                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-                popoverController.permittedArrowDirections = .down
-            }
-            present(activityViewController, animated: true, completion: nil)
-        } else {
-            print("Invalid URL")
-        }
-    }
 }

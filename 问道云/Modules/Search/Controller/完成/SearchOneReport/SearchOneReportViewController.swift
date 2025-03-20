@@ -293,7 +293,6 @@ extension SearchOneReportViewController {
     //浏览历史
     private func getBrowsingHistory() {
         let man = RequestManager()
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "",
@@ -301,7 +300,6 @@ extension SearchOneReportViewController {
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -331,13 +329,15 @@ extension SearchOneReportViewController {
                 self.searchView.searchTx.becomeFirstResponder()
             }
             let type = model.viewrecordtype ?? ""
+            var name: String = ""
             if type == "1" {
-                listView.nameLabel.text = model.firmname ?? ""
+                name = model.firmname ?? ""
             }else {
-                listView.nameLabel.text = model.personname ?? ""
+                name = model.personname ?? ""
             }
+            listView.nameLabel.text = name
             listView.timeLabel.text = model.createhourtime ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22)))
+            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (22, 22)))
             self.oneView.historyView.addSubview(listView)
             listView.snp.makeConstraints { make in
                 make.height.equalTo(40)

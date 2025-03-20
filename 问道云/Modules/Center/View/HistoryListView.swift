@@ -66,7 +66,8 @@ class HistoryListView: BaseView {
                 cell?.model.accept(model)
                 return cell ?? UITableViewCell()
             },titleForHeaderInSection: { model, int in
-                return model.sectionModels[int].header
+                let headerTime = model.sectionModels[int].header
+                return self.getFormattedDate(date: headerTime)
             }
         )
         
@@ -96,6 +97,26 @@ class HistoryListView: BaseView {
 }
 
 extension HistoryListView {
+    
+    func getFormattedDate(date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        guard let inputDate = dateFormatter.date(from: date) else {
+            return "日期格式错误"
+        }
+        let calendar = Calendar.current
+        let now = Date()
+        let today = calendar.startOfDay(for: now)
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
+
+        if calendar.isDate(inputDate, inSameDayAs: today) {
+            return "今天"
+        } else if calendar.isDate(inputDate, inSameDayAs: yesterday) {
+            return "昨天"
+        } else {
+            return date
+        }
+    }
     
     func groupRowsByOrderState(rows: [rowsModel]) -> [SectionModel] {
         var groupedDict: [String: [rowsModel]] = [:]

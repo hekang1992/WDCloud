@@ -489,7 +489,9 @@ class itemsModel {
     var orgId: String?
     var orgLogo: String?
     var provinceStatList: [provinceStatListModel]?
+    var riskInfo: riskInfoModel?
     init(json: JSON) {
+        self.riskInfo = riskInfoModel(json: json["riskInfo"])
         self.orgLogo = json["orgLogo"].stringValue
         self.legalId = json["legalId"].stringValue
         self.website = json["website"].arrayValue.map { websitesListModel(json: $0) }

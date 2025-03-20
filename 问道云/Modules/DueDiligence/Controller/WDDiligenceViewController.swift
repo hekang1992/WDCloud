@@ -91,7 +91,6 @@ extension WDDiligenceViewController: JXSegmentedViewDelegate {
     
     private func createCocsciew() -> UIScrollView {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .random()
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false

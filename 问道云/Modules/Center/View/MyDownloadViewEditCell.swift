@@ -24,11 +24,10 @@ class MyDownloadViewEditCell: BaseViewCell {
         return icon
     }()
     
-    lazy var bgView: UIView = {
-        let bgView = UIView()
-        bgView.layer.cornerRadius = 6
-        bgView.backgroundColor = .white
-        return bgView
+    lazy var lineView: UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = .init(cssStr: "#F5F5F5")
+        return lineView
     }()
     
     lazy var nameLabel: UILabel = {
@@ -58,7 +57,7 @@ class MyDownloadViewEditCell: BaseViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(checkIcon)
-        contentView.addSubview(bgView)
+        contentView.addSubview(lineView)
         contentView.addSubview(icon)
         contentView.addSubview(nameLabel)
         contentView.addSubview(gongsiLabel)
@@ -87,14 +86,11 @@ class MyDownloadViewEditCell: BaseViewCell {
             make.left.equalTo(icon.snp.right).offset(22)
             make.top.equalTo(gongsiLabel.snp.bottom).offset(4)
             make.height.equalTo(16.5)
-            make.bottom.equalToSuperview().offset(-8)
+            make.bottom.equalToSuperview().offset(-5)
         }
-        bgView.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-9)
-            make.left.equalToSuperview().offset(42)
-            make.top.equalToSuperview().offset(8)
-            make.height.equalTo(84.5)
-            make.bottom.equalToSuperview()
+        lineView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(2)
         }
     }
     

@@ -70,6 +70,7 @@ class SearchRiskViewController: WDBaseViewController {
     //只有人员
     lazy var listPeopleView: RiskListPeopleView = {
         let listPeopleView = RiskListPeopleView()
+        listPeopleView.backgroundColor = .white
         listPeopleView.isHidden = true
         return listPeopleView
     }()
@@ -244,6 +245,13 @@ class SearchRiskViewController: WDBaseViewController {
                     }
                 }
             }
+        }
+        
+        listPeopleView.block = { [weak self] model in
+            let peopleRiskVc = PeopleRiskDetailViewController()
+            peopleRiskVc.name = model.personname ?? ""
+            peopleRiskVc.personId = model.personId ?? ""
+            self?.navigationController?.pushViewController(peopleRiskVc, animated: true)
         }
     }
     

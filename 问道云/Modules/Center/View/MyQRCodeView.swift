@@ -48,7 +48,6 @@ class MyQRCodeView: BaseView {
         let codeicon = UIImageView()
         codeicon.layer.borderWidth = 2
         codeicon.layer.borderColor = UIColor.white.cgColor
-        codeicon.backgroundColor = .random()
         return codeicon
     }()
     

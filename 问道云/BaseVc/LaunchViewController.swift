@@ -21,7 +21,6 @@ class LaunchViewController: WDBaseViewController {
     
     lazy var priImageView: UIImageView = {
         let priImageView = UIImageView()
-        priImageView.backgroundColor = .random()
         priImageView.image = UIImage(named: "apppriimage")
         priImageView.contentMode = .scaleAspectFit
         return priImageView

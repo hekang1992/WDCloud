@@ -85,7 +85,6 @@ class PeopleDetailTwoViewController: WDBaseViewController {
     
     lazy var whiteView: UIView = {
         let whiteView = UIView()
-        whiteView.backgroundColor = .random()
         return whiteView
     }()
     

@@ -48,8 +48,9 @@ class OneReportViewController: WDBaseViewController {
         addHeadView(from: headView)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
+            make.left.right.equalToSuperview()
             make.top.equalTo(headView.snp.bottom).offset(5)
+            make.bottom.equalToSuperview().offset(-10)
         }
         
         headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in

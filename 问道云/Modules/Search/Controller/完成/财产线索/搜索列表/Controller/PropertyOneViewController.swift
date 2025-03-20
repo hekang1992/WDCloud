@@ -38,7 +38,6 @@ class PropertyOneViewController: WDBaseViewController {
     
     lazy var oneView: UIView = {
         let oneView = UIView()
-        oneView.backgroundColor = .random()
         return oneView
     }()
     
