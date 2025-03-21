@@ -22,6 +22,7 @@ class SearchOneReportCell: BaseViewCell {
         mlabel.textColor = UIColor.init(cssStr: "#333333")
         mlabel.textAlignment = .left
         mlabel.font = .regularFontOfSize(size: 14)
+        mlabel.numberOfLines = 0
         return mlabel
     }()
 
@@ -53,8 +54,8 @@ class SearchOneReportCell: BaseViewCell {
         mlabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalTo(ctImageView.snp.right).offset(6)
-            make.height.equalTo(20)
-            make.bottom.equalToSuperview().offset(-24)
+            make.right.equalToSuperview().offset(-70)
+            make.bottom.equalToSuperview().offset(-20)
         }
         
         riImageView.snp.makeConstraints { make in

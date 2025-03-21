@@ -89,11 +89,11 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         headView.titlelabel.text = "企业风险信息"
-        addHeadView(from: headView)
         view.addSubview(riskHeadView)
+        addHeadView(from: headView)
         riskHeadView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(headView.snp.bottom).offset(-StatusHeightManager.navigationBarHeight + 15.5)
+            make.top.equalToSuperview()
             make.height.equalTo(90)
         }
         

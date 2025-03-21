@@ -98,6 +98,7 @@ class SearchBeneficialOwnerViewController: WDBaseViewController {
                         self.getBrowsingHistory()
                         //热搜
                         self.getHotWords()
+                        getNumInfo(from: text)
                     }else {
                         self.oneView.isHidden = false
                     }
@@ -119,6 +120,7 @@ class SearchBeneficialOwnerViewController: WDBaseViewController {
                 }else {
                     companyVc.searchWordsRelay.accept(text)
                 }
+                getNumInfo(from: text)
             })
             .disposed(by: disposeBag)
         
@@ -152,6 +154,7 @@ class SearchBeneficialOwnerViewController: WDBaseViewController {
                 }else {
                     self?.companyVc.searchWordsRelay.accept(keywords)
                 }
+                self?.getNumInfo(from: keywords)
             }else {
                 self?.oneView.isHidden = false
             }
@@ -221,14 +224,6 @@ extension SearchBeneficialOwnerViewController: JXPagingViewDelegate, JXSegmented
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
-            peopleVc.blockModel = { [weak self] model in
-                guard let self = self else { return }
-                let peopleCount = model.total ?? 0
-                let companyCount = model.orgTotal ?? 0
-                let titles = ["自然人\(peopleCount)", "企业\(companyCount)"]
-                self.segmentedViewDataSource.titles = titles
-                self.segmentedView.reloadData()
-            }
             return peopleVc
         }else{
             return companyVc
@@ -495,4 +490,28 @@ extension SearchBeneficialOwnerViewController {
             }
         })
     }
+    
+    private func getNumInfo(from keywords: String){
+        let dict = ["keywords": keywords]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/v2/home-page/ubo/table-count",
+                       method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    guard let self = self else { return }
+                    let peopleCount = success.data?.personCount ?? 0
+                    let companyCount = success.data?.orgCount ?? 0
+                    let titles = ["自然人\(peopleCount)", "企业\(companyCount)"]
+                    self.segmentedViewDataSource.titles = titles
+                    self.segmentedView.reloadData()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
 }

@@ -78,7 +78,7 @@ extension BeneficialDetailViewController {
                     "pageNum": pageNum,
                     "pageSize": 10] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/v2/home-page/actual/org-page",
+                       pageUrl: "/firminfo/v2/home-page/ubo/org-page",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
             self.tableView.mj_header?.endRefreshing()

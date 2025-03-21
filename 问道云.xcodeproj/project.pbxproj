@@ -221,6 +221,7 @@
 		739527FA2D633EBE0020589C /* TwoDueDiligenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739527F92D633EBE0020589C /* TwoDueDiligenceViewController.swift */; };
 		739527FC2D633EC70020589C /* ThreeDueDiligenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739527FB2D633EC70020589C /* ThreeDueDiligenceViewController.swift */; };
 		739CE9892D8D03F2003DE72A /* BeneficialCompanyViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739CE9882D8D03F2003DE72A /* BeneficialCompanyViewCell.swift */; };
+		739CE98D2D8D3224003DE72A /* PropertyLineHotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739CE98C2D8D3224003DE72A /* PropertyLineHotView.swift */; };
 		739D90BC2D26A72100D9421B /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739D90BB2D26A72100D9421B /* GroupListViewController.swift */; };
 		739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739D90BD2D26AB1B00D9421B /* GroupListView.swift */; };
 		739DCA042D66DF6F009CFC78 /* PropertyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA032D66DF6F009CFC78 /* PropertyTabBarController.swift */; };
@@ -622,6 +623,7 @@
 		739527F92D633EBE0020589C /* TwoDueDiligenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoDueDiligenceViewController.swift; sourceTree = "<group>"; };
 		739527FB2D633EC70020589C /* ThreeDueDiligenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDueDiligenceViewController.swift; sourceTree = "<group>"; };
 		739CE9882D8D03F2003DE72A /* BeneficialCompanyViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeneficialCompanyViewCell.swift; sourceTree = "<group>"; };
+		739CE98C2D8D3224003DE72A /* PropertyLineHotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineHotView.swift; sourceTree = "<group>"; };
 		739D90BB2D26A72100D9421B /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		739D90BD2D26AB1B00D9421B /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		739DCA032D66DF6F009CFC78 /* PropertyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTabBarController.swift; sourceTree = "<group>"; };
@@ -1575,6 +1577,7 @@
 				73090B6E2D82DE7900041457 /* PropertyHeadView.swift */,
 				73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */,
 				732926962D85313700E93F96 /* PropertyLineListViewCell.swift */,
+				739CE98C2D8D3224003DE72A /* PropertyLineHotView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2490,6 +2493,7 @@
 				734896EA2D3A429500B028FE /* RiskUnioViewCell.swift in Sources */,
 				739527F82D633EB60020589C /* OneDueDiligenceViewController.swift in Sources */,
 				73DE1D212D7BF72200C554B1 /* PhoneEmailNameView.swift in Sources */,
+				739CE98D2D8D3224003DE72A /* PropertyLineHotView.swift in Sources */,
 				73EABF922D320F460052F4AB /* TwoRiskListView.swift in Sources */,
 				737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,

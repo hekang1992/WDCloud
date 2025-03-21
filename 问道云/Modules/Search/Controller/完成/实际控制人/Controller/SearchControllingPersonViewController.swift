@@ -66,7 +66,7 @@ class SearchControllingPersonViewController: WDBaseViewController {
         // Do any additional setup after loading the view.
         //添加
         addSegmentedView()
-    
+        
         //最近搜索
         self.getlastSearch()
         
@@ -87,6 +87,7 @@ class SearchControllingPersonViewController: WDBaseViewController {
                     print("自动打印中文：\(text)")
                     if !text.isEmpty {
                         self.oneView.isHidden = true
+                        getNumInfo(from: text)
                         if selectIndex == 0 {
                             peopleVc.searchWordsRelay.accept(text)
                         }else {
@@ -119,6 +120,7 @@ class SearchControllingPersonViewController: WDBaseViewController {
                 }else {
                     companyVc.searchWordsRelay.accept(text)
                 }
+                getNumInfo(from: text)
             })
             .disposed(by: disposeBag)
         
@@ -152,6 +154,7 @@ class SearchControllingPersonViewController: WDBaseViewController {
                 }else {
                     self?.companyVc.searchWordsRelay.accept(keywords)
                 }
+                self?.getNumInfo(from: keywords)
             }else {
                 self?.oneView.isHidden = false
             }
@@ -221,14 +224,6 @@ extension SearchControllingPersonViewController: JXPagingViewDelegate, JXSegment
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
-            peopleVc.blockModel = { [weak self] model in
-                guard let self = self else { return }
-                let peopleCount = model.total ?? 0
-                let companyCount = model.orgTotal ?? 0
-                let titles = ["自然人\(peopleCount)", "企业\(companyCount)"]
-                self.segmentedViewDataSource.titles = titles
-                self.segmentedView.reloadData()
-            }
             return peopleVc
         }else{
             return companyVc
@@ -327,19 +322,19 @@ extension SearchControllingPersonViewController {
             let type = model.viewrecordtype ?? ""
             listView.block = { [weak self] in
                 guard let self = self else { return }
-//                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
-//                var dict: [String: String]
-//                if type == "1" {
-//                    dict = ["firmname": model.firmname ?? "",
-//                            "entityId": model.firmnumber ?? "",
-//                            "isPerson": "0"]
-//                }else {
-//                    dict = ["personName": model.name ?? "",
-//                            "personNumber": model.eid ?? "",
-//                            "isPerson": "1"]
-//                }
-//                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-//                self.pushWebPage(from: webUrl)
+                //                let pageUrl = "\(base_url)/personal-information/shareholder-situation"
+                //                var dict: [String: String]
+                //                if type == "1" {
+                //                    dict = ["firmname": model.firmname ?? "",
+                //                            "entityId": model.firmnumber ?? "",
+                //                            "isPerson": "0"]
+                //                }else {
+                //                    dict = ["personName": model.name ?? "",
+                //                            "personNumber": model.eid ?? "",
+                //                            "isPerson": "1"]
+                //                }
+                //                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                //                self.pushWebPage(from: webUrl)
             }
             var name: String = ""
             if type == "1" {
@@ -493,4 +488,28 @@ extension SearchControllingPersonViewController {
             }
         })
     }
+    
+    private func getNumInfo(from keywords: String){
+        let dict = ["keywords": keywords]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/v2/home-page/actual/table-count",
+                       method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    guard let self = self else { return }
+                    let peopleCount = success.data?.personCount ?? 0
+                    let companyCount = success.data?.orgCount ?? 0
+                    let titles = ["自然人\(peopleCount)", "企业\(companyCount)"]
+                    self.segmentedViewDataSource.titles = titles
+                    self.segmentedView.reloadData()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
 }

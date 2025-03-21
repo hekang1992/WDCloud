@@ -42,6 +42,8 @@ class FocusCompanyViewController: WDBaseViewController {
         let addGroupView = CMMView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 200))
         return addGroupView
     }()
+    
+    weak var nav: UINavigationController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -220,7 +222,7 @@ class FocusCompanyViewController: WDBaseViewController {
             let companyDetailVc = CompanyBothViewController()
             companyDetailVc.enityId.accept(model.entityId ?? "")
             companyDetailVc.companyName.accept(model.followtargetname ?? "")
-            self?.navigationController?.pushViewController(companyDetailVc, animated: true)
+            self?.nav?.pushViewController(companyDetailVc, animated: true)
         }
     }
     
@@ -239,12 +241,10 @@ extension FocusCompanyViewController {
     //获取所有分组
     func getAllGroup() {
         let man = RequestManager()
-        
         let dict = ["followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/followGroup/list",
                        method: .get) { result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -260,12 +260,10 @@ extension FocusCompanyViewController {
     //获取地区
     func getRegion() {
         let man = RequestManager()
-        
         let dict = ["typeVec": "REGION"]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/meta",
                        method: .get) { result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -281,12 +279,10 @@ extension FocusCompanyViewController {
     //获取行业
     func getIndustry() {
         let man = RequestManager()
-        
         let dict = ["typeVec": "INDUSTRY"]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/meta",
                        method: .get) { result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -310,13 +306,10 @@ extension FocusCompanyViewController {
                     "secondAreaCode": secondAreaCode,
                     "firstIndustryCode": firstIndustryCode,
                     "secondIndustryCode": secondIndustryCode] as [String : Any]
-        
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/list",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -358,13 +351,11 @@ extension FocusCompanyViewController: UITableViewDelegate {
     
     private func addNewInfo() {
         let man = RequestManager()
-        
         let dict = ["groupName": self.addGroupView.tf.text ?? "".removingEmojis,
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/followGroup",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -382,13 +373,11 @@ extension FocusCompanyViewController: UITableViewDelegate {
     //取消关注
     func cancelFocusInfo(from dataIds: [String]) {
         let man = RequestManager()
-        
         let dict = ["ids": dataIds,
                     "followTargetType": "1"] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/batchCancel",
                        method: .post) { result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -402,7 +391,7 @@ extension FocusCompanyViewController: UITableViewDelegate {
     }
     
     func movePopFocus(from ids: [String]) {
-        let groupView = FocusCompanyPopGroupView(frame: self.view.bounds)
+        let groupView = FocusCompanyPopGroupView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 350))
         if let model = self.dataModel.value {
             groupView.model.accept(model.rows ?? [])
         }
@@ -418,14 +407,12 @@ extension FocusCompanyViewController: UITableViewDelegate {
     
     func moveFocusInfo(from model: rowsModel, ids: [String]) {
         let man = RequestManager()
-        
         let dict = ["groupNumber": model.groupnumber ?? "",
                     "ids": ids,
                     "followTargetType": "1"] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/moveGroup",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

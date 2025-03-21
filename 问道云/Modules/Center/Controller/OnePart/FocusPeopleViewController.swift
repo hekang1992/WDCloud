@@ -40,6 +40,8 @@ class FocusPeopleViewController: WDBaseViewController {
         let cmmView = CMMView(frame: self.view.bounds)
         return cmmView
     }()
+    
+    weak var nav: UINavigationController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -217,7 +219,7 @@ class FocusPeopleViewController: WDBaseViewController {
             let peopleDetailVc = PeopleBothViewController()
             peopleDetailVc.personId.accept(model.personnumber ?? "")
             peopleDetailVc.peopleName.accept(model.followtargetname ?? "")
-            self?.navigationController?.pushViewController(peopleDetailVc, animated: true)
+            self?.nav?.pushViewController(peopleDetailVc, animated: true)
         }
         
     }

@@ -31,13 +31,15 @@ class PropertyOneViewController: WDBaseViewController {
     
     let segmentedDataSource = JXSegmentedTitleDataSource()
     
+    var hotsModel = BehaviorRelay<DataModel?>(value: nil)
+    
     lazy var headView: PropertyHeadView = {
         let headView = PropertyHeadView()
         return headView
     }()
     
-    lazy var oneView: UIView = {
-        let oneView = UIView()
+    lazy var oneView: PropertyLineHotView = {
+        let oneView = PropertyLineHotView()
         return oneView
     }()
     
@@ -67,6 +69,9 @@ class PropertyOneViewController: WDBaseViewController {
         
         //获取行业数据
         getAllIndustryInfo()
+        
+        //获取热搜数据
+        getHotsInfo()
         
         // 监听 UITextField 的文本变化
         self.headView.searchHeadView.searchTx
@@ -229,6 +234,25 @@ extension PropertyOneViewController {
             getIndustryInfo { modelArray in
                 self.companyVc.regionModelArray.accept(modelArray)
                 self.peopleVc.regionModelArray.accept(modelArray)
+            }
+        }
+    }
+    
+    //获取热搜数据
+    func getHotsInfo() {
+        let man = RequestManager()
+        let dict = [String :String]()
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/property/clues/search/hot-search",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    
+                }
+                break
+            case .failure(let failure):
+                break
             }
         }
     }

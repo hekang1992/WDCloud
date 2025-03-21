@@ -145,9 +145,11 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
         if index == 0 {
             let companyVc = self.listVCArray.first as! FocusCompanyViewController
             companyVc.getCompanyAllInfo()
+            companyVc.nav = navigationController
         }else {
             let peopleVc = self.listVCArray.last as! FocusPeopleViewController
             peopleVc.getPeopleAllInfo()
+            peopleVc.nav = navigationController
         }
     }
     

@@ -184,7 +184,11 @@ class DataModel {
     var count: countModel?
     var endDate: String?
     var startDate: String?
+    var personCount: Int?
+    var orgCount: Int?
     init(json: JSON) {
+        self.personCount = json["personCount"].intValue
+        self.orgCount = json["orgCount"].intValue
         self.startDate = json["startDate"].stringValue
         self.endDate = json["endDate"].stringValue
         self.relevaRiskItemDtos = json["relevaRiskItemDtos"].arrayValue.map { itemDtoListModel(json: $0) }

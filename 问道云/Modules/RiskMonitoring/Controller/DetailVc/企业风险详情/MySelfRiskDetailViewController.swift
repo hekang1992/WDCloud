@@ -133,7 +133,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         let fourlabel = PaddedLabel()
         fourlabel.text = "舆情风险"
         fourlabel.textAlignment = .center
-        fourlabel.backgroundColor = .init(cssStr: "#F5F5F5")
+        fourlabel.backgroundColor = .white
         fourlabel.textColor = .init(cssStr: "#547AFF")
         fourlabel.font = .mediumFontOfSize(size: 13)
         fourlabel.isUserInteractionEnabled = true

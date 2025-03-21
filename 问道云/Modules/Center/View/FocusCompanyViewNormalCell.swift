@@ -95,11 +95,8 @@ class FocusCompanyViewNormalCell: BaseViewCell {
             }else {
                 typelabel.isHidden = true
             }
-            if let logo = model.logo, !logo.isEmpty, logo != "null" {
-                ctImageView.kf.setImage(with: URL(string: logo))
-            }else {
-                ctImageView.image = UIImage.imageOfText(model.followtargetname ?? "", size: (24, 24))
-            }
+            let logo = model.logo ?? ""
+            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(model.followtargetname ?? "", size: (24, 24), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
         }).disposed(by: disposeBag)
     }
     
