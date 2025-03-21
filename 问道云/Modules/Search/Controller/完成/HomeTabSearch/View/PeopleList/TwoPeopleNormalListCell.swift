@@ -12,10 +12,10 @@ class TwoPeopleNormalListCell: BaseViewCell {
     
     var model = BehaviorRelay<itemsModel?>(value: nil)
     
-    lazy var bgView: UIView = {
-        let bgView = UIView()
-        bgView.backgroundColor = .white
-        return bgView
+    lazy var lineView: UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = .init(cssStr: "#F5F5F5")
+        return lineView
     }()
     
     lazy var ctImageView: UIImageView = {
@@ -54,20 +54,44 @@ class TwoPeopleNormalListCell: BaseViewCell {
         cooperationLabel.textColor = .init(cssStr: "#999999")
         cooperationLabel.font = .regularFontOfSize(size: 13)
         cooperationLabel.textAlignment = .left
-        cooperationLabel.text = "TA的合作伙伴: 暂无合作伙伴信息"
+        cooperationLabel.text = "TA的合作伙伴:"
         return cooperationLabel
+    }()
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 5
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .white
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(TwoPeopleCoopViewCell.self, forCellWithReuseIdentifier: "TwoPeopleCoopViewCell")
+        return collectionView
+    }()
+    
+    lazy var addFocusBtn: UIButton = {
+        let addFocusBtn = UIButton(type: .custom)
+        addFocusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+        return addFocusBtn
     }()
     
     var listViews: [CompanyListView] = []
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(bgView)
+        contentView.addSubview(lineView)
         contentView.addSubview(ctImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(numLabel)
         contentView.addSubview(containerView)
         contentView.addSubview(cooperationLabel)
+        contentView.addSubview(collectionView)
+        contentView.addSubview(addFocusBtn)
         
         ctImageView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 40, height: 40))
@@ -88,18 +112,31 @@ class TwoPeopleNormalListCell: BaseViewCell {
             make.left.equalToSuperview()
             make.top.equalTo(ctImageView.snp.bottom).offset(11)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-28.5)
-        }
-        
-        bgView.snp.makeConstraints { make in
-            make.left.top.right.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-5)
         }
         
         cooperationLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(12)
             make.top.equalTo(containerView.snp.bottom).offset(8)
             make.height.equalTo(18.5)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(cooperationLabel.snp.bottom).offset(6)
+            make.left.equalToSuperview().offset(12)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(0)
+            make.bottom.equalToSuperview().offset(-10)
+        }
+        
+        addFocusBtn.snp.makeConstraints { make in
+            make.left.equalTo(nameLabel.snp.right).offset(5)
+            make.centerY.equalTo(nameLabel.snp.centerY)
+            make.height.equalTo(14)
+        }
+        
+        lineView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(4)
         }
         
         model.asObservable().subscribe(onNext: { [weak self] model in
@@ -117,6 +154,36 @@ class TwoPeopleNormalListCell: BaseViewCell {
                 configureLabels(with: listCompany)
             }
             
+            let shareholderListCount = model.shareholderList?.count ?? 0
+            if shareholderListCount > 0 {
+                self.cooperationLabel.text = "TA的合作伙伴:"
+                self.collectionView.snp.updateConstraints { make in
+                    make.height.equalTo(69.5)
+                }
+            }else {
+                self.cooperationLabel.text = "TA的合作伙伴: 暂无合作伙伴信息"
+                self.collectionView.snp.updateConstraints { make in
+                    make.height.equalTo(0)
+                }
+            }
+            
+            let follow = model.follow ?? true
+            if follow {
+                addFocusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+            }else {
+                addFocusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+            }
+            
+        }).disposed(by: disposeBag)
+        
+        addFocusBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = self.model.value else { return }
+            let follow = model.follow ?? true
+            if follow {//取消关注
+                deleteFocusInfo(from: model, focusBtn: addFocusBtn)
+            }else {//去关注
+                addFocusInfo(from: model, focusBtn: addFocusBtn)
+            }
         }).disposed(by: disposeBag)
         
     }
@@ -150,6 +217,84 @@ extension TwoPeopleNormalListCell {
             listView.heightAnchor.constraint(equalToConstant: 18.5).isActive = true
             containerView.addArrangedSubview(listView)
         }
+    }
+    
+}
+
+/** 网络数据请求 */
+extension TwoPeopleNormalListCell {
+    
+    //添加关注
+    private func addFocusInfo(from model: itemsModel, focusBtn: UIButton) {
+        let man = RequestManager()
+        let dict = ["entityId": model.personId ?? "",
+                    "followTargetType": "2"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/add-or-cancel",
+                       method: .post) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.follow = true
+                    focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+                    ToastViewConfig.showToast(message: "关注成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //取消关注
+    private func deleteFocusInfo(from model: itemsModel, focusBtn: UIButton) {
+        let man = RequestManager()
+        let dict = ["entityId": model.personId ?? "",
+                    "followTargetType": "2"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/add-or-cancel",
+                       method: .post) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.follow = false
+                    focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+                    ToastViewConfig.showToast(message: "取消关注成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+}
+
+extension TwoPeopleNormalListCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 120, height: 69.5)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let count = self.model.value?.shareholderList?.count ?? 0
+        return count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TwoPeopleCoopViewCell", for: indexPath) as! TwoPeopleCoopViewCell
+        let model = self.model.value?.shareholderList?[indexPath.row]
+        cell.model.accept(model)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = self.model.value?.shareholderList?[indexPath.row]
+        let vc = ViewControllerUtils.findViewController(from: self)
+        let peopleDetailVc = PeopleBothViewController()
+        peopleDetailVc.personId.accept(String(model?.personId ?? 0))
+        peopleDetailVc.peopleName.accept(model?.personName ?? "")
+        vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
     }
     
 }

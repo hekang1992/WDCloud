@@ -68,7 +68,7 @@ class SearchShareholderViewController: WDBaseViewController {
         // Do any additional setup after loading the view.
         //添加
         addSegmentedView()
-    
+        
         //最近搜索
         self.getlastSearch()
         
@@ -393,7 +393,6 @@ extension SearchShareholderViewController {
     //热搜
     private func getHotWords() {
         let man = RequestManager()
-        
         let dict = ["moduleId": "03"]
         man.requestAPI(params: dict,
                        pageUrl: browser_hotwords,
@@ -487,7 +486,6 @@ extension SearchShareholderViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
                         "moduleId": "03",
@@ -495,7 +493,6 @@ extension SearchShareholderViewController {
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
                            method: .get) { result in
-                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

@@ -26,7 +26,7 @@ class SearchCompanyBeneficialOwnerViewController: WDBaseViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.register(PropertyListViewCell.self, forCellReuseIdentifier: "PropertyListViewCell")
+        tableView.register(BeneficialCompanyViewCell.self, forCellReuseIdentifier: "BeneficialCompanyViewCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
@@ -42,7 +42,7 @@ class SearchCompanyBeneficialOwnerViewController: WDBaseViewController {
     
     //搜索参数
     var pageIndex: Int = 1
-    var allArray: [DataModel] = []//加载更多
+    var allArray: [itemsModel] = []//加载更多
     var dataModel: DataModel?
     
     override func viewDidLoad() {
@@ -95,8 +95,8 @@ extension SearchCompanyBeneficialOwnerViewController: UITableViewDelegate, UITab
         numLabel.textColor = UIColor.init(cssStr: "#666666")
         numLabel.font = .regularFontOfSize(size: 12)
         numLabel.textAlignment = .left
-        let count = String(self.dataModel?.companyPage?.total ?? 0)
-        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)个企业有财产线索", font: .regularFontOfSize(size: 12))
+        let count = String(self.dataModel?.total ?? 0)
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "搜索到\(count)个相关企业", font: .regularFontOfSize(size: 12))
         headView.addSubview(numLabel)
         numLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -111,27 +111,28 @@ extension SearchCompanyBeneficialOwnerViewController: UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PropertyListViewCell", for: indexPath) as! PropertyListViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BeneficialCompanyViewCell", for: indexPath) as! BeneficialCompanyViewCell
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         let model = self.allArray[indexPath.row]
         model.searchStr = self.searchWordsRelay.value
-        cell.model = model
-        cell.monitoringBlock = { [weak self] in
-            self?.monitroingInfo(from: model)
-        }
+        cell.model.accept(model)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        print("公司名称=====\(model.entityName ?? "")")
+        let detailVc = BeneficialDetailViewController()
+        let entityId = model.orgId ?? ""
+        detailVc.entityId = entityId
+        detailVc.entityCategory = "1"
+        self.navigationController?.pushViewController(detailVc, animated: true)
     }
 }
 
 extension SearchCompanyBeneficialOwnerViewController: SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "PropertyListViewCell"
+        return "BeneficialCompanyViewCell"
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -144,24 +145,24 @@ extension SearchCompanyBeneficialOwnerViewController {
     
     //财产线索列表
     private func searchListInfo() {
-        let dict = ["keyWords": self.searchWordsRelay.value,
+        let dict = ["keywords": self.searchWordsRelay.value,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/v2/home-page/actual/org-page",
-                       method: .post) { [weak self] result in
+                       pageUrl: "/firminfo/v2/home-page/ubo/org",
+                       method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    if let self = self, let model = success.data, let total = model.companyPage?.total {
+                    if let self = self, let model = success.data, let total = model.total {
                         self.dataModel = model
                         if pageIndex == 1 {
                             self.allArray.removeAll()
                         }
                         pageIndex += 1
-                        let pageData = model.companyPage?.data ?? []
+                        let pageData = model.items ?? []
                         self.allArray.append(contentsOf: pageData)
                         if total != 0 {
                             self.emptyView.removeFromSuperview()

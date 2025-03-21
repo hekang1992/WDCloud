@@ -215,7 +215,7 @@
     self.modalPresentationStyle = UIModalPresentationCustom;
     self.transitioningDelegate = self;
     
-    _backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    _backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
     _backgoundTapDismissEnable = YES;
     _alertStyleEdging = 15;
     _actionSheetStyleEdging = 0;

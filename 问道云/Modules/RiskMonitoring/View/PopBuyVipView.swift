@@ -43,25 +43,25 @@ class PopBuyVipView: BaseView {
         bgImageView.addSubview(threeBtn)
         bgImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 320.pix(), height: 350.pix()))
+            make.size.equalTo(CGSize(width: 261.pix(), height: 257.pix()))
         }
         threeBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
             make.left.equalToSuperview()
-            make.height.equalTo(55.pix())
+            make.height.equalTo(40.pix())
         }
         twoBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(threeBtn.snp.top)
             make.left.equalToSuperview()
-            make.height.equalTo(55.pix())
+            make.height.equalTo(40.pix())
         }
         oneBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(twoBtn.snp.top)
             make.left.equalToSuperview()
-            make.height.equalTo(55.pix())
+            make.height.equalTo(40.pix())
         }
         threeBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }

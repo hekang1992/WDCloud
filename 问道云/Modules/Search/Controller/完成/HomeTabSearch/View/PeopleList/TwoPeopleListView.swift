@@ -28,16 +28,14 @@ class TwoPeopleListView: BaseView {
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .init(cssStr: "#F8F8F8")
+        tableView.backgroundColor = .white
         tableView.estimatedRowHeight = 60
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        tableView.register(TwoPeopleSpecListCell.self, forCellReuseIdentifier: "TwoPeopleSpecListCell")
         tableView.register(TwoPeopleNormalListCell.self, forCellReuseIdentifier: "TwoPeopleNormalListCell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
@@ -81,22 +79,12 @@ extension TwoPeopleListView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = dataModelArray.value?[indexPath.row]
-        let shareholderListCount = model?.shareholderList?.count ?? 0
-        if shareholderListCount != 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TwoPeopleSpecListCell") as? TwoPeopleSpecListCell
-            model?.searchStr = self.searchWordsRelay.value ?? ""
-            cell?.backgroundColor = .clear
-            cell?.selectionStyle = .none
-            cell?.model.accept(model)
-            return cell ?? UITableViewCell()
-        }else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TwoPeopleNormalListCell") as? TwoPeopleNormalListCell
-            model?.searchStr = self.searchWordsRelay.value ?? ""
-            cell?.backgroundColor = .clear
-            cell?.selectionStyle = .none
-            cell?.model.accept(model)
-            return cell ?? UITableViewCell()
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TwoPeopleNormalListCell") as! TwoPeopleNormalListCell
+        model?.searchStr = self.searchWordsRelay.value ?? ""
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        cell.model.accept(model)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

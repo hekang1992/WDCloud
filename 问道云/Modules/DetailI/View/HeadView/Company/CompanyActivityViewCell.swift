@@ -170,7 +170,6 @@ class CompanyActivityViewCell: BaseViewCell {
             label.font = .regularFontOfSize(size: 12)
             label.text = "  \(text.title ?? ""):  \(text.fieldValue ?? "")"
             label.numberOfLines = 2
-//            label.heightAnchor.constraint(equalToConstant: 20).isActive = true
             label.setContentHuggingPriority(.defaultLow, for: .vertical)
             stackView.addArrangedSubview(label)
         }

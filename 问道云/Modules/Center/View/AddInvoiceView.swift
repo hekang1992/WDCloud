@@ -65,7 +65,7 @@ class AddInvoiceView: BaseView {
         checkButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(nextBtn.snp.top).offset(-13.5)
-            make.size.equalTo(CGSize(width: 120, height: 16.5))
+            make.size.equalTo(CGSize(width: 120.pix(), height: 16.5))
         }
         
         modelArray.asObservable().bind(to: tableView.rx.items) { [weak self] tableView, index, model in

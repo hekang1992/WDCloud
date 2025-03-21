@@ -460,6 +460,7 @@ class itemsModel {
     var publishTime: String?
     var pdfUrl: String?
     var ossUrl: String?
+    var announcement_url: String?
     var title: String?
     var formulating_authority: String?
     var law_category: String?
@@ -491,6 +492,7 @@ class itemsModel {
     var provinceStatList: [provinceStatListModel]?
     var riskInfo: riskInfoModel?
     init(json: JSON) {
+        self.announcement_url = json["announcement_url"].stringValue
         self.riskInfo = riskInfoModel(json: json["riskInfo"])
         self.orgLogo = json["orgLogo"].stringValue
         self.legalId = json["legalId"].stringValue
@@ -1021,17 +1023,21 @@ class relatedEntityModel {
 class customerFollowListModel {
     var followtargetname: String?
     var createTime: String?
-    var entityid: String?
+    var entityId: String?
     var dataid: String?
     var firmnamestate: String?
     var logo: String?
+    var logoColor: String?
+    var personnumber: String?
     init(json: JSON) {
         self.followtargetname = json["followtargetname"].stringValue
         self.createTime = json["createTime"].stringValue
-        self.entityid = json["entityid"].stringValue
+        self.entityId = json["entityId"].stringValue
         self.dataid = json["dataid"].stringValue
         self.firmnamestate = json["firmnamestate"].stringValue
         self.logo = json["logo"].stringValue
+        self.logoColor = json["logoColor"].stringValue
+        self.personnumber = json["personnumber"].stringValue
     }
 }
 

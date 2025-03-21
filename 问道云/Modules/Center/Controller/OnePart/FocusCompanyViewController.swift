@@ -191,14 +191,6 @@ class FocusCompanyViewController: WDBaseViewController {
             self.addNewGroup()
         }).disposed(by: disposeBag)
         
-        companyView.modelBlock = { [weak self] model in
-            guard let self = self else { return }
-            let detailVc = CompanyBothViewController()
-            detailVc.enityId.accept(model.entityid ?? "")
-            detailVc.companyName.accept(model.followtargetname ?? "")
-            navController?.pushViewController(detailVc, animated: true)
-        }
-        
         companyView.footerView.cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             let selectedDataids = companyView.selectedDataIds
@@ -223,6 +215,13 @@ class FocusCompanyViewController: WDBaseViewController {
             }
         }).disposed(by: disposeBag)
         
+        
+        companyView.modelBlock = { [weak self] model in
+            let companyDetailVc = CompanyBothViewController()
+            companyDetailVc.enityId.accept(model.entityId ?? "")
+            companyDetailVc.companyName.accept(model.followtargetname ?? "")
+            self?.navigationController?.pushViewController(companyDetailVc, animated: true)
+        }
     }
     
     //获取所有企业信息

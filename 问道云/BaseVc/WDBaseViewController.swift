@@ -28,6 +28,7 @@ class WDBaseViewController: UIViewController {
     
     lazy var buyVipView: PopBuyVipView = {
         let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+        buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
         return buyVipView
     }()
     

@@ -250,25 +250,10 @@ extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewData
                        method: .post) { [weak self] result in
             switch result {
             case .success(let success):
-                if let self = self,
-                   let code = success.code,
-                   code == 200 {
+                if success.code == 200 {
                     ToastViewConfig.showToast(message: "尽调成功")
-//                    var pageUrl: String = ""
-//                    if ddnumber == "1" {
-//                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-basic&entityId=\(firmnumber)&customernumber=\(customernumber)"
-//                    } else if ddnumber == "6" {
-//                        pageUrl = base_url + "/due-diligence/form-fill?type=badAsset&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("basic")"
-//                    } else if ddnumber == "7" {
-//                        pageUrl = base_url + "/due-diligence/form-fill?type=corporateLoan&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("basic")"
-//                    } else if ddnumber == "11" {
-//                        pageUrl = base_url + "/due-diligence/analyse?pageType=firm-professions&entityId=\(firmnumber)&customernumber=\(customernumber)"
-//                    } else if ddnumber == "16" {
-//                        pageUrl = base_url + "/due-diligence/form-fill?page-type=badAsset&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("pro")"
-//                    } else if ddnumber == "17" {
-//                        pageUrl = base_url + "/due-diligence/form-fill?page-type=corporateLoan&entityId=\(firmnumber)&customernumber=\(customernumber)&version-type=\("pro")"
-//                    }
-//                    self.pushWebPage(from: pageUrl)
+                }else if success.code == 702 {
+                    
                 }
                 break
             case .failure(_):

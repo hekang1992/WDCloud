@@ -43,9 +43,7 @@ class FocusCompanyView: BaseView {
     var selectedIndexPaths = [IndexPath]() // 存储选中的IndexPath
     
     var selectedDataIds = [String]() // 存储选中的id
-    
-    //    private var arrayRelay = BehaviorRelay<[SectionModel]>(value: [])
-    
+        
     lazy var descLabel: UILabel = {
         let descLabel = UILabel()
         descLabel.text = "已关注"
@@ -189,31 +187,6 @@ class FocusCompanyView: BaseView {
             }
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
-        
-        //        modelArray.subscribe(onNext: { [weak self] modelArray in
-        //            let sections = modelArray.enumerated().map { index, model -> SectionModel in
-        //                let numStr = String(format: "%@", "\(model.groupname ?? "")(\(model.customerFollowList?.count ?? 0))")
-        //                return SectionModel(header: numStr, items: model.customerFollowList ?? [], isExpanded: false)
-        //            }
-        //            self?.arrayRelay.accept(sections)
-        //        }).disposed(by: disposeBag)
-        //
-        //        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel>(
-        //            configureCell: { dataSource, tableView, indexPath, rowModel in
-        //                let section = dataSource[indexPath.section]
-        //                if section.isExpanded {
-        //                    let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell")!
-        //                    cell.textLabel?.text = rowModel.followtargetname
-        //                    return cell
-        //                } else {
-        //                    return UITableViewCell()
-        //                }
-        //            }
-        //        )
-        //
-        //        arrayRelay.asObservable().bind(to: tableView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
-        //
-        //        tableView.rx.setDelegate(self).disposed(by: disposeBag)
         
         nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }

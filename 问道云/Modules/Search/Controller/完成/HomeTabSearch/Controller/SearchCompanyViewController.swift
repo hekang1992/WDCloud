@@ -55,10 +55,10 @@ class SearchCompanyViewController: WDBaseViewController {
     //搜索文字回调
     var lastSearchTextBlock: ((String) -> Void)?
     
-    lazy var companyView: OneCompanyView = {
-        let companyView = OneCompanyView()
-        companyView.isHidden = false
-        return companyView
+    lazy var oneView: OneCompanyView = {
+        let oneView = OneCompanyView()
+        oneView.isHidden = false
+        return oneView
     }()
     
     //搜索list列表页面
@@ -77,8 +77,8 @@ class SearchCompanyViewController: WDBaseViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        view.addSubview(companyView)
-        companyView.snp.makeConstraints { make in
+        view.addSubview(oneView)
+        oneView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
@@ -94,20 +94,20 @@ class SearchCompanyViewController: WDBaseViewController {
             self?.moreBtnBlock?()
         }
         //删除最近搜索
-        self.companyView.searchView.deleteBtn
+        self.oneView.searchView.deleteBtn
             .rx
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteSearchInfo()
             }).disposed(by: disposeBag)
         //删除浏览历史
-        self.companyView.historyView.deleteBtn
+        self.oneView.historyView.deleteBtn
             .rx
             .tap.subscribe(onNext: { [weak self] in
                 self?.deleteHistoryInfo()
             }).disposed(by: disposeBag)
         
         //点击最近搜索
-        self.companyView.lastSearchTextBlock = { [weak self] searchStr in
+        self.oneView.lastSearchTextBlock = { [weak self] searchStr in
             self?.lastSearchTextBlock?(searchStr)
             self?.searchWords = searchStr
         }
@@ -264,7 +264,7 @@ extension SearchCompanyViewController {
                 }else {
                     self.pageIndex = 1
                     self.allArray.removeAll()
-                    self.companyView.isHidden = false
+                    self.oneView.isHidden = false
                     self.companyListView.isHidden = true
                     self.tableView.reloadData()
                 }
@@ -331,21 +331,21 @@ extension SearchCompanyViewController {
             for model in data {
                 strArray.append(model.searchContent ?? "")
             }
-            self.companyView.searchView.tagListView.removeAllTags()
-            self.companyView.searchView.tagListView.addTags(strArray)
-            self.companyView.searchView.isHidden = false
-            self.companyView.layoutIfNeeded()
-            let height = self.companyView.searchView.tagListView.frame.height
-            self.companyView.searchView.snp.updateConstraints { make in
+            self.oneView.searchView.tagListView.removeAllTags()
+            self.oneView.searchView.tagListView.addTags(strArray)
+            self.oneView.searchView.isHidden = false
+            self.oneView.layoutIfNeeded()
+            let height = self.oneView.searchView.tagListView.frame.height
+            self.oneView.searchView.snp.updateConstraints { make in
                 make.height.equalTo(30 + height + 20)
             }
         } else {
-            self.companyView.searchView.isHidden = true
-            self.companyView.searchView.snp.updateConstraints { make in
+            self.oneView.searchView.isHidden = true
+            self.oneView.searchView.snp.updateConstraints { make in
                 make.height.equalTo(0)
             }
         }
-        self.companyView.layoutIfNeeded()
+        self.oneView.layoutIfNeeded()
     }
     
     //浏览历史
@@ -391,25 +391,25 @@ extension SearchCompanyViewController {
             listView.nameLabel.text = model.firmname ?? ""
             listView.timeLabel.text = model.createhourtime ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
-            self.companyView.historyView.addSubview(listView)
+            self.oneView.historyView.addSubview(listView)
             listView.snp.makeConstraints { make in
                 make.height.equalTo(40)
                 make.width.equalTo(SCREEN_WIDTH)
                 make.left.equalToSuperview()
-                make.top.equalTo(self.companyView.historyView.lineView.snp.bottom).offset(40 * index)
+                make.top.equalTo(self.oneView.historyView.lineView.snp.bottom).offset(40 * index)
             }
         }
         
-        self.companyView.historyView.snp.updateConstraints { make in
+        self.oneView.historyView.snp.updateConstraints { make in
             if data.count != 0 {
-                self.companyView.historyView.isHidden = false
+                self.oneView.historyView.isHidden = false
                 make.height.equalTo((data.count) * 40 + 30)
             } else {
-                self.companyView.historyView.isHidden = true
+                self.oneView.historyView.isHidden = true
                 make.height.equalTo(0)
             }
         }
-        self.companyView.layoutIfNeeded()
+        self.oneView.layoutIfNeeded()
     }
     
     //热搜
@@ -437,7 +437,7 @@ extension SearchCompanyViewController {
     
     //UI刷新
     func hotsWordsUI(data: [rowsModel]) {
-        self.companyView.hotWordsView.isHidden = false
+        self.oneView.hotWordsView.isHidden = false
         for (index, model) in data.enumerated() {
             let listView = CommonSearchListView()
             listView.block = { [weak self] in
@@ -451,24 +451,24 @@ extension SearchCompanyViewController {
             }
             listView.nameLabel.text = model.name ?? ""
             listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
-            self.companyView.hotWordsView.addSubview(listView)
+            self.oneView.hotWordsView.addSubview(listView)
             listView.snp.updateConstraints { make in
                 make.height.equalTo(40)
                 make.left.right.equalToSuperview()
-                make.top.equalTo(self.companyView.hotWordsView.lineView.snp.bottom).offset(40 * index)
+                make.top.equalTo(self.oneView.hotWordsView.lineView.snp.bottom).offset(40 * index)
             }
         }
         
-        self.companyView.hotWordsView.snp.updateConstraints { make in
+        self.oneView.hotWordsView.snp.updateConstraints { make in
             if data.count != 0 {
-                self.companyView.hotWordsView.isHidden = false
+                self.oneView.hotWordsView.isHidden = false
                 make.height.equalTo((data.count) * 40 + 30)
             } else {
-                self.companyView.hotWordsView.isHidden = true
+                self.oneView.hotWordsView.isHidden = true
                 make.height.equalTo(0)
             }
         }
-        self.companyView.layoutIfNeeded()
+        self.oneView.layoutIfNeeded()
     }
     
     //删除最近搜索
@@ -485,8 +485,8 @@ extension SearchCompanyViewController {
                 case .success(let success):
                     if success.code == 200 {
                         ToastViewConfig.showToast(message: "删除成功")
-                        self.companyView.searchView.isHidden = true
-                        self.companyView.searchView.snp.updateConstraints({ make in
+                        self.oneView.searchView.isHidden = true
+                        self.oneView.searchView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
                         })
                     }
@@ -515,8 +515,8 @@ extension SearchCompanyViewController {
                 case .success(let success):
                     if success.code == 200 {
                         ToastViewConfig.showToast(message: "删除成功")
-                        self.companyView.historyView.isHidden = true
-                        self.companyView.historyView.snp.updateConstraints({ make in
+                        self.oneView.historyView.isHidden = true
+                        self.oneView.historyView.snp.updateConstraints({ make in
                             make.height.equalTo(0)
                         })
                     }
@@ -550,7 +550,7 @@ extension SearchCompanyViewController {
                    let code = success.code,
                    code == 200,
                    let total = model.pageMeta?.totalNum {
-                    self.companyView.isHidden = true
+                    self.oneView.isHidden = true
                     self.companyListView.isHidden = false
                     if self.pageIndex == 1 {
                         self.pageIndex = 1

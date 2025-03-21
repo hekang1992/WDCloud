@@ -213,6 +213,13 @@ class FocusPeopleViewController: WDBaseViewController {
             }
         }).disposed(by: disposeBag)
         
+        companyView.modelBlock = { [weak self] model in
+            let peopleDetailVc = PeopleBothViewController()
+            peopleDetailVc.personId.accept(model.personnumber ?? "")
+            peopleDetailVc.peopleName.accept(model.followtargetname ?? "")
+            self?.navigationController?.pushViewController(peopleDetailVc, animated: true)
+        }
+        
     }
     
     //获取所有人员信息
@@ -230,12 +237,10 @@ extension FocusPeopleViewController {
     //获取所有分组
     func getAllGroup() {
         let man = RequestManager()
-        
         let dict = ["followTargetType": "2"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/followGroup/list",
                        method: .get) { result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -251,12 +256,10 @@ extension FocusPeopleViewController {
     //获取地区
     func getRegion() {
         let man = RequestManager()
-        
         let dict = ["typeVec": "REGION"]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/meta",
                        method: .get) { result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -272,12 +275,10 @@ extension FocusPeopleViewController {
     //获取行业
     func getIndustry() {
         let man = RequestManager()
-        
         let dict = ["typeVec": "INDUSTRY"]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/meta",
                        method: .get) { result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -301,13 +302,10 @@ extension FocusPeopleViewController {
                     "secondAreaCode": secondAreaCode,
                     "firstIndustryCode": firstIndustryCode,
                     "secondIndustryCode": secondIndustryCode] as [String : Any]
-        
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/list",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -348,13 +346,11 @@ extension FocusPeopleViewController: UITableViewDelegate {
     
     private func addNewInfo() {
         let man = RequestManager()
-        
         let dict = ["groupName": self.cmmView.tf.text ?? "".removingEmojis,
                     "followTargetType": "2"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/followGroup",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -372,13 +368,11 @@ extension FocusPeopleViewController: UITableViewDelegate {
     //取消关注
     func cancelFocusInfo(from dataIds: [String]) {
         let man = RequestManager()
-        
         let dict = ["ids": dataIds,
                     "followTargetType": "2"] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/batchCancel",
                        method: .post) { result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -410,14 +404,12 @@ extension FocusPeopleViewController: UITableViewDelegate {
     //接口调用
     func moveFocusInfo(from model: rowsModel, ids: [String]) {
         let man = RequestManager()
-        
         let dict = ["groupNumber": model.groupnumber ?? "",
                     "ids": ids,
                     "followTargetType": "2"] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/moveGroup",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
