@@ -85,13 +85,13 @@ class PropertyCompanyViewController: WDBaseViewController {
         let industryMenu = MenuAction(title: "行业", style: .typeList)!
         self.industryModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
-            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
-            regionMenu.listDataSource = regionArray
+            let regionArray = getThreeIndustryInfo(from: modelArray ?? [])
+            industryMenu.listDataSource = regionArray
         }).disposed(by: disposeBag)
         
         industryMenu.didSelectedMenuResult = { [weak self] index, model, grand in
             guard let self = self else { return }
-            self.entityArea = model?.currentID ?? ""
+            self.entityIndustry = model?.currentID ?? ""
             self.pageIndex = 1
             self.searchListInfo()
         }
@@ -100,7 +100,8 @@ class PropertyCompanyViewController: WDBaseViewController {
         menuView.backgroundColor = .white
         view.addSubview(menuView)
         menuView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
             make.top.equalToSuperview().offset(1)
             make.height.equalTo(30)
         }
@@ -164,8 +165,9 @@ extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSou
         let model = self.allArray[indexPath.row]
         model.searchStr = self.searchWordsRelay.value
         cell.model = model
-        cell.monitoringBlock = { [weak self] in
-            self?.monitroingInfo(from: model)
+        cell.cellBlock = { [weak self] in
+            guard let self = self else { return }
+            self.tableView(tableView, didSelectRowAt: indexPath)
         }
         return cell
     }
@@ -173,6 +175,14 @@ extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
         print("公司名称=====\(model.entityName ?? "")")
+        let bothVc = PropertyLineBothViewController()
+        let enityId = model.entityId ?? ""
+        let companyName = model.entityName ?? ""
+        bothVc.enityId.accept(enityId)
+        bothVc.companyName.accept(companyName)
+        bothVc.logoUrl = model.logoUrl ?? ""
+        bothVc.monitor = model.monitor ?? true
+        self.navigationController?.pushViewController(bothVc, animated: true)
     }
 }
 
@@ -229,30 +239,6 @@ extension PropertyCompanyViewController {
                             self.tableView.reloadData()
                         }
                     }
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
-    //添加监控
-    private func monitroingInfo(from model: DataModel) {
-        let entityId = model.entityId ?? ""
-        let entityName = model.entityName ?? ""
-        let entityType = "1"
-        let man = RequestManager()
-        let dict = ["entityId": entityId,
-                    "entityName": entityName,
-                    "entityType": entityType]
-        man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/monitor",
-                       method: .post) { result in
-            switch result {
-            case .success(let success):
-                if success.code == 200 {
-                    
                 }
                 break
             case .failure(_):

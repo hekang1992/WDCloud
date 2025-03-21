@@ -148,7 +148,6 @@ class HighSearchResultViewController: WDBaseViewController {
     }
     
     private func getHighSearchInfo() {
-        
         let man = RequestManager()
         dict = ["pageSize": 20, "pageIndex": pageIndex]
         if let keyword = keyword {
@@ -419,7 +418,6 @@ extension HighSearchResultViewController {
     //取消关注
     private func deleteFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
         let man = RequestManager()
-        
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,

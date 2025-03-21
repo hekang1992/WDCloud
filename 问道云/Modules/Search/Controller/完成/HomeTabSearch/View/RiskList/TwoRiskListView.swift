@@ -284,13 +284,11 @@ extension TwoRiskListView {
     //取消关注
     private func deleteFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
         let man = RequestManager()
-        
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

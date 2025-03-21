@@ -7,11 +7,14 @@
 
 import UIKit
 import SkeletonView
+import TYAlertController
 
 class PropertyListViewCell: BaseViewCell {
     
     //监控block
     var monitoringBlock: (() -> Void)?
+    
+    var cellBlock: (() -> Void)?
     
     lazy var logoImageView: UIImageView = {
         let logoImageView = UIImageView()
@@ -158,7 +161,13 @@ class PropertyListViewCell: BaseViewCell {
         }
         
         monitoringBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.monitoringBlock?()
+            guard let self = self, let model = self.model else { return }
+            let monitor = model.monitor ?? true
+            if monitor {
+                propertyLineCancelInfo(from: model, monitoringBtn: monitoringBtn)
+            }else {
+                prppertyLineMonitrongInfo(from: model, monitoringBtn: monitoringBtn)
+            }
         }).disposed(by: disposeBag)
     }
     
@@ -182,7 +191,7 @@ class PropertyListViewCell: BaseViewCell {
             
             namelabel.attributedText = GetRedStrConfig.getRedStr(from: searchStr, fullText: companyName)
             
-            let monitor = model.monitor ?? false
+            let monitor = model.monitor ?? true
             
             if monitor {
                 monitoringBtn.setImage(UIImage(named: "propertyhavjiank"), for: .normal)
@@ -190,8 +199,10 @@ class PropertyListViewCell: BaseViewCell {
                 monitoringBtn.setImage(UIImage(named: "propertymongijan"), for: .normal)
             }
             
-            numLabel.attributedText = GetRedStrConfig.getRedStr(from: "0", fullText: "当前财产线索0条,", colorStr: "#FF4D4F", font: UIFont.regularFontOfSize(size: 13))
-            moneyLabel.attributedText = GetRedStrConfig.getRedStr(from: "0", fullText: "预估价值0万元", colorStr: "#FF4D4F", font: UIFont.regularFontOfSize(size: 13))
+            let clueNum = String(model.clueNum ?? 0)
+            let clueValuation = model.clueValuation ?? ""
+            numLabel.attributedText = GetRedStrConfig.getRedStr(from: clueNum, fullText: "当前财产线索\(clueNum)条,", colorStr: "#FF4D4F", font: UIFont.regularFontOfSize(size: 13))
+            moneyLabel.attributedText = GetRedStrConfig.getRedStr(from: clueValuation, fullText: "预估价值\(clueValuation)", colorStr: "#FF4D4F", font: UIFont.regularFontOfSize(size: 13))
             
             let cluesDataList = model.cluesDataList ?? []
             if cluesDataList.isEmpty {
@@ -226,6 +237,103 @@ extension PropertyListViewCell: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 80)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.cellBlock?()
+    }
+    
+}
+
+/** 网络数据请求 */
+extension PropertyListViewCell {
+    
+    //添加监控
+    func prppertyLineMonitrongInfo(from model: DataModel, monitoringBtn: UIButton) {
+        let entityId = model.entityId ?? ""
+        let entityName = model.entityName ?? ""
+        let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let entityType = 1
+        let man = RequestManager()
+        let dict = ["entityId": entityId,
+                    "entityName": entityName,
+                    "entityType": entityType,
+                    "customerNumber": customerNumber] as [String : Any]
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/monitor",
+                       method: .post) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.monitor = true
+                    monitoringBtn.setImage(UIImage(named: "propertyhavjiank"), for: .normal)
+                    ToastViewConfig.showToast(message: "监控成功")
+                }else if success.code == 702 {
+                    let vc = ViewControllerUtils.findViewController(from: self)
+                    let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+                    buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
+                    let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+                    buyVipView.cancelBlock = {
+                        vc?.dismiss(animated: true)
+                    }
+                    buyVipView.buyOneBlock = {
+                        //跳转购买单次会员
+                        vc?.dismiss(animated: true, completion: {
+                            let oneVc = BuyOnePropertyLineViewController()
+                            oneVc.entityType = 1
+                            oneVc.entityId = model.entityId ?? ""
+                            oneVc.entityName = model.entityName ?? ""
+                            //刷新列表
+                            oneVc.refreshBlock = {
+                                model.monitor = true
+                                monitoringBtn.setImage(UIImage(named: "propertyhavjiank"), for: .normal)
+                            }
+                            vc?.navigationController?.pushViewController(oneVc, animated: true)
+                        })
+                    }
+                    buyVipView.buyVipBlock = {
+                        //跳转购买会员
+                        vc?.dismiss(animated: true, completion: {
+                            let memVc = MembershipCenterViewController()
+                            vc?.navigationController?.pushViewController(memVc, animated: true)
+                        })
+                    }
+                    vc?.present(alertVc, animated: true)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //取消监控
+    func propertyLineCancelInfo(from model: DataModel, monitoringBtn: UIButton) {
+        let entityId = model.entityId ?? ""
+        let entityName = model.entityName ?? ""
+        let entityType = "1"
+        let man = RequestManager()
+        let dict = ["entityId": entityId,
+                    "entityName": entityName,
+                    "entityType": entityType]
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/monitor/cancel",
+                       method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                guard let self = self else { return }
+                if success.code == 200 {
+                    model.monitor = false
+                    monitoringBtn.setImage(UIImage(named: "propertymongijan"), for: .normal)
+                    ToastViewConfig.showToast(message: "取消监控成功")
+                }else if success.code == 702 {
+                    
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

@@ -200,7 +200,6 @@ extension MonthCompanyViewController: UITableViewDataSource, UITableViewDelegate
 extension MonthCompanyViewController {
     
     func getCompanyInfo() {
-        
         let man = RequestManager()
         let dict = ["reportTermType": "month",
                     "groupId": groupId,
@@ -209,7 +208,6 @@ extension MonthCompanyViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/queryRiskMonitorOrg",
                        method: .get) { [weak self] result in
-            
             self?.dailyView.tableView.mj_header?.endRefreshing()
             self?.dailyView.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -318,7 +316,6 @@ extension MonthCompanyViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/cancelRiskMonitorOrg",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

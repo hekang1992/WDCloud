@@ -184,7 +184,6 @@ extension CompanyDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/operatingstate/getprestatistics",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):

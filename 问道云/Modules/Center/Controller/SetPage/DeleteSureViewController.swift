@@ -255,13 +255,11 @@ extension DeleteSureViewController {
     
     func getCodeInfo() {
         let man = RequestManager()
-        
         let dict = ["phone": self.numLabel.text ?? "",
                     "sendType": "3"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -297,7 +295,6 @@ extension DeleteSureViewController {
         let phone = self.numLabel.text ?? ""
         let code = self.codeTx.text ?? ""
         let man = RequestManager()
-        
         let dict = ["customernumber": customernumber,
                     "phone": phone,
                     "code": code,
@@ -305,7 +302,6 @@ extension DeleteSureViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerinfo/updatecustomerInfoisCustomertype",
                        method: .post) { result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

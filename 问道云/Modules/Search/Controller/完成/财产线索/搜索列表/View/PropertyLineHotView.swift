@@ -6,10 +6,30 @@
 //
 
 import UIKit
+import TagListView
 
 class PropertyLineHotView: BaseView {
     
     var modelArray: [DataModel]?
+    
+    lazy var tagListView: TagListView = {
+        let tagListView = TagListView()
+        tagListView.cornerRadius = 5
+        tagListView.paddingX = 5
+        tagListView.paddingY = 5
+        tagListView.marginX = 8
+        tagListView.marginY = 8
+        tagListView.textColor = .init(cssStr: "#27344B")!
+        tagListView.tagBackgroundColor = .init(cssStr: "#F3F3F3")!
+        tagListView.textFont = .regularFontOfSize(size: 12)
+        tagListView.borderWidth = 1
+        tagListView.borderColor = UIColor.clear
+        tagListView.selectedTextColor = UIColor.init(cssStr: "#547AFF")!
+        tagListView.selectedBorderColor = UIColor.init(cssStr: "#547AFF")
+        tagListView.tagSelectedBackgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.05)
+        tagListView.delegate = self
+        return tagListView
+    }()
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -28,6 +48,19 @@ class PropertyLineHotView: BaseView {
         return tableView
     }()
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(5)
+            make.left.right.bottom.equalToSuperview()
+        }
+    }
+    
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
 
 extension PropertyLineHotView: UITableViewDelegate, UITableViewDataSource {
@@ -63,7 +96,28 @@ extension PropertyLineHotView: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.backgroundColor = .white
         cell.model = model
+        cell.cellBlock = { [weak self] in
+            guard let self = self else { return }
+            self.tableView(tableView, didSelectRowAt: indexPath)
+        }
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = ViewControllerUtils.findViewController(from: self)
+        let model = self.modelArray?[indexPath.row]
+        let bothVc = PropertyLineBothViewController()
+        let enityId = model?.entityId ?? ""
+        let companyName = model?.entityName ?? ""
+        bothVc.enityId.accept(enityId)
+        bothVc.companyName.accept(companyName)
+        bothVc.logoUrl = model?.logoUrl ?? ""
+        vc?.navigationController?.pushViewController(bothVc, animated: true)
+    }
 
+}
+
+extension PropertyLineHotView: TagListViewDelegate {
+    
+    
 }

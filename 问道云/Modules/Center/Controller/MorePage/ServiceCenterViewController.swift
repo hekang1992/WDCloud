@@ -232,13 +232,11 @@ extension ServiceCenterViewController {
     
     private func getMessageInfo() {
         let man = RequestManager()
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/operationQuestion/grouplist",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

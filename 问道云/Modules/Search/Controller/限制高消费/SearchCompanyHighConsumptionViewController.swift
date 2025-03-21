@@ -103,7 +103,6 @@ class SearchCompanyHighConsumptionViewController: WDBaseViewController {
 extension SearchCompanyHighConsumptionViewController {
     
     private func getSearchPeopleInfo() {
-        
         let man = RequestManager()
         let dict = ["keywords": self.keyWords.value,
                     "type": "2",
@@ -111,7 +110,6 @@ extension SearchCompanyHighConsumptionViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/cooperation/getLimitHighConsumption",
                        method: .get) { [weak self] result in
-            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

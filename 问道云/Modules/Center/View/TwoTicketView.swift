@@ -110,7 +110,7 @@ class TwoTicketCell: BaseViewCell {
     
     lazy var openBtn: UIButton = {
         let openBtn = UIButton(type: .custom)
-        openBtn.setTitle("打开发票", for: .normal)
+        openBtn.setTitle("查看发票", for: .normal)
         openBtn.layer.cornerRadius = 2.5
         openBtn.titleLabel?.font = .regularFontOfSize(size: 13)
         openBtn.backgroundColor = UIColor.init(cssStr: "#EEEEEE")

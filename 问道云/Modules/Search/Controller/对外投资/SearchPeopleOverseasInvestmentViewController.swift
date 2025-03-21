@@ -193,7 +193,6 @@ extension SearchPeopleOverseasInvestmentViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/illegalPunish/getExternalGuarantees",
                        method: .get) { [weak self] result in
-            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

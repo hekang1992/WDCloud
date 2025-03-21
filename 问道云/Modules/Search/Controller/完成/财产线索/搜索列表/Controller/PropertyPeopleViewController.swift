@@ -68,17 +68,16 @@ class PropertyPeopleViewController: WDBaseViewController {
             self.searchListInfo()
         }
         
-        
         let industryMenu = MenuAction(title: "行业", style: .typeList)!
         self.industryModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
-            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
-            regionMenu.listDataSource = regionArray
+            let regionArray = getThreeIndustryInfo(from: modelArray ?? [])
+            industryMenu.listDataSource = regionArray
         }).disposed(by: disposeBag)
         
         industryMenu.didSelectedMenuResult = { [weak self] index, model, grand in
             guard let self = self else { return }
-            self.entityArea = model?.currentID ?? ""
+            self.entityIndustry = model?.currentID ?? ""
             self.pageIndex = 1
             self.searchListInfo()
         }
@@ -108,11 +107,9 @@ extension PropertyPeopleViewController {
                     "areaCode": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
-        
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/property/clues/search/findPropertySearchList",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

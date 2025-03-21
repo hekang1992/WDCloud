@@ -473,11 +473,9 @@ extension MinitoringMessagePushViewController {
         let startTime = self.zbtn.titleLabel?.text ?? ""
         let endTime = self.xbtn.titleLabel?.text ?? ""
         let dict = ["startTime": startTime, "endTime": endTime]
-        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-config/updateRiskMonitorConfig",
                        method: .post) { result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -516,13 +514,11 @@ extension MinitoringMessagePushViewController {
     
     //获取用户监控设置
     func getUserSettingInfo() {
-        
         let man = RequestManager()
         let dict = [String: Any]()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-config/getRiskMonitorConfig",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

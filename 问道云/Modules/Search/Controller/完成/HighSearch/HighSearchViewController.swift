@@ -243,10 +243,8 @@ extension HighSearchViewController {
     private func getHighMessageInfo() {
         let dict = ["typeVec": ""]
         let man = RequestManager()
-        
         man.requestAPI(params: dict, pageUrl: "/entity/v2/meta", method: .get) { [weak self] result in
             guard let self = self else { return }
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

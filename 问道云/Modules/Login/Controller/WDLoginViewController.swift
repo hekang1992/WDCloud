@@ -90,13 +90,11 @@ extension WDLoginViewController {
     //获取验证码
     func getCodeInfo() {
         let man = RequestManager()
-        
         let dict = ["phone": self.loginView.phoneTx.text ?? "",
                     "sendType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 self?.pushCodeVc()

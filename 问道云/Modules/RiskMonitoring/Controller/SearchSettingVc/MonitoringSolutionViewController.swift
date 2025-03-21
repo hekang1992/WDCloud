@@ -324,11 +324,9 @@ extension MonitoringSolutionViewController {
         let liststr = listArray.joined()
         let man = RequestManager()
         let dict = ["pushOffset": liststr]
-        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-config/updateRiskMonitorConfig",
                        method: .post) { result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -345,11 +343,9 @@ extension MonitoringSolutionViewController {
     private func getUserSettingInfo() {
         let dict = [String: Any]()
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-config/getRiskMonitorConfig",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

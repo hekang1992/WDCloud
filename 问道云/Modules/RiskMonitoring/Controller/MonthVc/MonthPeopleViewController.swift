@@ -200,7 +200,6 @@ extension MonthPeopleViewController: UITableViewDataSource, UITableViewDelegate 
 extension MonthPeopleViewController {
     
     func getPeopleInfo() {
-        
         let man = RequestManager()
         let dict = ["termType": "month",
                     "groupId": groupId,
@@ -209,7 +208,6 @@ extension MonthPeopleViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/queryRiskMonitorPerson",
                        method: .get) { [weak self] result in
-            
             self?.dailyView.tableView.mj_header?.endRefreshing()
             self?.dailyView.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -318,7 +316,6 @@ extension MonthPeopleViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/cancelRiskMonitorPerson",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

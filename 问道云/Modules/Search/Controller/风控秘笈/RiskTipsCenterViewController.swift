@@ -88,10 +88,7 @@ extension RiskTipsCenterViewController: UITableViewDelegate, UITableViewDataSour
         return nil
     }
     
-    
-    
     private func getListInfo() {
-        
         let dict = ["pageNum": pageNum,
                     "type": type,
                     "pulishstate": pulishstate,
@@ -100,7 +97,6 @@ extension RiskTipsCenterViewController: UITableViewDelegate, UITableViewDataSour
         man.requestAPI(params: dict,
                        pageUrl: "/operation/webnews/list",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if let self = self, let code = success.code, code == 200 {

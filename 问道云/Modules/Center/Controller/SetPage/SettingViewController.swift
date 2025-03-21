@@ -170,12 +170,10 @@ extension SettingViewController {
     //退出账号
     func logout() {
         let man = RequestManager()
-        
         let dict = [String: Any]()
         man.requestAPI(params: dict,
                        pageUrl: "/auth/logout",
                        method: .delete) { result in
-            
             switch result {
             case .success(_):
                 WDLoginConfig.removeLoginInfo()

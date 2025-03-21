@@ -277,12 +277,10 @@ extension WDHomeViewController {
     //获取banner
     func getBannerInfo() {
         let man = RequestManager()
-        
         let dict = ["binnertype": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/configurationoc/selectconfigurationenabledstate2",
                        method: .get) { [weak self] reslut in
-            
             switch reslut {
             case .success(let success):
                 if success.code == 200 {
@@ -298,12 +296,10 @@ extension WDHomeViewController {
     //热搜 全部 企业加人员
     func getHotWords() {
         let man = RequestManager()
-        
         let dict = ["moduleId": ""]
         man.requestAPI(params: dict,
-                       pageUrl: browser_hotwords,
+                       pageUrl: "/operation/clientbrowsecb/hot-search",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -324,12 +320,10 @@ extension WDHomeViewController {
     //热搜1 企业热搜
     func getHotCompanyWords() {
         let man = RequestManager()
-        
         let dict = ["moduleId": "01"]
         man.requestAPI(params: dict,
-                       pageUrl: browser_hotwords,
+                       pageUrl: "/operation/clientbrowsecb/hot-search",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):

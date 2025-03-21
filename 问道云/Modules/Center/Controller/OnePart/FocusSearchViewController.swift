@@ -235,11 +235,9 @@ extension FocusSearchViewController {
     private func searchInfo() {
         let dict = ["keywords": self.keyWords]
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/searchEntity",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data, let modelArray = model.data, modelArray.count > 0 {
@@ -261,13 +259,11 @@ extension FocusSearchViewController {
     //添加关注
     func addFocusInfo(from btn: UIButton, model: rowsModel) {
         let man = RequestManager()
-        
         let dict = ["entityId": model.entityId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/save",
                        method: .post) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(_):

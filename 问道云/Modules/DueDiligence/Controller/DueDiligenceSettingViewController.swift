@@ -187,13 +187,11 @@ extension DueDiligenceSettingViewController {
     //查询监控分组
     func getMonitoringGroupInfo() {
         let man = RequestManager()
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: "/dd/ddGroup/list",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -215,15 +213,12 @@ extension DueDiligenceSettingViewController {
     }
     
     private func getVipInfo() {
-        
         let man = RequestManager()
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/enterpriseclientbm/buymoreinfo",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -259,7 +254,6 @@ extension DueDiligenceSettingViewController {
     }
     
     func addNewInfo() {
-        
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["groupname": self.cmmView.tf.text ?? "",
@@ -267,7 +261,6 @@ extension DueDiligenceSettingViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/dd/ddGroup/add",
                        method: .post) { [weak self] result in
-            
             switch result {
             case .success(_):
                 guard let self = self else { return }
@@ -331,13 +324,11 @@ extension DueDiligenceSettingViewController: UITableViewDelegate, UITableViewDat
     func deleteInfo(form model: itemsModel) {
         let groupnumber = model.groupnumber ?? ""
         ShowAlertManager.showAlert(title: "删除提醒", message: "删除该监控方案后，采用该监控方案的对象将使用默认监控方案监控", confirmAction:  {
-            
             let man = RequestManager()
             let dict = ["groupnumber": groupnumber]
             man.requestAPI(params: dict,
                            pageUrl: "/dd/ddGroup/delete",
                            method: .post) { [weak self] result in
-                
                 switch result {
                 case .success(let success):
                     if let self = self, let code = success.code, code == 200 {

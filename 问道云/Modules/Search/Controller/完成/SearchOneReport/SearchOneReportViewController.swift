@@ -361,7 +361,7 @@ extension SearchOneReportViewController {
         let man = RequestManager()
         let dict = ["moduleId": "09"]
         man.requestAPI(params: dict,
-                       pageUrl: browser_hotwords,
+                       pageUrl: "/operation/clientbrowsecb/hot-search",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -438,7 +438,6 @@ extension SearchOneReportViewController {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
                         "moduleId": "09",
@@ -446,7 +445,6 @@ extension SearchOneReportViewController {
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
                            method: .get) { result in
-                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

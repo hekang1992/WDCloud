@@ -103,7 +103,6 @@ class SearchPeopleDeadbeatViewController: WDBaseViewController {
 extension SearchPeopleDeadbeatViewController {
     
     private func getSearchPeopleInfo() {
-        
         let man = RequestManager()
         let dict = ["keywords": self.keyWords.value,
                     "type": "1",
@@ -111,7 +110,6 @@ extension SearchPeopleDeadbeatViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/cooperation/getDeadBeat",
                        method: .get) { [weak self] result in
-            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

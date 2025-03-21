@@ -73,13 +73,11 @@ extension GroupListViewController {
     //获取套餐列表信息
     private func getListInfo() {
         let man = RequestManager()
-        
         let phoneNumber = GetSaveLoginInfoConfig.getPhoneNumber()
         let dict = ["maincustomernumber": phoneNumber]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerinfo/subaccountlist",
                        method: .get) { result in
-            
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -99,11 +97,9 @@ extension GroupListViewController {
             let customernumber = model.customernumber ?? ""
             let dict = ["customernumber": customernumber]
             let man = RequestManager()
-        
             man.requestAPI(params: dict,
                            pageUrl: "/operation/customerinfo/subaccount/delete",
                            method: .delete) { [weak self] result in
-                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -133,7 +129,6 @@ extension GroupListViewController {
         changeView.sureBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             let man = RequestManager()
-            
             let name = changeView.nameTx.text ?? ""
             let friendphone = model.username ?? ""
             let maincustomernumber = GetSaveLoginInfoConfig.getPhoneNumber()
@@ -149,7 +144,6 @@ extension GroupListViewController {
             man.requestAPI(params: dict,
                            pageUrl: "/operation/customerinfo/updatesubaccount",
                            method: .post) { result in
-                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

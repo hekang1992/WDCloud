@@ -14,14 +14,16 @@ class BaseModel {
     var data: DataModel?
     var rows: [rowsModel]?
     var datas: [rowsModel]?//搜索的数组
+    var datass: [DataModel]?//搜索的数组
     var total: Int?
     init(json: JSON) {
         self.code = json["code"].intValue
         self.msg = json["msg"].stringValue
+        self.total = json["total"].intValue
+        self.data = DataModel(json: json["data"])
         self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
         self.datas = json["data"].arrayValue.map { rowsModel(json: $0) }
-        self.data = DataModel(json: json["data"])
-        self.total = json["total"].intValue
+        self.datass = json["data"].arrayValue.map { DataModel(json: $0) }
     }
 }
 
@@ -186,7 +188,11 @@ class DataModel {
     var startDate: String?
     var personCount: Int?
     var orgCount: Int?
+    var clueNum: Int?
+    var clueValuation: String?
     init(json: JSON) {
+        self.clueNum = json["clueNum"].intValue
+        self.clueValuation = json["clueValuation"].stringValue
         self.personCount = json["personCount"].intValue
         self.orgCount = json["orgCount"].intValue
         self.startDate = json["startDate"].stringValue

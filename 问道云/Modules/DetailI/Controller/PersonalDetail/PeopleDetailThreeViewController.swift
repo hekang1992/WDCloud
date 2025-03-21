@@ -56,11 +56,9 @@ class PeopleDetailThreeViewController: WDBaseViewController {
         let dict = ["moduleType": "3",
                     "personId": personId] as [String: Any]
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customermenu/customerMenuTree",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):

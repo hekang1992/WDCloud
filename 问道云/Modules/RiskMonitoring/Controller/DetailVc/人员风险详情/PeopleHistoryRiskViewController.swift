@@ -150,7 +150,7 @@ class PeopleHistoryRiskViewController: WDBaseViewController {
     
     lazy var timeLabel: UILabel = {
         let timeLabel = UILabel()
-        timeLabel.text = "时间筛选"
+        timeLabel.text = "时间"
         timeLabel.font = .regularFontOfSize(size: 12)
         timeLabel.textColor = .init(cssStr: "#9FA4AD")
         timeLabel.textAlignment = .left
@@ -223,7 +223,7 @@ class PeopleHistoryRiskViewController: WDBaseViewController {
         }
         timeLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)
-            make.right.equalToSuperview().offset(-66)
+            make.right.equalToSuperview().offset(-60)
             make.height.equalTo(25)
         }
         whiteView.snp.makeConstraints { make in
@@ -468,7 +468,6 @@ extension PeopleHistoryRiskViewController {
     //获取风险信息
     private func getRiskDetailInfo() {
         let man = RequestManager()
-        
         let dict = ["personId": enityId,
                     "functionType": functionType,
                     "itemType": itemtype,
@@ -476,7 +475,6 @@ extension PeopleHistoryRiskViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk-monitor/statisticPersonRisk",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):

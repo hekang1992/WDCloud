@@ -65,7 +65,7 @@ class TwoRiskListPeopleCollectionViewCell: UICollectionViewCell {
             make.left.equalToSuperview().offset(9)
             make.top.equalToSuperview().offset(2)
             make.centerY.equalToSuperview()
-            make.width.equalTo(153.pix())
+            make.width.equalTo(161)
         }
         ctImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(8.5)

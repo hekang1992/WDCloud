@@ -160,12 +160,10 @@ class SearchLawSuitViewController: WDBaseViewController {
     //获取所有城市数据
     func getAllRegionInfo() {
         let man = RequestManager()
-        
         let emptyDict = [String: Any]()
         man.requestAPI(params: emptyDict,
                        pageUrl: "/operation/ajax/areaTree",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if let self = self, let modelArray = success.data?.data {
@@ -228,13 +226,11 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
     //最近搜索
     private func getlastSearch() {
         let man = RequestManager()
-        
         let dict = ["searchType": "",
                     "moduleId": "06"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/searchRecord/query",
                        method: .post) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -275,7 +271,6 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
     //浏览历史
     private func getBrowsingHistory() {
         let man = RequestManager()
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
                     "viewrecordtype": "",
@@ -283,7 +278,6 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
                     "pageNum": "1",
                     "pageSize": "20"]
         man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -357,10 +351,9 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
     //热搜
     private func getHotWords() {
         let man = RequestManager()
-        
         let dict = ["moduleId": "06"]
         man.requestAPI(params: dict,
-                       pageUrl: browser_hotwords,
+                       pageUrl: "/operation/clientbrowsecb/hot-search",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -429,13 +422,11 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
     private func deleteSearchInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
             let man = RequestManager()
-            
             let dict = ["searchType": "",
                         "moduleId": "06"]
             man.requestAPI(params: dict,
                            pageUrl: "/operation/searchRecord/clear",
                            method: .post) { result in
-                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -457,7 +448,6 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
     private func deleteHistoryInfo() {
         ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
             let man = RequestManager()
-            
             let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
             let dict = ["customernumber": customernumber,
                         "moduleId": "06",
@@ -465,7 +455,6 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
             man.requestAPI(params: dict,
                            pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
                            method: .get) { result in
-                
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

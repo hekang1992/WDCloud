@@ -103,7 +103,6 @@ class SearchCompanyLawSuitViewController: WDBaseViewController {
 extension SearchCompanyLawSuitViewController {
     
     private func getSearchPeopleInfo() {
-        
         let man = RequestManager()
         let dict = ["keywords": self.keyWords.value,
                     "type": "2",
@@ -111,7 +110,6 @@ extension SearchCompanyLawSuitViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/cooperation/getLawsuit",
                        method: .get) { [weak self] result in
-            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

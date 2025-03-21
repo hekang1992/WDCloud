@@ -103,7 +103,6 @@ class SearchCompanyDondDefaultViewController: WDBaseViewController {
 extension SearchCompanyDondDefaultViewController {
     
     private func getSearchPeopleInfo() {
-        
         let man = RequestManager()
         let dict = ["keywords": self.keyWords.value,
                     "type": "2",
@@ -111,7 +110,6 @@ extension SearchCompanyDondDefaultViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/illegalPunish/getBondDefault",
                        method: .get) { [weak self] result in
-            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

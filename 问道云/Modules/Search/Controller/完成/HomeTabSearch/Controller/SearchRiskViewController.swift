@@ -249,7 +249,7 @@ class SearchRiskViewController: WDBaseViewController {
         
         listPeopleView.block = { [weak self] model in
             let peopleRiskVc = PeopleRiskDetailViewController()
-            peopleRiskVc.name = model.personname ?? ""
+            peopleRiskVc.name = model.personName ?? ""
             peopleRiskVc.personId = model.personId ?? ""
             self?.navigationController?.pushViewController(peopleRiskVc, animated: true)
         }
@@ -442,7 +442,7 @@ extension SearchRiskViewController {
         let man = RequestManager()
         let dict = ["moduleId": "05"]
         man.requestAPI(params: dict,
-                       pageUrl: browser_hotwords,
+                       pageUrl: "/operation/clientbrowsecb/hot-search",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
             switch result {

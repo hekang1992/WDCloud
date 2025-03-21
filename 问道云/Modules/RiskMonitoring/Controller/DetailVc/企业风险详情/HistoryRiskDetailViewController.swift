@@ -158,7 +158,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
     
     lazy var timeLabel: UILabel = {
         let timeLabel = UILabel()
-        timeLabel.text = "时间筛选"
+        timeLabel.text = "时间"
         timeLabel.font = .regularFontOfSize(size: 12)
         timeLabel.textColor = .init(cssStr: "#9FA4AD")
         timeLabel.textAlignment = .left
@@ -237,7 +237,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         }
         timeLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)
-            make.right.equalToSuperview().offset(-66)
+            make.right.equalToSuperview().offset(-60)
             make.height.equalTo(25)
         }
         whiteView.snp.makeConstraints { make in
@@ -482,7 +482,6 @@ extension HistoryRiskDetailViewController {
     //获取风险信息
     private func getRiskDetailInfo() {
         let man = RequestManager()
-        
         let dict = ["orgId": enityId,
                     "functionType": functionType,
                     "itemType": itemtype,
@@ -490,7 +489,6 @@ extension HistoryRiskDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk-monitor/statisticOrgRisk",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):

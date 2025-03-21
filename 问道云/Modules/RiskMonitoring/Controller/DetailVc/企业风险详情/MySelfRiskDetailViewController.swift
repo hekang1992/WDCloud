@@ -163,7 +163,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
     
     lazy var timeLabel: UILabel = {
         let timeLabel = UILabel()
-        timeLabel.text = "时间筛选"
+        timeLabel.text = "时间"
         timeLabel.font = .regularFontOfSize(size: 12)
         timeLabel.textColor = .init(cssStr: "#9FA4AD")
         timeLabel.textAlignment = .left
@@ -251,7 +251,7 @@ class MySelfRiskDetailViewController: WDBaseViewController {
         }
         timeLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)
-            make.right.equalToSuperview().offset(-66)
+            make.right.equalToSuperview().offset(-60)
             make.height.equalTo(25)
         }
         whiteView.snp.makeConstraints { make in

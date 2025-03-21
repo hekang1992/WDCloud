@@ -143,7 +143,6 @@ extension CompanyActivityViewController {
     
     private func getActivityInfo() {
         let man = RequestManager()
-        
         let dict = ["entityId": enityId,
                     "pageNum": pageIndex,
                     "pageSize": "20"] as [String : Any]

@@ -494,12 +494,10 @@ extension OpinioUpLoadViewController: UIImagePickerControllerDelegate, UINavigat
     
     func uploadImage(image: UIImage) {
         // 在这里实现图片上传逻辑
-        
         let man = RequestManager()
         let dict = ["orgnumber": "200"]
         let data = image.jpegData(compressionQuality: 0.8)!
         man.uploadImageAPI(params: dict, pageUrl: "/file/upload", data: data, method: .post) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if let self = self,

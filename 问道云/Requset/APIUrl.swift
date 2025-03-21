@@ -18,5 +18,3 @@ let membership_agreement = "/membership-agreement"
 //收集协议
 let information_collection = "/information-collection"
 
-//热词
-let browser_hotwords = "/operation/clientbrowsecb/hot-search"

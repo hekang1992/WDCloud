@@ -31,8 +31,6 @@ class PropertyOneViewController: WDBaseViewController {
     
     let segmentedDataSource = JXSegmentedTitleDataSource()
     
-    var hotsModel = BehaviorRelay<DataModel?>(value: nil)
-    
     lazy var headView: PropertyHeadView = {
         let headView = PropertyHeadView()
         return headView
@@ -40,6 +38,7 @@ class PropertyOneViewController: WDBaseViewController {
     
     lazy var oneView: PropertyLineHotView = {
         let oneView = PropertyLineHotView()
+        oneView.backgroundColor = .white
         return oneView
     }()
     
@@ -232,8 +231,8 @@ extension PropertyOneViewController {
             self.peopleVc.industryModelArray.accept(modelArray)
         }else {
             getIndustryInfo { modelArray in
-                self.companyVc.regionModelArray.accept(modelArray)
-                self.peopleVc.regionModelArray.accept(modelArray)
+                self.companyVc.industryModelArray.accept(modelArray)
+                self.peopleVc.industryModelArray.accept(modelArray)
             }
         }
     }
@@ -244,14 +243,17 @@ extension PropertyOneViewController {
         let dict = [String :String]()
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/property/clues/search/hot-search",
-                       method: .get) { result in
+                       method: .get) { [weak self] result in
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    
+                    if let modelArray = success.datass {
+                        self?.oneView.modelArray = modelArray
+                        self?.oneView.tableView.reloadData()
+                    }
                 }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }

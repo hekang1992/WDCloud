@@ -114,7 +114,6 @@ extension HomeVideoListViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/webvideo/list",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             self.tableView.mj_header?.endRefreshing()
             self.tableView.mj_footer?.endRefreshing()

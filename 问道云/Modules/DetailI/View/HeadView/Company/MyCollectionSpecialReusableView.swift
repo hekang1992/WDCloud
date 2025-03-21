@@ -334,11 +334,9 @@ extension MyCollectionSpecialReusableView {
                     "defaultstate": defaultstate,
                     "contact": customernumber] as [String : Any]
         let man = RequestManager()
-        
         man.requestAPI(params: dict,
                        pageUrl: "/operation/invoiceriseit/add",
                        method: .post) { result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

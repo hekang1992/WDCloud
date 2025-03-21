@@ -224,14 +224,12 @@ class SearchPeopleDeadbeatDetailViewController: WDBaseViewController {
 extension SearchPeopleDeadbeatDetailViewController {
     
     private func getDetailInfo() {
-        
         let man = RequestManager()
         let dict = ["personId": model?.personId ?? "",
                     "type": "1"]
         man.requestAPI(params: dict,
                        pageUrl: pageUrl,
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if let self = self, let model = success.data {

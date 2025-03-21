@@ -140,7 +140,6 @@ extension UserAllOrderSController {
     //数据请求
     func getOrderInfo(form combotypenumber: Int, pageNum: Int, orderstate: String, completion: @escaping () -> Void) {
         let man = RequestManager()
-       
         let customernumber = model.value?.customernumber ?? ""
         let dict = ["customernumber": customernumber,
                     "combotypenumber": combotypenumber,
@@ -150,7 +149,6 @@ extension UserAllOrderSController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/myorder",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             self.orderView.tableView.mj_header?.endRefreshing()
             self.orderView.tableView.mj_footer?.endRefreshing()

@@ -397,7 +397,6 @@ extension SearchMonitoringViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):

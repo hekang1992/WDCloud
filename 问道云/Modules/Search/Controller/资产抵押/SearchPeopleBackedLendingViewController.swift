@@ -194,7 +194,6 @@ extension SearchPeopleBackedLendingViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/riskmonitor/illegalPunish/getAssetsPledged",
                        method: .get) { [weak self] result in
-            
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

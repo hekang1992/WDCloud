@@ -214,7 +214,6 @@ extension MembershipCenterViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/auth/refreshcustomerreflogin",
                        method: .post) { result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {

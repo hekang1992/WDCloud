@@ -181,13 +181,11 @@ extension WDCenterViewController {
     
     func getBuymoreinfo() {
         let man = RequestManager()
-        
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/enterpriseclientbm/buymoreinfo",
                        method: .get) { [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case .success(let success):
@@ -216,12 +214,10 @@ extension WDCenterViewController {
     //获取是否是分销商
     func getChanelPartner() {
         let man = RequestManager()
-        
         let dict = ["customernumber": GetSaveLoginInfoConfig.getCustomerNumber()]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/partner/ischnnelpartner",
                        method: .get) { [weak self] result in
-            
             switch result {
             case .success(let success):
                 if success.code == 200 {
