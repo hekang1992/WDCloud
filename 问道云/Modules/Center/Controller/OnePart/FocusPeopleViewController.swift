@@ -389,7 +389,7 @@ extension FocusPeopleViewController: UITableViewDelegate {
     
     //弹窗
     func movePopFocus(from ids: [String]) {
-        let groupView = FocusCompanyPopGroupView(frame: self.view.bounds)
+        let groupView = FocusCompanyPopGroupView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 350))
         if let model = self.groupModel.value {
             groupView.model.accept(model.data ?? [])
         }

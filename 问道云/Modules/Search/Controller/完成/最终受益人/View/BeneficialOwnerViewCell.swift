@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import TYAlertController
 
 class BeneficialOwnerViewCell: BaseViewCell {
     
@@ -214,6 +215,37 @@ extension BeneficialOwnerViewCell {
                     model.monitor = true
                     btn.setImage(UIImage(named: "havejiankong"), for: .normal)
                     ToastViewConfig.showToast(message: "监控成功")
+                }else if success.code == 702 {
+                    let vc = ViewControllerUtils.findViewController(from: self)
+                    let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+                    buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
+                    let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+                    buyVipView.cancelBlock = {
+                        vc?.dismiss(animated: true)
+                    }
+                    buyVipView.buyOneBlock = {
+                        //跳转购买单次会员
+                        vc?.dismiss(animated: true, completion: {
+                            let oneVc = BuyMonitoringOneVipViewController()
+                            oneVc.entityType = 2
+                            oneVc.entityId = model.personId ?? ""
+                            oneVc.entityName = model.personName ?? ""
+                            //刷新列表
+                            oneVc.refreshBlock = {
+                                model.monitor = true
+                                btn.setImage(UIImage(named: "havejiankong"), for: .normal)
+                            }
+                            vc?.navigationController?.pushViewController(oneVc, animated: true)
+                        })
+                    }
+                    buyVipView.buyVipBlock = {
+                        //跳转购买会员
+                        vc?.dismiss(animated: true, completion: {
+                            let memVc = MembershipCenterViewController()
+                            vc?.navigationController?.pushViewController(memVc, animated: true)
+                        })
+                    }
+                    vc?.present(alertVc, animated: true)
                 }
                 break
             case .failure(_):
