@@ -595,3 +595,100 @@ extension WDBaseViewController {
     }
     
 }
+
+extension WDBaseViewController {
+    
+    //获取财产线索三级列表数据
+    func getThreePropertyLineInfo(from modelArray: [rowsModel]) -> [ItemModel] {
+        var threeList: [ItemModel] = []
+        let regionModel = ItemModel(text: "全部", currentID: "", isSelect: true)!
+        threeList.append(regionModel)
+        for (_, rowModel) in modelArray.enumerated() {
+            let key = rowModel.key ?? ""
+            let count = rowModel.count ?? 0
+            let title = "\(key)(\(count))"
+            let levelOneModel = ItemModel(
+                text: rowModel.key ?? "",
+                currentID: rowModel.value,
+                isSelect: false
+            )!
+            if let secondLevelChildren = rowModel.children {
+                var secondLevelList: [ItemModel] = []
+                let hanyeModel = ItemModel(
+                    text: "全部",
+                    currentID: "",
+                    isSelect: true
+                )!
+                secondLevelList.append(hanyeModel)
+                for (_, secondLevelModel) in secondLevelChildren.enumerated() {
+                    let levelTwoModel = ItemModel(
+                        text: secondLevelModel.key,
+                        currentID: secondLevelModel.value,
+                        isSelect: false
+                    )!
+                    if let thirdLevelChildren = secondLevelModel.children {
+                        var thirdLevelList: [ItemModel] = []
+                        let hanyeModelThirdLevel = ItemModel(
+                            text: "全部",
+                            currentID: "",
+                            isSelect: true
+                        )!
+                        thirdLevelList.append(hanyeModelThirdLevel)
+                        for (_, thirdLevelModel) in thirdLevelChildren
+                            .enumerated() {
+                            let levelThreeModel = ItemModel(
+                                text: thirdLevelModel.key,
+                                currentID: thirdLevelModel.value,
+                                isSelect: false
+                            )!
+                            thirdLevelList.append(levelThreeModel)
+                        }
+                        levelTwoModel.dataSource = thirdLevelList
+                    }
+                    secondLevelList.append(levelTwoModel)
+                }
+                levelOneModel.dataSource = secondLevelList
+            }
+            threeList.append(levelOneModel)
+        }
+        return threeList
+    }
+    
+    //获取财产线索二级列表
+    func getTwoPropertyLineInfo(from modelArray: [rowsModel]) -> [ItemModel] {
+        var twoList: [ItemModel] = []
+        let regionModel = ItemModel(text: "全部", currentID: "", isSelect: true)!
+        let noModel = ItemModel(text: "全部", currentID: "", isSelect: true)!
+        twoList.append(regionModel)
+        for (_, rowModel) in modelArray.enumerated() {
+            let key = rowModel.key ?? ""
+            let count = rowModel.count ?? 0
+            let title = "\(key)(\(count))"
+            var model: ItemModel
+            model = ItemModel(
+                text: title,
+                currentID: rowModel.value,
+                isSelect: false
+            )
+            var temp: [ItemModel] = []
+            if let children = rowModel.children {
+                temp.append(noModel)
+                for (_, chModel) in children.enumerated() {
+                    let key = chModel.key ?? ""
+                    let count = chModel.count ?? 0
+                    let title = "\(key)(\(count))"
+                    let layerModel = ItemModel(
+                        text: title,
+                        currentID: chModel.value,
+                        isSelect: false
+                    )
+                    temp.append(layerModel!)
+                }
+            }
+            model.dataSource = temp
+            twoList.append(model)
+        }
+        return twoList
+    }
+    
+}

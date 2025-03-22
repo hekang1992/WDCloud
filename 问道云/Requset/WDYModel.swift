@@ -193,7 +193,11 @@ class DataModel {
     var clueNum: Int?
     var clueValuation: String?
     var groupList: [rowsModel]?
+    var conditionVO: conditionVOModel?
+    var pageableData: pageableDataModel?
     init(json: JSON) {
+        self.pageableData = pageableDataModel(json: json["pageableData"])
+        self.conditionVO = conditionVOModel(json: json["conditionVO"])
         self.groupList = json["groupList"].arrayValue.map { rowsModel(json: $0) }
         self.clueNum = json["clueNum"].intValue
         self.clueValuation = json["clueValuation"].stringValue
@@ -873,7 +877,11 @@ class rowsModel {
     var riskTime: String?
     var riskLevel: String?
     var riskLevelDesc: String?
+    var key: String?
+    var count: Int?
     init(json: JSON) {
+        self.key = json["key"].stringValue
+        self.count = json["count"].intValue
         self.riskId = json["riskId"].stringValue
         self.riskName = json["riskName"].stringValue
         self.riskTime = json["riskTime"].stringValue
@@ -1839,5 +1847,39 @@ class notRelevaRiskDtoModel {
         self.tipLevelCnt = json["tipLevelCnt"].intValue
         self.totalRiskCnt = json["totalRiskCnt"].intValue
         self.itemDtoList = json["itemDtoList"].arrayValue.map { itemDtoListModel(json: $0) }
+    }
+}
+
+class conditionVOModel {
+    var cueObject: [rowsModel]?
+    var propertyDirection: [rowsModel]?
+    var cueType: [rowsModel]?
+    init(json: JSON) {
+        self.cueObject = json["cueObject"].arrayValue.map { rowsModel(json: $0) }
+        self.propertyDirection = json["propertyDirection"].arrayValue.map { rowsModel(json: $0) }
+        self.cueType = json["cueType"].arrayValue.map { rowsModel(json: $0) }
+    }
+}
+
+class pageableDataModel {
+    var totalElements: Int?//总条数
+    var totalValue: String?
+    var valueUnit: String?
+    var pageItems: [pageItemsModel]?
+    init(json: JSON) {
+        self.totalElements = json["totalElements"].intValue
+        self.totalValue = json["totalValue"].stringValue
+        self.valueUnit = json["valueUnit"].stringValue
+        self.pageItems = json["pageItems"].arrayValue.map { pageItemsModel(json: $0) }
+    }
+}
+
+class pageItemsModel {
+    var clueId: String?
+    var modelId: String?
+    var modelName: String?
+    var clueType: String?
+    init(json: JSON) {
+        
     }
 }

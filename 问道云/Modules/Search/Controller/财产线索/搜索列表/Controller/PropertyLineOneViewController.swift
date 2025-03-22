@@ -6,9 +6,14 @@
 //
 
 import UIKit
+import RxRelay
+import DropMenuBar
+import SevenSwitch
+import MJRefresh
 
 class PropertyLineOneViewController: WDBaseViewController {
     
+    var model = BehaviorRelay<DataModel?>(value: nil)
     //ID
     var entityId: String = ""
     //名字
@@ -18,10 +23,17 @@ class PropertyLineOneViewController: WDBaseViewController {
     //logourl
     var logoUrl: String = ""
     //参数
-    var subjectId: String = ""
-    var subjectType: String = ""
+    var subjectId: String = ""//企业ID
+    var subjectType: String = ""//类型1企业 2个人
     var pageIndex: Int = 1
+    var conditionCode: String = ""//线索对象
+    var clueDirection: String = ""//流入流出
+    var clueModel: String = ""//线索类型
+    var predictValue: String = ""//金额
+    var updateTime: String = ""//时间
     
+    //所有数据
+    var allArray: [pageItemsModel] = []
     
     var leftTitles: [String] = []
     var rightTitles: [String] = []
@@ -85,7 +97,43 @@ class PropertyLineOneViewController: WDBaseViewController {
         return rightBtn
     }()
     
+    lazy var oneSwitch: SevenSwitch = {
+        let oneSwitch = SevenSwitch()
+        oneSwitch.on = true
+        oneSwitch.onTintColor = .init(cssStr: "#547AFF")!
+        return oneSwitch
+    }()
     
+    lazy var descLabel: UILabel = {
+        let descLabel = UILabel()
+        descLabel.text = "线索解析"
+        descLabel.textAlignment = .center
+        descLabel.font = .regularFontOfSize(size: 10)
+        descLabel.textColor = .init(cssStr: "#333333")
+        return descLabel
+    }()
+    
+    lazy var coverView: UIView = {
+        let coverView = UIView()
+        return coverView
+    }()
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+        tableView.estimatedRowHeight = 80
+        tableView.showsVerticalScrollIndicator = false
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.delegate = self
+        tableView.dataSource = self
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
+        return tableView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,6 +218,84 @@ class PropertyLineOneViewController: WDBaseViewController {
             configure(with: rightTitles)
         }).disposed(by: disposeBag)
         
+        let oneMenu = MenuAction(title: "线索对象", style: .typeList)!
+        let twoMenu = MenuAction(title: "财产流向", style: .typeList)!
+        let threeMenu = MenuAction(title: "线索类型", style: .typeList)!
+        let fourMenu = MenuAction(title: "更多", style: .typeList)!
+        let menuView = DropMenuBar(action: [oneMenu, twoMenu, threeMenu, fourMenu])!
+        view.addSubview(coverView)
+        coverView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.top.equalTo(stackView.snp.bottom).offset(5)
+            make.bottom.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+        }
+        
+        coverView.addSubview(menuView)
+        menuView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(35)
+            make.width.equalTo(SCREEN_WIDTH - 40)
+        }
+        
+        self.model.asObservable()
+            .map { $0?.conditionVO?.cueObject ?? [] }
+            .subscribe(onNext: { [weak self] modelArray in
+                guard let self = self else { return }
+                let modelArray = getThreePropertyLineInfo(from: modelArray)
+                oneMenu.listDataSource = modelArray
+        }).disposed(by: disposeBag)
+        
+        self.model.asObservable()
+            .map { $0?.conditionVO?.propertyDirection ?? [] }
+            .subscribe(onNext: { [weak self] modelArray in
+                guard let self = self else { return }
+                let modelArray = getTwoPropertyLineInfo(from: modelArray)
+                twoMenu.listDataSource = modelArray
+        }).disposed(by: disposeBag)
+        
+        self.model.asObservable()
+            .map { $0?.conditionVO?.cueType ?? [] }
+            .subscribe(onNext: { [weak self] modelArray in
+                guard let self = self else { return }
+                let modelArray = getTwoPropertyLineInfo(from: modelArray)
+                threeMenu.listDataSource = modelArray
+        }).disposed(by: disposeBag)
+        
+        coverView.addSubview(oneSwitch)
+        oneSwitch.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(6)
+            make.size.equalTo(CGSize(width: 25, height: 12.5))
+            make.left.equalTo(menuView.snp.right)
+        }
+        coverView.addSubview(descLabel)
+        descLabel.snp.makeConstraints { make in
+            make.top.equalTo(oneSwitch.snp.bottom).offset(2)
+            make.centerX.equalTo(oneSwitch.snp.centerX)
+            make.height.equalTo(14)
+        }
+        
+        coverView.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+            make.top.equalTo(menuView.snp.bottom)
+            make.bottom.equalToSuperview()
+        }
+        
+        self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.pageIndex = 1
+            getListInfo()
+        })
+        
+        //添加上拉加载更多
+        self.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.getListInfo()
+        })
+        
         //获取列表数据信息
         getListInfo()
     }
@@ -193,6 +319,60 @@ extension PropertyLineOneViewController {
             stackView.addArrangedSubview(infoView)
         }
     }
+    
+}
+
+extension PropertyLineOneViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headView = UIView()
+        let numLabel = UILabel()
+        numLabel.textColor = .init(cssStr: "#666666")
+        numLabel.font = .regularFontOfSize(size: 12)
+        numLabel.textAlignment = .left
+        headView.addSubview(numLabel)
+        
+        let moneyLabel = UILabel()
+        moneyLabel.textColor = .init(cssStr: "#666666")
+        moneyLabel.font = .regularFontOfSize(size: 12)
+        moneyLabel.textAlignment = .left
+        headView.addSubview(moneyLabel)
+        
+        numLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview().offset(10)
+            make.height.equalTo(30)
+        }
+        
+        moneyLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(numLabel.snp.right).offset(1)
+            make.height.equalTo(30)
+        }
+        let count1 = String(self.model.value?.pageableData?.totalElements ?? 0)
+        let count2 = self.model.value?.pageableData?.totalValue ?? ""
+        let count3 = self.model.value?.pageableData?.valueUnit ?? ""
+        let moneyStr = "\(count2)\(count3)"
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count1, fullText: "共\(count1)条线索,", font: UIFont.regularFontOfSize(size: 12))
+        moneyLabel.attributedText = GetRedStrConfig.getRedStr(from: count2, fullText: "预估价值\(moneyStr)", font: UIFont.regularFontOfSize(size: 12))
+        
+        return headView
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.allArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        cell.backgroundColor = .random()
+        return cell
+    }
+    
     
 }
 
@@ -251,16 +431,42 @@ extension PropertyLineOneViewController {
         let subjectType = "1"
         let dict = ["subjectId": subjectId,
                     "subjectType": subjectType,
+                    "conditionCode": conditionCode,
+                    "clueDirection": clueDirection,
+                    "clueModel": clueModel,
+                    "predictValue": predictValue,
+                    "updateTime": updateTime,
                     "pageIndex": pageIndex,
                     "pageSize": 10] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/property/clues/search/findCluePageList",
-                       method: .post) { result in
+                       method: .post) { [weak self] result in
+            self?.tableView.mj_header?.endRefreshing()
+            self?.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    
+                    if let self = self, let model = success.data?.pageableData, let total = model.totalElements {
+                        self.model.accept(success.data)
+                        if pageIndex == 1 {
+                            self.allArray.removeAll()
+                        }
+                        pageIndex += 1
+                        let pageData = model.pageItems ?? []
+                        self.allArray.append(contentsOf: pageData)
+                        if total != 0 {
+                            self.emptyView.removeFromSuperview()
+                        }else {
+                            self.addNodataView(from: self.tableView)
+                        }
+                        if self.allArray.count != total {
+                            self.tableView.mj_footer?.isHidden = false
+                        }else {
+                            self.tableView.mj_footer?.isHidden = true
+                        }
+                        self.tableView.reloadData()
+                    }
                 }
                 break
             case .failure(_):
@@ -270,3 +476,5 @@ extension PropertyLineOneViewController {
     }
     
 }
+
+
