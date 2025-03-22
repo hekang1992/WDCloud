@@ -115,11 +115,11 @@ class FocusPeopleViewController: WDBaseViewController {
             //点击全部,今天,近一周等
             timeView.block = { model in
                 self?.isChoiceDate = model.currentID ?? ""
-                self?.getFocusPeopleList()
                 self?.startTime = ""
                 self?.endTime = ""
                 self?.startDateRelay.accept("")
                 self?.endDateRelay.accept("")
+                self?.getFocusPeopleList()
                 if model.displayText != "全部" {
                     timeMenu.adjustTitle(model.displayText ?? "", textColor: UIColor.init(cssStr: "#547AFF"))
                 }else {

@@ -116,6 +116,10 @@ class PropertyOneViewController: WDBaseViewController {
             make.top.equalTo(self.headView.snp.bottom)
         }
         
+        headView.headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.backBlock?()
+        }).disposed(by: disposeBag)
+        
     }
     
 }

@@ -48,6 +48,8 @@ class PropertyThreeViewController: WDBaseViewController {
         return ctImageView
     }()
     
+    var listArray: [WDBaseViewController] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,8 +61,8 @@ class PropertyThreeViewController: WDBaseViewController {
         
         view.addSubview(ctImageView)
         ctImageView.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-4.5)
-            make.bottom.equalToSuperview().offset(-25)
+            make.left.equalToSuperview().offset(4.5)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-25)
             make.size.equalTo(CGSize(width: 44, height: 44))
         }
         ctImageView
@@ -74,9 +76,7 @@ class PropertyThreeViewController: WDBaseViewController {
         
         //添加切换
         addsentMentView()
-        //添加子控制器
-        setupViewControllers()
-        
+        segmentedView(segmentedView, didSelectedItemAt: 0)
     }
 }
 
@@ -97,24 +97,6 @@ extension PropertyThreeViewController: JXSegmentedViewDelegate {
         }
     }
     
-    func setupViewControllers() {
-        listVCArray.forEach { $0.view.removeFromSuperview() }
-        listVCArray.removeAll()
-        
-        cocsciew.addSubview(bothVc.view)
-        bothVc.navController = navigationController
-        listVCArray.append(bothVc)
-        
-        cocsciew.addSubview(companyVc.view)
-        listVCArray.append(companyVc)
-        
-        cocsciew.addSubview(peopleVc.view)
-        listVCArray.append(peopleVc)
-        
-        updateViewControllersLayout()
-        segmentedView(segmentedView, didSelectedItemAt: 0)
-    }
-    
     private func updateViewControllersLayout() {
         for (index, vc) in listVCArray.enumerated() {
             vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: 1)
@@ -132,6 +114,7 @@ extension PropertyThreeViewController: JXSegmentedViewDelegate {
         segmurce.titleNormalColor = UIColor.init(cssStr: "#9FA4AD")!
         segmurce.titleSelectedColor = UIColor.init(cssStr: "#333333")!
         segmentedView.dataSource = segmurce
+        segmentedView.delegate = self
         let indicator = createSegmentedIndicator()
         segmentedView.indicators = [indicator]
         segmentedView.contentScrollView = cocsciew
@@ -157,6 +140,37 @@ extension PropertyThreeViewController: JXSegmentedViewDelegate {
         indicator.lineStyle = .normal
         indicator.indicatorColor = UIColor.init(cssStr: "#547AFF")!
         return indicator
+    }
+    
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        if index == 0 {
+            if listArray.contains(bothVc) {
+                return
+            }
+            bothVc.view.frame = CGRect(x: CGFloat(index) * SCREEN_WIDTH, y: 0, width: SCREEN_WIDTH, height: 1)
+            cocsciew.addSubview(bothVc.view)
+            addChild(bothVc)
+            bothVc.didMove(toParent: self)
+            listArray.append(bothVc)
+        }else if index == 1 {
+            if listArray.contains(companyVc) {
+                return
+            }
+            companyVc.view.frame = CGRect(x: CGFloat(index) * SCREEN_WIDTH, y: 0, width: SCREEN_WIDTH, height: 1)
+            cocsciew.addSubview(companyVc.view)
+            addChild(companyVc)
+            companyVc.didMove(toParent: self)
+            listArray.append(companyVc)
+        }else {
+            if listArray.contains(peopleVc) {
+                return
+            }
+            peopleVc.view.frame = CGRect(x: CGFloat(index) * SCREEN_WIDTH, y: 0, width: SCREEN_WIDTH, height: 1)
+            cocsciew.addSubview(peopleVc.view)
+            addChild(peopleVc)
+            peopleVc.didMove(toParent: self)
+            listArray.append(peopleVc)
+        }
     }
     
 }

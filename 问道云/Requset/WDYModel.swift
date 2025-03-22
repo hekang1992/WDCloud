@@ -15,6 +15,7 @@ class BaseModel {
     var rows: [rowsModel]?
     var datas: [rowsModel]?//搜索的数组
     var datass: [DataModel]?//搜索的数组
+    var datasss: [String]?
     var total: Int?
     init(json: JSON) {
         self.code = json["code"].intValue
@@ -24,6 +25,7 @@ class BaseModel {
         self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
         self.datas = json["data"].arrayValue.map { rowsModel(json: $0) }
         self.datass = json["data"].arrayValue.map { DataModel(json: $0) }
+        self.datasss = json["data"].arrayValue.map { $0.stringValue }
     }
 }
 
@@ -190,7 +192,9 @@ class DataModel {
     var orgCount: Int?
     var clueNum: Int?
     var clueValuation: String?
+    var groupList: [rowsModel]?
     init(json: JSON) {
+        self.groupList = json["groupList"].arrayValue.map { rowsModel(json: $0) }
         self.clueNum = json["clueNum"].intValue
         self.clueValuation = json["clueValuation"].stringValue
         self.personCount = json["personCount"].intValue
@@ -390,6 +394,7 @@ class itemsModel {
     var personname: String?//个人名字
     var personId: String?
     var logo: String?
+    var clueNum: String?
     var groupname: String?
     var groupnumber: String?
     var shareholderList: [shareholderListModel]?//合作伙伴信息
@@ -501,7 +506,10 @@ class itemsModel {
     var orgLogo: String?
     var provinceStatList: [provinceStatListModel]?
     var riskInfo: riskInfoModel?
+    var cluesDataList: [cluesDataListModel]?
     init(json: JSON) {
+        self.cluesDataList = json["cluesDataList"].arrayValue.map { cluesDataListModel(json: $0) }
+        self.clueNum = json["clueNum"].stringValue
         self.announcement_url = json["announcement_url"].stringValue
         self.riskInfo = riskInfoModel(json: json["riskInfo"])
         self.orgLogo = json["orgLogo"].stringValue

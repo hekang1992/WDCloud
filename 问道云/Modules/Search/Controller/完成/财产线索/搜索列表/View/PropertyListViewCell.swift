@@ -162,7 +162,7 @@ class PropertyListViewCell: BaseViewCell {
         
         monitoringBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self, let model = self.model else { return }
-            let monitor = model.monitor ?? true
+            let monitor = model.monitor ?? false
             if monitor {
                 propertyLineCancelInfo(from: model, monitoringBtn: monitoringBtn)
             }else {
@@ -191,7 +191,7 @@ class PropertyListViewCell: BaseViewCell {
             
             namelabel.attributedText = GetRedStrConfig.getRedStr(from: searchStr, fullText: companyName)
             
-            let monitor = model.monitor ?? true
+            let monitor = model.monitor ?? false
             
             if monitor {
                 monitoringBtn.setImage(UIImage(named: "propertyhavjiank"), for: .normal)

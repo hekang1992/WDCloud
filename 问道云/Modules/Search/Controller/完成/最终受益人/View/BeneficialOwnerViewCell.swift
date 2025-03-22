@@ -172,7 +172,7 @@ class BeneficialOwnerViewCell: BaseViewCell {
             }
             
             //是否被监控
-            let monitor = model.monitor ?? true
+            let monitor = model.monitor ?? false
             if monitor {
                 monitoringBtn.setImage(UIImage(named: "havejiankong"), for: .normal)
             }else {
@@ -184,7 +184,7 @@ class BeneficialOwnerViewCell: BaseViewCell {
         
         monitoringBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self, let model = self.model.value else { return }
-            let monitor = model.monitor ?? true
+            let monitor = model.monitor ?? false
             if monitor {//取消监控
                 cancelMonitrongInfo(from: monitoringBtn, model: model)
             }else {//添加监控

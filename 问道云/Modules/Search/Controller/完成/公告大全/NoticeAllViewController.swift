@@ -172,11 +172,11 @@ class NoticeAllViewController: WDBaseViewController {
             timeView.block = { model in
                 self?.pageNum = 1
                 self?.isChoiceDate = model.currentID ?? ""
-                self?.getNoticeListInfo()
                 self?.startTime = ""
                 self?.endTime = ""
                 self?.startDateRelay.accept("")
                 self?.endDateRelay.accept("")
+                self?.getNoticeListInfo()
                 if model.displayText != "全部" {
                     timeMenu.adjustTitle(model.displayText ?? "", textColor: UIColor.init(cssStr: "#547AFF"))
                 }else {

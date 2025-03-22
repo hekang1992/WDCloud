@@ -25,6 +25,7 @@
 		730488132D2BD2090024265C /* HomeBannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730488122D2BD2090024265C /* HomeBannerViewCell.swift */; };
 		730488152D2BD2380024265C /* HomeItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730488142D2BD2380024265C /* HomeItemViewCell.swift */; };
 		73090B6F2D82DE7900041457 /* PropertyHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73090B6E2D82DE7900041457 /* PropertyHeadView.swift */; };
+		730CB5312D8EA46700531BD4 /* PropertyMoreLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CB5302D8EA46700531BD4 /* PropertyMoreLineView.swift */; };
 		730CEDF32D530924002DE9DF /* RiskUnioHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDF22D530924002DE9DF /* RiskUnioHeadView.swift */; };
 		730CEDF52D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDF42D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift */; };
 		730CEDF82D53590B002DE9DF /* CompanyLawListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CEDF72D53590B002DE9DF /* CompanyLawListView.swift */; };
@@ -245,6 +246,8 @@
 		739DCA262D671B45009CFC78 /* MyOneSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA252D671B45009CFC78 /* MyOneSettingViewController.swift */; };
 		739DCA282D671B4E009CFC78 /* MyTwoSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA272D671B4E009CFC78 /* MyTwoSettingViewController.swift */; };
 		739DCA2B2D67362B009CFC78 /* MyPropertySettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA2A2D67362B009CFC78 /* MyPropertySettingCell.swift */; };
+		739E91EE2D8E6C08000E1A11 /* PropertyLineInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739E91ED2D8E6C08000E1A11 /* PropertyLineInfoView.swift */; };
+		739E91F02D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739E91EF2D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift */; };
 		73A0509B2D83CCA700208602 /* PropertyListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */; };
 		73A0509D2D84321C00208602 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 73A0509C2D84321C00208602 /* index.html */; };
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
@@ -424,6 +427,7 @@
 		730488122D2BD2090024265C /* HomeBannerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBannerViewCell.swift; sourceTree = "<group>"; };
 		730488142D2BD2380024265C /* HomeItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItemViewCell.swift; sourceTree = "<group>"; };
 		73090B6E2D82DE7900041457 /* PropertyHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyHeadView.swift; sourceTree = "<group>"; };
+		730CB5302D8EA46700531BD4 /* PropertyMoreLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyMoreLineView.swift; sourceTree = "<group>"; };
 		730CEDF22D530924002DE9DF /* RiskUnioHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskUnioHeadView.swift; sourceTree = "<group>"; };
 		730CEDF42D5337FC002DE9DF /* ComanyRiskMoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComanyRiskMoreDetailViewController.swift; sourceTree = "<group>"; };
 		730CEDF72D53590B002DE9DF /* CompanyLawListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLawListView.swift; sourceTree = "<group>"; };
@@ -651,6 +655,8 @@
 		739DCA252D671B45009CFC78 /* MyOneSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOneSettingViewController.swift; sourceTree = "<group>"; };
 		739DCA272D671B4E009CFC78 /* MyTwoSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTwoSettingViewController.swift; sourceTree = "<group>"; };
 		739DCA2A2D67362B009CFC78 /* MyPropertySettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPropertySettingCell.swift; sourceTree = "<group>"; };
+		739E91ED2D8E6C08000E1A11 /* PropertyLineInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineInfoView.swift; sourceTree = "<group>"; };
+		739E91EF2D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertMonitoringListViewCell.swift; sourceTree = "<group>"; };
 		73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListViewCell.swift; sourceTree = "<group>"; };
 		73A0509C2D84321C00208602 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -829,6 +835,26 @@
 				73654B1A2D7FCBF90004E408 /* Pods_问道云.framework */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		730CB52E2D8EA44000531BD4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				739DCA092D66E012009CFC78 /* PropertyThreeViewController.swift */,
+				739DCA152D670E73009CFC78 /* PropertyThreeBothViewController.swift */,
+				739DCA172D670E7E009CFC78 /* PropertyThreeCompanyViewController.swift */,
+				739DCA192D670E87009CFC78 /* PropertyThreePeopleViewController.swift */,
+				739DCA1B2D67133E009CFC78 /* SearchAddPropertyViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		730CB52F2D8EA44C00531BD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				730CB5302D8EA46700531BD4 /* PropertyMoreLineView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		730DB4152D6C0A06007B49B6 /* Home */ = {
@@ -1561,11 +1587,8 @@
 		739DCA142D670D03009CFC78 /* 监控列表 */ = {
 			isa = PBXGroup;
 			children = (
-				739DCA092D66E012009CFC78 /* PropertyThreeViewController.swift */,
-				739DCA152D670E73009CFC78 /* PropertyThreeBothViewController.swift */,
-				739DCA172D670E7E009CFC78 /* PropertyThreeCompanyViewController.swift */,
-				739DCA192D670E87009CFC78 /* PropertyThreePeopleViewController.swift */,
-				739DCA1B2D67133E009CFC78 /* SearchAddPropertyViewController.swift */,
+				730CB52F2D8EA44C00531BD4 /* View */,
+				730CB52E2D8EA44000531BD4 /* Controller */,
 			);
 			path = "监控列表";
 			sourceTree = "<group>";
@@ -1590,6 +1613,8 @@
 				73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */,
 				732926962D85313700E93F96 /* PropertyLineListViewCell.swift */,
 				739CE98C2D8D3224003DE72A /* PropertyLineHotView.swift */,
+				739E91ED2D8E6C08000E1A11 /* PropertyLineInfoView.swift */,
+				739E91EF2D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2225,6 +2250,7 @@
 				7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */,
 				73FC5E372D5B2AED001D0DEF /* SanctionTableViewCell.swift in Sources */,
 				73C7524E2D1D5A3100C47187 /* FocusSearchViewController.swift in Sources */,
+				739E91F02D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift in Sources */,
 				73807D4E2D3369C500F8B90D /* CompanyBothViewController.swift in Sources */,
 				73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */,
 				7329269F2D857B0D00E93F96 /* ContorlDetailViewViewController.swift in Sources */,
@@ -2247,6 +2273,7 @@
 				73EF03DB2D31339A0070F850 /* TwoPeopleCoopViewCell.swift in Sources */,
 				736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */,
 				73807D492D32C93C00F8B90D /* Networkmanager.swift in Sources */,
+				739E91EE2D8E6C08000E1A11 /* PropertyLineInfoView.swift in Sources */,
 				73FC5E632D5CAA63001D0DEF /* SearchDondDefaultViewController.swift in Sources */,
 				736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */,
 				73B362552D37B9BC003BD911 /* PeopleDetailOneViewController.swift in Sources */,
@@ -2394,6 +2421,7 @@
 				73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */,
 				73C89F132D74047D0002C3C9 /* PopAgainLoginView.swift in Sources */,
 				7342CF572D78456B005157A0 /* HighSearchViewCell.swift in Sources */,
+				730CB5312D8EA46700531BD4 /* PropertyMoreLineView.swift in Sources */,
 				73EDE9EE2D59E81F00A0A7E3 /* SearchCompanySanctionViewController.swift in Sources */,
 				7303844A2D60731C008AA7C3 /* MyOpinioDetailViewController.swift in Sources */,
 				73EABF9C2D32481A0052F4AB /* TwoRiskListOnlyPeopleCell.swift in Sources */,

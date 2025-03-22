@@ -20,7 +20,7 @@ class PropertyLineBothViewController: WDBaseViewController {
     
     var logoUrl: String = ""
     
-    var monitor: Bool = true
+    var monitor: Bool = false
     
     //是否刷新搜索列表页面
     var refreshBlock: ((Int) -> Void)?
@@ -108,7 +108,7 @@ class PropertyLineBothViewController: WDBaseViewController {
             self.navigationController?.pushViewController(searchVc, animated: false)
         }
         setheadUI()
-
+        segmentedView(segmentedView, didSelectedItemAt: 0)
     }
 }
 
@@ -146,29 +146,25 @@ extension PropertyLineBothViewController: JXSegmentedViewDelegate {
         view.addSubview(contentScrollView)
         contentScrollView.snp.makeConstraints { make in
             make.left.equalToSuperview()
-            make.right.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
             make.bottom.equalToSuperview()
             make.top.equalTo(headView.snp.bottom)
         }
         contentScrollView.contentSize = CGSize(width: view.bounds.width * 2, height: contentScrollView.bounds.height)
-        
-        let modules = [oneVc, twoVc]
-        for (index, vc) in modules.enumerated() {
-            vc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
-            contentScrollView.addSubview(vc.view)
-            addChild(vc)
-            vc.didMove(toParent: self)
-        }
     }
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         if index == 0 {
-            oneVc.entityId = enityId.value
-            oneVc.entityName = companyName.value
-            oneVc.monitor = monitor
-            oneVc.logoUrl = logoUrl
+            oneVc.entityId = self.enityId.value
+            oneVc.entityName = self.companyName.value
+            oneVc.monitor = self.monitor
+            oneVc.logoUrl = self.logoUrl
+            oneVc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
+            contentScrollView.addSubview(oneVc.view)
+            addChild(oneVc)
+            oneVc.didMove(toParent: self)
         }else {
-            
+            addChild(twoVc)
         }
     }
     

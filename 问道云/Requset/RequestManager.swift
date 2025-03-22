@@ -104,16 +104,16 @@ class RequestManager {
         // 取消上一次的请求
         let pageUrl = target.path
         if !(pageUrl.contains("searchRecord/query") || pageUrl.contains("clientbrowsecb/selectBrowserecord") || pageUrl.contains("clientbrowsecb/hot-search")) || pageUrl.contains("clientbrowsecb/addBrowserecord") {
-            ViewHud.addLoadView()
+//            ViewHud.addLoadView()
         }
         if let lastRequest = currentRequest {
-            ViewHud.hideLoadView()
+//            ViewHud.hideLoadView()
             lastRequest.cancel()
             print("🔴 上一次请求已取消")
         }
         print("🟢 发起新的请求: \(target)")
         currentRequest = provider.request(target) { result in
-            ViewHud.hideLoadView()
+//            ViewHud.hideLoadView()
             switch result {
             case .success(let response):
                 do {

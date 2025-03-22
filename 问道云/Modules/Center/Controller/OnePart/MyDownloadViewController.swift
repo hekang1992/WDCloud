@@ -258,11 +258,11 @@ extension MyDownloadViewController {
             timeView.block = { model in
                 self?.pageNum = 1
                 self?.isChoiceDate = model.currentID ?? ""
-                self?.getPdfInfo()
                 self?.startTime = ""
                 self?.endTime = ""
                 self?.startDateRelay.accept("")
                 self?.endDateRelay.accept("")
+                self?.getPdfInfo()
                 if model.displayText != "全部" {
                     leixing2.adjustTitle(model.displayText ?? "", textColor: UIColor.init(cssStr: "#547AFF"))
                 }else {

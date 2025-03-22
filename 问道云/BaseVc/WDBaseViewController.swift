@@ -115,6 +115,21 @@ extension WDBaseViewController {
         return allArray
     }
     
+    func getPropertyLineGroupMenuInfo(from modelArray: [rowsModel]) -> [ItemModel]{
+        var allArray = [ItemModel]()
+        let model1 = ItemModel(text: "全部分组", currentID: "", isSelect: true)!
+        for rowmodel in modelArray {
+            let model = ItemModel(
+                text: rowmodel.groupName,
+                currentID: rowmodel.eid ?? "",
+                isSelect: false
+            )!
+            allArray.append(model)
+        }
+        allArray.insert(model1, at: 0)
+        return allArray
+    }
+    
     func getLawGroupMenuInfo(from modelArray: [lawNatureListModel]) -> [ItemModel]{
         var allArray = [ItemModel]()
         let model1 = ItemModel(text: "全部", currentID: "", isSelect: true)!

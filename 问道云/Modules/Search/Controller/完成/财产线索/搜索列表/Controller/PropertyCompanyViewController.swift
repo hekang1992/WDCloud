@@ -12,6 +12,7 @@ import DropMenuBar
 import JXPagingView
 import MJRefresh
 import SkeletonView
+import TYAlertController
 
 class PropertyCompanyViewController: WDBaseViewController {
     
@@ -175,14 +176,8 @@ extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
         print("公司名称=====\(model.entityName ?? "")")
-        let bothVc = PropertyLineBothViewController()
-        let enityId = model.entityId ?? ""
-        let companyName = model.entityName ?? ""
-        bothVc.enityId.accept(enityId)
-        bothVc.companyName.accept(companyName)
-        bothVc.logoUrl = model.logoUrl ?? ""
-        bothVc.monitor = model.monitor ?? true
-        self.navigationController?.pushViewController(bothVc, animated: true)
+        let cell = tableView.cellForRow(at: indexPath) as! PropertyListViewCell
+        self.checkInfo(from: model, cell: cell)
     }
 }
 
@@ -239,6 +234,66 @@ extension PropertyCompanyViewController {
                             self.tableView.reloadData()
                         }
                     }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    private func checkInfo(from model: DataModel, cell: PropertyListViewCell) {
+        let entityType = "1"
+        let entityId = model.entityId ?? ""
+        let entityName = model.entityName ?? ""
+        let dict = ["entityType": entityType,
+                    "entityId": entityId,
+                    "entityName": entityName]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/equity-property/check",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    let bothVc = PropertyLineBothViewController()
+                    let enityId = model.entityId ?? ""
+                    let companyName = model.entityName ?? ""
+                    bothVc.enityId.accept(enityId)
+                    bothVc.companyName.accept(companyName)
+                    bothVc.logoUrl = model.logoUrl ?? ""
+                    bothVc.monitor = model.monitor ?? false
+                    self.navigationController?.pushViewController(bothVc, animated: true)
+                }else if success.code == 702 {
+                    let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+                    buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
+                    let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+                    buyVipView.cancelBlock = {
+                        self.dismiss(animated: true)
+                    }
+                    buyVipView.buyOneBlock = {
+                        //跳转购买单次会员
+                        self.dismiss(animated: true, completion: {
+                            let oneVc = BuyOnePropertyLineViewController()
+                            oneVc.entityType = 1
+                            oneVc.entityId = model.entityId ?? ""
+                            oneVc.entityName = model.entityName ?? ""
+                            //刷新列表
+                            oneVc.refreshBlock = {
+                                model.monitor = true
+                                cell.monitoringBtn.setImage(UIImage(named: "propertyhavjiank"), for: .normal)
+                            }
+                            self.navigationController?.pushViewController(oneVc, animated: true)
+                        })
+                    }
+                    buyVipView.buyVipBlock = {
+                        //跳转购买会员
+                        self.dismiss(animated: true, completion: {
+                            let memVc = MembershipCenterViewController()
+                            self.navigationController?.pushViewController(memVc, animated: true)
+                        })
+                    }
+                    self.present(alertVc, animated: true)
                 }
                 break
             case .failure(_):
