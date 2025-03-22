@@ -97,12 +97,6 @@ extension PropertyThreeViewController: JXSegmentedViewDelegate {
         }
     }
     
-    private func updateViewControllersLayout() {
-        for (index, vc) in listVCArray.enumerated() {
-            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: 1)
-        }
-    }
-    
     private func createSegmentedView() -> JXSegmentedView {
         let segmentedView = JXSegmentedView()
         segmentedView.backgroundColor = .white
@@ -156,7 +150,7 @@ extension PropertyThreeViewController: JXSegmentedViewDelegate {
             if listArray.contains(companyVc) {
                 return
             }
-            companyVc.view.frame = CGRect(x: CGFloat(index) * SCREEN_WIDTH, y: 0, width: SCREEN_WIDTH, height: 1)
+            companyVc.view.frame = CGRect(x: CGFloat(index) * SCREEN_WIDTH, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 40 - StatusHeightManager.tabBarHeight)
             cocsciew.addSubview(companyVc.view)
             addChild(companyVc)
             companyVc.didMove(toParent: self)
@@ -165,7 +159,7 @@ extension PropertyThreeViewController: JXSegmentedViewDelegate {
             if listArray.contains(peopleVc) {
                 return
             }
-            peopleVc.view.frame = CGRect(x: CGFloat(index) * SCREEN_WIDTH, y: 0, width: SCREEN_WIDTH, height: 1)
+            peopleVc.view.frame = CGRect(x: CGFloat(index) * SCREEN_WIDTH, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 40 - StatusHeightManager.tabBarHeight)
             cocsciew.addSubview(peopleVc.view)
             addChild(peopleVc)
             peopleVc.didMove(toParent: self)

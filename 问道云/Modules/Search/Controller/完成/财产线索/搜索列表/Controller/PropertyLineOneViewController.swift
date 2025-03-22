@@ -17,6 +17,11 @@ class PropertyLineOneViewController: WDBaseViewController {
     var monitor: Bool = false
     //logourl
     var logoUrl: String = ""
+    //参数
+    var subjectId: String = ""
+    var subjectType: String = ""
+    var pageIndex: Int = 1
+    
     
     var leftTitles: [String] = []
     var rightTitles: [String] = []
@@ -165,6 +170,28 @@ class PropertyLineOneViewController: WDBaseViewController {
             configure(with: rightTitles)
         }).disposed(by: disposeBag)
         
+        //获取列表数据信息
+        getListInfo()
+    }
+    
+}
+
+extension PropertyLineOneViewController {
+    
+    func configure(with dynamiccontent: [String]) {
+        // 清空之前的 labels
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        // 创建新的 labels
+        for name in dynamiccontent {
+            let infoView = PropertyLineInfoView()
+            if let attributedText = name.htmlToAttributedString {
+                infoView.nameLabel.attributedText = attributedText
+            } else {
+                infoView.nameLabel.text = "Failed to parse HTML."
+            }
+            infoView.setContentHuggingPriority(.defaultLow, for: .vertical)
+            stackView.addArrangedSubview(infoView)
+        }
     }
     
 }
@@ -208,7 +235,6 @@ extension PropertyLineOneViewController {
                 if success.code == 200 {
                     if let self = self, let modelArray = success.datasss {
                         let titles = modelArray.joined(separator: ",").components(separatedBy: ",")
-//                        configure(with: titles)
                         self.rightTitles = titles
                     }
                 }
@@ -219,23 +245,27 @@ extension PropertyLineOneViewController {
         }
     }
     
-}
-
-extension PropertyLineOneViewController {
-    
-    func configure(with dynamiccontent: [String]) {
-        // 清空之前的 labels
-        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        // 创建新的 labels
-        for name in dynamiccontent {
-            let infoView = PropertyLineInfoView()
-            if let attributedText = name.htmlToAttributedString {
-                infoView.nameLabel.attributedText = attributedText
-            } else {
-                infoView.nameLabel.text = "Failed to parse HTML."
+    //获取财产线索列表信息
+    private func getListInfo() {
+        let subjectId = entityId
+        let subjectType = "1"
+        let dict = ["subjectId": subjectId,
+                    "subjectType": subjectType,
+                    "pageIndex": pageIndex,
+                    "pageSize": 10] as [String : Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/property/clues/search/findCluePageList",
+                       method: .post) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    
+                }
+                break
+            case .failure(_):
+                break
             }
-            infoView.setContentHuggingPriority(.defaultLow, for: .vertical)
-            stackView.addArrangedSubview(infoView)
         }
     }
     
