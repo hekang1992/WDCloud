@@ -184,6 +184,7 @@
 		736E97822D22A61E009CC0DF /* SKLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E977C2D22A61E009CC0DF /* SKLoadingView.swift */; };
 		736E97832D22A61E009CC0DF /* SKIAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E977A2D22A61E009CC0DF /* SKIAPManager.swift */; };
 		736E97852D22A7A0009CC0DF /* ApplePayConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E97842D22A792009CC0DF /* ApplePayConfig.swift */; };
+		7370BB772D8FB51500D49757 /* PropertyLineSearchMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7370BB762D8FB51500D49757 /* PropertyLineSearchMoreView.swift */; };
 		7374162B2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374162A2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift */; };
 		7374162D2D0EB87F00E6CD23 /* FocusAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374162C2D0EB87F00E6CD23 /* FocusAllViewController.swift */; };
 		737416342D0EBCB000E6CD23 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416332D0EBCB000E6CD23 /* ContactUsViewController.swift */; };
@@ -593,6 +594,7 @@
 		736E977B2D22A61E009CC0DF /* SKIndefiniteAnimatedSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKIndefiniteAnimatedSpinner.swift; sourceTree = "<group>"; };
 		736E977C2D22A61E009CC0DF /* SKLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKLoadingView.swift; sourceTree = "<group>"; };
 		736E97842D22A792009CC0DF /* ApplePayConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayConfig.swift; sourceTree = "<group>"; };
+		7370BB762D8FB51500D49757 /* PropertyLineSearchMoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineSearchMoreView.swift; sourceTree = "<group>"; };
 		7374162A2D0EB7B900E6CD23 /* BrowsingHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsingHistoryViewController.swift; sourceTree = "<group>"; };
 		7374162C2D0EB87F00E6CD23 /* FocusAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusAllViewController.swift; sourceTree = "<group>"; };
 		737416332D0EBCB000E6CD23 /* ContactUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
@@ -1614,6 +1616,7 @@
 				739CE98C2D8D3224003DE72A /* PropertyLineHotView.swift */,
 				739E91ED2D8E6C08000E1A11 /* PropertyLineInfoView.swift */,
 				739E91EF2D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift */,
+				7370BB762D8FB51500D49757 /* PropertyLineSearchMoreView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2481,6 +2484,7 @@
 				7340E1AD2D5CD619008FD5C7 /* SearchPeopleJudicialAuctioniewViewController.swift in Sources */,
 				73CC037A2D685FED0022F794 /* HighSearchView.swift in Sources */,
 				73B3623F2D375189003BD911 /* PopInvoiceView.swift in Sources */,
+				7370BB772D8FB51500D49757 /* PropertyLineSearchMoreView.swift in Sources */,
 				7340E1BF2D5DD55F008FD5C7 /* SearchBackedLendingViewController.swift in Sources */,
 				73A21DF42D0C403000FC4C49 /* AccountManagerViewController.swift in Sources */,
 				73EDE9E62D59D0CB00A0A7E3 /* SearchLawsViewController.swift in Sources */,

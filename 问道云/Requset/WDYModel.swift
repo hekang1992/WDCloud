@@ -195,7 +195,9 @@ class DataModel {
     var groupList: [rowsModel]?
     var conditionVO: conditionVOModel?
     var pageableData: pageableDataModel?
+    var isRealTimePush: Int?
     init(json: JSON) {
+        self.isRealTimePush = json["isRealTimePush"].intValue
         self.pageableData = pageableDataModel(json: json["pageableData"])
         self.conditionVO = conditionVOModel(json: json["conditionVO"])
         self.groupList = json["groupList"].arrayValue.map { rowsModel(json: $0) }
@@ -341,17 +343,29 @@ class propertyTypeSettingModel {
     var code: Int?
     var isShow: String?
     var name: String?
-    var select: String?
+    var select: Int?
     var levelKey: String?
     var items: [itemsModel]?
     init(json: JSON) {
         self.code = json["code"].intValue
         self.isShow = json["isShow"].stringValue
         self.name = json["name"].stringValue
-        self.select = json["select"].stringValue
+        self.select = json["select"].intValue
         self.levelKey = json["levelKey"].stringValue
         self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
     }
+    
+    func toDictionary() -> [String: Any] {
+        return [
+            "code": self.code ?? 0,
+            "isShow": self.isShow ?? "",
+            "name": self.name ?? "",
+            "select": self.select ?? "",
+            "levelKey": self.levelKey ?? "",
+            "items": self.items?.map { $0.toDictionary() } ?? []
+        ]
+    }
+    
 }
 
 class riskListModel {
@@ -499,7 +513,7 @@ class itemsModel {
     var total: Int?
     var items: [itemsModel]?
     var content: String?
-    var select: String?
+    var select: Int?
     var code: String?
     var levelKey: String?
     var value: String?
@@ -538,7 +552,7 @@ class itemsModel {
         self.value = json["value"].stringValue
         self.levelKey = json["levelKey"].stringValue
         self.code = json["code"].stringValue
-        self.select = json["select"].stringValue
+        self.select = json["select"].intValue
         self.groupnumber = json["groupnumber"].stringValue
         self.groupname = json["groupname"].stringValue
         self.content = json["content"].stringValue
@@ -625,6 +639,18 @@ class itemsModel {
         self.shareholderList = json["shareholderList"].arrayValue.map { shareholderListModel(json: $0) }
         self.subitems = json["subitems"].arrayValue.map { subitemsModel(json: $0) }
     }
+    
+    func toDictionary() -> [String: Any] {
+        return [
+            "code": self.code ?? "",
+            "name": self.name ?? "",
+            "levelKey": self.levelKey ?? "",
+            "select": self.select ?? "",
+            "value": self.value ?? "",
+            "items": self.items?.map { $0.toDictionary() } ?? []
+        ]
+    }
+    
 }
 
 class riskDataModel {
@@ -886,7 +912,7 @@ class rowsModel {
         self.riskName = json["riskName"].stringValue
         self.riskTime = json["riskTime"].stringValue
         self.riskLevel = json["riskLevel"].stringValue
-        self.riskLevelDesc = json["riskLevelDesc"].stringValue        
+        self.riskLevelDesc = json["riskLevelDesc"].stringValue
         self.stockCode = json["stockCode"].stringValue
         self.category = json["category"].stringValue
         self.announcementLink = json["announcementLink"].stringValue

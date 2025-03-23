@@ -11,9 +11,13 @@ import RxRelay
 
 class MyTwoSettingViewController: WDBaseViewController {
     
+    var model: DataModel?
+    
+    var modelArray0: [propertyTypeSettingModel]?
     var modelArray: [propertyTypeSettingModel]?
     var modelpArray: [propertyTypeSettingModel]?
     
+    var selectArray0 = BehaviorRelay<[propertyTypeSettingModel]?>(value: nil)
     var selectArray = BehaviorRelay<[propertyTypeSettingModel]?>(value: nil)
     var selectpArray = BehaviorRelay<[propertyTypeSettingModel]?>(value: nil)
     
@@ -252,13 +256,13 @@ class MyTwoSettingViewController: WDBaseViewController {
             guard let self = self else { return }
             if let modelArray = modelArray {
                 for model in modelArray {
-                    model.select = "0"
+                    model.select = 0
                     if let modelArray = model.items {
                         for model in modelArray {
-                            model.select = "0"
+                            model.select = 0
                             if let modelArray = model.items {
                                 for model in modelArray {
-                                    model.select = "0"
+                                    model.select = 0
                                 }
                             }
                         }
@@ -268,13 +272,13 @@ class MyTwoSettingViewController: WDBaseViewController {
             
             if let modelArray = modelpArray {
                 for model in modelArray {
-                    model.select = "0"
+                    model.select = 0
                     if let modelArray = model.items {
                         for model in modelArray {
-                            model.select = "0"
+                            model.select = 0
                             if let modelArray = model.items {
                                 for model in modelArray {
-                                    model.select = "0"
+                                    model.select = 0
                                 }
                             }
                         }
@@ -295,19 +299,45 @@ class MyTwoSettingViewController: WDBaseViewController {
             guard let self = self else { return }
             self.selectArray.accept(modelArray)
             self.selectpArray.accept(modelpArray)
+            self.selectArray0.accept(modelArray0)
         }).disposed(by: disposeBag)
         
         //确定
-        self.selectArray.asObservable().subscribe(onNext: { [weak self] modelArray in
-            guard let self = self, let modelArray = modelArray else { return }
-            let add = modelArray
-            print("=============")
+        var dictionaryArray: [[String: Any]] = []
+        var dictionaryArray1: [[String: Any]] = []
+        var dictionaryArray2: [[String: Any]] = []
+        self.selectArray.asObservable().subscribe(onNext: { modelArray in
+            guard let modelArray = modelArray else { return }
+            dictionaryArray = modelArray.map { $0.toDictionary() }
         }).disposed(by: disposeBag)
         
-        self.selectpArray.asObservable().subscribe(onNext: { [weak self] modelArray in
-            guard let self = self, let modelArray = modelArray else { return }
-            let add = modelArray
-            print("=============")
+        self.selectpArray.asObservable().subscribe(onNext: { modelArray in
+            guard let modelArray = modelArray else { return }
+            dictionaryArray1 = modelArray.map { $0.toDictionary() }
+        }).disposed(by: disposeBag)
+        
+        self.selectArray0.asObservable().subscribe(onNext: { modelArray in
+            guard let modelArray = modelArray else { return }
+            dictionaryArray2 = modelArray.map { $0.toDictionary() }
+            let isRealTimePush = self.model?.isRealTimePush ?? 0
+            let dict = ["propertyTypeSetting": dictionaryArray2,
+                        "propertyEntityRelatedSetting": dictionaryArray,
+                        "propertyPersonRelatedSetting": dictionaryArray1,
+                        "isRealTimePush": isRealTimePush]
+            let man = RequestManager()
+            man.requestAPI(params: dict,
+                           pageUrl: "/firminfo/monitor_settings/configs",
+                           method: .post) { result in
+                switch result {
+                case .success(let success):
+                    if success.code == 200 {
+                        ToastViewConfig.showToast(message: "设置成功")
+                    }
+                    break
+                case .failure(_):
+                    break
+                }
+            }
         }).disposed(by: disposeBag)
         
         //获取用户监控设置
@@ -362,24 +392,24 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
             cell.mlabel.text = model?.name ?? ""
             cell.backgroundColor = .init(cssStr: "#EEEEEE")
             cell.model.accept(model)
-            var titles: [String] = []
+            var titles: [Int] = []
             if let items = model?.items {
                 titles.removeAll()
                 for model in items {
-                    titles.append(model.select ?? "")
+                    titles.append(model.select ?? 0)
                 }
-                let containsZero = titles.contains("0")
-                let containsOne = titles.contains("1")
+                let containsZero = titles.contains(0)
+                let containsOne = titles.contains(1)
                 if containsZero && containsOne {
-                    model?.select = "0"
+                    model?.select = 0
                     cell.checkBtn.setImage(UIImage(named: "bottiamgeadd"), for: .normal)
                 } else if containsZero {
                     print("只包含 0")
-                    model?.select = "0"
+                    model?.select = 0
                     cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
                 } else if containsOne {
                     print("只包含 1")
-                    model?.select = "1"
+                    model?.select = 1
                     cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                 } else {
                     print("既不包含 0 也不包含 1")
@@ -388,28 +418,28 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
             cell.block = { [weak self] btn in
                 guard let self = self, let model = model else { return }
                 self.tableView(self.tableView1, didSelectRowAt: indexPath)
-                if model.select == "0" {
-                    model.select = "1"
+                if model.select == 0 {
+                    model.select = 1
                     btn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                     if let items = model.items {
                         for model in items {
-                            model.select = "1"
+                            model.select = 1
                             if let items = model.items {
                                 for model in items {
-                                    model.select = "1"
+                                    model.select = 1
                                 }
                             }
                         }
                     }
                 }else {
-                    model.select = "0"
+                    model.select = 0
                     btn.setImage(UIImage(named: "agreenorimage"), for: .normal)
                     if let items = model.items {
                         for model in items {
-                            model.select = "0"
+                            model.select = 0
                             if let items = model.items {
                                 for model in items {
-                                    model.select = "0"
+                                    model.select = 0
                                 }
                             }
                         }
@@ -425,30 +455,30 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyPropertySettingCell", for: indexPath) as! MyPropertySettingCell
             cell.mlabel.text = model?.name ?? ""
             cell.backgroundColor = .init(cssStr: "#EEEEEE")
-            let select = model?.select ?? ""
-            if select == "1" {
+            let select = model?.select ?? 0
+            if select == 1 {
                 cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
             }else {
                 cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
             }
-            var titles: [String] = []
+            var titles: [Int] = []
             if let items = model?.items {
                 titles.removeAll()
                 for model in items {
-                    titles.append(model.select ?? "")
+                    titles.append(model.select ?? 0)
                 }
-                let containsZero = titles.contains("0")
-                let containsOne = titles.contains("1")
+                let containsZero = titles.contains(0)
+                let containsOne = titles.contains(1)
                 if containsZero && containsOne {
-                    model?.select = "0"
+                    model?.select = 0
                     cell.checkBtn.setImage(UIImage(named: "bottiamgeadd"), for: .normal)
                 } else if containsZero {
                     print("只包含 0")
-                    model?.select = "0"
+                    model?.select = 0
                     cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
                 } else if containsOne {
                     print("只包含 1")
-                    model?.select = "1"
+                    model?.select = 1
                     cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                 } else {
                     
@@ -457,20 +487,20 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
             cell.block = { [weak self] btn in
                 guard let self = self, let model = model else { return }
                 self.tableView(self.tableView2, didSelectRowAt: indexPath)
-                if model.select == "0" {
-                    model.select = "1"
+                if model.select == 0 {
+                    model.select = 1
                     btn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                     if let items = model.items {
                         for model in items {
-                            model.select = "1"
+                            model.select = 1
                         }
                     }
                 }else {
-                    model.select = "0"
+                    model.select = 0
                     btn.setImage(UIImage(named: "agreenorimage"), for: .normal)
                     if let items = model.items {
                         for model in items {
-                            model.select = "0"
+                            model.select = 0
                         }
                     }
                 }
@@ -484,19 +514,19 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyPropertySettingCell", for: indexPath) as! MyPropertySettingCell
             cell.mlabel.text = model?.name ?? ""
             cell.backgroundColor = .init(cssStr: "#EEEEEE")
-            let select = model?.select ?? ""
-            if select == "1" {
+            let select = model?.select ?? 0
+            if select == 1 {
                 cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
             } else {
                 cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
             }
             cell.block = { [weak self] btn in
                 guard let self = self, let model = model else { return }
-                if select == "1" {
-                    model.select = "0"
+                if select == 1 {
+                    model.select = 0
                     btn.setImage(UIImage(named: "agreenorimage"), for: .normal)
                 }else {
-                    model.select = "1"
+                    model.select = 1
                     btn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                 }
                 self.tableView1.reloadData()
@@ -510,24 +540,24 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
             cell.mlabel.text = model?.name ?? ""
             cell.backgroundColor = .init(cssStr: "#EEEEEE")
             cell.model1.accept(model)
-            var titles: [String] = []
+            var titles: [Int] = []
             if let items = model?.items {
                 titles.removeAll()
                 for model in items {
-                    titles.append(model.select ?? "")
+                    titles.append(model.select ?? 0)
                 }
-                let containsZero = titles.contains("0")
-                let containsOne = titles.contains("1")
+                let containsZero = titles.contains(0)
+                let containsOne = titles.contains(1)
                 if containsZero && containsOne {
-                    model?.select = "0"
+                    model?.select = 0
                     cell.checkBtn.setImage(UIImage(named: "bottiamgeadd"), for: .normal)
                 } else if containsZero {
                     print("只包含 0")
-                    model?.select = "0"
+                    model?.select = 0
                     cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
                 } else if containsOne {
                     print("只包含 1")
-                    model?.select = "1"
+                    model?.select = 1
                     cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                 } else {
                     print("既不包含 0 也不包含 1")
@@ -536,28 +566,28 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
             cell.block = { [weak self] btn in
                 guard let self = self, let model = model else { return }
                 self.tableView(self.tableView4, didSelectRowAt: indexPath)
-                if model.select == "0" {
-                    model.select = "1"
+                if model.select == 0 {
+                    model.select = 1
                     btn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                     if let items = model.items {
                         for model in items {
-                            model.select = "1"
+                            model.select = 1
                             if let items = model.items {
                                 for model in items {
-                                    model.select = "1"
+                                    model.select = 1
                                 }
                             }
                         }
                     }
                 }else {
-                    model.select = "0"
+                    model.select = 0
                     btn.setImage(UIImage(named: "agreenorimage"), for: .normal)
                     if let items = model.items {
                         for model in items {
-                            model.select = "0"
+                            model.select = 0
                             if let items = model.items {
                                 for model in items {
-                                    model.select = "0"
+                                    model.select = 0
                                 }
                             }
                         }
@@ -573,30 +603,30 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyPropertySettingCell", for: indexPath) as! MyPropertySettingCell
             cell.mlabel.text = model?.name ?? ""
             cell.backgroundColor = .init(cssStr: "#EEEEEE")
-            let select = model?.select ?? ""
-            if select == "1" {
+            let select = model?.select ?? 0
+            if select == 1 {
                 cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
             }else {
                 cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
             }
-            var titles: [String] = []
+            var titles: [Int] = []
             if let items = model?.items {
                 titles.removeAll()
                 for model in items {
-                    titles.append(model.select ?? "")
+                    titles.append(model.select ?? 0)
                 }
-                let containsZero = titles.contains("0")
-                let containsOne = titles.contains("1")
+                let containsZero = titles.contains(0)
+                let containsOne = titles.contains(1)
                 if containsZero && containsOne {
-                    model?.select = "0"
+                    model?.select = 0
                     cell.checkBtn.setImage(UIImage(named: "bottiamgeadd"), for: .normal)
                 } else if containsZero {
                     print("只包含 0")
-                    model?.select = "0"
+                    model?.select = 0
                     cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
                 } else if containsOne {
                     print("只包含 1")
-                    model?.select = "1"
+                    model?.select = 1
                     cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                 } else {
                     
@@ -605,20 +635,20 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
             cell.block = { [weak self] btn in
                 guard let self = self, let model = model else { return }
                 self.tableView(self.tableView4, didSelectRowAt: indexPath)
-                if model.select == "0" {
-                    model.select = "1"
+                if model.select == 0 {
+                    model.select = 1
                     btn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                     if let items = model.items {
                         for model in items {
-                            model.select = "1"
+                            model.select = 1
                         }
                     }
                 }else {
-                    model.select = "0"
+                    model.select = 0
                     btn.setImage(UIImage(named: "agreenorimage"), for: .normal)
                     if let items = model.items {
                         for model in items {
-                            model.select = "0"
+                            model.select = 0
                         }
                     }
                 }
@@ -632,19 +662,19 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyPropertySettingCell", for: indexPath) as! MyPropertySettingCell
             cell.mlabel.text = model?.name ?? ""
             cell.backgroundColor = .init(cssStr: "#EEEEEE")
-            let select = model?.select ?? ""
-            if select == "1" {
+            let select = model?.select ?? 0
+            if select == 1 {
                 cell.checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
             } else {
                 cell.checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
             }
             cell.block = { [weak self] btn in
                 guard let self = self, let model = model else { return }
-                if select == "1" {
-                    model.select = "0"
+                if select == 1 {
+                    model.select = 0
                     btn.setImage(UIImage(named: "agreenorimage"), for: .normal)
                 }else {
-                    model.select = "1"
+                    model.select = 1
                     btn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                 }
                 self.tableView4.reloadData()
@@ -694,6 +724,8 @@ extension MyTwoSettingViewController {
             switch result {
             case .success(let success):
                 if success.code == 200 {
+                    self.model = success.data
+                    self.modelArray0 = model?.propertyTypeSetting ?? []
                     self.modelArray = success.data?.propertyEntityRelatedSetting ?? []
                     self.tableView1.reloadData()
                     tableView(self.tableView1, didSelectRowAt: IndexPath(row: 0, section: 0))

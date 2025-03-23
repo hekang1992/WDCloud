@@ -135,6 +135,11 @@ class PropertyLineOneViewController: WDBaseViewController {
         return tableView
     }()
     
+    lazy var moreView: PropertyLineSearchMoreView = {
+        let moreView = PropertyLineSearchMoreView()
+        return moreView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -221,7 +226,7 @@ class PropertyLineOneViewController: WDBaseViewController {
         let oneMenu = MenuAction(title: "线索对象", style: .typeList)!
         let twoMenu = MenuAction(title: "财产流向", style: .typeList)!
         let threeMenu = MenuAction(title: "线索类型", style: .typeList)!
-        let fourMenu = MenuAction(title: "更多", style: .typeList)!
+        let fourMenu = MenuAction(title: "更多", style: .typeCustom)!
         let menuView = DropMenuBar(action: [oneMenu, twoMenu, threeMenu, fourMenu])!
         view.addSubview(coverView)
         coverView.snp.makeConstraints { make in
@@ -238,7 +243,7 @@ class PropertyLineOneViewController: WDBaseViewController {
             make.height.equalTo(35)
             make.width.equalTo(SCREEN_WIDTH - 40)
         }
-        
+        //线索对象
         self.model.asObservable()
             .map { $0?.conditionVO?.cueObject ?? [] }
             .subscribe(onNext: { [weak self] modelArray in
@@ -246,7 +251,13 @@ class PropertyLineOneViewController: WDBaseViewController {
                 let modelArray = getThreePropertyLineInfo(from: modelArray)
                 oneMenu.listDataSource = modelArray
         }).disposed(by: disposeBag)
+        oneMenu.didSelectedMenuResult = { [weak self] index, model, granted in
+            self?.pageIndex = 1
+            self?.conditionCode = model?.currentID ?? ""
+            self?.getListInfo()
+        }
         
+        //财产留向
         self.model.asObservable()
             .map { $0?.conditionVO?.propertyDirection ?? [] }
             .subscribe(onNext: { [weak self] modelArray in
@@ -254,7 +265,13 @@ class PropertyLineOneViewController: WDBaseViewController {
                 let modelArray = getTwoPropertyLineInfo(from: modelArray)
                 twoMenu.listDataSource = modelArray
         }).disposed(by: disposeBag)
+        twoMenu.didSelectedMenuResult = { [weak self] index, model, granted in
+            self?.pageIndex = 1
+            self?.clueDirection = model?.currentID ?? ""
+            self?.getListInfo()
+        }
         
+        //线索类型
         self.model.asObservable()
             .map { $0?.conditionVO?.cueType ?? [] }
             .subscribe(onNext: { [weak self] modelArray in
@@ -262,6 +279,25 @@ class PropertyLineOneViewController: WDBaseViewController {
                 let modelArray = getTwoPropertyLineInfo(from: modelArray)
                 threeMenu.listDataSource = modelArray
         }).disposed(by: disposeBag)
+        threeMenu.didSelectedMenuResult = { [weak self] index, model, granted in
+            self?.pageIndex = 1
+            self?.clueModel = model?.currentID ?? ""
+            self?.getListInfo()
+        }
+        
+        //更多筛选条件
+        fourMenu.displayCustomWithMenu = { [weak self] in
+            guard let self = self else { return UIView() }
+            moreView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 250)
+            moreView.sureBlock = { oneStr, twoStr, threeStr in
+                fourMenu.adjustTitle(threeStr, textColor: UIColor.init(cssStr: "#547AFF"))
+                self.pageIndex = 1
+                self.predictValue = oneStr
+                self.updateTime = twoStr
+                self.getListInfo()
+            }
+            return moreView
+        }
         
         coverView.addSubview(oneSwitch)
         oneSwitch.snp.makeConstraints { make in

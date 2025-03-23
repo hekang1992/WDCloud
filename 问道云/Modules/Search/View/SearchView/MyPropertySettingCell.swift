@@ -59,8 +59,8 @@ class MyPropertySettingCell: BaseViewCell {
             .asObservable()
             .subscribe(onNext: { [weak self] model in
                 guard let self = self, let model = model else { return }
-                let select = model.select ?? ""
-                if select == "1" {
+                let select = model.select ?? 0
+                if select == 1 {
                     checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                 } else {
                     checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)
@@ -71,8 +71,8 @@ class MyPropertySettingCell: BaseViewCell {
             .asObservable()
             .subscribe(onNext: { [weak self] model in
                 guard let self = self, let model = model else { return }
-                let select = model.select ?? ""
-                if select == "1" {
+                let select = model.select ?? 0
+                if select == 1 {
                     checkBtn.setImage(UIImage(named: "agreeselimage"), for: .normal)
                 } else {
                     checkBtn.setImage(UIImage(named: "agreenorimage"), for: .normal)

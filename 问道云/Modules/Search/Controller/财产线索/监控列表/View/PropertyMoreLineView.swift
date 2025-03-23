@@ -27,7 +27,7 @@ class PropertyMoreLineView: BaseView {
         let descLabel = UILabel()
         descLabel.text = "注册资本"
         descLabel.textColor = .init(cssStr: "#333333")
-        descLabel.font = .mediumFontOfSize(size: 13)
+        descLabel.font = .boldFontOfSize(size: 13)
         descLabel.textAlignment = .left
         return descLabel
     }()
