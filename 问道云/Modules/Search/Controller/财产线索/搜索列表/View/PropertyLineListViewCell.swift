@@ -113,32 +113,38 @@ class PropertyLineListViewCell: UICollectionViewCell {
         oneLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(nameLabel.snp.bottom).offset(2.5)
-            make.height.equalTo(16.5)
+            make.height.equalTo(18)
+            make.width.equalTo(30)
         }
         twoLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(oneLabel.snp.bottom).offset(2)
-            make.height.equalTo(16.5)
+            make.height.equalTo(18)
+            make.width.equalTo(30)
         }
         threeLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(twoLabel.snp.bottom).offset(2)
-            make.height.equalTo(16.5)
+            make.height.equalTo(18)
+            make.width.equalTo(30)
         }
         fourLabel.snp.makeConstraints { make in
-            make.left.equalTo(oneLabel.snp.right).offset(4)
+            make.left.equalTo(oneLabel.snp.right).offset(2)
             make.centerY.equalTo(oneLabel.snp.centerY)
             make.height.equalTo(16.5)
+            make.right.equalToSuperview().offset(-1)
         }
         fiveLabel.snp.makeConstraints { make in
-            make.left.equalTo(twoLabel.snp.right).offset(4)
+            make.left.equalTo(twoLabel.snp.right).offset(2)
             make.centerY.equalTo(twoLabel.snp.centerY)
             make.height.equalTo(16.5)
+            make.right.equalToSuperview().offset(-1)
         }
         sixLabel.snp.makeConstraints { make in
-            make.left.equalTo(threeLabel.snp.right).offset(4)
+            make.left.equalTo(threeLabel.snp.right).offset(2)
             make.centerY.equalTo(threeLabel.snp.centerY)
             make.height.equalTo(16.5)
+            make.right.equalToSuperview().offset(-1)
         }
     }
     

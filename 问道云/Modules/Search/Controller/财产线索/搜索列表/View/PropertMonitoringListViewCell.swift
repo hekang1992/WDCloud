@@ -21,6 +21,7 @@ class PropertMonitoringListViewCell: BaseViewCell {
         namelabel.textColor = UIColor.init(cssStr: "#333333")
         namelabel.textAlignment = .left
         namelabel.font = .mediumFontOfSize(size: 15)
+        namelabel.numberOfLines = 0
         return namelabel
     }()
     
@@ -80,8 +81,7 @@ class PropertMonitoringListViewCell: BaseViewCell {
         namelabel.snp.makeConstraints { make in
             make.centerY.equalTo(logoImageView.snp.centerY)
             make.left.equalTo(logoImageView.snp.right).offset(6)
-            make.right.equalToSuperview().offset(-80)
-            make.height.equalTo(22)
+            make.right.equalToSuperview().offset(-50)
         }
         monitoringBtn.snp.makeConstraints { make in
             make.centerY.equalTo(logoImageView.snp.centerY)
