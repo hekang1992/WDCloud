@@ -170,6 +170,15 @@ extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSou
             guard let self = self else { return }
             self.tableView(tableView, didSelectRowAt: indexPath)
         }
+        cell.monitoringBlock = { [weak self] model, monitoringBtn in
+            guard let self = self else { return }
+            let monitor = model.monitor ?? false
+            if monitor {
+                propertyLineCancelInfo(from: model, monitoringBtn: monitoringBtn)
+            }else {
+                prppertyLineMonitrongInfo(from: model, monitoringBtn: monitoringBtn)
+            }
+        }
         return cell
     }
     
@@ -294,6 +303,126 @@ extension PropertyCompanyViewController {
                         })
                     }
                     self.present(alertVc, animated: true)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //添加监控
+    func prppertyLineMonitrongInfo(from model: DataModel, monitoringBtn: UIButton) {
+        let entityId = model.entityId ?? ""
+        let entityName = model.entityName ?? ""
+        let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let entityType = 1
+        let man = RequestManager()
+        let dict = ["entityId": entityId,
+                    "entityName": entityName,
+                    "entityType": entityType,
+                    "customerNumber": customerNumber] as [String : Any]
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/monitor",
+                       method: .post) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.monitor = true
+                    monitoringBtn.setImage(UIImage(named: "propertyhavjiank"), for: .normal)
+                    self.addUnioInfo(form: entityId, name: entityName)
+                    ToastViewConfig.showToast(message: "监控成功")
+                }else if success.code == 702 {
+                    let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+                    buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
+                    let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+                    buyVipView.cancelBlock = {
+                        self.dismiss(animated: true)
+                    }
+                    buyVipView.buyOneBlock = {
+                        //跳转购买单次会员
+                        self.dismiss(animated: true, completion: {
+                            let oneVc = BuyOnePropertyLineViewController()
+                            oneVc.entityType = 1
+                            oneVc.entityId = model.entityId ?? ""
+                            oneVc.entityName = model.entityName ?? ""
+                            //刷新列表
+                            oneVc.refreshBlock = { [weak self] in
+                                guard let self = self else { return }
+                                addUnioInfo(form: entityId, name: entityName)
+                                model.monitor = true
+                                monitoringBtn.setImage(UIImage(named: "propertyhavjiank"), for: .normal)
+                            }
+                            self.navigationController?.pushViewController(oneVc, animated: true)
+                        })
+                    }
+                    buyVipView.buyVipBlock = {
+                        //跳转购买会员
+                        self.dismiss(animated: true, completion: {
+                            let memVc = MembershipCenterViewController()
+                            self.navigationController?.pushViewController(memVc, animated: true)
+                        })
+                    }
+                    self.present(alertVc, animated: true)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //取消监控
+    func propertyLineCancelInfo(from model: DataModel, monitoringBtn: UIButton) {
+        let entityId = model.entityId ?? ""
+        let entityName = model.entityName ?? ""
+        let entityType = "1"
+        let man = RequestManager()
+        let dict = ["entityId": entityId,
+                    "entityName": entityName,
+                    "entityType": entityType]
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/monitor/cancel",
+                       method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                guard let self = self else { return }
+                if success.code == 200 {
+                    model.monitor = false
+                    monitoringBtn.setImage(UIImage(named: "propertymongijan"), for: .normal)
+                    ToastViewConfig.showToast(message: "取消监控成功")
+                }else if success.code == 702 {
+                    
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //添加关联方信息
+    func addUnioInfo(form entityId: String, name: String) {
+        let man = RequestManager()
+        let dict = ["entityId": entityId,
+                    "entityType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/monitor/relation",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    if let modelArray = success.data?.monitorRelationVOList {
+                        let popView = PropertyAlertView(frame: CGRectMake(0, StatusHeightManager.navigationBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight))
+                        popView.ctImageView.image = UIImage.imageOfText(name, size: (30, 30))
+                        popView.nameLabel.text = name
+                        popView.modelArray = modelArray
+                        popView.tableView.reloadData()
+                        UIView.animate(withDuration: 0.25) {
+                            keyWindow?.addSubview(popView)
+                        }
+                    }
                 }
                 break
             case .failure(_):

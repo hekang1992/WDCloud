@@ -7,30 +7,12 @@
 
 import UIKit
 import TagListView
+import SkeletonView
 import TYAlertController
 
 class PropertyLineHotView: BaseView {
     
     var modelArray: [DataModel]?
-    
-    lazy var tagListView: TagListView = {
-        let tagListView = TagListView()
-        tagListView.cornerRadius = 5
-        tagListView.paddingX = 5
-        tagListView.paddingY = 5
-        tagListView.marginX = 8
-        tagListView.marginY = 8
-        tagListView.textColor = .init(cssStr: "#27344B")!
-        tagListView.tagBackgroundColor = .init(cssStr: "#F3F3F3")!
-        tagListView.textFont = .regularFontOfSize(size: 12)
-        tagListView.borderWidth = 1
-        tagListView.borderColor = UIColor.clear
-        tagListView.selectedTextColor = UIColor.init(cssStr: "#547AFF")!
-        tagListView.selectedBorderColor = UIColor.init(cssStr: "#547AFF")
-        tagListView.tagSelectedBackgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.05)
-        tagListView.delegate = self
-        return tagListView
-    }()
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -56,6 +38,8 @@ class PropertyLineHotView: BaseView {
             make.top.equalToSuperview().offset(5)
             make.left.right.bottom.equalToSuperview()
         }
+        tableView.isSkeletonable = true
+        tableView.showAnimatedGradientSkeleton()
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -113,14 +97,20 @@ extension PropertyLineHotView: UITableViewDelegate, UITableViewDataSource {
 
 }
 
-extension PropertyLineHotView: TagListViewDelegate {
+extension PropertyLineHotView: SkeletonTableViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "PropertyListViewCell"
+    }
     
-    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
 }
 
 /** 网络数据请求 */
 extension PropertyLineHotView {
     
+    //添加监控
     private func checkInfo(from model: DataModel, cell: PropertyListViewCell) {
         let entityType = "1"
         let entityId = model.entityId ?? ""
@@ -160,7 +150,9 @@ extension PropertyLineHotView {
                             oneVc.entityId = model.entityId ?? ""
                             oneVc.entityName = model.entityName ?? ""
                             //刷新列表
-                            oneVc.refreshBlock = {
+                            oneVc.refreshBlock = { [weak self] in
+                                guard let self = self else { return }
+                                addUnioInfo(form: model.entityId ?? "")
                                 model.monitor = true
                                 cell.monitoringBtn.setImage(UIImage(named: "propertyhavjiank"), for: .normal)
                             }
@@ -175,6 +167,26 @@ extension PropertyLineHotView {
                         })
                     }
                     vc?.present(alertVc, animated: true)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //添加关联方信息
+    func addUnioInfo(form entityId: String) {
+        let man = RequestManager()
+        let dict = ["entityId": entityId,
+                    "entityType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/monitor/relation",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    
                 }
                 break
             case .failure(_):

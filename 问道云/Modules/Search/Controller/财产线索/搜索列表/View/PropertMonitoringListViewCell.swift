@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class PropertMonitoringListViewCell: BaseViewCell {
     
@@ -13,6 +14,7 @@ class PropertMonitoringListViewCell: BaseViewCell {
 
     lazy var logoImageView: UIImageView = {
         let logoImageView = UIImageView()
+        logoImageView.isSkeletonable = true
         return logoImageView
     }()
     
@@ -22,11 +24,13 @@ class PropertMonitoringListViewCell: BaseViewCell {
         namelabel.textAlignment = .left
         namelabel.font = .mediumFontOfSize(size: 15)
         namelabel.numberOfLines = 0
+        namelabel.isSkeletonable = true
         return namelabel
     }()
     
     lazy var monitoringBtn: UIButton = {
         let monitoringBtn = UIButton(type: .custom)
+        monitoringBtn.isSkeletonable = true
         monitoringBtn.setImage(UIImage(named: "moreniacion"), for: .normal)
         return monitoringBtn
     }()
@@ -60,12 +64,14 @@ class PropertMonitoringListViewCell: BaseViewCell {
     
     lazy var lineView: UIView = {
         let lineView = UIView()
+        lineView.isSkeletonable = true
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")
         return lineView
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        isSkeletonable = true
         contentView.addSubview(logoImageView)
         contentView.addSubview(namelabel)
         contentView.addSubview(monitoringBtn)

@@ -214,6 +214,8 @@
 		73868A452D55F55A00CE107D /* MonthReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73868A442D55F55A00CE107D /* MonthReportViewController.swift */; };
 		73868A472D55F56600CE107D /* BothReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73868A462D55F56600CE107D /* BothReportViewController.swift */; };
 		738AD0B02D90E945007B7838 /* PropertyLineOneViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738AD0AF2D90E945007B7838 /* PropertyLineOneViewCell.swift */; };
+		738AD0B22D914DF9007B7838 /* PropertyAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738AD0B12D914DF9007B7838 /* PropertyAlertView.swift */; };
+		738AD0B42D915694007B7838 /* PropertyAlertViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738AD0B32D915694007B7838 /* PropertyAlertViewTableViewCell.swift */; };
 		73950F732D55A93A005AD034 /* PopMonitoringGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F722D55A93A005AD034 /* PopMonitoringGroupView.swift */; };
 		73950F752D55B3E7005AD034 /* AddMonitoringListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F742D55B3E7005AD034 /* AddMonitoringListView.swift */; };
 		73950F772D55EE2B005AD034 /* MonitoringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F762D55EE2B005AD034 /* MonitoringCell.swift */; };
@@ -625,6 +627,8 @@
 		73868A442D55F55A00CE107D /* MonthReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthReportViewController.swift; sourceTree = "<group>"; };
 		73868A462D55F56600CE107D /* BothReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothReportViewController.swift; sourceTree = "<group>"; };
 		738AD0AF2D90E945007B7838 /* PropertyLineOneViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineOneViewCell.swift; sourceTree = "<group>"; };
+		738AD0B12D914DF9007B7838 /* PropertyAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyAlertView.swift; sourceTree = "<group>"; };
+		738AD0B32D915694007B7838 /* PropertyAlertViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyAlertViewTableViewCell.swift; sourceTree = "<group>"; };
 		73950F722D55A93A005AD034 /* PopMonitoringGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopMonitoringGroupView.swift; sourceTree = "<group>"; };
 		73950F742D55B3E7005AD034 /* AddMonitoringListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMonitoringListView.swift; sourceTree = "<group>"; };
 		73950F762D55EE2B005AD034 /* MonitoringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringCell.swift; sourceTree = "<group>"; };
@@ -1613,13 +1617,15 @@
 			isa = PBXGroup;
 			children = (
 				73090B6E2D82DE7900041457 /* PropertyHeadView.swift */,
-				73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */,
 				732926962D85313700E93F96 /* PropertyLineListViewCell.swift */,
 				739CE98C2D8D3224003DE72A /* PropertyLineHotView.swift */,
+				73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */,
 				739E91ED2D8E6C08000E1A11 /* PropertyLineInfoView.swift */,
 				739E91EF2D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift */,
 				7370BB762D8FB51500D49757 /* PropertyLineSearchMoreView.swift */,
 				738AD0AF2D90E945007B7838 /* PropertyLineOneViewCell.swift */,
+				738AD0B12D914DF9007B7838 /* PropertyAlertView.swift */,
+				738AD0B32D915694007B7838 /* PropertyAlertViewTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2213,6 +2219,7 @@
 				7340E1C12D5DD56A008FD5C7 /* SearchCompanyBackedLendingViewController.swift in Sources */,
 				7340E1782D5CCFD0008FD5C7 /* SearchTaxViolationViewController.swift in Sources */,
 				73EDE9F22D59F0A900A0A7E3 /* OneReportViewController.swift in Sources */,
+				738AD0B42D915694007B7838 /* PropertyAlertViewTableViewCell.swift in Sources */,
 				73807D592D33808400F8B90D /* CompanyCollectionCell.swift in Sources */,
 				739527FA2D633EBE0020589C /* TwoDueDiligenceViewController.swift in Sources */,
 				734F4EAD2D716591000D701F /* BuyMonitoringOneVipViewController.swift in Sources */,
@@ -2364,6 +2371,7 @@
 				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
 				739DCA202D671A23009CFC78 /* MyCheckSettingViewController.swift in Sources */,
 				733B5FFA2D573BFF00ADE7C5 /* RiskNoMonitoringView.swift in Sources */,
+				738AD0B22D914DF9007B7838 /* PropertyAlertView.swift in Sources */,
 				73BDABA42D1EA73100D93691 /* MembershipListView.swift in Sources */,
 				7340E1D82D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift in Sources */,
 				73EDE9F62D59F9AA00A0A7E3 /* HomeOneReportCell.swift in Sources */,

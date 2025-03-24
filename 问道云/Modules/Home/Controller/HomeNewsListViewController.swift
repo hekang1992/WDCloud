@@ -59,6 +59,10 @@ class HomeNewsListViewController: WDBaseViewController {
             cell.selectionStyle = .none
             cell.block = { [weak self] model in
                 let type = model.type ?? ""
+                if !IS_LOGIN {
+                    self?.popLogin()
+                    return
+                }
                 if type == "1" {//企业
                     let companyDetailVc = CompanyBothViewController()
                     companyDetailVc.enityId.accept(model.tag ?? "")

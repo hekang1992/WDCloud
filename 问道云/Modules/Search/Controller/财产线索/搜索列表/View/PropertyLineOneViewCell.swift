@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class PropertyLineOneViewCell: BaseViewCell {
 
@@ -68,12 +69,15 @@ class PropertyLineOneViewCell: BaseViewCell {
         let twoStackView = UIStackView()
         twoStackView.axis = .vertical
         twoStackView.distribution = .equalSpacing
-        twoStackView.layer.cornerRadius = 2
-        twoStackView.backgroundColor = .init(cssStr: "#F8F8F8")
         twoStackView.spacing = 5
-        twoStackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        twoStackView.isLayoutMarginsRelativeArrangement = true
         return twoStackView
+    }()
+    
+    lazy var coverView: UIView = {
+        let coverView = UIView()
+        coverView.layer.cornerRadius = 2
+        coverView.backgroundColor = .init(cssStr: "#F8F8F8")
+        return coverView
     }()
     
     lazy var lineView: UIView = {
@@ -91,6 +95,7 @@ class PropertyLineOneViewCell: BaseViewCell {
     
     lazy var diImageView: UIImageView = {
         let diImageView = UIImageView()
+        diImageView.isHidden = true
         diImageView.image = UIImage(named: "diprpimged")
         diImageView.contentMode = .scaleAspectFit
         return diImageView
@@ -113,7 +118,8 @@ class PropertyLineOneViewCell: BaseViewCell {
         contentView.addSubview(starBtn)
         contentView.addSubview(timeLabel)
         contentView.addSubview(oneStackView)
-        contentView.addSubview(twoStackView)
+        contentView.addSubview(coverView)
+        coverView.addSubview(twoStackView)
         twoStackView.addSubview(ctImageView)
         contentView.addSubview(diImageView)
         diImageView.addSubview(descLabel)
@@ -149,21 +155,26 @@ class PropertyLineOneViewCell: BaseViewCell {
             make.top.equalTo(tagOneLabel.snp.bottom).offset(4)
             make.right.equalToSuperview().offset(-12)
         }
-        twoStackView.snp.makeConstraints { make in
+        coverView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(12)
             make.top.equalTo(oneStackView.snp.bottom).offset(4)
             make.right.equalToSuperview().offset(-12)
         }
+        twoStackView.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(10)
+            make.right.equalToSuperview().offset(-12)
+            make.bottom.equalToSuperview().offset(-10)
+        }
         ctImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview().offset(-5)
+            make.right.equalToSuperview()
             make.size.equalTo(CGSize(width: 18, height: 18))
         }
         diImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(twoStackView.snp.bottom).offset(4)
+            make.top.equalTo(coverView.snp.bottom).offset(4)
             make.size.equalTo(CGSize(width: 351.pix(), height: 76.pix()))
-            make.bottom.equalToSuperview().offset(-14)
         }
         descLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(33.pix())
@@ -171,8 +182,10 @@ class PropertyLineOneViewCell: BaseViewCell {
             make.right.equalToSuperview().offset(-9.pix())
         }
         lineView.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
+            make.left.right.equalToSuperview()
             make.height.equalTo(5)
+            make.top.equalTo(coverView.snp.bottom).offset(90)
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -187,7 +200,7 @@ class PropertyLineOneViewCell: BaseViewCell {
             tagOneLabel.text = model.clueTypeName ?? ""
             tagTwoLabel.text = model.clueTypeDirectionName ?? ""
             timeLabel.text = model.longTimeDes ?? ""
-            
+            descLabel.text = model.clueAnalyze ?? ""
             let oneList = model.outList ?? []
             if !oneList.isEmpty {
                 configureOneInfo(with: oneList)
@@ -197,10 +210,41 @@ class PropertyLineOneViewCell: BaseViewCell {
             
             let twoList = model.innerList ?? []
             if !twoList.isEmpty {
+                twoStackView.isHidden = false
+                ctImageView.isHidden = false
+                coverView.isHidden = false
                 configureTwoInfo(with: twoList)
             }else {
+                twoStackView.isHidden = true
+                ctImageView.isHidden = true
+                coverView.isHidden = true
+                coverView.snp.remakeConstraints { make in
+                    make.left.equalToSuperview().offset(12)
+                    make.top.equalTo(oneStackView.snp.bottom)
+                    make.right.equalToSuperview().offset(-12)
+                    make.height.equalTo(0)
+                }
                 twoStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
             }
+            
+            let isShowLine = model.isShowLine ?? true
+            self.diImageView.isHidden = !isShowLine
+            if isShowLine {
+                self.diImageView.snp.updateConstraints { make in
+                    make.height.equalTo(76.pix())
+                }
+                self.lineView.snp.updateConstraints { make in
+                    make.top.equalTo(coverView.snp.bottom).offset(90)
+                }
+            }else {
+                self.diImageView.snp.updateConstraints { make in
+                    make.height.equalTo(0.pix())
+                }
+                self.lineView.snp.updateConstraints { make in
+                    make.top.equalTo(coverView.snp.bottom).offset(10)
+                }
+            }
+            
         }
     }
     
@@ -228,10 +272,6 @@ extension PropertyLineOneViewCell {
     func configureTwoInfo(with dynamiccontent: [outListModel]) {
         // 清空之前的 labels
         twoStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        // 创建新的 labels
-        let spacerView = UIView()
-        spacerView.heightAnchor.constraint(equalToConstant: 5).isActive = true
-        twoStackView.addArrangedSubview(spacerView)
         for model in dynamiccontent {
             let label = UILabel()
             label.textColor = .init(cssStr: "#333333")
@@ -243,9 +283,6 @@ extension PropertyLineOneViewCell {
             label.setContentHuggingPriority(.defaultLow, for: .vertical)
             twoStackView.addArrangedSubview(label)
         }
-        let spacer1View = UIView()
-        spacer1View.heightAnchor.constraint(equalToConstant: 5).isActive = true
-        twoStackView.addArrangedSubview(spacer1View)
     }
     
 }

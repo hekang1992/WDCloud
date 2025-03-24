@@ -363,7 +363,12 @@ class PropertyLineSearchMoreView: BaseView {
                 ToastViewConfig.showToast(message: "时间格式不正确,请重新选择")
                 return
             }
-            self?.sureBlock?(String(self?.selectIndex ?? 0), self?.timeStr ?? "", self?.selectBtn?.titleLabel?.text ?? "")
+            let money = self?.selectIndex ?? 0
+            if money == 0 {
+                self?.sureBlock?("", self?.timeStr ?? "", self?.selectBtn?.titleLabel?.text ?? "")
+            }else {
+                self?.sureBlock?(String(money), self?.timeStr ?? "", self?.selectBtn?.titleLabel?.text ?? "")
+            }
             print("one====\(self?.selectIndex ?? 0)")
             print("two====\(self?.timeStr ?? "")")
         }).disposed(by: disposeBag)

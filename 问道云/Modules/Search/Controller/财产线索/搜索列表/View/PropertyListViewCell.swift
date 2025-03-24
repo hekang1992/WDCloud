@@ -12,7 +12,7 @@ import TYAlertController
 class PropertyListViewCell: BaseViewCell {
     
     //监控block
-    var monitoringBlock: (() -> Void)?
+    var monitoringBlock: ((DataModel, UIButton) -> Void)?
     
     var cellBlock: (() -> Void)?
     
@@ -53,6 +53,7 @@ class PropertyListViewCell: BaseViewCell {
         desclabel.textAlignment = .left
         desclabel.text = "财产状况:"
         desclabel.font = .regularFontOfSize(size: 13)
+        desclabel.isSkeletonable = true
         return desclabel
     }()
     
@@ -87,7 +88,6 @@ class PropertyListViewCell: BaseViewCell {
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.isSkeletonable = true
         return collectionView
     }()
     
@@ -162,13 +162,9 @@ class PropertyListViewCell: BaseViewCell {
         
         monitoringBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self, let model = self.model else { return }
-            let monitor = model.monitor ?? false
-            if monitor {
-                propertyLineCancelInfo(from: model, monitoringBtn: monitoringBtn)
-            }else {
-                prppertyLineMonitrongInfo(from: model, monitoringBtn: monitoringBtn)
-            }
+            self.monitoringBlock?(model, monitoringBtn)
         }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -261,12 +257,14 @@ extension PropertyListViewCell {
                     "customerNumber": customerNumber] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/monitor",
-                       method: .post) { result in
+                       method: .post) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     model.monitor = true
                     monitoringBtn.setImage(UIImage(named: "propertyhavjiank"), for: .normal)
+                    self.addUnioInfo(form: model.entityId ?? "")
                     ToastViewConfig.showToast(message: "监控成功")
                 }else if success.code == 702 {
                     let vc = ViewControllerUtils.findViewController(from: self)
@@ -284,7 +282,9 @@ extension PropertyListViewCell {
                             oneVc.entityId = model.entityId ?? ""
                             oneVc.entityName = model.entityName ?? ""
                             //刷新列表
-                            oneVc.refreshBlock = {
+                            oneVc.refreshBlock = { [weak self] in
+                                guard let self = self else { return }
+                                addUnioInfo(form: model.entityId ?? "")
                                 model.monitor = true
                                 monitoringBtn.setImage(UIImage(named: "propertyhavjiank"), for: .normal)
                             }
@@ -327,6 +327,26 @@ extension PropertyListViewCell {
                     monitoringBtn.setImage(UIImage(named: "propertymongijan"), for: .normal)
                     ToastViewConfig.showToast(message: "取消监控成功")
                 }else if success.code == 702 {
+                    
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //添加关联方信息
+    func addUnioInfo(form entityId: String) {
+        let man = RequestManager()
+        let dict = ["entityId": entityId,
+                    "entityType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/monitor/relation",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
                     
                 }
                 break

@@ -10,6 +10,7 @@ import RxRelay
 import MJRefresh
 import DropMenuBar
 import SevenSwitch
+import SkeletonView
 
 class PropertyLineOneViewController: WDBaseViewController {
     
@@ -332,13 +333,14 @@ class PropertyLineOneViewController: WDBaseViewController {
             guard let self = self else { return }
             self.getListInfo()
         })
-        
         //获取列表数据信息
         getListInfo()
     }
     
     @objc func switchChanged(_ sender: SevenSwitch) {
         print("Changed value to: \(sender.on)")
+        self.model.value?.pageableData?.isShowLine = sender.on
+        self.tableView.reloadData()
     }
     
 }
@@ -412,10 +414,18 @@ extension PropertyLineOneViewController: UITableViewDelegate, UITableViewDataSou
         let model = self.allArray[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "PropertyLineOneViewCell", for: indexPath) as! PropertyLineOneViewCell
         cell.selectionStyle = .none
+        model.isShowLine = self.oneSwitch.on
         cell.model = model
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.allArray[indexPath.row]
+        let pageUrl = base_url + "\(model.detailUrl ?? "")"
+        let webVc = WebPageViewController()
+        webVc.pageUrl.accept(pageUrl)
+        self.navigationController?.pushViewController(webVc, animated: true)
+    }
     
 }
 

@@ -222,6 +222,8 @@ class PropertyThreeBothViewController: WDBaseViewController {
             guard let self = self else { return }
             getListInfo()
         })
+        self.tableView.isSkeletonable = true
+        self.tableView.showAnimatedGradientSkeleton()
         //获取分组信息
         getGroupInfo()
         //获取列表信息
@@ -287,7 +289,10 @@ extension PropertyThreeBothViewController {
                         }else {
                             self.tableView.mj_footer?.isHidden = true
                         }
-                        self.tableView.reloadData()
+                        DispatchQueue.main.asyncAfter(delay: 0.25) {
+                            self.tableView.hideSkeleton()
+                            self.tableView.reloadData()
+                        }
                     }
                 }
                 break
@@ -298,16 +303,15 @@ extension PropertyThreeBothViewController {
     }
 }
 
-//extension PropertyThreeBothViewController: SkeletonTableViewDataSource {
-//    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-//        return "PropertyListViewCell"
-//    }
-//    
-//    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 20
-//    }
-//}
-
+extension PropertyThreeBothViewController: SkeletonTableViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "PropertMonitoringListViewCell"
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
+}
 
 extension PropertyThreeBothViewController: UITableViewDelegate, UITableViewDataSource {
     

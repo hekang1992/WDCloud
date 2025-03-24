@@ -253,7 +253,10 @@ extension PropertyOneViewController {
                 if success.code == 200 {
                     if let modelArray = success.datass {
                         self?.oneView.modelArray = modelArray
-                        self?.oneView.tableView.reloadData()
+                        DispatchQueue.main.asyncAfter(delay: 0.25) {
+                            self?.oneView.tableView.hideSkeleton()
+                            self?.oneView.tableView.reloadData()
+                        }
                     }
                 }
                 break

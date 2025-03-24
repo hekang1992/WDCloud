@@ -196,7 +196,9 @@ class DataModel {
     var conditionVO: conditionVOModel?
     var pageableData: pageableDataModel?
     var isRealTimePush: Int?
+    var monitorRelationVOList: [monitorRelationVOListModel]?
     init(json: JSON) {
+        self.monitorRelationVOList = json["monitorRelationVOList"].arrayValue.map { monitorRelationVOListModel(json: $0) }
         self.isRealTimePush = json["isRealTimePush"].intValue
         self.pageableData = pageableDataModel(json: json["pageableData"])
         self.conditionVO = conditionVOModel(json: json["conditionVO"])
@@ -1892,7 +1894,9 @@ class pageableDataModel {
     var totalValue: String?
     var valueUnit: String?
     var pageItems: [pageItemsModel]?
+    var isShowLine: Bool?//自定义
     init(json: JSON) {
+        self.isShowLine = json["isShowLine"].boolValue
         self.totalElements = json["totalElements"].intValue
         self.totalValue = json["totalValue"].stringValue
         self.valueUnit = json["valueUnit"].stringValue
@@ -1912,7 +1916,9 @@ class pageItemsModel {
     var clueAnalyze: String?
     var outList: [outListModel]?
     var innerList: [outListModel]?
+    var isShowLine: Bool?//自定义
     init(json: JSON) {
+        self.isShowLine = json["isShowLine"].boolValue
         self.clueId = json["clueId"].stringValue
         self.modelId = json["modelId"].stringValue
         self.modelName = json["modelName"].stringValue
@@ -1933,5 +1939,28 @@ class outListModel {
     init(json: JSON) {
         self.itemKey = json["itemKey"].stringValue
         self.itemValue = json["itemValue"].stringValue
+    }
+}
+
+class monitorRelationVOListModel {
+    var subjectId: String?
+    var entityId: String?
+    var entityName: String?
+    var entityType: String?
+    var relation: String?
+    var relationName: String?
+    var shareholdingRatio: String?
+    var customRelation: String?
+    var select: Bool?//是否点选了。自己加的..
+    init(json: JSON) {
+        self.select = json["select"].boolValue
+        self.subjectId = json["subjectId"].stringValue
+        self.entityId = json["entityId"].stringValue
+        self.entityName = json["entityName"].stringValue
+        self.entityType = json["entityType"].stringValue
+        self.relation = json["relation"].stringValue
+        self.relationName = json["relationName"].stringValue
+        self.shareholdingRatio = json["shareholdingRatio"].stringValue
+        self.customRelation = json["customRelation"].stringValue
     }
 }
