@@ -7,9 +7,9 @@
 
 import UIKit
 import RxRelay
+import MJRefresh
 import DropMenuBar
 import SevenSwitch
-import MJRefresh
 
 class PropertyLineOneViewController: WDBaseViewController {
     
@@ -101,6 +101,7 @@ class PropertyLineOneViewController: WDBaseViewController {
         let oneSwitch = SevenSwitch()
         oneSwitch.on = true
         oneSwitch.onTintColor = .init(cssStr: "#547AFF")!
+        oneSwitch.addTarget(self, action: #selector(switchChanged(_:)), for: UIControl.Event.valueChanged)
         return oneSwitch
     }()
     
@@ -122,7 +123,7 @@ class PropertyLineOneViewController: WDBaseViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+        tableView.register(PropertyLineOneViewCell.self, forCellReuseIdentifier: "PropertyLineOneViewCell")
         tableView.estimatedRowHeight = 80
         tableView.showsVerticalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
@@ -336,6 +337,10 @@ class PropertyLineOneViewController: WDBaseViewController {
         getListInfo()
     }
     
+    @objc func switchChanged(_ sender: SevenSwitch) {
+        print("Changed value to: \(sender.on)")
+    }
+    
 }
 
 extension PropertyLineOneViewController {
@@ -371,7 +376,7 @@ extension PropertyLineOneViewController: UITableViewDelegate, UITableViewDataSou
         numLabel.font = .regularFontOfSize(size: 12)
         numLabel.textAlignment = .left
         headView.addSubview(numLabel)
-        
+        headView.backgroundColor = .init(cssStr: "#F5F5F5")
         let moneyLabel = UILabel()
         moneyLabel.textColor = .init(cssStr: "#666666")
         moneyLabel.font = .regularFontOfSize(size: 12)
@@ -404,8 +409,10 @@ extension PropertyLineOneViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        cell.backgroundColor = .random()
+        let model = self.allArray[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PropertyLineOneViewCell", for: indexPath) as! PropertyLineOneViewCell
+        cell.selectionStyle = .none
+        cell.model = model
         return cell
     }
     

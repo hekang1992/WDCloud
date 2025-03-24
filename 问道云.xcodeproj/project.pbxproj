@@ -213,6 +213,7 @@
 		73868A432D55F54E00CE107D /* WeekReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73868A422D55F54E00CE107D /* WeekReportViewController.swift */; };
 		73868A452D55F55A00CE107D /* MonthReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73868A442D55F55A00CE107D /* MonthReportViewController.swift */; };
 		73868A472D55F56600CE107D /* BothReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73868A462D55F56600CE107D /* BothReportViewController.swift */; };
+		738AD0B02D90E945007B7838 /* PropertyLineOneViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738AD0AF2D90E945007B7838 /* PropertyLineOneViewCell.swift */; };
 		73950F732D55A93A005AD034 /* PopMonitoringGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F722D55A93A005AD034 /* PopMonitoringGroupView.swift */; };
 		73950F752D55B3E7005AD034 /* AddMonitoringListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F742D55B3E7005AD034 /* AddMonitoringListView.swift */; };
 		73950F772D55EE2B005AD034 /* MonitoringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73950F762D55EE2B005AD034 /* MonitoringCell.swift */; };
@@ -623,6 +624,7 @@
 		73868A422D55F54E00CE107D /* WeekReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekReportViewController.swift; sourceTree = "<group>"; };
 		73868A442D55F55A00CE107D /* MonthReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthReportViewController.swift; sourceTree = "<group>"; };
 		73868A462D55F56600CE107D /* BothReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothReportViewController.swift; sourceTree = "<group>"; };
+		738AD0AF2D90E945007B7838 /* PropertyLineOneViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineOneViewCell.swift; sourceTree = "<group>"; };
 		73950F722D55A93A005AD034 /* PopMonitoringGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopMonitoringGroupView.swift; sourceTree = "<group>"; };
 		73950F742D55B3E7005AD034 /* AddMonitoringListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMonitoringListView.swift; sourceTree = "<group>"; };
 		73950F762D55EE2B005AD034 /* MonitoringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringCell.swift; sourceTree = "<group>"; };
@@ -1617,6 +1619,7 @@
 				739E91ED2D8E6C08000E1A11 /* PropertyLineInfoView.swift */,
 				739E91EF2D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift */,
 				7370BB762D8FB51500D49757 /* PropertyLineSearchMoreView.swift */,
+				738AD0AF2D90E945007B7838 /* PropertyLineOneViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2248,6 +2251,7 @@
 				73FB9C862D5EF33E00554CAD /* RiskSettingView.swift in Sources */,
 				7374164E2D100BB200E6CD23 /* SearchInvoiceCell.swift in Sources */,
 				73C36A7B2D2D147400D6DC46 /* OneCompanyView.swift in Sources */,
+				738AD0B02D90E945007B7838 /* PropertyLineOneViewCell.swift in Sources */,
 				73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */,
 				7325A7E02CFF14350043C196 /* ForgetPasswordViewController.swift in Sources */,
 				7314AD812D01A55900770009 /* OrderListViewCell.swift in Sources */,

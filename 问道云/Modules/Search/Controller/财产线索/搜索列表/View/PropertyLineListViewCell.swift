@@ -103,7 +103,7 @@ class PropertyLineListViewCell: UICollectionViewCell {
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(4)
             make.left.equalToSuperview().offset(4)
-            make.size.equalTo(CGSize(width: 50, height: 16.5))
+            make.size.equalTo(CGSize(width: 50.pix(), height: 16.5))
         }
         tagLabel.snp.makeConstraints { make in
             make.centerY.equalTo(nameLabel.snp.centerY)
@@ -114,19 +114,19 @@ class PropertyLineListViewCell: UICollectionViewCell {
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(nameLabel.snp.bottom).offset(2.5)
             make.height.equalTo(18)
-            make.width.equalTo(30)
+            make.width.equalTo(30.pix())
         }
         twoLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(oneLabel.snp.bottom).offset(2)
             make.height.equalTo(18)
-            make.width.equalTo(30)
+            make.width.equalTo(30.pix())
         }
         threeLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(twoLabel.snp.bottom).offset(2)
             make.height.equalTo(18)
-            make.width.equalTo(30)
+            make.width.equalTo(30.pix())
         }
         fourLabel.snp.makeConstraints { make in
             make.left.equalTo(oneLabel.snp.right).offset(2)

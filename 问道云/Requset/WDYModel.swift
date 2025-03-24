@@ -1905,7 +1905,33 @@ class pageItemsModel {
     var modelId: String?
     var modelName: String?
     var clueType: String?
+    var clueTypeName: String?
+    var clueTypeDirectionName: String?
+    var detailUrl: String?//H5地址
+    var longTimeDes: String?
+    var clueAnalyze: String?
+    var outList: [outListModel]?
+    var innerList: [outListModel]?
     init(json: JSON) {
-        
+        self.clueId = json["clueId"].stringValue
+        self.modelId = json["modelId"].stringValue
+        self.modelName = json["modelName"].stringValue
+        self.clueType = json["clueType"].stringValue
+        self.clueTypeName = json["clueTypeName"].stringValue
+        self.clueTypeDirectionName = json["clueTypeDirectionName"].stringValue
+        self.detailUrl = json["detailUrl"].stringValue
+        self.longTimeDes = json["longTimeDes"].stringValue
+        self.clueAnalyze = json["clueAnalyze"].stringValue
+        self.outList = json["outList"].arrayValue.map { outListModel(json: $0) }
+        self.innerList = json["innerList"].arrayValue.map { outListModel(json: $0) }
+    }
+}
+
+class outListModel {
+    var itemKey: String?
+    var itemValue: String?
+    init(json: JSON) {
+        self.itemKey = json["itemKey"].stringValue
+        self.itemValue = json["itemValue"].stringValue
     }
 }
