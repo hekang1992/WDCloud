@@ -10,8 +10,8 @@ import MJRefresh
 
 class RiskTipsCenterViewController: WDBaseViewController {
     
-    var pageNum: Int = 1
     let type = "2"
+    var pageNum: Int = 1
     let pulishstate = "1"
     
     var allArray: [rowsModel] = []
@@ -55,6 +55,7 @@ class RiskTipsCenterViewController: WDBaseViewController {
         //下拉刷新
         tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
+            self.pageNum = 1
             getListInfo()
         })
         tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
@@ -97,6 +98,8 @@ extension RiskTipsCenterViewController: UITableViewDelegate, UITableViewDataSour
         man.requestAPI(params: dict,
                        pageUrl: "/operation/webnews/list",
                        method: .get) { [weak self] result in
+            self?.tableView.mj_header?.endRefreshing()
+            self?.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
                 if let self = self, let code = success.code, code == 200 {

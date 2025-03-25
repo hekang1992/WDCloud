@@ -111,17 +111,17 @@ class RiskDetailViewCell: BaseViewCell {
         }
         highLabel.snp.makeConstraints { make in
             make.centerY.equalTo(namelabel.snp.centerY)
-            make.left.equalTo(namelabel.snp.right).offset(4.5)
+            make.left.equalTo(namelabel.snp.right)
             make.height.equalTo(16.pix())
         }
         lowLabel.snp.makeConstraints { make in
             make.centerY.equalTo(namelabel.snp.centerY)
-            make.left.equalTo(highLabel.snp.right).offset(4.5)
+            make.left.equalTo(highLabel.snp.right)
             make.height.equalTo(16.pix())
         }
         hitLabel.snp.makeConstraints { make in
             make.centerY.equalTo(namelabel.snp.centerY)
-            make.left.equalTo(lowLabel.snp.right).offset(4.5)
+            make.left.equalTo(lowLabel.snp.right)
             make.height.equalTo(16.pix())
         }
         
@@ -134,37 +134,37 @@ class RiskDetailViewCell: BaseViewCell {
             let tipLevelCnt = model.tipLevelCnt ?? 0
             if highLevelCnt == 0 {
                 highLabel.isHidden = true
-                highLabel.snp.makeConstraints({ make in
+                highLabel.snp.updateConstraints({ make in
                     make.left.equalTo(self.namelabel.snp.right)
                 })
             }else {
                 highLabel.isHidden = false
                 highLabel.text = "高风险(\(model.highLevelCnt ?? 0))"
-                highLabel.snp.makeConstraints({ make in
+                highLabel.snp.updateConstraints({ make in
                     make.left.equalTo(self.namelabel.snp.right).offset(4.5)
                 })
             }
             if lowLevelCnt == 0 {
                 lowLabel.isHidden = true
-                lowLabel.snp.makeConstraints({ make in
+                lowLabel.snp.updateConstraints({ make in
                     make.left.equalTo(self.highLabel.snp.right)
                 })
             }else {
                 lowLabel.isHidden = false
                 lowLabel.text = "低风险(\(model.lowLevelCnt ?? 0))"
-                lowLabel.snp.makeConstraints({ make in
+                lowLabel.snp.updateConstraints({ make in
                     make.left.equalTo(self.highLabel.snp.right).offset(4.5)
                 })
             }
             if tipLevelCnt == 0 {
                 hitLabel.isHidden = true
-                hitLabel.snp.makeConstraints({ make in
+                hitLabel.snp.updateConstraints({ make in
                     make.left.equalTo(self.lowLabel.snp.right)
                 })
             }else {
                 hitLabel.isHidden = false
                 hitLabel.text = "提示(\(model.tipLevelCnt ?? 0))"
-                hitLabel.snp.makeConstraints({ make in
+                hitLabel.snp.updateConstraints({ make in
                     make.left.equalTo(self.lowLabel.snp.right).offset(4.5)
                 })
             }

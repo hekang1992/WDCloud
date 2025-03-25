@@ -91,7 +91,7 @@ class DataModel {
     //员工
     var employees: employeesModel?
     //利润
-    var incomeInfo: incomeInfoModel?
+    var saleInfo: incomeInfoModel?
     //收入
     var profitInfo: profitInfoModel?
     //主要股东
@@ -197,7 +197,13 @@ class DataModel {
     var pageableData: pageableDataModel?
     var isRealTimePush: Int?
     var monitorRelationVOList: [monitorRelationVOListModel]?
+    var pitems: [pageItemsModel]?
+    var amountUnit: String?
+    var amount: String?
     init(json: JSON) {
+        self.amount = json["amount"].stringValue
+        self.amountUnit = json["amountUnit"].stringValue
+        self.pitems = json["item"].arrayValue.map { pageItemsModel(json: $0) }
         self.monitorRelationVOList = json["monitorRelationVOList"].arrayValue.map { monitorRelationVOListModel(json: $0) }
         self.isRealTimePush = json["isRealTimePush"].intValue
         self.pageableData = pageableDataModel(json: json["pageableData"])
@@ -296,7 +302,7 @@ class DataModel {
         self.srMgmtInfos = json["srMgmtInfos"].arrayValue.map { staffInfosModel(json: $0) }
         self.shareHolders = json["shareHolders"].arrayValue.map { shareHoldersModel(json: $0) }
         self.profitInfo = profitInfoModel(json: json["profitInfo"])
-        self.incomeInfo = incomeInfoModel(json: json["incomeInfo"])
+        self.saleInfo = incomeInfoModel(json: json["saleInfo"])
         self.employees = employeesModel(json: json["employees"])
         self.warnLabels = json["warnLabels"].arrayValue.map { warnLabelsModel(json: $0) }
         self.firmInfo = firmInfoModel(json: json["firmInfo"])
@@ -462,11 +468,13 @@ class itemsModel {
     var status: String?//状态
     
     //动态
-    var dynamiccontent: [dynamiccontentModel]?
+    var dynamicContent: [dynamiccontentModel]?
     var itemName: String?
     var createtime: String?
-    var risklevel: String?
+    var createTime: String?
+    var riskLevel: String?
     var riskDetailPath: String?
+    var h5Path: String?
     var itemname: String?
     var size: Int?
     var itemnumber: String?
@@ -528,6 +536,8 @@ class itemsModel {
     var riskInfo: riskInfoModel?
     var cluesDataList: [cluesDataListModel]?
     init(json: JSON) {
+        self.createTime = json["createTime"].stringValue
+        self.h5Path = json["h5Path"].stringValue
         self.cluesDataList = json["cluesDataList"].arrayValue.map { cluesDataListModel(json: $0) }
         self.clueNum = json["clueNum"].stringValue
         self.announcement_url = json["announcement_url"].stringValue
@@ -622,12 +632,12 @@ class itemsModel {
         self.personNumber = json["personNumber"].stringValue
         self.relevanceCount = json["relevanceCount"].intValue
         
-        self.dynamiccontent = json["dynamiccontent"].arrayValue.map {
+        self.dynamicContent = json["dynamicContent"].arrayValue.map {
             dynamiccontentModel(json: $0)
         }
         self.itemName = json["itemName"].stringValue
         self.createtime = json["createtime"].stringValue
-        self.risklevel = json["risklevel"].stringValue
+        self.riskLevel = json["riskLevel"].stringValue
         self.riskDetailPath = json["riskDetailPath"].stringValue
         self.firmname = json["firmname"].stringValue
         
@@ -809,6 +819,8 @@ class rowsModel {
     var invoicecontent: String?
     var createTime: String?
     var createtime: String?
+    var itemName: String?
+    var risklevel: String?
     var ordertime: String?
     var invoiceamount: String?
     var invoicetype: String?//发票类型
@@ -907,7 +919,13 @@ class rowsModel {
     var riskLevelDesc: String?
     var key: String?
     var count: Int?
+    var h5Path: String?
+    var data: [itemsModel]?
     init(json: JSON) {
+        self.data = json["data"].arrayValue.map { itemsModel(json: $0) }
+        self.risklevel = json["risklevel"].stringValue
+        self.itemName = json["itemName"].stringValue
+        self.h5Path = json["h5Path"].stringValue
         self.key = json["key"].stringValue
         self.count = json["count"].intValue
         self.riskId = json["riskId"].stringValue
@@ -1359,12 +1377,12 @@ class warnLabelsModel {
 }
 
 class employeesModel {
-    var lastNumber: Int?
+    var lastAmount: String?
     var lastYear: String?
     var annualReports: [annualReportsModel]?
     init(json: JSON) {
         self.annualReports = json["annualReports"].arrayValue.map { annualReportsModel(json: $0) }
-        self.lastNumber = json["lastNumber"].intValue
+        self.lastAmount = json["lastAmount"].stringValue
         self.lastYear = json["lastYear"].stringValue
     }
 }
@@ -1372,34 +1390,34 @@ class employeesModel {
 class annualReportsModel {
     var number: Int?//人数
     var reportYear: String?
-    var amount: Double?//利润
+    var amount: String?//利润
     init(json: JSON) {
         self.number = json["number"].intValue
         self.reportYear = json["reportYear"].stringValue
-        self.amount = json["amount"].doubleValue
+        self.amount = json["amount"].stringValue
     }
 }
 
 //利润模型
 class incomeInfoModel {
-    var lastAmount: Int?
+    var lastAmount: String?
     var lastYear: String?
     var annualReports: [annualReportsModel]?
     init(json: JSON) {
         self.annualReports = json["annualReports"].arrayValue.map { annualReportsModel(json: $0) }
-        self.lastAmount = json["lastAmount"].intValue
+        self.lastAmount = json["lastAmount"].stringValue
         self.lastYear = json["lastYear"].stringValue
     }
 }
 
 //收益模型
 class profitInfoModel {
-    var lastAmount: Int?
+    var lastAmount: String?
     var lastYear: String?
     var annualReports: [annualReportsModel]?
     init(json: JSON) {
         self.annualReports = json["annualReports"].arrayValue.map { annualReportsModel(json: $0) }
-        self.lastAmount = json["lastAmount"].intValue
+        self.lastAmount = json["lastAmount"].stringValue
         self.lastYear = json["lastYear"].stringValue
     }
 }
@@ -1466,11 +1484,11 @@ class taxInfoModel {
 
 //总资产
 class assetInfoModel {
-    var lastAmount: Double?
+    var lastAmount: String?
     var lastYear: String?
     var annualReports: [annualReportsModel]?
     init(json: JSON) {
-        self.lastAmount = json["lastAmount"].doubleValue
+        self.lastAmount = json["lastAmount"].stringValue
         self.lastYear = json["lastYear"].stringValue
         self.annualReports = json["annualReports"].arrayValue.map { annualReportsModel(json: $0) }
     }
@@ -1914,10 +1932,22 @@ class pageItemsModel {
     var detailUrl: String?//H5地址
     var longTimeDes: String?
     var clueAnalyze: String?
+    var explanin: String?
     var outList: [outListModel]?
     var innerList: [outListModel]?
     var isShowLine: Bool?//自定义
+    var entityName: String?
+    var clueClassificationName: String?
+    var assetTypeName: String?
+    var directionTypeName: String?
+    var clueName: String?
     init(json: JSON) {
+        self.clueName = json["clueName"].stringValue
+        self.assetTypeName = json["assetTypeName"].stringValue
+        self.directionTypeName = json["directionTypeName"].stringValue
+        self.clueClassificationName = json["clueClassificationName"].stringValue
+        self.explanin = json["explanin"].stringValue
+        self.entityName = json["entityName"].stringValue
         self.isShowLine = json["isShowLine"].boolValue
         self.clueId = json["clueId"].stringValue
         self.modelId = json["modelId"].stringValue

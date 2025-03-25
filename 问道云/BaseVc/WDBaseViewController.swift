@@ -427,6 +427,7 @@ extension WDBaseViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/addorder",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

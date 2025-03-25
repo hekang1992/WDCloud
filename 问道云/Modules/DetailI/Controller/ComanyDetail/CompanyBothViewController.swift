@@ -47,6 +47,7 @@ class CompanyBothViewController: WDBaseViewController {
     lazy var activityDetailVc: CompanyActivityViewController = {
         let activityDetailVc = CompanyActivityViewController()
         activityDetailVc.enityId = self.enityId.value
+        activityDetailVc.companyName = self.companyName.value
         return activityDetailVc
     }()
     
@@ -170,6 +171,7 @@ extension CompanyBothViewController: JXSegmentedViewDelegate {
         segmentedView.frame = CGRect(x: 0, y: 0, width: 200, height: 40)
         setupContentScrollView()
         segmentedView.contentScrollView = contentScrollView
+        segmentedView(segmentedView, didSelectedItemAt: 0)
     }
     
     func setupContentScrollView() {
@@ -185,13 +187,22 @@ extension CompanyBothViewController: JXSegmentedViewDelegate {
             make.top.equalTo(headView.snp.bottom)
         }
         contentScrollView.contentSize = CGSize(width: view.bounds.width * 2, height: contentScrollView.bounds.height)
-        
-        let modules = [companyDetailVc, activityDetailVc]
-        for (index, vc) in modules.enumerated() {
-            vc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
-            contentScrollView.addSubview(vc.view)
-            addChild(vc)
-            vc.didMove(toParent: self)
+    }
+    
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        if index == 0 {
+            companyDetailVc.enityId = self.enityId.value
+            companyDetailVc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
+            contentScrollView.addSubview(companyDetailVc.view)
+            addChild(companyDetailVc)
+            companyDetailVc.didMove(toParent: self)
+        }else {
+            activityDetailVc.enityId = self.enityId.value
+            activityDetailVc.companyName = self.companyName.value
+            activityDetailVc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
+            contentScrollView.addSubview(activityDetailVc.view)
+            addChild(activityDetailVc)
+            activityDetailVc.didMove(toParent: self)
         }
     }
     

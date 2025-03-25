@@ -264,11 +264,10 @@ extension ComanyRiskMoreDetailViewController: UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let model = self.allArray[indexPath.row]
-//        let itemnumber = model.riskId ?? "0"
-//        let riskdynamicid = model.riskdynamicid ?? ""
-//        let pageUrl = "\(base_url)/risk-detail/\(itemnumber)_\(riskdynamicid)"
-//        self.pushWebPage(from: pageUrl)
+        let model = self.allArray[indexPath.row]
+        let h5Path = model.h5Path ?? ""
+        let pageUrl = "\(base_url)\(h5Path)"
+        self.pushWebPage(from: pageUrl)
     }
     
 }

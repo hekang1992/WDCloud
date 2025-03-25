@@ -40,6 +40,8 @@
 		731B28A22D86A3D70007C6BB /* PopMoreLegalListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731B28A12D86A3D70007C6BB /* PopMoreLegalListViewCell.swift */; };
 		731B28A62D86BA6F0007C6BB /* BeneficialOwnerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731B28A52D86BA6F0007C6BB /* BeneficialOwnerViewCell.swift */; };
 		731B28AA2D86BC770007C6BB /* BeneficialDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731B28A92D86BC770007C6BB /* BeneficialDetailViewController.swift */; };
+		731FCA922D92888500D2A93B /* PropertyLineOnlyTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731FCA912D92888500D2A93B /* PropertyLineOnlyTimeView.swift */; };
+		731FCA942D92909300D2A93B /* PropertyLineTwoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731FCA932D92909300D2A93B /* PropertyLineTwoCell.swift */; };
 		7320D2D52D13AB63006FD1F9 /* OpenTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */; };
 		7320D2D72D13C4D3006FD1F9 /* OpenTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */; };
 		7325A7A32CFEE58D0043C196 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A79D2CFEE58D0043C196 /* AppDelegate.swift */; };
@@ -65,7 +67,6 @@
 		7325A7E22CFF14A90043C196 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */; };
 		7325A7E42CFFF8EE0043C196 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 7325A7E32CFFF8EE0043C196 /* loading.json */; };
 		7325A7E62D0000040043C196 /* GetCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7325A7E52D0000040043C196 /* GetCodeViewController.swift */; };
-		732861762D896D90004CC775 /* FadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732861752D896D90004CC775 /* FadeTransition.swift */; };
 		732861782D89749C004CC775 /* PopRightMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732861772D89749C004CC775 /* PopRightMoreView.swift */; };
 		732926972D85313700E93F96 /* PropertyLineListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732926962D85313700E93F96 /* PropertyLineListViewCell.swift */; };
 		7329269B2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329269A2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift */; };
@@ -446,6 +447,8 @@
 		731B28A12D86A3D70007C6BB /* PopMoreLegalListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopMoreLegalListViewCell.swift; sourceTree = "<group>"; };
 		731B28A52D86BA6F0007C6BB /* BeneficialOwnerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeneficialOwnerViewCell.swift; sourceTree = "<group>"; };
 		731B28A92D86BC770007C6BB /* BeneficialDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeneficialDetailViewController.swift; sourceTree = "<group>"; };
+		731FCA912D92888500D2A93B /* PropertyLineOnlyTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineOnlyTimeView.swift; sourceTree = "<group>"; };
+		731FCA932D92909300D2A93B /* PropertyLineTwoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineTwoCell.swift; sourceTree = "<group>"; };
 		7320D2D42D13AB63006FD1F9 /* OpenTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketViewController.swift; sourceTree = "<group>"; };
 		7320D2D62D13C4D3006FD1F9 /* OpenTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTicketView.swift; sourceTree = "<group>"; };
 		7325A7812CFEE5240043C196 /* 问道云.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "问道云.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -474,7 +477,6 @@
 		7325A7E32CFFF8EE0043C196 /* loading.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		7325A7E52D0000040043C196 /* GetCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCodeViewController.swift; sourceTree = "<group>"; };
 		7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "问道云-Bridging-Header.h"; sourceTree = "<group>"; };
-		732861752D896D90004CC775 /* FadeTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeTransition.swift; sourceTree = "<group>"; };
 		732861772D89749C004CC775 /* PopRightMoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopRightMoreView.swift; sourceTree = "<group>"; };
 		732926962D85313700E93F96 /* PropertyLineListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineListViewCell.swift; sourceTree = "<group>"; };
 		7329269A2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContorlPeopleViewCell.swift; sourceTree = "<group>"; };
@@ -1514,7 +1516,6 @@
 				73807D4D2D3369C500F8B90D /* CompanyBothViewController.swift */,
 				73807D4F2D3369D100F8B90D /* CompanyDetailViewController.swift */,
 				73807D512D336A0B00F8B90D /* CompanyActivityViewController.swift */,
-				732861752D896D90004CC775 /* FadeTransition.swift */,
 			);
 			path = ComanyDetail;
 			sourceTree = "<group>";
@@ -1626,6 +1627,8 @@
 				738AD0AF2D90E945007B7838 /* PropertyLineOneViewCell.swift */,
 				738AD0B12D914DF9007B7838 /* PropertyAlertView.swift */,
 				738AD0B32D915694007B7838 /* PropertyAlertViewTableViewCell.swift */,
+				731FCA912D92888500D2A93B /* PropertyLineOnlyTimeView.swift */,
+				731FCA932D92909300D2A93B /* PropertyLineTwoCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2191,6 +2194,7 @@
 				7325A7E62D0000040043C196 /* GetCodeViewController.swift in Sources */,
 				7340E1CA2D5DE420008FD5C7 /* SearchPeopleOverseasInvestmentViewController.swift in Sources */,
 				73A443E22D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift in Sources */,
+				731FCA922D92888500D2A93B /* PropertyLineOnlyTimeView.swift in Sources */,
 				733B5FFC2D573CAA00ADE7C5 /* RiskNoLoginView.swift in Sources */,
 				7340E1962D5CD47A008FD5C7 /* SearchCompanyHighConsumptionViewController.swift in Sources */,
 				7340E1752D5CC6D2008FD5C7 /* SearchPeopleEnvironmentalPenaltyViewController.swift in Sources */,
@@ -2213,6 +2217,7 @@
 				7325A7D12CFEFBE60043C196 /* WDYModel.swift in Sources */,
 				739DCA282D671B4E009CFC78 /* MyTwoSettingViewController.swift in Sources */,
 				73C36A7D2D2D1B8400D6DC46 /* SearchHistoryListView.swift in Sources */,
+				731FCA942D92909300D2A93B /* PropertyLineTwoCell.swift in Sources */,
 				73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */,
 				73E971302D2E614200F12B15 /* CommonSearchListView.swift in Sources */,
 				7340E1A22D5CD58D008FD5C7 /* SearchStartCourtNoticeViewController.swift in Sources */,
@@ -2241,7 +2246,6 @@
 				739DCA162D670E73009CFC78 /* PropertyThreeBothViewController.swift in Sources */,
 				73D4E3F52D734038005C73D8 /* MonthPeopleViewController.swift in Sources */,
 				73D4E3F92D73404F005C73D8 /* BothCompanyViewController.swift in Sources */,
-				732861762D896D90004CC775 /* FadeTransition.swift in Sources */,
 				739DCA1E2D671669009CFC78 /* MyCollectionPropertyViewController.swift in Sources */,
 				7340E1CE2D5DE622008FD5C7 /* SearchCompanyBeneficialOwnerViewController.swift in Sources */,
 				739DCA062D66E001009CFC78 /* PropertyOneViewController.swift in Sources */,

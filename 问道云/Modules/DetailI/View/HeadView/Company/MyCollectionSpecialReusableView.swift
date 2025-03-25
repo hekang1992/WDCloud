@@ -177,16 +177,16 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             headView.oneHeadView.twoView.label2.text = model.basicInfo?.scale ?? "--"
             //员工
             headView.oneHeadView.threeView.timeLabel.text = model.employees?.lastYear ?? ""
-            headView.oneHeadView.threeView.label2.text = "\(model.employees?.lastNumber ?? 0)人"
+            headView.oneHeadView.threeView.label2.text = "\(model.employees?.lastAmount ?? "")"
             //利润
-            headView.oneHeadView.fourView.timeLabel.text = model.incomeInfo?.lastYear ?? ""
-            headView.oneHeadView.fourView.label2.text = String(model.incomeInfo?.lastAmount ?? 0)
+            headView.oneHeadView.fourView.timeLabel.text = model.saleInfo?.lastYear ?? ""
+            headView.oneHeadView.fourView.label2.text = model.saleInfo?.lastAmount ?? ""
             //收入
             headView.oneHeadView.fiveView.timeLabel.text = model.profitInfo?.lastYear ?? ""
-            headView.oneHeadView.fiveView.label2.text = String(model.profitInfo?.lastAmount ?? 0)
+            headView.oneHeadView.fiveView.label2.text = model.profitInfo?.lastAmount ?? ""
             //总资产
             headView.oneHeadView.sixView.timeLabel.text = model.assetInfo?.lastYear ?? ""
-            headView.oneHeadView.sixView.label2.text = String(model.assetInfo?.lastAmount ?? 0)
+            headView.oneHeadView.sixView.label2.text = model.assetInfo?.lastAmount ?? ""
             //电话个数
             headView.twoHeadView.model.accept(model)
             //主要股东

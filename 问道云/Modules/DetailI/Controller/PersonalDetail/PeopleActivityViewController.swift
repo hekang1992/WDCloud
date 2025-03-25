@@ -14,7 +14,7 @@ class PeopleActivityViewController: WDBaseViewController {
     
     var pageIndex: Int = 1
     
-    var allArray: [itemsModel] = []//加载更多数据
+    var allArray: [rowsModel] = []//加载更多数据
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -113,7 +113,7 @@ extension PeopleActivityViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CompanyActivityViewCell", for: indexPath) as? CompanyActivityViewCell {
             cell.selectionStyle = .none
-            let model = self.allArray[indexPath.row]
+            let model = self.allArray[indexPath.section].data?[indexPath.row]
             cell.model.accept(model)
             if indexPath.row == 0 {
                 cell.lineView1.isHidden = true
@@ -133,8 +133,8 @@ extension PeopleActivityViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        let pageUrl = model.riskDetailPath ?? ""
-        self.pushWebPage(from: pageUrl)
+//        let pageUrl = model.riskDetailPath ?? ""
+//        self.pushWebPage(from: pageUrl)
     }
     
 }
@@ -162,7 +162,7 @@ extension PeopleActivityViewController {
                         self.allArray.removeAll()
                     }
                     pageIndex += 1
-                    let pageData = model.items ?? []
+                    let pageData = model.rows ?? []
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()

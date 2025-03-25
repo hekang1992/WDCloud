@@ -106,25 +106,25 @@ class PopRateMoneyView: BaseView {
         }).disposed(by: disposeBag)
         
         if type == "0" {
-            model.compactMap { $0?.incomeInfo?.annualReports ?? [] }.bind(to: tableView.rx.items(cellIdentifier: "EmployeeMoneyNumViewCell", cellType: EmployeeMoneyNumViewCell.self)) { row, model, cell in
+            model.compactMap { $0?.saleInfo?.annualReports ?? [] }.bind(to: tableView.rx.items(cellIdentifier: "EmployeeMoneyNumViewCell", cellType: EmployeeMoneyNumViewCell.self)) { row, model, cell in
                 cell.backgroundColor = .clear
                 cell.selectionStyle = .none
                 cell.timeLabel.text = model.reportYear ?? ""
-                cell.numLabel.text = String(model.amount ?? 0)
+                cell.numLabel.text = model.amount ?? ""
             }.disposed(by: disposeBag)
         }else if type == "1" {
             model.compactMap { $0?.profitInfo?.annualReports ?? [] }.bind(to: tableView.rx.items(cellIdentifier: "EmployeeMoneyNumViewCell", cellType: EmployeeMoneyNumViewCell.self)) { row, model, cell in
                 cell.backgroundColor = .clear
                 cell.selectionStyle = .none
                 cell.timeLabel.text = model.reportYear ?? ""
-                cell.numLabel.text = String(model.amount ?? 0)
+                cell.numLabel.text = model.amount ?? ""
             }.disposed(by: disposeBag)
         }else if type == "2" {
             model.compactMap { $0?.assetInfo?.annualReports ?? [] }.bind(to: tableView.rx.items(cellIdentifier: "EmployeeMoneyNumViewCell", cellType: EmployeeMoneyNumViewCell.self)) { row, model, cell in
                 cell.backgroundColor = .clear
                 cell.selectionStyle = .none
                 cell.timeLabel.text = model.reportYear ?? ""
-                cell.numLabel.text = String(model.amount ?? 0)
+                cell.numLabel.text = model.amount ?? ""
             }.disposed(by: disposeBag)
         }else {
             

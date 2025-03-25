@@ -72,9 +72,9 @@ class BiaoQianView: BaseView {
                 make.height.equalTo(16.5)
             }
             timeLabel.snp.makeConstraints { make in
-                make.left.equalTo(label1.snp.right).offset(1)
+                make.left.equalTo(label1.snp.right).offset(2)
                 make.centerY.equalTo(label1.snp.centerY)
-                make.height.equalTo(10)
+                make.height.equalTo(13)
             }
         }else if enmu == .showImage {
             addSubview(iconImageView)

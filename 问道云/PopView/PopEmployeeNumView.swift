@@ -86,36 +86,8 @@ class PopEmployeeNumView: BaseView {
             cell.backgroundColor = .clear
             cell.selectionStyle = .none
             cell.timeLabel.text = model.reportYear ?? ""
-            cell.numLabel.text = String(model.number ?? 0)
+            cell.numLabel.text = model.amount ?? ""
         }.disposed(by: disposeBag)
-        
-        //        if type == "0" {
-        //
-        //        }else if type == "1" {
-        //
-        //        }else if type == "2" {
-        //            model.compactMap { $0?.incomeInfo?.annualReports ?? [] }.bind(to: tableView.rx.items(cellIdentifier: "EmployeeNumViewCell", cellType: EmployeeNumViewCell.self)) { row, model, cell in
-        //                cell.backgroundColor = .clear
-        //                cell.selectionStyle = .none
-        //                cell.timeLabel.text = model.reportYear ?? ""
-        //                cell.numLabel.text = String(model.amount ?? 0)
-        //            }.disposed(by: disposeBag)
-        //        }else if type == "3" {
-        //            model.compactMap { $0?.profitInfo?.annualReports ?? [] }.bind(to: tableView.rx.items(cellIdentifier: "EmployeeNumViewCell", cellType: EmployeeNumViewCell.self)) { row, model, cell in
-        //                cell.backgroundColor = .clear
-        //                cell.selectionStyle = .none
-        //                cell.timeLabel.text = model.reportYear ?? ""
-        //                cell.numLabel.text = String(model.amount ?? 0)
-        //            }.disposed(by: disposeBag)
-        //        }else {
-        //            model.compactMap { $0?.assetInfo?.annualReports ?? [] }.bind(to: tableView.rx.items(cellIdentifier: "EmployeeNumViewCell", cellType: EmployeeNumViewCell.self)) { row, model, cell in
-        //                cell.backgroundColor = .clear
-        //                cell.selectionStyle = .none
-        //                cell.timeLabel.text = model.reportYear ?? ""
-        //                cell.numLabel.text = String(model.amount ?? 0)
-        //            }.disposed(by: disposeBag)
-        //        }
-        
     }
     
     @MainActor required init?(coder: NSCoder) {

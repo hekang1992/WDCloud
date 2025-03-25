@@ -129,28 +129,26 @@ class CompanyActivityViewCell: BaseViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             nameLabel.text = model.itemName ?? ""
-            timeLabel.text = model.createtime ?? ""
-            let type = model.risklevel ?? ""
-            switch type {
-            case "1":
-                typeLabel.text = "高风险"
+            timeLabel.text = model.createTime ?? ""
+            let riskLevel = model.riskLevel ?? ""
+            typeLabel.text = riskLevel
+            switch riskLevel {
+            case "高风险":
                 typeLabel.textColor = UIColor.init(cssStr: "#F55B5B")
                 typeLabel.backgroundColor = UIColor.init(cssStr: "#FEF0EF")
                 break
-            case "2":
-                typeLabel.text = "低风险"
+            case "低风险":
                 typeLabel.textColor = UIColor.init(cssStr: "#4DC929")
                 typeLabel.backgroundColor = UIColor.init(cssStr: "#4DC929")?.withAlphaComponent(0.1)
                 break
-            case "3":
-                typeLabel.text = "提示信息"
+            case "提示风险":
                 typeLabel.textColor = UIColor.init(cssStr: "#547AFF")
                 typeLabel.backgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.1)
                 break
             default:
                 break
             }
-            configure(with: model.dynamiccontent ?? [])
+            configure(with: model.dynamicContent ?? [])
         }).disposed(by: disposeBag)
         
     }
@@ -163,16 +161,57 @@ class CompanyActivityViewCell: BaseViewCell {
         // 清空之前的 labels
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         // 创建新的 labels
-        for text in dynamiccontent {
-            let label = UILabel()
-            label.textColor = .init(cssStr: "#999999")
-            label.textAlignment = .left
-            label.font = .regularFontOfSize(size: 12)
-            label.text = "  \(text.title ?? ""):  \(text.fieldValue ?? "")"
-            label.numberOfLines = 2
-            label.setContentHuggingPriority(.defaultLow, for: .vertical)
-            stackView.addArrangedSubview(label)
+        for model in dynamiccontent {
+            let listView = ActivityListView()
+            let title = model.title ?? ""
+            let fieldValue = model.fieldValue ?? ""
+            listView.titleLabel.text = title
+            listView.contentLabel.text = fieldValue
+            listView.setContentHuggingPriority(.defaultLow, for: .vertical)
+            stackView.addArrangedSubview(listView)
         }
     }
 
+}
+
+class ActivityListView: UIView {
+    
+    lazy var titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.font = .regularFontOfSize(size: 13)
+        titleLabel.textColor = .init(cssStr: "#999999")
+        titleLabel.textAlignment = .left
+        return titleLabel
+    }()
+    
+    lazy var contentLabel: UILabel = {
+        let contentLabel = UILabel()
+        contentLabel.font = .regularFontOfSize(size: 13)
+        contentLabel.textColor = .init(cssStr: "#333333")
+        contentLabel.textAlignment = .left
+        contentLabel.numberOfLines = 0
+        return contentLabel
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(titleLabel)
+        addSubview(contentLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(5)
+            make.left.equalToSuperview().offset(8)
+            make.height.equalTo(16.5)
+        }
+        contentLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.top)
+            make.right.equalToSuperview().offset(-30)
+            make.left.equalTo(titleLabel.snp.right).offset(2)
+            make.bottom.equalToSuperview().offset(-5)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
