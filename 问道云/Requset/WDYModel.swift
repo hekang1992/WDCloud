@@ -65,6 +65,7 @@ class DataModel {
     var flag: String?
     var wechatopenid: String?
     var items: [itemsModel]?
+    var datas: [DataModel]?
     var bossList: bossListModel?
     var pageData: [pageDataModel]?
     var pageMeta: pageMetaModel?
@@ -201,6 +202,7 @@ class DataModel {
     var amountUnit: String?
     var amount: String?
     init(json: JSON) {
+        self.datas = json["items"].arrayValue.map { DataModel(json: $0) }
         self.amount = json["amount"].stringValue
         self.amountUnit = json["amountUnit"].stringValue
         self.pitems = json["item"].arrayValue.map { pageItemsModel(json: $0) }

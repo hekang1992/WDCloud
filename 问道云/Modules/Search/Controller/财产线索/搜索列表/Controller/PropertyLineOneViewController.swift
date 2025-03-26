@@ -11,6 +11,7 @@ import MJRefresh
 import DropMenuBar
 import SevenSwitch
 import SkeletonView
+import TYAlertController
 
 class PropertyLineOneViewController: WDBaseViewController {
     
@@ -32,6 +33,9 @@ class PropertyLineOneViewController: WDBaseViewController {
     var clueModel: String = ""//线索类型
     var predictValue: String = ""//金额
     var updateTime: String = ""//时间
+    
+    //是否显示了下拉框
+    var isShowListImage: Bool = false
     
     //所有数据
     var allArray: [pageItemsModel] = []
@@ -142,6 +146,11 @@ class PropertyLineOneViewController: WDBaseViewController {
         return moreView
     }()
     
+    lazy var listImageView: PropertyMonitoringListView = {
+        let listImageView = PropertyMonitoringListView()
+        return listImageView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -174,6 +183,136 @@ class PropertyLineOneViewController: WDBaseViewController {
             make.left.equalTo(SCREEN_WIDTH - 175.pix() - 10)
             make.top.equalTo(logoImageView.snp.bottom).offset(5)
             make.size.equalTo(CGSize(width: 175.pix(), height: 23.pix()))
+        }
+        
+        //点击
+        twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            if twoBtn.isSelected {
+                if !isShowListImage {
+                    view.addSubview(listImageView)
+                    listImageView.snp.makeConstraints { make in
+                        make.top.equalTo(self.twoBtn.snp.bottom).offset(1)
+                        make.centerX.equalTo(self.twoBtn.snp.centerX)
+                        make.size.equalTo(CGSize(width: 99.5.pix(), height: 133.pix()))
+                    }
+                    // Prepare for animation
+                    listImageView.alpha = 0
+                    listImageView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+                    // Animate
+                    UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+                        self.listImageView.alpha = 1
+                        self.listImageView.transform = .identity
+                    })
+                    isShowListImage = true
+                }else {
+                    listImageView.removeFromSuperview()
+                    isShowListImage = false
+                }
+            }else {
+                //根据权限判断是否可以监控
+                let entityType = "1"
+                let man = RequestManager()
+                let dict = ["entityId": self.entityId,
+                            "entityName": self.entityName,
+                            "entityType": entityType]
+                man.requestAPI(params: dict,
+                               pageUrl: "/firminfo/monitor/cancel",
+                               method: .post) { [weak self] result in
+                    switch result {
+                    case .success(let success):
+                        guard let self = self else { return }
+                        if success.code == 200 {
+                            twoBtn.isSelected = true
+                            ToastViewConfig.showToast(message: "监控成功")
+                            self.addUnioInfo(form: entityId, name: entityName)
+                        }else if success.code == 702 {
+                            let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+                            buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
+                            let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+                            buyVipView.cancelBlock = {
+                                self.dismiss(animated: true)
+                            }
+                            buyVipView.buyOneBlock = { [weak self] in
+                                guard let self = self else { return }
+                                //跳转购买单次会员
+                                self.dismiss(animated: true, completion: {
+                                    let oneVc = BuyOnePropertyLineViewController()
+                                    oneVc.entityType = 1
+                                    oneVc.entityId = self.entityId
+                                    oneVc.entityName = self.entityName
+                                    //刷新列表
+                                    oneVc.refreshBlock = {
+                                        self.twoBtn.isSelected = true
+                                    }
+                                    self.navigationController?.pushViewController(oneVc, animated: true)
+                                })
+                            }
+                            buyVipView.buyVipBlock = {
+                                //跳转购买会员
+                                self.dismiss(animated: true, completion: {
+                                    let memVc = MembershipCenterViewController()
+                                    self.navigationController?.pushViewController(memVc, animated: true)
+                                })
+                            }
+                            self.present(alertVc, animated: true)
+                        }
+                        break
+                    case .failure(_):
+                        break
+                    }
+                }
+            }
+        }).disposed(by: disposeBag)
+        
+        listImageView.oneBlock = { [weak self] in
+            self?.isShowListImage = false
+            self?.listImageView.removeFromSuperview()
+            NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC_PROPERYTY), object: nil)
+        }
+        
+        listImageView.twoBlock = { [weak self] in
+            guard let self = self else { return }
+            self.isShowListImage = false
+            self.listImageView.removeFromSuperview()
+            ShowAlertManager.showAlert(title: "取消监控", message: "是否取消监控?", confirmAction: {
+                let entityType = "1"
+                let man = RequestManager()
+                let dict = ["entityId": self.entityId,
+                            "entityName": self.entityName,
+                            "entityType": entityType]
+                man.requestAPI(params: dict,
+                               pageUrl: "/firminfo/monitor/cancel",
+                               method: .post) { [weak self] result in
+                    switch result {
+                    case .success(let success):
+                        guard let self = self else { return }
+                        if success.code == 200 {
+                            twoBtn.isSelected = false
+                            ToastViewConfig.showToast(message: "取消监控成功")
+                        }else if success.code == 702 {
+                            
+                        }
+                        break
+                    case .failure(_):
+                        break
+                    }
+                }
+            })
+        }
+        
+        listImageView.threeBlock = { [weak self] in
+            //设置分组
+            self?.isShowListImage = false
+            self?.listImageView.removeFromSuperview()
+            self?.getGroupInfo()
+        }
+        
+        listImageView.fourBlock = { [weak self] in
+            self?.isShowListImage = false
+            self?.listImageView.removeFromSuperview()
+            let checkVc = MyCheckSettingViewController()
+            self?.navigationController?.pushViewController(checkVc, animated: true)
         }
         
         view.addSubview(bgView)
@@ -252,7 +391,7 @@ class PropertyLineOneViewController: WDBaseViewController {
                 guard let self = self else { return }
                 let modelArray = getThreePropertyLineInfo(from: modelArray)
                 oneMenu.listDataSource = modelArray
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         oneMenu.didSelectedMenuResult = { [weak self] index, model, granted in
             self?.pageIndex = 1
             self?.conditionCode = model?.currentID ?? ""
@@ -266,7 +405,7 @@ class PropertyLineOneViewController: WDBaseViewController {
                 guard let self = self else { return }
                 let modelArray = getTwoPropertyLineInfo(from: modelArray)
                 twoMenu.listDataSource = modelArray
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         twoMenu.didSelectedMenuResult = { [weak self] index, model, granted in
             self?.pageIndex = 1
             self?.clueDirection = model?.currentID ?? ""
@@ -280,7 +419,7 @@ class PropertyLineOneViewController: WDBaseViewController {
                 guard let self = self else { return }
                 let modelArray = getTwoPropertyLineInfo(from: modelArray)
                 threeMenu.listDataSource = modelArray
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         threeMenu.didSelectedMenuResult = { [weak self] index, model, granted in
             self?.pageIndex = 1
             self?.clueModel = model?.currentID ?? ""
@@ -519,6 +658,83 @@ extension PropertyLineOneViewController {
                             self.tableView.mj_footer?.isHidden = true
                         }
                         self.tableView.reloadData()
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //获取分组
+    private func getGroupInfo() {
+        let man = RequestManager()
+        let dict = [String: String]()
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/monitor/group",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    if let modelArray = success.data?.groupList {
+                        let groupView = FocusCompanyPopGroupView()
+                        groupView.frame = self.view.superview!.frame
+                        groupView.model.accept(modelArray)
+                        let alertVc = TYAlertController(alert: groupView, preferredStyle: .alert)!
+                        self.present(alertVc, animated: true)
+                        groupView.cblock = { [weak self] in
+                            self?.dismiss(animated: true)
+                        }
+                        groupView.sblock = { [weak self] model in
+                            self?.dismiss(animated: true, completion: {
+                                let monitorListId = self?.entityId
+                                let groupId = model.eid ?? ""
+                                let dict = ["monitorListId": monitorListId, "groupId": groupId]
+                                man.requestAPI(params: dict as [String : Any],
+                                               pageUrl: "/firminfo/monitor/group/set-group",
+                                               method: .post) { result in
+                                    switch result {
+                                    case .success(let success):
+                                        if success.code == 200 {
+                                            ToastViewConfig.showToast(message: "设置成功")
+                                        }
+                                        break
+                                    case .failure(let failure):
+                                        break
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //添加关联方信息
+    func addUnioInfo(form entityId: String, name: String) {
+        let man = RequestManager()
+        let dict = ["entityId": entityId,
+                    "entityType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/monitor/relation",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    if let modelArray = success.data?.monitorRelationVOList {
+                        let popView = PropertyAlertView(frame: CGRectMake(0, StatusHeightManager.navigationBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight))
+                        popView.ctImageView.image = UIImage.imageOfText(name, size: (30, 30))
+                        popView.nameLabel.text = name
+                        popView.modelArray = modelArray
+                        popView.tableView.reloadData()
+                        UIView.animate(withDuration: 0.25) {
+                            keyWindow?.addSubview(popView)
+                        }
                     }
                 }
                 break

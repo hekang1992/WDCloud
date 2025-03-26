@@ -12,7 +12,7 @@ import TYAlertController
 
 class PropertyLineHotView: BaseView {
     
-    var modelArray: [DataModel]?
+    var modelArray: [[DataModel]]?
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -55,10 +55,16 @@ extension PropertyLineHotView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        var title = ""
+        if section == 0 {
+            title = "浏览历史"
+        }else {
+            title = "最近搜索"
+        }
         let headView = UIView()
         headView.backgroundColor = .init(cssStr: "#F5F5F5")
         let label = UILabel()
-        label.text = "热门搜索"
+        label.text = title
         label.textColor = .init(cssStr: "#333333")
         label.font = .regularFontOfSize(size: 13)
         label.textAlignment = .left
@@ -71,12 +77,16 @@ extension PropertyLineHotView: UITableViewDelegate, UITableViewDataSource {
         return headView
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.modelArray?.count ?? 0
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return modelArray?.count ?? 0
+        return self.modelArray?[section].count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = modelArray?[indexPath.row]
+        let model = modelArray?[indexPath.section][indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "PropertyListViewCell", for: indexPath) as! PropertyListViewCell
         cell.selectionStyle = .none
         cell.backgroundColor = .white
@@ -98,7 +108,7 @@ extension PropertyLineHotView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let model = self.modelArray?[indexPath.row] {
+        if let model = self.modelArray?[indexPath.section][indexPath.row] {
             let cell = tableView.cellForRow(at: indexPath) as! PropertyListViewCell
             self.checkInfo(from: model, cell: cell)
         }

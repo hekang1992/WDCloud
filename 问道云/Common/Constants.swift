@@ -14,6 +14,8 @@ let RISK_VC = "RISK_VC"
 
 let DILI_VC = "DILI_VC"
 
+let ROOT_VC_PROPERYTY = "ROOT_VC_PROPERYTY"
+
 let SCREEN_WIDTH = UIScreen.main.bounds.size.width
 
 let SCREEN_HEIGHT = UIScreen.main.bounds.size.height

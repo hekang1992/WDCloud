@@ -109,6 +109,7 @@ class PropertyLineBothViewController: WDBaseViewController {
         }
         setheadUI()
         segmentedView(segmentedView, didSelectedItemAt: 0)
+        addHistoryInfo()
     }
 }
 
@@ -165,6 +166,28 @@ extension PropertyLineBothViewController: JXSegmentedViewDelegate {
             oneVc.didMove(toParent: self)
         }else {
             addChild(twoVc)
+        }
+    }
+    
+}
+
+extension PropertyLineBothViewController {
+    
+    //新增浏览历史
+    private func addHistoryInfo() {
+        let man = RequestManager()
+        let dict = ["subjectId": enityId.value,
+                    "subjectName": companyName.value,
+                    "subjectType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/property/clue/scan/history/add",
+                       method: .post) { result in
+            switch result {
+            case .success(_):
+                break
+            case .failure(_):
+                break
+            }
         }
     }
     

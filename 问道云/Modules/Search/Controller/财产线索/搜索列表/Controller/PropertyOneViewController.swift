@@ -56,6 +56,10 @@ class PropertyOneViewController: WDBaseViewController {
     
     var isShowKeyboard: Bool = true
     
+    var oneArray: [DataModel]?
+    var twoArray: [DataModel]?
+    var allArray: [[DataModel]]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,8 +73,34 @@ class PropertyOneViewController: WDBaseViewController {
         //获取行业数据
         getAllIndustryInfo()
         
+        let group = DispatchGroup()
+        
         //获取热搜数据
-        getHotsInfo()
+        group.enter()
+        getHotsInfo(complete: { [weak self] modelArray in
+            self?.oneArray = modelArray
+            group.leave()
+        })
+        
+        //获取浏览历史
+        group.enter()
+        getHistoryInfo(complete: { [weak self] modelArray in
+            self?.twoArray = modelArray
+            group.leave()
+        })
+        
+        // 所有任务完成后的通知
+        group.notify(queue: .main) { [weak self] in
+            let one = self?.oneArray ?? []
+            let two = self?.twoArray ?? []
+            self?.allArray = [two, one]
+            self?.oneView.modelArray = self?.allArray ?? []
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
+                self?.oneView.tableView.hideSkeleton()
+                self?.oneView.tableView.reloadData()
+            }
+            print("全部执行完成========全部执行完成")
+        }
         
         // 监听 UITextField 的文本变化
         self.headView.searchHeadView.searchTx
@@ -211,6 +241,7 @@ extension PropertyOneViewController: JXPagingViewDelegate, JXSegmentedViewDelega
     
 }
 
+/** 网络数据请求 */
 extension PropertyOneViewController {
     
     //获取所有城市数据
@@ -242,21 +273,17 @@ extension PropertyOneViewController {
     }
     
     //获取热搜数据
-    func getHotsInfo() {
+    func getHotsInfo(complete: @escaping (([DataModel]) -> Void)) {
         let man = RequestManager()
         let dict = [String :String]()
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/property/clues/search/hot-search",
-                       method: .get) { [weak self] result in
+                       method: .get) { result in
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     if let modelArray = success.datass {
-                        self?.oneView.modelArray = modelArray
-                        DispatchQueue.main.asyncAfter(delay: 0.25) {
-                            self?.oneView.tableView.hideSkeleton()
-                            self?.oneView.tableView.reloadData()
-                        }
+                        complete(modelArray)
                     }
                 }
                 break
@@ -266,10 +293,25 @@ extension PropertyOneViewController {
         }
     }
     
-}
-
-/** 网络数据请求 */
-extension PropertyOneViewController {
-    
+    //获取浏览历史
+    func getHistoryInfo(complete: @escaping (([DataModel]) -> Void)) {
+        let man = RequestManager()
+        let dict = [String: String]()
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/property/clue/scan/history/list",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    if let modelArray = success.data?.datas {
+                        complete(modelArray)
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
     
 }

@@ -11,7 +11,7 @@ class PropertyTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(setUpRootVc(_ :)), name: NSNotification.Name(ROOT_VC_PROPERYTY), object: nil)
         //TabBar设置
         tabBar.backgroundColor = .white
         tabBar.isTranslucent = false
@@ -110,6 +110,14 @@ class PropertyTabBarController: UITabBarController, UITabBarControllerDelegate {
                 imageView.layer.add(scaleUp, forKey: nil)
             }
         }
+    }
+    
+}
+
+extension PropertyTabBarController {
+    
+    @objc func setUpRootVc(_ notification: Notification) {
+        self.selectedIndex = 2
     }
     
 }
