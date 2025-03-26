@@ -1973,24 +1973,37 @@ class outListModel {
 }
 
 class monitorRelationVOListModel {
-    var subjectId: String?
-    var entityId: String?
+    var subjectId: Int?
+    var entityId: Int?
     var entityName: String?
-    var entityType: String?
-    var relation: String?
+    var entityType: Int?
+    var relation: Int?
     var relationName: String?
     var shareholdingRatio: String?
-    var customRelation: String?
+    var customRelation: Int?
     var select: Bool?//是否点选了。自己加的..
     init(json: JSON) {
         self.select = json["select"].boolValue
-        self.subjectId = json["subjectId"].stringValue
-        self.entityId = json["entityId"].stringValue
+        self.subjectId = json["subjectId"].intValue
+        self.entityId = json["entityId"].intValue
         self.entityName = json["entityName"].stringValue
-        self.entityType = json["entityType"].stringValue
-        self.relation = json["relation"].stringValue
+        self.entityType = json["entityType"].intValue
+        self.relation = json["relation"].intValue
         self.relationName = json["relationName"].stringValue
         self.shareholdingRatio = json["shareholdingRatio"].stringValue
-        self.customRelation = json["customRelation"].stringValue
+        self.customRelation = json["customRelation"].intValue
+    }
+    
+    func toDictionary() -> [String: Any] {
+        return [
+            "subjectId": self.subjectId ?? "",
+            "entityId": self.entityId ?? "",
+            "entityName": self.entityName ?? "",
+            "entityType": self.entityType ?? "",
+            "relation": self.relation ?? "",
+            "relationName": self.relationName ?? "",
+            "shareholdingRatio": self.shareholdingRatio ?? "",
+            "customRelation": self.customRelation ?? ""
+        ]
     }
 }

@@ -26,7 +26,7 @@ class PropertyThreePeopleViewController: WDBaseViewController {
     var monitorTimeBegin: String = ""
     var monitorTimeEnd: String = ""
     var registerCapital: String = ""
-    var entityName: String = "2"
+    var entityName: String = ""
     var pageNum: Int = 1
     var allArray: [itemsModel] = []//加载更多
     var dataModel: DataModel?

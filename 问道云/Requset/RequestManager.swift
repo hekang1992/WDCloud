@@ -13,6 +13,7 @@ enum APIService {
     case requestAPI(params: [String: Any]?, pageUrl: String, method: Moya.Method)
     case uploadImageAPI(params: [String: Any]?, pageUrl: String, data: Data, method: Moya.Method)
     case uploadDataAPI(params: [String: Any]?, pageUrl: String, method: Moya.Method)
+    case sendJSONArray(jsonArray: [[String: Any]], pageUrl: String, method: Moya.Method)
 }
 
 extension APIService: TargetType {
@@ -25,14 +26,18 @@ extension APIService: TargetType {
         switch self {
         case .requestAPI(_, let pageUrl, _),
                 .uploadImageAPI(_, let pageUrl, _, _),
-                .uploadDataAPI(_, let pageUrl, _):
+                .uploadDataAPI(_, let pageUrl, _),
+                .sendJSONArray(_, let pageUrl, _):
             return pageUrl
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .requestAPI(_, _, let method), .uploadImageAPI(_, _, _, let method), .uploadDataAPI(_, _, let method):
+        case .requestAPI(_, _, let method),
+                .uploadImageAPI(_, _, _, let method),
+                .uploadDataAPI(_, _, let method),
+                .sendJSONArray(_, _, let method):
             return method
         }
     }
@@ -69,12 +74,22 @@ extension APIService: TargetType {
                 }
             }
             return .uploadMultipart(formData)
+            
+        case .sendJSONArray(let array, _, _): // 处理 JSON 数组请求
+            do {
+                let data = try JSONSerialization.data(withJSONObject: array, options: [])
+                return .requestData(data)
+            } catch {
+                return .requestPlain // 失败时回退
+            }
+            
         }
+        
     }
     
     var headers: [String: String]? {
         var headers = [String: String]()
-        headers["Accept"] = "application/json"
+        headers["Content-Type"] = "application/json"
         headers["Connection"] = "keep-alive"
         headers["x-sld-client-version"] = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         var sessionID: String = ""
@@ -104,16 +119,16 @@ class RequestManager {
         // 取消上一次的请求
         let pageUrl = target.path
         if !(pageUrl.contains("searchRecord/query") || pageUrl.contains("clientbrowsecb/selectBrowserecord") || pageUrl.contains("clientbrowsecb/hot-search")) || pageUrl.contains("clientbrowsecb/addBrowserecord") {
-//            ViewHud.addLoadView()
+            //            ViewHud.addLoadView()
         }
         if let lastRequest = currentRequest {
-//            ViewHud.hideLoadView()
+            //            ViewHud.hideLoadView()
             lastRequest.cancel()
             print("🔴 上一次请求已取消")
         }
         print("🟢 发起新的请求: \(target)")
         currentRequest = provider.request(target) { result in
-//            ViewHud.hideLoadView()
+            //            ViewHud.hideLoadView()
             switch result {
             case .success(let response):
                 do {
@@ -159,6 +174,10 @@ class RequestManager {
     
     func uploadImageAPI(params: [String: Any]?, pageUrl: String, data: Data, method: Moya.Method, completion: @escaping (Result<BaseModel, Error>) -> Void) {
         requestData(target: .uploadImageAPI(params: params, pageUrl: pageUrl, data: data, method: method), completion: completion)
+    }
+    
+    func requestArrayAPI(array: [[String: Any]], pageUrl: String, method: Moya.Method, completion: @escaping (Result<BaseModel, Error>) -> Void) {
+        requestData(target: .sendJSONArray(jsonArray: array, pageUrl: pageUrl, method: method), completion: completion)
     }
     
 }

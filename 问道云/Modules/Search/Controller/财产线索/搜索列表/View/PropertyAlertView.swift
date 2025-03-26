@@ -9,6 +9,8 @@ import UIKit
 
 class PropertyAlertView: BaseView {
     
+    var selectedIndexPaths = [IndexPath]()
+    var selectedModels = [[String: Any]]()
     var modelArray: [monitorRelationVOListModel]?
     
     lazy var grayView: UIView = {
@@ -120,6 +122,34 @@ class PropertyAlertView: BaseView {
             guard let self = self else { return }
             self.removeFromSuperview()
         }).disposed(by: disposeBag)
+        
+        cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.removeFromSuperview()
+        }).disposed(by: disposeBag)
+        
+        saveBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let man = RequestManager()
+            let newDictArray = selectedModels.map { dict in
+                var newDict = dict
+                return newDict
+            }
+            man.requestArrayAPI(array: newDictArray,
+                                pageUrl: "/entity/monitor/relation",
+                                method: .post) { result in
+                switch result {
+                case .success(let success):
+                    if success.code == 200 {
+                        ToastViewConfig.showToast(message: "监控成功")
+                    }
+                    break
+                case .failure(_):
+                    break
+                }
+            }
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -137,7 +167,8 @@ extension PropertyAlertView: UITableViewDelegate, UITableViewDataSource {
         numLabel.textColor = .init(cssStr: "#666666")
         numLabel.font = .regularFontOfSize(size: 12)
         numLabel.textAlignment = .left
-        numLabel.text = "同时监控财产关联方"
+        
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(selectedIndexPaths.count)", fullText: "同时监控财产关联方\(selectedIndexPaths.count)", font: UIFont.regularFontOfSize(size: 12))
         headView.addSubview(numLabel)
         numLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -146,7 +177,7 @@ extension PropertyAlertView: UITableViewDelegate, UITableViewDataSource {
         }
         
         let qBtn = UIButton(type: .custom)
-        qBtn.setTitle("全选", for: .normal)
+        qBtn.setTitle("全选\(self.selectedIndexPaths.count)", for: .normal)
         qBtn.titleLabel?.font = .regularFontOfSize(size: 12)
         qBtn.setTitleColor(UIColor.init(cssStr: "#666666"), for: .normal)
         qBtn.setImage(UIImage(named: "Control_nor"), for: .normal)
@@ -155,8 +186,42 @@ extension PropertyAlertView: UITableViewDelegate, UITableViewDataSource {
         qBtn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-14)
-            make.size.equalTo(CGSize(width: 20.pix(), height: 20.pix()))
+            make.size.equalTo(CGSize(width: 60.pix(), height: 20.pix()))
         }
+        qBtn.layoutButtonEdgeInsets(style: .right, space: 10)
+        
+        let selectCount = self.selectedIndexPaths.count
+        if selectCount == self.modelArray?.count {
+            qBtn.isSelected = true
+        }else {
+            qBtn.isSelected = false
+        }
+        
+        qBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            if qBtn.isSelected {
+                if let modelArray = self.modelArray {
+                    for (index, model) in modelArray.enumerated() {
+                        model.select = false
+                    }
+                    self.selectedModels.removeAll()
+                    self.selectedIndexPaths.removeAll()
+                }
+                self.tableView.reloadData()
+            }else {
+                if let modelArray = self.modelArray {
+                    self.selectedModels.removeAll()
+                    self.selectedIndexPaths.removeAll()
+                    for (index, model) in modelArray.enumerated() {
+                        model.select = true
+                        let indexPath = NSIndexPath(row: index, section: 0)
+                        self.selectedIndexPaths.append(indexPath as IndexPath)
+                        self.selectedModels.append(model.toDictionary())
+                    }
+                }
+                self.tableView.reloadData()
+            }
+        }).disposed(by: disposeBag)
         
         return headView
     }
@@ -175,6 +240,21 @@ extension PropertyAlertView: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.model = model
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let model = modelArray?[indexPath.row] {
+            if let index = self.selectedIndexPaths.firstIndex(of: indexPath) {
+                self.selectedIndexPaths.remove(at: index) //如果已经选中，则取消选中
+                self.selectedModels.remove(at: index)
+                model.select = false
+            } else {
+                self.selectedModels.append(model.toDictionary())
+                self.selectedIndexPaths.append(indexPath)
+                model.select = true
+            }
+            tableView.reloadData()
+        }
     }
     
 }
