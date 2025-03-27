@@ -132,8 +132,8 @@ extension PropertyLineHotView {
     //权限验证
     private func checkInfo(from model: DataModel, cell: PropertyListViewCell) {
         let entityType = "1"
-        let entityId = model.entityId ?? ""
-        let entityName = model.entityName ?? ""
+        let entityId = model.subjectId ?? ""
+        let entityName = model.subjectName ?? ""
         let dict = ["entityType": entityType,
                     "entityId": entityId,
                     "entityName": entityName]
@@ -146,8 +146,8 @@ extension PropertyLineHotView {
                 if success.code == 200 {
                     let vc = ViewControllerUtils.findViewController(from: self)
                     let bothVc = PropertyLineBothViewController()
-                    let enityId = model.entityId ?? ""
-                    let companyName = model.entityName ?? ""
+                    let enityId = model.subjectId ?? ""
+                    let companyName = model.subjectName ?? ""
                     bothVc.enityId.accept(enityId)
                     bothVc.companyName.accept(companyName)
                     bothVc.logoUrl = model.logoUrl ?? ""
@@ -166,8 +166,8 @@ extension PropertyLineHotView {
                         vc?.dismiss(animated: true, completion: {
                             let oneVc = BuyOnePropertyLineViewController()
                             oneVc.entityType = 1
-                            oneVc.entityId = model.entityId ?? ""
-                            oneVc.entityName = model.entityName ?? ""
+                            oneVc.entityId = model.subjectId ?? ""
+                            oneVc.entityName = model.subjectName ?? ""
                             //刷新列表
                             oneVc.refreshBlock = { [weak self] in
                                 guard let self = self else { return }
@@ -196,8 +196,8 @@ extension PropertyLineHotView {
     
     //添加监控
     func prppertyLineMonitrongInfo(from model: DataModel, monitoringBtn: UIButton) {
-        let entityId = model.entityId ?? ""
-        let entityName = model.entityName ?? ""
+        let entityId = model.subjectId ?? ""
+        let entityName = model.subjectName ?? ""
         let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let entityType = 1
         let man = RequestManager()
@@ -229,8 +229,8 @@ extension PropertyLineHotView {
                         vc?.dismiss(animated: true, completion: {
                             let oneVc = BuyOnePropertyLineViewController()
                             oneVc.entityType = 1
-                            oneVc.entityId = model.entityId ?? ""
-                            oneVc.entityName = model.entityName ?? ""
+                            oneVc.entityId = model.subjectId ?? ""
+                            oneVc.entityName = model.subjectName ?? ""
                             //刷新列表
                             oneVc.refreshBlock = { [weak self] in
                                 guard let self = self else { return }
@@ -259,8 +259,8 @@ extension PropertyLineHotView {
     
     //取消监控
     func propertyLineCancelInfo(from model: DataModel, monitoringBtn: UIButton) {
-        let entityId = model.entityId ?? ""
-        let entityName = model.entityName ?? ""
+        let entityId = model.subjectId ?? ""
+        let entityName = model.subjectName ?? ""
         let entityType = "1"
         let man = RequestManager()
         let dict = ["entityId": entityId,

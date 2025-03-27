@@ -201,7 +201,11 @@ class DataModel {
     var pitems: [pageItemsModel]?
     var amountUnit: String?
     var amount: String?
+    var subjectName: String?
+    var subjectId: String?
     init(json: JSON) {
+        self.subjectName = json["subjectName"].stringValue
+        self.subjectId = json["subjectId"].stringValue
         self.datas = json["items"].arrayValue.map { DataModel(json: $0) }
         self.amount = json["amount"].stringValue
         self.amountUnit = json["amountUnit"].stringValue

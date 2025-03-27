@@ -161,9 +161,17 @@ extension OpenTicketViewController {
                        method: .post) { [weak self] result in
             switch result {
             case .success(let success):
+                guard let self = self else { return }
                 if success.code == 200 {
-                    self?.navigationController?.popViewController(animated: true)
-                } 
+                    if let viewControllers = self.navigationController?.viewControllers {
+                        let targetVC = viewControllers.first { $0 is MyTicketViewController }
+                        if targetVC != nil {
+                            self.navigationController?.popToViewController(targetVC!, animated: true)
+                        } else {
+                            self.navigationController?.popToRootViewController(animated: true)
+                        }
+                    }
+                }
                 ToastViewConfig.showToast(message: success.msg ?? "")
                 break
             case .failure(_):

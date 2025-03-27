@@ -232,8 +232,8 @@ class TwoTicketCell: BaseViewCell {
             taxNumLabel.text = model.taxpayernumber ?? ""
             priceLabel.text = "¥\(model.invoiceamount ?? "0.00")"
             timeLabel.text = model.createTime ?? ""
-            nameLabel.text = model.invoicetype == "1" ? "增值税专用发票(专票)" :
-                             model.invoicetype == "2" ? "增值税普通发票(普票)" : "其他类型发票"
+            nameLabel.text = model.invoicetype == "2" ? "增值税专用发票(专票)" :
+                             model.invoicetype == "1" ? "增值税普通发票(普票)" : "其他类型发票"
             typeImageView.image = model.handlestate == "3" ?
                                   UIImage(named: "watermarkwacnehng") : UIImage(named: "watermarkjinxinzhong")
             if model.handlestate == "3" {

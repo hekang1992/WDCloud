@@ -58,8 +58,7 @@ class FocusAllViewController: WDBaseViewController {
         addsentMentView()
         
         //添加子控制器
-        setupViewControllers()
-        
+        segmentedView(segmentedView, didSelectedItemAt: 0)
     }
     
 }
@@ -79,29 +78,7 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
             make.top.equalTo(segmentedView.snp.bottom).offset(1)
         }
     }
-    
-    func setupViewControllers() {
-        listVCArray.forEach { $0.view.removeFromSuperview() }
-        listVCArray.removeAll()
-       
-        companyVc.navController = navigationController
-        cocsciew.addSubview(companyVc.view)
-        listVCArray.append(companyVc)
-        
-        peopleVc.navController = navigationController
-        cocsciew.addSubview(peopleVc.view)
-        listVCArray.append(peopleVc)
-        
-        updateViewControllersLayout()
-        segmentedView(segmentedView, didSelectedItemAt: 0)
-    }
-    
-    private func updateViewControllersLayout() {
-        for (index, vc) in listVCArray.enumerated() {
-            vc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: 1)
-        }
-    }
-    
+ 
     private func createSegmentedView() -> JXSegmentedView {
         let segmentedView = JXSegmentedView()
         segmentedView.delegate = self
@@ -143,13 +120,21 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         if index == 0 {
-            let companyVc = self.listVCArray.first as! FocusCompanyViewController
-            companyVc.getCompanyAllInfo()
+            cocsciew.addSubview(companyVc.view)
+            listVCArray.append(companyVc)
+            companyVc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: cocsciew.frame.height)
             companyVc.nav = navigationController
+            DispatchQueue.main.asyncAfter(delay: 0.5) {
+                self.companyVc.getCompanyAllInfo()
+            }   
         }else {
-            let peopleVc = self.listVCArray.last as! FocusPeopleViewController
-            peopleVc.getPeopleAllInfo()
+            cocsciew.addSubview(peopleVc.view)
+            listVCArray.append(peopleVc)
+            peopleVc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: cocsciew.frame.height)
             peopleVc.nav = navigationController
+            DispatchQueue.main.asyncAfter(delay: 0.5) {
+                self.peopleVc.getPeopleAllInfo()
+            }
         }
     }
     

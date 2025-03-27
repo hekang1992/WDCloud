@@ -151,6 +151,11 @@ class PropertyLineOneViewController: WDBaseViewController {
         return listImageView
     }()
     
+    lazy var moreClueView: PropertyMonitoringClueListView = {
+        let moreClueView = PropertyMonitoringClueListView()
+        return moreClueView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -347,9 +352,6 @@ class PropertyLineOneViewController: WDBaseViewController {
             make.bottom.equalToSuperview().offset(-6)
         }
         
-        getPropertyInfo()
-        getZhuiZongInfo()
-        
         leftBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             leftBtn.isSelected = true
@@ -364,7 +366,7 @@ class PropertyLineOneViewController: WDBaseViewController {
             configure(with: rightTitles)
         }).disposed(by: disposeBag)
         
-        let oneMenu = MenuAction(title: "线索对象", style: .typeList)!
+        let oneMenu = MenuAction(title: "线索对象", style: .typeCustom)!
         let twoMenu = MenuAction(title: "财产流向", style: .typeList)!
         let threeMenu = MenuAction(title: "线索类型", style: .typeList)!
         let fourMenu = MenuAction(title: "更多", style: .typeCustom)!
@@ -389,14 +391,15 @@ class PropertyLineOneViewController: WDBaseViewController {
             .map { $0?.conditionVO?.cueObject ?? [] }
             .subscribe(onNext: { [weak self] modelArray in
                 guard let self = self else { return }
-                let modelArray = getThreePropertyLineInfo(from: modelArray)
-                oneMenu.listDataSource = modelArray
+                oneMenu.displayCustomWithMenu = { [weak self] in
+                    guard let self = self else { return UIView() }
+                    moreClueView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 250)
+                    let modelArray = getThreePropertyLineInfo(from: modelArray)
+                    moreClueView.listModelArray = modelArray
+                    moreClueView.tableView1.reloadData()
+                    return moreClueView
+                }
             }).disposed(by: disposeBag)
-        oneMenu.didSelectedMenuResult = { [weak self] index, model, granted in
-            self?.pageIndex = 1
-            self?.conditionCode = model?.currentID ?? ""
-            self?.getListInfo()
-        }
         
         //财产留向
         self.model.asObservable()
@@ -474,6 +477,8 @@ class PropertyLineOneViewController: WDBaseViewController {
         })
         //获取列表数据信息
         getListInfo()
+        getPropertyInfo()
+        getZhuiZongInfo()
     }
     
     @objc func switchChanged(_ sender: SevenSwitch) {
@@ -700,7 +705,7 @@ extension PropertyLineOneViewController {
                                             ToastViewConfig.showToast(message: "设置成功")
                                         }
                                         break
-                                    case .failure(let failure):
+                                    case .failure(_):
                                         break
                                     }
                                 }

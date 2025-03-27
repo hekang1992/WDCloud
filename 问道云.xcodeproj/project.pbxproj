@@ -363,6 +363,7 @@
 		73EF03D92D312B330070F850 /* TwoPeopleNormalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03D82D312B330070F850 /* TwoPeopleNormalListCell.swift */; };
 		73EF03DB2D31339A0070F850 /* TwoPeopleCoopViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03DA2D31339A0070F850 /* TwoPeopleCoopViewCell.swift */; };
 		73F3B88F2D94176900350CB1 /* PropertyMonitoringListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F3B88E2D94176900350CB1 /* PropertyMonitoringListView.swift */; };
+		73F3B8912D94E87200350CB1 /* PropertyMonitoringClueListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F3B8902D94E87200350CB1 /* PropertyMonitoringClueListView.swift */; };
 		73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */; };
 		73F6046A2D1171280061D5D3 /* MyTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604692D1171280061D5D3 /* MyTicketView.swift */; };
 		73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */; };
@@ -780,6 +781,7 @@
 		73EF03D82D312B330070F850 /* TwoPeopleNormalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleNormalListCell.swift; sourceTree = "<group>"; };
 		73EF03DA2D31339A0070F850 /* TwoPeopleCoopViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleCoopViewCell.swift; sourceTree = "<group>"; };
 		73F3B88E2D94176900350CB1 /* PropertyMonitoringListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyMonitoringListView.swift; sourceTree = "<group>"; };
+		73F3B8902D94E87200350CB1 /* PropertyMonitoringClueListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyMonitoringClueListView.swift; sourceTree = "<group>"; };
 		73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketViewController.swift; sourceTree = "<group>"; };
 		73F604692D1171280061D5D3 /* MyTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketView.swift; sourceTree = "<group>"; };
 		73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTicketViewController.swift; sourceTree = "<group>"; };
@@ -1632,6 +1634,7 @@
 				731FCA912D92888500D2A93B /* PropertyLineOnlyTimeView.swift */,
 				731FCA932D92909300D2A93B /* PropertyLineTwoCell.swift */,
 				73F3B88E2D94176900350CB1 /* PropertyMonitoringListView.swift */,
+				73F3B8902D94E87200350CB1 /* PropertyMonitoringClueListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2208,6 +2211,7 @@
 				73C007112D6459AF003C3CE1 /* SearchDueDiligenceView.swift in Sources */,
 				739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */,
 				7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */,
+				73F3B8912D94E87200350CB1 /* PropertyMonitoringClueListView.swift in Sources */,
 				73D4E3EF2D73401B005C73D8 /* WeekCompanyViewController.swift in Sources */,
 				730CEDFC2D544EF6002DE9DF /* CompanyLawCell.swift in Sources */,
 				7340E1D62D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift in Sources */,

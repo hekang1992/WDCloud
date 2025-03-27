@@ -184,7 +184,7 @@ extension PropertyCompanyViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        print("公司名称=====\(model.entityName ?? "")")
+        print("公司名称=====\(model.subjectName ?? "")")
         let cell = tableView.cellForRow(at: indexPath) as! PropertyListViewCell
         self.checkInfo(from: model, cell: cell)
     }
@@ -253,8 +253,8 @@ extension PropertyCompanyViewController {
     
     private func checkInfo(from model: DataModel, cell: PropertyListViewCell) {
         let entityType = "1"
-        let entityId = model.entityId ?? ""
-        let entityName = model.entityName ?? ""
+        let entityId = model.subjectId ?? ""
+        let entityName = model.subjectName ?? ""
         let dict = ["entityType": entityType,
                     "entityId": entityId,
                     "entityName": entityName]
@@ -266,8 +266,8 @@ extension PropertyCompanyViewController {
             case .success(let success):
                 if success.code == 200 {
                     let bothVc = PropertyLineBothViewController()
-                    let enityId = model.entityId ?? ""
-                    let companyName = model.entityName ?? ""
+                    let enityId = model.subjectId ?? ""
+                    let companyName = model.subjectName ?? ""
                     bothVc.enityId.accept(enityId)
                     bothVc.companyName.accept(companyName)
                     bothVc.logoUrl = model.logoUrl ?? ""
@@ -285,8 +285,8 @@ extension PropertyCompanyViewController {
                         self.dismiss(animated: true, completion: {
                             let oneVc = BuyOnePropertyLineViewController()
                             oneVc.entityType = 1
-                            oneVc.entityId = model.entityId ?? ""
-                            oneVc.entityName = model.entityName ?? ""
+                            oneVc.entityId = model.subjectId ?? ""
+                            oneVc.entityName = model.subjectName ?? ""
                             //刷新列表
                             oneVc.refreshBlock = {
                                 model.monitor = true
@@ -313,8 +313,8 @@ extension PropertyCompanyViewController {
     
     //添加监控
     func prppertyLineMonitrongInfo(from model: DataModel, monitoringBtn: UIButton) {
-        let entityId = model.entityId ?? ""
-        let entityName = model.entityName ?? ""
+        let entityId = model.subjectId ?? ""
+        let entityName = model.subjectName ?? ""
         let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let entityType = 1
         let man = RequestManager()
@@ -345,8 +345,8 @@ extension PropertyCompanyViewController {
                         self.dismiss(animated: true, completion: {
                             let oneVc = BuyOnePropertyLineViewController()
                             oneVc.entityType = 1
-                            oneVc.entityId = model.entityId ?? ""
-                            oneVc.entityName = model.entityName ?? ""
+                            oneVc.entityId = model.subjectId ?? ""
+                            oneVc.entityName = model.subjectName ?? ""
                             //刷新列表
                             oneVc.refreshBlock = { [weak self] in
                                 guard let self = self else { return }
@@ -375,8 +375,8 @@ extension PropertyCompanyViewController {
     
     //取消监控
     func propertyLineCancelInfo(from model: DataModel, monitoringBtn: UIButton) {
-        let entityId = model.entityId ?? ""
-        let entityName = model.entityName ?? ""
+        let entityId = model.subjectId ?? ""
+        let entityName = model.subjectName ?? ""
         let entityType = "1"
         let man = RequestManager()
         let dict = ["entityId": entityId,

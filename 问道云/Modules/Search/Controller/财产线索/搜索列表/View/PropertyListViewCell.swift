@@ -177,7 +177,7 @@ class PropertyListViewCell: BaseViewCell {
             
             self.collectionView.reloadData()
             
-            let companyName = model.entityName ?? ""
+            let companyName = model.subjectName ?? ""
             
             let logoUrl = model.logoUrl ?? ""
             

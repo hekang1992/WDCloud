@@ -202,7 +202,7 @@ extension AddInvoiceViewController: UITableViewDelegate {
                     "bankname": bankname,
                     "bankfullname": bankfullname,
                     "defaultstate": defaultstate,
-                    "contact": customernumber] as [String : Any]
+                    "contact": contactnumber] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/invoiceriseit/add",

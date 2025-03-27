@@ -83,7 +83,6 @@ extension TwoTicketViewController {
                     }
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
-                        self.noNetView.removeFromSuperview()
                     }else {
                         self.addNodataView(from: self.twoTicketView)
                         
@@ -91,11 +90,6 @@ extension TwoTicketViewController {
                 }
                 break
             case .failure(_):
-                self.addNoNetView(from: self.twoTicketView)
-                self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
-                    self?.pageNum = 1
-                    self?.getListInfo()
-                }).disposed(by: disposeBag)
                 break
             }
         }

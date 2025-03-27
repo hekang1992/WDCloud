@@ -171,7 +171,7 @@ extension MyTicketViewController: JXSegmentedViewDelegate {
         }
         
         twoVc.linkBlock = { [weak self] model in
-            self?.pushWebPage(from: base_url + (model.localpdflink ?? ""))
+            self?.pushWebPage(from: model.localpdflink ?? "")
         }
         
         updateViewControllersLayout()

@@ -11,12 +11,13 @@ import RxSwift
 
 class OrderListViewCell: BaseViewCell {
     
-    var countdownTimer: CountdownTimer!
-    
     var model = BehaviorRelay<rowsModel?>(value: nil)
     
     var block: ((rowsModel) -> Void)?
-
+    
+    private var timer: Timer?
+    private var endDate: Date?
+    
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.textAlignment = .left
@@ -246,14 +247,14 @@ class OrderListViewCell: BaseViewCell {
             if orderstate == "0" {
                 self.syLabel.isHidden = false
                 self.payBtn.isHidden = false
-                let countdown = CountdownTimer(startTime: model.ordertime ?? "", durationInMinutes: 30)
-                countdown.startCountdown(update: { remainingTime in
-                    self.syLabel.text = "剩余支付时间 \(remainingTime)"
-                }, completion: {
-                    self.syLabel.isHidden = true
-                    self.payBtn.isHidden = true
-                })
+                let ordertime = model.ordertime ?? ""
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                dateFormatter.timeZone = TimeZone.current
+                let startDate = dateFormatter.date(from: ordertime)!
+                self.configure(with: startDate)
             }else {
+                self.syLabel.text = ""
                 self.syLabel.isHidden = true
                 self.payBtn.isHidden = true
             }
@@ -262,7 +263,7 @@ class OrderListViewCell: BaseViewCell {
         //立即支付
         payBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self,
-            let model = model.value else { return }
+                  let model = model.value else { return }
             self.block?(model)
         }).disposed(by: disposeBag)
         
@@ -272,4 +273,50 @@ class OrderListViewCell: BaseViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configure(with startDate: Date) {
+        // 清除之前的计时器
+        timer?.invalidate()
+        
+        // 设置结束时间（开始时间 + 30分钟）
+        endDate = startDate.addingTimeInterval(30 * 60)
+        
+        // 立即更新一次显示
+        updateCountdown()
+        
+        // 启动新的计时器
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            self?.updateCountdown()
+        }
+    }
+    
+    private func updateCountdown() {
+        guard let endDate = endDate else { return }
+        
+        let now = Date()
+        let remainingTime = endDate.timeIntervalSince(now)
+        
+        if remainingTime <= 0 {
+            // 倒计时结束
+            self.syLabel.text = ""
+            timer?.invalidate()
+            timer = nil
+        } else {
+            // 格式化剩余时间
+            let hours = Int(remainingTime) / 3600
+            let minutes = (Int(remainingTime) % 3600) / 60
+            let seconds = Int(remainingTime) % 60
+            self.syLabel.text = String(format: "剩余支付时间:%02d:%02d", minutes, seconds)
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        timer?.invalidate()
+        timer = nil
+        self.syLabel.text = nil
+    }
+    
+    deinit {
+        timer?.invalidate()
+    }
 }
