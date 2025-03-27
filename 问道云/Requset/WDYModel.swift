@@ -203,7 +203,9 @@ class DataModel {
     var amount: String?
     var subjectName: String?
     var subjectId: String?
+    var bindStatus: Int?
     init(json: JSON) {
+        self.bindStatus = json["bindStatus"].intValue
         self.subjectName = json["subjectName"].stringValue
         self.subjectId = json["subjectId"].stringValue
         self.datas = json["items"].arrayValue.map { DataModel(json: $0) }

@@ -32,6 +32,8 @@ typedef NS_ENUM(NSInteger, MenuActionStyle) {
 /** 用于调整 自定义视图选中时文字的显示 */
 - (void) adjustTitle:(NSString *)title textColor:(UIColor *)color;
 
+- (void) dismiss;
+
 /** 私有属性用于自定义视图 主动移除筛选列表  */
 @property (nonatomic, copy) void (^didDismissDropMenu)(void);
 

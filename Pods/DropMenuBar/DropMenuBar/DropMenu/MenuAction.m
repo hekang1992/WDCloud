@@ -83,4 +83,11 @@
     }
 }
 
+- (void) dismiss {
+    
+    if(self.didDismissDropMenu){
+        self.didDismissDropMenu();
+    }
+}
+
 @end

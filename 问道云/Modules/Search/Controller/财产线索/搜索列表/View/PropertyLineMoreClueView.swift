@@ -1,37 +1,28 @@
 //
-//  PropertyMonitoringClueListView.swift
+//  PropertyLineMoreClueView.swift
 //  问道云
 //
 //  Created by 何康 on 2025/3/27.
 //
 
 import UIKit
-import DropMenuBar
 
 class PropertyMonitoringClueListView: BaseView {
     
-    var oneListModel: ItemModel?
-    var twoListModel: ItemModel?
-    var threeListModel: ItemModel?
+    var modelBlock: ((rowsModel) -> Void)?
     
-    var listModelArray: [ItemModel]? {
-        didSet {
-            guard let listModelArray = listModelArray else { return }
-            oneListModel = listModelArray[1]
-            twoListModel = listModelArray[2]
-            threeListModel = listModelArray[3]
-        }
-    }
+    var listModelArray: [rowsModel]?
+    
+    var addBtnBlock: (() -> Void)?
     
     // 当前选中的索引
     var selectedIndex1: Int = 0
     var selectedIndex2: Int = 0
     var selectedIndex3: Int = 0
     
-    
     lazy var listView: UIView = {
         let listView = UIView()
-        listView.backgroundColor = .random()
+        listView.backgroundColor = .init(cssStr: "#F5F5F5")
         return listView
     }()
     
@@ -101,6 +92,7 @@ class PropertyMonitoringClueListView: BaseView {
         descLabel.textAlignment = .left
         descLabel.font = .regularFontOfSize(size: 15)
         descLabel.attributedText = GetRedStrConfig.getRedStr(from: "(仅自己可以见)", fullText: "自定义财产关联方(仅自己可以见)", colorStr: "#9FA4AD")
+        descLabel.isUserInteractionEnabled = true
         return descLabel
     }()
     
@@ -134,7 +126,7 @@ class PropertyMonitoringClueListView: BaseView {
             make.width.equalToSuperview().dividedBy(3)
         }
         ctImageView.snp.makeConstraints { make in
-            make.left.equalTo(tableView1.snp.left).offset(40)
+            make.left.equalTo(tableView1.snp.left).offset(60.pix())
             make.bottom.equalToSuperview().offset(-12)
             make.size.equalTo(CGSize(width: 15, height: 15))
         }
@@ -143,6 +135,15 @@ class PropertyMonitoringClueListView: BaseView {
             make.centerY.equalTo(ctImageView.snp.centerY)
             make.height.equalTo(20)
         }
+        
+        descLabel
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.addBtnBlock?()
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -154,14 +155,74 @@ class PropertyMonitoringClueListView: BaseView {
 extension PropertyMonitoringClueListView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        if tableView == tableView1 {
+            return self.listModelArray?.count ?? 0
+        } else if tableView == tableView2 {
+            let model1 = self.listModelArray?[selectedIndex1]
+            let count = model1?.children?.count ?? 0
+            return count
+        }else {
+            let model1 = self.listModelArray?[selectedIndex1]
+            if (model1?.children?.count ?? 0) > 0 {
+                let model2 = self.listModelArray?[selectedIndex1].children?[selectedIndex2]
+                return model2?.children?.count ?? 0
+            }
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        cell.selectionStyle = .none
-        cell.backgroundColor = .random()
-        return cell
+        if tableView == self.tableView1 {
+            let model = self.listModelArray?[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+            cell.selectionStyle = .none
+            cell.textLabel?.text = model?.key ?? ""
+            cell.textLabel?.font = .regularFontOfSize(size: 13)
+            if indexPath.row == selectedIndex1 {
+                cell.backgroundColor = UIColor.init(cssStr: "#F5F5F5")
+                cell.textLabel?.textColor = .init(cssStr: "#3F96FF")
+            }else {
+                cell.backgroundColor = .white
+                cell.textLabel?.textColor = .black
+            }
+            return cell
+        }else if tableView == self.tableView2 {
+            let model1 = self.listModelArray?[selectedIndex1]
+            if (model1?.children?.count ?? 0) > 0 {
+                let model2 = self.listModelArray?[selectedIndex1].children?[indexPath.row]
+                let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+                cell.selectionStyle = .none
+                cell.textLabel?.text = model2?.key ?? ""
+                cell.textLabel?.font = .regularFontOfSize(size: 13)
+                if indexPath.row == selectedIndex2 {
+                    cell.backgroundColor = UIColor.init(cssStr: "#F5F5F5")
+                    cell.textLabel?.textColor = .init(cssStr: "#3F96FF")
+                }else {
+                    cell.backgroundColor = .white
+                    cell.textLabel?.textColor = .black
+                }
+                return cell
+            }
+            return UITableViewCell()
+        }else {
+            let model1 = self.listModelArray?[selectedIndex1]
+            if (model1?.children?.count ?? 0) > 0 {
+                let model3 = self.listModelArray?[selectedIndex1].children?[selectedIndex2].children?[indexPath.row]
+                let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+                cell.selectionStyle = .none
+                cell.textLabel?.text = model3?.key ?? ""
+                cell.textLabel?.font = .regularFontOfSize(size: 13)
+                if indexPath.row == selectedIndex3 {
+                    cell.backgroundColor = UIColor.init(cssStr: "#F5F5F5")
+                    cell.textLabel?.textColor = .init(cssStr: "#3F96FF")
+                }else {
+                    cell.backgroundColor = .white
+                    cell.textLabel?.textColor = .black
+                }
+                return cell
+            }
+            return UITableViewCell()
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -170,17 +231,52 @@ extension PropertyMonitoringClueListView: UITableViewDelegate, UITableViewDataSo
             selectedIndex1 = indexPath.row
             // 重置第二个表格的选中索引
             selectedIndex2 = 0
+            tableView1.reloadData()
             // 刷新第二个表格
             tableView2.reloadData()
             // 刷新第三个表格
             tableView3.reloadData()
             // 选中第二个表格的第一行
             tableView2.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
+            let model1 = self.listModelArray?[selectedIndex1]
+            let children = model1?.children ?? []
+            if children.count > 0 {
+                
+            }else {
+                if let model1 = model1 {
+                    self.modelBlock?(model1)
+                }
+            }
         } else if tableView == tableView2 {
             // 更新第二个表格的选中索引
             selectedIndex2 = indexPath.row
+            tableView2.reloadData()
             // 刷新第三个表格
             tableView3.reloadData()
+            let model1 = self.listModelArray?[selectedIndex1]
+            let children = model1?.children ?? []
+            if children.count > 0 {
+                 let model2 = self.listModelArray?[selectedIndex1].children?[indexPath.row]
+                let children = model2?.children ?? []
+                if children.count > 0 {
+                    
+                }else {
+                    if let model2 = model2 {
+                        self.modelBlock?(model2)
+                    }
+                }
+                
+            }else {
+                
+            }
+        } else {
+            selectedIndex3 = indexPath.row
+            tableView3.reloadData()
+            let model1 = self.listModelArray?[selectedIndex1]
+            let children = model1?.children ?? []
+            if let model3 = self.listModelArray?[selectedIndex1].children?[selectedIndex2].children?[indexPath.row] {
+                self.modelBlock?(model3)
+            }
         }
     }
     

@@ -721,11 +721,7 @@ extension HighFiveView: TagListViewDelegate {
             self.endBtn.setTitle("结束日期", for: .normal)
             self.startBtn.setTitleColor(UIColor.init(cssStr: "#9FA4AD"), for: .normal)
             self.endBtn.setTitleColor(UIColor.init(cssStr: "#9FA4AD"), for: .normal)
-            if isGrand == false {
-                tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
-            }else {
-                tagListViews.forEach { _ in }
-            }
+            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
         } else {
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
         }
@@ -748,8 +744,8 @@ extension HighFiveView: TagListViewDelegate {
 
 class HighSixView: BaseView {
     
-    var startMoney = BehaviorRelay<String>(value: "")
-    var endMoney = BehaviorRelay<String>(value: "")
+    var startMoney = BehaviorRelay<Int>(value: 0)
+    var endMoney = BehaviorRelay<Int>(value: 0)
     
     var isGrand: Bool = true
     
@@ -894,24 +890,20 @@ class HighSixView: BaseView {
         startTx.rx.controlEvent(.editingChanged)
             .withLatestFrom(startTx.rx.text.orEmpty)
             .subscribe(onNext: { [weak self] text in
-                self?.startMoney.accept(text)
+                self?.startMoney.accept(Int(text) ?? 0)
             })
             .disposed(by: disposeBag)
         endTx.rx.controlEvent(.editingChanged)
             .withLatestFrom(endTx.rx.text.orEmpty)
             .subscribe(onNext: { [weak self] text in
-                self?.endMoney.accept(text)
+                self?.endMoney.accept(Int(text) ?? 0)
             })
             .disposed(by: disposeBag)
         
         let combine = Observable.combineLatest(startMoney, endMoney)
             .map { startMoney, endMoney in
-                if startMoney != "" && endMoney != "" {
-                    if startMoney > endMoney {
-                        return false
-                    }else {
-                        return true
-                    }
+                if startMoney > endMoney {
+                    return false
                 }else {
                     return true
                 }
@@ -938,11 +930,12 @@ extension HighSixView: TagListViewDelegate {
         if title == "不限" {
             self.startTx.text = ""
             self.endTx.text = ""
-            if isGrand == false {
-                tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
-            }else {
-                tagListViews.forEach { _ in }
-            }
+//            if isGrand == false {
+//                tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
+//            }else {
+//                tagListViews.forEach { _ in }
+//            }
+            tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
         } else {
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
         }

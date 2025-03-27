@@ -470,7 +470,11 @@ extension HighSearchViewController {
         twoBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             //关键词
-            let keyword = self.oneView.nameTx.text ?? ""
+            var nameStr = self.oneView.nameTx.text ?? ""
+            if nameStr.contains("非必填") {
+                nameStr = ""
+            }
+            let keyword = nameStr
             
             //精度
             let matchType = Int(self.oneView.matchType ?? "1")
@@ -522,6 +526,10 @@ extension HighSearchViewController {
             //成立年限参数
             let incDateTypeVec: [Int] = filteredModels.map { Int($0.code ?? "0") ?? 0 }
             var incDateRange = startTime + "-" + endTime
+            if startTime > endTime {
+                ToastViewConfig.showToast(message: "开始日期大于结束日期,请重新选择")
+                return
+            }
             if incDateRange.contains("日期") {
                 incDateRange = ""
             }
@@ -539,6 +547,10 @@ extension HighSearchViewController {
             let regCapLevelVec: [Int] = filteredMoneyModels.map { Int($0.code ?? "0") ?? 0 }
             
             var regCapRange = startMoney + "-" + endMoney
+            if startMoney > endMoney {
+                ToastViewConfig.showToast(message: "最低资本大于最高资本,请重新填写")
+                return
+            }
             if regCapRange == "-" {
                 regCapRange = ""
             }
@@ -575,6 +587,10 @@ extension HighSearchViewController {
             let startPeople = self.peopleView.startTx.text ?? ""
             let endPeople = self.peopleView.endTx.text ?? ""
             var sipCountRange = startPeople + "-" + endPeople
+            if startPeople > endPeople {
+                ToastViewConfig.showToast(message: "最低人数大于最高人数,请重新选择")
+                return
+            }
             if sipCountRange == "-" {
                 sipCountRange = ""
             }
@@ -606,6 +622,8 @@ extension HighSearchViewController {
             //所有参数
             var searchConditionArray: [String] = []
             searchConditionArray.append(keyword)//名字
+            searchConditionArray.append(industryType)
+            searchConditionArray.append(region == "0" ? "" : region)
             searchConditionArray.append(contentsOf: regStatusTitles)//登记状态
             searchConditionArray.append(contentsOf: selectArray)//成立时间
             searchConditionArray.append(incDateRange)//自定义时间
@@ -630,6 +648,8 @@ extension HighSearchViewController {
             //关键词
             if !keyword.isEmpty {
                 resultVc.keyword = ["keyword": keyword]
+            }else {
+                resultVc.keyword = ["keyword": ""]
             }
             
             //精度

@@ -264,7 +264,7 @@ class UserCenterView: BaseView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 24.pix()
-        layout.minimumInteritemSpacing = (SCREEN_WIDTH - 100 - 192.pix()) / 3
+        layout.minimumInteritemSpacing = (SCREEN_WIDTH - 100 - 210.pix()) / 3
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(UserCenterItemCell.self, forCellWithReuseIdentifier: "UserCenterItemCell")
         return collectionView
@@ -486,7 +486,7 @@ class UserCenterView: BaseView {
 extension UserCenterView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 48.pix(), height: 43.5.pix())
+        return CGSize(width: 50.pix(), height: 43.5.pix())
     }
     
     override func layoutSubviews() {

@@ -137,6 +137,8 @@
 		7340E1D42D5DF9DB008FD5C7 /* SearchJudgmentDebtorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1D32D5DF9DB008FD5C7 /* SearchJudgmentDebtorViewController.swift */; };
 		7340E1D62D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1D52D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift */; };
 		7340E1D82D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1D72D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift */; };
+		734207192D95527F00D8E42D /* PropertyLineMoreClueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734207182D95527F00D8E42D /* PropertyLineMoreClueView.swift */; };
+		7342071B2D9571B000D8E42D /* BindWechatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342071A2D9571B000D8E42D /* BindWechatViewController.swift */; };
 		7342CF552D7815C3005157A0 /* ServerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342CF542D7815C3005157A0 /* ServerDataManager.swift */; };
 		7342CF572D78456B005157A0 /* HighSearchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342CF562D78456B005157A0 /* HighSearchViewCell.swift */; };
 		734334932D798C1F006AE608 /* CompanyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734334922D798C1F006AE608 /* CompanyListView.swift */; };
@@ -363,7 +365,6 @@
 		73EF03D92D312B330070F850 /* TwoPeopleNormalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03D82D312B330070F850 /* TwoPeopleNormalListCell.swift */; };
 		73EF03DB2D31339A0070F850 /* TwoPeopleCoopViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF03DA2D31339A0070F850 /* TwoPeopleCoopViewCell.swift */; };
 		73F3B88F2D94176900350CB1 /* PropertyMonitoringListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F3B88E2D94176900350CB1 /* PropertyMonitoringListView.swift */; };
-		73F3B8912D94E87200350CB1 /* PropertyMonitoringClueListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F3B8902D94E87200350CB1 /* PropertyMonitoringClueListView.swift */; };
 		73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */; };
 		73F6046A2D1171280061D5D3 /* MyTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F604692D1171280061D5D3 /* MyTicketView.swift */; };
 		73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */; };
@@ -549,6 +550,8 @@
 		7340E1D32D5DF9DB008FD5C7 /* SearchJudgmentDebtorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchJudgmentDebtorViewController.swift; sourceTree = "<group>"; };
 		7340E1D52D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyJudgmentDebtorViewController.swift; sourceTree = "<group>"; };
 		7340E1D72D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleJudgmentDebtorViewController.swift; sourceTree = "<group>"; };
+		734207182D95527F00D8E42D /* PropertyLineMoreClueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineMoreClueView.swift; sourceTree = "<group>"; };
+		7342071A2D9571B000D8E42D /* BindWechatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindWechatViewController.swift; sourceTree = "<group>"; };
 		7342CF542D7815C3005157A0 /* ServerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerDataManager.swift; sourceTree = "<group>"; };
 		7342CF562D78456B005157A0 /* HighSearchViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchViewCell.swift; sourceTree = "<group>"; };
 		734334922D798C1F006AE608 /* CompanyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyListView.swift; sourceTree = "<group>"; };
@@ -781,7 +784,6 @@
 		73EF03D82D312B330070F850 /* TwoPeopleNormalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleNormalListCell.swift; sourceTree = "<group>"; };
 		73EF03DA2D31339A0070F850 /* TwoPeopleCoopViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoPeopleCoopViewCell.swift; sourceTree = "<group>"; };
 		73F3B88E2D94176900350CB1 /* PropertyMonitoringListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyMonitoringListView.swift; sourceTree = "<group>"; };
-		73F3B8902D94E87200350CB1 /* PropertyMonitoringClueListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyMonitoringClueListView.swift; sourceTree = "<group>"; };
 		73F604672D116F1A0061D5D3 /* MyTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketViewController.swift; sourceTree = "<group>"; };
 		73F604692D1171280061D5D3 /* MyTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketView.swift; sourceTree = "<group>"; };
 		73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTicketViewController.swift; sourceTree = "<group>"; };
@@ -1473,6 +1475,7 @@
 				73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */,
 				73460D102D150DD400EC9408 /* DeleteAccountViewController.swift */,
 				73460D122D15162500EC9408 /* DeleteSureViewController.swift */,
+				7342071A2D9571B000D8E42D /* BindWechatViewController.swift */,
 			);
 			path = SetPage;
 			sourceTree = "<group>";
@@ -1634,7 +1637,7 @@
 				731FCA912D92888500D2A93B /* PropertyLineOnlyTimeView.swift */,
 				731FCA932D92909300D2A93B /* PropertyLineTwoCell.swift */,
 				73F3B88E2D94176900350CB1 /* PropertyMonitoringListView.swift */,
-				73F3B8902D94E87200350CB1 /* PropertyMonitoringClueListView.swift */,
+				734207182D95527F00D8E42D /* PropertyLineMoreClueView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2211,7 +2214,6 @@
 				73C007112D6459AF003C3CE1 /* SearchDueDiligenceView.swift in Sources */,
 				739D90BE2D26AB1B00D9421B /* GroupListView.swift in Sources */,
 				7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */,
-				73F3B8912D94E87200350CB1 /* PropertyMonitoringClueListView.swift in Sources */,
 				73D4E3EF2D73401B005C73D8 /* WeekCompanyViewController.swift in Sources */,
 				730CEDFC2D544EF6002DE9DF /* CompanyLawCell.swift in Sources */,
 				7340E1D62D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift in Sources */,
@@ -2290,6 +2292,7 @@
 				73EEE7B72D0BC08500001E22 /* TimeDownView.swift in Sources */,
 				73950F732D55A93A005AD034 /* PopMonitoringGroupView.swift in Sources */,
 				732926972D85313700E93F96 /* PropertyLineListViewCell.swift in Sources */,
+				7342071B2D9571B000D8E42D /* BindWechatViewController.swift in Sources */,
 				73CFEB9C2D01996900B2FE1B /* UserAllOrderView.swift in Sources */,
 				73B362572D37B9CB003BD911 /* PeopleDetailTwoViewController.swift in Sources */,
 				739DCA262D671B45009CFC78 /* MyOneSettingViewController.swift in Sources */,
@@ -2532,6 +2535,7 @@
 				7352B2222D35321C00B5391B /* CompanyTwoHeadView.swift in Sources */,
 				734896E02D39F30C00B028FE /* RiskDetailHeadView.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
+				734207192D95527F00D8E42D /* PropertyLineMoreClueView.swift in Sources */,
 				7340E1912D5CD420008FD5C7 /* SearchPeopleExternalGuaranteeViewController.swift in Sources */,
 				7340E1A62D5CD5A9008FD5C7 /* SearchPeopleStartCourtNoticeViewController.swift in Sources */,
 				73FC5E4E2D5C78E2001D0DEF /* SearchCompanyDeadbeatViewController.swift in Sources */,

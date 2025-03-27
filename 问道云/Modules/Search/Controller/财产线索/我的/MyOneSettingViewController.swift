@@ -279,7 +279,6 @@ extension MyOneSettingViewController: UITableViewDelegate, UITableViewDataSource
             let count = self.modelArray?[selectOneIndex].items?[selectTwoIndex].items?.count ?? 0
             return count
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

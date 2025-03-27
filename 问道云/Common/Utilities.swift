@@ -346,7 +346,7 @@ class ShowAlertManager {
     ///   - cancelAction: 点击取消按钮的回调（默认为nil）
     static func showAlert(title: String?,
                           message: String?,
-                          confirmTitle: String = "确认",
+                          confirmTitle: String? = "确认",
                           cancelTitle: String? = "取消",
                           confirmAction: (() -> Void)? = nil,
                           cancelAction: (() -> Void)? = nil) {

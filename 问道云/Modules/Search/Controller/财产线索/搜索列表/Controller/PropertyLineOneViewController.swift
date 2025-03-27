@@ -393,11 +393,19 @@ class PropertyLineOneViewController: WDBaseViewController {
                 guard let self = self else { return }
                 oneMenu.displayCustomWithMenu = { [weak self] in
                     guard let self = self else { return UIView() }
-                    moreClueView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 250)
-                    let modelArray = getThreePropertyLineInfo(from: modelArray)
+                    moreClueView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 200)
                     moreClueView.listModelArray = modelArray
                     moreClueView.tableView1.reloadData()
                     return moreClueView
+                }
+                moreClueView.modelBlock = { [weak self] model in
+                    oneMenu.adjustTitle(model.key ?? "", textColor: UIColor.init(cssStr: "#547AFF"))
+                    self?.pageIndex = 1
+                    self?.conditionCode = model.value ?? ""
+                    self?.getListInfo()
+                }
+                moreClueView.addBtnBlock = { [weak self] in
+                    oneMenu.dismiss()
                 }
             }).disposed(by: disposeBag)
         

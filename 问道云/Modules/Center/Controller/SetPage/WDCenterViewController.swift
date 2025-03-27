@@ -196,16 +196,6 @@ extension WDCenterViewController {
                 }
                 break
             case .failure(_):
-                self.addNoNetView(from: self.centerView)
-                self.noNetView
-                    .refreshBtn
-                    .rx
-                    .tap
-                    .take(1)
-                    .subscribe(onNext: { [weak self] in
-                        self?.getBuymoreinfo()
-                        self?.getChanelPartner()
-                }).disposed(by: disposeBag)
                 break
             }
         }
@@ -283,8 +273,6 @@ extension WDCenterViewController {
             self.navigationController?.pushViewController(serviceVc, animated: true)
             break
         case "微信通知":
-            //            let wechatVc = WechatPushViewController()
-            //            self.navigationController?.pushViewController(wechatVc, animated: true)
             goWechatApp()
             break
         case "邀请好友":
@@ -328,26 +316,42 @@ extension WDCenterViewController {
     }
     
     func goWechatApp() {
+        let man = RequestManager()
+        let dict = [String: String]()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/wechat-bind/selectPubMsgBindInfo",
+                       method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    let model = success.data
+                    if model?.bindStatus == 1 {
+                        let bindVc = BindWechatViewController()
+                        self?.navigationController?.pushViewController(bindVc, animated: true)
+                    }else {
+                        self?.goWechatMinInfo()
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+        
+    }
+    
+    func goWechatMinInfo() {
         let accessToken = GetSaveLoginInfoConfig.getSessionID()
         let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
         if WXApi.isWXAppInstalled() {
-            let miniProgramObject = WXMiniProgramObject()
-            miniProgramObject.userName = "gh_3f4fcd0bdb14"
-            miniProgramObject.path = "packageMy/pages/share/index?Authorization=\(accessToken)&customNumber=\(customerNumber)"
-            miniProgramObject.miniProgramType = .preview
-            
-            let mediaMessage = WXMediaMessage()
-            mediaMessage.mediaObject = miniProgramObject
-            mediaMessage.title = ""
-            mediaMessage.description = ""
-            
-            let req = SendMessageToWXReq()
-            req.bText = false
-            req.message = mediaMessage
-            req.scene = Int32(WXSceneSession.rawValue)
-            
+            let req = WXLaunchMiniProgramReq()
+            req.userName = "gh_3f4fcd0bdb14"
+            req.path = "/pages/share/index?Authorization=\(accessToken)&customNumber=\(customerNumber)"
+            req.miniProgramType = .preview
             WXApi.send(req) { success in
-                print(success ? "请求发送成功" : "请求发送失败")
+                if !success {
+                    
+                }
             }
         }else {
             ToastViewConfig.showToast(message: "微信未安装，无法跳转")
@@ -355,3 +359,5 @@ extension WDCenterViewController {
     }
     
 }
+
+
