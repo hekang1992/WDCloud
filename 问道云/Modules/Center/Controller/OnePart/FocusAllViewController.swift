@@ -31,6 +31,8 @@ class FocusAllViewController: WDBaseViewController {
         return peopleVc
     }()
     
+    var selectIndex: Int = 0
+    
     private lazy var segmentedView: JXSegmentedView = createSegmentedView()
     
     private lazy var cocsciew: UIScrollView = createCocsciew()
@@ -39,6 +41,12 @@ class FocusAllViewController: WDBaseViewController {
     
     private var listVCArray = [WDBaseViewController]()
     
+    lazy var popListView: PopFocusListView = {
+        let popListView = PopFocusListView()
+        return popListView
+    }()
+    
+    var isShowListImage: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,11 +62,54 @@ class FocusAllViewController: WDBaseViewController {
             self?.navigationController?.pushViewController(searchVc, animated: false)
         }).disposed(by: disposeBag)
         
+        headView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            if !isShowListImage {
+                view.addSubview(popListView)
+                popListView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                popListView.ctImageView.snp.remakeConstraints { make in
+                    make.top.equalTo(self.headView.oneBtn.snp.bottom).offset(2)
+                    make.right.equalToSuperview().offset(-5)
+                    make.size.equalTo(CGSize(width: 70.pix(), height: 104.pix()))
+                }
+                isShowListImage = true
+            }else {
+                popListView.removeFromSuperview()
+                isShowListImage = false
+            }
+        }).disposed(by: disposeBag)
+        
         //添加切换
         addsentMentView()
         
         //添加子控制器
         segmentedView(segmentedView, didSelectedItemAt: 0)
+        
+        popListView.oneBlock = { [weak self] in
+            self?.isShowListImage = false
+            self?.popListView.removeFromSuperview()
+            let seatchVc = FocusSearchViewController()
+            self?.navigationController?.pushViewController(seatchVc, animated: true)
+        }
+        
+        popListView.twoBlock = { [weak self] in
+            self?.isShowListImage = false
+            self?.popListView.removeFromSuperview()
+            if self?.selectIndex == 0 {
+                self?.companyVc.companyView.isDeleteMode.accept(false)
+                self?.companyVc.companyView.manBtnClick()
+            }else {
+                self?.peopleVc.companyView.isDeleteMode.accept(false)
+                self?.peopleVc.companyView.manBtnClick()
+            }
+        }
+        
+        popListView.threeBlock = { [weak self] in
+            
+        }
+        
     }
     
 }
@@ -119,6 +170,7 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
     }
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        selectIndex = index
         if index == 0 {
             cocsciew.addSubview(companyVc.view)
             listVCArray.append(companyVc)

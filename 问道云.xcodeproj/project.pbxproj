@@ -139,6 +139,7 @@
 		7340E1D82D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340E1D72D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift */; };
 		734207192D95527F00D8E42D /* PropertyLineMoreClueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734207182D95527F00D8E42D /* PropertyLineMoreClueView.swift */; };
 		7342071B2D9571B000D8E42D /* BindWechatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342071A2D9571B000D8E42D /* BindWechatViewController.swift */; };
+		7342071D2D96370C00D8E42D /* PopFocusListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342071C2D96370C00D8E42D /* PopFocusListView.swift */; };
 		7342CF552D7815C3005157A0 /* ServerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342CF542D7815C3005157A0 /* ServerDataManager.swift */; };
 		7342CF572D78456B005157A0 /* HighSearchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342CF562D78456B005157A0 /* HighSearchViewCell.swift */; };
 		734334932D798C1F006AE608 /* CompanyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734334922D798C1F006AE608 /* CompanyListView.swift */; };
@@ -552,6 +553,7 @@
 		7340E1D72D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleJudgmentDebtorViewController.swift; sourceTree = "<group>"; };
 		734207182D95527F00D8E42D /* PropertyLineMoreClueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineMoreClueView.swift; sourceTree = "<group>"; };
 		7342071A2D9571B000D8E42D /* BindWechatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindWechatViewController.swift; sourceTree = "<group>"; };
+		7342071C2D96370C00D8E42D /* PopFocusListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopFocusListView.swift; sourceTree = "<group>"; };
 		7342CF542D7815C3005157A0 /* ServerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerDataManager.swift; sourceTree = "<group>"; };
 		7342CF562D78456B005157A0 /* HighSearchViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchViewCell.swift; sourceTree = "<group>"; };
 		734334922D798C1F006AE608 /* CompanyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyListView.swift; sourceTree = "<group>"; };
@@ -1879,6 +1881,7 @@
 				730384472D606572008AA7C3 /* MyOpinionViewCell.swift */,
 				7303844B2D609006008AA7C3 /* ServiceCenterViewCell.swift */,
 				73A443DF2D8BEF5000CB3A6C /* DIBUView.swift */,
+				7342071C2D96370C00D8E42D /* PopFocusListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2375,6 +2378,7 @@
 				7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */,
 				7325A7B62CFEECDD0043C196 /* WDBaseViewController.swift in Sources */,
 				737416422D0FD0D000E6CD23 /* InvoiceListView.swift in Sources */,
+				7342071D2D96370C00D8E42D /* PopFocusListView.swift in Sources */,
 				7325A7BA2CFEED0F0043C196 /* WDTabBarController.swift in Sources */,
 				7340E1D02D5DE62D008FD5C7 /* SearchPeopleBeneficialOwnerViewController.swift in Sources */,
 				73654B1F2D8186BC0004E408 /* PopPrivacyView.swift in Sources */,

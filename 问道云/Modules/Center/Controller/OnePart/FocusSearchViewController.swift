@@ -11,9 +11,9 @@ import RxSwift
 
 class SearchFocusCell: BaseViewCell {
     
-    var block: ((rowsModel, UIButton) -> Void)?
+    var block: ((pageDataModel, UIButton) -> Void)?
     
-    var model = BehaviorRelay<rowsModel?>(value: nil)
+    var model = BehaviorRelay<pageDataModel?>(value: nil)
     
     lazy var icon: UIImageView = {
         let icon = UIImageView()
@@ -73,9 +73,9 @@ class SearchFocusCell: BaseViewCell {
         
         model.subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model  else { return }
-            self.icon.image = UIImage.imageOfText(model.entityName ?? "", size: (20, 20), bgColor: .random())
-            self.nameLabel.text = model.entityName
-            if model.follow == false {
+            self.icon.image = UIImage.imageOfText(model.orgInfo?.orgName ?? "", size: (20, 20), bgColor: .random())
+            self.nameLabel.text = model.orgInfo?.orgName ?? ""
+            if model.followStatus != 2 {
                 self.focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
             }else {
                 self.focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
@@ -170,7 +170,7 @@ class FocusSearchViewController: WDBaseViewController {
         return tableView
     }()
     
-    var modelArray = BehaviorRelay<[rowsModel]?>(value: nil)
+    var modelArray = BehaviorRelay<[pageDataModel]?>(value: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -214,9 +214,9 @@ class FocusSearchViewController: WDBaseViewController {
             cell.model.accept(model)
             cell.selectionStyle = .none
             cell.backgroundColor = .white
-            let follow = model.follow ?? false
             cell.block = { [weak self] model, btn in
-                if follow {
+                let follow = model.followStatus ?? 0
+                if follow == 2 {
                     self?.deleteFocusInfo(from: btn, model: model)
                 }else {
                     self?.addFocusInfo(from: btn, model: model)
@@ -233,14 +233,14 @@ class FocusSearchViewController: WDBaseViewController {
 extension FocusSearchViewController {
     
     private func searchInfo() {
-        let dict = ["keywords": self.keyWords]
+        let dict = ["keyword": self.keyWords, "pageSize": 20] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict,
-                       pageUrl: "/operation/follow/searchEntity",
+                       pageUrl: "/entity/v2/org-list",
                        method: .get) { [weak self] result in
             switch result {
             case .success(let success):
-                if let model = success.data, let modelArray = model.data, modelArray.count > 0 {
+                if let model = success.data, let modelArray = model.pageData, modelArray.count > 0 {
                     self?.modelArray.accept(modelArray)
                     self?.emptyView.isHidden = true
                 }else {
@@ -257,20 +257,20 @@ extension FocusSearchViewController {
     }
     
     //添加关注
-    func addFocusInfo(from btn: UIButton, model: rowsModel) {
+    func addFocusInfo(from btn: UIButton, model: pageDataModel) {
         let man = RequestManager()
-        let dict = ["entityId": model.entityId ?? "",
+        let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
-                       pageUrl: "/operation/follow/save",
-                       method: .post) { [weak self] result in
-            guard let self = self else { return }
+                       pageUrl: "/operation/follow/add-or-cancel",
+                       method: .post) { result in
             switch result {
-            case .success(_):
-                model.follow = true
-                btn.setImage(UIImage(named: "havefocusimage"), for: .normal)
-//                self.searchInfo()
-                ToastViewConfig.showToast(message: "关注成功")
+            case .success(let success):
+                if success.code == 200 {
+                    model.followStatus = 2
+                    btn.setImage(UIImage(named: "havefocusimage"), for: .normal)
+                    ToastViewConfig.showToast(message: "关注成功")
+                }
                 break
             case .failure(_):
                 break
@@ -279,8 +279,25 @@ extension FocusSearchViewController {
     }
     
     //取消关注
-    func deleteFocusInfo(from btn: UIButton, model: rowsModel) {
-        ToastViewConfig.showToast(message: "暂不支持")
+    func deleteFocusInfo(from btn: UIButton, model: pageDataModel) {
+        let man = RequestManager()
+        let dict = ["entityId": model.orgInfo?.orgId ?? "",
+                    "followTargetType": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/add-or-cancel",
+                       method: .post) {result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    model.followStatus = 1
+                    btn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+                    ToastViewConfig.showToast(message: "取消关注成功")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
 }

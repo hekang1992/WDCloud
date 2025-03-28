@@ -300,15 +300,15 @@ extension TwoCompanyView {
     
     private func focusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
         if cell is TwoCompanyNormalListCell {
-            let followStatus = model.followStatus ?? ""
-            if followStatus == "1" {
+            let followStatus = model.followStatus ?? 0
+            if followStatus == 1 {
                 addFocusInfo(from: model, cell: cell)
             }else {
                 deleteFocusInfo(from: model, cell: cell)
             }
         } else if cell is TwoCompanyNormalListCell {
-            let followStatus = model.followStatus ?? ""
-            if followStatus == "1" {
+            let followStatus = model.followStatus ?? 0
+            if followStatus == 1 {
                 addFocusInfo(from: model, cell: cell)
             }else {
                 deleteFocusInfo(from: model, cell: cell)
@@ -327,7 +327,7 @@ extension TwoCompanyView {
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    model.followStatus = "2"
+                    model.followStatus = 2
                     if let specificCell = cell as? TwoCompanyNormalListCell {
                         specificCell.focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
                     }else if let otherCell = cell as? TwoCompanyNormalListCell {
@@ -353,7 +353,7 @@ extension TwoCompanyView {
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    model.followStatus = "1"
+                    model.followStatus = 1
                     if let specificCell = cell as? TwoCompanyNormalListCell {
                         specificCell.focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
                     }else if let otherCell = cell as? TwoCompanyNormalListCell {

@@ -15,6 +15,8 @@ class PropertyMonitoringClueListView: BaseView {
     
     var addBtnBlock: (() -> Void)?
     
+    var flag: Bool = false
+    
     // 当前选中的索引
     var selectedIndex1: Int = 0
     var selectedIndex2: Int = 0
@@ -205,21 +207,23 @@ extension PropertyMonitoringClueListView: UITableViewDelegate, UITableViewDataSo
             }
             return UITableViewCell()
         }else {
-            let model1 = self.listModelArray?[selectedIndex1]
-            if (model1?.children?.count ?? 0) > 0 {
-                let model3 = self.listModelArray?[selectedIndex1].children?[selectedIndex2].children?[indexPath.row]
-                let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-                cell.selectionStyle = .none
-                cell.textLabel?.text = model3?.key ?? ""
-                cell.textLabel?.font = .regularFontOfSize(size: 13)
-                if indexPath.row == selectedIndex3 {
-                    cell.backgroundColor = UIColor.init(cssStr: "#F5F5F5")
-                    cell.textLabel?.textColor = .init(cssStr: "#3F96FF")
-                }else {
-                    cell.backgroundColor = .white
-                    cell.textLabel?.textColor = .black
+            if flag {
+                let model1 = self.listModelArray?[selectedIndex1]
+                if (model1?.children?.count ?? 0) > 0 {
+                    let model3 = self.listModelArray?[selectedIndex1].children?[selectedIndex2].children?[indexPath.row]
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+                    cell.selectionStyle = .none
+                    cell.textLabel?.text = model3?.key ?? ""
+                    cell.textLabel?.font = .regularFontOfSize(size: 13)
+                    if indexPath.row == selectedIndex3 {
+                        cell.backgroundColor = UIColor.init(cssStr: "#F5F5F5")
+                        cell.textLabel?.textColor = .init(cssStr: "#3F96FF")
+                    }else {
+                        cell.backgroundColor = .white
+                        cell.textLabel?.textColor = .black
+                    }
+                    return cell
                 }
-                return cell
             }
             return UITableViewCell()
         }
@@ -249,6 +253,7 @@ extension PropertyMonitoringClueListView: UITableViewDelegate, UITableViewDataSo
             }
         } else if tableView == tableView2 {
             // 更新第二个表格的选中索引
+            flag = true
             selectedIndex2 = indexPath.row
             tableView2.reloadData()
             // 刷新第三个表格

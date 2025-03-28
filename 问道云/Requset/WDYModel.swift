@@ -1146,7 +1146,7 @@ class pageDataModel {
     var riskInfo: riskInfoModel?
     var searchStr: String?//被搜索的文字 == 自己添加的。不是后台返回的
     var labels: [labelsModel]?
-    var followStatus: String?//是否被关注 1 没有关注 2 被关注
+    var followStatus: Int?//是否被关注 1 没有关注 2 被关注
     var orgInfo: orgInfoModel?
     var leaderVec: leaderVecModel?
     var regAddr: regAddrModel?
@@ -1155,7 +1155,7 @@ class pageDataModel {
         self.taxInfo = taxInfoModel(json: json["taxInfo"])
         self.regAddr = regAddrModel(json: json["regAddr"])
         self.orgInfo = orgInfoModel(json: json["orgInfo"])
-        self.followStatus = json["followStatus"].stringValue
+        self.followStatus = json["followStatus"].intValue
         self.searchStr = json["searchStr"].stringValue
         self.firmInfo = firmInfoModel(json: json["firmInfo"])
         self.legalPerson = legalPersonModel(json: json["legalPerson"])
@@ -1908,7 +1908,9 @@ class conditionVOModel {
     var cueObject: [rowsModel]?
     var propertyDirection: [rowsModel]?
     var cueType: [rowsModel]?
+    var customRelationFlag: Int?
     init(json: JSON) {
+        self.customRelationFlag = json["customRelationFlag"].intValue
         self.cueObject = json["cueObject"].arrayValue.map { rowsModel(json: $0) }
         self.propertyDirection = json["propertyDirection"].arrayValue.map { rowsModel(json: $0) }
         self.cueType = json["cueType"].arrayValue.map { rowsModel(json: $0) }

@@ -310,8 +310,8 @@ class TwoCompanyNormalListCell: BaseViewCell {
             self.tagArray = model.labels?.compactMap { $0.name ?? "" } ?? []
             setupScrollView(tagScrollView: tagListView, tagArray: tagArray)
             //是否被关注
-            let followStatus = model.followStatus ?? ""
-            if followStatus == "1" {
+            let followStatus = model.followStatus ?? 0
+            if followStatus == 1 {
                 focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
             }else {
                 focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)

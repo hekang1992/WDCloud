@@ -405,6 +405,12 @@ class PropertyLineOneViewController: WDBaseViewController {
                     self?.getListInfo()
                 }
                 moreClueView.addBtnBlock = { [weak self] in
+                    let customRelationFlag = self?.model.value?.conditionVO?.customRelationFlag ?? 0
+                    if customRelationFlag == 0 {
+                        //可以跳转
+                    }else {
+                        //弹窗购买会员
+                    }
                     oneMenu.dismiss()
                 }
             }).disposed(by: disposeBag)

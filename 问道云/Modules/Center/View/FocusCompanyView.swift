@@ -124,7 +124,7 @@ class FocusCompanyView: BaseView {
         nextBtn.snp.makeConstraints { make in
             make.centerY.equalTo(descLabel.snp.centerY)
             make.right.equalToSuperview().offset(-19)
-            make.size.equalTo(CGSize(width: 26, height: 18))
+            make.size.equalTo(CGSize(width: 26.pix(), height: 18.pix()))
         }
         
         addSubview(tableView)
@@ -190,15 +190,7 @@ class FocusCompanyView: BaseView {
         
         nextBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
-            let currentMode = self.isDeleteMode.value
-            self.isDeleteMode.accept(!currentMode)
-            self.selectedIndexPaths.removeAll()//移除所有选中的cell
-            self.selectedDataIds.removeAll()
-            for section in 0..<isSectionCollapsed.count {
-                isSectionCollapsed[section] = currentMode // 设置为展开
-                tableView.reloadSections(IndexSet(integer: section), with: .none) // 刷新每个 section
-            }
-            self.tableView.reloadData()
+            manBtnClick()
         }).disposed(by: disposeBag)
         
         self.isDeleteMode.subscribe(onNext: { [weak self] bool in
@@ -214,6 +206,18 @@ class FocusCompanyView: BaseView {
     
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func manBtnClick() {
+        let currentMode = self.isDeleteMode.value
+        self.isDeleteMode.accept(!currentMode)
+        self.selectedIndexPaths.removeAll()//移除所有选中的cell
+        self.selectedDataIds.removeAll()
+        for section in 0..<isSectionCollapsed.count {
+            isSectionCollapsed[section] = currentMode // 设置为展开
+            tableView.reloadSections(IndexSet(integer: section), with: .none) // 刷新每个 section
+        }
+        self.tableView.reloadData()
     }
     
 }

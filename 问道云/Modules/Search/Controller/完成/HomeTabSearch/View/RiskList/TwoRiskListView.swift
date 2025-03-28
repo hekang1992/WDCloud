@@ -110,8 +110,8 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                 cell?.model.accept(model)
                 cell?.focusBlock = { [weak self] in
                     if let self = self, let model = model, let cell = cell {
-                        let followStatus = model.followStatus ?? ""
-                        if followStatus == "1" {
+                        let followStatus = model.followStatus ?? 0
+                        if followStatus == 1 {
                             addFocusInfo(from: model, cell: cell)
                         }else {
                             deleteFocusInfo(from: model, cell: cell)
@@ -132,8 +132,8 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
             cell?.model.accept(model)
             cell?.focusBlock = { [weak self] in
                 if let self = self, let model = model, let cell = cell {
-                    let followStatus = model.followStatus ?? ""
-                    if followStatus == "1" {
+                    let followStatus = model.followStatus ?? 0
+                    if followStatus == 1 {
                         addFocusInfo(from: model, cell: cell)
                     }else {
                         deleteFocusInfo(from: model, cell: cell)
@@ -266,7 +266,7 @@ extension TwoRiskListView {
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    model.followStatus = "2"
+                    model.followStatus = 2
                     if let specificCell = cell as? TwoRiskListCompanyCell {
                         specificCell.focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
                     }else if let otherCell = cell as? TwoCompanyNormalListCell {
@@ -292,7 +292,7 @@ extension TwoRiskListView {
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    model.followStatus = "1"
+                    model.followStatus = 1
                     if let specificCell = cell as? TwoRiskListCompanyCell {
                         specificCell.focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
                     }else if let otherCell = cell as? TwoCompanyNormalListCell {
