@@ -55,6 +55,13 @@ class InvoiceListViewController: WDBaseViewController {
             })
         }
         
+        listView.block = { [weak self] in
+            guard let self = self else { return }
+            let addVc = AddInvoiceViewController()
+            addVc.model.accept(self.model.value)
+            self.navigationController?.pushViewController(addVc, animated: true)
+        }
+        
         listView.pasteBlock = { model in
             let name = "企业名称: \(model.companyname ?? "")"
             let shuihao = "税号: \(model.companynumber ?? "")"
@@ -80,8 +87,8 @@ class InvoiceListViewController: WDBaseViewController {
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         getInvoListInfo()
     }
 
@@ -111,15 +118,10 @@ extension InvoiceListViewController {
             switch result {
             case .success(let success):
                 if let model = success.data {
-                    self.noNetView.removeFromSuperview()
                     self.listView.model.accept(model)
                 }
                 break
             case .failure(_):
-                self.addNoNetView(from: self.listView)
-                self.noNetView.refreshBtn.rx.tap.subscribe(onNext: { [weak self] in
-                    self?.getInvoListInfo()
-                }).disposed(by: disposeBag)
                 break
             }
         }

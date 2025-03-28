@@ -96,7 +96,7 @@ class DonateMembershipView: BaseView {
         phoneTx.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.left.equalToSuperview().offset(9.5)
-            make.size.equalTo(CGSize(width: 200, height: 31.5))
+            make.size.equalTo(CGSize(width: 210.pix(), height: 31.5))
         }
         contactBtn.snp.makeConstraints { make in
             make.top.right.equalToSuperview()

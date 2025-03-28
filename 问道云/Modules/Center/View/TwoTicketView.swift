@@ -10,6 +10,8 @@ import RxRelay
 
 class TwoTicketCell: BaseViewCell {
     
+    var sendBlock: ((rowsModel) -> Void)?
+    
     var linkBlock: ((rowsModel) -> Void)?
     
     var rowsModel = BehaviorRelay<rowsModel?>(value: nil)
@@ -129,6 +131,17 @@ class TwoTicketCell: BaseViewCell {
         return againBtn
     }()
     
+    lazy var sendBtn: UIButton = {
+        let sendBtn = UIButton(type: .custom)
+        sendBtn.setTitle("发送邮箱", for: .normal)
+        sendBtn.layer.cornerRadius = 2.5
+        sendBtn.titleLabel?.font = .regularFontOfSize(size: 13)
+        sendBtn.backgroundColor = UIColor.init(cssStr: "#EEEEEE")
+        sendBtn.setTitleColor(UIColor.init(cssStr: "#333333"), for: .normal)
+        sendBtn.isEnabled = false
+        return sendBtn
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(whiteView)
@@ -144,6 +157,7 @@ class TwoTicketCell: BaseViewCell {
         contentView.addSubview(lineView)
         contentView.addSubview(openBtn)
         contentView.addSubview(againBtn)
+        contentView.addSubview(sendBtn)
         whiteView.addSubview(typeImageView)
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(15.pix())
@@ -215,6 +229,11 @@ class TwoTicketCell: BaseViewCell {
             make.top.equalTo(lineView.snp.bottom).offset(7.pix())
             make.size.equalTo(CGSize(width: 85.pix(), height: 28.pix()))
         }
+        sendBtn.snp.makeConstraints { make in
+            make.right.equalTo(againBtn.snp.left).offset(-6)
+            make.top.equalTo(lineView.snp.bottom).offset(7.pix())
+            make.size.equalTo(CGSize(width: 77.pix(), height: 28.pix()))
+        }
         whiteView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(11)
             make.top.equalToSuperview()
@@ -240,7 +259,14 @@ class TwoTicketCell: BaseViewCell {
                 openBtn.isEnabled = true
                 openBtn.backgroundColor = UIColor.init(cssStr: "#3849F7")?.withAlphaComponent(0.1)
                 openBtn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
+                sendBtn.isEnabled = true
+                sendBtn.backgroundColor = UIColor.init(cssStr: "#3849F7")?.withAlphaComponent(0.1)
+                sendBtn.setTitleColor(UIColor.init(cssStr: "#547AFF"), for: .normal)
             }else {
+                sendBtn.isEnabled = false
+                sendBtn.backgroundColor = UIColor.init(cssStr: "#EEEEEE")
+                sendBtn.setTitleColor(UIColor.init(cssStr: "#333333"), for: .normal)
+                
                 openBtn.isEnabled = false
                 openBtn.backgroundColor = UIColor.init(cssStr: "#EEEEEE")
                 openBtn.setTitleColor(UIColor.init(cssStr: "#333333"), for: .normal)
@@ -253,6 +279,11 @@ class TwoTicketCell: BaseViewCell {
             self.linkBlock?(model)
         }).disposed(by: disposeBag)
         
+        self.sendBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = self.rowsModel.value else { return }
+            self.sendBlock?(model)
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -263,7 +294,10 @@ class TwoTicketCell: BaseViewCell {
 
 class TwoTicketView: BaseView {
     
+    
     var linkBlock: ((rowsModel) -> Void)?
+    
+    var sendBlock: ((rowsModel) -> Void)?
     
     var modelArray = BehaviorRelay<[rowsModel]>(value: [])
     
@@ -298,6 +332,10 @@ class TwoTicketView: BaseView {
             cell.linkBlock = { [weak self] model in
                 guard let self = self else { return }
                 self.linkBlock?(model)
+            }
+            cell.sendBlock = { [weak self] model in
+                guard let self = self else { return }
+                self.sendBlock?(model)
             }
         }.disposed(by: disposeBag)
     }

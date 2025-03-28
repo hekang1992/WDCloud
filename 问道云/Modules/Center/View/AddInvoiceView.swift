@@ -77,6 +77,13 @@ class AddInvoiceView: BaseView {
                 model.text.subscribe(onNext: { text in
                     cell.enterTx.text = text
                 }).disposed(by: disposeBag)
+                if index == 5 {
+                    cell.enterTx.keyboardType = .numberPad
+                }else if index == 3{
+                    cell.enterTx.keyboardType = .phonePad
+                }else {
+                    cell.enterTx.keyboardType = .default
+                }
                 return cell
             }
             return UITableViewCell()

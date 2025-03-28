@@ -292,7 +292,7 @@ class InvoiceSelectListCell: BaseViewCell {
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(20)
             make.height.equalTo(22.5)
-            make.bottom.equalToSuperview().offset(-334)
+            make.left.equalToSuperview().offset(19)
         }
         ctImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -309,16 +309,7 @@ class InvoiceSelectListCell: BaseViewCell {
             make.top.equalTo(onelabel.snp.bottom).offset(6)
             make.size.equalTo(CGSize(width: 69.5, height: 18.5))
         }
-        threelabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(56.5)
-            make.top.equalTo(twolabel.snp.bottom).offset(6)
-            make.size.equalTo(CGSize(width: 69.5, height: 18.5))
-        }
-        fourlabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(56.5)
-            make.top.equalTo(threelabel.snp.bottom).offset(6)
-            make.size.equalTo(CGSize(width: 69.5, height: 18.5))
-        }
+        
         fivelabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(56.5)
             make.top.equalTo(fourlabel.snp.bottom).offset(6)
@@ -331,14 +322,24 @@ class InvoiceSelectListCell: BaseViewCell {
             make.right.equalToSuperview().offset(-20)
         }
         label2.snp.makeConstraints { make in
-            make.centerY.equalTo(twolabel.snp.centerY)
+            make.top.equalTo(twolabel.snp.top)
             make.left.equalTo(twolabel.snp.right).offset(16)
             make.right.equalToSuperview().offset(-20)
         }
+        threelabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(56.5)
+            make.top.equalTo(label2.snp.bottom).offset(6)
+            make.size.equalTo(CGSize(width: 69.5, height: 18.5))
+        }
         label3.snp.makeConstraints { make in
-            make.centerY.equalTo(threelabel.snp.centerY)
+            make.top.equalTo(threelabel.snp.top)
             make.left.equalTo(threelabel.snp.right).offset(16)
             make.right.equalToSuperview().offset(-20)
+        }
+        fourlabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(56.5)
+            make.top.equalTo(label3.snp.bottom).offset(6)
+            make.size.equalTo(CGSize(width: 69.5, height: 18.5))
         }
         label4.snp.makeConstraints { make in
             make.centerY.equalTo(fourlabel.snp.centerY)
@@ -365,7 +366,8 @@ class InvoiceSelectListCell: BaseViewCell {
             make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset(16)
             make.height.equalTo(0.5)
-            make.top.equalTo(nameLabel.snp.bottom).offset(282)
+            make.top.equalTo(label5.snp.bottom).offset(10)
+            make.bottom.equalToSuperview().offset(-50)
         }
         itemImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -414,8 +416,8 @@ class InvoiceSelectListCell: BaseViewCell {
                     make.height.equalTo(1.5)
                     make.top.equalTo(self.itemImageView.snp.bottom).offset(1.5)
                 }
-                nameLabel.snp.updateConstraints { make in
-                    make.bottom.equalToSuperview().offset(-390)
+                lineView.snp.updateConstraints { make in
+                    make.bottom.equalToSuperview().offset(-105)
                 }
                 ticketBtn.snp.makeConstraints { make in
                     make.centerX.equalToSuperview()
@@ -425,8 +427,8 @@ class InvoiceSelectListCell: BaseViewCell {
             }else {
                 ticketBtn.isHidden = true
                 lineView1.isHidden = true
-                nameLabel.snp.updateConstraints { make in
-                    make.bottom.equalToSuperview().offset(-334)
+                lineView.snp.updateConstraints { make in
+                    make.bottom.equalToSuperview().offset(-50)
                 }
             }
         }).disposed(by: disposeBag)
@@ -461,6 +463,8 @@ class InvoiceSelectListCell: BaseViewCell {
 
 
 class InvoiceListView: BaseView {
+    
+    var block: (() -> Void)?
     
     //是否是点击
     var isClickType = BehaviorRelay<Bool>(value: false)
@@ -661,6 +665,14 @@ extension InvoiceListView: UITableViewDelegate {
         self.bgImageView.isHidden = false
         self.mlabel.isHidden = false
         self.nextBtn.isHidden = false
+        //弹窗提示
+        ShowAlertManager.showAlert(title: "提示",
+                                   message: "您尚未填写发票抬头，无法开票",
+                                   confirmTitle: "添加发票抬头",
+                                   cancelTitle: "暂时放弃开票",
+                                   confirmAction: { [weak self] in
+            self?.block?()
+        })
     }
     
 }

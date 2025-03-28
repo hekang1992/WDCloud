@@ -188,13 +188,35 @@ extension AddInvoiceViewController: UITableViewDelegate {
     //添加发票抬头
     func addInfo(from modelArray: [DescModel]) {
         let companyname = modelArray[0].text.value
+        
         let companynumber = modelArray[1].text.value
+        if !Validator.isValidTaxNumber(companynumber) {
+            ToastViewConfig.showToast(message: "税号格式不对,请重新填写")
+            return
+        }
+        
         let address = modelArray[2].text.value
+        
         let contactnumber = modelArray[3].text.value
+        if !contactnumber.isEmpty {
+            if !Validator.validatePhoneNumber(contactnumber) {
+                ToastViewConfig.showToast(message: "电话号码格式不对,请重新填写")
+                return
+            }
+        }
+        
         let bankname = modelArray[4].text.value
+        
         let bankfullname = modelArray[5].text.value
+        if !bankfullname.isEmpty {
+            if !Validator.isValidBankCardNumber(bankfullname) {
+                ToastViewConfig.showToast(message: "银行卡号格式不对,请重新填写")
+                return
+            }
+        }
+        
         let defaultstate = self.isSure.value
-        let customernumber = model.value?.customernumber ?? ""
+                
         let dict = ["companyname": companyname,
                     "companynumber": companynumber,
                     "address": address,

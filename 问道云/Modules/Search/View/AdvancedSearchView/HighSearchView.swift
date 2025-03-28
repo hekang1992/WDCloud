@@ -148,7 +148,7 @@ class HighTwoView: BaseView {
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "ent_detail_arrow_right")
+        ctImageView.image = UIImage(named: "righticonimage")
         return ctImageView
     }()
     
@@ -217,7 +217,7 @@ class HighThreeView: BaseView {
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "ent_detail_arrow_right")
+        ctImageView.image = UIImage(named: "righticonimage")
         return ctImageView
     }()
     

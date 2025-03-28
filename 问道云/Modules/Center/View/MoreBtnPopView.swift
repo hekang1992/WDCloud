@@ -433,7 +433,7 @@ class SendEmailView: BaseView {
         
         bgView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.left.equalToSuperview().offset(60)
+            make.left.equalToSuperview().offset(30)
             make.height.equalTo(268)
         }
         fasongLabel.snp.makeConstraints { make in

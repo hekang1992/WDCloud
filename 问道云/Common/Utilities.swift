@@ -365,6 +365,7 @@ class ShowAlertManager {
                 cancelAction?()
             }
             alert.addAction(cancelButton)
+            cancelButton.setValue(UIColor.init(cssStr: "#9FA4AD"), forKey: "titleTextColor")
         }
         
         // 获取当前视图控制器并呈现提示框
@@ -687,4 +688,86 @@ class URLQueryAppender {
         urlComponents.queryItems = (urlComponents.queryItems ?? []) + queryItems
         return urlComponents.url?.absoluteString
     }
+}
+
+/** 电话,银行卡,税号校验 */
+enum PhoneNumberType {
+    case mobile      // 手机号
+    case landline    // 座机号
+    case international // 国际号码
+    case invalid     // 无效号码
+}
+
+struct Validator {
+    
+    // MARK: - 银行卡验证
+    /// 验证银行卡号（16-19位数字）
+    static func isValidBankCardNumber(_ cardNumber: String) -> Bool {
+        let pattern = #"^\d{16,19}$"#
+        return cardNumber.range(of: pattern, options: .regularExpression) != nil
+    }
+    
+    // MARK: - 税号验证
+    /// 验证税号（中国15位或18位数字/字母）
+    static func isValidTaxNumber(_ taxNumber: String) -> Bool {
+        let pattern = #"^[A-Z0-9]{15}$|^[A-Z0-9]{18}$"#
+        return taxNumber.range(of: pattern, options: .regularExpression) != nil
+    }
+    
+    // MARK: - 电话号码验证
+    // MARK: - 中国手机号验证
+        /// 验证中国手机号（精确到当前所有运营商号段）
+        static func isValidChineseMobile(_ number: String) -> Bool {
+            // 清理号码（去除空格、横线、+86等前缀）
+            let cleaned = number
+                .replacingOccurrences(of: "^\\+86", with: "", options: .regularExpression)
+                .replacingOccurrences(of: "[\\s-]", with: "", options: .regularExpression)
+            
+            // 2023年中国大陆手机号最新号段
+            let pattern = #"^(1[3-9]\d{9})$"#
+            return cleaned.range(of: pattern, options: .regularExpression) != nil
+        }
+        
+        // MARK: - 中国座机号验证
+        /// 验证中国座机号（严格格式）
+        static func isValidChineseLandline(_ number: String) -> Bool {
+            // 标准格式：区号-号码 或 区号号码
+            let pattern = #"^(0[1-9]\d{1,2}-?[1-9]\d{6,7})(-\d{1,5})?$"#
+            return number.range(of: pattern, options: .regularExpression) != nil
+        }
+        
+        // MARK: - 综合电话号码验证
+        /// 综合验证电话号码（自动识别类型）
+    static func validatePhoneNumber(_ number: String) -> Bool {
+            // 先清理号码
+            let cleaned = number
+                .replacingOccurrences(of: "^\\+86", with: "", options: .regularExpression)
+                .replacingOccurrences(of: "[\\s-]", with: "", options: .regularExpression)
+            
+            // 1. 检查中国手机号
+            if isValidChineseMobile(cleaned) {
+                return true
+            }
+            
+            // 2. 检查中国座机号
+            if isValidChineseLandline(number) {  // 注意这里使用原始号码，因为横线对座机号很重要
+                return true
+            }
+            
+            // 3. 检查国际号码
+            if isValidInternationalNumber(number) {
+                return true
+            }
+            
+        return false
+        }
+        
+        // MARK: - 国际号码验证
+        /// 验证国际电话号码（相对宽松的验证）
+        private static func isValidInternationalNumber(_ number: String) -> Bool {
+            // 国际号码基本格式：+国家代码 号码
+            let pattern = #"^\+\d{1,4}[\s-]?\d{5,14}$"#
+            return number.range(of: pattern, options: .regularExpression) != nil
+        }
+    
 }

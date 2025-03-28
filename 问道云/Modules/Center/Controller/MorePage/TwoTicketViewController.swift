@@ -8,6 +8,7 @@
 import UIKit
 import RxRelay
 import MJRefresh
+import TYAlertController
 
 class TwoTicketViewController: WDBaseViewController {
     
@@ -24,6 +25,11 @@ class TwoTicketViewController: WDBaseViewController {
         return twoTicketView
     }()
 
+    lazy var sendView: SendEmailView = {
+        let sendView = SendEmailView(frame: self.view.bounds)
+        return sendView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,11 +53,45 @@ class TwoTicketViewController: WDBaseViewController {
         twoTicketView.linkBlock = { [weak self] model in
             self?.linkBlock?(model)
         }
+        
+        twoTicketView.sendBlock =  { [weak self] model in
+            let alertVc = TYAlertController(alert: self?.sendView, preferredStyle: .actionSheet)
+            self?.present(alertVc!, animated: true)
+            self?.sendView.model = model
+            self?.sendView.cblock = {
+                self?.dismiss(animated: true)
+            }
+            self?.sendView.sblock = {
+                self?.sendEmailInfo(form: model)
+            }
+        }
+        
     }
     
 }
 
 extension TwoTicketViewController {
+    
+    //发送邮箱
+    func sendEmailInfo(form model: rowsModel) {
+        let man = RequestManager()
+        let dict = ["dataid": model.dataid ?? "",
+                    "mailbox": self.sendView.tf.text ?? ""]
+        man.requestAPI(params: dict,
+                       pageUrl: "operation/invoiceRecord/selectInvoiceMailbox",
+                       method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    ToastViewConfig.showToast(message: "发送成功")
+                    self?.dismiss(animated: true)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
     
     //获取列表信息
     func getListInfo() {
