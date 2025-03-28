@@ -43,7 +43,7 @@ class WDLoginViewController: WDBaseViewController {
         loginView.block2 = { [weak self] in
             self?.pushWebPage(from: base_url + privacy_url)
         }
-        
+        loginView.weiBtn.isHidden = !WXApi.isWXAppInstalled()
         //微信登陆
         loginView.weiBtn.rx.tap.subscribe(onNext: { [weak self] in
             let req = SendAuthReq()
