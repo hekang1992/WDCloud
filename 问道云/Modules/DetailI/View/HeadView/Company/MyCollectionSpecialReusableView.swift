@@ -197,6 +197,7 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
                 if category == "1" {
                     let companyVc = CompanyBothViewController()
                     companyVc.enityId.accept(model.id ?? "")
+                    companyVc.companyName.accept(model.name ?? "")
                     vc?.navigationController?.pushViewController(companyVc, animated: true)
                 }else {
                     let legalName = model.name ?? ""

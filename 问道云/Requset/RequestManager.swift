@@ -151,6 +151,7 @@ class RequestManager {
             completion(.success(baseModel))
         }else if code == 400 {
             completion(.success(baseModel))
+            ToastViewConfig.showToast(message: msg)
         }else if code == 401 {
             WDLoginConfig.removeLoginInfo()
             ShowAgainLoginConfig.againLoginView()
