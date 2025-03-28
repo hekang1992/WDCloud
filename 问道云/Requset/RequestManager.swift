@@ -156,11 +156,11 @@ class RequestManager {
             ShowAgainLoginConfig.againLoginView()
         }else if code == 702 {
             completion(.success(baseModel))
-            ToastViewConfig.showToast(message: msg)
+//            ToastViewConfig.showToast(message: msg)
         }else {
             let error = NSError()
             completion(.failure(error))
-            ToastViewConfig.showToast(message: msg)
+//            ToastViewConfig.showToast(message: msg)
         }
     }
     
