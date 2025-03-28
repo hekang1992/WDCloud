@@ -8,6 +8,8 @@
 import UIKit
 
 class PopPrivacyView: BaseView {
+    
+    
 
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
@@ -25,12 +27,24 @@ class PopPrivacyView: BaseView {
         let sureBtn = UIButton(type: .custom)
         return sureBtn
     }()
+    
+    lazy var oneBtn: UIButton = {
+        let oneBtn = UIButton(type: .custom)
+        return oneBtn
+    }()
+    
+    lazy var twoBtn: UIButton = {
+        let twoBtn = UIButton(type: .custom)
+        return twoBtn
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(ctImageView)
         ctImageView.addSubview(cancelBtn)
         ctImageView.addSubview(sureBtn)
+        ctImageView.addSubview(oneBtn)
+        ctImageView.addSubview(twoBtn)
         ctImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.size.equalTo(CGSize(width: 310.pix(), height: 385.pix()))
@@ -42,6 +56,16 @@ class PopPrivacyView: BaseView {
         sureBtn.snp.makeConstraints { make in
             make.right.bottom.equalToSuperview()
             make.size.equalTo(CGSize(width: 155.pix(), height: 60.pix()))
+        }
+        oneBtn.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.size.equalTo(CGSize(width: 155.pix(), height: 150.pix()))
+        }
+        twoBtn.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.right.equalToSuperview()
+            make.size.equalTo(CGSize(width: 155.pix(), height: 150.pix()))
         }
     }
     

@@ -21,6 +21,7 @@ class LaunchViewController: WDBaseViewController {
     
     lazy var priImageView: UIImageView = {
         let priImageView = UIImageView()
+        priImageView.isUserInteractionEnabled = true
         priImageView.image = UIImage(named: "apppriimage")
         priImageView.contentMode = .scaleAspectFit
         return priImageView
@@ -43,6 +44,7 @@ class LaunchViewController: WDBaseViewController {
             }
         }
         
+        
     }
     
 }
@@ -62,6 +64,43 @@ extension LaunchViewController {
             self?.savePrivacyInfo()
             NetworkManager.shared.startListening()
         }).disposed(by: disposeBag)
+        
+        popView.oneBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let pageUrl = base_url + privacy_url
+            let webVc = WebPageViewController()
+            webVc.modalPresentationStyle = .fullScreen
+            webVc.pageUrl.accept(pageUrl)
+            self.dismiss(animated: true, completion: {
+                self.present(webVc, animated: true)
+            })
+            webVc.headView.backBtn.rx.tap.subscribe(onNext: {
+                self.dismiss(animated: true, completion: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        self.showAlertPrivacyView()
+                    }
+                })
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+        
+        popView.twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let pageUrl = base_url + agreement_url
+            let webVc = WebPageViewController()
+            webVc.modalPresentationStyle = .fullScreen
+            webVc.pageUrl.accept(pageUrl)
+            self.dismiss(animated: true, completion: {
+                self.present(webVc, animated: true)
+            })
+            webVc.headView.backBtn.rx.tap.subscribe(onNext: {
+                self.dismiss(animated: true, completion: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        self.showAlertPrivacyView()
+                    }
+                })
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+        
     }
     
     private func savePrivacyInfo() {

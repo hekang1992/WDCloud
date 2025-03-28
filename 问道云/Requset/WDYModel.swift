@@ -811,6 +811,7 @@ class rowsModel {
     var dataid: String?//id号
     var entityId: String?
     var entityName: String?
+    var legalType: String?
     var follow: Bool?
     var phone: String?
     var registerAddress: String?
@@ -929,7 +930,14 @@ class rowsModel {
     var count: Int?
     var h5Path: String?
     var data: [itemsModel]?
+    var companyRelation: Bool?
+    var personRelation: Bool?
+    var legalInfo: [legalInfoModel]?
     init(json: JSON) {
+        self.legalInfo = json["legalInfo"].arrayValue.map { legalInfoModel(json: $0) }
+        self.personRelation = json["personRelation"].boolValue
+        self.companyRelation = json["companyRelation"].boolValue
+        self.legalType = json["legalType"].stringValue
         self.data = json["data"].arrayValue.map { itemsModel(json: $0) }
         self.risklevel = json["risklevel"].stringValue
         self.itemName = json["itemName"].stringValue
@@ -2015,5 +2023,16 @@ class monitorRelationVOListModel {
             "shareholdingRatio": self.shareholdingRatio ?? "",
             "customRelation": self.customRelation ?? ""
         ]
+    }
+}
+
+class legalInfoModel {
+    var legal_id: Int?
+    var legal_name: String?
+    var legal_type: Int?
+    init(json: JSON) {
+        self.legal_id = json["legal_id"].intValue
+        self.legal_type = json["legal_type"].intValue
+        self.legal_name = json["legal_name"].stringValue
     }
 }

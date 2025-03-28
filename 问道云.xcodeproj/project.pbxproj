@@ -140,6 +140,10 @@
 		734207192D95527F00D8E42D /* PropertyLineMoreClueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734207182D95527F00D8E42D /* PropertyLineMoreClueView.swift */; };
 		7342071B2D9571B000D8E42D /* BindWechatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342071A2D9571B000D8E42D /* BindWechatViewController.swift */; };
 		7342071D2D96370C00D8E42D /* PopFocusListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342071C2D96370C00D8E42D /* PopFocusListView.swift */; };
+		7342071F2D963E8600D8E42D /* AddPropertyUnioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342071E2D963E8600D8E42D /* AddPropertyUnioViewController.swift */; };
+		734207212D964BDB00D8E42D /* AddPropertyUnioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734207202D964BDB00D8E42D /* AddPropertyUnioCell.swift */; };
+		734207232D96676100D8E42D /* AddPropertyCompanyUnioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734207222D96676100D8E42D /* AddPropertyCompanyUnioViewController.swift */; };
+		734207252D96676E00D8E42D /* AddPropertyPeopleUnioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734207242D96676E00D8E42D /* AddPropertyPeopleUnioViewController.swift */; };
 		7342CF552D7815C3005157A0 /* ServerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342CF542D7815C3005157A0 /* ServerDataManager.swift */; };
 		7342CF572D78456B005157A0 /* HighSearchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7342CF562D78456B005157A0 /* HighSearchViewCell.swift */; };
 		734334932D798C1F006AE608 /* CompanyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734334922D798C1F006AE608 /* CompanyListView.swift */; };
@@ -554,6 +558,10 @@
 		734207182D95527F00D8E42D /* PropertyLineMoreClueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineMoreClueView.swift; sourceTree = "<group>"; };
 		7342071A2D9571B000D8E42D /* BindWechatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindWechatViewController.swift; sourceTree = "<group>"; };
 		7342071C2D96370C00D8E42D /* PopFocusListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopFocusListView.swift; sourceTree = "<group>"; };
+		7342071E2D963E8600D8E42D /* AddPropertyUnioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPropertyUnioViewController.swift; sourceTree = "<group>"; };
+		734207202D964BDB00D8E42D /* AddPropertyUnioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPropertyUnioCell.swift; sourceTree = "<group>"; };
+		734207222D96676100D8E42D /* AddPropertyCompanyUnioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPropertyCompanyUnioViewController.swift; sourceTree = "<group>"; };
+		734207242D96676E00D8E42D /* AddPropertyPeopleUnioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPropertyPeopleUnioViewController.swift; sourceTree = "<group>"; };
 		7342CF542D7815C3005157A0 /* ServerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerDataManager.swift; sourceTree = "<group>"; };
 		7342CF562D78456B005157A0 /* HighSearchViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSearchViewCell.swift; sourceTree = "<group>"; };
 		734334922D798C1F006AE608 /* CompanyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyListView.swift; sourceTree = "<group>"; };
@@ -1619,6 +1627,9 @@
 				739CE9902D8D642C003DE72A /* PropertyLineBothViewController.swift */,
 				739CE9922D8D643A003DE72A /* PropertyLineOneViewController.swift */,
 				739CE9942D8D6444003DE72A /* PropertyLineTwoViewController.swift */,
+				7342071E2D963E8600D8E42D /* AddPropertyUnioViewController.swift */,
+				734207222D96676100D8E42D /* AddPropertyCompanyUnioViewController.swift */,
+				734207242D96676E00D8E42D /* AddPropertyPeopleUnioViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1640,6 +1651,7 @@
 				731FCA932D92909300D2A93B /* PropertyLineTwoCell.swift */,
 				73F3B88E2D94176900350CB1 /* PropertyMonitoringListView.swift */,
 				734207182D95527F00D8E42D /* PropertyLineMoreClueView.swift */,
+				734207202D964BDB00D8E42D /* AddPropertyUnioCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2286,6 +2298,7 @@
 				7329269F2D857B0D00E93F96 /* ContorlDetailViewViewController.swift in Sources */,
 				73B3FA6B2D7EB9A60077766F /* Constants.swift in Sources */,
 				735A3F6D2D6572B000448268 /* SearchOneReportCell.swift in Sources */,
+				734207232D96676100D8E42D /* AddPropertyCompanyUnioViewController.swift in Sources */,
 				7340E18F2D5CD410008FD5C7 /* SearchCompanyExternalGuaranteeViewController.swift in Sources */,
 				73D4E3F72D734042005C73D8 /* MonthCompanyViewController.swift in Sources */,
 				73FB9C8A2D5F0EC200554CAD /* RiskPopGroupView.swift in Sources */,
@@ -2432,6 +2445,7 @@
 				73CFEB962D01415C00B2FE1B /* UserCenterView.swift in Sources */,
 				7352B2262D353C9300B5391B /* CompanyFourHeadView.swift in Sources */,
 				7352B2362D366BE400B5391B /* CompanyDetailCommonServiceCell.swift in Sources */,
+				7342071F2D963E8600D8E42D /* AddPropertyUnioViewController.swift in Sources */,
 				73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */,
 				739CE9952D8D6444003DE72A /* PropertyLineTwoViewController.swift in Sources */,
 				73FC5E4C2D5C7881001D0DEF /* SearchDeadbeatViewController.swift in Sources */,
@@ -2468,6 +2482,7 @@
 				7340E1712D5CC6B8008FD5C7 /* SearchEnvironmentalPenaltyViewController.swift in Sources */,
 				734334932D798C1F006AE608 /* CompanyListView.swift in Sources */,
 				73D4E3FB2D734059005C73D8 /* BothPeopleViewController.swift in Sources */,
+				734207212D964BDB00D8E42D /* AddPropertyUnioCell.swift in Sources */,
 				730488112D2A97F00024265C /* HomeVideoListViewCell.swift in Sources */,
 				73A0509B2D83CCA700208602 /* PropertyListViewCell.swift in Sources */,
 				7340E19B2D5CD4D0008FD5C7 /* SearchCourtNoticeViewController.swift in Sources */,
@@ -2572,6 +2587,7 @@
 				73C36A812D2D1BAA00D6DC46 /* SearchHotWordsListView.swift in Sources */,
 				734896EA2D3A429500B028FE /* RiskUnioViewCell.swift in Sources */,
 				739527F82D633EB60020589C /* OneDueDiligenceViewController.swift in Sources */,
+				734207252D96676E00D8E42D /* AddPropertyPeopleUnioViewController.swift in Sources */,
 				73DE1D212D7BF72200C554B1 /* PhoneEmailNameView.swift in Sources */,
 				739CE98D2D8D3224003DE72A /* PropertyLineHotView.swift in Sources */,
 				73EABF922D320F460052F4AB /* TwoRiskListView.swift in Sources */,
@@ -2610,7 +2626,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "问道云-测试版";
+				INFOPLIST_KEY_CFBundleDisplayName = "问道云";
 				INFOPLIST_KEY_NSCameraUsageDescription = "我们希望访问您的相机以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相机，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "需要访问您的文档文件夹以选择PDF文件,提交发票.";
@@ -2625,7 +2641,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2656,7 +2672,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "问道云-测试版";
+				INFOPLIST_KEY_CFBundleDisplayName = "问道云";
 				INFOPLIST_KEY_NSCameraUsageDescription = "我们希望访问您的相机以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相机，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "需要访问您的文档文件夹以选择PDF文件,提交发票.";
@@ -2671,7 +2687,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

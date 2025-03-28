@@ -408,6 +408,10 @@ class PropertyLineOneViewController: WDBaseViewController {
                     let customRelationFlag = self?.model.value?.conditionVO?.customRelationFlag ?? 0
                     if customRelationFlag == 0 {
                         //可以跳转
+                        let addVc = AddPropertyUnioViewController()
+                        addVc.entityId = self?.entityId ?? ""
+                        addVc.entityName = self?.entityName ?? ""
+                        self?.navigationController?.pushViewController(addVc, animated: true)
                     }else {
                         //弹窗购买会员
                     }

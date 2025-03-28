@@ -99,7 +99,7 @@ class SearchDueDiligenceViewController: WDBaseViewController {
             .rx
             .controlEvent(.editingChanged)
             .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] keywords in
                 guard let self = self else { return }
                 if keywords.isEmpty {

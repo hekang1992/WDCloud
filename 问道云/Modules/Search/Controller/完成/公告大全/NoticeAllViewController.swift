@@ -109,7 +109,7 @@ class NoticeAllViewController: WDBaseViewController {
             .controlEvent(.editingChanged)
             .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
             .distinctUntilChanged()
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] keywords in
                 self?.pageNum = 1
                 self?.shareSearchKey = keywords

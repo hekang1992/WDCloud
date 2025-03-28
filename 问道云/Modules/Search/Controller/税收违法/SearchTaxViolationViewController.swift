@@ -410,7 +410,7 @@ extension SearchTaxViolationViewController: HGSegmentedPageViewControllerDelegat
                 }else {//个人
                     let pageUrl = "\(base_url)/business-risk/tax-violations-person"
                     let dict = ["personName": model.name ?? "",
-                                "personNumber": model.eid ?? "",
+                                "personId": model.eid ?? "",
                                 "isPerson": "1"]
                     let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
                     self.pushWebPage(from: webUrl)
