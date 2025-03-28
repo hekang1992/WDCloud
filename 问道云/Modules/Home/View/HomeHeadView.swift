@@ -176,6 +176,15 @@ class HomeHeadView: BaseView {
         }
         grayImageView.frame = CGRectMake(0, 0, 12.5, 4)
         
+        itemModelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self, let modelArray = modelArray else { return }
+            if modelArray.count > 20 {
+                grayImageView.isHidden = false
+            }else {
+                grayImageView.isHidden = true
+            }
+        }).disposed(by: disposeBag)
+        
         itemModelArray.compactMap { $0 }.asObservable().bind(to: collectionView.rx.items(cellIdentifier: "HomeItemViewCell", cellType: HomeItemViewCell.self)) { row, model ,cell in
             let picUrl = model.icon ?? ""
             cell.iconImageView.kf.setImage(with: URL(string: picUrl))

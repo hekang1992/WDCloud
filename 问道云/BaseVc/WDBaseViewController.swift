@@ -349,8 +349,8 @@ extension WDBaseViewController {
     func getListOrderType(from isSelect: Bool) -> [ItemModel]{
         let model1 = ItemModel(text: "全部", currentID: "", isSelect: isSelect)!
         let model2 = ItemModel(text: "已支付", currentID: "1", isSelect: false)!
-        let model3 = ItemModel(text: "未支付", currentID: "2", isSelect: false)!
-        let model4 = ItemModel(text: "已取消", currentID: "3", isSelect: false)!
+        let model3 = ItemModel(text: "未支付", currentID: "0", isSelect: false)!
+        let model4 = ItemModel(text: "已取消", currentID: "2", isSelect: false)!
         let modelArray = [model1, model2, model3, model4]
         return modelArray
     }
