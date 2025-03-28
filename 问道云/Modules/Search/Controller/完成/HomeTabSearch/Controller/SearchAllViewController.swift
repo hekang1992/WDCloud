@@ -195,6 +195,8 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
             }
             companyVc.moreBtnBlock = { [weak self] in
                 guard let self = self else { return }
+                self.peopleVc.searchWords = self.searchHeadView.searchTx
+                    .text ?? ""
                 segmentedView.defaultSelectedIndex = 1
                 segmentedView.reloadData()
             }

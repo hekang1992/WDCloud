@@ -55,7 +55,7 @@ extension SettingViewController {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: {_ in
-                ToastViewConfig.showToast(message: "消息推送")
+//                ToastViewConfig.showToast(message: "消息推送")
             }).disposed(by: disposeBag)
         
         settingView.threeListView.bgView
@@ -65,9 +65,7 @@ extension SettingViewController {
             .subscribe(onNext: { [weak self] _ in
                 ShowAlertManager.showAlert(title: "提示", message: "是否确认清除缓存?", confirmAction: {
                     GetCacheConfig.clearCache()
-                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        
                         ToastViewConfig.showToast(message: "清理缓存成功")
                         self?.settingView.threeListView.rightlabel.text = "0.00MB"
                     }
