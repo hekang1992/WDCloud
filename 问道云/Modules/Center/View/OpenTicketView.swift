@@ -347,7 +347,7 @@ extension OpenTicketView: UITableViewDelegate, UITableViewDataSource {
                 cell.selectionStyle = .none
                 model1.subscribe(onNext: { [weak self] model in
                     guard let self = self, let model = model else { return }
-                    cell.mlabel.text = model.comboname ?? ""
+                    cell.mlabel.text = "技术服务费"
                     cell.mlabel.textColor = UIColor.init(cssStr: "#333333")
                 }).disposed(by: disposeBag)
                 return cell
