@@ -13,6 +13,10 @@ class AddPropertyCompanyUnioViewController: WDBaseViewController {
     //名字
     var entityName: String = ""
     
+    var model: rowsModel?
+    
+    var buttons: [UIButton] = []
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "自定义财产关联方"
@@ -90,9 +94,15 @@ class AddPropertyCompanyUnioViewController: WDBaseViewController {
         return lineView3
     }()
     
+    lazy var lineView4: UIView = {
+        let lineView4 = UIView()
+        lineView4.backgroundColor = .init(cssStr: "#F5F5F5")
+        return lineView4
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         addHeadView(from: headView)
@@ -160,18 +170,123 @@ class AddPropertyCompanyUnioViewController: WDBaseViewController {
             make.height.equalTo(1)
         }
         
+        self.searchTx.text = model?.entityName ?? ""
+        getMessageInfo()
+    }
+    
+    
+}
+
+extension AddPropertyCompanyUnioViewController {
+    
+    private func getMessageInfo() {
+        let dict = ["connectType": 2]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/customer/connect/findConnectTypeList",
+                       method: .get) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    let data = success.datas ?? []
+                    self?.refreshUI(from: data)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    private func refreshUI(from modelArray: [rowsModel]) {
+        let buttonSpacing = 10
+        let buttonHeight = 29
+        let buttonWidth = (Int(SCREEN_WIDTH) - 4 * buttonSpacing) / 3
+        var previousButton: UIButton?
+        for (index, model) in modelArray.enumerated() {
+            let button = UIButton()
+            buttons.append(button)
+            button.setTitle(model.connectName ?? "", for: .normal)
+            button.backgroundColor = .init(cssStr: "#F3F3F3")
+            button.setTitleColor(.init(cssStr: "#666666"), for: .normal)
+            button.layer.cornerRadius = 2
+            button.titleLabel?.font = .mediumFontOfSize(size: 13)
+            button.tag = 1000 + index
+            button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+            view.addSubview(button)
+            
+            // 使用 SnapKit 布局
+            button.snp.makeConstraints { make in
+                make.width.equalTo(buttonWidth)
+                make.height.equalTo(buttonHeight)
+                
+                // 如果是第一行的第一个按钮（index == 0）
+                if index == 0 {
+                    make.top.equalTo(lineView3.snp.bottom).offset(12)
+                    make.leading.equalToSuperview().offset(buttonSpacing)
+                }
+                // 如果是当前行的第一个按钮（index % 3 == 0）
+                else if index % 3 == 0 {
+                    make.top.equalTo(previousButton!.snp.bottom).offset(buttonSpacing)
+                    make.leading.equalToSuperview().offset(buttonSpacing)
+                }
+                // 否则，同一行后续按钮
+                else {
+                    make.top.equalTo(previousButton!)
+                    make.leading.equalTo(previousButton!.snp.trailing).offset(buttonSpacing)
+                }
+            }
+            previousButton = button
+        }
+        
+        if let previousButton = previousButton {
+            view.addSubview(lineView4)
+            lineView4.snp.makeConstraints { make in
+                make.left.right.equalToSuperview()
+                make.height.equalTo(4)
+                make.top.equalTo(previousButton.snp.bottom).offset(18 + buttonSpacing)
+            }
+        }
+        
+        let sureBtn = UIButton(type: .custom)
+        sureBtn.setTitle("添加", for: .normal)
+        sureBtn.backgroundColor = .init(cssStr: "#547AFF")
+        sureBtn.layer.cornerRadius = 3
+        view.addSubview(sureBtn)
+        sureBtn.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(15)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(lineView4.snp.bottom).offset(10)
+            make.height.equalTo(40.pix())
+        }
+    }
+    
+    @objc private func buttonTapped(_ sender: UIButton) {
+        for button in buttons {
+            button.backgroundColor = .init(cssStr: "#F3F3F3")
+            button.setTitleColor(.init(cssStr: "#666666"), for: .normal)
+        }
+        sender.backgroundColor = .init(cssStr: "#547AFF")
+        sender.setTitleColor(.init(cssStr: "#FFFFFF"), for: .normal)
+        let index = sender.tag
+        let title = sender.titleLabel?.text ?? ""
         
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func addInfo() {
+        let dict = ["relationId": entityId, "relationName": entityName, "relationType": 1, "beRelationId": model?.beRelationId ?? 0] as [String : Any]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/firminfo/customer/relation/add",
+                       method: .post) { result in
+            switch result {
+            case .success(let success):
+                break
+            case .failure(let failure):
+                break
+            }
+        }
+        
     }
-    */
-
 }
+

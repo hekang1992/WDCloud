@@ -9,6 +9,7 @@ import UIKit
 import JXPagingView
 import DropMenuBar
 import RxRelay
+import TYAlertController
 
 class MySelfRiskDetailViewController: WDBaseViewController {
     
@@ -628,12 +629,55 @@ extension MySelfRiskDetailViewController {
                     riskSecondVc.monitoringTime = self.monitoringTime
                     riskSecondVc.groupName = self.groupName
                     self.navigationController?.pushViewController(riskSecondVc, animated: true)
+                }else if success.code == 702 {
+                    self.buyOneVipInfo()
                 }
                 break
             case .failure(_):
                 break
             }
         }
+    }
+    
+}
+
+extension MySelfRiskDetailViewController {
+    
+    private func buyOneVipInfo() {
+        let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+        buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
+        let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+        buyVipView.cancelBlock = {
+            self.dismiss(animated: true)
+        }
+        buyVipView.buyOneBlock = { [weak self] in
+            guard let self = self else { return }
+            //跳转购买单次会员
+            self.dismiss(animated: true, completion: {
+                let oneVc = BuyMonitoringOneVipViewController()
+                oneVc.entityType = 1
+                oneVc.entityId = self.enityId
+                oneVc.entityName = self.name
+                //刷新列表
+                oneVc.refreshBlock = { startTime, endTime in
+                    //刷新头部消息
+                    let allTime = "监控周期:\(startTime) - \(endTime)"
+                    self.mainHeadView?.timeLabel.text = allTime
+                    self.mainHeadView?.tagLabel.text = "默认分钟"
+                    self.mainHeadView?.tagLabel.isHidden = false
+                    self.mainHeadView?.monitoringBtn.isHidden = true
+                }
+                self.navigationController?.pushViewController(oneVc, animated: true)
+            })
+        }
+        buyVipView.buyVipBlock = {
+            //跳转购买会员
+            self.dismiss(animated: true, completion: {
+                let memVc = MembershipCenterViewController()
+                self.navigationController?.pushViewController(memVc, animated: true)
+            })
+        }
+        self.present(alertVc, animated: true)
     }
     
 }

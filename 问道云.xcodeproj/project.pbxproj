@@ -272,6 +272,8 @@
 		73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */; };
 		73A443E02D8BEF5000CB3A6C /* DIBUView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A443DF2D8BEF5000CB3A6C /* DIBUView.swift */; };
 		73A443E22D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A443E12D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift */; };
+		73AEAD2D2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AEAD2C2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift */; };
+		73AEAD2F2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */; };
 		73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */; };
 		73B3329A2D30CF5100934773 /* CompanyLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332992D30CF5100934773 /* CompanyLocationViewController.swift */; };
 		73B3623D2D374222003BD911 /* PopHistoryNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3623C2D374222003BD911 /* PopHistoryNameView.swift */; };
@@ -694,6 +696,8 @@
 		73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAuthorityViewController.swift; sourceTree = "<group>"; };
 		73A443DF2D8BEF5000CB3A6C /* DIBUView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIBUView.swift; sourceTree = "<group>"; };
 		73A443E12D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyOneReportOneVipViewController.swift; sourceTree = "<group>"; };
+		73AEAD2C2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyPeopleCollectionViewCell.swift; sourceTree = "<group>"; };
+		73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyAddCustomerViewCell.swift; sourceTree = "<group>"; };
 		73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyNormalListCell.swift; sourceTree = "<group>"; };
 		73B332992D30CF5100934773 /* CompanyLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLocationViewController.swift; sourceTree = "<group>"; };
 		73B3623C2D374222003BD911 /* PopHistoryNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopHistoryNameView.swift; sourceTree = "<group>"; };
@@ -1652,6 +1656,8 @@
 				73F3B88E2D94176900350CB1 /* PropertyMonitoringListView.swift */,
 				734207182D95527F00D8E42D /* PropertyLineMoreClueView.swift */,
 				734207202D964BDB00D8E42D /* AddPropertyUnioCell.swift */,
+				73AEAD2C2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift */,
+				73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2214,6 +2220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73AEAD2F2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift in Sources */,
 				73B3624D2D37A665003BD911 /* PeopleActivityViewController.swift in Sources */,
 				7325A7E62D0000040043C196 /* GetCodeViewController.swift in Sources */,
 				7340E1CA2D5DE420008FD5C7 /* SearchPeopleOverseasInvestmentViewController.swift in Sources */,
@@ -2448,6 +2455,7 @@
 				7342071F2D963E8600D8E42D /* AddPropertyUnioViewController.swift in Sources */,
 				73A21DF62D0C422D00FC4C49 /* SettingPasswordViewController.swift in Sources */,
 				739CE9952D8D6444003DE72A /* PropertyLineTwoViewController.swift in Sources */,
+				73AEAD2D2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift in Sources */,
 				73FC5E4C2D5C7881001D0DEF /* SearchDeadbeatViewController.swift in Sources */,
 				73B362412D377C28003BD911 /* PopEmployeeNumView.swift in Sources */,
 				73E971792D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift in Sources */,
@@ -2641,7 +2649,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2687,7 +2695,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

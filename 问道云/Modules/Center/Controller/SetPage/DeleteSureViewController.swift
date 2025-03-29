@@ -64,7 +64,7 @@ class DeleteSureViewController: WDBaseViewController {
         yinsiLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
         let attributedString = NSMutableAttributedString(string: fullText)
                 let range = (fullText as NSString).range(of: linkText)
-        attributedString.addAttribute(.foregroundColor, value: UIColor.init(cssStr: "#547AFF"), range: range)
+        attributedString.addAttribute(.foregroundColor, value: UIColor.init(cssStr: "#547AFF") as Any, range: range)
         yinsiLabel.attributedText = attributedString
         yinsiLabel.isUserInteractionEnabled = true
         return yinsiLabel
@@ -256,7 +256,7 @@ extension DeleteSureViewController {
     func getCodeInfo() {
         let man = RequestManager()
         let dict = ["phone": self.numLabel.text ?? "",
-                    "sendType": "3"]
+                    "sendType": "6"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in

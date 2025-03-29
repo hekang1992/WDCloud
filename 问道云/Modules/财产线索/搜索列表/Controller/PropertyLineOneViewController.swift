@@ -3,7 +3,7 @@
 //  问道云
 //
 //  Created by Andrew on 2025/3/21.
-//
+//  财产线索
 
 import UIKit
 import RxRelay
@@ -154,6 +154,42 @@ class PropertyLineOneViewController: WDBaseViewController {
     lazy var moreClueView: PropertyMonitoringClueListView = {
         let moreClueView = PropertyMonitoringClueListView()
         return moreClueView
+    }()
+    
+    lazy var colView: UIView = {
+        let colView = UIView()
+        return colView
+    }()
+    
+    lazy var mlabel: UILabel = {
+        let mlabel = UILabel()
+        mlabel.text = "相\n关\n人\n员"
+        mlabel.textColor = UIColor.init(cssStr: "#333333")
+        mlabel.textAlignment = .center
+        mlabel.font = .mediumFontOfSize(size: 10)
+        mlabel.numberOfLines = 0
+        mlabel.backgroundColor = .init(cssStr: "#F8F8F8")
+        mlabel.layer.cornerRadius = 2
+        mlabel.layer.masksToBounds = true
+        return mlabel
+    }()
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 4
+        layout.minimumInteritemSpacing = 4
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .white
+        collectionView.register(PropertyPeopleCollectionViewCell.self, forCellWithReuseIdentifier: "PropertyPeopleCollectionViewCell")
+        collectionView.isPagingEnabled = true
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
     }()
     
     override func viewDidLoad() {
@@ -366,6 +402,27 @@ class PropertyLineOneViewController: WDBaseViewController {
             configure(with: rightTitles)
         }).disposed(by: disposeBag)
         
+        view.addSubview(colView)
+        colView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+            make.top.equalTo(bgView.snp.bottom).offset(10)
+            make.height.equalTo(75)
+        }
+        colView.addSubview(mlabel)
+        colView.addSubview(collectionView)
+        mlabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(10)
+            make.size.equalTo(CGSize(width: 17, height: 75))
+            make.top.equalToSuperview()
+        }
+        collectionView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalTo(mlabel.snp.right).offset(4)
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+
         let oneMenu = MenuAction(title: "线索对象", style: .typeCustom)!
         let twoMenu = MenuAction(title: "财产流向", style: .typeList)!
         let threeMenu = MenuAction(title: "线索类型", style: .typeList)!
@@ -374,7 +431,7 @@ class PropertyLineOneViewController: WDBaseViewController {
         view.addSubview(coverView)
         coverView.snp.makeConstraints { make in
             make.left.equalToSuperview()
-            make.top.equalTo(stackView.snp.bottom).offset(5)
+            make.top.equalTo(colView.snp.bottom).offset(5)
             make.bottom.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
         }
@@ -680,6 +737,7 @@ extension PropertyLineOneViewController {
                         }else {
                             self.tableView.mj_footer?.isHidden = true
                         }
+                        self.collectionView.reloadData()
                         self.tableView.reloadData()
                     }
                 }
@@ -769,4 +827,23 @@ extension PropertyLineOneViewController {
     
 }
 
-
+extension PropertyLineOneViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 90.pix(), height: 75)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let modelArray = self.model.value?.relatedEntityList ?? []
+        return modelArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PropertyPeopleCollectionViewCell", for: indexPath) as! PropertyPeopleCollectionViewCell
+        let model = self.model.value?.relatedEntityList?[indexPath.row]
+        cell.model = model
+        return cell
+    }
+    
+    
+}

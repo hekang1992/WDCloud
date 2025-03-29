@@ -320,7 +320,6 @@ extension SearchExternalGuaranteeViewController: HGSegmentedPageViewControllerDe
                 }
                 break
             case .failure(_):
-                
                 break
             }
         }

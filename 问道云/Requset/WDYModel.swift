@@ -196,6 +196,7 @@ class DataModel {
     var groupList: [rowsModel]?
     var conditionVO: conditionVOModel?
     var pageableData: pageableDataModel?
+    var relatedEntityList: [relatedEntityListModel]?
     var isRealTimePush: Int?
     var monitorRelationVOList: [monitorRelationVOListModel]?
     var pitems: [pageItemsModel]?
@@ -205,6 +206,7 @@ class DataModel {
     var subjectId: String?
     var bindStatus: Int?
     init(json: JSON) {
+        self.relatedEntityList = json["relatedEntityList"].arrayValue.map { relatedEntityListModel(json: $0) }
         self.bindStatus = json["bindStatus"].intValue
         self.subjectName = json["subjectName"].stringValue
         self.subjectId = json["subjectId"].stringValue
@@ -543,7 +545,11 @@ class itemsModel {
     var provinceStatList: [provinceStatListModel]?
     var riskInfo: riskInfoModel?
     var cluesDataList: [cluesDataListModel]?
+    var relationName: String?
+    var connectName: String?
     init(json: JSON) {
+        self.connectName = json["connectName"].stringValue
+        self.relationName = json["relationName"].stringValue
         self.createTime = json["createTime"].stringValue
         self.h5Path = json["h5Path"].stringValue
         self.cluesDataList = json["cluesDataList"].arrayValue.map { cluesDataListModel(json: $0) }
@@ -933,7 +939,11 @@ class rowsModel {
     var companyRelation: Bool?
     var personRelation: Bool?
     var legalInfo: [legalInfoModel]?
+    var connectName: String?
+    var beRelationId: Int?
     init(json: JSON) {
+        self.beRelationId = json["beRelationId"].intValue
+        self.connectName = json["connectName"].stringValue
         self.legalInfo = json["legalInfo"].arrayValue.map { legalInfoModel(json: $0) }
         self.personRelation = json["personRelation"].boolValue
         self.companyRelation = json["companyRelation"].boolValue
@@ -2034,5 +2044,22 @@ class legalInfoModel {
         self.legal_id = json["legal_id"].intValue
         self.legal_type = json["legal_type"].intValue
         self.legal_name = json["legal_name"].stringValue
+    }
+}
+
+class relatedEntityListModel {
+    var clueNum: Int?
+    var clueValuation: String?
+    var entityId: Int?
+    var entityName: String?
+    var identity: String?
+    var logoUrl: String?
+    init(json: JSON) {
+        self.clueNum = json["clueNum"].intValue
+        self.clueValuation = json["clueValuation"].stringValue
+        self.entityId = json["entityId"].intValue
+        self.entityName = json["entityName"].stringValue
+        self.identity = json["identity"].stringValue
+        self.logoUrl = json["logoUrl"].stringValue
     }
 }

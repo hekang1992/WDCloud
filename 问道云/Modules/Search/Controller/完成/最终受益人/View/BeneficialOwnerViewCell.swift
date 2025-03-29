@@ -231,7 +231,7 @@ extension BeneficialOwnerViewCell {
                             oneVc.entityId = model.personId ?? ""
                             oneVc.entityName = model.personName ?? ""
                             //刷新列表
-                            oneVc.refreshBlock = {
+                            oneVc.refreshBlock = { _, _ in
                                 model.monitor = true
                                 btn.setImage(UIImage(named: "havejiankong"), for: .normal)
                             }

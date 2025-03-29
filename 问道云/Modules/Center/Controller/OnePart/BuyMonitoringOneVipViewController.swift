@@ -25,7 +25,7 @@ class BuyMonitoringOneVipViewController: WDBaseViewController {
     var entityName: String = ""
     
     //返回是否需要刷新列表
-    var refreshBlock: (() -> Void)?
+    var refreshBlock: ((String, String) -> Void)?
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
@@ -269,7 +269,9 @@ extension BuyMonitoringOneVipViewController {
             case .success(let success):
                 let code = success.code ?? 0
                 if code == 200 {
-                    self?.refreshBlock?()
+                    let endDate = success.data?.endDate ?? ""
+                    let startDate = success.data?.startDate ?? ""
+                    self?.refreshBlock?(startDate, endDate)
                     self?.navigationController?.popViewController(animated: true)
                     ToastViewConfig.showToast(message: "监控成功")
                 }
@@ -298,7 +300,7 @@ extension BuyMonitoringOneVipViewController {
             case .success(let success):
                 let code = success.code ?? 0
                 if code == 200 {
-                    self?.refreshBlock?()
+                    self?.refreshBlock?("", "")
                     self?.navigationController?.popViewController(animated: true)
                     ToastViewConfig.showToast(message: "监控成功")
                 }

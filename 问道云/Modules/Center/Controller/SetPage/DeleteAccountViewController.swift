@@ -57,7 +57,7 @@ class DeleteAccountViewController: WDBaseViewController {
         yinsiLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
         let attributedString = NSMutableAttributedString(string: fullText)
                 let range = (fullText as NSString).range(of: linkText)
-        attributedString.addAttribute(.foregroundColor, value: UIColor.init(cssStr: "#547AFF"), range: range)
+        attributedString.addAttribute(.foregroundColor, value: UIColor.init(cssStr: "#547AFF") as Any, range: range)
         yinsiLabel.attributedText = attributedString
         yinsiLabel.isUserInteractionEnabled = true
         return yinsiLabel

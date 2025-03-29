@@ -49,7 +49,7 @@ class SearchPeopleShareholderCell: BaseViewCell {
     
     lazy var descLabel: UILabel = {
         let descLabel = UILabel()
-        descLabel.text = "TA的合作伙伴："
+        descLabel.text = "TA的合作伙伴:"
         descLabel.textColor = .init(cssStr: "#999999")
         descLabel.font = .regularFontOfSize(size: 13)
         descLabel.isSkeletonable = true
@@ -171,13 +171,14 @@ class SearchPeopleShareholderCell: BaseViewCell {
             configure(with: Array(listCompany.prefix(3)))
             
             let shareholderList = model.shareholderList ?? []
+            let count1 = String(shareholderList.count)
             if shareholderList.isEmpty {
                 descLabel.text = "TA的合作伙伴: 暂无合作伙伴信息"
                 stackView.snp.updateConstraints { make in
                     make.bottom.equalToSuperview().offset(-35)
                 }
             }else {
-                descLabel.text = "TA的合作伙伴:"
+                descLabel.attributedText = GetRedStrConfig.getRedStr(from: count1, fullText: "TA的合作伙伴(\(count1)):", font: UIFont.regularFontOfSize(size: 13))
                 stackView.snp.updateConstraints { make in
                     make.bottom.equalToSuperview().offset(-115)
                 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import SnapKit
 
 class TwoPeopleNormalListCell: BaseViewCell {
     
@@ -82,6 +83,8 @@ class TwoPeopleNormalListCell: BaseViewCell {
     
     var listViews: [CompanyListView] = []
     
+    private var collectionViewHeightConstraint: Constraint?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(lineView)
@@ -124,8 +127,8 @@ class TwoPeopleNormalListCell: BaseViewCell {
             make.top.equalTo(cooperationLabel.snp.bottom).offset(6)
             make.left.equalToSuperview().offset(12)
             make.centerX.equalToSuperview()
-            make.height.equalTo(0)
             make.bottom.equalToSuperview().offset(-10)
+            make.height.equalTo(0)
         }
         
         addFocusBtn.snp.makeConstraints { make in
@@ -141,7 +144,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            
+            self.collectionView.reloadData()
             self.ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.personName ?? "", size: (40, 40), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             
             nameLabel.text = model.personName ?? ""
@@ -156,7 +159,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
             
             let shareholderListCount = model.shareholderList?.count ?? 0
             if shareholderListCount > 0 {
-                self.cooperationLabel.text = "TA的合作伙伴:"
+                self.cooperationLabel.attributedText = GetRedStrConfig.getRedStr(from: String(shareholderListCount), fullText: "TA的合作伙伴(\(shareholderListCount)):", font: UIFont.regularFontOfSize(size: 13))
                 self.collectionView.snp.updateConstraints { make in
                     make.height.equalTo(69.5)
                 }

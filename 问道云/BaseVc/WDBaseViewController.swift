@@ -560,7 +560,7 @@ extension WDBaseViewController {
                 oneVc.entityName = entityName
                 oneVc.menuId = menuId
                 //刷新列表
-                oneVc.refreshBlock = {
+                oneVc.refreshBlock = { _, _ in
                     complete()
                 }
                 self?.navigationController?.pushViewController(oneVc, animated: true)

@@ -128,7 +128,7 @@ class PropertyMonitoringClueListView: BaseView {
             make.width.equalToSuperview().dividedBy(3)
         }
         ctImageView.snp.makeConstraints { make in
-            make.left.equalTo(tableView1.snp.left).offset(60.pix())
+            make.left.equalTo(tableView1.snp.left).offset(65.pix())
             make.bottom.equalToSuperview().offset(-12)
             make.size.equalTo(CGSize(width: 15, height: 15))
         }

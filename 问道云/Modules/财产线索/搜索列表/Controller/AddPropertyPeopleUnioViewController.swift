@@ -8,6 +8,8 @@
 import UIKit
 
 class AddPropertyPeopleUnioViewController: WDBaseViewController {
+    
+    var model: rowsModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()

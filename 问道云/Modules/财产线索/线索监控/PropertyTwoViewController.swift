@@ -21,13 +21,9 @@ class PropertyTwoViewController: WDBaseViewController {
     //参数
     var directionType: String = ""
     var clueModel: String = ""
-    var assetType: String = ""
     var clueClassification: String = ""
     var updateTime: String = ""
-    var updateTimeStart: String = ""
-    var updateTimeEnd: String = ""
     var pageNum: Int = 1
-    
     
     var backBlock: (() -> Void)?
     
@@ -171,12 +167,11 @@ class PropertyTwoViewController: WDBaseViewController {
 extension PropertyTwoViewController {
     
     private func getListInfo() {
-        let dict = ["directionType": directionType,
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let dict = ["clueClassification": clueClassification,
+                    "directionType": directionType,
                     "clueModel": clueModel,
-                    "assetType": assetType,
                     "updateTime": updateTime,
-                    "updateTimeStart": updateTimeStart,
-                    "updateTimeEnd": updateTimeEnd,
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
