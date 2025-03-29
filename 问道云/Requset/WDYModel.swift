@@ -1624,7 +1624,7 @@ class itemDtoListModel {
     var orgName: String?//
     var orgRelaveType: [String]?
     var operationRiskCnt: Int?//经营风险
-    var lowRiskCnt: Int?//法律风险
+    var lawRiskCnt: Int?//法律风险
     var financeRiskCnt: Int?//经营风险
     var opinionRiskCnt: Int?//舆情风险
     init(json: JSON) {
@@ -1640,7 +1640,7 @@ class itemDtoListModel {
         self.totalCnt = json["totalCnt"].intValue
         
         self.operationRiskCnt = json["operationRiskCnt"].intValue
-        self.lowRiskCnt = json["lowRiskCnt"].intValue
+        self.lawRiskCnt = json["lawRiskCnt"].intValue
         self.financeRiskCnt = json["financeRiskCnt"].intValue
         self.opinionRiskCnt = json["opinionRiskCnt"].intValue
     }

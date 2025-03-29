@@ -538,9 +538,9 @@ extension MySelfRiskDetailViewController {
         self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险\(count)条/", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
         self.highNumLabel.attributedText = GetRedStrConfig.getRedStr(from: highcount, fullText: "高风险\(highcount)条", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
         self.totalItemView.numLabel.text = String(model.notRelevaRiskDto?.totalRiskCnt ?? 0)
-        self.oneItemView.numLabel.text = String(model.highLevelCnt ?? 0)
-        self.twoItemView.numLabel.text = String(model.lowLevelCnt ?? 0)
-        self.threeItemView.numLabel.text = String(model.tipLevelCnt ?? 0)
+        self.oneItemView.numLabel.text = String(model.notRelevaRiskDto?.highLevelCnt ?? 0)
+        self.twoItemView.numLabel.text = String(model.notRelevaRiskDto?.lowLevelCnt ?? 0)
+        self.threeItemView.numLabel.text = String(model.notRelevaRiskDto?.tipLevelCnt ?? 0)
         let startTime = model.monitorStartDate ?? ""
         let endTime = model.monitorEndDate ?? ""
         let monitorFlag = model.monitorFlag ?? 0

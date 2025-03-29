@@ -131,7 +131,7 @@ class RiskUnioViewCell: BaseViewCell {
             fourView.nameLabel.text = "舆情信息"
             
             oneView.numLabel.text = String(model.operationRiskCnt ?? 0)
-            twoView.numLabel.text = String(model.lowRiskCnt ?? 0)
+            twoView.numLabel.text = String(model.lawRiskCnt ?? 0)
             threeView.numLabel.text = String(model.financeRiskCnt ?? 0)
             fourView.numLabel.text = String(model.opinionRiskCnt ?? 0)
             
