@@ -354,7 +354,7 @@ extension SearchShareholderViewController {
                             "isPerson": "0"]
                 }else {
                     dict = ["personName": model.personname ?? "",
-                            "personNumber": model.personnumber ?? "",
+                            "personId": model.personnumber ?? "",
                             "isPerson": "1"]
                 }
                 let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""

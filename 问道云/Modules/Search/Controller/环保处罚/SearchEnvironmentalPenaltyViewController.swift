@@ -340,7 +340,7 @@ extension SearchEnvironmentalPenaltyViewController: HGSegmentedPageViewControlle
                 }else {//个人
                     let pageUrl = "\(base_url)/business-risk/environmental-penalties"
                     let dict = ["personName": model.personname ?? "",
-                                "personNumber": model.personnumber ?? ""]
+                                "personId": model.personnumber ?? ""]
                     let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
                     self.pushWebPage(from: webUrl)
                 }

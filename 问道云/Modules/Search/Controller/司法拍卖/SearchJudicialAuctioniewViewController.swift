@@ -343,7 +343,7 @@ extension SearchJudicialAuctioniewViewController: HGSegmentedPageViewControllerD
                 }else {//个人
                     let pageUrl = "\(base_url)/litigation-risk/judicial-action"
                     let dict = ["persoNname": model.personname ?? "",
-                                "personNumber": model.personnumber ?? "",
+                                "personId": model.personnumber ?? "",
                                 "type": "1"]
                     let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
                     self.pushWebPage(from: webUrl)
