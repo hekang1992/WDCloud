@@ -149,6 +149,9 @@ class RequestManager {
         let code = baseModel.code ?? 0
         if code == 200  {
             completion(.success(baseModel))
+        }else if code == 500 {
+            completion(.success(baseModel))
+            ToastViewConfig.showToast(message: msg)
         }else if code == 400 {
             completion(.success(baseModel))
             ToastViewConfig.showToast(message: msg)
