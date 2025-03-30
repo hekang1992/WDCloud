@@ -118,7 +118,7 @@ extension AppDelegate: WXApiDelegate {
     }
     
     private func openWechat() {
-        WXApi.registerApp("wx24b1a40f5ff2811e", universalLink: "https://www.wintaocloud.com/iOS/")
+        WXApi.registerApp("wx24b1a40f5ff2811e", universalLink: "https://h5.wintaocloud.com/iOS/")
     }
     
     private func keyBordManager() {

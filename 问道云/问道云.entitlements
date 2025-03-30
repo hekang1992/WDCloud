@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:wintaocloud.com</string>
+		<string>applinks:h5.wintaocloud.com</string>
 	</array>
 </dict>
 </plist>
