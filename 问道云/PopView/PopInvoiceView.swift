@@ -123,7 +123,7 @@ class PopInvoiceView: BaseView {
         label2.textColor = UIColor.init(cssStr: "#333333")
         label2.textAlignment = .left
         label2.font = .regularFontOfSize(size: 13)
-        label2.numberOfLines = 0
+        label2.numberOfLines = 2
         return label2
     }()
     
@@ -183,7 +183,7 @@ class PopInvoiceView: BaseView {
             make.height.equalTo(22.5)
         }
         namelabel.snp.makeConstraints { make in
-            make.top.equalTo(mlabel.snp.bottom).offset(31)
+            make.top.equalTo(mlabel.snp.bottom).offset(21)
             make.centerX.equalToSuperview()
             make.height.equalTo(22.5)
         }
@@ -197,11 +197,7 @@ class PopInvoiceView: BaseView {
             make.top.equalTo(onelabel.snp.bottom).offset(8)
             make.size.equalTo(CGSize(width: 69.5, height: 18.5))
         }
-        threelabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(24)
-            make.top.equalTo(twolabel.snp.bottom).offset(8)
-            make.size.equalTo(CGSize(width: 69.5, height: 18.5))
-        }
+        
         fourlabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)
             make.top.equalTo(threelabel.snp.bottom).offset(8)
@@ -213,6 +209,7 @@ class PopInvoiceView: BaseView {
             make.size.equalTo(CGSize(width: 69.5, height: 18.5))
         }
         
+        
         label1.snp.makeConstraints { make in
             make.centerY.equalTo(onelabel.snp.centerY)
             make.height.equalTo(18.5)
@@ -220,10 +217,17 @@ class PopInvoiceView: BaseView {
             make.right.equalToSuperview().offset(-20)
         }
         label2.snp.makeConstraints { make in
-            make.centerY.equalTo(twolabel.snp.centerY)
+            make.top.equalTo(twolabel.snp.top)
             make.left.equalTo(twolabel.snp.right).offset(16)
             make.right.equalToSuperview().offset(-20)
         }
+        
+        threelabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(24)
+            make.top.equalTo(label2.snp.bottom).offset(8)
+            make.size.equalTo(CGSize(width: 69.5, height: 18.5))
+        }
+        
         label3.snp.makeConstraints { make in
             make.centerY.equalTo(threelabel.snp.centerY)
             make.left.equalTo(threelabel.snp.right).offset(16)
