@@ -11,7 +11,11 @@ class PropertyAlertView: BaseView {
     
     var selectedIndexPaths = [IndexPath]()
     var selectedModels = [[String: Any]]()
-    var modelArray: [monitorRelationVOListModel]?
+    var modelArray: [monitorRelationVOListModel]? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     lazy var grayView: UIView = {
         let grayView = UIView()
@@ -132,7 +136,7 @@ class PropertyAlertView: BaseView {
             guard let self = self else { return }
             let man = RequestManager()
             let newDictArray = selectedModels.map { dict in
-                var newDict = dict
+                let newDict = dict
                 return newDict
             }
             man.requestArrayAPI(array: newDictArray,
@@ -141,6 +145,7 @@ class PropertyAlertView: BaseView {
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
+                        self.removeFromSuperview()
                         ToastViewConfig.showToast(message: "监控成功")
                     }
                     break
@@ -201,7 +206,7 @@ extension PropertyAlertView: UITableViewDelegate, UITableViewDataSource {
             guard let self = self else { return }
             if qBtn.isSelected {
                 if let modelArray = self.modelArray {
-                    for (index, model) in modelArray.enumerated() {
+                    for (_, model) in modelArray.enumerated() {
                         model.select = false
                     }
                     self.selectedModels.removeAll()

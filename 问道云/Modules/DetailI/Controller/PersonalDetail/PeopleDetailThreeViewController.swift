@@ -121,13 +121,15 @@ extension PeopleDetailThreeViewController: UICollectionViewDelegateFlowLayout, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var pageUrl: String = ""
         let modelArray = self.model.value?.items?.first?.children ?? []
-        let newArray = Array(modelArray.suffix(1))[indexPath.section]
+        let newArray = Array(modelArray.dropLast())[indexPath.section]
         let model = newArray.children?[indexPath.row]
-        let oneUrl = base_url + (model?.path ?? "")
-        pageUrl = oneUrl + "?" + "personId=\(personId)"
-        self.pushWebPage(from: pageUrl)
+        let pageUrl = base_url + (model?.path ?? "")
+        let dict = ["personId": personId]
+        let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+        let webVc = WebPageViewController()
+        webVc.pageUrl.accept(webUrl)
+        self.navigationController?.pushViewController(webVc, animated: true)
     }
     
 }

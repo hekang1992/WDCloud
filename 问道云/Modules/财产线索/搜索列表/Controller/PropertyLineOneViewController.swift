@@ -812,7 +812,6 @@ extension PropertyLineOneViewController {
                         popView.ctImageView.image = UIImage.imageOfText(name, size: (30, 30))
                         popView.nameLabel.text = name
                         popView.modelArray = modelArray
-                        popView.tableView.reloadData()
                         UIView.animate(withDuration: 0.25) {
                             keyWindow?.addSubview(popView)
                         }

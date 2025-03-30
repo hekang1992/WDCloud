@@ -43,11 +43,13 @@ class CompanyDetailViewController: WDBaseViewController {
         }
         companyDetailView.cellBlock = { [weak self] model in
             guard let self = self else { return }
-            var pageUrl: String = ""
-            if let pathUrl = model.path {
-                pageUrl = base_url + pathUrl + "?" + "entityId=\(enityId)"
-            }
-            self.pushWebPage(from: pageUrl)
+            let pathUrl = model.path ?? ""
+            let dict = ["entityId": self.enityId]
+            let pageUrl = base_url + pathUrl
+            let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+            let webVc = WebPageViewController()
+            webVc.pageUrl.accept(webUrl)
+            self.navigationController?.pushViewController(webVc, animated: true)
         }
         
         //回到首页

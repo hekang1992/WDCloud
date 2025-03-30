@@ -98,14 +98,14 @@ extension PeopleDetailOneViewController: UICollectionViewDelegateFlowLayout, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var pageUrl: String = ""
         let modelArray = self.model.value?.items?.first?.children ?? []
         let newArray = Array(modelArray.dropLast())[indexPath.section]
         let model = newArray.children?[indexPath.row]
-        let oneUrl = base_url + (model?.path ?? "")
-        pageUrl = oneUrl + "&" + "personId=\(personId)"
+        let pageUrl = base_url + (model?.path ?? "")
+        let dict = ["personId": personId]
+        let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
         let webVc = WebPageViewController()
-        webVc.pageUrl.accept(pageUrl)
+        webVc.pageUrl.accept(webUrl)
         self.navigationController?.pushViewController(webVc, animated: true)
     }
     
