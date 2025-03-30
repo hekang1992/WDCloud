@@ -27,6 +27,8 @@ class AddPropertyUnioViewController: WDBaseViewController {
     
     var pageNum: Int = 1
     
+    var addPageNum: Int = 1
+    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
         headView.titlelabel.text = "添加财产关联方"
@@ -248,7 +250,7 @@ class AddPropertyUnioViewController: WDBaseViewController {
         
         self.addTableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
-            pageNum = 1
+            addPageNum = 1
             addUnioInfo()
         })
         
@@ -262,7 +264,71 @@ class AddPropertyUnioViewController: WDBaseViewController {
     
 }
 
+extension AddPropertyUnioViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == addTableView {
+            return self.itemsArray.count
+        }else {
+            return self.modelArray.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView == self.addTableView {
+            let model = self.itemsArray[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PropertyAddCustomerViewCell", for: indexPath) as! PropertyAddCustomerViewCell
+            cell.selectionStyle = .none
+            cell.model = model
+            return cell
+        }else {
+            let model = self.modelArray[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AddPropertyUnioCell", for: indexPath) as! AddPropertyUnioCell
+            cell.selectionStyle = .none
+            cell.model = model
+            cell.cellCompanyBlock = { [weak self] model in
+                self?.companyUnioInfo(from: model)
+            }
+            cell.cellPeopleBlock = { [weak self] model in
+                self?.peopleUnioInfo(from: model)
+            }
+            return cell
+        }
+    }
+    
+}
+
+/** 网络数据请求 */
 extension AddPropertyUnioViewController {
+    
+    private func companyUnioInfo(from model: rowsModel) {
+        let companyVc = AddPropertyCompanyUnioViewController()
+        companyVc.model = model
+        companyVc.entityId = entityId
+        companyVc.entityName = entityName
+        self.navigationController?.pushViewController(companyVc, animated: true)
+        companyVc.refreshBlock = { [weak self] in
+            self?.addTableView.isHidden = false
+            self?.tableView.isHidden = true
+            self?.addPageNum = 1
+            self?.pageNum = 1
+            self?.addUnioInfo()
+        }
+    }
+    
+    private func peopleUnioInfo(from model: rowsModel) {
+        let peopleVc = AddPropertyPeopleUnioViewController()
+        peopleVc.model = model
+        peopleVc.entityId = entityId
+        peopleVc.entityName = entityName
+        self.navigationController?.pushViewController(peopleVc, animated: true)
+        peopleVc.refreshBlock = { [weak self] in
+            self?.addTableView.isHidden = false
+            self?.tableView.isHidden = true
+            self?.addPageNum = 1
+            self?.pageNum = 1
+            self?.addUnioInfo()
+        }
+    }
     
     private func searchInfo() {
         let dict = ["keyWords": keyWords,
@@ -314,7 +380,7 @@ extension AddPropertyUnioViewController {
     //已经添加的自定义财产关联方
     private func addUnioInfo() {
         let man = RequestManager()
-        let dict = ["pageNum": pageNum,
+        let dict = ["pageNum": addPageNum,
                     "pageSize": 20,
                     "relationId": entityId] as [String : Any]
         man.requestAPI(params: dict,
@@ -328,10 +394,10 @@ extension AddPropertyUnioViewController {
                 if success.code == 200 {
                     let model = success.data
                     let total = model?.total ?? 0
-                    if pageNum == 1 {
+                    if addPageNum == 1 {
                         self.itemsArray.removeAll()
                     }
-                    pageNum += 1
+                    addPageNum += 1
                     let pageData = model?.items ?? []
                     self.itemsArray.append(contentsOf: pageData)
                     if total != 0 {
@@ -351,57 +417,6 @@ extension AddPropertyUnioViewController {
                 break
             }
         }
-    }
-    
-}
-
-extension AddPropertyUnioViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == addTableView {
-            return self.itemsArray.count
-        }else {
-            return self.modelArray.count
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == self.addTableView {
-            let model = self.itemsArray[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PropertyAddCustomerViewCell", for: indexPath) as! PropertyAddCustomerViewCell
-            cell.selectionStyle = .none
-            cell.model = model
-            return cell
-        }else {
-            let model = self.modelArray[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AddPropertyUnioCell", for: indexPath) as! AddPropertyUnioCell
-            cell.selectionStyle = .none
-            cell.model = model
-            cell.cellCompanyBlock = { [weak self] model in
-                self?.companyUnioInfo(from: model)
-            }
-            cell.cellPeopleBlock = { [weak self] model in
-                self?.peopleUnioInfo(from: model)
-            }
-            return cell
-        }
-    }
-    
-}
-
-/** 网络数据请求 */
-extension AddPropertyUnioViewController {
-    
-    private func companyUnioInfo(from model: rowsModel) {
-        let companyVc = AddPropertyCompanyUnioViewController()
-        companyVc.model = model
-        companyVc.entityId = entityId
-        companyVc.entityName = entityName
-        self.navigationController?.pushViewController(companyVc, animated: true)
-    }
-    
-    private func peopleUnioInfo(from model: rowsModel) {
-        let peopleVc = AddPropertyPeopleUnioViewController()
-        self.navigationController?.pushViewController(peopleVc, animated: true)
     }
     
 }

@@ -12,7 +12,7 @@ class PropertyAddCustomerViewCell: UITableViewCell {
     var model: itemsModel? {
         didSet {
             guard let model = model else { return }
-            let name = model.relationName ?? ""
+            let name = model.beRelationName ?? ""
             ctImageView.image = UIImage.imageOfText(name, size: (25, 25))
             nameLabel.text = name
             descLabel.text = model.connectName ?? ""

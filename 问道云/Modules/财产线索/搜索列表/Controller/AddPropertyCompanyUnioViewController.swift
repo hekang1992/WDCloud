@@ -9,9 +9,14 @@ import UIKit
 
 class AddPropertyCompanyUnioViewController: WDBaseViewController {
     
+    var refreshBlock:(() -> Void)?
+    
     var entityId: String = ""
     //名字
     var entityName: String = ""
+    //参数
+    var connectId: Int = 0
+    var dataArray: [rowsModel]?
     
     var model: rowsModel?
     
@@ -189,6 +194,7 @@ extension AddPropertyCompanyUnioViewController {
             case .success(let success):
                 if success.code == 200 {
                     let data = success.datas ?? []
+                    self?.dataArray = data
                     self?.refreshUI(from: data)
                 }
                 break
@@ -259,6 +265,11 @@ extension AddPropertyCompanyUnioViewController {
             make.top.equalTo(lineView4.snp.bottom).offset(10)
             make.height.equalTo(40.pix())
         }
+        
+        sureBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.addInfo()
+        }).disposed(by: disposeBag)
+        
     }
     
     @objc private func buttonTapped(_ sender: UIButton) {
@@ -268,21 +279,33 @@ extension AddPropertyCompanyUnioViewController {
         }
         sender.backgroundColor = .init(cssStr: "#547AFF")
         sender.setTitleColor(.init(cssStr: "#FFFFFF"), for: .normal)
-        let index = sender.tag
-        let title = sender.titleLabel?.text ?? ""
+        let index = sender.tag - 1000
+        let connectId = Int(self.dataArray?[index].eid ?? "0") ?? 0
+        self.connectId = connectId
         
     }
     
     private func addInfo() {
-        let dict = ["relationId": entityId, "relationName": entityName, "relationType": 1, "beRelationId": model?.beRelationId ?? 0] as [String : Any]
+        let dict = ["relationId": entityId,
+                    "relationName": entityName,
+                    "relationType": 1,
+                    "beRelationId": model?.entityId ?? 0,
+                    "connectId": connectId,
+                    "beRelationName": self.searchTx.text ?? "",
+                    "beRelationType": "1"] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/customer/relation/add",
-                       method: .post) { result in
+                       method: .post) { [weak self] result in
             switch result {
             case .success(let success):
+                if success.code == 200 {
+                    self?.refreshBlock?()
+                    ToastViewConfig.showToast(message: "关联成功")
+                    self?.navigationController?.popViewController(animated: true)
+                }
                 break
-            case .failure(let failure):
+            case .failure(_):
                 break
             }
         }

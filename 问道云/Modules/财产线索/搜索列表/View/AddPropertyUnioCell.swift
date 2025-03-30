@@ -159,7 +159,7 @@ class AddPropertyUnioCell: BaseViewCell {
         
         unioPeopleBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self, let model = model else { return  }
-            self.cellCompanyBlock?(model)
+            self.cellPeopleBlock?(model)
         }).disposed(by: disposeBag)
         
     }

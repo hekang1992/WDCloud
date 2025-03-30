@@ -547,7 +547,9 @@ class itemsModel {
     var cluesDataList: [cluesDataListModel]?
     var relationName: String?
     var connectName: String?
+    var beRelationName: String?
     init(json: JSON) {
+        self.beRelationName = json["beRelationName"].stringValue
         self.connectName = json["connectName"].stringValue
         self.relationName = json["relationName"].stringValue
         self.createTime = json["createTime"].stringValue
