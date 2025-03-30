@@ -124,12 +124,20 @@ class CorrelationViewCell: BaseViewCell {
                 title = "股东(\(percent))"
             }
             
+            if shareholderFlag && legalFlag {
+                title += "、"
+            }
+            
             if legalFlag {
-                title += "、法定代表人"
+                title += "法定代表人"
+            }
+            
+            if legalFlag && !positionName.isEmpty {
+                title += "、"
             }
             
             if !positionName.isEmpty {
-                title += "、\(positionName)"
+                title += "\(positionName)"
             }
             //职位
             let originalString = title

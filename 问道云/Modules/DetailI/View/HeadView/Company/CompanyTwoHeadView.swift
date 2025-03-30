@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 import RxRelay
 import TYAlertController
 
@@ -222,6 +223,35 @@ extension CompanyTwoHeadView {
         phoneView.model.accept(model)
         let vc = ViewControllerUtils.findViewController(from: self)
         vc?.present(alertVc, animated: true)
+        
+        phoneView.addressBlock = { [weak self] model in
+            self?.goAddressInfo(from: model)
+        }
+        
+        phoneView.websiteBlock = { [weak self] model in
+            self?.goWensiteInfo(from: model)
+        }
+    }
+    
+    private func goAddressInfo(from model: addressListModel) {
+        let vc = ViewControllerUtils.findViewController(from: self)
+        let latitude = Double(model.lat ?? "0.0") ?? 0.0
+        let longitude = Double(model.lng ?? "0.0") ?? 0.0
+        let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let locationVc = CompanyLocationViewController(location: location)
+        locationVc.name = model.address ?? ""
+        vc?.dismiss(animated: true, completion: {
+            vc?.navigationController?.pushViewController(locationVc, animated: true)
+        })
+    }
+    
+    private func goWensiteInfo(from model: websitesListModel) {
+        let vc = ViewControllerUtils.findViewController(from: self)
+        let webVc = WebPageViewController()
+        webVc.pageUrl.accept(model.website ?? "")
+        vc?.dismiss(animated: true, completion: {
+            vc?.navigationController?.pushViewController(webVc, animated: true)
+        })
     }
     
 }

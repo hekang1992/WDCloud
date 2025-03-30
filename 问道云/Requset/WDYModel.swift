@@ -1466,12 +1466,14 @@ class shareHoldersModel {
 
 //主要人员
 class staffInfosModel {
-    var orgId: String?//人员ID
+    var orgId: String?//ID
     var name: String?
     var positionName: String?
     var relatedNum: Int?
     var logo: String?
+    var id: Int?
     init(json: JSON) {
+        self.id = json["id"].intValue
         self.logo = json["logo"].stringValue
         self.orgId = json["orgId"].stringValue
         self.name = json["name"].stringValue

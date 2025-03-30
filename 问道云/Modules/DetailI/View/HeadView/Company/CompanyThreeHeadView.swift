@@ -254,7 +254,6 @@ extension CompanyThreeHeadView: UICollectionViewDelegateFlowLayout, UICollection
         }
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == self.pcollectionView {
             return CGSize(width: 100.pix(), height: 57)

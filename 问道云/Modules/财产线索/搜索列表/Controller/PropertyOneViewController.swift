@@ -285,6 +285,8 @@ extension PropertyOneViewController {
                     if let modelArray = success.datass {
                         complete(modelArray)
                     }
+                }else {
+                    complete([])
                 }
                 break
             case .failure(_):
@@ -305,7 +307,9 @@ extension PropertyOneViewController {
                 if success.code == 200 {
                     if let modelArray = success.data?.datas {
                         complete(modelArray)
-                    }
+                    } 
+                }else {
+                    complete([])
                 }
                 break
             case .failure(_):

@@ -211,7 +211,7 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             headView.threeHeadView.staffInfosBlock = { model in
                 let vc = ViewControllerUtils.findViewController(from: self)
                 let legalName = model.name ?? ""
-                let personNumber = model.orgId ?? ""
+                let personNumber = String(model.id ?? 0)
                 let peopleDetailVc = PeopleBothViewController()
                 peopleDetailVc.personId.accept(personNumber)
                 peopleDetailVc.peopleName.accept(legalName)

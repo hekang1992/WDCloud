@@ -7,8 +7,12 @@
 
 import UIKit
 import RxRelay
+import MapKit
 
 class PopPhoneEmailView: BaseView {
+    
+    var addressBlock: ((addressListModel) -> Void)?
+    var websiteBlock: ((websitesListModel) -> Void)?
     
     var model = BehaviorRelay<DataModel?>(value: nil)
     
@@ -245,15 +249,22 @@ class PopPhoneEmailView: BaseView {
             emailView.phonelabel.text = "邮箱\(emailList.count)"
             wechatView.phonelabel.text = "公众号\(wechatList.count)"
             
+            //电话
             for (_, model) in phoneList.enumerated() {
                 let phoneListView = PhoneEmailListView()
                 let phone = model.phone ?? ""
                 let year = model.year ?? ""
                 let source = model.source ?? ""
                 let orgCount = model.orgCount ?? ""
-                //电话
                 phoneListView.namelabel.text = phone
                 phoneListView.desclabel.text = year + source
+                phoneListView
+                    .rx
+                    .tapGesture()
+                    .when(.recognized)
+                    .subscribe { [weak self] _ in
+                        self?.goPhoneInfo(from: model)
+                }.disposed(by: disposeBag)
                 if !orgCount.isEmpty && orgCount != "0" {
                     phoneListView.numlabel.isHidden = false
                     phoneListView.numlabel.attributedText = GetRedStrConfig.getRedStr(from: orgCount, fullText: "同电话企业\(orgCount)", colorStr: "#FF7D00", font: .regularFontOfSize(size: 11))
@@ -263,15 +274,22 @@ class PopPhoneEmailView: BaseView {
                 phoneStackView.addArrangedSubview(phoneListView)
             }
             
+            //地址
             for (_, model) in addressList.enumerated() {
                 let phoneListView = PhoneEmailListView()
                 let address = model.address ?? ""
                 let source = model.source ?? ""
                 let type = model.type ?? ""
                 let orgCount = model.orgCount ?? ""
-                //地址
                 phoneListView.namelabel.text = address
                 phoneListView.desclabel.text = source
+                phoneListView
+                    .rx
+                    .tapGesture()
+                    .when(.recognized)
+                    .subscribe { [weak self] _ in
+                        self?.addressBlock?(model)
+                }.disposed(by: disposeBag)
                 if !type.isEmpty {
                     phoneListView.tagLabel.isHidden = false
                     phoneListView.tagLabel.text = type
@@ -287,11 +305,19 @@ class PopPhoneEmailView: BaseView {
                 addressStackView.addArrangedSubview(phoneListView)
             }
             
+            //官网
             for (_, model) in websitesList.enumerated() {
                 let phoneListView = PhoneEmailListView()
                 let website = model.website ?? ""
                 let type = model.icpFlag ?? false
                 let owFlag = model.owFlag ?? false
+                phoneListView
+                    .rx
+                    .tapGesture()
+                    .when(.recognized)
+                    .subscribe { [weak self] _ in
+                        self?.websiteBlock?(model)
+                }.disposed(by: disposeBag)
                 if type {
                     phoneListView.tagLabel.text = "ICP"
                     phoneListView.tagLabel.isHidden = false
@@ -307,12 +333,12 @@ class PopPhoneEmailView: BaseView {
                 }else {
                     phoneListView.numlabel.isHidden = true
                 }
-                //地址
                 phoneListView.namelabel.text = website
                 phoneListView.desclabel.text = "企业网址"
                 websiteStackView.addArrangedSubview(phoneListView)
             }
             
+            //邮箱
             for (_, model) in emailList.enumerated() {
                 let phoneListView = PhoneEmailListView()
                 let address = model.email ?? ""
@@ -330,12 +356,12 @@ class PopPhoneEmailView: BaseView {
                 emailStackView.addArrangedSubview(phoneListView)
             }
             
+            //公众号
             for (_, model) in wechatList.enumerated() {
                 let phoneListView = PhoneEmailListView()
                 let address = model.wechat ?? ""
                 let source = model.title ?? ""
                 let orgCount = model.orgCount ?? ""
-                //地址
                 phoneListView.namelabel.text = address
                 phoneListView.desclabel.text = source
                 if !orgCount.isEmpty && orgCount != "0" {
@@ -367,6 +393,31 @@ extension PopPhoneEmailView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 0 {
             scrollView.contentOffset.y = 0
+        }
+    }
+    
+}
+
+extension PopPhoneEmailView {
+    
+    private func goPhoneInfo(from model: phoneListModel) {
+        let phone = model.phone ?? ""
+        makePhoneCall(phoneNumber: phone)
+    }
+    
+    private func goEmailInfo(from model: phoneListModel) {
+        
+    }
+    
+    func makePhoneCall(phoneNumber: String) {
+        guard let url = URL(string: "tel://\(phoneNumber)") else {
+            print("无效的电话号码")
+            return
+        }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            print("设备不支持拨打电话")
         }
     }
     
