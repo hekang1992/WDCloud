@@ -947,7 +947,9 @@ class rowsModel {
     var beRelationId: Int?
     var updateTime: String?
     var entityType: Int?
+    var updateHourTime: String?
     init(json: JSON) {
+        self.updateHourTime = json["updateHourTime"].stringValue
         self.entityType = json["entityType"].intValue
         self.updateTime = json["updateTime"].string
         self.beRelationId = json["beRelationId"].intValue

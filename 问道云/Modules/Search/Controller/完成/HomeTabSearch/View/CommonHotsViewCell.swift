@@ -17,7 +17,7 @@ class CommonHotsViewCell: BaseViewCell {
             let entityName = model.entityName ?? ""
             ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(entityName, size: (22, 22), bgColor: UIColor.init(cssStr: logoColor) ?? .random()))
             nameLabel.text = entityName
-            timeLabel.text = model.updateTime ?? ""
+            timeLabel.text = model.updateHourTime ?? ""
         }
     }
     

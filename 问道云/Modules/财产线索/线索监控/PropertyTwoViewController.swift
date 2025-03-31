@@ -167,7 +167,7 @@ class PropertyTwoViewController: WDBaseViewController {
 extension PropertyTwoViewController {
     
     private func getListInfo() {
-        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        ViewHud.addLoadView()
         let dict = ["clueClassification": clueClassification,
                     "directionType": directionType,
                     "clueModel": clueModel,
@@ -177,6 +177,7 @@ extension PropertyTwoViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/clue-monitor",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
             switch result {

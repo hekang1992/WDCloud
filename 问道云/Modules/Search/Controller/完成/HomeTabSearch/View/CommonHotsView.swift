@@ -28,6 +28,7 @@ class CommonHotsView: BaseView {
     
     lazy var bgView: UIView = {
         let bgView = UIView()
+        bgView.isHidden = true
         bgView.backgroundColor = .white
         return bgView
     }()

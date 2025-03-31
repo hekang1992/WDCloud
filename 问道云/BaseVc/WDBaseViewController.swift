@@ -725,7 +725,7 @@ extension WDBaseViewController {
     //获取浏览历史
     func getLastHistroyInfo(from menuId: String, complete: @escaping (([rowsModel]) -> Void)) {
         let man = RequestManager()
-        let dict = ["moduleId": menuId]
+        let dict = ["moduleId": menuId, "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/view-record/query",
                        method: .get) {result in

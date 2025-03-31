@@ -254,6 +254,7 @@ extension PropertyThreeBothViewController {
     
     //获取监控列表信息
     private func getListInfo() {
+        ViewHud.addLoadView()
         let dict = ["entityName": entityName,
                     "entityType": "",
                     "groupId": groupId,
@@ -268,6 +269,7 @@ extension PropertyThreeBothViewController {
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

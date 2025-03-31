@@ -110,14 +110,12 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyHeadPeopleCell") as? TwoCompanyHeadPeopleCell
                 cell?.selectionStyle = .none
                 cell?.modelArray = pageDataModel
-                cell?.isSkeletonable = true
                 return cell ?? UITableViewCell()
             }else {
                 let pageDataModel = self.dataModelArray?[indexPath.row]
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
                 pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
                 cell?.selectionStyle = .none
-                cell?.isSkeletonable = true
                 cell?.model.accept(pageDataModel)
                 cell?.addressBlock = { [weak self] model in
                     self?.addressBlock?(model)

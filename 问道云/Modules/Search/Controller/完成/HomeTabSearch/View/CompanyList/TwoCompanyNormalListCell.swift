@@ -39,7 +39,6 @@ class TwoCompanyNormalListCell: BaseViewCell {
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
-        ctImageView.isSkeletonable = true
         ctImageView.layer.cornerRadius = 3
         return ctImageView
     }()
@@ -49,6 +48,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         nameLabel.font = .mediumFontOfSize(size: 14)
         nameLabel.textColor = .init(cssStr: "#333333")
         nameLabel.textAlignment = .left
+        nameLabel.numberOfLines = 0
         return nameLabel
     }()
     
@@ -185,9 +185,8 @@ class TwoCompanyNormalListCell: BaseViewCell {
         
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(ctImageView.snp.top).offset(-1)
-            make.height.equalTo(20)
             make.left.equalTo(ctImageView.snp.right).offset(8)
-            make.right.equalToSuperview().offset(-55)
+            make.right.equalToSuperview().offset(-60)
         }
         
         tagListView.snp.makeConstraints { make in

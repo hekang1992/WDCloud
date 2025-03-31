@@ -449,12 +449,11 @@ extension SearchPeopleViewController {
                     "orgArea": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
-        //        let man = RequestManager()
-        
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/person/boss-search",
                        method: .get) { [weak self] result in
-            
+            ViewHud.hideLoadView()
             self?.twoPeopleListView.tableView.mj_header?.endRefreshing()
             self?.twoPeopleListView.tableView.mj_footer?.endRefreshing()
             switch result {
