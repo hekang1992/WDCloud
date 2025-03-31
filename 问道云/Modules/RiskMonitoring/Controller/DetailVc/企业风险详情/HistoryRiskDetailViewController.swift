@@ -553,28 +553,7 @@ extension HistoryRiskDetailViewController: UITableViewDelegate, UITableViewDataS
         cell.selectionStyle = .none
         cell.namelabel.text = model?.itemName ?? ""
         cell.numlabel.text = "共\(model?.totalCnt ?? 0)条"
-        if let model = model {
-            cell.highLabel.text = "高风险(\(model.highLevelCnt ?? 0))"
-            if model.highLevelCnt == 0 {
-                cell.highLabel.snp.makeConstraints({ make in
-                    make.width.equalTo(0)
-                    make.left.equalTo(cell.namelabel.snp.right)
-                })
-            }
-            cell.lowLabel.text = "低风险(\(model.lowLevelCnt ?? 0))"
-            if model.lowLevelCnt == 0 {
-                cell.lowLabel.snp.makeConstraints({ make in
-                    make.width.equalTo(0)
-                    make.left.equalTo(cell.highLabel.snp.right)
-                })
-            }
-            cell.hitLabel.text = "提示(\(model.tipLevelCnt ?? 0))"
-            if model.tipLevelCnt == 0 {
-                cell.hitLabel.snp.makeConstraints({ make in
-                    make.width.equalTo(0)
-                })
-            }
-        }
+        cell.model.accept(model)
         return cell
     }
     

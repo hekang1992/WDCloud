@@ -97,7 +97,6 @@ class PropertyLineOneViewCell: BaseViewCell {
         let diImageView = UIImageView()
         diImageView.isHidden = true
         diImageView.image = UIImage(named: "diprpimged")
-        diImageView.contentMode = .scaleAspectFit
         return diImageView
     }()
     
@@ -175,17 +174,17 @@ class PropertyLineOneViewCell: BaseViewCell {
             make.centerX.equalToSuperview()
             make.top.equalTo(coverView.snp.bottom).offset(4)
             make.size.equalTo(CGSize(width: 351.pix(), height: 76.pix()))
+            make.bottom.equalToSuperview().offset(-10)
         }
         descLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(33.pix())
-            make.left.equalToSuperview().offset(9.pix())
-            make.right.equalToSuperview().offset(-9.pix())
+            make.top.equalToSuperview().offset(33)
+            make.left.equalToSuperview().offset(9)
+            make.right.equalToSuperview().offset(-9)
         }
         lineView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.height.equalTo(5)
-            make.top.equalTo(coverView.snp.bottom).offset(90)
-            make.bottom.equalToSuperview()
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(2)
+            make.top.equalTo(coverView.snp.bottom).offset(95)
         }
     }
     

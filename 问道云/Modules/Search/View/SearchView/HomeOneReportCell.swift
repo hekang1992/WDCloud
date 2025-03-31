@@ -98,13 +98,13 @@ class HomeOneReportCell: BaseViewCell {
         ctImageView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(20)
             make.top.equalToSuperview().offset(21)
-            make.size.equalTo(CGSize(width: 81, height: 111))
+            make.size.equalTo(CGSize(width: 81.pix(), height: 111.pix()))
             make.bottom.equalToSuperview().offset(-40)
         }
         nlabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.left.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-24.5)
+            make.bottom.equalToSuperview().offset(-25.pix())
             make.height.equalTo(16.5)
         }
         namelabel.snp.makeConstraints { make in

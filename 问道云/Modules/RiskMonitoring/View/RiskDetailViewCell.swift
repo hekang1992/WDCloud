@@ -133,6 +133,7 @@ class RiskDetailViewCell: BaseViewCell {
             let lowLevelCnt = model.lowLevelCnt ?? 0
             let tipLevelCnt = model.tipLevelCnt ?? 0
             if highLevelCnt == 0 {
+                highLabel.text = ""
                 highLabel.isHidden = true
                 highLabel.snp.updateConstraints({ make in
                     make.left.equalTo(self.namelabel.snp.right)
@@ -145,6 +146,7 @@ class RiskDetailViewCell: BaseViewCell {
                 })
             }
             if lowLevelCnt == 0 {
+                lowLabel.text = ""
                 lowLabel.isHidden = true
                 lowLabel.snp.updateConstraints({ make in
                     make.left.equalTo(self.highLabel.snp.right)
@@ -157,6 +159,7 @@ class RiskDetailViewCell: BaseViewCell {
                 })
             }
             if tipLevelCnt == 0 {
+                hitLabel.text = ""
                 hitLabel.isHidden = true
                 hitLabel.snp.updateConstraints({ make in
                     make.left.equalTo(self.lowLabel.snp.right)

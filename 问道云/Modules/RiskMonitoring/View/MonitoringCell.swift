@@ -262,7 +262,7 @@ class MonitoringCell: BaseViewCell {
             let logo = model.logo ?? ""
             let orgName = model.orgName ?? ""
 
-            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (30, 30), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
+            ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(orgName, size: (30, 30), bgColor: UIColor.init(cssStr: model.logoColor ?? "") ?? .random()))
             namelabel.text = orgName
             
             let orgStatus = model.orgStatus ?? ""
