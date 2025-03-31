@@ -142,6 +142,7 @@ class DataModel {
     var entityName: String?
     var logoUrl: String?
     var highLevelCnt: Int?
+    var totalHighRiskCnt: Int?
     var lowLevelCnt: Int?
     var tipLevelCnt: Int?
     var monitorStartDate: String?
@@ -206,6 +207,7 @@ class DataModel {
     var subjectId: String?
     var bindStatus: Int?
     init(json: JSON) {
+        self.totalHighRiskCnt = json["totalHighRiskCnt"].intValue
         self.relatedEntityList = json["relatedEntityList"].arrayValue.map { relatedEntityListModel(json: $0) }
         self.bindStatus = json["bindStatus"].intValue
         self.subjectName = json["subjectName"].stringValue
@@ -943,7 +945,11 @@ class rowsModel {
     var legalInfo: [legalInfoModel]?
     var connectName: String?
     var beRelationId: Int?
+    var updateTime: String?
+    var entityType: Int?
     init(json: JSON) {
+        self.entityType = json["entityType"].intValue
+        self.updateTime = json["updateTime"].string
         self.beRelationId = json["beRelationId"].intValue
         self.connectName = json["connectName"].stringValue
         self.legalInfo = json["legalInfo"].arrayValue.map { legalInfoModel(json: $0) }

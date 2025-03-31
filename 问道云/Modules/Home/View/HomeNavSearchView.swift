@@ -49,7 +49,7 @@ class HomeNavSearchView: BaseView {
         }
         modelArray.compactMap { $0 }.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
-            let titlesArray = modelArray.map { $0.name ?? "" }
+            let titlesArray = modelArray.map { $0.entityName ?? "" }
             //创建文字上下轮博
             self.scrollLabelView?.endScrolling()
             let scrollLabelView = TXScrollLabelView(textArray: titlesArray, type: .flipNoRepeat, velocity: 2.0, options: .curveEaseInOut, inset: .zero)!

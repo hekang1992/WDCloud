@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		730037A92D9A3E6900A6E789 /* SearchEnterpriseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730037A82D9A3E6900A6E789 /* SearchEnterpriseViewController.swift */; };
+		730037AB2D9A448200A6E789 /* CommonHotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730037AA2D9A448200A6E789 /* CommonHotsView.swift */; };
+		730037AD2D9A5FD000A6E789 /* CommonHotsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730037AC2D9A5FD000A6E789 /* CommonHotsViewCell.swift */; };
 		730384482D606572008AA7C3 /* MyOpinionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730384472D606572008AA7C3 /* MyOpinionViewCell.swift */; };
 		7303844A2D60731C008AA7C3 /* MyOpinioDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730384492D60731C008AA7C3 /* MyOpinioDetailViewController.swift */; };
 		7303844C2D609006008AA7C3 /* ServiceCenterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7303844B2D609006008AA7C3 /* ServiceCenterViewCell.swift */; };
@@ -301,7 +304,6 @@
 		73C36A6A2D2CCB1600D6DC46 /* HomeHotWordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */; };
 		73C36A6C2D2D024C00D6DC46 /* SearchAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A6B2D2D024C00D6DC46 /* SearchAllViewController.swift */; };
 		73C36A712D2D050200D6DC46 /* SearchHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A702D2D050200D6DC46 /* SearchHeadView.swift */; };
-		73C36A732D2D08CB00D6DC46 /* SearchCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A722D2D08CB00D6DC46 /* SearchCompanyViewController.swift */; };
 		73C36A752D2D08DA00D6DC46 /* SearchRiskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A742D2D08DA00D6DC46 /* SearchRiskViewController.swift */; };
 		73C36A772D2D08EB00D6DC46 /* SearchPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A762D2D08EB00D6DC46 /* SearchPeopleViewController.swift */; };
 		73C36A7B2D2D147400D6DC46 /* OneCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C36A7A2D2D147400D6DC46 /* OneCompanyView.swift */; };
@@ -424,6 +426,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		730037A82D9A3E6900A6E789 /* SearchEnterpriseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEnterpriseViewController.swift; sourceTree = "<group>"; };
+		730037AA2D9A448200A6E789 /* CommonHotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHotsView.swift; sourceTree = "<group>"; };
+		730037AC2D9A5FD000A6E789 /* CommonHotsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHotsViewCell.swift; sourceTree = "<group>"; };
 		730384472D606572008AA7C3 /* MyOpinionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOpinionViewCell.swift; sourceTree = "<group>"; };
 		730384492D60731C008AA7C3 /* MyOpinioDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOpinioDetailViewController.swift; sourceTree = "<group>"; };
 		7303844B2D609006008AA7C3 /* ServiceCenterViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCenterViewCell.swift; sourceTree = "<group>"; };
@@ -725,7 +730,6 @@
 		73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHotWordsCell.swift; sourceTree = "<group>"; };
 		73C36A6B2D2D024C00D6DC46 /* SearchAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllViewController.swift; sourceTree = "<group>"; };
 		73C36A702D2D050200D6DC46 /* SearchHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeadView.swift; sourceTree = "<group>"; };
-		73C36A722D2D08CB00D6DC46 /* SearchCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyViewController.swift; sourceTree = "<group>"; };
 		73C36A742D2D08DA00D6DC46 /* SearchRiskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRiskViewController.swift; sourceTree = "<group>"; };
 		73C36A762D2D08EB00D6DC46 /* SearchPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleViewController.swift; sourceTree = "<group>"; };
 		73C36A7A2D2D147400D6DC46 /* OneCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneCompanyView.swift; sourceTree = "<group>"; };
@@ -1142,7 +1146,7 @@
 			isa = PBXGroup;
 			children = (
 				73C36A6B2D2D024C00D6DC46 /* SearchAllViewController.swift */,
-				73C36A722D2D08CB00D6DC46 /* SearchCompanyViewController.swift */,
+				730037A82D9A3E6900A6E789 /* SearchEnterpriseViewController.swift */,
 				73C36A762D2D08EB00D6DC46 /* SearchPeopleViewController.swift */,
 				73C36A742D2D08DA00D6DC46 /* SearchRiskViewController.swift */,
 				73B332992D30CF5100934773 /* CompanyLocationViewController.swift */,
@@ -1153,6 +1157,8 @@
 		733D2F4D2D87E7D60019C697 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				730037AA2D9A448200A6E789 /* CommonHotsView.swift */,
+				730037AC2D9A5FD000A6E789 /* CommonHotsViewCell.swift */,
 				73EF03CC2D30F4D50070F850 /* CompanyList */,
 				73EF03CD2D30F4E20070F850 /* PeopleList */,
 				73EABF902D320F250052F4AB /* RiskList */,
@@ -2269,6 +2275,7 @@
 				73807D5B2D3396A100F8B90D /* CompanyDetailView.swift in Sources */,
 				7340E1C62D5DE356008FD5C7 /* SearchOverseasInvestmentViewController.swift in Sources */,
 				7374162D2D0EB87F00E6CD23 /* FocusAllViewController.swift in Sources */,
+				730037A92D9A3E6900A6E789 /* SearchEnterpriseViewController.swift in Sources */,
 				73C752542D1E4B5800C47187 /* HistoryListViewController.swift in Sources */,
 				7340E17A2D5CCFDE008FD5C7 /* SearchCompanyTaxViolationViewController.swift in Sources */,
 				73C752322D18F44F00C47187 /* FocusPeopleViewController.swift in Sources */,
@@ -2495,7 +2502,6 @@
 				73A0509B2D83CCA700208602 /* PropertyListViewCell.swift in Sources */,
 				7340E19B2D5CD4D0008FD5C7 /* SearchCourtNoticeViewController.swift in Sources */,
 				734355EC2D26433000BB4087 /* GroupTeamSpecView.swift in Sources */,
-				73C36A732D2D08CB00D6DC46 /* SearchCompanyViewController.swift in Sources */,
 				730488072D2A72200024265C /* HomeHeadTabView.swift in Sources */,
 				730487FD2D2A5C7D0024265C /* HomeNewsListViewController.swift in Sources */,
 				7340E17C2D5CCFEE008FD5C7 /* SearchPeopleTaxViolationViewController.swift in Sources */,
@@ -2528,9 +2534,11 @@
 				73868A472D55F56600CE107D /* BothReportViewController.swift in Sources */,
 				73CC03772D6859660022F794 /* HighSearchViewController.swift in Sources */,
 				7330CB822D23E65900778D54 /* ContactManager.swift in Sources */,
+				730037AB2D9A448200A6E789 /* CommonHotsView.swift in Sources */,
 				739DCA0A2D66E012009CFC78 /* PropertyThreeViewController.swift in Sources */,
 				7340E19D2D5CD52A008FD5C7 /* SearchCompanyCourtNoticeViewController.swift in Sources */,
 				73B3329A2D30CF5100934773 /* CompanyLocationViewController.swift in Sources */,
+				730037AD2D9A5FD000A6E789 /* CommonHotsViewCell.swift in Sources */,
 				7329269D2D85698F00E93F96 /* ContorlPeopleListView.swift in Sources */,
 				73C36A752D2D08DA00D6DC46 /* SearchRiskViewController.swift in Sources */,
 				739DCA042D66DF6F009CFC78 /* PropertyTabBarController.swift in Sources */,

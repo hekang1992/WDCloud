@@ -46,7 +46,6 @@ class TwoCompanyNormalListCell: BaseViewCell {
     
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.isSkeletonable = true
         nameLabel.font = .mediumFontOfSize(size: 14)
         nameLabel.textColor = .init(cssStr: "#333333")
         nameLabel.textAlignment = .left
@@ -55,7 +54,6 @@ class TwoCompanyNormalListCell: BaseViewCell {
     
     lazy var tagListView: UIScrollView = {
         let tagListView = UIScrollView()
-        tagListView.isSkeletonable = true
         return tagListView
     }()
     

@@ -43,7 +43,6 @@ class TwoCompanyView: BaseView {
         tableView.estimatedRowHeight = 60
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
@@ -66,13 +65,10 @@ class TwoCompanyView: BaseView {
             make.edges.equalToSuperview()
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(32)
+            make.top.equalToSuperview().offset(40)
             make.left.right.bottom.equalToSuperview()
         }
-        
-        print("检查骨架屏是否激活========\(tableView.sk.isSkeletonActive)")
-        print("检查是否支持骨架屏=========\(tableView.isSkeletonable)")
-        
+
     }
     
     @MainActor required init?(coder: NSCoder) {

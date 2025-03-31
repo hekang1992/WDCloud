@@ -31,16 +31,15 @@ class SearchAllViewController: WDBaseViewController {
     
     lazy var searchHeadView: SearchHeadView = {
         let searchHeadView = SearchHeadView()
-        searchHeadView.searchTx.placeholder = model.value?.name ?? ""
-        searchHeadView.searchTx.delegate = self
+        searchHeadView.searchTx.placeholder = model.value?.entityName ?? ""
         return searchHeadView
     }()
     
-    lazy var companyVc: SearchCompanyViewController = {
-        let companyVc = SearchCompanyViewController()
-        return companyVc
+    lazy var enterpriseVc: SearchEnterpriseViewController = {
+        let enterpriseVc = SearchEnterpriseViewController()
+        return enterpriseVc
     }()
-    
+
     lazy var peopleVc: SearchPeopleViewController = {
         let peopleVc = SearchPeopleViewController()
         return peopleVc
@@ -80,12 +79,13 @@ class SearchAllViewController: WDBaseViewController {
         // 监听 UITextField 的文本变化
         self.searchHeadView.searchTx
             .rx.text.orEmpty
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if self.containsOnlyChinese(text) == true {
                     print("自动打印中文：\(text)")
                     if selectIndex == 0 {
-                        companyVc.searchWords = text
+                        enterpriseVc.searchWords.accept(text)
                     }else if selectIndex == 1 {
                         peopleVc.searchWords = text
                     }else if selectIndex == 2 {
@@ -105,7 +105,12 @@ class SearchAllViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if selectIndex == 0 {
-                    companyVc.searchWords = text
+                    if text.isEmpty {
+                        self.searchHeadView.searchTx.text = self.searchHeadView.searchTx.placeholder
+                        enterpriseVc.searchWords.accept(self.searchHeadView.searchTx.placeholder)
+                    }else {self.searchHeadView.searchTx.text = text
+                        enterpriseVc.searchWords.accept(text)
+                    }
                 }else if selectIndex == 1 {
                     peopleVc.searchWords = text
                 }else if selectIndex == 2 {
@@ -178,12 +183,15 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
-            companyVc.lastSearchTextBlock = { [weak self] searchStr in
+            enterpriseVc.lastSearchTextBlock = { [weak self] searchStr in
                 guard let self = self else { return }
+                searchHeadView.searchTx.placeholder = searchStr
                 searchHeadView.searchTx.text = searchStr
-                companyVc.searchWords = searchStr
+                DispatchQueue.main.asyncAfter(delay: 0.25) {
+                    self.searchHeadView.searchTx.becomeFirstResponder()
+                }
             }
-            companyVc.completeBlock = { [weak self] in
+            enterpriseVc.completeBlock = { [weak self] in
                 guard let self = self else { return }
                 if self.isShowKeyboard {
                     self.isShowKeyboard = false
@@ -192,14 +200,14 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                     }
                 }
             }
-            companyVc.moreBtnBlock = { [weak self] in
+            enterpriseVc.moreBtnBlock = { [weak self] in
                 guard let self = self else { return }
                 self.peopleVc.searchWords = self.searchHeadView.searchTx
                     .text ?? ""
                 segmentedView.defaultSelectedIndex = 1
                 segmentedView.reloadData()
             }
-            return companyVc
+            return enterpriseVc
         }else if index == 1 {
             peopleVc.lastSearchTextBlock = { [weak self] searchStr in
                 guard let self = self else { return }
@@ -216,7 +224,7 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 }
             }
             return peopleVc
-        }else {
+        }else if index == 2 {
             riskVc.lastSearchTextBlock = { [weak self] searchStr in
                 guard let self = self else { return }
                 searchHeadView.searchTx.text = searchStr
@@ -232,14 +240,16 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 }
             }
             return riskVc
+        }else {
+            return enterpriseVc
         }
     }
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         selectIndex = index
         if index == 0 {
-            self.companyVc.searchWords = self.searchHeadView.searchTx
-                .text ?? ""
+            self.enterpriseVc.searchWords.accept(self.searchHeadView.searchTx
+                .text ?? "")
         }else if index == 1 {
             self.peopleVc.searchWords = self.searchHeadView.searchTx
                 .text ?? ""
@@ -253,40 +263,18 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
     
 }
 
-extension SearchAllViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let searchText = textField.text ?? ""
-        if searchText.isEmpty {
-            textField.text = textField.placeholder
-        }
-        if selectIndex == 0 {
-            companyVc.searchWords = textField.text
-        }else if selectIndex == 1 {
-            peopleVc.searchWords = textField.text
-        }else if selectIndex == 2 {
-            riskVc.searchWords = textField.text
-        }else {
-            
-        }
-        textField.resignFirstResponder()
-        return true
-    }
-    
-}
-
 extension SearchAllViewController {
     
     //获取所有城市数据
     func getAllRegionInfo() {
         let modelArray = RegionDataManager.shared.getData()
         if modelArray.count > 0 {
-            self.companyVc.regionModelArray.accept(modelArray)
+            self.enterpriseVc.regionModelArray.accept(modelArray)
             self.peopleVc.regionModelArray.accept(modelArray)
             self.riskVc.regionModelArray.accept(modelArray)
         }else {
             getReginInfo { modelArray in
-                self.companyVc.regionModelArray.accept(modelArray)
+                self.enterpriseVc.regionModelArray.accept(modelArray)
                 self.peopleVc.regionModelArray.accept(modelArray)
                 self.riskVc.regionModelArray.accept(modelArray)
             }
@@ -297,12 +285,12 @@ extension SearchAllViewController {
     func getAllIndustryInfo() {
         let modelArray = IndustruDataManager.shared.getData()
         if modelArray.count > 0 {
-            self.companyVc.industryModelArray.accept(modelArray)
+            self.enterpriseVc.industryModelArray.accept(modelArray)
             self.peopleVc.industryModelArray.accept(modelArray)
             self.riskVc.industryModelArray.accept(modelArray)
         }else {
             getIndustryInfo { modelArray in
-                self.companyVc.regionModelArray.accept(modelArray)
+                self.enterpriseVc.regionModelArray.accept(modelArray)
                 self.peopleVc.regionModelArray.accept(modelArray)
                 self.riskVc.regionModelArray.accept(modelArray)
             }

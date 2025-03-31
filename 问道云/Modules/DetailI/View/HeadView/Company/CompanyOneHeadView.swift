@@ -24,7 +24,6 @@ class CompanyOneHeadView: BaseView {
     //发票抬头弹窗
     var invoiceBlock: (() -> Void)?
     
-    
     lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")
@@ -224,6 +223,7 @@ class CompanyOneHeadView: BaseView {
             make.top.equalToSuperview().offset(12)
             make.left.equalTo(iconImageView.snp.right).offset(6)
             make.height.equalTo(22.5)
+            make.right.equalToSuperview().offset(-5)
         }
         historyNamesButton.snp.makeConstraints { make in
             make.top.equalTo(namelabel.snp.bottom).offset(4.5)

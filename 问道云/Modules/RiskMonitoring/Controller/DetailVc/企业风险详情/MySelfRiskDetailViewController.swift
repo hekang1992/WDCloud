@@ -536,7 +536,7 @@ extension MySelfRiskDetailViewController {
     //数据刷新
     func refreshUI(from model: DataModel) {
         let count = String(model.totalRiskCnt ?? 0)
-        let highcount = String(model.highLevelCnt ?? 0)
+        let highcount = String(model.totalHighRiskCnt ?? 0)
         self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险\(count)条/", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
         self.highNumLabel.attributedText = GetRedStrConfig.getRedStr(from: highcount, fullText: "高风险\(highcount)条", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
         self.totalItemView.numLabel.text = String(model.notRelevaRiskDto?.totalRiskCnt ?? 0)

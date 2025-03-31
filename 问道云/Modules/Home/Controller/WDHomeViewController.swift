@@ -129,10 +129,13 @@ class WDHomeViewController: WDBaseViewController {
         self.homeHeadView.hotsView.hotWordsBlock = { [weak self] model in
             let searchVc = SearchAllViewController()
             if IS_LOGIN {
-                let type = model.type ?? ""
-                searchVc.searchHeadView.searchTx.text = model.name ?? ""
-                searchVc.searchHeadView.searchTx.placeholder = model.name ?? ""
-                if type == "1" {
+                let type = model.entityType ?? 0
+                searchVc.searchHeadView.searchTx.text = model.entityName ?? ""
+                searchVc.searchHeadView.searchTx.placeholder = model.entityName ?? ""
+                DispatchQueue.main.asyncAfter(delay: 0.25) {
+                    searchVc.searchHeadView.searchTx.becomeFirstResponder()
+                }
+                if type == 1 {
                     searchVc.selectIndex = 0
                     self?.navigationController?.pushViewController(searchVc, animated: true)
                 }else {
@@ -306,10 +309,10 @@ extension WDHomeViewController {
             switch result {
             case .success(let success):
                 if let model = success.data {
-                    self.homeHeadView.hotsView.modelArray.accept(model.data ?? [])
+                    self.homeHeadView.hotsView.modelArray.accept(model.rows ?? [])
                     if self.isClickHeadTab {
-                        self.homeHeadView.tabView.modelArray.accept(model.data ?? [])
-                        self.homeScroView.modelArray.accept(model.data ?? [])
+                        self.homeHeadView.tabView.modelArray.accept(model.rows ?? [])
+                        self.homeScroView.modelArray.accept(model.rows ?? [])
                     }
                 }
                 break
@@ -330,8 +333,8 @@ extension WDHomeViewController {
             switch result {
             case .success(let success):
                 if let model = success.data {
-                    self.homeHeadView.tabView.modelArray.accept(model.data ?? [])
-                    self.homeScroView.modelArray.accept(model.data ?? [])
+                    self.homeHeadView.tabView.modelArray.accept(model.rows ?? [])
+                    self.homeScroView.modelArray.accept(model.rows ?? [])
                 }
                 break
             case .failure(_):

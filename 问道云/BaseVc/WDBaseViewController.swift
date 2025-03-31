@@ -695,3 +695,77 @@ extension WDBaseViewController {
     }
     
 }
+
+/** 最近搜索, 浏览历史, 热门搜索 */
+extension WDBaseViewController {
+    
+    //获取最近搜索
+    func getLastSearchInfo(from menuId: String, complete: @escaping (([rowsModel]) -> Void)) {
+        let man = RequestManager()
+        let dict = ["moduleId": menuId]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/searchRecord/query",
+                       method: .post) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    let modelArray = success.data?.data ?? []
+                    complete(modelArray)
+                }else {
+                    complete([])
+                }
+                break
+            case .failure(_):
+                complete([])
+                break
+            }
+        }
+    }
+    
+    //获取浏览历史
+    func getLastHistroyInfo(from menuId: String, complete: @escaping (([rowsModel]) -> Void)) {
+        let man = RequestManager()
+        let dict = ["moduleId": menuId]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/view-record/query",
+                       method: .get) {result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    let modelArray = success.data?.rows ?? []
+                    complete(modelArray)
+                }else {
+                    complete([])
+                }
+                break
+            case .failure(_):
+                complete([])
+                break
+            }
+        }
+    }
+    
+    //获取热门搜索
+    func getLastHotsInfo(from menuId: String, complete: @escaping (([rowsModel]) -> Void)) {
+        let man = RequestManager()
+        let dict = ["moduleId": menuId]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/clientbrowsecb/hot-search",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    let modelArray = success.data?.rows ?? []
+                    complete(modelArray)
+                }else {
+                    complete([])
+                }
+                break
+            case .failure(_):
+                complete([])
+                break
+            }
+        }
+    }
+    
+}

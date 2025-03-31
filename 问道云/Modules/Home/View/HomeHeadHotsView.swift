@@ -101,7 +101,7 @@ class HomeHeadHotsView: BaseView {
             }).disposed(by: disposeBag)
         
         modelArray.compactMap { $0 }.asObservable().bind(to: collectionView.rx.items(cellIdentifier: "HomeHotWordsCell", cellType: HomeHotWordsCell.self)) { row, model ,cell in
-            cell.namelabel.text = model.name ?? ""
+            cell.namelabel.text = model.entityName ?? ""
         }.disposed(by: disposeBag)
         
         collectionView.rx
@@ -122,7 +122,7 @@ extension HomeHeadHotsView: UICollectionViewDelegate, UICollectionViewDelegateFl
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let model = modelArray.value?[indexPath.row]
-        let text = model?.name ?? ""
+        let text = model?.entityName ?? ""
         let width = text.size(withAttributes: [.font: UIFont.regularFontOfSize(size: 11)]).width
         return CGSize(width: width + 10, height: 12)
     }
