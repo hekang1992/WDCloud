@@ -105,6 +105,7 @@ extension UnioRiskDetailViewController {
     
     //获取关联风险
     private func getUnioRiskInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["functionType": functionType,
@@ -114,6 +115,7 @@ extension UnioRiskDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/risk-monitor/statisticOrgRisk",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):

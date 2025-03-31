@@ -331,6 +331,7 @@ extension AddPropertyUnioViewController {
     }
     
     private func searchInfo() {
+        ViewHud.addLoadView()
         let dict = ["keyWords": keyWords,
                     "subjectId": entityId,
                     "subjectType": "1",
@@ -341,6 +342,7 @@ extension AddPropertyUnioViewController {
                        method: .post) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             switch result {
             case .success(let success):

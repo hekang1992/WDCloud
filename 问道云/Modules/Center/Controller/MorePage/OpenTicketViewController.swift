@@ -142,6 +142,7 @@ extension OpenTicketViewController {
     
     //提交开票信息
     private func toSaveTicket() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["unitname": unitname ?? "",
                     "taxpayernumber": taxpayernumber ?? "",
@@ -159,6 +160,7 @@ extension OpenTicketViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/invoiceRecord/addinvoiceriseRecord",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 guard let self = self else { return }

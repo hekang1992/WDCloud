@@ -186,6 +186,7 @@ class BuyOnePropertyLineViewController: WDBaseViewController {
     
     //购买
     private func buyInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let combonumber = self.appleById ?? 0
         let phonenumber = GetSaveLoginInfoConfig.getPhoneNumber()
@@ -199,6 +200,7 @@ class BuyOnePropertyLineViewController: WDBaseViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/addorder-single",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -255,6 +257,7 @@ extension BuyOnePropertyLineViewController {
     
     //企业财产线索添加监控
     private func addCompanyMonitoring() {
+        ViewHud.addLoadView()
         let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["entityId": entityId,
                     "entityType": 1,
@@ -263,6 +266,7 @@ extension BuyOnePropertyLineViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/monitor",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 let code = success.code ?? 0
@@ -280,6 +284,7 @@ extension BuyOnePropertyLineViewController {
     
     //人员监控
     private func addPeopleMonitoring() {
+        ViewHud.addLoadView()
         let personId = entityId
         let personName = entityName
         let customerId = GetSaveLoginInfoConfig.getCustomerNumber()
@@ -292,6 +297,7 @@ extension BuyOnePropertyLineViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 let code = success.code ?? 0

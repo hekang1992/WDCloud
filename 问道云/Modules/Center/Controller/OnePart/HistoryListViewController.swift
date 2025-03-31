@@ -70,6 +70,7 @@ extension HistoryListViewController {
     
     //获取浏览历史列表
     func getHistroyListInfo(from viewType: String, pageNum: Int) {
+        ViewHud.addLoadView()
         self.viewType = viewType
         let man = RequestManager()
         let dict = ["viewrecordtype": viewType,
@@ -79,6 +80,7 @@ extension HistoryListViewController {
                        pageUrl: "/operation/clientbrowsecb/selectBrowserecord",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             self.historyView.tableView.mj_header?.endRefreshing()
             self.historyView.tableView.mj_footer?.endRefreshing()
             switch result {

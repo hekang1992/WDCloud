@@ -74,12 +74,14 @@ extension TwoTicketViewController {
     
     //发送邮箱
     func sendEmailInfo(form model: rowsModel) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["dataid": model.dataid ?? "",
                     "mailbox": self.sendView.tf.text ?? ""]
         man.requestAPI(params: dict,
                        pageUrl: "operation/invoiceRecord/selectInvoiceMailbox",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -95,6 +97,7 @@ extension TwoTicketViewController {
     
     //获取列表信息
     func getListInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber,
@@ -103,6 +106,7 @@ extension TwoTicketViewController {
                        pageUrl: "/operation/invoiceRecord/selecinvoiceriseRecord",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             self.twoTicketView.tableView.mj_header?.endRefreshing()
             self.twoTicketView.tableView.mj_footer?.endRefreshing()
             switch result {

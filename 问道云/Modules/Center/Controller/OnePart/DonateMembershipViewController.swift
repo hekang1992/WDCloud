@@ -189,11 +189,13 @@ extension DonateMembershipViewController {
     
     //获取套餐信息
     func getPriceInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let emptyDict = [String: Any]()
         man.requestAPI(params: emptyDict,
                        pageUrl: "/operation/combo/selectmember",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {

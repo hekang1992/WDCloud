@@ -451,7 +451,7 @@ class PropertyLineOneViewController: WDBaseViewController {
                 oneMenu.displayCustomWithMenu = { [weak self] in
                     guard let self = self else { return UIView() }
                     moreClueView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 200)
-                    moreClueView.listModelArray = modelArray
+                    moreClueView.listModelArray = modelArray 
                     moreClueView.tableView1.reloadData()
                     return moreClueView
                 }
@@ -459,7 +459,7 @@ class PropertyLineOneViewController: WDBaseViewController {
                     oneMenu.adjustTitle(model.key ?? "", textColor: UIColor.init(cssStr: "#547AFF"))
                     self?.pageIndex = 1
                     self?.conditionCode = model.value ?? ""
-                    self?.getListInfo()
+                    self?.getListInfo {}
                 }
                 moreClueView.addBtnBlock = { [weak self] in
                     let customRelationFlag = self?.model.value?.conditionVO?.customRelationFlag ?? 0
@@ -487,7 +487,7 @@ class PropertyLineOneViewController: WDBaseViewController {
         twoMenu.didSelectedMenuResult = { [weak self] index, model, granted in
             self?.pageIndex = 1
             self?.clueDirection = model?.currentID ?? ""
-            self?.getListInfo()
+            self?.getListInfo {}
         }
         
         //线索类型
@@ -501,7 +501,7 @@ class PropertyLineOneViewController: WDBaseViewController {
         threeMenu.didSelectedMenuResult = { [weak self] index, model, granted in
             self?.pageIndex = 1
             self?.clueModel = model?.currentID ?? ""
-            self?.getListInfo()
+            self?.getListInfo {}
         }
         
         //更多筛选条件
@@ -513,7 +513,7 @@ class PropertyLineOneViewController: WDBaseViewController {
                 self.pageIndex = 1
                 self.predictValue = oneStr
                 self.updateTime = twoStr
-                self.getListInfo()
+                self.getListInfo {}
             }
             return moreView
         }
@@ -542,18 +542,37 @@ class PropertyLineOneViewController: WDBaseViewController {
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.pageIndex = 1
-            getListInfo()
+            getListInfo{}
         })
         
         //添加上拉加载更多
         self.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
             guard let self = self else { return }
-            self.getListInfo()
+            self.getListInfo {}
         })
+        
+        let group = DispatchGroup()
+        
         //获取列表数据信息
-        getListInfo()
-        getPropertyInfo()
-        getZhuiZongInfo()
+        ViewHud.addLoadView()
+        group.enter()
+        getListInfo {
+            group.leave()
+        }
+        
+        group.enter()
+        getPropertyInfo {
+            group.leave()
+        }
+        
+        group.enter()
+        getZhuiZongInfo {
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            ViewHud.hideLoadView()
+        }
     }
     
     @objc func switchChanged(_ sender: SevenSwitch) {
@@ -652,7 +671,7 @@ extension PropertyLineOneViewController: UITableViewDelegate, UITableViewDataSou
 extension PropertyLineOneViewController {
     
     //获取财产评估信息
-    private func getPropertyInfo() {
+    private func getPropertyInfo(complete: @escaping (() -> Void)) {
         let man = RequestManager()
         let dict = ["subjectId": entityId]
         man.requestAPI(params: dict,
@@ -667,15 +686,17 @@ extension PropertyLineOneViewController {
                         self.leftTitles = titles
                     }
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }
     }
     
     //获取财产追踪
-    private func getZhuiZongInfo() {
+    private func getZhuiZongInfo(complete: @escaping (() -> Void)) {
         let man = RequestManager()
         let dict = ["subjectId": entityId,
                     "type": "1"]
@@ -690,15 +711,17 @@ extension PropertyLineOneViewController {
                         self.rightTitles = titles
                     }
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }
     }
     
     //获取财产线索列表信息
-    private func getListInfo() {
+    private func getListInfo(complete: @escaping (() -> Void)) {
         let subjectId = entityId
         let subjectType = "1"
         let dict = ["subjectId": subjectId,
@@ -741,8 +764,10 @@ extension PropertyLineOneViewController {
                         self.tableView.reloadData()
                     }
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }

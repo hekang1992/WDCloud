@@ -200,6 +200,7 @@ extension MonthPeopleViewController: UITableViewDataSource, UITableViewDelegate 
 extension MonthPeopleViewController {
     
     func getPeopleInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["termType": "month",
                     "groupId": groupId,
@@ -210,6 +211,7 @@ extension MonthPeopleViewController {
                        method: .get) { [weak self] result in
             self?.dailyView.tableView.mj_header?.endRefreshing()
             self?.dailyView.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -311,11 +313,13 @@ extension MonthPeopleViewController {
     
     //取消监控
     private func cancelMonitoringInfo(from model: rowsModel, indexPath: IndexPath) {
+        ViewHud.addLoadView()
         let dict = ["personId": model.personId ?? ""]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/cancelRiskMonitorPerson",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

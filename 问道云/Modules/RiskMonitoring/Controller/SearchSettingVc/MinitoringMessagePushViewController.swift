@@ -469,6 +469,7 @@ extension MinitoringMessagePushViewController {
     
     //更新监控方案
     private func updateInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let startTime = self.zbtn.titleLabel?.text ?? ""
         let endTime = self.xbtn.titleLabel?.text ?? ""
@@ -476,6 +477,7 @@ extension MinitoringMessagePushViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-config/updateRiskMonitorConfig",
                        method: .post) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

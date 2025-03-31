@@ -200,6 +200,7 @@ extension WeekPeopleViewController: UITableViewDataSource, UITableViewDelegate {
 extension WeekPeopleViewController {
     
     func getPeopleInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["termType": "week",
                     "groupId": groupId,
@@ -210,6 +211,7 @@ extension WeekPeopleViewController {
                        method: .get) { [weak self] result in
             self?.dailyView.tableView.mj_header?.endRefreshing()
             self?.dailyView.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

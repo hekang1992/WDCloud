@@ -481,6 +481,7 @@ extension HistoryRiskDetailViewController {
     
     //获取风险信息
     private func getRiskDetailInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["orgId": enityId,
                     "functionType": functionType,
@@ -490,6 +491,7 @@ extension HistoryRiskDetailViewController {
                        pageUrl: "/entity/risk-monitor/statisticOrgRisk",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {

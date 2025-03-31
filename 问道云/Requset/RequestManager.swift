@@ -118,20 +118,12 @@ class RequestManager {
     private func requestData(target: APIService, completion: @escaping (Result<BaseModel, Error>) -> Void) {
         
         if let lastRequest = currentRequest {
-            ViewHud.hideLoadView()
             lastRequest.cancel()
             print("🔴 上一次请求已取消")
         }
-        
-        // 取消上一次的请求
-        let pageUrl = target.path
-        if !(pageUrl.contains("searchRecord/query") || pageUrl.contains("clientbrowsecb/selectBrowserecord") || pageUrl.contains("clientbrowsecb/hot-search")) || pageUrl.contains("clientbrowsecb/addBrowserecord") || pageUrl.contains("history/add") || pageUrl.contains("scan/history/list") {
-            ViewHud.addLoadView()
-        }
-        
+ 
         print("🟢 发起新的请求: \(target)")
         currentRequest = provider.request(target) { result in
-            ViewHud.hideLoadView()
             switch result {
             case .success(let response):
                 do {

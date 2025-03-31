@@ -152,6 +152,7 @@ class ComanyRiskMoreDetailViewController: WDBaseViewController {
 extension ComanyRiskMoreDetailViewController {
     
     private func getDetailInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["orgId": orgId,
                     "itemId": itemId,
@@ -163,6 +164,7 @@ extension ComanyRiskMoreDetailViewController {
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let self = self,

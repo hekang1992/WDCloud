@@ -74,7 +74,7 @@ class PropertyOneViewController: WDBaseViewController {
         getAllIndustryInfo()
         
         let group = DispatchGroup()
-        
+        ViewHud.addLoadView()
         //获取热搜数据
         group.enter()
         getHotsInfo(complete: { [weak self] modelArray in
@@ -99,6 +99,7 @@ class PropertyOneViewController: WDBaseViewController {
                 self?.oneView.tableView.hideSkeleton()
                 self?.oneView.tableView.reloadData()
             }
+            ViewHud.hideLoadView()
             print("全部执行完成========全部执行完成")
         }
         

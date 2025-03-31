@@ -341,11 +341,13 @@ extension MonitoringSolutionViewController {
     
     
     private func getUserSettingInfo() {
+        ViewHud.addLoadView()
         let dict = [String: Any]()
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-config/getRiskMonitorConfig",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

@@ -118,7 +118,7 @@ class UserAllOrderSController: WDBaseViewController {
 extension UserAllOrderSController {
     
     func getGroupInfo() {
-        
+        ViewHud.addLoadView()
         let group = DispatchGroup()
         
         group.enter()
@@ -132,7 +132,7 @@ extension UserAllOrderSController {
         }
         
         group.notify(queue: .main) {
-            
+            ViewHud.hideLoadView()
             print("All requests completed.")
         }
     }

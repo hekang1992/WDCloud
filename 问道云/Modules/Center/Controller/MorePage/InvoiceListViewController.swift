@@ -108,6 +108,7 @@ extension InvoiceListViewController {
     
     //获取发票列表信息
     func getInvoListInfo() {
+        ViewHud.addLoadView()
         let customernumber = model.value?.customernumber ?? ""
         let dict = ["customernumber": customernumber]
         let man = RequestManager()
@@ -115,6 +116,7 @@ extension InvoiceListViewController {
                        pageUrl: "/operation/invoiceriseit/selecinvoicerise",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {

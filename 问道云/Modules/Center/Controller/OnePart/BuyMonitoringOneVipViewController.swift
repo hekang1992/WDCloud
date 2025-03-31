@@ -186,6 +186,7 @@ class BuyMonitoringOneVipViewController: WDBaseViewController {
     
     //购买
     private func buyInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let combonumber = self.appleById ?? 0
         let phonenumber = GetSaveLoginInfoConfig.getPhoneNumber()
@@ -199,6 +200,7 @@ class BuyMonitoringOneVipViewController: WDBaseViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/addorder-single",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -255,6 +257,7 @@ extension BuyMonitoringOneVipViewController {
     
     //企业添加监控
     private func addCompanyMonitoring() {
+        ViewHud.addLoadView()
         let entityid = entityId
         let firmname = entityName
         let groupnumber = menuId
@@ -265,6 +268,7 @@ extension BuyMonitoringOneVipViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 let code = success.code ?? 0
@@ -284,6 +288,7 @@ extension BuyMonitoringOneVipViewController {
     
     //人员监控
     private func addPeopleMonitoring() {
+        ViewHud.addLoadView()
         let personId = entityId
         let personName = entityName
         let customerId = GetSaveLoginInfoConfig.getCustomerNumber()
@@ -296,6 +301,7 @@ extension BuyMonitoringOneVipViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 let code = success.code ?? 0

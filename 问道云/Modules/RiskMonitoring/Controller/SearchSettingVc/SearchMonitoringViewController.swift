@@ -277,6 +277,8 @@ extension SearchMonitoringViewController {
     
     //搜索监控列表
     private func getSearchListInfo(from targetStr: String) {
+        ViewHud.addLoadView()
+        ViewHud.addLoadView()
         let dict = ["entityName": targetStr,
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
@@ -286,6 +288,8 @@ extension SearchMonitoringViewController {
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let self = self,
@@ -347,6 +351,7 @@ extension SearchMonitoringViewController {
     
     //添加企业监控
     private func addMonitoringCompanyInfo(from model: rowsModel) {
+        ViewHud.addLoadView()
         let entityid = model.orgId ?? ""
         let firmname = model.orgName ?? ""
         let groupnumber = self.groupnumber ?? ""
@@ -358,6 +363,7 @@ extension SearchMonitoringViewController {
                        pageUrl: "/entity/monitor-org/addRiskMonitorOrg",
                        method: .post) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 let code = success.code ?? 0

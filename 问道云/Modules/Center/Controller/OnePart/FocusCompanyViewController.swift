@@ -297,6 +297,7 @@ extension FocusCompanyViewController {
     
     //获取分组公司信息
     func getFocusCompanyList() {
+        ViewHud.addLoadView()
         self.companyView.selectedIndexPaths.removeAll()
         self.companyView.isDeleteMode.accept(false)
         let dict = ["groupNumber": groupNumber,
@@ -311,6 +312,7 @@ extension FocusCompanyViewController {
                        pageUrl: "/operation/follow/list",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {

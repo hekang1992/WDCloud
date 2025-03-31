@@ -188,6 +188,7 @@ class BuyOneReportOneVipViewController: WDBaseViewController {
     
     //购买
     private func buyInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let combonumber = self.appleById ?? 0
         let phonenumber = GetSaveLoginInfoConfig.getPhoneNumber()
@@ -201,6 +202,7 @@ class BuyOneReportOneVipViewController: WDBaseViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/addorder-single",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -253,6 +255,7 @@ extension BuyOneReportOneVipViewController {
     }
     
     private func getReportInfo() {
+        ViewHud.addLoadView()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let reportnumber = reportnumber
         let entityid = entityId
@@ -265,6 +268,7 @@ extension BuyOneReportOneVipViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/reportinfo/getTestFive",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(_):
                 let downVc = MyDownloadViewController()

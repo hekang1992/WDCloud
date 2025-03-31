@@ -286,6 +286,7 @@ extension AddPropertyCompanyUnioViewController {
     }
     
     private func addInfo() {
+        ViewHud.addLoadView()
         let dict = ["relationId": entityId,
                     "relationName": entityName,
                     "relationType": 1,
@@ -297,6 +298,7 @@ extension AddPropertyCompanyUnioViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/customer/relation/add",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

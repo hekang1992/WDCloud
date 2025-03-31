@@ -130,7 +130,9 @@ extension PropertyLineHotView: SkeletonTableViewDataSource {
 extension PropertyLineHotView {
     
     //权限验证
-    private func checkInfo(from model: DataModel, cell: PropertyListViewCell) {
+    private func checkInfo(from model: DataModel,
+                           cell: PropertyListViewCell) {
+        ViewHud.addLoadView()
         let entityType = "1"
         let entityId = model.subjectId ?? ""
         let entityName = model.subjectName ?? ""
@@ -141,6 +143,7 @@ extension PropertyLineHotView {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/equity-property/check",
                        method: .get) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -196,6 +199,7 @@ extension PropertyLineHotView {
     
     //添加监控
     func prppertyLineMonitrongInfo(from model: DataModel, monitoringBtn: UIButton) {
+        ViewHud.addLoadView()
         let entityId = model.subjectId ?? ""
         let entityName = model.subjectName ?? ""
         let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
@@ -208,6 +212,7 @@ extension PropertyLineHotView {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/monitor",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             guard let self = self else { return }
             let vc = ViewControllerUtils.findViewController(from: self)
             switch result {
@@ -258,7 +263,9 @@ extension PropertyLineHotView {
     }
     
     //取消监控
-    func propertyLineCancelInfo(from model: DataModel, monitoringBtn: UIButton) {
+    func propertyLineCancelInfo(from model: DataModel,
+                                monitoringBtn: UIButton) {
+        ViewHud.addLoadView()
         let entityId = model.subjectId ?? ""
         let entityName = model.subjectName ?? ""
         let entityType = "1"
@@ -269,6 +276,7 @@ extension PropertyLineHotView {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/monitor/cancel",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -289,11 +297,13 @@ extension PropertyLineHotView {
     //添加关联方信息
     func addUnioInfo(form entityId: String, name: String) {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["entityId": entityId,
                     "entityType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/monitor/relation",
                        method: .get) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

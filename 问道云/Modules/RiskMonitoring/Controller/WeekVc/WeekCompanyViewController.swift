@@ -201,6 +201,7 @@ extension WeekCompanyViewController: UITableViewDataSource, UITableViewDelegate 
 extension WeekCompanyViewController {
     
     func getCompanyInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["reportTermType": "week",
                     "groupId": groupId,
@@ -211,6 +212,7 @@ extension WeekCompanyViewController {
                        method: .get) { [weak self] result in
             self?.dailyView.tableView.mj_header?.endRefreshing()
             self?.dailyView.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -312,11 +314,13 @@ extension WeekCompanyViewController {
     
     //取消监控
     private func cancelMonitoringInfo(from model: rowsModel, indexPath: IndexPath) {
+        ViewHud.addLoadView()
         let dict = ["orgId": model.orgId ?? ""]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/cancelRiskMonitorOrg",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -342,12 +346,14 @@ extension WeekCompanyViewController {
             self?.dismiss(animated: true)
         }
         groupView.sblock = { model in
+            ViewHud.addLoadView()
             let man = RequestManager()
             let dict = ["orgId": rowsModel.orgId ?? "",
                         "groupId": model.eid ?? ""]
             man.requestAPI(params: dict,
                            pageUrl: "/entity/monitor-org/updRiskMonitorOrgGroup",
                            method: .post) { [weak self] result in
+                ViewHud.hideLoadView()
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

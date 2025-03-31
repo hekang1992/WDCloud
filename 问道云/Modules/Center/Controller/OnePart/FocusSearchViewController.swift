@@ -233,11 +233,13 @@ class FocusSearchViewController: WDBaseViewController {
 extension FocusSearchViewController {
     
     private func searchInfo() {
+        ViewHud.addLoadView()
         let dict = ["keyword": self.keyWords, "pageSize": 20] as [String : Any]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org-list",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data, let modelArray = model.pageData, modelArray.count > 0 {
@@ -258,12 +260,14 @@ extension FocusSearchViewController {
     
     //添加关注
     func addFocusInfo(from btn: UIButton, model: pageDataModel) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -280,12 +284,14 @@ extension FocusSearchViewController {
     
     //取消关注
     func deleteFocusInfo(from btn: UIButton, model: pageDataModel) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/add-or-cancel",
-                       method: .post) {result in
+                       method: .post) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

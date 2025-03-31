@@ -368,6 +368,7 @@ extension MyDownloadViewController {
     
     //获取下载文件
     func getPdfInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["downloadtype": downloadtype,
                     "downloadfilename": downloadfilename,
@@ -380,6 +381,7 @@ extension MyDownloadViewController {
             guard let self = self else { return }
             self.downloadView.tableView.mj_header?.endRefreshing()
             self.downloadView.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data,
@@ -425,9 +427,11 @@ extension MyDownloadViewController {
     func deletePdf(from dataid: [String]) {
         let dict = ["ids": dataid]
         let man = RequestManager()
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/mydownload/customerDownload",
                        method: .put) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -447,12 +451,14 @@ extension MyDownloadViewController {
     
     //重命名
     func changeName(form model: rowsModel) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["dataId": model.dataid ?? "",
                     "downLoadFileName": self.cmmView.tf.text ?? ""]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/mydownload/updateCustomerDownload",
                        method: .put) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -470,6 +476,7 @@ extension MyDownloadViewController {
     
     //发送邮箱
     func sendEmailInfo(form model: rowsModel) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["dataid": model.dataid ?? "",
                     "emailnumber": self.sendView.tf.text ?? "",
@@ -477,6 +484,7 @@ extension MyDownloadViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/mydownload/sendingMailbox",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

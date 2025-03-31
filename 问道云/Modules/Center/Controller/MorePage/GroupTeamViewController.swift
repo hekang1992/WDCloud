@@ -182,11 +182,13 @@ extension GroupTeamViewController {
     }
     
     func createGroupInfo(from name: String, email: String) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["firmname": name, "email": email]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/enterpriseclientbm",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

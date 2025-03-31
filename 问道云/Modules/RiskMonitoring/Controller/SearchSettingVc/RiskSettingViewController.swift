@@ -160,6 +160,7 @@ class RiskSettingViewController: WDBaseViewController {
 extension RiskSettingViewController {
     
     private func getVipInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
@@ -167,6 +168,7 @@ extension RiskSettingViewController {
                        pageUrl: "/operation/enterpriseclientbm/buymoreinfo",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {

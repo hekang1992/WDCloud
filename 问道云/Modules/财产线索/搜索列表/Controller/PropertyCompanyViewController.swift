@@ -205,6 +205,7 @@ extension PropertyCompanyViewController {
     
     //财产线索列表
     private func searchListInfo() {
+        ViewHud.addLoadView()
         let dict = ["keyWords": self.searchWordsRelay.value,
                     "searchType": "0",
                     "industryCode": entityIndustry,
@@ -216,6 +217,7 @@ extension PropertyCompanyViewController {
                        method: .post) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -313,6 +315,7 @@ extension PropertyCompanyViewController {
     
     //添加监控
     func prppertyLineMonitrongInfo(from model: DataModel, monitoringBtn: UIButton) {
+        ViewHud.addLoadView()
         let entityId = model.subjectId ?? ""
         let entityName = model.subjectName ?? ""
         let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
@@ -326,6 +329,7 @@ extension PropertyCompanyViewController {
                        pageUrl: "/firminfo/monitor",
                        method: .post) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -375,6 +379,7 @@ extension PropertyCompanyViewController {
     
     //取消监控
     func propertyLineCancelInfo(from model: DataModel, monitoringBtn: UIButton) {
+        ViewHud.addLoadView()
         let entityId = model.subjectId ?? ""
         let entityName = model.subjectName ?? ""
         let entityType = "1"
@@ -385,6 +390,7 @@ extension PropertyCompanyViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/monitor/cancel",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 guard let self = self else { return }
@@ -404,12 +410,14 @@ extension PropertyCompanyViewController {
     
     //添加关联方信息
     func addUnioInfo(form entityId: String, name: String) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["entityId": entityId,
                     "entityType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/monitor/relation",
                        method: .get) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

@@ -365,7 +365,6 @@ class MySelfRiskDetailViewController: WDBaseViewController {
             })
             .disposed(by: disposeBag)
         
-        
         let timeMenu = MenuAction(title: "全部", style: .typeCustom)!
         var modelArray = getListTime(from: true)
         let menuView = DropMenuBar(action: [timeMenu])!
@@ -503,6 +502,7 @@ extension MySelfRiskDetailViewController {
     
     //获取风险信息
     private func getRiskDetailInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["orgId": enityId,
                     "functionType": functionType,
@@ -512,6 +512,7 @@ extension MySelfRiskDetailViewController {
                        pageUrl: "/entity/risk-monitor/statisticOrgRisk",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -604,6 +605,7 @@ extension MySelfRiskDetailViewController {
     
     //判断是否有权限点击
     private func checkClickInfo(form model: itemDtoListModel) {
+        ViewHud.addLoadView()
         let itemId = model.itemId ?? ""
         let entityId = self.enityId
         let entityName = self.name
@@ -615,6 +617,7 @@ extension MySelfRiskDetailViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/operation/equity-risk/check",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 guard let self = self else { return }

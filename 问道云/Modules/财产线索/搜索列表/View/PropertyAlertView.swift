@@ -139,9 +139,11 @@ class PropertyAlertView: BaseView {
                 let newDict = dict
                 return newDict
             }
+            ViewHud.addLoadView()
             man.requestArrayAPI(array: newDictArray,
                                 pageUrl: "/entity/monitor/relation",
                                 method: .post) { result in
+                ViewHud.hideLoadView()
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

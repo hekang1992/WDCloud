@@ -204,7 +204,7 @@ extension DailyPeopleViewController: UITableViewDataSource, UITableViewDelegate 
 extension DailyPeopleViewController {
     
     func getPeopleInfo() {
-        
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["termType": "day",
                     "groupId": groupId,
@@ -213,7 +213,7 @@ extension DailyPeopleViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/queryRiskMonitorPerson",
                        method: .get) { [weak self] result in
-            
+            ViewHud.hideLoadView()
             self?.dailyView.tableView.mj_header?.endRefreshing()
             self?.dailyView.tableView.mj_footer?.endRefreshing()
             switch result {

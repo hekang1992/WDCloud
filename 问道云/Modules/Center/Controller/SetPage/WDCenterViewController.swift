@@ -177,9 +177,11 @@ class WDCenterViewController: WDBaseViewController {
     }
 }
 
+/** 网络数据请求 */
 extension WDCenterViewController {
     
     func getBuymoreinfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
@@ -187,6 +189,7 @@ extension WDCenterViewController {
                        pageUrl: "/operation/enterpriseclientbm/buymoreinfo",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {
@@ -316,11 +319,13 @@ extension WDCenterViewController {
     }
     
     func goWechatApp() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = [String: String]()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/wechat-bind/selectPubMsgBindInfo",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

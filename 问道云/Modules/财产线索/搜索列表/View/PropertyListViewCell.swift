@@ -246,6 +246,7 @@ extension PropertyListViewCell {
     
     //添加监控
     func prppertyLineMonitrongInfo(from model: DataModel, monitoringBtn: UIButton) {
+        ViewHud.addLoadView()
         let entityId = model.entityId ?? ""
         let entityName = model.entityName ?? ""
         let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
@@ -259,6 +260,7 @@ extension PropertyListViewCell {
                        pageUrl: "/firminfo/monitor",
                        method: .post) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -309,6 +311,7 @@ extension PropertyListViewCell {
     
     //取消监控
     func propertyLineCancelInfo(from model: DataModel, monitoringBtn: UIButton) {
+        ViewHud.addLoadView()
         let entityId = model.entityId ?? ""
         let entityName = model.entityName ?? ""
         let entityType = "1"
@@ -319,6 +322,7 @@ extension PropertyListViewCell {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/monitor/cancel",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 guard let self = self else { return }

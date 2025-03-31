@@ -460,14 +460,16 @@ extension WDBaseViewController {
     }
     
     //支付成功回调
-    private func paySuccess(from orderNumberID:
-                            String, complete: (() -> Void)? = nil) {
+    private func paySuccess(from orderNumberID: String,
+                            complete: (() -> Void)? = nil) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["ordernumber": orderNumberID,
                     "payway": "Apple"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/callback",
                        method: .post) { result in
+            ViewHud.hideLoadView()
             complete?()
         }
     }

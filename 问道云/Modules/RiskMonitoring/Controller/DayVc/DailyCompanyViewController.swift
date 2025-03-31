@@ -199,6 +199,7 @@ extension DailyCompanyViewController: UITableViewDataSource, UITableViewDelegate
 extension DailyCompanyViewController {
     
     func getCompanyInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["reportTermType": "day",
                     "groupId": groupId,
@@ -209,6 +210,7 @@ extension DailyCompanyViewController {
                        method: .get) { [weak self] result in
             self?.dailyView.tableView.mj_header?.endRefreshing()
             self?.dailyView.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

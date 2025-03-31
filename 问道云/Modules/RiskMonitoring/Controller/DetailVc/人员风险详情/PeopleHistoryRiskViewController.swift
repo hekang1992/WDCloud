@@ -467,6 +467,7 @@ extension PeopleHistoryRiskViewController {
     
     //获取风险信息
     private func getRiskDetailInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["personId": enityId,
                     "functionType": functionType,
@@ -476,6 +477,7 @@ extension PeopleHistoryRiskViewController {
                        pageUrl: "/entity/risk-monitor/statisticPersonRisk",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {
