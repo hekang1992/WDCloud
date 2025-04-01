@@ -78,8 +78,6 @@ class SearchPeopleBeneficialOwnerViewController: WDBaseViewController {
         })
         tableView.isSkeletonable = true
         tableView.showAnimatedGradientSkeleton()
-        print("检查骨架屏是否激活========\(tableView.sk.isSkeletonActive)")
-        print("检查是否支持骨架屏=========\(tableView.isSkeletonable)")
     }
     
 }
@@ -147,6 +145,7 @@ extension SearchPeopleBeneficialOwnerViewController {
     
     //最终受益人
     private func searchListInfo() {
+        ViewHud.addLoadView()
         let dict = ["keywords": self.searchWordsRelay.value,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
@@ -155,6 +154,7 @@ extension SearchPeopleBeneficialOwnerViewController {
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -177,7 +177,7 @@ extension SearchPeopleBeneficialOwnerViewController {
                         }else {
                             self.tableView.mj_footer?.isHidden = true
                         }
-                        DispatchQueue.main.asyncAfter(delay: 0.15) {
+                        DispatchQueue.main.asyncAfter(delay: 0.25) {
                             self.tableView.hideSkeleton()
                             self.tableView.reloadData()
                         }

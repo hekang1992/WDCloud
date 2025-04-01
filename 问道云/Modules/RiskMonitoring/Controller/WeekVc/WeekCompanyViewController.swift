@@ -243,7 +243,7 @@ extension WeekCompanyViewController {
                         }else {
                             self.dailyView.tableView.mj_footer?.isHidden = true
                         }
-                        DispatchQueue.main.asyncAfter(delay: 0.15) {
+                        DispatchQueue.main.asyncAfter(delay: 0.25) {
                             self.dailyView.tableView.hideSkeleton()
                             self.dailyView.tableView.reloadData()
                         }

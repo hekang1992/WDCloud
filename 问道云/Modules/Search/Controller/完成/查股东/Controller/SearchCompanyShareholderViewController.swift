@@ -145,8 +145,9 @@ extension SearchCompanyShareholderViewController: SkeletonTableViewDataSource {
 /** 网络数据请求 */
 extension SearchCompanyShareholderViewController {
     
-    //最终受益人
+    //查股东
     private func searchListInfo() {
+        ViewHud.addLoadView()
         let dict = ["keywords": self.searchWordsRelay.value,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
@@ -155,6 +156,7 @@ extension SearchCompanyShareholderViewController {
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -177,7 +179,7 @@ extension SearchCompanyShareholderViewController {
                         }else {
                             self.tableView.mj_footer?.isHidden = true
                         }
-                        DispatchQueue.main.asyncAfter(delay: 0.15) {
+                        DispatchQueue.main.asyncAfter(delay: 0.25) {
                             self.tableView.hideSkeleton()
                             self.tableView.reloadData()
                         }
