@@ -10,7 +10,6 @@ import MJRefresh
 
 class RiskTipsCenterViewController: WDBaseViewController {
     
-    let type = "2"
     var pageNum: Int = 1
     let pulishstate = "1"
     
@@ -89,9 +88,21 @@ extension RiskTipsCenterViewController: UITableViewDelegate, UITableViewDataSour
         return nil
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.allArray[indexPath.row]
+        let itemId = model.itemId ?? ""
+        let pageUrl = "/news-information?itemId=\(itemId)"
+        self.pushWebPage(from: base_url + pageUrl)
+    }
+    
+}
+
+/** 网络数据请求 */
+extension RiskTipsCenterViewController {
+    
     private func getListInfo() {
         let dict = ["pageNum": pageNum,
-                    "type": type,
+                    "type": 2,
                     "pulishstate": pulishstate,
                     "pageSize": 10] as [String : Any]
         let man = RequestManager()

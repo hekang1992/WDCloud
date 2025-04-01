@@ -91,7 +91,6 @@ class SearchPeopleShareholderCell: BaseViewCell {
         let monitoringBtn = UIButton(type: .custom)
         monitoringBtn.isSkeletonable = true
         monitoringBtn.setImage(UIImage(named: "jiankonganniu"), for: .normal)
-        monitoringBtn.isSkeletonable = true
         return monitoringBtn
     }()
     

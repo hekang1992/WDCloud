@@ -78,8 +78,6 @@ class SearchPeopleShareholderViewController: WDBaseViewController {
         })
         tableView.isSkeletonable = true
         tableView.showAnimatedGradientSkeleton()
-        print("检查骨架屏是否激活========\(tableView.sk.isSkeletonActive)")
-        print("检查是否支持骨架屏=========\(tableView.isSkeletonable)")
     }
     
 }
@@ -124,11 +122,11 @@ extension SearchPeopleShareholderViewController: UITableViewDelegate, UITableVie
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
-        let detailVc = ShareholdeDetailViewController()
-//        let entityId = model.personId ?? ""
-//        detailVc.entityId = entityId
-//        detailVc.entityCategory = "2"
-        self.navigationController?.pushViewController(detailVc, animated: true)
+        let pageUrl = model.h5Url ?? ""
+        let webUrl = base_url + pageUrl
+        let webVc = WebPageViewController()
+        webVc.pageUrl.accept(webUrl)
+        self.navigationController?.pushViewController(webVc, animated: true)
     }
 }
 
@@ -145,8 +143,9 @@ extension SearchPeopleShareholderViewController: SkeletonTableViewDataSource {
 /** 网络数据请求 */
 extension SearchPeopleShareholderViewController {
     
-    //最终受益人
+    //查股东
     private func searchListInfo() {
+        ViewHud.addLoadView()
         let dict = ["keywords": self.searchWordsRelay.value,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
@@ -155,6 +154,7 @@ extension SearchPeopleShareholderViewController {
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

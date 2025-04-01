@@ -92,7 +92,6 @@
 		733B5FFC2D573CAA00ADE7C5 /* RiskNoLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */; };
 		733B5FFE2D574D3D00ADE7C5 /* HomeNavSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FFD2D574D3D00ADE7C5 /* HomeNavSearchView.swift */; };
 		733D2F492D87C0DE0019C697 /* CompanyShareholderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733D2F482D87C0DE0019C697 /* CompanyShareholderViewCell.swift */; };
-		733D2F4B2D87CFF00019C697 /* ShareholdeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733D2F4A2D87CFF00019C697 /* ShareholdeDetailViewController.swift */; };
 		733D2F4F2D87F5370019C697 /* PopShareholdePhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733D2F4E2D87F5370019C697 /* PopShareholdePhoneView.swift */; };
 		733D2F512D87F7260019C697 /* ShareholdePhoneViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733D2F502D87F7260019C697 /* ShareholdePhoneViewCell.swift */; };
 		734056A92D38E34C009C9C96 /* CorrelationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */; };
@@ -515,7 +514,6 @@
 		733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskNoLoginView.swift; sourceTree = "<group>"; };
 		733B5FFD2D574D3D00ADE7C5 /* HomeNavSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavSearchView.swift; sourceTree = "<group>"; };
 		733D2F482D87C0DE0019C697 /* CompanyShareholderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyShareholderViewCell.swift; sourceTree = "<group>"; };
-		733D2F4A2D87CFF00019C697 /* ShareholdeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareholdeDetailViewController.swift; sourceTree = "<group>"; };
 		733D2F4E2D87F5370019C697 /* PopShareholdePhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopShareholdePhoneView.swift; sourceTree = "<group>"; };
 		733D2F502D87F7260019C697 /* ShareholdePhoneViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareholdePhoneViewCell.swift; sourceTree = "<group>"; };
 		734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrelationViewCell.swift; sourceTree = "<group>"; };
@@ -1127,7 +1125,6 @@
 				73FC5E3B2D5C3403001D0DEF /* SearchShareholderViewController.swift */,
 				73FC5E3F2D5C342F001D0DEF /* SearchPeopleShareholderViewController.swift */,
 				73FC5E3D2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift */,
-				733D2F4A2D87CFF00019C697 /* ShareholdeDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2248,7 +2245,6 @@
 				73D4E3EF2D73401B005C73D8 /* WeekCompanyViewController.swift in Sources */,
 				730CEDFC2D544EF6002DE9DF /* CompanyLawCell.swift in Sources */,
 				7340E1D62D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift in Sources */,
-				733D2F4B2D87CFF00019C697 /* ShareholdeDetailViewController.swift in Sources */,
 				73FC5E652D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift in Sources */,
 				733D2F512D87F7260019C697 /* ShareholdePhoneViewCell.swift in Sources */,
 				739DCA182D670E7E009CFC78 /* PropertyThreeCompanyViewController.swift in Sources */,

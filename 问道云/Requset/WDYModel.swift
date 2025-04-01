@@ -550,7 +550,9 @@ class itemsModel {
     var relationName: String?
     var connectName: String?
     var beRelationName: String?
+    var h5Url: String?
     init(json: JSON) {
+        self.h5Url = json["h5Url"].stringValue
         self.beRelationName = json["beRelationName"].stringValue
         self.connectName = json["connectName"].stringValue
         self.relationName = json["relationName"].stringValue
@@ -948,7 +950,9 @@ class rowsModel {
     var updateTime: String?
     var entityType: Int?
     var updateHourTime: String?
+    var h5Url: String?
     init(json: JSON) {
+        self.h5Url = json["h5Url"].string
         self.updateHourTime = json["updateHourTime"].stringValue
         self.entityType = json["entityType"].intValue
         self.updateTime = json["updateTime"].string
