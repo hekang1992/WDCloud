@@ -40,8 +40,8 @@ class SearchAllViewController: WDBaseViewController {
         return enterpriseVc
     }()
 
-    lazy var peopleVc: SearchPeopleViewController = {
-        let peopleVc = SearchPeopleViewController()
+    lazy var peopleVc: SearchBossViewController = {
+        let peopleVc = SearchBossViewController()
         return peopleVc
     }()
     
@@ -87,7 +87,7 @@ class SearchAllViewController: WDBaseViewController {
                     if selectIndex == 0 {
                         enterpriseVc.searchWords.accept(text)
                     }else if selectIndex == 1 {
-                        peopleVc.searchWords = text
+                        peopleVc.searchWords.accept(text)
                     }else if selectIndex == 2 {
                         riskVc.searchWords = text
                     }else {
@@ -112,7 +112,12 @@ class SearchAllViewController: WDBaseViewController {
                         enterpriseVc.searchWords.accept(text)
                     }
                 }else if selectIndex == 1 {
-                    peopleVc.searchWords = text
+                    if text.isEmpty {
+                        self.searchHeadView.searchTx.text = self.searchHeadView.searchTx.placeholder
+                        peopleVc.searchWords.accept(self.searchHeadView.searchTx.placeholder)
+                    }else {self.searchHeadView.searchTx.text = text
+                        peopleVc.searchWords.accept(text)
+                    }
                 }else if selectIndex == 2 {
                     riskVc.searchWords = text
                 }else {
@@ -202,8 +207,6 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
             }
             enterpriseVc.moreBtnBlock = { [weak self] in
                 guard let self = self else { return }
-                self.peopleVc.searchWords = self.searchHeadView.searchTx
-                    .text ?? ""
                 segmentedView.defaultSelectedIndex = 1
                 segmentedView.reloadData()
             }
@@ -212,7 +215,6 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
             peopleVc.lastSearchTextBlock = { [weak self] searchStr in
                 guard let self = self else { return }
                 searchHeadView.searchTx.text = searchStr
-                peopleVc.searchWords = searchStr
             }
             peopleVc.completeBlock = { [weak self] in
                 guard let self = self else { return }
@@ -251,8 +253,8 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
             self.enterpriseVc.searchWords.accept(self.searchHeadView.searchTx
                 .text ?? "")
         }else if index == 1 {
-            self.peopleVc.searchWords = self.searchHeadView.searchTx
-                .text ?? ""
+            self.peopleVc.searchWords.accept(self.searchHeadView.searchTx
+                .text ?? "")
         }else if index == 2 {
             self.riskVc.searchWords = self.searchHeadView.searchTx
                 .text ?? ""

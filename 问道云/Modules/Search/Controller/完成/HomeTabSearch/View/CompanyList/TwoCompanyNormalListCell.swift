@@ -11,7 +11,8 @@ import TagListView
 import SkeletonView
 
 class TwoCompanyNormalListCell: BaseViewCell {
-    
+    // 高度更新回调
+    var heightDidUpdate: (() -> Void)?
     //地址回调
     var addressBlock: ((pageDataModel) -> Void)?
     //官网回调
@@ -31,12 +32,6 @@ class TwoCompanyNormalListCell: BaseViewCell {
     
     var tagArray: [String] = []
     
-    lazy var bgView: UIView = {
-        let bgView = UIView()
-        bgView.backgroundColor = .white
-        return bgView
-    }()
-    
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         ctImageView.layer.cornerRadius = 3
@@ -45,7 +40,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
     
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.font = .mediumFontOfSize(size: 14)
+        nameLabel.font = .mediumFontOfSize(size: 16)
         nameLabel.textColor = .init(cssStr: "#333333")
         nameLabel.textAlignment = .left
         nameLabel.numberOfLines = 0
@@ -83,7 +78,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
     lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.isSkeletonable = true
-        lineView.backgroundColor = .init(cssStr: "#EBEBEB")
+        lineView.backgroundColor = .init(cssStr: "#F5F5F5")
         return lineView
     }()
     
@@ -153,20 +148,26 @@ class TwoCompanyNormalListCell: BaseViewCell {
     
     lazy var footView: UIView = {
         let footView = UIView()
-        footView.backgroundColor = .init(cssStr: "#F8F8F8")
+        footView.backgroundColor = .init(cssStr: "#F5F5F5")
         return footView
+    }()
+    
+    lazy var coverView: UIView = {
+        let coverView = UIView()
+        coverView.isSkeletonable = true
+        return coverView
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         isSkeletonable = true
-        contentView.addSubview(bgView)
         contentView.addSubview(ctImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(tagListView)
-        contentView.addSubview(nameView)
-        contentView.addSubview(moneyView)
-        contentView.addSubview(timeView)
+        contentView.addSubview(coverView)
+        coverView.addSubview(nameView)
+        coverView.addSubview(moneyView)
+        coverView.addSubview(timeView)
         contentView.addSubview(redView)
         redView.addSubview(riskImageView)
         redView.addSubview(rightImageView)
@@ -184,41 +185,51 @@ class TwoCompanyNormalListCell: BaseViewCell {
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(ctImageView.snp.top).offset(-1)
+            make.top.equalToSuperview().offset(10)
             make.left.equalTo(ctImageView.snp.right).offset(8)
-            make.right.equalToSuperview().offset(-60)
+            make.right.equalToSuperview().offset(-70)
+            make.height.equalTo(20)
         }
         
         tagListView.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
-            make.top.equalTo(nameLabel.snp.bottom).offset(3)
+            make.top.equalToSuperview().offset(32.5)
             make.width.equalTo(SCREEN_WIDTH - 80)
             make.height.equalTo(20)
         }
         
-        moneyView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(120)
+        coverView.snp.makeConstraints { make in
             make.top.equalTo(tagListView.snp.bottom).offset(6.5)
-            make.size.equalTo(CGSize(width: 150, height: 36))
+            make.left.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.height.equalTo(36)
+        }
+        
+        moneyView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview()
+            make.height.equalTo(36)
+            make.width.equalTo(150)
         }
         
         nameView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalTo(moneyView.snp.left)
-            make.top.equalTo(tagListView.snp.bottom).offset(6.5)
+            make.top.equalToSuperview()
             make.height.equalTo(36)
         }
         
         timeView.snp.makeConstraints { make in
             make.left.equalTo(moneyView.snp.right)
-            make.top.equalTo(tagListView.snp.bottom).offset(6.5)
+            make.top.equalToSuperview()
             make.height.equalTo(36)
             make.right.equalToSuperview()
         }
+        
         redView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset(10)
-            make.top.equalTo(timeView.snp.bottom)
+            make.top.equalTo(coverView.snp.bottom).offset(7)
             make.height.equalTo(0)
         }
         riskImageView.snp.makeConstraints { make in
@@ -236,17 +247,11 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.left.equalTo(riskImageView.snp.right).offset(10.5)
             make.height.equalTo(16.5)
         }
-        bgView.snp.makeConstraints { make in
-            make.left.right.top.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-5)
-        }
-        
         lineView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.left.equalToSuperview()
-            make.top.equalTo(tagListView.snp.bottom).offset(49.5)
-            make.height.equalTo(0.5)
-            make.bottom.equalToSuperview().offset(-42)
+            make.left.right.equalToSuperview()
+            make.top.equalTo(redView.snp.bottom).offset(11.5)
+            make.height.equalTo(1)
+            make.bottom.equalToSuperview().offset(-40)
         }
         focusBtn.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-15.5)
@@ -255,7 +260,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         }
         
         addressimageView.snp.makeConstraints { make in
-            make.top.equalTo(lineView.snp.bottom).offset(6)
+            make.top.equalTo(lineView.snp.bottom).offset(7)
             make.size.equalTo(CGSize(width: 47, height: 21))
             make.right.equalToSuperview().offset(-12)
         }
@@ -272,7 +277,8 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.right.equalTo(websiteimageView.snp.left).offset(-8)
         }
         footView.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(lineView.snp.bottom).offset(35)
+            make.left.right.equalToSuperview()
             make.height.equalTo(4)
         }
         model.asObservable().subscribe(onNext: { [weak self] model in
@@ -306,6 +312,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
             //小标签
             self.tagArray = model.labels?.compactMap { $0.name ?? "" } ?? []
             setupScrollView(tagScrollView: tagListView, tagArray: tagArray)
+            
             //是否被关注
             let followStatus = model.followStatus ?? 0
             if followStatus == 1 {
@@ -364,26 +371,36 @@ class TwoCompanyNormalListCell: BaseViewCell {
             
             if let riskInfo = model.riskInfo,
                let riskTime = riskInfo.riskTime,
-                !riskTime.isEmpty {
+               !riskTime.isEmpty {
                 self.redView.isHidden = false
                 self.redView.snp.updateConstraints { make in
-                    make.top.equalTo(self.timeView.snp.bottom).offset(7)
+                    make.top.equalTo(self.coverView.snp.bottom).offset(7)
                     make.height.equalTo(30)
-                }
-                self.lineView.snp.updateConstraints { make in
-                    make.top.equalTo(self.tagListView.snp.bottom).offset(91)
                 }
                 riskTimeLabel.text = riskTime + content
             }else {
                 self.redView.isHidden = true
                 self.redView.snp.updateConstraints { make in
-                    make.top.equalTo(self.timeView.snp.bottom)
+                    make.top.equalTo(self.coverView.snp.bottom)
                     make.height.equalTo(0)
                 }
-                self.lineView.snp.updateConstraints { make in
-                    make.top.equalTo(self.tagListView.snp.bottom).offset(49.5)
-                }
                 riskTimeLabel.text = ""
+            }
+            
+            if lat.isEmpty && phone.isEmpty && website.isEmpty {
+                self.lineView.snp.updateConstraints { make in
+                    make.bottom.equalToSuperview().offset(-5)
+                }
+                self.footView.snp.updateConstraints { make in
+                    make.top.equalTo(self.lineView.snp.bottom)
+                }
+            }else {
+                self.lineView.snp.updateConstraints { make in
+                    make.bottom.equalToSuperview().offset(-40)
+                }
+                self.footView.snp.updateConstraints { make in
+                    make.top.equalTo(self.lineView.snp.bottom).offset(35)
+                }
             }
             
         }).disposed(by: disposeBag)
@@ -436,7 +453,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
                 if let self = self, let model = self.model.value {
                     self.riskBlock?(model)
                 }
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         focusBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self, let model = self.model.value else { return }
@@ -461,7 +478,7 @@ extension TwoCompanyNormalListCell {
         }
         let maxWidth = SCREEN_WIDTH - 80
         let openButtonWidth: CGFloat = 40 // 展开按钮宽度
-        let buttonHeight: CGFloat = 18 // 标签高度
+        let buttonHeight: CGFloat = 20 // 标签高度
         let buttonSpacing: CGFloat = 5 // 标签之间的间距
         var numberOfLine: CGFloat = 1 // 标签总行数
         var lastRight: CGFloat = 0 // 标签的左边距
@@ -581,9 +598,10 @@ extension TwoCompanyNormalListCell {
         tagScrollView.snp.updateConstraints { make in
             make.height.equalTo(numberOfLine * (buttonHeight + buttonSpacing))
         }
-        self.lineView.snp.updateConstraints { make in
-            make.top.equalTo(tagListView.snp.bottom).offset(60)
-        }
+        UIView.animate(withDuration: 0.25, animations: {
+            self.layoutIfNeeded()
+        })
+        self.heightDidUpdate?()
         openButton.layoutButtonEdgeInsets(style: .right, space: 2)
     }
     

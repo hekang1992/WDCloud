@@ -1,9 +1,9 @@
 //
-//  SearchEnterpriseViewController.swift
+//  SearchBossViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/3/31.
-//  首页搜索企业
+//  首页搜索人员
 
 import UIKit
 import MapKit
@@ -15,7 +15,7 @@ import JXPagingView
 import SkeletonView
 import TYAlertController
 
-class SearchEnterpriseViewController: WDBaseViewController {
+class SearchBossViewController: WDBaseViewController {
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
@@ -30,10 +30,10 @@ class SearchEnterpriseViewController: WDBaseViewController {
     }()
     
     //搜索list列表页面
-    lazy var companyListView: TwoCompanyView = {
-        let companyListView = TwoCompanyView()
-        companyListView.isHidden = true
-        return companyListView
+    lazy var twoPeopleListView: TwoPeopleListView = {
+        let twoPeopleListView = TwoPeopleListView()
+        twoPeopleListView.isHidden = true
+        return twoPeopleListView
     }()
     
     var completeBlock: (() -> Void)?
@@ -60,7 +60,7 @@ class SearchEnterpriseViewController: WDBaseViewController {
     var keyword: String = ""//搜索的文字
     var entityArea: String = ""//地区
     var entityIndustry: String = ""//行业
-    var allArray: [pageDataModel] = []//加载更多
+    var allArray: [itemsModel] = []//加载更多
     
     //搜索的文字
     var searchWords = BehaviorRelay<String?>(value: nil)
@@ -78,10 +78,13 @@ class SearchEnterpriseViewController: WDBaseViewController {
             make.edges.equalToSuperview()
         }
         
-        view.addSubview(companyListView)
-        companyListView.snp.makeConstraints { make in
+        view.addSubview(twoPeopleListView)
+        twoPeopleListView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        twoPeopleListView.tableView.isSkeletonable = true
+        twoPeopleListView.tableView.showAnimatedGradientSkeleton()
         
         self.searchWords
             .asObservable()
@@ -91,15 +94,15 @@ class SearchEnterpriseViewController: WDBaseViewController {
             self.pageIndex = 1
             if text.count < 2 {
                 self.oneView.isHidden = false
-                self.companyListView.isHidden = true
+                self.twoPeopleListView.isHidden = true
                 self.allArray.removeAll()
                 //获取热搜等数据
                 getHotsSearchInfo()
             }else {
                 self.oneView.isHidden = true
-                self.companyListView.isHidden = false
+                self.twoPeopleListView.isHidden = false
                 self.keyword = text
-                self.getCompanyListInfo()
+                self.searchListInfo()
             }
         }).disposed(by: disposeBag)
         
@@ -114,7 +117,7 @@ class SearchEnterpriseViewController: WDBaseViewController {
     }
 }
 
-extension SearchEnterpriseViewController {
+extension SearchBossViewController {
     
     private func setupUI() {
         //添加下拉筛选
@@ -130,7 +133,7 @@ extension SearchEnterpriseViewController {
             guard let self = self else { return }
             self.entityArea = model?.currentID ?? ""
             self.pageIndex = 1
-            self.getCompanyListInfo()
+            self.searchListInfo()
         }
         
         let industryMenu = MenuAction(title: "行业", style: .typeList)!
@@ -145,12 +148,12 @@ extension SearchEnterpriseViewController {
             guard let self = self else { return }
             self.entityIndustry = model?.currentID ?? ""
             self.pageIndex = 1
-            self.getCompanyListInfo()
+            self.searchListInfo()
         }
         
         let menuView = DropMenuBar(action: [regionMenu, industryMenu])!
         menuView.backgroundColor = .white
-        self.companyListView.addSubview(menuView)
+        self.twoPeopleListView.addSubview(menuView)
         menuView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(1)
             make.left.right.equalToSuperview()
@@ -158,92 +161,24 @@ extension SearchEnterpriseViewController {
         }
         
         //添加下拉刷新
-        self.companyListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+        self.twoPeopleListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.pageIndex = 1
-            self.getCompanyListInfo()
+            self.searchListInfo()
         })
         
         //添加上拉加载更多
-        self.companyListView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+        self.twoPeopleListView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
             guard let self = self else { return }
-            self.getCompanyListInfo()
+            self.searchListInfo()
         })
-        
-        //跳转地址
-        companyListView.addressBlock = { [weak self] model in
-            let latitude = Double(model.orgInfo?.regAddr?.lat ?? "0.0") ?? 0.0
-            let longitude = Double(model.orgInfo?.regAddr?.lng ?? "0.0") ?? 0.0
-            let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let locationVc = CompanyLocationViewController(location: location)
-            locationVc.name = model.orgInfo?.orgName ?? ""
-            self?.navigationController?.pushViewController(locationVc, animated: true)
-        }
-        
-        //跳转网址
-        companyListView.websiteBlock = { [weak self] model in
-            let pageUrl = model.orgInfo?.website ?? ""
-            self?.pushWebPage(from: pageUrl)
-        }
-        
-        //这里不仅仅是可以点击人员了....还有可能是企业
-        companyListView.peopleBlock = { [weak self] model in
-            guard let self = self else { return }
-            let leaderList = model.leaderVec?.leaderList ?? []
-            if leaderList.count > 1 {
-                let popMoreListView = PopMoreLegalListView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
-                popMoreListView.descLabel.text = "\(model.leaderVec?.leaderTypeName ?? "")\(leaderList.count)"
-                popMoreListView.dataList = leaderList
-                let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
-                popMoreListView.closeBlock = {
-                    self.dismiss(animated: true)
-                }
-                popMoreListView.clickBlock = { [weak self] model in
-                    self?.dismiss(animated: true, completion: {
-                        self?.pushPageWithModel(from: model)
-                    })
-                }
-                self.present(alertVc, animated: true)
-            }else {
-                self.dismiss(animated: true) {
-                    if let peopleModel = model.leaderVec?.leaderList?.first {
-                        self.pushPageWithModel(from: peopleModel)
-                    }
-                }
-            }
-        }
-        
-        //点击电话回调
-        companyListView.phoneBlock = { [weak self] model in
-            self?.makePhoneCall(phoneNumber: model.orgInfo?.phone ?? "")
-        }
-        
-        //企业ID回调
-        companyListView.entityIdBlock = { [weak self] model in
-            let companyDetailVc = CompanyBothViewController()
-            let enityId = model.orgInfo?.orgId ?? ""
-            let companyName = model.orgInfo?.orgName ?? ""
-            companyDetailVc.enityId.accept(enityId)
-            companyDetailVc.companyName.accept(companyName)
-            companyDetailVc.refreshBlock = { [weak self] index in
-                guard let self = self else { return }
-                self.pageIndex = 1
-                self.getCompanyListInfo()
-            }
-            self?.navigationController?.pushViewController(companyDetailVc, animated: true)
-        }
-        
-        //查看更多
-        companyListView.moreBtnBlock = { [weak self] in
-            self?.moreBtnBlock?()
-        }
         
         //删除最近搜索
         oneView.deleteBlock = {
             ShowAlertManager.showAlert(title: "删除", message: "是否确定删除最近搜索?", confirmAction: {
                 ViewHud.addLoadView()
                 let man = RequestManager()
-                let dict = ["moduleId": "01"]
+                let dict = ["moduleId": "02"]
                 man.requestAPI(params: dict,
                                pageUrl: "/operation/searchRecord/clear",
                                method: .post) { [weak self] result in
@@ -273,7 +208,7 @@ extension SearchEnterpriseViewController {
             ShowAlertManager.showAlert(title: "删除", message: "是否确定删除浏览历史?", confirmAction: {
                 ViewHud.addLoadView()
                 let man = RequestManager()
-                let dict = ["moduleId": "01"]
+                let dict = ["moduleId": "02"]
                 man.requestAPI(params: dict,
                                pageUrl: "/operation/view-record/del",
                                method: .post) { [weak self] result in
@@ -295,67 +230,63 @@ extension SearchEnterpriseViewController {
         
         //浏览历史和热门搜索点击
         oneView.cellBlock = { [weak self] index, model in
-            let companyDetailVc = CompanyBothViewController()
-            let enityId = model.entityId ?? ""
-            let companyName = model.entityName ?? ""
-            companyDetailVc.enityId.accept(enityId)
-            companyDetailVc.companyName.accept(companyName)
-            self?.navigationController?.pushViewController(companyDetailVc, animated: true)
+            let peopleDetailVc = PeopleBothViewController()
+            peopleDetailVc.personId.accept(model.entityId ?? "")
+            peopleDetailVc.peopleName.accept(model.entityName ?? "")
+            self?.navigationController?.pushViewController(peopleDetailVc, animated: true)
         }
     }
     
 }
 
 /** 网络数据请求*/
-extension SearchEnterpriseViewController {
+extension SearchBossViewController {
     
-    //获取企业列表数据
-    private func getCompanyListInfo() {
-        ViewHud.addLoadView()
-        let dict = ["keyword": keyword,
-                    "matchType": 1,
-                    "industryType": entityIndustry,
-                    "region": entityArea,
-                    "pageIndex": pageIndex,
+    //获取人员列表数据
+    private func searchListInfo() {
+        let dict = ["keywords": keyword,
+                    "orgIndustry": entityIndustry,
+                    "orgArea": entityArea,
+                    "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
-                       pageUrl: "/entity/v2/org-list",
+                       pageUrl: "/firminfo/v2/person/boss-search",
                        method: .get) { [weak self] result in
             ViewHud.hideLoadView()
-            self?.companyListView.tableView.mj_header?.endRefreshing()
-            self?.companyListView.tableView.mj_footer?.endRefreshing()
+            self?.twoPeopleListView.tableView.mj_header?.endRefreshing()
+            self?.twoPeopleListView.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
                 if let self = self,
                    let model = success.data,
                    let code = success.code,
-                   code == 200,
-                   let total = model.pageMeta?.totalNum {
+                   code == 200, let total = model.total {
                     self.oneView.isHidden = true
-                    self.companyListView.isHidden = false
-                    if self.pageIndex == 1 {
-                        self.pageIndex = 1
+                    self.twoPeopleListView.isHidden = false
+                    if pageIndex == 1 {
+                        pageIndex = 1
                         self.allArray.removeAll()
                     }
-                    self.pageIndex += 1
-                    let pageData = model.pageData ?? []
+                    pageIndex += 1
+                    let pageData = model.items ?? []
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
                     }else {
-                        self.addNodataView(from: self.companyListView.whiteView)
+                        self.addNodataView(from: self.twoPeopleListView.whiteView)
                     }
                     if self.allArray.count != total {
-                        self.companyListView.tableView.mj_footer?.isHidden = false
+                        self.twoPeopleListView.tableView.mj_footer?.isHidden = false
                     }else {
-                        self.companyListView.tableView.mj_footer?.isHidden = true
+                        self.twoPeopleListView.tableView.mj_footer?.isHidden = true
                     }
-                    self.companyListView.dataModel = model
-                    self.companyListView.dataModelArray = self.allArray
-                    self.companyListView.searchWordsRelay.accept(keyword)
+                    self.twoPeopleListView.dataModel.accept(model)
+                    self.twoPeopleListView.dataModelArray.accept(self.allArray)
+                    self.twoPeopleListView.searchWordsRelay.accept(keyword)
                     DispatchQueue.main.asyncAfter(delay: 0.25) {
-                        self.companyListView.tableView.hideSkeleton()
-                        self.companyListView.tableView.reloadData()
+                        self.twoPeopleListView.tableView.hideSkeleton()
+                        self.twoPeopleListView.tableView.reloadData()
                     }
                 }
                 break
@@ -370,7 +301,7 @@ extension SearchEnterpriseViewController {
         let group = DispatchGroup()
         ViewHud.addLoadView()
         group.enter()
-        getLastSearchInfo(from: "01") { [weak self] modelArray in
+        getLastSearchInfo(from: "02") { [weak self] modelArray in
             if !modelArray.isEmpty {
                 self?.oneView.bgView.isHidden = false
                 self?.oneView.bgView.snp.remakeConstraints({ make in
@@ -393,13 +324,13 @@ extension SearchEnterpriseViewController {
         }
         
         group.enter()
-        getLastHistroyInfo(from: "01") { [weak self] modelArray in
+        getLastHistroyInfo(from: "02") { [weak self] modelArray in
             self?.historyArray = modelArray
             group.leave()
         }
         
         group.enter()
-        getLastHotsInfo(from: "01") { [weak self] modelArray in
+        getLastHotsInfo(from: "02") { [weak self] modelArray in
             self?.hotsArray = modelArray
             group.leave()
         }
@@ -419,7 +350,7 @@ extension SearchEnterpriseViewController {
     
 }
 
-extension SearchEnterpriseViewController: JXPagingViewListViewDelegate {
+extension SearchBossViewController: JXPagingViewListViewDelegate {
     
     func listView() -> UIView {
         return view

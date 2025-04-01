@@ -70,11 +70,13 @@ class BiaoQianView: BaseView {
                 make.left.equalToSuperview().offset(15)
                 make.top.equalToSuperview()
                 make.height.equalTo(16.5)
+                make.centerX.equalToSuperview()
             }
             timeLabel.snp.makeConstraints { make in
                 make.left.equalTo(label1.snp.right).offset(2)
                 make.centerY.equalTo(label1.snp.centerY)
                 make.height.equalTo(13)
+                make.centerX.equalToSuperview()
             }
         }else if enmu == .showImage {
             addSubview(iconImageView)
@@ -100,7 +102,7 @@ class BiaoQianView: BaseView {
         }
         lineView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: 0.5, height: 10))
+            make.size.equalTo(CGSize(width: 1, height: 10))
             make.right.equalToSuperview()
         }
     }

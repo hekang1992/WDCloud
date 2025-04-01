@@ -22,6 +22,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         ctImageView.layer.cornerRadius = 4
+        ctImageView.isSkeletonable = true
         return ctImageView
     }()
     
@@ -56,6 +57,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
         cooperationLabel.font = .regularFontOfSize(size: 13)
         cooperationLabel.textAlignment = .left
         cooperationLabel.text = "TA的合作伙伴:"
+        cooperationLabel.isSkeletonable = true
         return cooperationLabel
     }()
     
@@ -77,6 +79,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
     
     lazy var addFocusBtn: UIButton = {
         let addFocusBtn = UIButton(type: .custom)
+        addFocusBtn.isSkeletonable = true
         addFocusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
         return addFocusBtn
     }()
@@ -87,6 +90,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        isSkeletonable = true
         contentView.addSubview(lineView)
         contentView.addSubview(ctImageView)
         contentView.addSubview(nameLabel)

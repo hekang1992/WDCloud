@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import SkeletonView
 
 class TwoPeopleListView: BaseView {
     
@@ -53,6 +54,7 @@ class TwoPeopleListView: BaseView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isSkeletonable = true
         addSubview(whiteView)
         whiteView.addSubview(tableView)
         whiteView.snp.makeConstraints { make in
@@ -62,6 +64,8 @@ class TwoPeopleListView: BaseView {
             make.top.equalToSuperview().offset(34)
             make.left.right.bottom.equalToSuperview()
         }
+        tableView.isSkeletonable = true
+        tableView.showAnimatedGradientSkeleton()
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -117,4 +121,15 @@ extension TwoPeopleListView: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+}
+
+// MARK: - SkeletonTableViewDataSource
+extension TwoPeopleListView: SkeletonTableViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "TwoPeopleNormalListCell"
+    }
+
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
 }

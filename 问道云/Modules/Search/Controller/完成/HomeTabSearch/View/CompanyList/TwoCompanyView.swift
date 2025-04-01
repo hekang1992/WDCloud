@@ -35,11 +35,11 @@ class TwoCompanyView: BaseView {
         let whiteView = UIView()
         return whiteView
     }()
-
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .white
         tableView.estimatedRowHeight = 60
         tableView.delegate = self
         tableView.dataSource = self
@@ -68,7 +68,8 @@ class TwoCompanyView: BaseView {
             make.top.equalToSuperview().offset(40)
             make.left.right.bottom.equalToSuperview()
         }
-
+        tableView.isSkeletonable = true
+        tableView.showAnimatedGradientSkeleton()
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -140,8 +141,6 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             let pageDataModel = self.dataModelArray?[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
             pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
-            cell?.backgroundColor = .clear
-            cell?.isSkeletonable = true
             cell?.selectionStyle = .none
             cell?.model.accept(pageDataModel)
             cell?.addressBlock = { [weak self] model in
@@ -160,6 +159,10 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 if let cell = cell {
                     self?.focusInfo(from: model, cell: cell)
                 }
+            }
+            cell?.heightDidUpdate = { [weak self] in
+                self?.tableView.beginUpdates()
+                self?.tableView.endUpdates()
             }
             //跳转风险扫描
             cell?.riskBlock = { [weak self] model in
@@ -368,7 +371,7 @@ extension TwoCompanyView: SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "TwoCompanyNormalListCell"
     }
-
+    
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }

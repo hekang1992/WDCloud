@@ -352,7 +352,7 @@ extension WDCenterViewController {
             let req = WXLaunchMiniProgramReq()
             req.userName = "gh_3f4fcd0bdb14"
             req.path = "/pages/share/index?Authorization=\(accessToken)&customNumber=\(customerNumber)"
-            req.miniProgramType = .preview
+            req.miniProgramType = .release
             WXApi.send(req) { success in
                 if !success {
                     

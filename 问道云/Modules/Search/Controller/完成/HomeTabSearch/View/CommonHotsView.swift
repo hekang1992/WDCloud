@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class CommonHotsView: BaseView {
     
@@ -19,10 +20,15 @@ class CommonHotsView: BaseView {
     
     //删除最近搜索
     var deleteBlock: (() -> Void)?
+    //删除浏览历史
+    var deleteHistoryBlock: (() -> Void)?
     
     var modelArray: [[rowsModel]]? {
         didSet {
-            tableView.reloadData()
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
+                self.tableView.hideSkeleton()
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -144,12 +150,26 @@ class CommonHotsView: BaseView {
             guard let self = self else { return }
             self.deleteBlock?()
         }).disposed(by: disposeBag)
+        
+        tableView.isSkeletonable = true
+        tableView.showAnimatedGradientSkeleton()
     }
     
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+// MARK: - SkeletonTableViewDataSource
+extension CommonHotsView: SkeletonTableViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "CommonHotsViewCell"
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
 }
 
 extension CommonHotsView: UITableViewDelegate, UITableViewDataSource {
@@ -208,6 +228,20 @@ extension CommonHotsView: UITableViewDelegate, UITableViewDataSource {
         lineView.snp.makeConstraints { make in
             make.bottom.left.right.equalToSuperview()
             make.height.equalTo(1)
+        }
+        if title == "浏览历史" {
+            let deleteBtn = UIButton(type: .custom)
+            deleteBtn.setImage(UIImage(named: "delete_icon"), for: .normal)
+            headView.addSubview(deleteBtn)
+            deleteBtn.snp.makeConstraints { make in
+                make.centerY.equalTo(label.snp.centerY)
+                make.right.equalToSuperview().offset(-2)
+                make.size.equalTo(CGSize(width: 30, height: 30))
+            }
+            deleteBtn.rx.tap.subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.deleteHistoryBlock?()
+            }).disposed(by: disposeBag)
         }
         return headView
     }
