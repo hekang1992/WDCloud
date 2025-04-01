@@ -186,7 +186,9 @@ extension WebPageViewController: WKUIDelegate, WKScriptMessageHandler, WKNavigat
     
     private func showAlert(message: String) {
         let alert = UIAlertController(title: "提示", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { _ in
+            self.navigationController?.popViewController(animated: true)
+        }))
         self.present(alert, animated: true, completion: nil)
     }
     
