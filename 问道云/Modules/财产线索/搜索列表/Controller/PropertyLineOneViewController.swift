@@ -447,7 +447,7 @@ class PropertyLineOneViewController: WDBaseViewController {
         self.model.asObservable()
             .map { $0?.conditionVO?.cueObject ?? [] }
             .subscribe(onNext: { [weak self] modelArray in
-                guard let self = self else { return }
+                guard let self = self, !modelArray.isEmpty else { return }
                 oneMenu.displayCustomWithMenu = { [weak self] in
                     guard let self = self else { return UIView() }
                     moreClueView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 200)

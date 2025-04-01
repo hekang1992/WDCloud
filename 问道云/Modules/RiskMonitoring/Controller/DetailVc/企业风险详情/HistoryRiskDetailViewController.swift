@@ -173,6 +173,14 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         return maskView
     }()
     
+    lazy var totalItemView: RiskNumView = {
+        let totalItemView = RiskNumView()
+        totalItemView.nameLabel.text = "风险数"
+        totalItemView.numLabel.textColor = .init(cssStr: "#FF0000")
+        totalItemView.numLabel.font = .mediumFontOfSize(size: 14)
+        return totalItemView
+    }()
+    
     lazy var oneItemView: RiskNumView = {
         let oneItemView = RiskNumView()
         oneItemView.nameLabel.text = "高风险"
@@ -184,7 +192,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
     lazy var twoItemView: RiskNumView = {
         let twoItemView = RiskNumView()
         twoItemView.nameLabel.text = "低风险"
-        twoItemView.numLabel.textColor = .init(cssStr: "#333333")
+        twoItemView.numLabel.textColor = .init(cssStr: "#FF0000")
         twoItemView.numLabel.font = .mediumFontOfSize(size: 14)
         return twoItemView
     }()
@@ -219,6 +227,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         whiteView.addSubview(threelabel)
         whiteView.addSubview(fourlabel)
         view.addSubview(maskView)
+        maskView.addSubview(totalItemView)
         maskView.addSubview(oneItemView)
         maskView.addSubview(twoItemView)
         maskView.addSubview(threeItemView)
@@ -277,19 +286,25 @@ class HistoryRiskDetailViewController: WDBaseViewController {
             make.width.equalTo(labelWidth)
         }
         
-        twoItemView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 100, height: 61.5))
+        totalItemView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
         }
         oneItemView.snp.makeConstraints { make in
-            make.right.equalTo(twoItemView.snp.left)
-            make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: 100, height: 61.5))
+            make.left.equalTo(totalItemView.snp.right)
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
+        }
+        twoItemView.snp.makeConstraints { make in
+            make.left.equalTo(oneItemView.snp.right)
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
         }
         threeItemView.snp.makeConstraints { make in
             make.left.equalTo(twoItemView.snp.right)
-            make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: 100, height: 61.5))
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
         }
         
         tableView.snp.makeConstraints { make in
@@ -515,19 +530,13 @@ extension HistoryRiskDetailViewController {
     //数据刷新
     func refreshUI(from model: DataModel) {
         let count = String(model.totalRiskCnt ?? 0)
-        let highcount = String(model.highLevelCnt ?? 0)
-        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计历史风险\(count)条/", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
-        self.highnumLabel.attributedText = GetRedStrConfig.getRedStr(from: highcount, fullText: "历史高风险\(highcount)条", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
-        self.oneItemView.numLabel.text = String(model.highLevelCnt ?? 0)
-        self.twoItemView.numLabel.text = String(model.lowLevelCnt ?? 0)
-        self.threeItemView.numLabel.text = String(model.tipLevelCnt ?? 0)
-        //法律风险数据
-//        if self.itemtype == "2" {
-//            let modelArray = model.items ?? []
-//            self.lawView.modelArray.accept(modelArray)
-//            self.lawView.numLabel.text = "案件信息(\(count))"
-//        }
-//        self.lawView.tableView.reloadData()
+        let highcount = String(model.totalHighRiskCnt ?? 0)
+        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险\(count)条/", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
+        self.highnumLabel.attributedText = GetRedStrConfig.getRedStr(from: highcount, fullText: "高风险\(highcount)条", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
+        self.totalItemView.numLabel.text = String(model.notRelevaRiskDto?.totalRiskCnt ?? 0)
+        self.oneItemView.numLabel.text = String(model.notRelevaRiskDto?.highLevelCnt ?? 0)
+        self.twoItemView.numLabel.text = String(model.notRelevaRiskDto?.lowLevelCnt ?? 0)
+        self.threeItemView.numLabel.text = String(model.notRelevaRiskDto?.tipLevelCnt ?? 0)
     }
     
 }

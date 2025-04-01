@@ -56,7 +56,9 @@ class PropertyOneViewController: WDBaseViewController {
     
     var isShowKeyboard: Bool = true
     
+    //热门搜索
     var oneArray: [DataModel]?
+    //浏览历史
     var twoArray: [DataModel]?
     var allArray: [[DataModel]]?
     

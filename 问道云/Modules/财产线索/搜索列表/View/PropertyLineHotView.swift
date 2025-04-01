@@ -13,6 +13,8 @@ import TYAlertController
 class PropertyLineHotView: BaseView {
     
     var modelArray: [[DataModel]]?
+    
+    var deleteHistoryBlock: (() -> Void)?
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -59,7 +61,7 @@ extension PropertyLineHotView: UITableViewDelegate, UITableViewDataSource {
         if section == 0 {
             title = "浏览历史"
         }else {
-            title = "最近搜索"
+            title = "热门搜索"
         }
         let headView = UIView()
         headView.backgroundColor = .init(cssStr: "#F5F5F5")
@@ -73,6 +75,20 @@ extension PropertyLineHotView: UITableViewDelegate, UITableViewDataSource {
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(12)
             make.height.equalTo(25)
+        }
+        if title == "浏览历史" {
+//            let deleteBtn = UIButton(type: .custom)
+//            deleteBtn.setImage(UIImage(named: "delete_icon"), for: .normal)
+//            headView.addSubview(deleteBtn)
+//            deleteBtn.snp.makeConstraints { make in
+//                make.centerY.equalTo(label.snp.centerY)
+//                make.right.equalToSuperview().offset(-2)
+//                make.size.equalTo(CGSize(width: 30, height: 30))
+//            }
+//            deleteBtn.rx.tap.subscribe(onNext: { [weak self] in
+//                guard let self = self else { return }
+//                self.deleteHistoryBlock?()
+//            }).disposed(by: disposeBag)
         }
         return headView
     }
