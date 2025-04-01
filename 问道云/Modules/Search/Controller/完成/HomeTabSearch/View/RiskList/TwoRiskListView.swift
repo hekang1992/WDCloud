@@ -108,6 +108,10 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                 let model = dataModelArray.value?[indexPath.row]
                 model?.searchStr = self.searchWordsRelay.value ?? ""
                 cell?.model.accept(model)
+                cell?.heightDidUpdate = { [weak self] in
+                    self?.tableView.beginUpdates()
+                    self?.tableView.endUpdates()
+                }
                 cell?.focusBlock = { [weak self] in
                     if let self = self, let model = model, let cell = cell {
                         let followStatus = model.followStatus ?? 0
@@ -130,6 +134,10 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
             cell?.backgroundColor = .clear
             cell?.selectionStyle = .none
             cell?.model.accept(model)
+            cell?.heightDidUpdate = { [weak self] in
+                self?.tableView.beginUpdates()
+                self?.tableView.endUpdates()
+            }
             cell?.focusBlock = { [weak self] in
                 if let self = self, let model = model, let cell = cell {
                     let followStatus = model.followStatus ?? 0
@@ -257,12 +265,14 @@ extension TwoRiskListView {
     
     //添加关注
     private func addFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -283,12 +293,14 @@ extension TwoRiskListView {
     
     //取消关注
     private func deleteFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

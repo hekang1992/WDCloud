@@ -108,7 +108,7 @@ class PropertyOneViewController: WDBaseViewController {
         // 监听 UITextField 的文本变化
         self.headView.searchHeadView.searchTx
             .rx.text.orEmpty
-            .debounce(.milliseconds(600), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if self.containsOnlyChinese(text) == true {

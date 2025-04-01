@@ -75,7 +75,7 @@ class AddInvoiceViewCell: BaseViewCell {
             .controlEvent(.editingChanged)
             .withLatestFrom(enterTx.rx.text.orEmpty)
             .distinctUntilChanged()
-            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
                 self?.model.value?.text.accept(text)
             }).disposed(by: disposeBag)

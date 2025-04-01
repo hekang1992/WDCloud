@@ -15,6 +15,8 @@ import TYAlertController
 
 class SearchRiskViewController: WDBaseViewController {
     
+    private var cman = RequestManager()
+    
     private var man = RequestManager()
     
     var completeBlock: (() -> Void)?
@@ -37,26 +39,23 @@ class SearchRiskViewController: WDBaseViewController {
     var allPeopleArray: [itemsModel] = []//人员时候加载更多
     
     //被搜索的关键词
-    var searchWordsRelay = BehaviorRelay<String>(value: "")
-    
-    var searchWords: String? {
-        didSet {
-            guard let searchWords = searchWords else { return }
-            searchWordsRelay.accept(searchWords)
-        }
-    }
-    
-    //热搜
-    var hotWordsArray = BehaviorRelay<[rowsModel]?>(value: nil)
+    var searchWords = BehaviorRelay<String?>(value: nil)
+    var keyword: String = ""//搜索的文字
+    //浏览历史
+    var historyArray: [rowsModel] = []
+    //热门搜索
+    var hotsArray: [rowsModel] = []
+    //总数组
+    var modelArray: [[rowsModel]] = []
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
     //搜索文字回调
     var lastSearchTextBlock: ((String) -> Void)?
     
-    lazy var riskView: OneCompanyView = {
-        let riskView = OneCompanyView()
-        return riskView
+    lazy var oneView: CommonHotsView = {
+        let oneView = CommonHotsView()
+        return oneView
     }()
     
     //企业加人员
@@ -121,10 +120,10 @@ class SearchRiskViewController: WDBaseViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        view.addSubview(riskView)
+        view.addSubview(oneView)
         view.addSubview(twoRiskListView)
         view.addSubview(listPeopleView)
-        riskView.snp.makeConstraints { make in
+        oneView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         //企业加人员
@@ -136,21 +135,10 @@ class SearchRiskViewController: WDBaseViewController {
             make.top.equalToSuperview().offset(35.5)
             make.left.right.bottom.equalToSuperview()
         }
-        //删除最近搜索
-        self.riskView.searchView.deleteBtn
-            .rx
-            .tap.subscribe(onNext: { [weak self] in
-                self?.deleteSearchInfo()
-            }).disposed(by: disposeBag)
-        //删除浏览历史
-        self.riskView.historyView.deleteBtn
-            .rx
-            .tap.subscribe(onNext: { [weak self] in
-                self?.deleteHistoryInfo()
-            }).disposed(by: disposeBag)
         
         //点击最近搜索
-        self.riskView.lastSearchTextBlock = { [weak self] searchStr in
+        self.oneView.tagClickBlock = { [weak self] label in
+            let searchStr = label.text ?? ""
             self?.lastSearchTextBlock?(searchStr)
         }
         
@@ -253,11 +241,86 @@ class SearchRiskViewController: WDBaseViewController {
             peopleRiskVc.personId = model.personId ?? ""
             self?.navigationController?.pushViewController(peopleRiskVc, animated: true)
         }
+        
+        //删除最近搜索
+        oneView.deleteBlock = {
+            ShowAlertManager.showAlert(title: "删除", message: "是否确定删除最近搜索?", confirmAction: {
+                ViewHud.addLoadView()
+                let man = RequestManager()
+                let dict = ["moduleId": "05"]
+                man.requestAPI(params: dict,
+                               pageUrl: "/operation/searchRecord/clear",
+                               method: .post) { [weak self] result in
+                    ViewHud.hideLoadView()
+                    switch result {
+                    case .success(let success):
+                        if success.code == 200 {
+                            ToastViewConfig.showToast(message: "删除成功")
+                            self?.oneView.bgView.isHidden = true
+                            self?.oneView.bgView.snp.remakeConstraints({ make in
+                                make.top.equalToSuperview().offset(1)
+                                make.left.equalToSuperview()
+                                make.width.equalTo(SCREEN_WIDTH)
+                                make.height.equalTo(0)
+                            })
+                        }
+                        break
+                    case .failure(_):
+                        break
+                    }
+                }
+            })
+        }
+        
+        //删除浏览历史
+        oneView.deleteHistoryBlock = {
+            ShowAlertManager.showAlert(title: "删除", message: "是否确定删除浏览历史?", confirmAction: {
+                ViewHud.addLoadView()
+                let man = RequestManager()
+                let dict = ["moduleId": "05"]
+                man.requestAPI(params: dict,
+                               pageUrl: "/operation/view-record/del",
+                               method: .post) { [weak self] result in
+                    ViewHud.hideLoadView()
+                    switch result {
+                    case .success(let success):
+                        if success.code == 200 {
+                            ToastViewConfig.showToast(message: "删除成功")
+                            self?.historyArray.removeAll()
+                            self?.oneView.modelArray = [self?.historyArray ?? [], self?.hotsArray ?? []]
+                        }
+                        break
+                    case .failure(_):
+                        break
+                    }
+                }
+            })
+        }
+        
+        //浏览历史和热门搜索点击
+        oneView.cellBlock = { [weak self] index, model in
+            let entityType = model.entityType ?? 0
+            if entityType == 1 {
+                let companyRiskVc = CompanyRiskDetailViewController()
+                companyRiskVc.enityId = model.entityId ?? ""
+                companyRiskVc.name = model.entityName ?? ""
+                self?.navigationController?.pushViewController(companyRiskVc, animated: true)
+            }else {
+                let peopleRiskVc = PeopleRiskDetailViewController()
+                peopleRiskVc.personId = model.entityId ?? ""
+                peopleRiskVc.name = model.entityName ?? ""
+                self?.navigationController?.pushViewController(peopleRiskVc, animated: true)
+            }
+        }
+        
+        
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("风险===============风险")
+        //获取热搜等数据
+        getHotsSearchInfo()
     }
     
 }
@@ -267,310 +330,53 @@ extension SearchRiskViewController {
     
     //搜索
     private func getDataInfo() {
-        self.searchWordsRelay
-            .debounce(.milliseconds(600),
-                      scheduler: MainScheduler.instance)
+        self.searchWords
+            .asObservable()
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                if !text.isEmpty {
+                guard let self = self, let text = text else { return }
+                self.keyword = text
+                if !text.isEmpty, text.count >= 2 {
                     self.pageIndex = 1
                     self.buttonTapped(companyBtn)
-                    self.searchPeopleListinfo(from: false)
                 }else {
                     self.pageIndex = 1
                     self.allArray.removeAll()
-                    self.riskView.isHidden = false
+                    self.oneView.isHidden = false
                     self.twoRiskListView.isHidden = true
                     self.listPeopleView.isHidden = true
                     self.companyBtn.isHidden = true
                     self.peopleBtn.isHidden = true
                     self.tableView.reloadData()
+                    getHotsSearchInfo()
                 }
-            }).disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         
-        self.searchWordsRelay
-            .debounce(.milliseconds(50),
-                      scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                let group = DispatchGroup()
-                //最近搜索
-                group.enter()
-                getlastSearch {
-                    group.leave()
-                }
-                //浏览历史
-                group.enter()
-                getBrowsingHistory {
-                    group.leave()
-                }
-                //热搜
-                group.enter()
-                getHotWords {
-                    group.leave()
-                }
-                
-                // 所有任务完成后的通知
-                group.notify(queue: .main) {
-                    //
-                    self.completeBlock?()
-                }
-            }).disposed(by: disposeBag)
     }
     
-    //最近搜索
-    private func getlastSearch(complete: @escaping () -> Void) {
-        let man = RequestManager()
-        let dict = ["searchType": "",
-                    "moduleId": "05"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/searchRecord/query",
-                       method: .post) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                if let rows = success.data?.data {
-                    reloadSearchUI(data: rows)
-                }
-                break
-            case .failure(_):
-                break
-            }
-            complete()
-        }
-    }
-    
-    //最近搜索UI刷新
-    func reloadSearchUI(data: [rowsModel]) {
-        var strArray: [String] = []
-        if data.count > 0 {
-            for model in data {
-                strArray.append(model.searchContent ?? "")
-            }
-            self.riskView.searchView.tagListView.removeAllTags()
-            self.riskView.searchView.tagListView.addTags(strArray)
-            self.riskView.searchView.isHidden = false
-            self.riskView.layoutIfNeeded()
-            let height = self.riskView.searchView.tagListView.frame.height
-            self.riskView.searchView.snp.updateConstraints { make in
-                make.height.equalTo(30 + height + 20)
-            }
-        } else {
-            self.riskView.searchView.isHidden = true
-            self.riskView.searchView.snp.updateConstraints { make in
-                make.height.equalTo(0)
-            }
-        }
-        self.riskView.layoutIfNeeded()
-    }
-    
-    //浏览历史
-    private func getBrowsingHistory(complete: @escaping () -> Void) {
-        let man = RequestManager()
-        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
-        let dict = ["customernumber":customernumber,
-                    "viewrecordtype": "",
-                    "moduleId": "05",
-                    "pageNum": "1",
-                    "pageSize": "20"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/clientbrowsecb/selectBrowserecord",
-                       method: .get) { [weak self] result in
-            switch result {
-            case .success(let success):
-                guard let self = self else { return }
-                if let rows = success.data?.rows {
-                    readHistoryUI(data: rows)
-                }
-                break
-            case .failure(_):
-                
-                break
-            }
-            complete()
-        }
-    }
-    
-    //UI刷新
-    func readHistoryUI(data: [rowsModel]) {
-        for (index, model) in data.enumerated() {
-            let listView = CommonSearchListView()
-            listView.block = { [weak self] in
-                guard let self = self else { return }
-                let riskDetailVc = CompanyRiskDetailViewController()
-                let enityId = model.firmnumber ?? ""
-                let logo = model.logo ?? ""
-                let name = model.firmname ?? ""
-                riskDetailVc.enityId = enityId
-                riskDetailVc.logo = logo
-                riskDetailVc.name = name
-                self.navigationController?.pushViewController(riskDetailVc, animated: true)
-            }
-            let type = model.viewrecordtype ?? ""
-            if type == "1" {
-                listView.nameLabel.text = model.firmname ?? ""
-            }else {
-                listView.nameLabel.text = model.personname ?? ""
-            }
-            listView.timeLabel.text = model.createhourtime ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.firmname ?? "", size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
-            self.riskView.historyView.addSubview(listView)
-            listView.snp.makeConstraints { make in
-                make.height.equalTo(40)
-                make.width.equalTo(SCREEN_WIDTH)
-                make.left.equalToSuperview()
-                make.top.equalTo(self.riskView.historyView.lineView.snp.bottom).offset(40 * index)
-            }
-        }
-        
-        self.riskView.historyView.snp.updateConstraints { make in
-            if data.count != 0 {
-                self.riskView.historyView.isHidden = false
-                make.height.equalTo((data.count) * 40 + 30)
-            } else {
-                self.riskView.historyView.isHidden = true
-                make.height.equalTo(0)
-            }
-        }
-        self.riskView.layoutIfNeeded()
-    }
-    
-    //热搜
-    private func getHotWords(complete: @escaping () -> Void) {
-        let man = RequestManager()
-        let dict = ["moduleId": "05"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/clientbrowsecb/hot-search",
-                       method: .get) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                if let model = success.data {
-                    self.hotWordsArray.accept(model.data ?? [])
-                    hotsWordsUI(data: model.data ?? [])
-                }
-                break
-            case .failure(_):
-                break
-            }
-            complete()
-        }
-    }
-    
-    //UI刷新
-    func hotsWordsUI(data: [rowsModel]) {
-        for (index, model) in data.enumerated() {
-            let listView = CommonSearchListView()
-            listView.block = { [weak self] in
-                guard let self = self else { return }
-                let riskDetailVc = CompanyRiskDetailViewController()
-                let enityId = model.eid ?? ""
-                let logo = model.logo ?? ""
-                let name = model.name ?? ""
-                riskDetailVc.enityId = enityId
-                riskDetailVc.logo = logo
-                riskDetailVc.name = name
-                self.navigationController?.pushViewController(riskDetailVc, animated: true)
-            }
-            listView.nameLabel.text = model.name ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
-            self.riskView.hotWordsView.addSubview(listView)
-            listView.snp.updateConstraints { make in
-                make.height.equalTo(40)
-                make.left.right.equalToSuperview()
-                make.top.equalTo(self.riskView.hotWordsView.lineView.snp.bottom).offset(40 * index)
-            }
-        }
-        
-        self.riskView.hotWordsView.snp.updateConstraints { make in
-            if data.count != 0 {
-                self.riskView.hotWordsView.isHidden = false
-                make.height.equalTo((data.count) * 40 + 30)
-            } else {
-                self.riskView.hotWordsView.isHidden = true
-                make.height.equalTo(0)
-            }
-        }
-        self.riskView.layoutIfNeeded()
-    }
-    
-    //删除最近搜索
-    private func deleteSearchInfo() {
-        ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
-            let man = RequestManager()
-            let dict = ["searchType": "",
-                        "moduleId": "05"]
-            man.requestAPI(params: dict,
-                           pageUrl: "/operation/searchRecord/clear",
-                           method: .post) { result in
-                switch result {
-                case .success(let success):
-                    if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功")
-                        self.riskView.searchView.isHidden = true
-                        self.riskView.searchView.snp.updateConstraints({ make in
-                            make.height.equalTo(0)
-                        })
-                    }
-                    break
-                case .failure(_):
-                    break
-                }
-            }
-        })
-    }
-    
-    //删除浏览历史
-    private func deleteHistoryInfo() {
-        ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
-            let man = RequestManager()
-            let customerNumber = GetSaveLoginInfoConfig.getCustomerNumber()
-            let dict = ["moduleId": "05",
-                        "viewrecordtype": "",
-                        "customerNumber": customerNumber]
-            man.requestAPI(params: dict,
-                           pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
-                           method: .get) { result in
-                switch result {
-                case .success(let success):
-                    if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功")
-                        self.riskView.historyView.isHidden = true
-                        self.riskView.historyView.snp.updateConstraints({ make in
-                            make.height.equalTo(0)
-                        })
-                    }
-                    break
-                case .failure(_):
-                    break
-                }
-            }
-        })
-    }
     
     //风险列表数据企业
     private func searchListInfo() {
-        let dict = ["keywords": searchWords ?? "",
+        ViewHud.addLoadView()
+        let dict = ["keywords": keyword,
                     "industryType": entityIndustry,
                     "region": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20,
                     "type": "1"] as [String : Any]
-        let man = RequestManager()
-        man.requestAPI(params: dict,
+        cman.requestAPI(params: dict,
                        pageUrl: "/entity/risk/getRiskData",
                        method: .get) { [weak self] result in
             self?.twoRiskListView.tableView.mj_header?.endRefreshing()
             self?.twoRiskListView.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let self = self,
                    let model = success.data,
                    let code = success.code,
                    code == 200, let total = model.pageMeta?.totalNum {
-                    self.riskView.isHidden = true
+                    self.oneView.isHidden = true
                     self.twoRiskListView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1
@@ -591,7 +397,7 @@ extension SearchRiskViewController {
                     }
                     self.twoRiskListView.dataModel.accept(model)
                     self.twoRiskListView.dataModelArray.accept(self.allArray)
-                    self.twoRiskListView.searchWordsRelay.accept(self.searchWordsRelay.value)
+                    self.twoRiskListView.searchWordsRelay.accept(keyword)
                     self.twoRiskListView.tableView.reloadData()
                     //根据数据刷新按钮文字
                     let companyNum = String(model.pageMeta?.totalNum ?? 0)
@@ -608,7 +414,8 @@ extension SearchRiskViewController {
     
     //只搜索人员
     func searchPeopleListinfo(from grand: Bool) {
-        let dict = ["keywords": searchWords ?? "",
+        ViewHud.addLoadView()
+        let dict = ["keywords": keyword,
                     "industryType": entityIndustry,
                     "region": entityArea,
                     "pageNum": pageIndex,
@@ -619,6 +426,7 @@ extension SearchRiskViewController {
                        method: .get) { [weak self] result in
             self?.listPeopleView.tableView.mj_header?.endRefreshing()
             self?.listPeopleView.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let self = self,
@@ -627,15 +435,14 @@ extension SearchRiskViewController {
                    code == 200,
                    let total = model.total {
                     if grand {
-                        self.riskView.isHidden = true
+                        self.oneView.isHidden = true
                         self.listPeopleView.isHidden = false
                     }else {
-                        self.riskView.isHidden = false
+                        self.oneView.isHidden = false
                         self.listPeopleView.isHidden = true
                     }
                     if pageIndex == 1 {
                         pageIndex = 1
-                        self.getlastSearch{}
                         self.allPeopleArray.removeAll()
                     }
                     pageIndex += 1
@@ -653,7 +460,7 @@ extension SearchRiskViewController {
                     }
                     self.listPeopleView.dataModel.accept(model)
                     //                    self.listPeopleView.dataModelArray.accept(self.allPeopleArray)
-                    self.listPeopleView.searchWordsRelay.accept(self.searchWordsRelay.value)
+                    self.listPeopleView.searchWordsRelay.accept(keyword)
                     self.listPeopleView.tableView.reloadData()
                     //根据数据刷新按钮文字
                     let peopleNum = String(model.total ?? 0)
@@ -666,6 +473,58 @@ extension SearchRiskViewController {
                 break
             }
         }
+    }
+    
+    //获取最近搜索,浏览历史,热搜
+    private func getHotsSearchInfo() {
+        let group = DispatchGroup()
+        ViewHud.addLoadView()
+        group.enter()
+        getLastSearchInfo(from: "05") { [weak self] modelArray in
+            if !modelArray.isEmpty {
+                self?.oneView.bgView.isHidden = false
+                self?.oneView.bgView.snp.remakeConstraints({ make in
+                    make.top.equalToSuperview().offset(1)
+                    make.left.equalToSuperview()
+                    make.width.equalTo(SCREEN_WIDTH)
+                })
+                self?.oneView.tagArray = modelArray.map { $0.searchContent ?? "" }
+                self?.oneView.setupScrollView()
+            }else {
+                self?.oneView.bgView.isHidden = true
+                self?.oneView.bgView.snp.remakeConstraints({ make in
+                    make.top.equalToSuperview().offset(1)
+                    make.left.equalToSuperview()
+                    make.width.equalTo(SCREEN_WIDTH)
+                    make.height.equalTo(0)
+                })
+            }
+            group.leave()
+        }
+        
+        group.enter()
+        getLastHistroyInfo(from: "05") { [weak self] modelArray in
+            self?.historyArray = modelArray
+            group.leave()
+        }
+        
+        group.enter()
+        getLastHotsInfo(from: "05") { [weak self] modelArray in
+            self?.hotsArray = modelArray
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            self.modelArray = [self.historyArray, self.hotsArray]
+            self.oneView.modelArray = self.modelArray
+            self.completeBlock?()
+            ViewHud.hideLoadView()
+        }
+        
+        oneView.tagClickBlock = { [weak self] label in
+            self?.lastSearchTextBlock?(label.text ?? "")
+        }
+        
     }
     
 }
@@ -749,7 +608,6 @@ extension SearchRiskViewController {
             make.height.equalTo(32)
         }
     }
-    
     
     private func addMenuWithPeopleView() {
         //添加下拉筛选

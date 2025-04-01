@@ -183,6 +183,7 @@ class InvoiceSelectListCell: BaseViewCell {
         let label1 = UILabel()
         label1.textColor = UIColor.init(cssStr: "#333333")
         label1.textAlignment = .left
+        label1.text = "--"
         label1.font = .regularFontOfSize(size: 13)
         return label1
     }()
@@ -191,6 +192,7 @@ class InvoiceSelectListCell: BaseViewCell {
         let label2 = UILabel()
         label2.textColor = UIColor.init(cssStr: "#333333")
         label2.textAlignment = .left
+        label2.text = "--"
         label2.font = .regularFontOfSize(size: 13)
         label2.numberOfLines = 0
         return label2
@@ -200,6 +202,7 @@ class InvoiceSelectListCell: BaseViewCell {
         let label3 = UILabel()
         label3.textColor = UIColor.init(cssStr: "#333333")
         label3.textAlignment = .left
+        label3.text = "--"
         label3.font = .regularFontOfSize(size: 13)
         label3.numberOfLines = 0
         return label3
@@ -209,6 +212,7 @@ class InvoiceSelectListCell: BaseViewCell {
         let label4 = UILabel()
         label4.textColor = UIColor.init(cssStr: "#333333")
         label4.textAlignment = .left
+        label4.text = "--"
         label4.font = .regularFontOfSize(size: 13)
         return label4
     }()
@@ -217,6 +221,7 @@ class InvoiceSelectListCell: BaseViewCell {
         let label5 = UILabel()
         label5.textColor = UIColor.init(cssStr: "#333333")
         label5.textAlignment = .left
+        label5.text = "--"
         label5.font = .regularFontOfSize(size: 13)
         return label5
     }()
@@ -391,11 +396,11 @@ class InvoiceSelectListCell: BaseViewCell {
             guard let self = self, let model = model else { return }
             nameLabel.text = model.companyname ?? ""
             ctImageView.image = .qrImageForString(qrString: model.companynumber ?? "")
-            label1.text = model.companynumber ?? ""
-            label2.text = model.address ?? ""
-            label3.text = model.bankname ?? ""
-            label4.text = model.bankfullname ?? ""
-            label5.text = model.contact ?? ""
+            label1.text = (model.companynumber ?? "").isEmpty ? "--" : model.companynumber ?? ""
+            label2.text = (model.address ?? "").isEmpty ? "--" : model.address ?? ""
+            label3.text = (model.bankname ?? "").isEmpty ? "--" : model.bankname ?? ""
+            label4.text = (model.bankfullname ?? "").isEmpty ? "--" : model.bankfullname ?? ""
+            label5.text = (model.contact ?? "").isEmpty ? "--" : model.contact ?? ""
             if model.defaultstate == "1" {
                 self.morenImageView.isHidden = false
             }else {

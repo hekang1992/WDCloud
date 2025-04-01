@@ -102,18 +102,49 @@ class CompanyDetailViewController: WDBaseViewController {
             }
         }).disposed(by: disposeBag)
         
+        let group = DispatchGroup()
+        ViewHud.addLoadView()
         //获取企业详情item菜单
-        getCompanyDetailItemInfo()
+        group.enter()
+        getCompanyDetailItemInfo {
+            print("000000000")
+            group.leave()
+        }
         //获取角标
-        getCompanyRightCountInfo()
+        group.enter()
+        getCompanyRightCountInfo {
+            print("111111111")
+            group.leave()
+        }
         //获取企业详情头部信息
-        getCompanyHeadInfo()
+        group.enter()
+        getCompanyHeadInfo {
+            print("222222222")
+            group.leave()
+        }
         //获取风险动态
-        getCompanyRiskInfo()
+        group.enter()
+        getCompanyRiskInfo {
+            print("333333333")
+            group.leave()
+        }
         //获取常用服务
-        getCommonServiceInfo()
+        group.enter()
+        getCommonServiceInfo {
+            print("444444444")
+            group.leave()
+        }
         //获取图谱
-        getAtlasInfo()
+        group.enter()
+        getAtlasInfo {
+            print("555555555")
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            ViewHud.hideLoadView()
+        }
+        
     }
     
 }
@@ -122,7 +153,7 @@ class CompanyDetailViewController: WDBaseViewController {
 extension CompanyDetailViewController {
     
     //获取常用服务
-    private func getCommonServiceInfo() {
+    private func getCommonServiceInfo(complete: @escaping(() -> Void)) {
         let man = RequestManager()
         let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
         let dict = ["moduleType": "6",
@@ -134,15 +165,17 @@ extension CompanyDetailViewController {
                 if success.code == 200 {
                     self.companyDetailView.childrenArrayModel.accept(success.data?.items?.first?.children ?? [])
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }
     }
     
     //获取图谱
-    private func getAtlasInfo() {
+    private func getAtlasInfo(complete: @escaping(() -> Void)) {
         let man = RequestManager()
         let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
         let dict = ["moduleType": "7",
@@ -156,15 +189,17 @@ extension CompanyDetailViewController {
                         self.companyDetailView.mapArrayModel.accept(success.data?.items?.first?.children?.first?.children ?? [])
                     }
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }
     }
     
     //获取企业详情item
-    private func getCompanyDetailItemInfo() {
+    private func getCompanyDetailItemInfo(complete: @escaping(() -> Void)) {
         let dict = ["moduleType": "2",
                     "entityId": enityId] as [String: Any]
         let man = RequestManager()
@@ -178,15 +213,17 @@ extension CompanyDetailViewController {
                     self.companyDetailView.model.accept(model)
                     self.companyDetailView.collectionView.reloadData()
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }
     }
     
     //获取角标
-    private func getCompanyRightCountInfo() {
+    private func getCompanyRightCountInfo(complete: @escaping(() -> Void)) {
         let dict = ["entityName": "2",
                     "entityId": enityId] as [String: Any]
         let man = RequestManager()
@@ -200,15 +237,17 @@ extension CompanyDetailViewController {
                     self.companyDetailView.numModel.accept(model)
                     self.companyDetailView.collectionView.reloadData()
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }
     }
     
     //获取企业详情头部信息
-    private func getCompanyHeadInfo() {
+    private func getCompanyHeadInfo(complete: @escaping(() -> Void)) {
         let man = RequestManager()
         let dict = ["orgId": enityId]
         man.requestAPI(params: dict,
@@ -225,15 +264,17 @@ extension CompanyDetailViewController {
                     self.companyDetailView.headModel.accept(model)
                     self.companyDetailView.collectionView.reloadData()
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }
     }
     
     //获取风险详情数据
-    private func getCompanyRiskInfo() {
+    private func getCompanyRiskInfo(complete: @escaping(() -> Void)) {
         let man = RequestManager()
         let dict = ["entityId": enityId, "entityCategory": "1"]
         man.requestAPI(params: dict,
@@ -245,8 +286,10 @@ extension CompanyDetailViewController {
                     self.companyDetailView.riskModel.accept(model)
                     self.companyDetailView.collectionView.reloadData()
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }
@@ -315,9 +358,11 @@ extension CompanyDetailViewController {
         let man = RequestManager()
         let entityId = model.basicInfo?.orgId ?? ""
         let dict = ["entityId": entityId, "followTargetType": "1"]
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -337,6 +382,7 @@ extension CompanyDetailViewController {
     
     //取消关注
     private func cancelFocus(from model: DataModel) {
+        ViewHud.addLoadView()
         ShowAlertManager.showAlert(title: "取消关注", message: "是否取消关注?", confirmAction: {
             let man = RequestManager()
             let entityId = model.basicInfo?.orgId ?? ""
@@ -344,6 +390,7 @@ extension CompanyDetailViewController {
             man.requestAPI(params: dict,
                            pageUrl: "/operation/follow/add-or-cancel",
                            method: .post) { [weak self] result in
+                ViewHud.hideLoadView()
                 switch result {
                 case .success(let success):
                     if success.code == 200 {

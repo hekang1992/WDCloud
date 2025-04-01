@@ -35,14 +35,20 @@ class RiskUnioHeadView: BaseView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .fill
-        stackView.spacing = 0
         stackView.distribution = .fillProportionally
         return stackView
     }()
     
+    lazy var allView: RiskNumView = {
+        let allView = RiskNumView()
+        allView.nameLabel.text = "全部"
+        allView.isUserInteractionEnabled = true
+        return allView
+    }()
+    
     lazy var oneView: RiskNumView = {
         let oneView = RiskNumView()
-        oneView.nameLabel.text = "母公司/子分公司"
+        oneView.nameLabel.text = "子/母公司"
         oneView.isUserInteractionEnabled = true
         return oneView
     }()
@@ -73,6 +79,7 @@ class RiskUnioHeadView: BaseView {
         addSubview(descLabel)
         addSubview(bgView)
         bgView.addSubview(stackView)
+        stackView.addArrangedSubview(allView)
         stackView.addArrangedSubview(oneView)
         stackView.addArrangedSubview(twoView)
         stackView.addArrangedSubview(threeView)
@@ -91,19 +98,34 @@ class RiskUnioHeadView: BaseView {
         }
         stackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(20)
+            make.left.equalToSuperview().offset(10)
             make.bottom.top.equalToSuperview()
         }
+        allView.numLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
         oneView.numLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
         twoView.numLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
         threeView.numLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
         fourView.numLabel.textColor = UIColor.init(cssStr: "#9FA4AD")
+        
+        allView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                self?.allView.backgroundColor = .white
+                self?.oneView.backgroundColor = UIColor.clear
+                self?.twoView.backgroundColor = UIColor.clear
+                self?.threeView.backgroundColor = UIColor.clear
+                self?.fourView.backgroundColor = UIColor.clear
+                self?.typeBlock?("")
+        }).disposed(by: disposeBag)
         
         oneView
             .rx
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.allView.backgroundColor = UIColor.clear
                 self?.oneView.backgroundColor = .white
                 self?.twoView.backgroundColor = UIColor.clear
                 self?.threeView.backgroundColor = UIColor.clear
@@ -116,6 +138,7 @@ class RiskUnioHeadView: BaseView {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.allView.backgroundColor = UIColor.clear
                 self?.twoView.backgroundColor = .white
                 self?.oneView.backgroundColor = UIColor.clear
                 self?.threeView.backgroundColor = UIColor.clear
@@ -128,6 +151,7 @@ class RiskUnioHeadView: BaseView {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.allView.backgroundColor = UIColor.clear
                 self?.threeView.backgroundColor = .white
                 self?.twoView.backgroundColor = UIColor.clear
                 self?.oneView.backgroundColor = UIColor.clear
@@ -140,6 +164,7 @@ class RiskUnioHeadView: BaseView {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
+                self?.allView.backgroundColor = UIColor.clear
                 self?.fourView.backgroundColor = .white
                 self?.twoView.backgroundColor = UIColor.clear
                 self?.threeView.backgroundColor = UIColor.clear

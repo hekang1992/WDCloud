@@ -112,6 +112,7 @@ extension HomeNewsListViewController: UITableViewDelegate {
 extension HomeNewsListViewController {
     
     func getHomeNewsInfo(from pageNum: Int) {
+        ViewHud.addLoadView()
         let dict = ["pageNum": pageNum,
                     "pageSize": 10,
                     "pulishstate": 1,
@@ -121,6 +122,7 @@ extension HomeNewsListViewController {
                        pageUrl: "/operation/webnews/list",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             self.tableView.mj_header?.endRefreshing()
             self.tableView.mj_footer?.endRefreshing()
             switch result {

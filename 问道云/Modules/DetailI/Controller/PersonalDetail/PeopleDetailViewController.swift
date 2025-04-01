@@ -66,10 +66,28 @@ class PeopleDetailViewController: WDBaseViewController {
         segmentedView.listContainer = pagingView.listContainerView
         //距离高度禁止
         pagingView.pinSectionHeaderVerticalOffset = 0
+        
+        let group = DispatchGroup()
+        ViewHud.addLoadView()
         //获取风险数据
-        getPeopleRiskInfo()
+        group.enter()
+        getPeopleRiskInfo {
+            group.leave()
+        }
         //获取图谱信息
-        getAtlasInfo()
+        group.enter()
+        getAtlasInfo {
+            group.leave()
+        }
+        //获取个人详情头部信息
+        group.enter()
+        getPeopleHeadInfo {
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            ViewHud.hideLoadView()
+        }
     }
     
     //一定要加上这句代码,否则不会下拉刷新
@@ -89,8 +107,6 @@ class PeopleDetailViewController: WDBaseViewController {
             peopleRiskVc.personId = personId
             self?.navigationController?.pushViewController(peopleRiskVc, animated: true)
         }
-        //获取个人详情头部信息
-        getPeopleHeadInfo()
         return header
     }
     
@@ -100,7 +116,7 @@ class PeopleDetailViewController: WDBaseViewController {
 extension PeopleDetailViewController {
     
     //获取图谱信息
-    private func getAtlasInfo() {
+    private func getAtlasInfo(complete: @escaping (() -> Void)) {
         let man = RequestManager()
         let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
         let dict = ["moduleType": "7",
@@ -116,15 +132,17 @@ extension PeopleDetailViewController {
                         self.homeHeadView.oneItems = success.data?.items?.first?.children?.last?.children ?? []
                     }
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }
     }
     
     //获取风险详情数据
-    private func getPeopleRiskInfo() {
+    private func getPeopleRiskInfo(complete: @escaping (() -> Void)) {
         let man = RequestManager()
         let dict = ["entityId": personId,
                     "entityCategory": "2"]
@@ -136,8 +154,10 @@ extension PeopleDetailViewController {
                 if let model = success.data, let code = success.code, code == 200 {
                     self?.refreshRiskUI(from: model)
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }
@@ -160,7 +180,7 @@ extension PeopleDetailViewController {
         
         
         homeHeadView.twoRiskView.namelabel.text = "法律风险"
-        if let model = model.lawRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
+        if let model = model.lawRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty {
             let count = model.riskCnt ?? ""
             let descStr = model.riskInfo ?? ""
             homeHeadView.twoRiskView.numLabel.text = count
@@ -205,7 +225,7 @@ extension PeopleDetailViewController {
     }
     
     //获取个人头部信息
-    private func getPeopleHeadInfo() {
+    private func getPeopleHeadInfo(complete: @escaping (() -> Void)) {
         let dict = [String: Any]()
         let man = RequestManager()
         let pageUrl = "/firminfo/v2/person/search/\(personId)"
@@ -218,8 +238,10 @@ extension PeopleDetailViewController {
                     self?.model = model
                     self?.refreshHeadUI(from: model)
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }

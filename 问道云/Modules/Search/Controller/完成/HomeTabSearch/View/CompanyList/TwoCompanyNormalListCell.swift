@@ -34,16 +34,17 @@ class TwoCompanyNormalListCell: BaseViewCell {
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
-        ctImageView.layer.cornerRadius = 3
+        ctImageView.layer.masksToBounds = true
+        ctImageView.isSkeletonable = true
         return ctImageView
     }()
     
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.font = .mediumFontOfSize(size: 16)
+        nameLabel.font = .mediumFontOfSize(size: 14)
         nameLabel.textColor = .init(cssStr: "#333333")
         nameLabel.textAlignment = .left
-        nameLabel.numberOfLines = 0
+        nameLabel.isSkeletonable = true
         return nameLabel
     }()
     
@@ -195,7 +196,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalToSuperview().offset(32.5)
             make.width.equalTo(SCREEN_WIDTH - 80)
-            make.height.equalTo(20)
+            make.height.equalTo(18)
         }
         
         coverView.snp.makeConstraints { make in
@@ -478,7 +479,7 @@ extension TwoCompanyNormalListCell {
         }
         let maxWidth = SCREEN_WIDTH - 80
         let openButtonWidth: CGFloat = 40 // 展开按钮宽度
-        let buttonHeight: CGFloat = 20 // 标签高度
+        let buttonHeight: CGFloat = 18 // 标签高度
         let buttonSpacing: CGFloat = 5 // 标签之间的间距
         var numberOfLine: CGFloat = 1 // 标签总行数
         var lastRight: CGFloat = 0 // 标签的左边距
@@ -598,9 +599,6 @@ extension TwoCompanyNormalListCell {
         tagScrollView.snp.updateConstraints { make in
             make.height.equalTo(numberOfLine * (buttonHeight + buttonSpacing))
         }
-        UIView.animate(withDuration: 0.25, animations: {
-            self.layoutIfNeeded()
-        })
         self.heightDidUpdate?()
         openButton.layoutButtonEdgeInsets(style: .right, space: 2)
     }

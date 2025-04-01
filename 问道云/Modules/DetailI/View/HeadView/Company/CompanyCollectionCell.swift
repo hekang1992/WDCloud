@@ -113,12 +113,7 @@ class CompanyCollectionCell: UICollectionViewCell {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             namelabel.text = model.menuName ?? ""
-            let clickFlag = model.clickFlag ?? 0
-            if clickFlag == 1 {
-                ctImageView.kf.setImage(with: URL(string: model.iconGrey ?? ""))
-            }else {
-                ctImageView.kf.setImage(with: URL(string: model.icon ?? ""))
-            }
+            ctImageView.kf.setImage(with: URL(string: model.icon ?? ""))
         }).disposed(by: disposeBag)
         
         numModel.asObservable().subscribe(onNext: { [weak self] model in

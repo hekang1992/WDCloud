@@ -88,7 +88,7 @@ class SearchLawsViewController: WDBaseViewController {
             .controlEvent(.editingChanged)
             .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
             .distinctUntilChanged()
-            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] keywords in
                 if !keywords.isEmpty {
                     self?.pageNum = 1

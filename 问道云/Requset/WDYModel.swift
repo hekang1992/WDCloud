@@ -1560,11 +1560,15 @@ class entityRiskEventInfoModel {
 class map1Model {
     var riskTime: String?
     var riskInfo: String?
+    var riskDetail: String?
+    var totalRiskCnt: String?
     var riskCnt: String?
     init(json: JSON) {
+        self.riskCnt = json["riskCnt"].stringValue
         self.riskTime = json["riskTime"].stringValue
         self.riskInfo = json["riskInfo"].stringValue
-        self.riskCnt = json["riskCnt"].stringValue
+        self.riskDetail = json["riskDetail"].stringValue
+        self.totalRiskCnt = json["totalRiskCnt"].stringValue
     }
 }
 
@@ -1684,7 +1688,11 @@ class basicInfoModel {
     var usCreditCode: String?
     var regCapCur: String?
     var resume: String?//描述
+    var logo: String?
+    var logoColor: String?
     init(json: JSON) {
+        self.logoColor = json["logoColor"].stringValue
+        self.logo = json["logo"].stringValue
         self.resume = json["resume"].stringValue
         self.regCapCur = json["regCapCur"].stringValue
         self.actCap = json["actCap"].stringValue

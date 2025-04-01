@@ -159,6 +159,8 @@ extension UnioRiskDetailViewController {
         }
         headView.descLabel.attributedText = attributedText
         
+        headView.allView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(model.totalCompanyCnt ?? 0)", fullText: "\(model.totalCompanyCnt ?? 0)家", colorStr: "#1677FF")
+        
         headView.oneView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(model.generaCompanyCnt ?? 0)", fullText: "\(model.generaCompanyCnt ?? 0)家", colorStr: "#1677FF")
         
         headView.twoView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(model.investCompanyCnt ?? 0)", fullText: "\(model.investCompanyCnt ?? 0)家", colorStr: "#1677FF")

@@ -110,13 +110,14 @@ extension HomeVideoListViewController {
                     "pulishstate": 1,
                     "type": "1"] as [String : Any]
         let man = RequestManager()
-        
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/webvideo/list",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
             self.tableView.mj_header?.endRefreshing()
             self.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

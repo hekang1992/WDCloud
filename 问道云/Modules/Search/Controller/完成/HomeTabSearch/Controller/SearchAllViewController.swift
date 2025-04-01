@@ -79,7 +79,7 @@ class SearchAllViewController: WDBaseViewController {
         // 监听 UITextField 的文本变化
         self.searchHeadView.searchTx
             .rx.text.orEmpty
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if self.containsOnlyChinese(text) == true {
@@ -89,7 +89,7 @@ class SearchAllViewController: WDBaseViewController {
                     }else if selectIndex == 1 {
                         peopleVc.searchWords.accept(text)
                     }else if selectIndex == 2 {
-                        riskVc.searchWords = text
+                        riskVc.searchWords.accept(text)
                     }else {
                         
                     }
@@ -108,18 +108,26 @@ class SearchAllViewController: WDBaseViewController {
                     if text.isEmpty {
                         self.searchHeadView.searchTx.text = self.searchHeadView.searchTx.placeholder
                         enterpriseVc.searchWords.accept(self.searchHeadView.searchTx.placeholder)
-                    }else {self.searchHeadView.searchTx.text = text
+                    }else {
+                        self.searchHeadView.searchTx.text = text
                         enterpriseVc.searchWords.accept(text)
                     }
                 }else if selectIndex == 1 {
                     if text.isEmpty {
                         self.searchHeadView.searchTx.text = self.searchHeadView.searchTx.placeholder
                         peopleVc.searchWords.accept(self.searchHeadView.searchTx.placeholder)
-                    }else {self.searchHeadView.searchTx.text = text
+                    }else {
+                        self.searchHeadView.searchTx.text = text
                         peopleVc.searchWords.accept(text)
                     }
                 }else if selectIndex == 2 {
-                    riskVc.searchWords = text
+                    if text.isEmpty {
+                        self.searchHeadView.searchTx.text = self.searchHeadView.searchTx.placeholder
+                        riskVc.searchWords.accept(self.searchHeadView.searchTx.placeholder)
+                    }else {
+                        self.searchHeadView.searchTx.text = text
+                        riskVc.searchWords.accept(text)
+                    }
                 }else {
                     
                 }
@@ -196,15 +204,6 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                     self.searchHeadView.searchTx.becomeFirstResponder()
                 }
             }
-            enterpriseVc.completeBlock = { [weak self] in
-                guard let self = self else { return }
-                if self.isShowKeyboard {
-                    self.isShowKeyboard = false
-                    DispatchQueue.main.asyncAfter(delay: 0.5) {
-                        self.searchHeadView.searchTx.becomeFirstResponder()
-                    }
-                }
-            }
             enterpriseVc.moreBtnBlock = { [weak self] in
                 guard let self = self else { return }
                 segmentedView.defaultSelectedIndex = 1
@@ -214,36 +213,23 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
         }else if index == 1 {
             peopleVc.lastSearchTextBlock = { [weak self] searchStr in
                 guard let self = self else { return }
+                searchHeadView.searchTx.placeholder = searchStr
                 searchHeadView.searchTx.text = searchStr
-            }
-            peopleVc.completeBlock = { [weak self] in
-                guard let self = self else { return }
-                if self.isShowKeyboard {
-                    self.isShowKeyboard = false
-                    DispatchQueue.main.asyncAfter(delay: 0.5) {
-                        self.searchHeadView.searchTx.becomeFirstResponder()
-                    }
+                DispatchQueue.main.asyncAfter(delay: 0.25) {
+                    self.searchHeadView.searchTx.becomeFirstResponder()
                 }
             }
             return peopleVc
-        }else if index == 2 {
+        }else {
             riskVc.lastSearchTextBlock = { [weak self] searchStr in
                 guard let self = self else { return }
                 searchHeadView.searchTx.text = searchStr
-                riskVc.searchWords = searchStr
-            }
-            riskVc.completeBlock = { [weak self] in
-                guard let self = self else { return }
-                if self.isShowKeyboard {
-                    self.isShowKeyboard = false
-                    DispatchQueue.main.asyncAfter(delay: 0.5) {
-                        self.searchHeadView.searchTx.becomeFirstResponder()
-                    }
+                searchHeadView.searchTx.placeholder = searchStr
+                DispatchQueue.main.asyncAfter(delay: 0.25) {
+                    self.searchHeadView.searchTx.becomeFirstResponder()
                 }
             }
             return riskVc
-        }else {
-            return enterpriseVc
         }
     }
     
@@ -256,8 +242,8 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
             self.peopleVc.searchWords.accept(self.searchHeadView.searchTx
                 .text ?? "")
         }else if index == 2 {
-            self.riskVc.searchWords = self.searchHeadView.searchTx
-                .text ?? ""
+            self.riskVc.searchWords.accept(self.searchHeadView.searchTx
+                .text ?? "")
         }else {
             
         }

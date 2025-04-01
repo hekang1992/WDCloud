@@ -76,14 +76,14 @@ extension PeopleUnioRiskViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.model?.notRelevaRiskDto?.itemDtoList.count ?? 0
+        return self.model?.relevaRiskItemDtos?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RiskUnioViewCell", for: indexPath) as? RiskUnioViewCell
         cell?.backgroundColor = .clear
         cell?.selectionStyle = .none
-        let model = self.model?.notRelevaRiskDto?.itemDtoList[indexPath.row]
+        let model = self.model?.relevaRiskItemDtos?[indexPath.row]
         cell?.model.accept(model)
         return cell ?? UITableViewCell()
     }
@@ -121,7 +121,7 @@ extension PeopleUnioRiskViewController {
             switch result {
             case .success(let success):
                 if let model = success.data,
-                   let modelArray = model.notRelevaRiskDto?.itemDtoList,
+                   let modelArray = model.relevaRiskItemDtos,
                     !modelArray.isEmpty {
                     self.model = model
                     self.refreshUI(from: model)
@@ -148,6 +148,8 @@ extension PeopleUnioRiskViewController {
             attributedText.addAttribute(.foregroundColor, value: UIColor.init(cssStr: "#FF0000") as Any, range: match.range)
         }
         headView.descLabel.attributedText = attributedText
+        
+        headView.allView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(model.totalCompanyCnt ?? 0)", fullText: "\(model.totalCompanyCnt ?? 0)家", colorStr: "#1677FF")
         
         headView.oneView.numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(model.generaCompanyCnt ?? 0)", fullText: "\(model.generaCompanyCnt ?? 0)家", colorStr: "#1677FF")
         

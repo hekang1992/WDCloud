@@ -65,10 +65,11 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             headView.model.accept(model)
+            let logoColor = model.basicInfo?.logoColor ?? ""
             //icon
             headView.oneHeadView.model.accept(model)
             let companyName = model.basicInfo?.orgName ?? ""
-            headView.oneHeadView.iconImageView.kf.setImage(with: URL(string: model.firmInfo?.logo ?? ""), placeholder: UIImage.imageOfText(companyName, size: (40, 40)))
+            headView.oneHeadView.iconImageView.kf.setImage(with: URL(string: model.basicInfo?.logo ?? ""), placeholder: UIImage.imageOfText(companyName, size: (40, 40), bgColor: UIColor.init(cssStr: logoColor) ?? .random()))
             //名字
             headView.oneHeadView.namelabel.text = companyName
             //代码
@@ -252,11 +253,11 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             guard let self = self, let model = model else { return }
             //风险数据
             headView.fourHeadView.oneRiskView.namelabel.text = "经营风险"
-            if let model = model.operationRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
-                let count = model.riskCnt ?? ""
-                let descStr = model.riskInfo ?? ""
+            if let model = model.operationRisk  {
+                let count = model.totalRiskCnt ?? ""
+                let descStr = model.riskDetail ?? ""
                 headView.fourHeadView.oneRiskView.numLabel.text = count
-                headView.fourHeadView.oneRiskView.descLabel.text = "\(descStr)(\(count))"
+                headView.fourHeadView.oneRiskView.descLabel.text = descStr
                 headView.fourHeadView.oneRiskView.timeLabel.text = model.riskTime ?? ""
             }else {
                 headView.fourHeadView.oneRiskView.numLabel.text = "0"
@@ -265,11 +266,11 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             }
             
             headView.fourHeadView.twoRiskView.namelabel.text = "法律风险"
-            if let model = model.lawRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
-                let count = model.riskCnt ?? ""
-                let descStr = model.riskInfo ?? ""
+            if let model = model.lawRisk {
+                let count = model.totalRiskCnt ?? ""
+                let descStr = model.riskDetail ?? ""
                 headView.fourHeadView.twoRiskView.numLabel.text = count
-                headView.fourHeadView.twoRiskView.descLabel.text = "\(descStr)(\(count))"
+                headView.fourHeadView.twoRiskView.descLabel.text = descStr
                 headView.fourHeadView.twoRiskView.timeLabel.text = model.riskTime ?? ""
             }else {
                 headView.fourHeadView.twoRiskView.numLabel.text = "0"
@@ -278,11 +279,11 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             }
             
             headView.fourHeadView.threeRiskView.namelabel.text = "财务风险"
-            if let model = model.financeRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
-                let count = model.riskCnt ?? ""
-                let descStr = model.riskInfo ?? ""
+            if let model = model.financeRisk  {
+                let count = model.totalRiskCnt ?? ""
+                let descStr = model.riskDetail ?? ""
                 headView.fourHeadView.threeRiskView.numLabel.text = count
-                headView.fourHeadView.threeRiskView.descLabel.text = "\(descStr)(\(count))"
+                headView.fourHeadView.threeRiskView.descLabel.text = descStr
                 headView.fourHeadView.threeRiskView.timeLabel.text = model.riskTime ?? ""
             }else {
                 headView.fourHeadView.threeRiskView.numLabel.text = "0"
@@ -291,11 +292,11 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             }
     
             headView.fourHeadView.fourRiskView.namelabel.text = "舆情风险"
-            if let model = model.opinionRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
-                let count = model.riskCnt ?? ""
-                let descStr = model.riskInfo ?? ""
+            if let model = model.opinionRisk  {
+                let count = model.totalRiskCnt ?? ""
+                let descStr = model.riskDetail ?? ""
                 headView.fourHeadView.fourRiskView.numLabel.text = count
-                headView.fourHeadView.fourRiskView.descLabel.text = "\(descStr)(\(count))"
+                headView.fourHeadView.fourRiskView.descLabel.text = descStr
                 headView.fourHeadView.fourRiskView.timeLabel.text = model.riskTime ?? ""
             }else {
                 headView.fourHeadView.fourRiskView.numLabel.text = "0"

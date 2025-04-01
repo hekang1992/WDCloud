@@ -134,7 +134,7 @@ class SearchTaxViolationViewController: WDBaseViewController {
             .controlEvent(.editingChanged)
             .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
             .distinctUntilChanged()
-            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] keywords in
                 guard let self = self else { return }
                 if keywords.isEmpty {

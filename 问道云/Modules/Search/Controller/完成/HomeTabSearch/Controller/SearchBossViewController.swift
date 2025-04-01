@@ -106,6 +106,14 @@ class SearchBossViewController: WDBaseViewController {
             }
         }).disposed(by: disposeBag)
         
+        twoPeopleListView.peopleBlock = { [weak self] model in
+            guard let self = self else { return }
+            let peopleDetailVc = PeopleBothViewController()
+            peopleDetailVc.personId.accept(model.personId ?? "")
+            peopleDetailVc.peopleName.accept(model.personName ?? "")
+            self.navigationController?.pushViewController(peopleDetailVc, animated: true)
+        }
+        
         setupUI()
         
     }

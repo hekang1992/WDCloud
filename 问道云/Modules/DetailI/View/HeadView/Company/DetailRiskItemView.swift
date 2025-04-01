@@ -38,7 +38,7 @@ class DetailRiskItemView: BaseView {
         descLabel.textColor = UIColor.init(cssStr: "#666666")
         descLabel.textAlignment = .left
         descLabel.font = .regularFontOfSize(size: 11)
-        descLabel.numberOfLines = 0
+        descLabel.numberOfLines = 2
         return descLabel
     }()
     

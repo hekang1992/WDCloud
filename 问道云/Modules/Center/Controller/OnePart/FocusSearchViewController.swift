@@ -204,7 +204,7 @@ class FocusSearchViewController: WDBaseViewController {
             .controlEvent(.editingChanged)
             .withLatestFrom(self.searchTx.rx.text.orEmpty)
             .distinctUntilChanged()
-            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] keywords in
                 self?.keyWords = keywords
                 self?.searchInfo()

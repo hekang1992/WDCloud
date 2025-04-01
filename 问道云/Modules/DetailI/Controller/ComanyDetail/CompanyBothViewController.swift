@@ -117,8 +117,7 @@ class CompanyBothViewController: WDBaseViewController {
             self.navigationController?.pushViewController(searchVc, animated: false)
         }
         setheadUI()
-        //新增浏览历史
-        addHistoryInfo()
+        
         companyDetailVc.intBlock = { [weak self] contentY in
             guard let self = self else { return }
             if contentY >= 200 {
@@ -128,25 +127,6 @@ class CompanyBothViewController: WDBaseViewController {
             }else {
                 self.headView.headTitleView.isHidden = false
                 self.headView.titlelabel.isHidden = true
-            }
-        }
-    }
-    
-    private func addHistoryInfo() {
-        let firmnumber = enityId.value
-        let firmname = companyName.value
-        let dict = ["viewrecordtype": "1",
-                    "firmnumber": firmnumber,
-                    "firmname": firmname] as [String : Any]
-        let man = RequestManager()
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/clientbrowsecb/addBrowserecord",
-                       method: .post) { result in
-            switch result {
-            case .success(_):
-                break
-            case .failure(_):
-                break
             }
         }
     }

@@ -148,6 +148,14 @@ class PeopleMySelfRiskViewController: WDBaseViewController {
         return numLabel
     }()
     
+    lazy var highNumLabel: UILabel = {
+        let highNumLabel = UILabel()
+        highNumLabel.textAlignment = .left
+        highNumLabel.font = .regularFontOfSize(size: 12)
+        highNumLabel.textColor = .init(cssStr: "#333333")
+        return highNumLabel
+    }()
+    
     lazy var timeLabel: UILabel = {
         let timeLabel = UILabel()
         timeLabel.text = "时间"
@@ -163,6 +171,14 @@ class PeopleMySelfRiskViewController: WDBaseViewController {
         maskView.layer.borderColor = UIColor.init(cssStr: "#FF0000")?.cgColor
         maskView.backgroundColor = .init(cssStr: "#FF0000")?.withAlphaComponent(0.03)
         return maskView
+    }()
+    
+    lazy var totalItemView: RiskNumView = {
+        let totalItemView = RiskNumView()
+        totalItemView.nameLabel.text = "风险数"
+        totalItemView.numLabel.textColor = .init(cssStr: "#FF0000")
+        totalItemView.numLabel.font = .mediumFontOfSize(size: 14)
+        return totalItemView
     }()
     
     lazy var oneItemView: RiskNumView = {
@@ -203,6 +219,7 @@ class PeopleMySelfRiskViewController: WDBaseViewController {
         // Do any additional setup after loading the view.
         
         view.addSubview(numLabel)
+        view.addSubview(highNumLabel)
         view.addSubview(timeLabel)
         view.addSubview(whiteView)
         whiteView.addSubview(onelabel)
@@ -210,6 +227,7 @@ class PeopleMySelfRiskViewController: WDBaseViewController {
         whiteView.addSubview(threelabel)
         whiteView.addSubview(fourlabel)
         view.addSubview(maskView)
+        maskView.addSubview(totalItemView)
         maskView.addSubview(oneItemView)
         maskView.addSubview(twoItemView)
         maskView.addSubview(threeItemView)
@@ -219,6 +237,11 @@ class PeopleMySelfRiskViewController: WDBaseViewController {
         numLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)
             make.left.equalToSuperview().offset(22)
+            make.height.equalTo(25)
+        }
+        highNumLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(2)
+            make.left.equalTo(numLabel.snp.right).offset(1)
             make.height.equalTo(25)
         }
         timeLabel.snp.makeConstraints { make in
@@ -263,19 +286,25 @@ class PeopleMySelfRiskViewController: WDBaseViewController {
             make.width.equalTo(labelWidth)
         }
         
-        twoItemView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 100, height: 61.5))
+        totalItemView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
         }
         oneItemView.snp.makeConstraints { make in
-            make.right.equalTo(twoItemView.snp.left)
-            make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: 100, height: 61.5))
+            make.left.equalTo(totalItemView.snp.right)
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
+        }
+        twoItemView.snp.makeConstraints { make in
+            make.left.equalTo(oneItemView.snp.right)
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
         }
         threeItemView.snp.makeConstraints { make in
             make.left.equalTo(twoItemView.snp.right)
-            make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: 100, height: 61.5))
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo((SCREEN_WIDTH - 24) * 0.25)
         }
         
         tableView.snp.makeConstraints { make in
@@ -500,18 +529,15 @@ extension PeopleMySelfRiskViewController {
     
     //数据刷新
     func refreshUI(from model: DataModel) {
+        let listModel = model.notRelevaRiskDto
         let count = String(model.totalRiskCnt ?? 0)
-        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险:\(count)条", colorStr: "#FF0000")
-        self.oneItemView.numLabel.text = String(model.highLevelCnt ?? 0)
-        self.twoItemView.numLabel.text = String(model.lowLevelCnt ?? 0)
-        self.threeItemView.numLabel.text = String(model.tipLevelCnt ?? 0)
-        //法律风险数据
-//        if self.itemtype == "2" {
-//            let modelArray = model.items ?? []
-//            self.lawView.modelArray.accept(modelArray)
-//            self.lawView.numLabel.text = "案件信息(\(count))"
-//        }
-//        self.lawView.tableView.reloadData()
+        let highcount = String(model.totalHighRiskCnt ?? 0)
+        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险\(count)条/", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
+        self.highNumLabel.attributedText = GetRedStrConfig.getRedStr(from: highcount, fullText: "高风险\(highcount)条", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
+        self.totalItemView.numLabel.text = String(listModel?.totalRiskCnt ?? 0)
+        self.oneItemView.numLabel.text = String(listModel?.highLevelCnt ?? 0)
+        self.twoItemView.numLabel.text = String(listModel?.lowLevelCnt ?? 0)
+        self.threeItemView.numLabel.text = String(listModel?.tipLevelCnt ?? 0)
     }
     
 }

@@ -38,6 +38,7 @@ class PeopleBothViewController: WDBaseViewController {
     lazy var activityDetailVc: PeopleActivityViewController = {
         let activityDetailVc = PeopleActivityViewController()
         activityDetailVc.personId = self.personId.value
+        activityDetailVc.personName = self.peopleName.value
         return activityDetailVc
     }()
 
@@ -48,7 +49,7 @@ class PeopleBothViewController: WDBaseViewController {
         addHeadView(from: headView)
         
         setheadUI()
-        addHistoryInfo()
+        
         peopleDetailVc.intBlock = { [weak self] contentY in
             guard let self = self else { return  }
             if contentY >= 200 {
@@ -58,25 +59,6 @@ class PeopleBothViewController: WDBaseViewController {
             }else {
                 self.headView.headTitleView.isHidden = false
                 self.headView.titlelabel.isHidden = true
-            }
-        }
-    }
-    
-    private func addHistoryInfo() {
-        let firmnumber = personId.value
-        let firmname = peopleName.value
-        let dict = ["viewrecordtype": "2",
-                    "personnumber": firmnumber,
-                    "personname": firmname] as [String : Any]
-        let man = RequestManager()
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/clientbrowsecb/addBrowserecord",
-                       method: .post) { result in
-            switch result {
-            case .success(_):
-                break
-            case .failure(_):
-                break
             }
         }
     }

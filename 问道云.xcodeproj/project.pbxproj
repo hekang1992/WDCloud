@@ -86,7 +86,6 @@
 		7335F6F02D0AE25D0074985F /* MyDownloadViewEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */; };
 		7335F6F22D0AF0170074985F /* MoreBtnPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */; };
 		7337BF652D9B7D9D00C9EB17 /* SearchBossViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7337BF642D9B7D9D00C9EB17 /* SearchBossViewController.swift */; };
-		7337BF672D9B87D800C9EB17 /* SearchRiskInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7337BF662D9B87D800C9EB17 /* SearchRiskInfoViewController.swift */; };
 		733B5FF62D57230A00ADE7C5 /* PopCancelMonitoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FF52D57230A00ADE7C5 /* PopCancelMonitoringView.swift */; };
 		733B5FFA2D573BFF00ADE7C5 /* RiskNoMonitoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */; };
 		733B5FFC2D573CAA00ADE7C5 /* RiskNoLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */; };
@@ -508,7 +507,6 @@
 		7335F6EF2D0AE25D0074985F /* MyDownloadViewEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDownloadViewEditCell.swift; sourceTree = "<group>"; };
 		7335F6F12D0AF0150074985F /* MoreBtnPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreBtnPopView.swift; sourceTree = "<group>"; };
 		7337BF642D9B7D9D00C9EB17 /* SearchBossViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBossViewController.swift; sourceTree = "<group>"; };
-		7337BF662D9B87D800C9EB17 /* SearchRiskInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRiskInfoViewController.swift; sourceTree = "<group>"; };
 		733B5FF52D57230A00ADE7C5 /* PopCancelMonitoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopCancelMonitoringView.swift; sourceTree = "<group>"; };
 		733B5FF92D573BFF00ADE7C5 /* RiskNoMonitoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskNoMonitoringView.swift; sourceTree = "<group>"; };
 		733B5FFB2D573CAA00ADE7C5 /* RiskNoLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskNoLoginView.swift; sourceTree = "<group>"; };
@@ -1147,7 +1145,6 @@
 				73C36A6B2D2D024C00D6DC46 /* SearchAllViewController.swift */,
 				730037A82D9A3E6900A6E789 /* SearchEnterpriseViewController.swift */,
 				7337BF642D9B7D9D00C9EB17 /* SearchBossViewController.swift */,
-				7337BF662D9B87D800C9EB17 /* SearchRiskInfoViewController.swift */,
 				73C36A742D2D08DA00D6DC46 /* SearchRiskViewController.swift */,
 				73B332992D30CF5100934773 /* CompanyLocationViewController.swift */,
 			);
@@ -2268,7 +2265,6 @@
 				733B5FF62D57230A00ADE7C5 /* PopCancelMonitoringView.swift in Sources */,
 				7340E1D42D5DF9DB008FD5C7 /* SearchJudgmentDebtorViewController.swift in Sources */,
 				7340E16A2D5CBB4D008FD5C7 /* SearchPeopleControllingPersonViewController.swift in Sources */,
-				7337BF672D9B87D800C9EB17 /* SearchRiskInfoViewController.swift in Sources */,
 				734896E62D3A2FE300B028FE /* RiskNumView.swift in Sources */,
 				7340E17F2D5CD308008FD5C7 /* SearchAssetFreezeViewController.swift in Sources */,
 				73807D5B2D3396A100F8B90D /* CompanyDetailView.swift in Sources */,
@@ -2642,7 +2638,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "问道云-测试版";
+				INFOPLIST_KEY_CFBundleDisplayName = "问道云";
 				INFOPLIST_KEY_NSCameraUsageDescription = "我们希望访问您的相机以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相机，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "需要访问您的文档文件夹以选择PDF文件,提交发票.";
@@ -2657,7 +2653,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.7;
+				MARKETING_VERSION = 1.0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2688,7 +2684,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "问道云-测试版";
+				INFOPLIST_KEY_CFBundleDisplayName = "问道云";
 				INFOPLIST_KEY_NSCameraUsageDescription = "我们希望访问您的相机以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相机，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "需要访问您的文档文件夹以选择PDF文件,提交发票.";
@@ -2703,7 +2699,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.7;
+				MARKETING_VERSION = 1.0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
