@@ -27,6 +27,9 @@ class CompanyDetailHeadView: BaseView {
     //人员点击
     var staffInfosBlock: ((staffInfosModel) -> Void)?
     
+    //点击了动态
+    var activityBlock: (() -> Void)?
+    
     lazy var oneHeadView: CompanyOneHeadView = {
         let oneHeadView = CompanyOneHeadView()
         oneHeadView.moreBtnBlock = { [weak self] in
@@ -125,7 +128,7 @@ class CompanyDetailHeadView: BaseView {
             self.moreClickBlcok?(model)
             if model.isOpenTag {
                 oneHeadView.snp.updateConstraints { make in
-                    make.height.equalTo(230)
+                    make.height.equalTo(245)
                 }
             }else {
                 oneHeadView.snp.updateConstraints { make in
@@ -158,6 +161,16 @@ class CompanyDetailHeadView: BaseView {
                     make.height.equalTo(0)
                 }
             }
+        }).disposed(by: disposeBag)
+        
+        
+        fiveHeadView
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.activityBlock?()
         }).disposed(by: disposeBag)
         
     }

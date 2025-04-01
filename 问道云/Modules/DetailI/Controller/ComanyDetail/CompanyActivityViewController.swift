@@ -87,8 +87,9 @@ class CompanyActivityViewController: WDBaseViewController {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom)
-            make.left.bottom.equalToSuperview()
+            make.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         
         //添加下拉刷新

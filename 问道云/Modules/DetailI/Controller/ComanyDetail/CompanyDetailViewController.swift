@@ -23,6 +23,9 @@ class CompanyDetailViewController: WDBaseViewController {
     //是否刷新上一个页面
     var refreshBlock: ((Int) -> Void)?
     
+    //点击了动态
+    var activityBlock: (() -> Void)?
+    
     lazy var companyDetailView: CompanyDetailView = {
         let companyDetailView = CompanyDetailView()
         companyDetailView.backgroundColor = .white
@@ -50,6 +53,10 @@ class CompanyDetailViewController: WDBaseViewController {
             let webVc = WebPageViewController()
             webVc.pageUrl.accept(webUrl)
             self.navigationController?.pushViewController(webVc, animated: true)
+        }
+        
+        companyDetailView.activityBlock = { [weak self] in
+            self?.activityBlock?()
         }
         
         //回到首页

@@ -175,7 +175,7 @@ class PopInvoiceView: BaseView {
         bgViwe.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.left.equalToSuperview().offset(30)
-            make.height.equalTo(346)
+            make.height.equalTo(360)
         }
         mlabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

@@ -552,7 +552,7 @@ extension CompanyOneHeadView {
         }
         let maxWidth = self.tagListView.frame.width
         let openButtonWidth: CGFloat = 40 // 展开按钮宽度
-        let buttonHeight: CGFloat = 18 // 标签高度
+        let buttonHeight: CGFloat = 20 // 标签高度
         let buttonSpacing: CGFloat = 5 // 标签之间的间距
         var numberOfLine: CGFloat = 1 // 标签总行数
         var lastRight: CGFloat = 0 // 标签的左边距

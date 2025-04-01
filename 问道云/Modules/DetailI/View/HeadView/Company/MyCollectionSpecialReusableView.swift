@@ -29,6 +29,9 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
     //点击了小标签的展开和收起
     var moreClickBlcok: ((CompanyModel) -> Void)?
     
+    //点击了动态
+    var activityBlock: (() -> Void)?
+    
     static let identifier = "MyCollectionSpecialReusableView"
     
     lazy var headView: CompanyDetailHeadView = {
@@ -36,6 +39,9 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
         headView.moreClickBlcok = { [weak self] model in
             guard let self = self else { return }
             self.moreClickBlcok?(model)
+        }
+        headView.activityBlock = { [weak self] in
+            self?.activityBlock?()
         }
         return headView
     }()

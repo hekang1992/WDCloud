@@ -10,6 +10,9 @@ import RxRelay
 
 class CompanyDetailView: BaseView {
     
+    //点击了动态
+    var activityBlock: (() -> Void)?
+    
     //返回cell的点击model
     var cellBlock: ((childrenModel) -> Void)?
     
@@ -43,6 +46,8 @@ class CompanyDetailView: BaseView {
     var isClickBtnSelectIndex: Int = 0
     
     var headHeight: Double = 906
+    
+    var headNormal: Double = 906
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -244,7 +249,7 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MyCollectionSpecialReusableView.identifier, for: indexPath) as! MyCollectionSpecialReusableView
             headerView.headView.moreClickBlcok = { model in
                 if model.isOpenTag {
-                    self.headHeight = 921
+                    self.headHeight = 935
                 }else {
                     self.headHeight = 906
                 }
@@ -252,6 +257,11 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
                     layout.invalidateLayout() // 使布局失效，重新计算
                 }
             }
+            
+            headerView.headView.activityBlock = { [weak self] in
+                self?.activityBlock?()
+            }
+            
             if let headModel = self.headModel.value {
                 headerView.model.accept(headModel)
                 headerView.headView.threeHeadView.collectionView.reloadData()
@@ -284,18 +294,18 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
             let shareHolders = model?.shareHolders ?? []
             let srMgmtInfos = model?.srMgmtInfos ?? []
             if !shareHolders.isEmpty && !srMgmtInfos.isEmpty {
-                self.headHeight = 906
+                self.headNormal = self.headHeight
             }else if !shareHolders.isEmpty && srMgmtInfos.isEmpty {
-                self.headHeight = 906 - 70
+                self.headNormal = self.headHeight - 70
             }else if shareHolders.isEmpty && !srMgmtInfos.isEmpty {
-                self.headHeight = 906 - 90
+                self.headNormal = self.headHeight - 90
             }else {
-                self.headHeight = 906 - 160
+                self.headNormal = self.headHeight - 160
             }
             if let headModel = self.headModel.value, let stockModel = headModel.stockInfo?.first, let key = stockModel.key, !key.isEmpty {
-                return CGSize(width: collectionView.bounds.width, height: headHeight)
+                return CGSize(width: collectionView.bounds.width, height: headNormal)
             }else {
-                return CGSize(width: collectionView.bounds.width, height: headHeight - 220)
+                return CGSize(width: collectionView.bounds.width, height: headNormal - 220)
             }
         }else {
             return CGSize(width: collectionView.bounds.width, height: 41)
