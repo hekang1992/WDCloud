@@ -206,7 +206,9 @@ class DataModel {
     var subjectName: String?
     var subjectId: String?
     var bindStatus: Int?
+    var subjectType: Int?
     init(json: JSON) {
+        self.subjectType = json["subjectType"].intValue
         self.totalHighRiskCnt = json["totalHighRiskCnt"].intValue
         self.relatedEntityList = json["relatedEntityList"].arrayValue.map { relatedEntityListModel(json: $0) }
         self.bindStatus = json["bindStatus"].intValue
@@ -551,7 +553,9 @@ class itemsModel {
     var connectName: String?
     var beRelationName: String?
     var h5Url: String?
+    var entityType: Int?
     init(json: JSON) {
+        self.entityType = json["entityType"].intValue
         self.h5Url = json["h5Url"].stringValue
         self.beRelationName = json["beRelationName"].stringValue
         self.connectName = json["connectName"].stringValue

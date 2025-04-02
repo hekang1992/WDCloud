@@ -319,6 +319,7 @@ extension PropertyThreePeopleViewController: UITableViewDelegate, UITableViewDat
         bothVc.companyName.accept(companyName)
         bothVc.logoUrl = model.logo ?? ""
         bothVc.monitor = true
+        bothVc.entityType = model.entityType ?? 0
         self.navigationController?.pushViewController(bothVc, animated: true)
     }
     

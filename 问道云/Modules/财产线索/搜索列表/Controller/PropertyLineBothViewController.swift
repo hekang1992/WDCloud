@@ -18,6 +18,9 @@ class PropertyLineBothViewController: WDBaseViewController {
     //企业名称
     var companyName = BehaviorRelay<String>(value: "")
     
+    //是否是企业
+    var entityType: Int?
+    
     var logoUrl: String = ""
     
     var monitor: Bool = false
@@ -165,7 +168,15 @@ extension PropertyLineBothViewController: JXSegmentedViewDelegate {
             addChild(oneVc)
             oneVc.didMove(toParent: self)
         }else {
+            twoVc.entityId = self.enityId.value
+            twoVc.entityName = self.companyName.value
+            twoVc.monitor = self.monitor
+            twoVc.logoUrl = self.logoUrl
+            twoVc.entityType = entityType ?? 1
+            twoVc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
+            contentScrollView.addSubview(twoVc.view)
             addChild(twoVc)
+            twoVc.didMove(toParent: self)
         }
     }
     

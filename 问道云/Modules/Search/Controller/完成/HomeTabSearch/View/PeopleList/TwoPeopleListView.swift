@@ -61,7 +61,7 @@ class TwoPeopleListView: BaseView {
             make.edges.equalToSuperview()
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(34)
+            make.top.equalToSuperview().offset(40)
             make.left.right.bottom.equalToSuperview()
         }
         tableView.isSkeletonable = true

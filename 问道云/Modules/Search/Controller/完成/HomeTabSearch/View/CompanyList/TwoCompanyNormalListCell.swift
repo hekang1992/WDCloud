@@ -45,6 +45,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         nameLabel.textColor = .init(cssStr: "#333333")
         nameLabel.textAlignment = .left
         nameLabel.isSkeletonable = true
+        nameLabel.isUserInteractionEnabled = true
         return nameLabel
     }()
     
@@ -461,12 +462,27 @@ class TwoCompanyNormalListCell: BaseViewCell {
             self.focusBlock?(model)
         }).disposed(by: disposeBag)
         
+        nameLabel.rx.longPressGesture(configuration: { gesture, _ in
+            gesture.minimumPressDuration = 0.3
+        })
+        .subscribe(onNext: { [weak self] gesture in
+            guard gesture.state == .began else { return }
+            self?.handleLongPressOnLabel()
+        })
+        .disposed(by: disposeBag)
+        
     }
     
+    private func handleLongPressOnLabel() {
+        UIPasteboard.general.string = nameLabel.text
+        ToastViewConfig.showToast(message: "复制成功")
+        HapticFeedbackManager.triggerImpactFeedback(style: .medium)
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }
 
 
