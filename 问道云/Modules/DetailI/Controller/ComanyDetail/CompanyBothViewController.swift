@@ -43,9 +43,7 @@ class CompanyBothViewController: WDBaseViewController {
         }
         companyDetailVc.activityBlock = { [weak self] in
             guard let self = self else { return }
-            segmentedView.defaultSelectedIndex = 1
-            segmentedView(segmentedView, didSelectedItemAt: 1)
-            segmentedView.reloadData()
+            self.segmentedView.selectItemAt(index: 1)
         }
         return companyDetailVc
     }()

@@ -761,7 +761,19 @@ class childrenModel {
     var name: String?
     var code: String?
     var clickFlag: Int?
+    var markCount: Int?
+    var markFlag: Int?
+    var markHisCount: String?//历史
+    var markHisFlag: Int?
+    var iconGreyColor: String?
+    var iconColor: String?
     init(json: JSON) {
+        self.iconColor = json["iconColor"].stringValue
+        self.iconGreyColor = json["iconGreyColor"].stringValue
+        self.markHisCount = json["markHisCount"].stringValue
+        self.markHisFlag = json["markHisFlag"].intValue
+        self.markFlag = json["markFlag"].intValue
+        self.markCount = json["markCount"].intValue
         self.children = json["children"].arrayValue.map { childrenModel(json: $0) }
         self.icon = json["icon"].stringValue
         self.iconGrey = json["iconGrey"].stringValue

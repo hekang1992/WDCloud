@@ -19,7 +19,11 @@ class PeopleDetailHeadView: BaseView {
     
     var model = BehaviorRelay<DataModel?>(value: nil)
     
+    //风险点击
     var oneBlock: (() -> Void)?
+    
+    //动态点击
+    var activityBlock: (() -> Void)?
     
     //问道图谱
     var oneItems: [childrenModel]? {
@@ -379,6 +383,10 @@ class PeopleDetailHeadView: BaseView {
             make.height.equalTo(4)
             make.top.equalTo(activityView.snp.bottom)
         }
+        
+        activityView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            self?.activityBlock?()
+        }).disposed(by: disposeBag)
         
         //合作伙伴
         partnerView.snp.makeConstraints { make in

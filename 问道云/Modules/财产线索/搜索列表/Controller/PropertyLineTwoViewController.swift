@@ -146,9 +146,9 @@ extension PropertyLineTwoViewController: UIScrollViewDelegate, UICollectionViewD
         let pageUrl = model?.path ?? ""
         var dict = [String: String]()
         if entityType == 1 {
-            dict = ["entityId": entityId, "entityName": entityName]
+            dict = ["entityId": entityId, "entityName": entityName, "entityType": String(entityType)]
         }else {
-            dict = ["personId": entityId, "personName": entityName]
+            dict = ["personId": entityId, "personName": entityName, "entityType": String(entityType)]
         }
         let webUrl = URLQueryAppender.appendQueryParameters(to: base_url + pageUrl, parameters: dict) ?? ""
         let webVc = WebPageViewController()

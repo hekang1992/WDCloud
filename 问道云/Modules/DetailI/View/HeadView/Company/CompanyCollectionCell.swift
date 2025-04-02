@@ -15,8 +15,6 @@ class CompanyCollectionCell: UICollectionViewCell {
     
     var model = BehaviorRelay<childrenModel?>(value: nil)
     
-    var numModel = BehaviorRelay<itemsModel?>(value: nil)
-    
     lazy var lineView1: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .init(cssStr: "#EEEEEE")
@@ -57,7 +55,6 @@ class CompanyCollectionCell: UICollectionViewCell {
         nlabel.backgroundColor = UIColor.init(cssStr: "#547AFF")?.withAlphaComponent(0.1)
         nlabel.font = .regularFontOfSize(size: 9)
         nlabel.layer.cornerRadius = 2
-        nlabel.isHidden = true
         return nlabel
     }()
     
@@ -71,12 +68,12 @@ class CompanyCollectionCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(lineView2)
-        addSubview(lineView3)
-        addSubview(ctImageView)
-        addSubview(namelabel)
-        addSubview(numlabel)
-        addSubview(nlabel)
+        contentView.addSubview(lineView2)
+        contentView.addSubview(lineView3)
+        contentView.addSubview(ctImageView)
+        contentView.addSubview(namelabel)
+        contentView.addSubview(numlabel)
+        contentView.addSubview(nlabel)
         lineView2.snp.makeConstraints { make in
             make.right.equalToSuperview()
             make.width.equalTo(0.5)
@@ -101,31 +98,53 @@ class CompanyCollectionCell: UICollectionViewCell {
         }
         namelabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(ctImageView.snp.bottom).offset(12)
+            make.top.equalTo(ctImageView.snp.bottom).offset(10)
             make.height.equalTo(15)
         }
         nlabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.height.equalTo(12)
+            make.height.equalTo(14)
             make.top.equalTo(namelabel.snp.bottom).offset(6)
         }
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             namelabel.text = model.menuName ?? ""
-            let clickFlag = model.clickFlag ?? 0
-            if clickFlag == 0 {
+            let markFlag = model.markFlag ?? 0
+            let markCount = model.markCount ?? 0
+            if markFlag == 0 {//不统计角标
+                numlabel.isHidden = true
                 ctImageView.kf.setImage(with: URL(string: model.icon ?? ""))
             }else {
-                ctImageView.kf.setImage(with: URL(string: model.iconGrey ?? ""))
+                numlabel.text = String(markCount)
+                if markCount == 0 {
+                    numlabel.isHidden = true
+                    ctImageView.kf.setImage(with: URL(string: model.iconGrey ?? ""))
+                    numlabel.textColor = UIColor.init(cssStr: model.iconGreyColor ?? "")
+                }else {
+                    numlabel.isHidden = false
+                    ctImageView.kf.setImage(with: URL(string: model.icon ?? ""))
+                    numlabel.textColor = UIColor.init(cssStr: model.iconColor ?? "")
+                }
             }
             
-        }).disposed(by: disposeBag)
-        
-        numModel.asObservable().subscribe(onNext: { [weak self] model in
-            guard let self = self, let model = model else { return }
-            let count = model.count ?? "0"
-            numlabel.text = String(count)
+            let markHisFlag = model.markHisFlag ?? 0
+            let markHisCount = model.markHisCount ?? ""
+            if markHisFlag == 0 {//不统计历史信息
+                nlabel.isHidden = true
+            }else {
+                nlabel.text = markHisCount
+                if markHisCount.isEmpty {
+                    nlabel.isHidden = true
+                    nlabel.textColor = UIColor.init(cssStr: model.iconGreyColor ?? "")
+                    nlabel.backgroundColor = UIColor.init(cssStr: model.iconGreyColor ?? "")?.withAlphaComponent(0.1)
+                }else {
+                    nlabel.isHidden = false
+                    nlabel.textColor = UIColor.init(cssStr: model.iconColor ?? "")
+                    nlabel.backgroundColor = UIColor.init(cssStr: model.iconColor ?? "")?.withAlphaComponent(0.1)
+                }
+            }
+            
         }).disposed(by: disposeBag)
         
     }

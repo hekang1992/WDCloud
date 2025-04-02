@@ -61,6 +61,12 @@ class PeopleBothViewController: WDBaseViewController {
                 self.headView.titlelabel.isHidden = true
             }
         }
+        
+        peopleDetailVc.activityBlock = { [weak self] in
+            guard let self = self else { return }
+            self.segmentedView.selectItemAt(index: 1)
+        }
+        
     }
     
 }

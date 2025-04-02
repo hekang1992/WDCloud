@@ -110,12 +110,6 @@ class CompanyDetailViewController: WDBaseViewController {
             print("000000000")
             group.leave()
         }
-        //获取角标
-        group.enter()
-        getCompanyRightCountInfo {
-            print("111111111")
-            group.leave()
-        }
         //获取企业详情头部信息
         group.enter()
         getCompanyHeadInfo {
@@ -159,7 +153,9 @@ extension CompanyDetailViewController {
         let dict = ["moduleType": "6",
                     "appleVersion": appleVersion,
                     "appType": "apple"]
-        man.requestAPI(params: dict, pageUrl: "/operation/customermenu/customerMenuTree", method: .get) { result in
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/customermenu/customerMenuTree",
+                       method: .get) { result in
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -201,7 +197,8 @@ extension CompanyDetailViewController {
     //获取企业详情item
     private func getCompanyDetailItemInfo(complete: @escaping(() -> Void)) {
         let dict = ["moduleType": "2",
-                    "entityId": enityId] as [String: Any]
+                    "entityId": enityId,
+                    "entityType": "1"] as [String: Any]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customermenu/customerMenuTree",
@@ -211,30 +208,6 @@ extension CompanyDetailViewController {
             case .success(let success):
                 if let model = success.data {
                     self.companyDetailView.model.accept(model)
-                    self.companyDetailView.collectionView.reloadData()
-                }
-                complete()
-                break
-            case .failure(_):
-                complete()
-                break
-            }
-        }
-    }
-    
-    //获取角标
-    private func getCompanyRightCountInfo(complete: @escaping(() -> Void)) {
-        let dict = ["entityName": "2",
-                    "entityId": enityId] as [String: Any]
-        let man = RequestManager()
-        man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/operatingstate/getprestatistics",
-                       method: .get) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                if let model = success.data {
-                    self.companyDetailView.numModel.accept(model)
                     self.companyDetailView.collectionView.reloadData()
                 }
                 complete()

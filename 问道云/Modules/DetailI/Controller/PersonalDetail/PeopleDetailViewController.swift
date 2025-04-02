@@ -17,6 +17,8 @@ class PeopleDetailViewController: WDBaseViewController {
     
     var intBlock: ((Double) -> Void)?
     
+    var activityBlock: (() -> Void)?
+    
     //简介
     lazy var infoView: CompanyDescInfoView = {
         let infoView = CompanyDescInfoView()
@@ -106,6 +108,9 @@ class PeopleDetailViewController: WDBaseViewController {
             peopleRiskVc.name = personName
             peopleRiskVc.personId = personId
             self?.navigationController?.pushViewController(peopleRiskVc, animated: true)
+        }
+        header.activityBlock = { [weak self] in
+            self?.activityBlock?()
         }
         return header
     }

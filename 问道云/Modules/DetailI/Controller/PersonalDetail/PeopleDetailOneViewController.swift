@@ -53,7 +53,8 @@ class PeopleDetailOneViewController: WDBaseViewController {
    
     private func getPeopleDetailItemInfo() {
         let dict = ["moduleType": "3",
-                    "personId": personId] as [String: Any]
+                    "personId": personId,
+                    "entityType": "2"] as [String: Any]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customermenu/customerMenuTree",

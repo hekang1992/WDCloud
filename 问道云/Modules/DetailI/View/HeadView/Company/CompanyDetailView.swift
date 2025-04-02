@@ -19,15 +19,12 @@ class CompanyDetailView: BaseView {
     //item的数据模型
     var model = BehaviorRelay<DataModel?>(value: nil)
     
-    //数字角标
-    var numModel = BehaviorRelay<DataModel?>(value: nil)
-    
     //头部的数据模型
     var headModel = BehaviorRelay<DataModel?>(value: nil)
     
     //风险模型
     var riskModel = BehaviorRelay<DataModel?>(value: nil)
-
+    
     //常用服务模型
     var childrenArrayModel = BehaviorRelay<[childrenModel]?>(value: nil)
     
@@ -54,7 +51,7 @@ class CompanyDetailView: BaseView {
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
-        layout.itemSize = CGSize(width: SCREEN_WIDTH * 0.25, height: 80)
+        layout.itemSize = CGSize(width: SCREEN_WIDTH * 0.25, height: 88)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -220,9 +217,6 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
             if let items = self.model.value?.items?.first, let item = items.children?[indexPath.section - 1] {
                 let model = item.children?[indexPath.row]
                 cell.model.accept(model)
-            }
-            if let items = self.numModel.value?.items?[indexPath.section - 1], let item = items.items?[indexPath.row] {
-                cell.numModel.accept(item)
             }
             return cell
         }
