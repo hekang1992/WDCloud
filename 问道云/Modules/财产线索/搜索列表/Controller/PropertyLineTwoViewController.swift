@@ -144,6 +144,16 @@ extension PropertyLineTwoViewController: UIScrollViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = self.modelArray?[indexPath.section].children?[indexPath.row]
         let pageUrl = model?.path ?? ""
+        var dict = [String: String]()
+        if entityType == 1 {
+            dict = ["entityId": entityId, "entityName": entityName]
+        }else {
+            dict = ["personId": entityId, "personName": entityName]
+        }
+        let webUrl = URLQueryAppender.appendQueryParameters(to: base_url + pageUrl, parameters: dict) ?? ""
+        let webVc = WebPageViewController()
+        webVc.pageUrl.accept(webUrl)
+        self.navigationController?.pushViewController(webVc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView,
