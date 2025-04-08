@@ -29,10 +29,12 @@ class CompanyShareholderViewCell: BaseViewCell {
         return namelabel
     }()
     
-    lazy var tagListView: UIScrollView = {
-        let tagListView = UIScrollView()
-        tagListView.isSkeletonable = true
-        return tagListView
+    lazy var tagLabel: PaddedLabel = {
+        let tagLabel = PaddedLabel()
+        tagLabel.font = .regularFontOfSize(size: 10)
+        tagLabel.layer.cornerRadius = 2.5
+        tagLabel.layer.masksToBounds = true
+        return tagLabel
     }()
     
     lazy var addFoucsBtn: UIButton = {
@@ -151,7 +153,7 @@ class CompanyShareholderViewCell: BaseViewCell {
         isSkeletonable = true
         contentView.addSubview(ctImageView)
         contentView.addSubview(namelabel)
-        contentView.addSubview(tagListView)
+        contentView.addSubview(tagLabel)
         contentView.addSubview(addFoucsBtn)
         contentView.addSubview(coverView)
         coverView.addSubview(nameView)
@@ -176,10 +178,9 @@ class CompanyShareholderViewCell: BaseViewCell {
             make.left.equalTo(ctImageView.snp.right).offset(6)
             make.height.equalTo(21)
         }
-        tagListView.snp.makeConstraints { make in
+        tagLabel.snp.makeConstraints { make in
             make.left.equalTo(namelabel.snp.left)
             make.top.equalTo(namelabel.snp.bottom).offset(4.5)
-            make.right.equalToSuperview().offset(-60)
             make.height.equalTo(20)
         }
         addFoucsBtn.snp.makeConstraints { make in
@@ -188,7 +189,7 @@ class CompanyShareholderViewCell: BaseViewCell {
             make.height.equalTo(14)
         }
         coverView.snp.makeConstraints { make in
-            make.top.equalTo(tagListView.snp.bottom).offset(6.5)
+            make.top.equalTo(tagLabel.snp.bottom).offset(6.5)
             make.centerX.equalToSuperview()
             make.left.equalToSuperview().offset(12)
             make.height.equalTo(43.5)
@@ -274,6 +275,9 @@ class CompanyShareholderViewCell: BaseViewCell {
             descLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共担任\(count)家企业股东,详情如下:")
             let relatedOrgList = model.relatedOrgList ?? []
             configure(with: relatedOrgList)
+            
+            tagLabel.text = model.orgStatus ?? ""
+            TagsLabelColorConfig.nameLabelColor(from: tagLabel)
             
             //是否关注
             let follow = model.follow ?? true

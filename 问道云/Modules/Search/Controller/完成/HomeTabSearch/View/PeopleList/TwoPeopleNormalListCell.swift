@@ -153,8 +153,14 @@ class TwoPeopleNormalListCell: BaseViewCell {
             
             nameLabel.text = model.personName ?? ""
             
-            let count = String(model.companyCount ?? 0)
-            self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业", font: .regularFontOfSize(size: 13))
+            let moduleId = model.moduleId ?? ""
+            if moduleId == "14" {
+                let count = String(model.riskCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条法院公告相关记录", font: .regularFontOfSize(size: 13))
+            }else {
+                let count = String(model.companyCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业", font: .regularFontOfSize(size: 13))
+            }
             
             //关联公司
             if let listCompany = model.listCompany {

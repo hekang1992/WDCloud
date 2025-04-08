@@ -25,6 +25,9 @@ class TwoRiskListCompanyCell: BaseViewCell {
     
     var tagArray: [String] = []
     
+    //点击查看更多
+    var moreBlock: (() -> Void)?
+    
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         ctImageView.layer.cornerRadius = 3
@@ -135,7 +138,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
     
     lazy var footerView: UIView = {
         let footerView = UIView()
-        footerView.backgroundColor = .init(cssStr: "#F5F5F5")
+        footerView.backgroundColor = .init(cssStr: "#F3F3F3")
         return footerView
     }()
     
@@ -254,6 +257,11 @@ class TwoRiskListCompanyCell: BaseViewCell {
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(4)
         }
+        
+        moreBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.moreBlock?()
+        }).disposed(by: disposeBag)
+        
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             let companyName = model.orgInfo?.orgName ?? ""
@@ -278,12 +286,20 @@ class TwoRiskListCompanyCell: BaseViewCell {
             
             self.moneyView.label2.text = model.orgInfo?.regCap ?? ""
             self.timeView.label2.text = model.orgInfo?.incDate ?? ""
-            
-            let relevaRiskCnt = String(model.riskInfo?.relevaRiskCnt ?? 0)
-            let selfRiskCnt = String(model.riskInfo?.selfRiskCnt ?? 0)
-            self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: selfRiskCnt, fullText: "共\(selfRiskCnt)条自身风险", font: .regularFontOfSize(size: 12))
-            self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "\(relevaRiskCnt)条关联风险", font: .regularFontOfSize(size: 12))
-            
+            let moduleId = model.moduleId ?? ""
+            if moduleId == "14" {//法院公告
+                let relevaRiskCnt = String(model.riskCount ?? 0)
+                self.oneNumLabel.isHidden = false
+                self.twoNumLabel.isHidden = true
+                self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(relevaRiskCnt)条法院公告相关记录", font: .regularFontOfSize(size: 12))
+            }else {
+                self.oneNumLabel.isHidden = false
+                self.twoNumLabel.isHidden = false
+                let relevaRiskCnt = String(model.riskInfo?.relevaRiskCnt ?? 0)
+                let selfRiskCnt = String(model.riskInfo?.selfRiskCnt ?? 0)
+                self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: selfRiskCnt, fullText: "共\(selfRiskCnt)条自身风险", font: .regularFontOfSize(size: 12))
+                self.twoNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "\(relevaRiskCnt)条关联风险", font: .regularFontOfSize(size: 12))
+            }
             //小标签
             let tagArray = model.labels?.compactMap { $0.name ?? "" } ?? []
             self.tagArray = tagArray
@@ -461,12 +477,12 @@ extension TwoRiskListCompanyCell {
         tagScrollView.snp.updateConstraints { make in
             make.height.equalTo(numberOfLine * (buttonHeight + buttonSpacing))
         }
-        self.heightDidUpdate?()
         openButton.layoutButtonEdgeInsets(style: .right, space: 2)
     }
     
     // 按钮点击事件
     @objc func didOpenTags(_ sender: UIButton) {
+        self.heightDidUpdate?()
         companyModel.isOpenTag.toggle() // 切换展开/收起状态
         setupScrollView(tagScrollView: tagListView, tagArray: tagArray) // 重新设置标签
     }

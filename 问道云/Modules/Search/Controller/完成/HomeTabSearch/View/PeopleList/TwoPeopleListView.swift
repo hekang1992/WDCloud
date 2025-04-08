@@ -20,6 +20,8 @@ class TwoPeopleListView: BaseView {
     
     var peopleBlock: ((itemsModel) -> Void)?
     
+    var pageBlock: ((itemsModel) -> Void)?
+    
     lazy var whiteView: UIView = {
         let whiteView = UIView()
         whiteView.backgroundColor = .clear
@@ -113,10 +115,19 @@ extension TwoPeopleListView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let model = dataModelArray.value?[indexPath.row] {
             let shareholderListCount = model.shareholderList?.count ?? 0
-            if shareholderListCount != 0 {//有合作伙伴
-                self.peopleBlock?(model)
+            let moduleId = model.moduleId ?? ""
+            if moduleId == "14" {
+                if shareholderListCount != 0 {//有合作伙伴
+                    self.peopleBlock?(model)
+                }else {
+                    self.pageBlock?(model)
+                }
             }else {
-                self.peopleBlock?(model)
+                if shareholderListCount != 0 {//有合作伙伴
+                    self.peopleBlock?(model)
+                }else {
+                    self.peopleBlock?(model)
+                }
             }
         }
     }

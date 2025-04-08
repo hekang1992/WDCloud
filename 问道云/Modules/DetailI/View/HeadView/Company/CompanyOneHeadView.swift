@@ -554,7 +554,6 @@ class CompanyOneHeadView: BaseView {
 
 }
 
-
 extension CompanyOneHeadView {
     
     private func handleLongPressOnLabel(from label: UILabel) {

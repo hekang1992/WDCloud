@@ -19,6 +19,9 @@ class TwoRiskListView: BaseView {
     
     var peopleBlock: ((pageDataModel) -> Void)?
     
+    //点击查看更多
+    var moreBlock: ((String) -> Void)?
+    
     //被搜索的文字,根据这个文字,去给cell的namelabel加上颜色
     var searchWordsRelay = BehaviorRelay<String?>(value: nil)
     
@@ -35,7 +38,6 @@ class TwoRiskListView: BaseView {
         tableView.estimatedRowHeight = 60
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
@@ -125,6 +127,11 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                 cell?.peopleBlock = { [weak self] model in
                     self?.peopleBlock?(model)
                 }
+                cell?.moreBlock = { [weak self] in
+                    guard let self = self else { return }
+                    let pageUrl = model?.detailUrl ?? ""
+                    self.moreBlock?(pageUrl)
+                }
                 return cell ?? UITableViewCell()
             }
         }else {
@@ -137,6 +144,11 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
             cell?.heightDidUpdate = { [weak self] in
                 self?.tableView.beginUpdates()
                 self?.tableView.endUpdates()
+            }
+            cell?.moreBlock = { [weak self] in
+                guard let self = self else { return }
+                let pageUrl = model?.detailUrl ?? ""
+                self.moreBlock?(pageUrl)
             }
             cell?.focusBlock = { [weak self] in
                 if let self = self, let model = model, let cell = cell {

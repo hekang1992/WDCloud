@@ -466,6 +466,7 @@ class itemsModel {
     var incDate: String?
     var relatedOrgCount: Int?
     var relatedOrgList: [relatedOrgListModel]?
+    var orgStatus: String?
     
     //风险数据人员
     var name: String?//名称
@@ -554,7 +555,12 @@ class itemsModel {
     var beRelationName: String?
     var h5Url: String?
     var entityType: Int?
+    var moduleId: String?
+    var detailUrl: String?
     init(json: JSON) {
+        self.detailUrl = json["detailUrl"].stringValue
+        self.moduleId = json["moduleId"].stringValue
+        self.orgStatus = json["orgStatus"].string
         self.entityType = json["entityType"].intValue
         self.h5Url = json["h5Url"].stringValue
         self.beRelationName = json["beRelationName"].stringValue
@@ -1199,7 +1205,13 @@ class pageDataModel {
     var leaderVec: leaderVecModel?
     var regAddr: regAddrModel?
     var taxInfo: taxInfoModel?
+    var riskCount: Int?
+    var detailUrl: String?
+    var moduleId: String? //自己添加的
     init(json: JSON) {
+        self.detailUrl = json["detailUrl"].stringValue
+        self.riskCount = json["riskCount"].intValue
+        self.moduleId = json["moduleId"].stringValue
         self.taxInfo = taxInfoModel(json: json["taxInfo"])
         self.regAddr = regAddrModel(json: json["regAddr"])
         self.orgInfo = orgInfoModel(json: json["orgInfo"])
