@@ -237,10 +237,12 @@ class MyOneSettingViewController: WDBaseViewController {
                         "propertyEntityRelatedSetting": dictionaryArray1,
                         "propertyPersonRelatedSetting": dictionaryArray2,
                         "isRealTimePush": isRealTimePush]
+            ViewHud.addLoadView()
             let man = RequestManager()
             man.requestAPI(params: dict,
                            pageUrl: "/firminfo/monitor_settings/configs",
                            method: .post) { result in
+                ViewHud.hideLoadView()
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -452,6 +454,7 @@ extension MyOneSettingViewController: UITableViewDelegate, UITableViewDataSource
 extension MyOneSettingViewController {
     
     private func getUserSettingInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
@@ -459,6 +462,7 @@ extension MyOneSettingViewController {
                        pageUrl: "/firminfo/monitor_settings/configs",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

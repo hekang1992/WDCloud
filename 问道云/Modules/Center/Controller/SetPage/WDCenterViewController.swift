@@ -90,9 +90,6 @@ class WDCenterViewController: WDBaseViewController {
         self.centerView.focusBtn.rx.tap.subscribe(onNext: { [weak self] in
             if IS_LOGIN {
                 let focusVc = FocusAllViewController()
-                if let model = self?.model {
-                    focusVc.model.accept(model)
-                }
                 self?.navigationController?.pushViewController(focusVc, animated: true)
             }else {
                 self?.popLogin()

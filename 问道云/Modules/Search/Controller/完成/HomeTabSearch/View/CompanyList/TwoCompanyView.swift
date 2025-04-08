@@ -162,7 +162,9 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
             }
             cell?.heightDidUpdate = { [weak self] in
                 self?.tableView.beginUpdates()
-                self?.tableView.endUpdates()
+                DispatchQueue.main.async {
+                    self?.tableView.endUpdates()
+                }
             }
             //跳转风险扫描
             cell?.riskBlock = { [weak self] model in
@@ -315,6 +317,7 @@ extension TwoCompanyView {
     
     //添加关注
     private func addFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
@@ -332,8 +335,10 @@ extension TwoCompanyView {
                     }
                     ToastViewConfig.showToast(message: "关注成功")
                 }
+                ViewHud.hideLoadView()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }
@@ -341,6 +346,7 @@ extension TwoCompanyView {
     
     //取消关注
     private func deleteFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
@@ -358,8 +364,10 @@ extension TwoCompanyView {
                     }
                     ToastViewConfig.showToast(message: "取消关注成功")
                 }
+                ViewHud.hideLoadView()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }

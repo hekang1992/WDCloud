@@ -71,7 +71,7 @@ class FocusPeopleViewController: WDBaseViewController {
             self?.getFocusPeopleList()
         }
         
-        self.regionModel.asObservable().compactMap { $0?.REGION }.asObservable().subscribe(onNext: { [weak self] modelArray in
+        self.regionModel.asObservable().compactMap { $0?.data }.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
             let regionArray = getRegionInfo(from: modelArray)
             regionMenu.listDataSource = regionArray
@@ -88,7 +88,7 @@ class FocusPeopleViewController: WDBaseViewController {
             self?.getFocusPeopleList()
         }
         
-        self.industryModel.asObservable().compactMap { $0?.INDUSTRY }.asObservable().subscribe(onNext: { [weak self] modelArray in
+        self.industryModel.asObservable().compactMap { $0?.data }.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
             industryMenu.listDataSource = getIndustryInfo(from: modelArray)
         }).disposed(by: disposeBag)
@@ -258,9 +258,8 @@ extension FocusPeopleViewController {
     //获取地区
     func getRegion() {
         let man = RequestManager()
-        let dict = ["typeVec": "REGION"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/v2/meta",
+        man.requestAPI(params: [String: String](),
+                       pageUrl: "/operation/follow/areaTree/2",
                        method: .get) { result in
             switch result {
             case .success(let success):
@@ -277,9 +276,8 @@ extension FocusPeopleViewController {
     //获取行业
     func getIndustry() {
         let man = RequestManager()
-        let dict = ["typeVec": "INDUSTRY"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/v2/meta",
+        man.requestAPI(params: [String: String](),
+                       pageUrl: "/operation/follow/industryTree/2",
                        method: .get) { result in
             switch result {
             case .success(let success):
@@ -293,8 +291,9 @@ extension FocusPeopleViewController {
         }
     }
     
-    //获取分组公司信息
+    //获取分组人员信息
     func getFocusPeopleList() {
+        ViewHud.addLoadView()
         self.companyView.selectedIndexPaths.removeAll()
         self.companyView.isDeleteMode.accept(false)
         let dict = ["groupNumber": groupNumber,
@@ -309,6 +308,7 @@ extension FocusPeopleViewController {
                        pageUrl: "/operation/follow/list",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let model = success.data {

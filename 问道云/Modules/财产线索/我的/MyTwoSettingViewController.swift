@@ -325,9 +325,11 @@ class MyTwoSettingViewController: WDBaseViewController {
                         "propertyPersonRelatedSetting": dictionaryArray1,
                         "isRealTimePush": isRealTimePush]
             let man = RequestManager()
+            ViewHud.addLoadView()
             man.requestAPI(params: dict,
                            pageUrl: "/firminfo/monitor_settings/configs",
                            method: .post) { result in
+                ViewHud.hideLoadView()
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -714,6 +716,7 @@ extension MyTwoSettingViewController: UITableViewDelegate, UITableViewDataSource
 extension MyTwoSettingViewController {
     
     private func getUserSettingInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
@@ -721,6 +724,7 @@ extension MyTwoSettingViewController {
                        pageUrl: "/firminfo/monitor_settings/configs",
                        method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

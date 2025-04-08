@@ -73,7 +73,7 @@ class FocusCompanyViewController: WDBaseViewController {
             self?.getFocusCompanyList()
         }
         
-        self.regionModel.asObservable().compactMap { $0?.REGION }.asObservable().subscribe(onNext: { [weak self] modelArray in
+        self.regionModel.asObservable().compactMap { $0?.data }.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
             let regionArray = getRegionInfo(from: modelArray)
             regionMenu.listDataSource = regionArray
@@ -90,7 +90,7 @@ class FocusCompanyViewController: WDBaseViewController {
             self?.getFocusCompanyList()
         }
         
-        self.industryModel.asObservable().compactMap { $0?.INDUSTRY }.asObservable().subscribe(onNext: { [weak self] modelArray in
+        self.industryModel.asObservable().compactMap { $0?.data }.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
             industryMenu.listDataSource = getIndustryInfo(from: modelArray)
         }).disposed(by: disposeBag)
@@ -260,9 +260,8 @@ extension FocusCompanyViewController {
     //获取地区
     func getRegion() {
         let man = RequestManager()
-        let dict = ["typeVec": "REGION"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/v2/meta",
+        man.requestAPI(params: [String: String](),
+                       pageUrl: "/operation/follow/areaTree/1",
                        method: .get) { result in
             switch result {
             case .success(let success):
@@ -279,9 +278,8 @@ extension FocusCompanyViewController {
     //获取行业
     func getIndustry() {
         let man = RequestManager()
-        let dict = ["typeVec": "INDUSTRY"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/v2/meta",
+        man.requestAPI(params: [String: String](),
+                       pageUrl: "/operation/follow/industryTree/1",
                        method: .get) { result in
             switch result {
             case .success(let success):

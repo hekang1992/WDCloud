@@ -11,8 +11,6 @@ import JXSegmentedView
 
 class FocusAllViewController: WDBaseViewController {
     
-    var model = BehaviorRelay<DataModel?>(value: nil)
-    
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .twoBtn)
         headView.oneBtn.setImage(UIImage(named: "santiaogang"), for: .normal)
@@ -176,7 +174,7 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
             listVCArray.append(companyVc)
             companyVc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: cocsciew.frame.height)
             companyVc.nav = navigationController
-            DispatchQueue.main.asyncAfter(delay: 0.5) {
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
                 self.companyVc.getCompanyAllInfo()
             }   
         }else {
@@ -184,7 +182,7 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
             listVCArray.append(peopleVc)
             peopleVc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: cocsciew.frame.height)
             peopleVc.nav = navigationController
-            DispatchQueue.main.asyncAfter(delay: 0.5) {
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
                 self.peopleVc.getPeopleAllInfo()
             }
         }

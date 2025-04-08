@@ -116,6 +116,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         focusBtn.adjustsImageWhenHighlighted = false
         focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
         focusBtn.isSkeletonable = true
+        focusBtn.imageView?.contentMode = .scaleAspectFit
         return focusBtn
     }()
     
@@ -190,6 +191,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.top.equalToSuperview().offset(10)
             make.left.equalTo(ctImageView.snp.right).offset(8)
             make.height.equalTo(20)
+            make.width.lessThanOrEqualTo(SCREEN_WIDTH - 60)
         }
         
         tagListView.snp.makeConstraints { make in
@@ -257,7 +259,8 @@ class TwoCompanyNormalListCell: BaseViewCell {
         focusBtn.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-15.5)
             make.top.equalToSuperview().offset(13)
-            make.height.equalTo(14)
+            make.height.equalTo(15.pix())
+            make.width.equalTo(34.pix())
         }
         
         addressimageView.snp.makeConstraints { make in

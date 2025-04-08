@@ -1934,8 +1934,8 @@
 		73EF03CC2D30F4D50070F850 /* CompanyList */ = {
 			isa = PBXGroup;
 			children = (
-				73E739D72D9BB09500EDD2B5 /* OneCompanyView.swift */,
 				734334962D799E84006AE608 /* BiaoQianView.swift */,
+				73E739D72D9BB09500EDD2B5 /* OneCompanyView.swift */,
 				734334922D798C1F006AE608 /* CompanyListView.swift */,
 				73E971722D2FCD8500F12B15 /* TwoCompanyView.swift */,
 				73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */,
@@ -2185,9 +2185,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-问道云/Pods-问道云-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-问道云/Pods-问道云-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

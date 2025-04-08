@@ -99,28 +99,16 @@ class SearchEnterpriseViewController: WDBaseViewController {
                 self.oneView.isHidden = true
                 self.companyListView.isHidden = false
                 self.keyword = text
-                self.getCompanyListInfo()
+                ViewHud.hideLoadView()
+                self.getCompanyListInfo {
+                    ViewHud.hideLoadView()
+                }
             }
         }).disposed(by: disposeBag)
         
         setupUI()
-        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //获取热搜等数据
-        searchWords.asObservable()
-            .distinctUntilChanged { old, new in
-                    return (old ?? "") == (new ?? "") // 强制解包 Optional
-                }
-            .subscribe(onNext: { [weak self] text in
-                print("Received==============: \(text ?? "")")
-                self?.getHotsSearchInfo()
-            })
-            .disposed(by: disposeBag)
-        
-    }
 }
 
 extension SearchEnterpriseViewController {
@@ -139,7 +127,7 @@ extension SearchEnterpriseViewController {
             guard let self = self else { return }
             self.entityArea = model?.currentID ?? ""
             self.pageIndex = 1
-            self.getCompanyListInfo()
+            self.getCompanyListInfo {}
         }
         
         let industryMenu = MenuAction(title: "行业", style: .typeList)!
@@ -154,7 +142,7 @@ extension SearchEnterpriseViewController {
             guard let self = self else { return }
             self.entityIndustry = model?.currentID ?? ""
             self.pageIndex = 1
-            self.getCompanyListInfo()
+            self.getCompanyListInfo {}
         }
         
         let menuView = DropMenuBar(action: [regionMenu, industryMenu])!
@@ -170,13 +158,13 @@ extension SearchEnterpriseViewController {
         self.companyListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.pageIndex = 1
-            self.getCompanyListInfo()
+            self.getCompanyListInfo {}
         })
         
         //添加上拉加载更多
         self.companyListView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
             guard let self = self else { return }
-            self.getCompanyListInfo()
+            self.getCompanyListInfo {}
         })
         
         //跳转地址
@@ -237,7 +225,7 @@ extension SearchEnterpriseViewController {
             companyDetailVc.refreshBlock = { [weak self] index in
                 guard let self = self else { return }
                 self.pageIndex = 1
-                self.getCompanyListInfo()
+                self.getCompanyListInfo {}
             }
             self?.navigationController?.pushViewController(companyDetailVc, animated: true)
         }
@@ -319,7 +307,7 @@ extension SearchEnterpriseViewController {
 extension SearchEnterpriseViewController {
     
     //获取企业列表数据
-    private func getCompanyListInfo() {
+    private func getCompanyListInfo(complete: @escaping (() -> Void)) {
         ViewHud.addLoadView()
         let dict = ["keyword": keyword,
                     "matchType": 1,
@@ -330,7 +318,6 @@ extension SearchEnterpriseViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org-list",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
             self?.companyListView.tableView.mj_header?.endRefreshing()
             self?.companyListView.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -364,10 +351,13 @@ extension SearchEnterpriseViewController {
                     self.companyListView.searchWordsRelay.accept(keyword)
                     DispatchQueue.main.asyncAfter(delay: 0.25) {
                         self.companyListView.tableView.hideSkeleton()
+                        self.companyListView.tableView.reloadData()
                     }
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }

@@ -233,6 +233,7 @@ extension TwoPeopleNormalListCell {
     
     //添加关注
     private func addFocusInfo(from model: itemsModel, focusBtn: UIButton) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["entityId": model.personId ?? "",
                     "followTargetType": "2"]
@@ -246,8 +247,10 @@ extension TwoPeopleNormalListCell {
                     focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
                     ToastViewConfig.showToast(message: "关注成功")
                 }
+                ViewHud.hideLoadView()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }
@@ -255,6 +258,7 @@ extension TwoPeopleNormalListCell {
     
     //取消关注
     private func deleteFocusInfo(from model: itemsModel, focusBtn: UIButton) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["entityId": model.personId ?? "",
                     "followTargetType": "2"]
@@ -268,8 +272,10 @@ extension TwoPeopleNormalListCell {
                     focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
                     ToastViewConfig.showToast(message: "取消关注成功")
                 }
+                ViewHud.hideLoadView()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }
