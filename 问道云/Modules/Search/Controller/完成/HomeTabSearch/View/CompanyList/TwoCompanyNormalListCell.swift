@@ -189,7 +189,6 @@ class TwoCompanyNormalListCell: BaseViewCell {
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.left.equalTo(ctImageView.snp.right).offset(8)
-            make.right.equalToSuperview().offset(-70)
             make.height.equalTo(20)
         }
         
@@ -283,6 +282,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.left.right.equalToSuperview()
             make.height.equalTo(4)
         }
+        
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
             let logo = model.orgInfo?.logo ?? ""
@@ -466,17 +466,27 @@ class TwoCompanyNormalListCell: BaseViewCell {
             gesture.minimumPressDuration = 0.3
         })
         .subscribe(onNext: { [weak self] gesture in
-            guard gesture.state == .began else { return }
-            self?.handleLongPressOnLabel()
+            if let self = self {
+                if gesture.state == .began {
+                    self.handleLongPressOnLabel(from: nameLabel)
+                }else if gesture.state == .ended {
+                    self.handleEndLongPressOnLabel(from: nameLabel)
+                }
+            }
         })
         .disposed(by: disposeBag)
         
     }
     
-    private func handleLongPressOnLabel() {
+    private func handleLongPressOnLabel(from label: UILabel) {
         UIPasteboard.general.string = nameLabel.text
         ToastViewConfig.showToast(message: "复制成功")
+        label.backgroundColor = .init(cssStr: "#333333")?.withAlphaComponent(0.2)
         HapticFeedbackManager.triggerImpactFeedback(style: .medium)
+    }
+    
+    private func handleEndLongPressOnLabel(from label: UILabel) {
+        label.backgroundColor = .clear
     }
 
     required init?(coder: NSCoder) {
@@ -615,7 +625,6 @@ extension TwoCompanyNormalListCell {
         tagScrollView.snp.updateConstraints { make in
             make.height.equalTo(numberOfLine * (buttonHeight + buttonSpacing))
         }
-        self.heightDidUpdate?()
         openButton.layoutButtonEdgeInsets(style: .right, space: 2)
     }
     
@@ -623,6 +632,7 @@ extension TwoCompanyNormalListCell {
     @objc func didOpenTags(_ sender: UIButton) {
         companyModel.isOpenTag.toggle() // 切换展开/收起状态
         setupScrollView(tagScrollView: tagListView, tagArray: tagArray) // 重新设置标签
+        self.heightDidUpdate?()
     }
     
 }

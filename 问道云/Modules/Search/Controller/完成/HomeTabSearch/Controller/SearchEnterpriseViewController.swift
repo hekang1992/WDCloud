@@ -110,7 +110,16 @@ class SearchEnterpriseViewController: WDBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //获取热搜等数据
-        getHotsSearchInfo()
+        searchWords.asObservable()
+            .distinctUntilChanged { old, new in
+                    return (old ?? "") == (new ?? "") // 强制解包 Optional
+                }
+            .subscribe(onNext: { [weak self] text in
+                print("Received==============: \(text ?? "")")
+                self?.getHotsSearchInfo()
+            })
+            .disposed(by: disposeBag)
+        
     }
 }
 
@@ -355,7 +364,6 @@ extension SearchEnterpriseViewController {
                     self.companyListView.searchWordsRelay.accept(keyword)
                     DispatchQueue.main.asyncAfter(delay: 0.25) {
                         self.companyListView.tableView.hideSkeleton()
-                        self.companyListView.tableView.reloadData()
                     }
                 }
                 break
