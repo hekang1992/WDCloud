@@ -331,6 +331,18 @@ class CompanyOneHeadView: BaseView {
             make.top.equalTo(scrollView.snp.bottom).offset(5)
         }
         
+        namelabel.rx.longPressGesture(configuration: { gesture, _ in
+            gesture.minimumPressDuration = 0.3
+        }).subscribe(onNext: { [weak self] gesture in
+            if let self = self {
+                if gesture.state == .began {
+                    self.handleLongPressOnLabel(from: namelabel)
+                }else if gesture.state == .ended {
+                    self.handleEndLongPressOnLabel(from: namelabel)
+                }
+            }
+        }).disposed(by: disposeBag)
+        
         //简介点击展开
         moreButton.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
@@ -544,6 +556,17 @@ class CompanyOneHeadView: BaseView {
 
 
 extension CompanyOneHeadView {
+    
+    private func handleLongPressOnLabel(from label: UILabel) {
+        UIPasteboard.general.string = label.text
+        ToastViewConfig.showToast(message: "复制成功")
+        label.backgroundColor = .init(cssStr: "#333333")?.withAlphaComponent(0.2)
+        HapticFeedbackManager.triggerImpactFeedback(style: .medium)
+    }
+    
+    private func handleEndLongPressOnLabel(from label: UILabel) {
+        label.backgroundColor = .clear
+    }
     
     func setupScrollView(tagScrollView: UIScrollView, tagArray: [String]) {
         // 清理子视图

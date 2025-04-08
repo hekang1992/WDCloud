@@ -191,7 +191,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
             make.top.equalToSuperview().offset(10)
             make.left.equalTo(ctImageView.snp.right).offset(8)
             make.height.equalTo(20)
-            make.width.lessThanOrEqualTo(SCREEN_WIDTH - 60)
+            make.width.lessThanOrEqualTo(SCREEN_WIDTH - 100)
         }
         
         tagListView.snp.makeConstraints { make in
@@ -467,8 +467,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         
         nameLabel.rx.longPressGesture(configuration: { gesture, _ in
             gesture.minimumPressDuration = 0.3
-        })
-        .subscribe(onNext: { [weak self] gesture in
+        }).subscribe(onNext: { [weak self] gesture in
             if let self = self {
                 if gesture.state == .began {
                     self.handleLongPressOnLabel(from: nameLabel)
@@ -476,8 +475,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
                     self.handleEndLongPressOnLabel(from: nameLabel)
                 }
             }
-        })
-        .disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         
     }
     
