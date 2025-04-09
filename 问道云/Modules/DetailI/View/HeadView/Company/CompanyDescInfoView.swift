@@ -27,7 +27,7 @@ class CompanyDescInfoView: BaseView {
     
     lazy var desLabel: UILabel = {
         let desLabel = UILabel()
-        desLabel.font = .regularFontOfSize(size: 12)
+        desLabel.font = .regularFontOfSize(size: 13)
         desLabel.textColor = .init(cssStr: "#666666")
         desLabel.textAlignment = .left
         desLabel.numberOfLines = 0

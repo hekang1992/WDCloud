@@ -101,6 +101,15 @@ class JudgmentDebtorDetailViewController: WDBaseViewController {
         return descLabel
     }()
     
+    lazy var moreButton: UIButton = {
+        let moreButton = UIButton()
+        moreButton.titleLabel?.font = .mediumFontOfSize(size: 12)
+        moreButton.setTitleColor(.init(cssStr: "#547AFF"), for: .normal)
+        moreButton.setTitle("展开", for: .normal)
+        moreButton.contentHorizontalAlignment = .right
+        return moreButton
+    }()
+    
     lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")
@@ -125,6 +134,12 @@ class JudgmentDebtorDetailViewController: WDBaseViewController {
         return tableView
     }()
     
+    //简介
+    lazy var infoView: CompanyDescInfoView = {
+        let infoView = CompanyDescInfoView()
+        return infoView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -132,6 +147,7 @@ class JudgmentDebtorDetailViewController: WDBaseViewController {
         view.addSubview(ctImageView)
         view.addSubview(nameLabel)
         view.addSubview(descLabel)
+        view.addSubview(moreButton)
         view.addSubview(lineView)
         view.addSubview(riskView)
         riskView.addSubview(riskImageView)
@@ -156,7 +172,12 @@ class JudgmentDebtorDetailViewController: WDBaseViewController {
             make.left.equalTo(ctImageView.snp.left)
             make.top.equalTo(ctImageView.snp.bottom).offset(10)
             make.height.equalTo(15)
-            make.right.equalToSuperview().offset(-30)
+            make.right.equalToSuperview().offset(-35)
+        }
+        moreButton.snp.makeConstraints { make in
+            make.centerY.equalTo(descLabel.snp.centerY)
+            make.right.equalToSuperview().offset(-12)
+            make.height.equalTo(16.5)
         }
         lineView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
@@ -235,6 +256,32 @@ class JudgmentDebtorDetailViewController: WDBaseViewController {
             goRiskInfoVc(from: model)
         }
         
+        moreButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            keyWindow?.addSubview(infoView)
+            infoView.snp.makeConstraints { make in
+                make.left.bottom.equalToSuperview()
+                make.width.equalTo(SCREEN_WIDTH)
+                make.top.equalTo(self.descLabel.snp.top)
+            }
+            UIView.animate(withDuration: 0.25) {
+                self.infoView.alpha = 1
+                self.descLabel.alpha = 0
+                self.moreButton.alpha = 0
+            }
+        }).disposed(by: disposeBag)
+        
+        infoView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                UIView.animate(withDuration: 0.25) {
+                    self.infoView.alpha = 0
+                    self.descLabel.alpha = 1
+                    self.moreButton.alpha = 1
+                }
+        }).disposed(by: disposeBag)
+        
     }
     
     
@@ -303,7 +350,8 @@ extension JudgmentDebtorDetailViewController {
         let logoColor = model.logoColor ?? ""
         ctImageView.image = UIImage.imageOfText(name, size: (45, 45), bgColor: UIColor.init(cssStr: logoColor) ?? .random())
         nameLabel.text = name
-        descLabel.attributedText = GetRedStrConfig.getRedStr(from: reusmStr, fullText: "简介: \(model.resume ?? "")", colorStr: "#333333", font: .regularFontOfSize(size: 13))
+        let resume = model.resume ?? ""
+        descLabel.attributedText = GetRedStrConfig.getRedStr(from: resume, fullText: "简介: \(resume)", colorStr: "#333333", font: .regularFontOfSize(size: 13))
 
         //风险数据
         self.oneRiskView.namelabel.text = "经营风险"
@@ -337,6 +385,16 @@ extension JudgmentDebtorDetailViewController {
             self.fourRiskView.numLabel.text = count
             self.fourRiskView.descLabel.text = descStr
         }
+        
+        let attributedString = NSMutableAttributedString(string: "简介: \(resume)")
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        attributedString.addAttribute(
+            .paragraphStyle,
+            value: paragraphStyle,
+            range: NSRange(location: 0, length: attributedString.length)
+        )
+        infoView.desLabel.attributedText = attributedString
         
     }
     
