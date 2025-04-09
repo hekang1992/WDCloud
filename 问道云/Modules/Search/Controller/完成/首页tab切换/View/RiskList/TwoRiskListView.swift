@@ -132,6 +132,12 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                     let pageUrl = model?.detailUrl ?? ""
                     self.moreBlock?(pageUrl)
                 }
+                cell?.heightDidUpdate = { [weak self] in
+                    DispatchQueue.main.async {
+                        self?.tableView.beginUpdates()
+                        self?.tableView.endUpdates()
+                    }
+                }
                 return cell ?? UITableViewCell()
             }
         }else {
@@ -158,6 +164,12 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                     }else {
                         deleteFocusInfo(from: model, cell: cell)
                     }
+                }
+            }
+            cell?.heightDidUpdate = { [weak self] in
+                DispatchQueue.main.async {
+                    self?.tableView.beginUpdates()
+                    self?.tableView.endUpdates()
                 }
             }
             cell?.peopleBlock = { [weak self] model in

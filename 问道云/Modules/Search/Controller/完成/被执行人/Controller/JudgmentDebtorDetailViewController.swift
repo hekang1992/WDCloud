@@ -417,7 +417,7 @@ extension JudgmentDebtorDetailViewController: UITableViewDelegate, UITableViewDa
             make.height.equalTo(32)
         }
         let count = String(self.dataModel?.tableInfo?.total ?? 0)
-        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条失信信息", font: .regularFontOfSize(size: 12))
+        numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条信息", font: .regularFontOfSize(size: 12))
         return headView
     }
     

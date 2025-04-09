@@ -157,9 +157,24 @@ class TwoPeopleNormalListCell: BaseViewCell {
             if moduleId == "14" || moduleId == "15" {
                 let count = String(model.riskCount ?? 0)
                 self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条法院公告相关记录", font: .regularFontOfSize(size: 13))
+            }else if moduleId == "16" {
+                let count = String(model.riskCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条司法拍卖相关记录", font: .regularFontOfSize(size: 13))
+            }else if moduleId == "17" {
+                let count = String(model.riskCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条税收违法相关记录", font: .regularFontOfSize(size: 13))
             }else if moduleId == "19" {
                 let count = String(model.riskCount ?? 0)
                 self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条行政处罚相关记录", font: .regularFontOfSize(size: 13))
+            }else if moduleId == "21" {
+                let count = String(model.riskCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条债券违约相关记录", font: .regularFontOfSize(size: 13))
+            }else if moduleId == "23" {
+                let count = String(model.riskCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条资产查封相关记录", font: .regularFontOfSize(size: 13))
+            }else if moduleId == "24" {
+                let count = String(model.riskCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条资产抵押相关记录", font: .regularFontOfSize(size: 13))
             }else {
                 let count = String(model.companyCount ?? 0)
                 self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业", font: .regularFontOfSize(size: 13))
