@@ -107,6 +107,9 @@ class SearchPeopleDeadbeatCell: BaseViewCell {
             if moduleId == "38" {
                 cImageView.isHidden = true
                 numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条被执行记录", font: .regularFontOfSize(size: 13))
+            }else if moduleId == "06" {
+                cImageView.isHidden = true
+                numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条被诉讼记录", font: .regularFontOfSize(size: 13))
             }else {
                 cImageView.isHidden = false
                 numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条失信记录", font: .regularFontOfSize(size: 13))

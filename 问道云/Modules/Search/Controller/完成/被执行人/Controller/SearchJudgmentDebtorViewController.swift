@@ -315,7 +315,6 @@ extension SearchJudgmentDebtorViewController {
     //获取最近搜索,浏览历史,热搜
     private func getHotsSearchInfo() {
         let group = DispatchGroup()
-        ViewHud.addLoadView()
         group.enter()
         getLastSearchInfo(from: "38") { [weak self] modelArray in
             if !modelArray.isEmpty {
@@ -354,7 +353,6 @@ extension SearchJudgmentDebtorViewController {
         group.notify(queue: .main) {
             self.modelArray = [self.historyArray, self.hotsArray]
             self.oneView.modelArray = self.modelArray
-            ViewHud.hideLoadView()
         }
         
     }
