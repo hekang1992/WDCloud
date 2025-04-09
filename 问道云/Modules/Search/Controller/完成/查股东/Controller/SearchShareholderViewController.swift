@@ -82,7 +82,7 @@ class SearchShareholderViewController: WDBaseViewController {
                 guard let self = self else { return }
                 if self.containsOnlyChinese(text) == true {
                     print("自动打印中文：\(text)")
-                    if !text.isEmpty {
+                    if !text.isEmpty && text.count >= 2 {
                         self.oneView.isHidden = true
                         if selectIndex == 0 {
                             peopleVc.searchWordsRelay.accept(text)

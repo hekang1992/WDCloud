@@ -82,7 +82,7 @@ class SearchStartCourtNoticeViewController: WDBaseViewController {
                 guard let self = self else { return }
                 if self.containsOnlyChinese(text) == true {
                     print("自动打印中文：\(text)")
-                    if !text.isEmpty {
+                    if !text.isEmpty && text.count >= 2 {
                         self.oneView.isHidden = true
                         getNumInfo(from: text)
                         if selectIndex == 0 {
@@ -107,12 +107,15 @@ class SearchStartCourtNoticeViewController: WDBaseViewController {
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
-                if selectIndex == 0 {
-                    companyVc.searchWords.accept(text)
-                }else {
-                    peopleVc.searchWords.accept(text)
+                if !text.isEmpty && text.count >= 2 {
+                    self.oneView.isHidden = true
+                    getNumInfo(from: text)
+                    if selectIndex == 0 {
+                        companyVc.searchWords.accept(text)
+                    }else {
+                        peopleVc.searchWords.accept(text)
+                    }
                 }
-                getNumInfo(from: text)
             })
             .disposed(by: disposeBag)
         

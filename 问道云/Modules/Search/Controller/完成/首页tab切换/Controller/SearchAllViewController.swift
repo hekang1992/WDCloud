@@ -39,7 +39,7 @@ class SearchAllViewController: WDBaseViewController {
         let enterpriseVc = SearchEnterpriseViewController()
         return enterpriseVc
     }()
-
+    
     lazy var peopleVc: SearchBossViewController = {
         let peopleVc = SearchBossViewController()
         return peopleVc

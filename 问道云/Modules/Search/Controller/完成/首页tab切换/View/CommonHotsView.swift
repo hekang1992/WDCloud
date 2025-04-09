@@ -349,7 +349,7 @@ extension CommonHotsView {
                     p += 1
                 }
                 
-                for i in 0..<p - 1 {
+                for i in 0..<p {
                     tagArrayToShow.append(tagArray[i])
                 }
                 tagArrayToShow.append("展开")
