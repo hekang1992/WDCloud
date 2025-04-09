@@ -47,11 +47,9 @@ class CompanyDetailViewController: WDBaseViewController {
         companyDetailView.cellBlock = { [weak self] model in
             guard let self = self else { return }
             let pathUrl = model.path ?? ""
-            let dict = ["entityId": self.enityId]
             let pageUrl = base_url + pathUrl
-            let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
             let webVc = WebPageViewController()
-            webVc.pageUrl.accept(webUrl)
+            webVc.pageUrl.accept(pageUrl)
             self.navigationController?.pushViewController(webVc, animated: true)
         }
         

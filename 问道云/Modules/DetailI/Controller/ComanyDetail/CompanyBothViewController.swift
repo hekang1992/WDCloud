@@ -25,6 +25,7 @@ class CompanyBothViewController: WDBaseViewController {
         let headView = HeadView(frame: .zero, typeEnum: .threeBtn)
         headView.headTitleView.isHidden = false
         headView.titlelabel.isHidden = true
+        headView.titlelabel.textAlignment = .left
         headView.oneBtn.setImage(UIImage(named: "moreniacion"), for: .normal)
         headView.twoBtn.setImage(UIImage(named: "rightheadsearch"), for: .normal)
         headView.threeBtn.setImage(UIImage(named: "rightHeadLogo"), for: .normal)

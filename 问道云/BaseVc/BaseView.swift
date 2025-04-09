@@ -124,10 +124,10 @@ class HeadView: BaseView {
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
         titlelabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.left.equalTo(backBtn.snp.right).offset(30)
+            make.left.equalTo(backBtn.snp.right).offset(5)
             make.centerY.equalTo(backBtn.snp.centerY)
             make.height.equalTo(20)
+            make.centerX.equalToSuperview()
         }
         headTitleView.snp.makeConstraints { make in
             make.height.equalTo(40)
