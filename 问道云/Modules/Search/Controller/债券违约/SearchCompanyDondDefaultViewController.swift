@@ -185,12 +185,7 @@ extension SearchCompanyDondDefaultViewController: UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.allArray[indexPath.row]
-        let detailVc = SearchCompanyDeadbeatDetailViewController()
-        detailVc.model = model
-        detailVc.nameTitle = "债券违约记录列表"
-        detailVc.pageUrl = "/riskmonitor/illegalPunish/getBondDefaultDetail"
-        self.navigationController?.pushViewController(detailVc, animated: true)
+        
     }
     
 }

@@ -278,7 +278,7 @@ extension SearchPeopleJudgmentDebtorViewController: UITableViewDelegate, UITable
         detailVc.model = model
         detailVc.nameTitle = "被执行人记录列表"
         detailVc.pageUrl = "/firminfo/v2/home-page/risk-correlation/person"
-        detailVc.reusmStr = (model.resume ?? "").isEmpty ? "--" : model.resume ?? ""
+        detailVc.riskType = "PERSON_ENFORCE_COUNT"
         self.navigationController?.pushViewController(detailVc, animated: true)
     }
 }

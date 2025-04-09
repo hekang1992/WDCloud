@@ -300,23 +300,9 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
                 guard let self = self else { return }
                 let type = model.viewrecordtype ?? ""
                 if type == "1" {//企业
-                    let entityId = model.firmnumber ?? ""
-                    let json: JSON = ["entityId": entityId]
-                    let itemModel: itemsModel = itemsModel(json: json)
-                    let detailVc = SearchCompanyDeadbeatDetailViewController()
-                    detailVc.model = itemModel
-                    detailVc.nameTitle = "诉讼记录列表"
-                    detailVc.pageUrl = "/riskmonitor/cooperation/getLawsuitDataDetail"
-                    self.navigationController?.pushViewController(detailVc, animated: true)
+                    
                 }else {//个人
-                    let personId = model.personnumber ?? ""
-                    let json: JSON = ["personId": personId]
-                    let itemModel: itemsModel = itemsModel(json: json)
-                    let detailVc = SearchPeopleDeadbeatDetailViewController()
-                    detailVc.model = itemModel
-                    detailVc.nameTitle = "诉讼记录列表"
-                    detailVc.pageUrl = "/riskmonitor/cooperation/getLawsuitDataDetail"
-                    self.navigationController?.pushViewController(detailVc, animated: true)
+                    
                 }
             }
             let type = model.viewrecordtype ?? ""
@@ -377,23 +363,9 @@ extension SearchLawSuitViewController: HGSegmentedPageViewControllerDelegate {
                 guard let self = self else { return }
                 let type = model.type ?? ""
                 if type == "1" {//企业
-                    let entityId = model.eid ?? ""
-                    let json: JSON = ["entityId": entityId]
-                    let itemModel: itemsModel = itemsModel(json: json)
-                    let detailVc = SearchCompanyDeadbeatDetailViewController()
-                    detailVc.model = itemModel
-                    detailVc.nameTitle = "诉讼记录列表"
-                    detailVc.pageUrl = "/riskmonitor/cooperation/getLawsuitDataDetail"
-                    self.navigationController?.pushViewController(detailVc, animated: true)
+                    
                 }else {//个人
-                    let personId = model.eid ?? ""
-                    let json: JSON = ["personId": personId]
-                    let itemModel: itemsModel = itemsModel(json: json)
-                    let detailVc = SearchPeopleDeadbeatDetailViewController()
-                    detailVc.model = itemModel
-                    detailVc.nameTitle = "诉讼记录列表"
-                    detailVc.pageUrl = "/riskmonitor/cooperation/getLawsuitDataDetail"
-                    self.navigationController?.pushViewController(detailVc, animated: true)
+                    
                 }
             }
             listView.nameLabel.text = model.name ?? ""

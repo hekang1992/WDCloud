@@ -281,6 +281,7 @@ extension SearchCompanyJudgmentDebtorViewController: UITableViewDelegate, UITabl
         detailVc.orgmodel = model
         detailVc.nameTitle = "被执行人记录列表"
         detailVc.pageUrl = "/firminfo/v2/home-page/risk-correlation/org"
+        detailVc.riskType = "PERSON_ENFORCE_COUNT"
         self.navigationController?.pushViewController(detailVc, animated: true)
     }
     

@@ -184,12 +184,7 @@ extension SearchCompanyLawSuitViewController: UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.allArray[indexPath.row]
-        let detailVc = SearchCompanyDeadbeatDetailViewController()
-        detailVc.model = model
-        detailVc.nameTitle = "诉讼记录列表"
-        detailVc.pageUrl = "/riskmonitor/cooperation/getLawsuitDataDetail"
-        self.navigationController?.pushViewController(detailVc, animated: true)
+        
     }
     
 }

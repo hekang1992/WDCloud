@@ -27,6 +27,7 @@ class JudgmentDebtorDetailViewController: WDBaseViewController {
     var reusmStr: String = ""
     var pageNum: Int = 1
     var dataModel: DataModel?
+    var riskType: String = ""
     
     var modelArray: [rowsModel] = []
     
@@ -309,7 +310,7 @@ extension JudgmentDebtorDetailViewController {
         let man = RequestManager()
         let dict = ["personId": model?.personId ?? "",
                     "orgId": orgmodel?.orgInfo?.orgId ?? "",
-                    "riskType": "PERSON_ENFORCE_COUNT",
+                    "riskType": riskType,
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,

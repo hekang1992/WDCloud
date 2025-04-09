@@ -400,8 +400,6 @@
 		73FC5E502D5C78EF001D0DEF /* SearchPeopleDeadbeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E4F2D5C78EF001D0DEF /* SearchPeopleDeadbeatViewController.swift */; };
 		73FC5E522D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E512D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift */; };
 		73FC5E542D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E532D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift */; };
-		73FC5E5C2D5C8D05001D0DEF /* SearchCompanyDeadbeatDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E5B2D5C8D05001D0DEF /* SearchCompanyDeadbeatDetailViewController.swift */; };
-		73FC5E5E2D5C8D15001D0DEF /* SearchPeopleDeadbeatDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E5D2D5C8D15001D0DEF /* SearchPeopleDeadbeatDetailViewController.swift */; };
 		73FC5E602D5C995D001D0DEF /* SearchPeopleDeadbeatDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E5F2D5C995D001D0DEF /* SearchPeopleDeadbeatDetailTableViewCell.swift */; };
 		73FC5E632D5CAA63001D0DEF /* SearchDondDefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E622D5CAA63001D0DEF /* SearchDondDefaultViewController.swift */; };
 		73FC5E652D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC5E642D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift */; };
@@ -828,8 +826,6 @@
 		73FC5E4F2D5C78EF001D0DEF /* SearchPeopleDeadbeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleDeadbeatViewController.swift; sourceTree = "<group>"; };
 		73FC5E512D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleDeadbeatCell.swift; sourceTree = "<group>"; };
 		73FC5E532D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyDeadbeatCell.swift; sourceTree = "<group>"; };
-		73FC5E5B2D5C8D05001D0DEF /* SearchCompanyDeadbeatDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyDeadbeatDetailViewController.swift; sourceTree = "<group>"; };
-		73FC5E5D2D5C8D15001D0DEF /* SearchPeopleDeadbeatDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleDeadbeatDetailViewController.swift; sourceTree = "<group>"; };
 		73FC5E5F2D5C995D001D0DEF /* SearchPeopleDeadbeatDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPeopleDeadbeatDetailTableViewCell.swift; sourceTree = "<group>"; };
 		73FC5E622D5CAA63001D0DEF /* SearchDondDefaultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDondDefaultViewController.swift; sourceTree = "<group>"; };
 		73FC5E642D5CAB21001D0DEF /* SearchCompanyDondDefaultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyDondDefaultViewController.swift; sourceTree = "<group>"; };
@@ -2073,9 +2069,7 @@
 			children = (
 				73FC5E4B2D5C7881001D0DEF /* SearchDeadbeatViewController.swift */,
 				73FC5E4F2D5C78EF001D0DEF /* SearchPeopleDeadbeatViewController.swift */,
-				73FC5E5D2D5C8D15001D0DEF /* SearchPeopleDeadbeatDetailViewController.swift */,
 				73FC5E4D2D5C78E2001D0DEF /* SearchCompanyDeadbeatViewController.swift */,
-				73FC5E5B2D5C8D05001D0DEF /* SearchCompanyDeadbeatDetailViewController.swift */,
 			);
 			path = "查老赖";
 			sourceTree = "<group>";
@@ -2458,12 +2452,10 @@
 				730488012D2A64410024265C /* WDRefreshHeader.swift in Sources */,
 				739CE9892D8D03F2003DE72A /* BeneficialCompanyViewCell.swift in Sources */,
 				734334952D798DEE006AE608 /* CompanySearchPeopleViewCell.swift in Sources */,
-				73FC5E5C2D5C8D05001D0DEF /* SearchCompanyDeadbeatDetailViewController.swift in Sources */,
 				7352B22A2D353F2200B5391B /* CompanySixHeadView.swift in Sources */,
 				73C0070B2D644C6E003C3CE1 /* DueDiligenceOneView.swift in Sources */,
 				73EDE9EC2D59E6D500A0A7E3 /* SearchSanctionViewController.swift in Sources */,
 				739DCA222D671A6E009CFC78 /* MyVipUseViewController.swift in Sources */,
-				73FC5E5E2D5C8D15001D0DEF /* SearchPeopleDeadbeatDetailViewController.swift in Sources */,
 				734896DC2D39F1EC00B028FE /* UnioRiskDetailViewController.swift in Sources */,
 				73C36A7F2D2D1B9800D6DC46 /* SearchLastSearchListView.swift in Sources */,
 				7352B2282D353EBE00B5391B /* CompanyFiveHeadView.swift in Sources */,
