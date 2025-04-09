@@ -287,11 +287,16 @@ class TwoRiskListCompanyCell: BaseViewCell {
             self.moneyView.label2.text = model.orgInfo?.regCap ?? ""
             self.timeView.label2.text = model.orgInfo?.incDate ?? ""
             let moduleId = model.moduleId ?? ""
-            if moduleId == "14" {//法院公告
+            if moduleId == "14" || moduleId == "15" {//法院公告
                 let relevaRiskCnt = String(model.riskCount ?? 0)
                 self.oneNumLabel.isHidden = false
                 self.twoNumLabel.isHidden = true
                 self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(relevaRiskCnt)条法院公告相关记录", font: .regularFontOfSize(size: 12))
+            }else if moduleId == "19" {
+                let relevaRiskCnt = String(model.riskCount ?? 0)
+                self.oneNumLabel.isHidden = false
+                self.twoNumLabel.isHidden = true
+                self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(relevaRiskCnt)条行政处罚相关记录", font: .regularFontOfSize(size: 12))
             }else {
                 self.oneNumLabel.isHidden = false
                 self.twoNumLabel.isHidden = false

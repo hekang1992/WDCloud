@@ -1,5 +1,5 @@
 //
-//  SearchJudgmentDebtorViewController.swift
+//  SearchSanctionViewController.swift
 //  问道云
 //
 //  Created by Andrew on 2025/2/10.
@@ -11,7 +11,7 @@ import RxSwift
 import JXPagingView
 import JXSegmentedView
 
-class SearchJudgmentDebtorViewController: WDBaseViewController {
+class SearchSanctionViewController: WDBaseViewController {
     
     private let man = RequestManager()
     
@@ -21,7 +21,7 @@ class SearchJudgmentDebtorViewController: WDBaseViewController {
     
     var segmentedView: JXSegmentedView!
     
-    let titles = ["自然人", "企业"]
+    let titles = ["企业", "人员"]
     
     var JXTableHeaderViewHeight: Int = Int(StatusHeightManager.navigationBarHeight + 50)
     
@@ -42,7 +42,7 @@ class SearchJudgmentDebtorViewController: WDBaseViewController {
     
     lazy var headView: PropertyHeadView = {
         let headView = PropertyHeadView()
-        headView.headView.titlelabel.text = "被执行人"
+        headView.headView.titlelabel.text = "行政处罚"
         return headView
     }()
     
@@ -52,13 +52,13 @@ class SearchJudgmentDebtorViewController: WDBaseViewController {
         return oneView
     }()
     
-    lazy var companyVc: SearchCompanyJudgmentDebtorViewController = {
-        let companyVc = SearchCompanyJudgmentDebtorViewController()
+    lazy var companyVc: SearchCompanySanctionViewController = {
+        let companyVc = SearchCompanySanctionViewController()
         return companyVc
     }()
     
-    lazy var peopleVc: SearchPeopleJudgmentDebtorViewController = {
-        let peopleVc = SearchPeopleJudgmentDebtorViewController()
+    lazy var peopleVc: SearchPeopleSanctionViewController = {
+        let peopleVc = SearchPeopleSanctionViewController()
         return peopleVc
     }()
     
@@ -86,9 +86,9 @@ class SearchJudgmentDebtorViewController: WDBaseViewController {
                         self.oneView.isHidden = true
                         getNumInfo(from: text)
                         if selectIndex == 0 {
-                            peopleVc.searchWords.accept(text)
-                        }else {
                             companyVc.searchWords.accept(text)
+                        }else {
+                            peopleVc.searchWords.accept(text)
                         }
                     }else {
                         self.oneView.isHidden = false
@@ -108,9 +108,9 @@ class SearchJudgmentDebtorViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if selectIndex == 0 {
-                    peopleVc.searchWords.accept(text)
-                }else {
                     companyVc.searchWords.accept(text)
+                }else {
+                    peopleVc.searchWords.accept(text)
                 }
                 getNumInfo(from: text)
             })
@@ -129,9 +129,9 @@ class SearchJudgmentDebtorViewController: WDBaseViewController {
             if !keywords.isEmpty {
                 self?.oneView.isHidden = true
                 if self?.selectIndex == 0 {
-                    self?.peopleVc.searchWords.accept(keywords)
-                }else {
                     self?.companyVc.searchWords.accept(keywords)
+                }else {
+                    self?.peopleVc.searchWords.accept(keywords)
                 }
                 self?.getNumInfo(from: keywords)
             }else {
@@ -151,7 +151,7 @@ class SearchJudgmentDebtorViewController: WDBaseViewController {
             ShowAlertManager.showAlert(title: "删除", message: "是否确定删除最近搜索?", confirmAction: {
                 ViewHud.addLoadView()
                 let man = RequestManager()
-                let dict = ["moduleId": "38"]
+                let dict = ["moduleId": "19"]
                 man.requestAPI(params: dict,
                                pageUrl: "/operation/searchRecord/clear",
                                method: .post) { [weak self] result in
@@ -181,7 +181,7 @@ class SearchJudgmentDebtorViewController: WDBaseViewController {
             ShowAlertManager.showAlert(title: "删除", message: "是否确定删除浏览历史?", confirmAction: {
                 ViewHud.addLoadView()
                 let man = RequestManager()
-                let dict = ["moduleId": "38"]
+                let dict = ["moduleId": "19"]
                 man.requestAPI(params: dict,
                                pageUrl: "/operation/view-record/del",
                                method: .post) { [weak self] result in
@@ -211,7 +211,7 @@ class SearchJudgmentDebtorViewController: WDBaseViewController {
   
 }
 
-extension SearchJudgmentDebtorViewController: JXPagingViewDelegate, JXSegmentedViewDelegate {
+extension SearchSanctionViewController: JXPagingViewDelegate, JXSegmentedViewDelegate {
     
     private func addSegmentedView() {
         //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
@@ -274,19 +274,19 @@ extension SearchJudgmentDebtorViewController: JXPagingViewDelegate, JXSegmentedV
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
-            return peopleVc
-        }else{
             return companyVc
+        }else{
+            return peopleVc
         }
     }
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         selectIndex = index
         if index == 0 {
-            self.peopleVc.searchWords.accept(self.headView.searchHeadView.searchTx
+            self.companyVc.searchWords.accept(self.headView.searchHeadView.searchTx
                 .text ?? "")
         }else {
-            self.companyVc.searchWords.accept(self.headView.searchHeadView.searchTx
+            self.peopleVc.searchWords.accept(self.headView.searchHeadView.searchTx
                 .text ?? "")
         }
     }
@@ -294,7 +294,7 @@ extension SearchJudgmentDebtorViewController: JXPagingViewDelegate, JXSegmentedV
 }
 
 /** 网络数据请求 */
-extension SearchJudgmentDebtorViewController {
+extension SearchSanctionViewController {
     
     //获取所有城市数据
     func getAllRegionInfo() {
@@ -325,7 +325,7 @@ extension SearchJudgmentDebtorViewController {
     }
     
     private func getNumInfo(from keywords: String){
-        let dict = ["keyword": keywords, "riskType": "PERSON_ENFORCE_COUNT"]
+        let dict = ["keyword": keywords, "riskType": "ADMIN_PENALTY_COUNT"]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/home-page/risk-correlation/table-count",
                        method: .get) { [weak self] result in
@@ -335,7 +335,7 @@ extension SearchJudgmentDebtorViewController {
                     guard let self = self else { return }
                     let companyCount = success.data?.orgCount ?? 0
                     let peopleCount = success.data?.personCount ?? 0
-                    let titles = ["自然人\(peopleCount)", "企业\(companyCount)"]
+                    let titles = ["企业\(companyCount)", "人员\(peopleCount)"]
                     self.segmentedViewDataSource.titles = titles
                     self.segmentedView.reloadData()
                 }
@@ -350,7 +350,7 @@ extension SearchJudgmentDebtorViewController {
     private func getHotsSearchInfo() {
         let group = DispatchGroup()
         group.enter()
-        getLastSearchInfo(from: "38") { [weak self] modelArray in
+        getLastSearchInfo(from: "19") { [weak self] modelArray in
             if !modelArray.isEmpty {
                 self?.oneView.bgView.isHidden = false
                 self?.oneView.bgView.snp.remakeConstraints({ make in
@@ -373,13 +373,13 @@ extension SearchJudgmentDebtorViewController {
         }
         
         group.enter()
-        getLastHistroyInfo(from: "38") { [weak self] modelArray in
+        getLastHistroyInfo(from: "19") { [weak self] modelArray in
             self?.historyArray = modelArray
             group.leave()
         }
         
         group.enter()
-        getLastHotsInfo(from: "38") { [weak self] modelArray in
+        getLastHotsInfo(from: "19") { [weak self] modelArray in
             self?.hotsArray = modelArray
             group.leave()
         }
@@ -392,4 +392,3 @@ extension SearchJudgmentDebtorViewController {
     }
     
 }
-

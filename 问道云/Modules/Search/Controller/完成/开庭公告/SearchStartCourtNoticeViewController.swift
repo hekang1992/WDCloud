@@ -52,13 +52,13 @@ class SearchStartCourtNoticeViewController: WDBaseViewController {
         return oneView
     }()
     
-    lazy var companyVc: SearchCompanyCourtNoticeViewController = {
-        let companyVc = SearchCompanyCourtNoticeViewController()
+    lazy var companyVc: SearchCompanyStartCourtNoticeViewController = {
+        let companyVc = SearchCompanyStartCourtNoticeViewController()
         return companyVc
     }()
     
-    lazy var peopleVc: SearchPeopleCourtNoticeViewController = {
-        let peopleVc = SearchPeopleCourtNoticeViewController()
+    lazy var peopleVc: SearchPeopleStartCourtNoticeViewController = {
+        let peopleVc = SearchPeopleStartCourtNoticeViewController()
         return peopleVc
     }()
     
@@ -201,6 +201,12 @@ class SearchStartCourtNoticeViewController: WDBaseViewController {
             })
         }
         
+        //获取城市数据
+        getAllRegionInfo()
+        
+        //获取行业数据
+        getAllIndustryInfo()
+        
     }
   
 }
@@ -290,6 +296,34 @@ extension SearchStartCourtNoticeViewController: JXPagingViewDelegate, JXSegmente
 /** 网络数据请求 */
 extension SearchStartCourtNoticeViewController {
     
+    //获取所有城市数据
+    func getAllRegionInfo() {
+        let modelArray = RegionDataManager.shared.getData()
+        if modelArray.count > 0 {
+            self.companyVc.regionModelArray.accept(modelArray)
+            self.peopleVc.regionModelArray.accept(modelArray)
+        }else {
+            getReginInfo { modelArray in
+                self.companyVc.regionModelArray.accept(modelArray)
+                self.peopleVc.regionModelArray.accept(modelArray)
+            }
+        }
+    }
+    
+    //获取行业数据
+    func getAllIndustryInfo() {
+        let modelArray = IndustruDataManager.shared.getData()
+        if modelArray.count > 0 {
+            self.companyVc.industryModelArray.accept(modelArray)
+            self.peopleVc.industryModelArray.accept(modelArray)
+        }else {
+            getIndustryInfo { modelArray in
+                self.companyVc.regionModelArray.accept(modelArray)
+                self.peopleVc.regionModelArray.accept(modelArray)
+            }
+        }
+    }
+    
     private func getNumInfo(from keywords: String){
         let dict = ["keyword": keywords, "riskType": "COURT_OPEN_ANNO_COUNT"]
         man.requestAPI(params: dict,
@@ -315,7 +349,6 @@ extension SearchStartCourtNoticeViewController {
     //获取最近搜索,浏览历史,热搜
     private func getHotsSearchInfo() {
         let group = DispatchGroup()
-        ViewHud.addLoadView()
         group.enter()
         getLastSearchInfo(from: "15") { [weak self] modelArray in
             if !modelArray.isEmpty {
@@ -354,7 +387,6 @@ extension SearchStartCourtNoticeViewController {
         group.notify(queue: .main) {
             self.modelArray = [self.historyArray, self.hotsArray]
             self.oneView.modelArray = self.modelArray
-            ViewHud.hideLoadView()
         }
         
     }

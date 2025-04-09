@@ -201,6 +201,12 @@ class SearchCourtNoticeViewController: WDBaseViewController {
             })
         }
         
+        //获取城市数据
+        getAllRegionInfo()
+        
+        //获取行业数据
+        getAllIndustryInfo()
+        
     }
   
 }
@@ -289,6 +295,34 @@ extension SearchCourtNoticeViewController: JXPagingViewDelegate, JXSegmentedView
 
 /** 网络数据请求 */
 extension SearchCourtNoticeViewController {
+    
+    //获取所有城市数据
+    func getAllRegionInfo() {
+        let modelArray = RegionDataManager.shared.getData()
+        if modelArray.count > 0 {
+            self.companyVc.regionModelArray.accept(modelArray)
+            self.peopleVc.regionModelArray.accept(modelArray)
+        }else {
+            getReginInfo { modelArray in
+                self.companyVc.regionModelArray.accept(modelArray)
+                self.peopleVc.regionModelArray.accept(modelArray)
+            }
+        }
+    }
+    
+    //获取行业数据
+    func getAllIndustryInfo() {
+        let modelArray = IndustruDataManager.shared.getData()
+        if modelArray.count > 0 {
+            self.companyVc.industryModelArray.accept(modelArray)
+            self.peopleVc.industryModelArray.accept(modelArray)
+        }else {
+            getIndustryInfo { modelArray in
+                self.companyVc.regionModelArray.accept(modelArray)
+                self.peopleVc.regionModelArray.accept(modelArray)
+            }
+        }
+    }
     
     private func getNumInfo(from keywords: String){
         let dict = ["keyword": keywords, "riskType": "COURT_ANNO_COUNT"]

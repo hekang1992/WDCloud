@@ -157,6 +157,9 @@ class TwoPeopleNormalListCell: BaseViewCell {
             if moduleId == "14" || moduleId == "15" {
                 let count = String(model.riskCount ?? 0)
                 self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条法院公告相关记录", font: .regularFontOfSize(size: 13))
+            }else if moduleId == "19" {
+                let count = String(model.riskCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条行政处罚相关记录", font: .regularFontOfSize(size: 13))
             }else {
                 let count = String(model.companyCount ?? 0)
                 self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业", font: .regularFontOfSize(size: 13))
