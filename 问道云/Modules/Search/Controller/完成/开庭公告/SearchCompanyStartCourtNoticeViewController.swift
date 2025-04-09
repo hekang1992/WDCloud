@@ -212,6 +212,7 @@ extension SearchCompanyStartCourtNoticeViewController {
                     "matchType": 1,
                     "moduleId": "15",
                     "riskType": "COURT_OPEN_ANNO_COUNT",
+                    "queryBoss": false,
                     "industryType": entityIndustry,
                     "region": entityArea,
                     "pageIndex": pageIndex,

@@ -2,230 +2,290 @@
 //  SearchCompanyAssetFreezeViewController.swift
 //  问道云
 //
-//  Created by Andrew on 2025/2/10.
+//  Created by 何康 on 2025/3/31.
 //
 
 import UIKit
+import MapKit
 import RxRelay
+import RxSwift
 import MJRefresh
 import DropMenuBar
+import JXPagingView
+import SkeletonView
+import TYAlertController
 
 class SearchCompanyAssetFreezeViewController: WDBaseViewController {
     
-    var entityArea: String = ""//公司时候的地区
-    var entityIndustry: String = ""//公司时候的行业
-    
-    //城市数据
-    var regionModelArray = BehaviorRelay<[rowsModel]?>(value: [])
-    
-    //行业数据
-    var industryModelArray = BehaviorRelay<[rowsModel]?>(value: [])
-    
-    var keyWords = BehaviorRelay<String>(value: "")
-    var pageNum: Int = 1
-    var pageSize: Int = 20
-    var type: String = "2"
-    var model: DataModel?
-    var allArray: [itemsModel] = []
-    var block: ((DataModel) -> Void)?
+    var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .init(cssStr: "#F5F5F5")
-        tableView.register(SanctionTableViewCell.self, forCellReuseIdentifier: "SanctionTableViewCell")
-        tableView.estimatedRowHeight = 80
-        tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.delegate = self
-        tableView.dataSource = self
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
         return tableView
     }()
-
+    
+    lazy var oneView: CommonHotsView = {
+        let oneView = CommonHotsView()
+        return oneView
+    }()
+    
+    //搜索list列表页面
+    lazy var companyListView: TwoRiskListView = {
+        let companyListView = TwoRiskListView()
+        companyListView.isHidden = true
+        companyListView.tableView.snp.remakeConstraints { make in
+            make.top.equalToSuperview().offset(40)
+            make.left.right.bottom.equalToSuperview()
+        }
+        return companyListView
+    }()
+    
+    private var man = RequestManager()
+    
+    //总数组
+    var modelArray: [[rowsModel]] = []
+    
+    //城市数据
+    var regionModelArray = BehaviorRelay<[rowsModel]>(value: [])
+    
+    //行业数据
+    var industryModelArray = BehaviorRelay<[rowsModel]>(value: [])
+    
+    //参数
+    var pageIndex: Int = 1
+    var keyword: String = ""//搜索的文字
+    var entityArea: String = ""//地区
+    var entityIndustry: String = ""//行业
+    var allArray: [pageDataModel] = []//加载更多
+    
+    //搜索的文字
+    var searchWords = BehaviorRelay<String?>(value: nil)
+    
+    //点击最近搜索回调
+    var lastSearchTextBlock: ((String) -> Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
-        self.keyWords.asObservable().subscribe(onNext: { [weak self] keyWords in
-            guard let self = self else { return }
-            if !keyWords.isEmpty {
-                pageNum = 1
-                getSanctionInfo()
-            }else {
+        
+        view.addSubview(oneView)
+        oneView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        view.addSubview(companyListView)
+        companyListView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        self.searchWords
+            .asObservable()
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] text in
+            guard let self = self, let text = text else { return }
+            self.pageIndex = 1
+            if text.count < 2 {
+                self.oneView.isHidden = false
+                self.companyListView.isHidden = true
                 self.allArray.removeAll()
+            }else {
+                self.oneView.isHidden = true
+                self.companyListView.isHidden = false
+                self.keyword = text
+                self.getCompanyListInfo {}
             }
         }).disposed(by: disposeBag)
         
-        self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
-            guard let self = self else { return }
-            pageNum = 1
-            getSanctionInfo()
-        })
-        
-        //添加上拉加载更多
-        self.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
-            guard let self = self else { return }
-            getSanctionInfo()
-        })
-        
-        addMenuWithCompanyView()
-    }
-    
-}
-
-extension SearchCompanyAssetFreezeViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let count = self.model?.total ?? 0
-        let headView = UIView()
-        let numLabel = UILabel()
-        headView.backgroundColor = .init(cssStr: "#F8F9FB")
-        numLabel.textColor = .init(cssStr: "#666666")
-        numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(count)", fullText: "搜到到\(count)条结果", colorStr: "#FF0000")
-        numLabel.textAlignment = .left
-        numLabel.font = .regularFontOfSize(size: 12)
-        headView.addSubview(numLabel)
-        numLabel.snp.makeConstraints { make in
-            make.height.equalTo(25)
-            make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(12.5)
+        //企业ID回调
+        companyListView.entityIdBlock = { [weak self] model in
+            let riskDetailVc = CompanyRiskDetailViewController()
+            riskDetailVc.enityId = model.orgInfo?.orgId ?? ""
+            riskDetailVc.name = model.orgInfo?.orgName ?? ""
+            riskDetailVc.logo = model.orgInfo?.logo ?? ""
+            self?.navigationController?.pushViewController(riskDetailVc, animated: true)
         }
-        return headView
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.allArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if !self.allArray.isEmpty {
-            let model = self.allArray[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SanctionTableViewCell", for: indexPath) as! SanctionTableViewCell
-            model.navHeadTitleStr = "资产冻结"
-            model.searchStr = self.keyWords.value
-            cell.model.accept(model)
-            cell.selectionStyle = .none
-            return cell
-        }
-        return UITableViewCell()
         
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.allArray[indexPath.row]
-        let pageUrl = "\(base_url)/litigation-risk/freeze-info"
-        let dict = ["firmname": model.entityName ?? "",
-                    "entityId": model.entityId ?? "",
-                    "type": "0"]
-        let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-        self.pushWebPage(from: webUrl)
+        //这里不仅仅是可以点击人员了....还有可能是企业
+        companyListView.peopleBlock = { [weak self] model in
+            guard let self = self else { return }
+            let leaderList = model.leaderVec?.leaderList ?? []
+            if leaderList.count > 1 {
+                let popMoreListView = PopMoreLegalListView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
+                popMoreListView.descLabel.text = "\(model.leaderVec?.leaderTypeName ?? "")\(leaderList.count)"
+                popMoreListView.dataList = leaderList
+                let alertVc = TYAlertController(alert: popMoreListView, preferredStyle: .alert)!
+                popMoreListView.closeBlock = {
+                    self.dismiss(animated: true)
+                }
+                popMoreListView.clickBlock = { [weak self] model in
+                    self?.dismiss(animated: true, completion: {
+                        self?.pushPageWithModel(from: model)
+                    })
+                }
+                self.present(alertVc, animated: true)
+            }else {
+                self.dismiss(animated: true) {
+                    if let peopleModel = model.leaderVec?.leaderList?.first {
+                        self.pushPageWithModel(from: peopleModel)
+                    }
+                }
+            }
+        }
+        
+        companyListView.moreBlock = { [weak self] pageUrl in
+            let webUrl = base_url + pageUrl
+            self?.pushWebPage(from: webUrl)
+        }
+        
+        setupUI()
     }
     
 }
 
 extension SearchCompanyAssetFreezeViewController {
     
-    private func addMenuWithCompanyView() {
+    private func setupUI() {
         //添加下拉筛选
         let regionMenu = MenuAction(title: "地区", style: .typeList)!
-        self.regionModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
+        
+        self.regionModelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
-            let regionArray = getThreeRegionInfo(from: modelArray ?? [])
+            let regionArray = getThreeRegionInfo(from: modelArray)
             regionMenu.listDataSource = regionArray
         }).disposed(by: disposeBag)
+        
         regionMenu.didSelectedMenuResult = { [weak self] index, model, grand in
             guard let self = self else { return }
-            self.pageNum = 1
             self.entityArea = model?.currentID ?? ""
-            self.getSanctionInfo()
+            self.pageIndex = 1
+            self.getCompanyListInfo {}
         }
         
         let industryMenu = MenuAction(title: "行业", style: .typeList)!
+        
         self.industryModelArray.asObservable().asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
-            let industryArray = getThreeIndustryInfo(from: modelArray ?? [])
+            let industryArray = getThreeIndustryInfo(from: modelArray)
             industryMenu.listDataSource = industryArray
         }).disposed(by: disposeBag)
+        
         industryMenu.didSelectedMenuResult = { [weak self] index, model, grand in
             guard let self = self else { return }
-            self.pageNum = 1
             self.entityIndustry = model?.currentID ?? ""
-            self.getSanctionInfo()
+            self.pageIndex = 1
+            self.getCompanyListInfo {}
         }
         
         let menuView = DropMenuBar(action: [regionMenu, industryMenu])!
         menuView.backgroundColor = .white
-        view.addSubview(menuView)
+        self.companyListView.addSubview(menuView)
         menuView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalToSuperview().offset(1)
             make.left.right.equalToSuperview()
-            make.height.equalTo(32)
+            make.height.equalTo(40)
         }
         
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(menuView.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
-        }
+        //添加下拉刷新
+        self.companyListView.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.pageIndex = 1
+            self.getCompanyListInfo {}
+        })
+        
+        //添加上拉加载更多
+        self.companyListView.tableView.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.getCompanyListInfo {}
+        })
         
     }
+}
+
+/** 网络数据请求*/
+extension SearchCompanyAssetFreezeViewController {
     
-    //获取行政处罚信息列表
-    private func getSanctionInfo() {
-        if keyWords.value.isEmpty {
-            return
-        }
-        
-        let man = RequestManager()
-        let dict = ["type": type,
-                    "entityIndustry": entityIndustry,
-                    "entityArea": entityArea,
-                    "keywords": keyWords.value,
-                    "pageNum": pageNum,
+    //获取企业列表数据
+    private func getCompanyListInfo(complete: @escaping (() -> Void)) {
+        ViewHud.addLoadView()
+        let dict = ["keyword": keyword,
+                    "matchType": 1,
+                    "moduleId": "22",
+                    "riskType": "ASSET_FREEZE_COUNT",
+                    "queryBoss": false,
+                    "industryType": entityIndustry,
+                    "region": entityArea,
+                    "pageIndex": pageIndex,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/riskmonitor/illegalPunish/getAssetsFrozen",
+                       pageUrl: "/entity/v2/org-list",
                        method: .get) { [weak self] result in
-            self?.tableView.mj_header?.endRefreshing()
-            self?.tableView.mj_footer?.endRefreshing()
+            self?.companyListView.tableView.mj_header?.endRefreshing()
+            self?.companyListView.tableView.mj_footer?.endRefreshing()
             switch result {
             case .success(let success):
-                if let self = self, let model = success.data, let total = model.total {
-                    self.block?(model)
-                    self.model = model
-                    if pageNum == 1 {
-                        pageNum = 1
+                if let self = self,
+                   let model = success.data,
+                   let code = success.code,
+                   code == 200,
+                   let total = model.pageMeta?.totalNum {
+                    self.oneView.isHidden = true
+                    self.companyListView.isHidden = false
+                    if self.pageIndex == 1 {
+                        self.pageIndex = 1
                         self.allArray.removeAll()
                     }
-                    pageNum += 1
-                    let pageData = model.items ?? []
+                    self.pageIndex += 1
+                    let pageData = model.pageData ?? []
+                    for model in pageData {
+                        model.moduleId = "22"
+                    }
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
                     }else {
-                        self.addNodataView(from: self.tableView)
+                        self.addNodataView(from: self.companyListView.whiteView)
                     }
                     if self.allArray.count != total {
-                        self.tableView.mj_footer?.isHidden = false
+                        self.companyListView.tableView.mj_footer?.isHidden = false
                     }else {
-                        self.tableView.mj_footer?.isHidden = true
+                        self.companyListView.tableView.mj_footer?.isHidden = true
                     }
-                    self.tableView.reloadData()
+                    self.companyListView.dataModel.accept(model)
+                    self.companyListView.dataModelArray.accept(self.allArray)
+                    self.companyListView.searchWordsRelay.accept(keyword)
+                    DispatchQueue.main.asyncAfter(delay: 0.25) {
+                        self.companyListView.tableView.hideSkeleton()
+                        self.companyListView.tableView.reloadData()
+                    }
                 }
+                ViewHud.hideLoadView()
+                complete()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
+                complete()
                 break
             }
         }
+    }
+    
+}
+
+extension SearchCompanyAssetFreezeViewController: JXPagingViewListViewDelegate {
+    
+    func listView() -> UIView {
+        return view
+    }
+    
+    func listViewDidScrollCallback(callback: @escaping (UIScrollView) -> ()) {
+        self.listViewDidScrollCallback = callback
+    }
+    
+    func listScrollView() -> UIScrollView { tableView }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        listViewDidScrollCallback?(scrollView)
     }
     
 }

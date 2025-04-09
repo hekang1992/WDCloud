@@ -192,6 +192,7 @@ extension SearchPeopleStartCourtNoticeViewController {
         let dict = ["keywords": keyword,
                     "moduleId": "15",
                     "riskType": "COURT_OPEN_ANNO_COUNT",
+                    "queryBoss": false,
                     "orgIndustry": entityIndustry,
                     "orgArea": entityArea,
                     "pageNum": pageIndex,
