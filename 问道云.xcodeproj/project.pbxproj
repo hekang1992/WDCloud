@@ -279,6 +279,7 @@
 		73AEAD2F2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */; };
 		73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */; };
 		73B3329A2D30CF5100934773 /* CompanyLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332992D30CF5100934773 /* CompanyLocationViewController.swift */; };
+		73B33B5A2DA616B500C37217 /* JudgmentDebtorDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B33B592DA616B500C37217 /* JudgmentDebtorDetailViewController.swift */; };
 		73B3623D2D374222003BD911 /* PopHistoryNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3623C2D374222003BD911 /* PopHistoryNameView.swift */; };
 		73B3623F2D375189003BD911 /* PopInvoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3623E2D375189003BD911 /* PopInvoiceView.swift */; };
 		73B362412D377C28003BD911 /* PopEmployeeNumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362402D377C28003BD911 /* PopEmployeeNumView.swift */; };
@@ -704,6 +705,7 @@
 		73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyAddCustomerViewCell.swift; sourceTree = "<group>"; };
 		73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyNormalListCell.swift; sourceTree = "<group>"; };
 		73B332992D30CF5100934773 /* CompanyLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLocationViewController.swift; sourceTree = "<group>"; };
+		73B33B592DA616B500C37217 /* JudgmentDebtorDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JudgmentDebtorDetailViewController.swift; sourceTree = "<group>"; };
 		73B3623C2D374222003BD911 /* PopHistoryNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopHistoryNameView.swift; sourceTree = "<group>"; };
 		73B3623E2D375189003BD911 /* PopInvoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopInvoiceView.swift; sourceTree = "<group>"; };
 		73B362402D377C28003BD911 /* PopEmployeeNumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopEmployeeNumView.swift; sourceTree = "<group>"; };
@@ -1113,6 +1115,8 @@
 				73FC5E452D5C3C44001D0DEF /* 公告大全 */,
 				7340E1662D5CB930008FD5C7 /* 实际控制人 */,
 				7340E16D2D5CC643008FD5C7 /* 最终受益人 */,
+				7340E1992D5CD491008FD5C7 /* 法院公告 */,
+				7340E1A02D5CD53B008FD5C7 /* 开庭公告 */,
 			);
 			path = "完成";
 			sourceTree = "<group>";
@@ -1184,9 +1188,8 @@
 		7340E16E2D5CC651008FD5C7 /* 被执行人 */ = {
 			isa = PBXGroup;
 			children = (
-				7340E1D32D5DF9DB008FD5C7 /* SearchJudgmentDebtorViewController.swift */,
-				7340E1D52D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift */,
-				7340E1D72D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift */,
+				73B33B582DA60BB900C37217 /* View */,
+				73B33B572DA60BB600C37217 /* Controller */,
 			);
 			path = "被执行人";
 			sourceTree = "<group>";
@@ -1733,6 +1736,26 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		73B33B572DA60BB600C37217 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7340E1D32D5DF9DB008FD5C7 /* SearchJudgmentDebtorViewController.swift */,
+				7340E1D72D5DF9F1008FD5C7 /* SearchPeopleJudgmentDebtorViewController.swift */,
+				7340E1D52D5DF9E7008FD5C7 /* SearchCompanyJudgmentDebtorViewController.swift */,
+				73B33B592DA616B500C37217 /* JudgmentDebtorDetailViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		73B33B582DA60BB900C37217 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				73FC5E512D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift */,
+				73FC5E532D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		73B3623A2D3741F6003BD911 /* HeadView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1976,8 +1999,6 @@
 				735A3F732D65BE4000448268 /* 求职监测 */,
 				7340E16E2D5CC651008FD5C7 /* 被执行人 */,
 				7340E1922D5CD437008FD5C7 /* 限制高消费 */,
-				7340E1992D5CD491008FD5C7 /* 法院公告 */,
-				7340E1A02D5CD53B008FD5C7 /* 开庭公告 */,
 				7340E1A72D5CD5B1008FD5C7 /* 司法拍卖 */,
 				7340E1762D5CCF85008FD5C7 /* 税收违法 */,
 				7340E16F2D5CC660008FD5C7 /* 环保处罚 */,
@@ -2062,8 +2083,6 @@
 		73FC5E5A2D5C811F001D0DEF /* SearchDefaultersView */ = {
 			isa = PBXGroup;
 			children = (
-				73FC5E512D5C8092001D0DEF /* SearchPeopleDeadbeatCell.swift */,
-				73FC5E532D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift */,
 				73FC5E5F2D5C995D001D0DEF /* SearchPeopleDeadbeatDetailTableViewCell.swift */,
 			);
 			path = SearchDefaultersView;
@@ -2526,6 +2545,7 @@
 				73C36A6C2D2D024C00D6DC46 /* SearchAllViewController.swift in Sources */,
 				73FC5E602D5C995D001D0DEF /* SearchPeopleDeadbeatDetailTableViewCell.swift in Sources */,
 				73FB9C902D5F1C3D00554CAD /* OpinionListCenterViewController.swift in Sources */,
+				73B33B5A2DA616B500C37217 /* JudgmentDebtorDetailViewController.swift in Sources */,
 				7340E1AB2D5CD60F008FD5C7 /* SearchCompanyJudicialAuctioniewViewController.swift in Sources */,
 				739CE9932D8D643A003DE72A /* PropertyLineOneViewController.swift in Sources */,
 				73FC5E3C2D5C3403001D0DEF /* SearchShareholderViewController.swift in Sources */,

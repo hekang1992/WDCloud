@@ -9,6 +9,7 @@ import UIKit
 import JXPagingView
 import DropMenuBar
 import RxRelay
+import TYAlertController
 
 class HistoryRiskDetailViewController: WDBaseViewController {
     
@@ -20,8 +21,13 @@ class HistoryRiskDetailViewController: WDBaseViewController {
     var dateType: String = ""
     var itemtype: String = "1"
     var allArray: [itemDtoListModel]?
+    //主头部信息
+    var mainHeadView: CompanyRiskDetailHeadView?
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
+    
+    var monitoringTime: String = ""
+    var groupName: String = ""
     
     lazy var whiteView: UIView = {
         let whiteView = UIView()
@@ -44,7 +50,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         return tableView
     }()
     
-    //法律风险view
+    //法律风险
     lazy var lawView: CompanyLawListView = {
         let lawView = CompanyLawListView()
         lawView.backgroundColor = .white
@@ -148,12 +154,12 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         return numLabel
     }()
     
-    lazy var highnumLabel: UILabel = {
-        let highnumLabel = UILabel()
-        highnumLabel.textAlignment = .left
-        highnumLabel.font = .regularFontOfSize(size: 12)
-        highnumLabel.textColor = .init(cssStr: "#333333")
-        return highnumLabel
+    lazy var highNumLabel: UILabel = {
+        let highNumLabel = UILabel()
+        highNumLabel.textAlignment = .left
+        highNumLabel.font = .regularFontOfSize(size: 12)
+        highNumLabel.textColor = .init(cssStr: "#333333")
+        return highNumLabel
     }()
     
     lazy var timeLabel: UILabel = {
@@ -169,7 +175,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         let maskView = UIView()
         maskView.layer.borderWidth = 1
         maskView.layer.borderColor = UIColor.init(cssStr: "#FF0000")?.cgColor
-        maskView.backgroundColor = .init(cssStr: "#FF0000")?.withAlphaComponent(0.03)
+        maskView.backgroundColor = .init(cssStr: "#FFF7F7")
         return maskView
     }()
     
@@ -219,7 +225,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         // Do any additional setup after loading the view.
         
         view.addSubview(numLabel)
-        view.addSubview(highnumLabel)
+        view.addSubview(highNumLabel)
         view.addSubview(timeLabel)
         view.addSubview(whiteView)
         whiteView.addSubview(onelabel)
@@ -239,7 +245,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
             make.left.equalToSuperview().offset(22)
             make.height.equalTo(25)
         }
-        highnumLabel.snp.makeConstraints { make in
+        highNumLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)
             make.left.equalTo(numLabel.snp.right).offset(1)
             make.height.equalTo(25)
@@ -255,7 +261,8 @@ class HistoryRiskDetailViewController: WDBaseViewController {
             make.height.equalTo(48)
         }
         maskView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
+            make.left.equalToSuperview().offset(12)
+            make.centerX.equalToSuperview()
             make.top.equalTo(whiteView.snp.bottom)
             make.height.equalTo(61.5)
         }
@@ -285,7 +292,6 @@ class HistoryRiskDetailViewController: WDBaseViewController {
             make.height.equalTo(26)
             make.width.equalTo(labelWidth)
         }
-        
         totalItemView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.top.bottom.equalToSuperview()
@@ -358,7 +364,6 @@ class HistoryRiskDetailViewController: WDBaseViewController {
                 self?.getRiskDetailInfo()
             })
             .disposed(by: disposeBag)
-        
         
         let timeMenu = MenuAction(title: "全部", style: .typeCustom)!
         var modelArray = getListTime(from: true)
@@ -452,6 +457,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
             return timeView
         }
         getRiskDetailInfo()
+        
     }
     
     private func updateSelectedLabel(_ selectedLabel: PaddedLabel?) {
@@ -531,14 +537,36 @@ extension HistoryRiskDetailViewController {
     func refreshUI(from model: DataModel) {
         let count = String(model.totalRiskCnt ?? 0)
         let highcount = String(model.totalHighRiskCnt ?? 0)
-        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计风险\(count)条/", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
-        self.highnumLabel.attributedText = GetRedStrConfig.getRedStr(from: highcount, fullText: "高风险\(highcount)条", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
+        self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "累计历史风险\(count)条/", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
+        self.highNumLabel.attributedText = GetRedStrConfig.getRedStr(from: highcount, fullText: "高风险\(highcount)条", colorStr: "#FF0000", font: UIFont.regularFontOfSize(size: 12))
         self.totalItemView.numLabel.text = String(model.notRelevaRiskDto?.totalRiskCnt ?? 0)
         self.oneItemView.numLabel.text = String(model.notRelevaRiskDto?.highLevelCnt ?? 0)
         self.twoItemView.numLabel.text = String(model.notRelevaRiskDto?.lowLevelCnt ?? 0)
         self.threeItemView.numLabel.text = String(model.notRelevaRiskDto?.tipLevelCnt ?? 0)
+        let startTime = model.monitorStartDate ?? ""
+        let endTime = model.monitorEndDate ?? ""
+        let monitorFlag = model.monitorFlag ?? 0
+        let groupName = model.groupName ?? ""
+        showOrHideMonitoringInfo(from: monitorFlag, startTime: startTime, endTime: endTime, groupName: groupName)
     }
     
+    //刷新头部监控按钮信息
+    private func showOrHideMonitoringInfo(from monitorFlag: Int, startTime: String, endTime: String, groupName: String) {
+        //头部信息
+        if monitorFlag != 0 {
+            let allTime = "监控周期:\(startTime) - \(endTime)"
+            mainHeadView?.timeLabel.text = allTime
+            mainHeadView?.tagLabel.text = groupName
+            mainHeadView?.tagLabel.isHidden = false
+            self.monitoringTime = allTime
+            self.groupName = groupName
+            mainHeadView?.monitoringBtn.isHidden = true
+        }else {
+            mainHeadView?.timeLabel.text = ""
+            mainHeadView?.tagLabel.isHidden = true
+            mainHeadView?.monitoringBtn.isHidden = false
+        }
+    }
 }
 
 extension HistoryRiskDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -560,19 +588,99 @@ extension HistoryRiskDetailViewController: UITableViewDelegate, UITableViewDataS
         let model = self.allArray?[indexPath.row]
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        cell.namelabel.text = model?.itemName ?? ""
-        cell.numlabel.text = "共\(model?.totalCnt ?? 0)条"
         cell.model.accept(model)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let riskSecondVc = ComanyRiskMoreDetailViewController()
-        riskSecondVc.dateType = self.dateType
-        riskSecondVc.logo = self.logo
-        riskSecondVc.name = self.name
-        riskSecondVc.orgId = self.enityId
-        self.navigationController?.pushViewController(riskSecondVc, animated: true)
+        if let model = self.allArray?[indexPath.row] {
+            checkClickInfo(form: model)
+        }
+    }
+    
+}
+
+/** 网络数据请求 */
+extension HistoryRiskDetailViewController {
+    
+    //判断是否有权限点击
+    private func checkClickInfo(form model: itemDtoListModel) {
+        ViewHud.addLoadView()
+        let itemId = model.itemId ?? ""
+        let entityId = self.enityId
+        let entityName = self.name
+        let man = RequestManager()
+        let dict = ["entityType": "1",
+                    "itemId": itemId,
+                    "entityId": entityId,
+                    "entityName": entityName]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/equity-risk/check",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                guard let self = self else { return }
+                if success.code == 200 {
+                    let riskSecondVc = ComanyRiskMoreDetailViewController()
+                    riskSecondVc.dateType = self.dateType
+                    riskSecondVc.logo = self.logo
+                    riskSecondVc.name = self.name
+                    riskSecondVc.orgId = self.enityId
+                    riskSecondVc.itemId = itemId
+                    riskSecondVc.historyFlag = "0"
+                    riskSecondVc.monitoringTime = self.monitoringTime
+                    riskSecondVc.groupName = self.groupName
+                    self.navigationController?.pushViewController(riskSecondVc, animated: true)
+                }else if success.code == 702 {
+                    self.buyOneVipInfo()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+}
+
+extension HistoryRiskDetailViewController {
+    
+    private func buyOneVipInfo() {
+        let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+        buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
+        let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+        buyVipView.cancelBlock = {
+            self.dismiss(animated: true)
+        }
+        buyVipView.buyOneBlock = { [weak self] in
+            guard let self = self else { return }
+            //跳转购买单次会员
+            self.dismiss(animated: true, completion: {
+                let oneVc = BuyMonitoringOneVipViewController()
+                oneVc.entityType = 1
+                oneVc.entityId = self.enityId
+                oneVc.entityName = self.name
+                //刷新列表
+                oneVc.refreshBlock = { startTime, endTime in
+                    //刷新头部消息
+                    let allTime = "监控周期:\(startTime) - \(endTime)"
+                    self.mainHeadView?.timeLabel.text = allTime
+                    self.mainHeadView?.tagLabel.text = "默认分钟"
+                    self.mainHeadView?.tagLabel.isHidden = false
+                    self.mainHeadView?.monitoringBtn.isHidden = true
+                }
+                self.navigationController?.pushViewController(oneVc, animated: true)
+            })
+        }
+        buyVipView.buyVipBlock = {
+            //跳转购买会员
+            self.dismiss(animated: true, completion: {
+                let memVc = MembershipCenterViewController()
+                self.navigationController?.pushViewController(memVc, animated: true)
+            })
+        }
+        self.present(alertVc, animated: true)
     }
     
 }
@@ -594,4 +702,3 @@ extension HistoryRiskDetailViewController: JXPagingViewListViewDelegate {
     }
     
 }
-

@@ -31,6 +31,7 @@ enum NavRightType {
 //导航栏headview
 class HeadView: BaseView {
     
+    var backBlock: (() -> Void)?
     var oneBlock: (() -> Void)?
     var twoBlock: (() -> Void)?
     var threeBlock: (() -> Void)?
@@ -164,6 +165,10 @@ class HeadView: BaseView {
         
         threeBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.threeBlock?()
+        }).disposed(by: disposeBag)
+        
+        backBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.backBlock?()
         }).disposed(by: disposeBag)
     }
     

@@ -123,7 +123,7 @@ class LoginView: BaseView {
         mimaBtn.backgroundColor = .white
         mimaBtn.layer.masksToBounds = true
         mimaBtn.layer.cornerRadius = 18
-        mimaBtn.layer.borderWidth = 0.5
+        mimaBtn.layer.borderWidth = 1
         mimaBtn.layer.borderColor = UIColor.init(cssStr: "#CCCCCC")?.cgColor
         return mimaBtn
     }()

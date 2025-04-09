@@ -83,6 +83,7 @@ extension AppDelegate: WXApiDelegate {
     
     //微信登录
     private func wechatLogin(from authorizationCode: String) {
+        ViewHud.addLoadView()
         let dict = ["code": authorizationCode]
         let man = RequestManager()
         man.uploadDataAPI(params: dict,
@@ -110,8 +111,10 @@ extension AppDelegate: WXApiDelegate {
                         NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
                     }
                 }
+                ViewHud.hideLoadView()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }

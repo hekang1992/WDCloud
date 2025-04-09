@@ -99,10 +99,7 @@ class SearchEnterpriseViewController: WDBaseViewController {
                 self.oneView.isHidden = true
                 self.companyListView.isHidden = false
                 self.keyword = text
-                ViewHud.hideLoadView()
-                self.getCompanyListInfo {
-                    ViewHud.hideLoadView()
-                }
+                self.getCompanyListInfo {}
             }
         }).disposed(by: disposeBag)
         
@@ -354,9 +351,11 @@ extension SearchEnterpriseViewController {
                         self.companyListView.tableView.reloadData()
                     }
                 }
+                ViewHud.hideLoadView()
                 complete()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 complete()
                 break
             }

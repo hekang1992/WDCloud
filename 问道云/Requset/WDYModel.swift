@@ -207,7 +207,15 @@ class DataModel {
     var subjectId: String?
     var bindStatus: Int?
     var subjectType: Int?
+    var riskTracking: riskTrackingModel?
+    var tableInfo: tableInfoModel?
+    var logoColor: String?
+    var entityCategory: String?
     init(json: JSON) {
+        self.entityCategory = json["entityCategory"].stringValue
+        self.logoColor = json["logoColor"].stringValue
+        self.tableInfo = tableInfoModel(json: json["tableInfo"])
+        self.riskTracking = riskTrackingModel(json: json["riskTracking"])
         self.subjectType = json["subjectType"].intValue
         self.totalHighRiskCnt = json["totalHighRiskCnt"].intValue
         self.relatedEntityList = json["relatedEntityList"].arrayValue.map { relatedEntityListModel(json: $0) }
@@ -973,7 +981,13 @@ class rowsModel {
     var entityType: Int?
     var updateHourTime: String?
     var h5Url: String?
+    var caseName: String?
+    var detailId: Int?
+    var detailUrl: String?
     init(json: JSON) {
+        self.caseName = json["caseName"].string
+        self.detailId = json["detailId"].intValue
+        self.detailUrl = json["detailUrl"].string
         self.h5Url = json["h5Url"].string
         self.updateHourTime = json["updateHourTime"].stringValue
         self.entityType = json["entityType"].intValue
@@ -1237,7 +1251,11 @@ class orgInfoModel {
     var regAddr: regAddrModel?
     var logoColor: String?
     var usCreditCode: String?
+    var actCap: String?
+    var org_no: String?
     init(json: JSON) {
+        self.org_no = json["org_no"].stringValue
+        self.actCap = json["actCap"].stringValue
         self.usCreditCode = json["usCreditCode"].stringValue
         self.logo = json["logo"].stringValue
         self.logoColor = json["logoColor"].stringValue
@@ -2113,5 +2131,27 @@ class relatedEntityListModel {
         self.entityName = json["entityName"].stringValue
         self.identity = json["identity"].stringValue
         self.logoUrl = json["logoUrl"].stringValue
+    }
+}
+
+class riskTrackingModel {
+    var financeRisk: map1Model?
+    var lawRisk: map1Model?
+    var operationRisk: map1Model?
+    var opinionRisk: map1Model?
+    init(json: JSON) {
+        self.financeRisk = map1Model(json: json["financeRisk"])
+        self.lawRisk = map1Model(json: json["lawRisk"])
+        self.operationRisk = map1Model(json: json["operationRisk"])
+        self.opinionRisk = map1Model(json: json["opinionRisk"])
+    }
+}
+
+class tableInfoModel {
+    var total: Int?
+    var rows: [rowsModel]?
+    init(json: JSON) {
+        self.total = json["total"].intValue
+        self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
     }
 }

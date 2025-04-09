@@ -179,7 +179,7 @@ class AuthViewCell: BaseViewCell {
         btn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-19)
-            make.size.equalTo(CGSize(width: 60, height: 20))
+            make.size.equalTo(CGSize(width: 70, height: 20))
         }
         lineView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()

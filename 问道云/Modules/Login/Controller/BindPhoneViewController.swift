@@ -73,6 +73,7 @@ extension BindPhoneViewController {
         let phone = self.bindView.phoneTx.text ?? ""
         let code = self.bindView.codeTx.text ?? ""
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["code": code,
                     "phone": phone,
                     "wechatopenid": wechatopenid]
@@ -93,8 +94,10 @@ extension BindPhoneViewController {
                     self.view.endEditing(true)
                     NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
                 }
+                ViewHud.hideLoadView()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }
@@ -102,6 +105,7 @@ extension BindPhoneViewController {
     
     //获取验证码
     func getCodeInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["phone": self.bindView.phoneTx.text ?? "", "sendType": "4"]
         man.requestAPI(params: dict,
@@ -113,8 +117,10 @@ extension BindPhoneViewController {
                 ToastViewConfig.showToast(message: success.msg ?? "")
                 bindView.sendCodeBtn.isEnabled = false
                 codeTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+                ViewHud.hideLoadView()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }

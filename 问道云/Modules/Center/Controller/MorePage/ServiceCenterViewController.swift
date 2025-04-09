@@ -231,6 +231,7 @@ class ServiceCenterViewController: WDBaseViewController {
 extension ServiceCenterViewController {
     
     private func getMessageInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
         let dict = ["customernumber": customernumber]
@@ -244,8 +245,10 @@ extension ServiceCenterViewController {
                     self?.modelArray = modelArray
                     self?.refreshUI(from: modelArray)
                 }
+                ViewHud.hideLoadView()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }

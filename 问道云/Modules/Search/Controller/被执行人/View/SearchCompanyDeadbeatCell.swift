@@ -10,7 +10,9 @@ import RxRelay
 
 class SearchCompanyDeadbeatCell: BaseViewCell {
     
-    var model = BehaviorRelay<itemsModel?>(value: nil)
+    var model = BehaviorRelay<pageDataModel?>(value: nil)
+    
+    var nameBlock: ((leaderVecModel) -> Void)?
     
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
@@ -50,6 +52,7 @@ class SearchCompanyDeadbeatCell: BaseViewCell {
         oneLabel.textColor = .init(cssStr: "#9FA4AD")
         oneLabel.font = .regularFontOfSize(size: 13)
         oneLabel.textAlignment = .left
+        oneLabel.isUserInteractionEnabled = true
         return oneLabel
     }()
     
@@ -137,28 +140,45 @@ class SearchCompanyDeadbeatCell: BaseViewCell {
             make.height.equalTo(18.5)
         }
         
+        //名字点击
+        oneLabel
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self, let model = model.value?.leaderVec  else { return }
+                self.nameBlock?(model)
+        }).disposed(by: disposeBag)
+        
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            let name = model.entityName ?? ""
-            ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (40, 40)))
+            let name = model.orgInfo?.orgName ?? ""
+            ctImageView.kf.setImage(with: URL(string: model.orgInfo?.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (40, 40)))
             
             let serchStr = model.searchStr ?? ""
             nameLabel.attributedText = GetRedStrConfig.getRedStr(from: serchStr, fullText: name)
             
-            let count = String(model.count ?? "0")
-            numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条失信记录", font: .regularFontOfSize(size: 13))
+            let count = String(model.riskCount ?? 0)
+            let moduleId = model.moduleId ?? ""
+            if moduleId == "38" {
+                cImageView.isHidden = true
+                numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条被执行记录", font: .regularFontOfSize(size: 13))
+            }else {
+                cImageView.isHidden = false
+                numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条失信记录", font: .regularFontOfSize(size: 13))
+            }
             
-            let legalName = model.legalName ?? ""
-            oneLabel.attributedText = GetRedStrConfig.getRedStr(from: legalName, fullText: "法定代表人: \(legalName)", colorStr: "#547AFF", font: .regularFontOfSize(size: 13))
+            let legalName = model.leaderVec?.leaderList?.first?.name ?? ""
+            oneLabel.attributedText = GetRedStrConfig.getRedStr(from: legalName, fullText: "\(model.leaderVec?.leaderTypeName ?? ""): \(legalName)", colorStr: "#3F96FF", font: .regularFontOfSize(size: 13))
             
-            let registerCapital = model.registerCapital ?? ""
+            let registerCapital = model.orgInfo?.regCap ?? ""
             twoLabel.attributedText = GetRedStrConfig.getRedStr(from: registerCapital, fullText: "注册资本: \(registerCapital)", colorStr: "#333333", font: .regularFontOfSize(size: 13))
             
-            let incorporationTime = model.incorporationTime ?? ""
-            threeLabel.attributedText = GetRedStrConfig.getRedStr(from: registerCapital, fullText: "成立日期: \(incorporationTime)", colorStr: "#333333", font: .regularFontOfSize(size: 13))
+            let incorporationTime = model.orgInfo?.incDate ?? ""
+            threeLabel.attributedText = GetRedStrConfig.getRedStr(from: incorporationTime, fullText: "成立日期: \(incorporationTime)", colorStr: "#333333", font: .regularFontOfSize(size: 13))
             
-            let organizationNumber = model.organizationNumber ?? ""
-            fourLabel.attributedText = GetRedStrConfig.getRedStr(from: registerCapital, fullText: "组织机构代码: \(organizationNumber)", colorStr: "#333333", font: .regularFontOfSize(size: 13))
+            let organizationNumber = model.orgInfo?.org_no ?? ""
+            fourLabel.attributedText = GetRedStrConfig.getRedStr(from: organizationNumber, fullText: "组织机构代码: \(organizationNumber)", colorStr: "#333333", font: .regularFontOfSize(size: 13))
             
         }).disposed(by: disposeBag)
     }

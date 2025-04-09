@@ -335,7 +335,7 @@ extension CommonHotsView {
                 for tags in tagArray {
                     let tag = "\(tags)"
                     let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 14)])
-                    let width = titleSize.width + 10
+                    let width = titleSize.width
                     
                     if width + currentRight > maxWidth {
                         currentLine += 1

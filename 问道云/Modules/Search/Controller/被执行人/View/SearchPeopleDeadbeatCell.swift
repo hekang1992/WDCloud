@@ -39,14 +39,6 @@ class SearchPeopleDeadbeatCell: BaseViewCell {
         return lineView
     }()
     
-    lazy var idLabel: UILabel = {
-        let idLabel = UILabel()
-        idLabel.textColor = .init(cssStr: "#9FA4AD")
-        idLabel.font = .regularFontOfSize(size: 13)
-        idLabel.textAlignment = .left
-        return idLabel
-    }()
-    
     lazy var descLabel: UILabel = {
         let descLabel = UILabel()
         descLabel.textColor = .init(cssStr: "#9FA4AD")
@@ -67,7 +59,6 @@ class SearchPeopleDeadbeatCell: BaseViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(numLabel)
         contentView.addSubview(lineView)
-        contentView.addSubview(idLabel)
         contentView.addSubview(descLabel)
         contentView.addSubview(cImageView)
         
@@ -85,21 +76,17 @@ class SearchPeopleDeadbeatCell: BaseViewCell {
             make.centerY.equalTo(ctImageView.snp.centerY)
             make.right.equalToSuperview().offset(-12)
             make.height.equalTo(18.5)
-            make.bottom.equalToSuperview().offset(-76)
         }
         lineView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
             make.height.equalTo(5)
         }
-        idLabel.snp.makeConstraints { make in
-            make.left.equalTo(ctImageView.snp.left)
-            make.top.equalTo(ctImageView.snp.bottom).offset(11)
-            make.height.equalTo(18.5)
-        }
         descLabel.snp.makeConstraints { make in
             make.left.equalTo(ctImageView.snp.left)
-            make.top.equalTo(idLabel.snp.bottom).offset(4)
-            make.height.equalTo(18.5)
+            make.top.equalTo(ctImageView.snp.bottom).offset(11)
+            make.right.equalToSuperview().offset(-6)
+            make.height.equalTo(19)
+            make.bottom.equalToSuperview().offset(-10)
         }
         cImageView.snp.makeConstraints { make in
             make.centerY.equalTo(nameLabel.snp.centerY)
@@ -116,13 +103,17 @@ class SearchPeopleDeadbeatCell: BaseViewCell {
             nameLabel.attributedText = GetRedStrConfig.getRedStr(from: serchStr, fullText: name)
             
             let count = String(model.riskCount ?? 0)
-            numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条失信记录", font: .regularFontOfSize(size: 13))
-            
-            let idtext = model.idCardNumber ?? ""
-            idLabel.attributedText = GetRedStrConfig.getRedStr(from: idtext, fullText: "身份证号码: \(idtext)", font: .regularFontOfSize(size: 13))
-            
-            let desctext = model.resume ?? ""
-            descLabel.attributedText = GetRedStrConfig.getRedStr(from: desctext, fullText: "简介: \(idtext)", font: .regularFontOfSize(size: 13))
+            let moduleId = model.moduleId ?? ""
+            if moduleId == "38" {
+                cImageView.isHidden = true
+                numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条被执行记录", font: .regularFontOfSize(size: 13))
+            }else {
+                cImageView.isHidden = false
+                numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条失信记录", font: .regularFontOfSize(size: 13))
+            }
+
+            let desctext = (model.resume ?? "").isEmpty ? "--" : model.resume ?? ""
+            descLabel.attributedText = GetRedStrConfig.getRedStr(from: desctext, fullText: "简介: \(desctext)", colorStr: "#333333", font: .regularFontOfSize(size: 13))
             
         }).disposed(by: disposeBag)
     }

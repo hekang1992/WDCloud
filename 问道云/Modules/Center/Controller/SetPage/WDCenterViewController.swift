@@ -278,11 +278,13 @@ extension WDCenterViewController {
         case "邀请好友":
             let viteVc = InviteFriendViewController()
             self.navigationController?.pushViewController(viteVc, animated: true)
-            
             break
         case "分享好友":
+            ViewHud.addLoadView()
             let alertVc = TYAlertController(alert: codeView, preferredStyle: .actionSheet)
-            self.present(alertVc!, animated: true)
+            self.present(alertVc!, animated: true) {
+                ViewHud.hideLoadView()
+            }
             codeView.closeBtn.rx.tap.subscribe(onNext: { [weak self] in
                 self?.dismiss(animated: true)
             }).disposed(by: disposeBag)

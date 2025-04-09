@@ -154,7 +154,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
             nameLabel.text = model.personName ?? ""
             
             let moduleId = model.moduleId ?? ""
-            if moduleId == "14" {
+            if moduleId == "14" || moduleId == "15" {
                 let count = String(model.riskCount ?? 0)
                 self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条法院公告相关记录", font: .regularFontOfSize(size: 13))
             }else {

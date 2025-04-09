@@ -9,6 +9,7 @@ import UIKit
 import JXSegmentedView
 import JXPagingView
 import SwiftyJSON
+import TYAlertController
 
 class PeopleRiskDetailViewController: WDBaseViewController {
     
@@ -35,7 +36,7 @@ class PeopleRiskDetailViewController: WDBaseViewController {
     var intBlock: ((Double) -> Void)?
     
     //头部view
-    lazy var homeHeadView: PeopleRiskDetailHeadView = preferredTableHeaderView()
+    lazy var homeHeadView: CompanyRiskDetailHeadView = preferredTableHeaderView()
     
     var segmentedViewDataSource: JXSegmentedTitleDataSource!
     
@@ -81,10 +82,10 @@ class PeopleRiskDetailViewController: WDBaseViewController {
         segmentedView.listContainer = pagingView.listContainerView
         //距离高度禁止
         pagingView.pinSectionHeaderVerticalOffset = Int(StatusHeightManager.navigationBarHeight)
-        headView.titlelabel.text = "个人风险信息"
+        headView.titlelabel.text = "人员风险信息"
         addHeadView(from: headView)
         //获取风险数据
-//        getRiskDetailInfo()
+        //        getRiskDetailInfo()
     }
     
     //一定要加上这句代码,否则不会下拉刷新
@@ -93,8 +94,8 @@ class PeopleRiskDetailViewController: WDBaseViewController {
     }
     
     //头部
-    func preferredTableHeaderView() -> PeopleRiskDetailHeadView {
-        let header = PeopleRiskDetailHeadView()
+    func preferredTableHeaderView() -> CompanyRiskDetailHeadView {
+        let header = CompanyRiskDetailHeadView()
         header.iconImageView.kf.setImage(with: URL(string: logo ?? ""), placeholder: UIImage.imageOfText(name ?? "", size: (45, 45)))
         header.namelabel.text = name
         header.timeLabel.text = "监控周期: \(time ?? "")"
@@ -110,11 +111,110 @@ class PeopleRiskDetailViewController: WDBaseViewController {
             oneRpVc.orgInfo = orgInfo
             self.navigationController?.pushViewController(oneRpVc, animated: true)
         }
+        
+        //监控点击
+        header.monitoringBtn
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                addMonitoringInfo { }
+            }).disposed(by: disposeBag)
+        
         return header
     }
     
     @objc func changeTableHeaderViewHeight() {
         pagingView.resizeTableHeaderViewHeight(animatable: true)
+    }
+    
+}
+
+/** 网络数据请求 */
+extension PeopleRiskDetailViewController {
+    
+    private func addMonitoringInfo(complete: @escaping (() -> Void)) {
+        let man = RequestManager()
+        let dict = ["personId": self.personId ?? "",
+                    "groupId": ""]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
+                       method: .post) { [weak self] result in
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    guard let self = self else { return }
+                    let endDate = success.data?.endDate ?? ""
+                    let startDate = success.data?.startDate ?? ""
+                    homeHeadView.monitoringBtn.isHidden = true
+                    showOrHideMonitoringInfo(from: 1, startTime: startDate, endTime: endDate, groupName: "默认分组")
+                    ToastViewConfig.showToast(message: "监控成功")
+                    complete()
+                }else if success.code == 702 {
+                    self?.buyOneVipInfo()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //刷新头部监控按钮信息
+    private func showOrHideMonitoringInfo(from monitorFlag: Int, startTime: String, endTime: String, groupName: String) {
+        //头部信息
+        if monitorFlag != 0 {
+            let allTime = "监控周期:\(startTime) - \(endTime)"
+            homeHeadView.timeLabel.text = allTime
+            homeHeadView.tagLabel.text = groupName
+            homeHeadView.tagLabel.isHidden = false
+            homeHeadView.monitoringBtn.isHidden = true
+        }else {
+            homeHeadView.timeLabel.text = ""
+            homeHeadView.tagLabel.isHidden = true
+            homeHeadView.monitoringBtn.isHidden = false
+        }
+    }
+    
+}
+
+extension PeopleRiskDetailViewController {
+    
+    private func buyOneVipInfo() {
+        let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+        buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
+        let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+        buyVipView.cancelBlock = {
+            self.dismiss(animated: true)
+        }
+        buyVipView.buyOneBlock = { [weak self] in
+            guard let self = self else { return }
+            //跳转购买单次会员
+            self.dismiss(animated: true, completion: {
+                let oneVc = BuyMonitoringOneVipViewController()
+                oneVc.entityType = 1
+                oneVc.entityId = self.personId ?? ""
+                oneVc.entityName = self.name ?? ""
+                //刷新列表
+                oneVc.refreshBlock = { startTime, endTime in
+                    //刷新头部消息
+                    let allTime = "监控周期:\(startTime) - \(endTime)"
+                    self.homeHeadView.timeLabel.text = allTime
+                    self.homeHeadView.tagLabel.text = "默认分组"
+                    self.homeHeadView.tagLabel.isHidden = false
+                    self.homeHeadView.monitoringBtn.isHidden = true
+                }
+                self.navigationController?.pushViewController(oneVc, animated: true)
+            })
+        }
+        buyVipView.buyVipBlock = {
+            //跳转购买会员
+            self.dismiss(animated: true, completion: {
+                let memVc = MembershipCenterViewController()
+                self.navigationController?.pushViewController(memVc, animated: true)
+            })
+        }
+        self.present(alertVc, animated: true)
     }
     
 }
@@ -147,6 +247,7 @@ extension PeopleRiskDetailViewController: JXPagingViewDelegate {
             oneRiskVc.enityId = personId ?? ""
             oneRiskVc.name = name ?? ""
             oneRiskVc.logo = logo ?? ""
+            oneRiskVc.mainHeadView = homeHeadView
             return oneRiskVc
         }else if index == 1 {
             let twoRiskVc = PeopleUnioRiskViewController()

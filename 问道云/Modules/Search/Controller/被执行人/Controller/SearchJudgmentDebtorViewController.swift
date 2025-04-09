@@ -1,5 +1,5 @@
 //
-//  SearchCourtNoticeViewController.swift
+//  SearchJudgmentDebtorViewController.swift
 //  问道云
 //
 //  Created by Andrew on 2025/2/10.
@@ -11,7 +11,7 @@ import RxSwift
 import JXPagingView
 import JXSegmentedView
 
-class SearchCourtNoticeViewController: WDBaseViewController {
+class SearchJudgmentDebtorViewController: WDBaseViewController {
     
     private let man = RequestManager()
     
@@ -21,7 +21,7 @@ class SearchCourtNoticeViewController: WDBaseViewController {
     
     var segmentedView: JXSegmentedView!
     
-    let titles = ["企业", "人员"]
+    let titles = ["自然人", "企业"]
     
     var JXTableHeaderViewHeight: Int = Int(StatusHeightManager.navigationBarHeight + 50)
     
@@ -42,7 +42,7 @@ class SearchCourtNoticeViewController: WDBaseViewController {
     
     lazy var headView: PropertyHeadView = {
         let headView = PropertyHeadView()
-        headView.headView.titlelabel.text = "法院公告"
+        headView.headView.titlelabel.text = "被执行人"
         return headView
     }()
     
@@ -52,13 +52,13 @@ class SearchCourtNoticeViewController: WDBaseViewController {
         return oneView
     }()
     
-    lazy var companyVc: SearchCompanyCourtNoticeViewController = {
-        let companyVc = SearchCompanyCourtNoticeViewController()
+    lazy var companyVc: SearchCompanyJudgmentDebtorViewController = {
+        let companyVc = SearchCompanyJudgmentDebtorViewController()
         return companyVc
     }()
     
-    lazy var peopleVc: SearchPeopleCourtNoticeViewController = {
-        let peopleVc = SearchPeopleCourtNoticeViewController()
+    lazy var peopleVc: SearchPeopleJudgmentDebtorViewController = {
+        let peopleVc = SearchPeopleJudgmentDebtorViewController()
         return peopleVc
     }()
     
@@ -86,9 +86,9 @@ class SearchCourtNoticeViewController: WDBaseViewController {
                         self.oneView.isHidden = true
                         getNumInfo(from: text)
                         if selectIndex == 0 {
-                            companyVc.searchWords.accept(text)
-                        }else {
                             peopleVc.searchWords.accept(text)
+                        }else {
+                            companyVc.searchWords.accept(text)
                         }
                     }else {
                         self.oneView.isHidden = false
@@ -108,9 +108,9 @@ class SearchCourtNoticeViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if selectIndex == 0 {
-                    companyVc.searchWords.accept(text)
-                }else {
                     peopleVc.searchWords.accept(text)
+                }else {
+                    companyVc.searchWords.accept(text)
                 }
                 getNumInfo(from: text)
             })
@@ -129,9 +129,9 @@ class SearchCourtNoticeViewController: WDBaseViewController {
             if !keywords.isEmpty {
                 self?.oneView.isHidden = true
                 if self?.selectIndex == 0 {
-                    self?.companyVc.searchWords.accept(keywords)
-                }else {
                     self?.peopleVc.searchWords.accept(keywords)
+                }else {
+                    self?.companyVc.searchWords.accept(keywords)
                 }
                 self?.getNumInfo(from: keywords)
             }else {
@@ -151,7 +151,7 @@ class SearchCourtNoticeViewController: WDBaseViewController {
             ShowAlertManager.showAlert(title: "删除", message: "是否确定删除最近搜索?", confirmAction: {
                 ViewHud.addLoadView()
                 let man = RequestManager()
-                let dict = ["moduleId": "14"]
+                let dict = ["moduleId": "38"]
                 man.requestAPI(params: dict,
                                pageUrl: "/operation/searchRecord/clear",
                                method: .post) { [weak self] result in
@@ -181,7 +181,7 @@ class SearchCourtNoticeViewController: WDBaseViewController {
             ShowAlertManager.showAlert(title: "删除", message: "是否确定删除浏览历史?", confirmAction: {
                 ViewHud.addLoadView()
                 let man = RequestManager()
-                let dict = ["moduleId": "14"]
+                let dict = ["moduleId": "38"]
                 man.requestAPI(params: dict,
                                pageUrl: "/operation/view-record/del",
                                method: .post) { [weak self] result in
@@ -205,7 +205,7 @@ class SearchCourtNoticeViewController: WDBaseViewController {
   
 }
 
-extension SearchCourtNoticeViewController: JXPagingViewDelegate, JXSegmentedViewDelegate {
+extension SearchJudgmentDebtorViewController: JXPagingViewDelegate, JXSegmentedViewDelegate {
     
     private func addSegmentedView() {
         //segmentedViewDataSource一定要通过属性强持有！！！！！！！！！
@@ -248,6 +248,9 @@ extension SearchCourtNoticeViewController: JXPagingViewDelegate, JXSegmentedView
     }
     
     func tableHeaderView(in pagingView: JXPagingView) -> UIView {
+        headView.headView.backBlock = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
         return headView
     }
     
@@ -265,19 +268,19 @@ extension SearchCourtNoticeViewController: JXPagingViewDelegate, JXSegmentedView
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         if index == 0 {
-            return companyVc
-        }else{
             return peopleVc
+        }else{
+            return companyVc
         }
     }
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         selectIndex = index
         if index == 0 {
-            self.companyVc.searchWords.accept(self.headView.searchHeadView.searchTx
+            self.peopleVc.searchWords.accept(self.headView.searchHeadView.searchTx
                 .text ?? "")
         }else {
-            self.peopleVc.searchWords.accept(self.headView.searchHeadView.searchTx
+            self.companyVc.searchWords.accept(self.headView.searchHeadView.searchTx
                 .text ?? "")
         }
     }
@@ -285,10 +288,10 @@ extension SearchCourtNoticeViewController: JXPagingViewDelegate, JXSegmentedView
 }
 
 /** 网络数据请求 */
-extension SearchCourtNoticeViewController {
+extension SearchJudgmentDebtorViewController {
     
     private func getNumInfo(from keywords: String){
-        let dict = ["keyword": keywords, "riskType": "COURT_ANNO_COUNT"]
+        let dict = ["keyword": keywords, "riskType": "PERSON_ENFORCE_COUNT"]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/home-page/risk-correlation/table-count",
                        method: .get) { [weak self] result in
@@ -298,7 +301,7 @@ extension SearchCourtNoticeViewController {
                     guard let self = self else { return }
                     let companyCount = success.data?.orgCount ?? 0
                     let peopleCount = success.data?.personCount ?? 0
-                    let titles = ["企业\(companyCount)", "人员\(peopleCount)"]
+                    let titles = ["自然人\(peopleCount)", "企业\(companyCount)"]
                     self.segmentedViewDataSource.titles = titles
                     self.segmentedView.reloadData()
                 }
@@ -314,7 +317,7 @@ extension SearchCourtNoticeViewController {
         let group = DispatchGroup()
         ViewHud.addLoadView()
         group.enter()
-        getLastSearchInfo(from: "14") { [weak self] modelArray in
+        getLastSearchInfo(from: "38") { [weak self] modelArray in
             if !modelArray.isEmpty {
                 self?.oneView.bgView.isHidden = false
                 self?.oneView.bgView.snp.remakeConstraints({ make in
@@ -337,13 +340,13 @@ extension SearchCourtNoticeViewController {
         }
         
         group.enter()
-        getLastHistroyInfo(from: "14") { [weak self] modelArray in
+        getLastHistroyInfo(from: "38") { [weak self] modelArray in
             self?.historyArray = modelArray
             group.leave()
         }
         
         group.enter()
-        getLastHotsInfo(from: "14") { [weak self] modelArray in
+        getLastHotsInfo(from: "38") { [weak self] modelArray in
             self?.hotsArray = modelArray
             group.leave()
         }
@@ -357,3 +360,4 @@ extension SearchCourtNoticeViewController {
     }
     
 }
+

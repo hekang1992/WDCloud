@@ -1,5 +1,5 @@
 //
-//  SearchBossViewController.swift
+//  SearchPeopleStartCourtNoticeViewController.swift
 //  问道云
 //
 //  Created by 何康 on 2025/3/31.
@@ -15,7 +15,7 @@ import JXPagingView
 import SkeletonView
 import TYAlertController
 
-class SearchBossViewController: WDBaseViewController {
+class SearchPeopleStartCourtNoticeViewController: WDBaseViewController {
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
@@ -96,8 +96,6 @@ class SearchBossViewController: WDBaseViewController {
                 self.oneView.isHidden = false
                 self.twoPeopleListView.isHidden = true
                 self.allArray.removeAll()
-                //获取热搜等数据
-                getHotsSearchInfo()
             }else {
                 self.oneView.isHidden = true
                 self.twoPeopleListView.isHidden = false
@@ -117,10 +115,10 @@ class SearchBossViewController: WDBaseViewController {
         setupUI()
         
     }
-    
+   
 }
 
-extension SearchBossViewController {
+extension SearchPeopleStartCourtNoticeViewController {
     
     private func setupUI() {
         //添加下拉筛选
@@ -176,79 +174,24 @@ extension SearchBossViewController {
             self.searchListInfo()
         })
         
-        //删除最近搜索
-        oneView.deleteBlock = {
-            ShowAlertManager.showAlert(title: "删除", message: "是否确定删除最近搜索?", confirmAction: {
-                ViewHud.addLoadView()
-                let man = RequestManager()
-                let dict = ["moduleId": "02"]
-                man.requestAPI(params: dict,
-                               pageUrl: "/operation/searchRecord/clear",
-                               method: .post) { [weak self] result in
-                    ViewHud.hideLoadView()
-                    switch result {
-                    case .success(let success):
-                        if success.code == 200 {
-                            ToastViewConfig.showToast(message: "删除成功")
-                            self?.oneView.bgView.isHidden = true
-                            self?.oneView.bgView.snp.remakeConstraints({ make in
-                                make.top.equalToSuperview().offset(1)
-                                make.left.equalToSuperview()
-                                make.width.equalTo(SCREEN_WIDTH)
-                                make.height.equalTo(0)
-                            })
-                        }
-                        break
-                    case .failure(_):
-                        break
-                    }
-                }
-            })
+        twoPeopleListView.pageBlock = { [weak self] model in
+            let pageUrl = model.detailUrl ?? ""
+            let webUrl = base_url + pageUrl
+            self?.pushWebPage(from: webUrl)
         }
         
-        //删除浏览历史
-        oneView.deleteHistoryBlock = {
-            ShowAlertManager.showAlert(title: "删除", message: "是否确定删除浏览历史?", confirmAction: {
-                ViewHud.addLoadView()
-                let man = RequestManager()
-                let dict = ["moduleId": "02"]
-                man.requestAPI(params: dict,
-                               pageUrl: "/operation/view-record/del",
-                               method: .post) { [weak self] result in
-                    ViewHud.hideLoadView()
-                    switch result {
-                    case .success(let success):
-                        if success.code == 200 {
-                            ToastViewConfig.showToast(message: "删除成功")
-                            self?.historyArray.removeAll()
-                            self?.oneView.modelArray = [self?.historyArray ?? [], self?.hotsArray ?? []]
-                        }
-                        break
-                    case .failure(_):
-                        break
-                    }
-                }
-            })
-        }
-        
-        //浏览历史和热门搜索点击
-        oneView.cellBlock = { [weak self] index, model in
-            let peopleDetailVc = PeopleBothViewController()
-            peopleDetailVc.personId.accept(model.entityId ?? "")
-            peopleDetailVc.peopleName.accept(model.entityName ?? "")
-            self?.navigationController?.pushViewController(peopleDetailVc, animated: true)
-        }
     }
     
 }
 
 /** 网络数据请求*/
-extension SearchBossViewController {
+extension SearchPeopleStartCourtNoticeViewController {
     
     //获取人员列表数据
     private func searchListInfo() {
-        ViewHud.addLoadView()
         let dict = ["keywords": keyword,
+                    "moduleId": "15",
+                    "riskType": "COURT_OPEN_ANNO_COUNT",
                     "orgIndustry": entityIndustry,
                     "orgArea": entityArea,
                     "pageNum": pageIndex,
@@ -257,7 +200,6 @@ extension SearchBossViewController {
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/person/boss-search",
                        method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
             self?.twoPeopleListView.tableView.mj_header?.endRefreshing()
             self?.twoPeopleListView.tableView.mj_footer?.endRefreshing()
             switch result {
@@ -274,6 +216,9 @@ extension SearchBossViewController {
                     }
                     pageIndex += 1
                     let pageData = model.items ?? []
+                    for model in pageData {
+                        model.moduleId = "15"
+                    }
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
@@ -293,68 +238,18 @@ extension SearchBossViewController {
                         self.twoPeopleListView.tableView.reloadData()
                     }
                 }
+                ViewHud.hideLoadView()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }
-    }
-    
-    //获取最近搜索,浏览历史,热搜
-    private func getHotsSearchInfo() {
-        let group = DispatchGroup()
-        ViewHud.addLoadView()
-        group.enter()
-        getLastSearchInfo(from: "02") { [weak self] modelArray in
-            if !modelArray.isEmpty {
-                self?.oneView.bgView.isHidden = false
-                self?.oneView.bgView.snp.remakeConstraints({ make in
-                    make.top.equalToSuperview().offset(1)
-                    make.left.equalToSuperview()
-                    make.width.equalTo(SCREEN_WIDTH)
-                })
-                self?.oneView.tagArray = modelArray.map { $0.searchContent ?? "" }
-                self?.oneView.setupScrollView()
-            }else {
-                self?.oneView.bgView.isHidden = true
-                self?.oneView.bgView.snp.remakeConstraints({ make in
-                    make.top.equalToSuperview().offset(1)
-                    make.left.equalToSuperview()
-                    make.width.equalTo(SCREEN_WIDTH)
-                    make.height.equalTo(0)
-                })
-            }
-            group.leave()
-        }
-        
-        group.enter()
-        getLastHistroyInfo(from: "02") { [weak self] modelArray in
-            self?.historyArray = modelArray
-            group.leave()
-        }
-        
-        group.enter()
-        getLastHotsInfo(from: "02") { [weak self] modelArray in
-            self?.hotsArray = modelArray
-            group.leave()
-        }
-        
-        group.notify(queue: .main) {
-            self.modelArray = [self.historyArray, self.hotsArray]
-            self.oneView.modelArray = self.modelArray
-            self.completeBlock?()
-            ViewHud.hideLoadView()
-        }
-        
-        oneView.tagClickBlock = { [weak self] label in
-            self?.lastSearchTextBlock?(label.text ?? "")
-        }
-        
     }
     
 }
 
-extension SearchBossViewController: JXPagingViewListViewDelegate {
+extension SearchPeopleStartCourtNoticeViewController: JXPagingViewListViewDelegate {
     
     func listView() -> UIView {
         return view

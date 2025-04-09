@@ -9,6 +9,7 @@ import UIKit
 import JXPagingView
 import DropMenuBar
 import RxRelay
+import TYAlertController
 
 class PeopleMySelfRiskViewController: WDBaseViewController {
     
@@ -20,6 +21,10 @@ class PeopleMySelfRiskViewController: WDBaseViewController {
     var dateType: String = ""
     var itemtype: String = "1"
     var allArray: [itemDtoListModel]?
+    //主头部信息
+    var mainHeadView: CompanyRiskDetailHeadView?
+    var monitoringTime: String = ""
+    var groupName: String = ""
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
@@ -538,6 +543,29 @@ extension PeopleMySelfRiskViewController {
         self.oneItemView.numLabel.text = String(listModel?.highLevelCnt ?? 0)
         self.twoItemView.numLabel.text = String(listModel?.lowLevelCnt ?? 0)
         self.threeItemView.numLabel.text = String(listModel?.tipLevelCnt ?? 0)
+        let monitorFlag = model.monitorFlag ?? 0
+        let startTime = model.monitorStartDate ?? ""
+        let endTime = model.monitorEndDate ?? ""
+        let groupName = model.groupName ?? ""
+        showOrHideMonitoringInfo(from: monitorFlag, startTime: startTime, endTime: endTime, groupName: groupName)
+    }
+    
+    //刷新头部监控按钮信息
+    private func showOrHideMonitoringInfo(from monitorFlag: Int, startTime: String, endTime: String, groupName: String) {
+        //头部信息
+        if monitorFlag != 0 {
+            let allTime = "监控周期:\(startTime) - \(endTime)"
+            mainHeadView?.timeLabel.text = allTime
+            mainHeadView?.tagLabel.text = groupName
+            mainHeadView?.tagLabel.isHidden = false
+            self.monitoringTime = allTime
+            self.groupName = groupName
+            mainHeadView?.monitoringBtn.isHidden = true
+        }else {
+            mainHeadView?.timeLabel.text = ""
+            mainHeadView?.tagLabel.isHidden = true
+            mainHeadView?.monitoringBtn.isHidden = false
+        }
     }
     
 }
@@ -589,12 +617,85 @@ extension PeopleMySelfRiskViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let riskSecondVc = ComanyRiskMoreDetailViewController()
-        riskSecondVc.dateType = self.dateType
-        riskSecondVc.logo = self.logo
-        riskSecondVc.name = self.name
-        riskSecondVc.orgId = self.enityId
-        self.navigationController?.pushViewController(riskSecondVc, animated: true)
+        if let model = self.allArray?[indexPath.row] {
+            checkClickInfo(form: model)
+        }
+    }
+    
+    //判断是否有权限点击
+    private func checkClickInfo(form model: itemDtoListModel) {
+        ViewHud.addLoadView()
+        let itemId = model.itemId ?? ""
+        let entityId = self.enityId
+        let entityName = self.name
+        let man = RequestManager()
+        let dict = ["entityType": "1",
+                    "itemId": itemId,
+                    "entityId": entityId,
+                    "entityName": entityName]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/equity-risk/check",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                guard let self = self else { return }
+                if success.code == 200 {
+                    let riskSecondVc = ComanyRiskMoreDetailViewController()
+                    riskSecondVc.dateType = self.dateType
+                    riskSecondVc.logo = self.logo
+                    riskSecondVc.name = self.name
+                    riskSecondVc.orgId = self.enityId
+                    riskSecondVc.itemId = itemId
+                    riskSecondVc.historyFlag = "0"
+                    riskSecondVc.monitoringTime = self.monitoringTime
+                    riskSecondVc.groupName = self.groupName
+                    self.navigationController?.pushViewController(riskSecondVc, animated: true)
+                }else if success.code == 702 {
+                    self.buyOneVipInfo()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    private func buyOneVipInfo() {
+        let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+        buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
+        let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+        buyVipView.cancelBlock = {
+            self.dismiss(animated: true)
+        }
+        buyVipView.buyOneBlock = { [weak self] in
+            guard let self = self else { return }
+            //跳转购买单次会员
+            self.dismiss(animated: true, completion: {
+                let oneVc = BuyMonitoringOneVipViewController()
+                oneVc.entityType = 1
+                oneVc.entityId = self.enityId
+                oneVc.entityName = self.name
+                //刷新列表
+                oneVc.refreshBlock = { startTime, endTime in
+                    //刷新头部消息
+                    let allTime = "监控周期:\(startTime) - \(endTime)"
+                    self.mainHeadView?.timeLabel.text = allTime
+                    self.mainHeadView?.tagLabel.text = "默认分钟"
+                    self.mainHeadView?.tagLabel.isHidden = false
+                    self.mainHeadView?.monitoringBtn.isHidden = true
+                }
+                self.navigationController?.pushViewController(oneVc, animated: true)
+            })
+        }
+        buyVipView.buyVipBlock = {
+            //跳转购买会员
+            self.dismiss(animated: true, completion: {
+                let memVc = MembershipCenterViewController()
+                self.navigationController?.pushViewController(memVc, animated: true)
+            })
+        }
+        self.present(alertVc, animated: true)
     }
     
 }

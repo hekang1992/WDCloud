@@ -178,7 +178,7 @@ extension SearchCompanyDondDefaultViewController: UITableViewDelegate, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCompanyDeadbeatCell", for: indexPath) as! SearchCompanyDeadbeatCell
         model.navHeadTitleStr = "债券违约"
         model.searchStr = self.keyWords.value
-        cell.model.accept(model)
+//        cell.model.accept(model)
         cell.selectionStyle = .none
         cell.cImageView.isHidden = true
         return cell

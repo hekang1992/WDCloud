@@ -315,13 +315,6 @@ class SearchRiskViewController: WDBaseViewController {
         
         
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("风险===============风险")
-        //获取热搜等数据
-        getHotsSearchInfo()
-    }
     
 }
 

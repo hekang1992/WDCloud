@@ -703,7 +703,7 @@ struct Validator {
     // MARK: - 银行卡验证
     /// 验证银行卡号（16-19位数字）
     static func isValidBankCardNumber(_ cardNumber: String) -> Bool {
-        let pattern = #"^\d{15,19}$"#
+        let pattern = #"^\d{10,30}$"#
         return cardNumber.range(of: pattern, options: .regularExpression) != nil
     }
     

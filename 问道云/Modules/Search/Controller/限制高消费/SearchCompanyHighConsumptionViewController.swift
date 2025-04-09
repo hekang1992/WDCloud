@@ -177,7 +177,7 @@ extension SearchCompanyHighConsumptionViewController: UITableViewDelegate, UITab
         let model = self.allArray[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCompanyDeadbeatCell", for: indexPath) as! SearchCompanyDeadbeatCell
         model.searchStr = self.keyWords.value
-        cell.model.accept(model)
+//        cell.model.accept(model)
         cell.selectionStyle = .none
         cell.cImageView.isHidden = true
         return cell
