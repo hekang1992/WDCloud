@@ -398,7 +398,6 @@ extension CompanyDetailViewController {
     
     //取消关注
     private func cancelFocus(from model: DataModel) {
-        ViewHud.addLoadView()
         ShowAlertManager.showAlert(title: "取消关注", message: "是否取消关注?", confirmAction: {
             let man = RequestManager()
             let entityId = model.basicInfo?.orgId ?? ""

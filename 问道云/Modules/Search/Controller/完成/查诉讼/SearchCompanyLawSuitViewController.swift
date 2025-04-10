@@ -278,7 +278,7 @@ extension SearchCompanyLawSuitViewController: UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
         let detailVc = JudgmentDebtorDetailViewController()
-        detailVc.orgmodel = model
+        detailVc.orgId = model.orgInfo?.orgId ?? ""
         detailVc.nameTitle = "诉讼记录列表"
         detailVc.pageUrl = "/firminfo/v2/home-page/risk-correlation/org"
         detailVc.riskType = "LAWSUIT_COUNT"

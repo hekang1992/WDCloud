@@ -143,10 +143,18 @@ class SearchJudgmentDebtorViewController: WDBaseViewController {
         }
         
         self.oneView.cellBlock = { [weak self] index, model in
-            let detailListVc = ContorlDetailViewViewController()
-            detailListVc.entityId = model.entityId ?? ""
-            detailListVc.entityCategory = String(model.entityType ?? 1)
-            self?.navigationController?.pushViewController(detailListVc, animated: true)
+            let entityType = model.entityType ?? 0
+            let detailVc = JudgmentDebtorDetailViewController()
+            if entityType == 1 {
+                detailVc.orgId = model.entityId ?? ""
+                detailVc.pageUrl = "/firminfo/v2/home-page/risk-correlation/org"
+            }else {
+                detailVc.personId = model.entityId ?? ""
+                detailVc.pageUrl = "/firminfo/v2/home-page/risk-correlation/person"
+            }
+            detailVc.nameTitle = "被执行人记录列表"
+            detailVc.riskType = "PERSON_ENFORCE_COUNT"
+            self?.navigationController?.pushViewController(detailVc, animated: true)
         }
         
         //删除最近搜索

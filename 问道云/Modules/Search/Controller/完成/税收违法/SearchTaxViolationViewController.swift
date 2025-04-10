@@ -143,10 +143,11 @@ class SearchTaxViolationViewController: WDBaseViewController {
         }
         
         self.oneView.cellBlock = { [weak self] index, model in
-            let detailListVc = ContorlDetailViewViewController()
-            detailListVc.entityId = model.entityId ?? ""
-            detailListVc.entityCategory = String(model.entityType ?? 1)
-            self?.navigationController?.pushViewController(detailListVc, animated: true)
+            let pageUrl = model.h5Url ?? ""
+            let webVc = WebPageViewController()
+            let webUrl = base_url + pageUrl
+            webVc.pageUrl.accept(webUrl)
+            self?.navigationController?.pushViewController(webVc, animated: true)
         }
         
         //删除最近搜索

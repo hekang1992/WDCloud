@@ -10,17 +10,8 @@ import MJRefresh
 
 class JudgmentDebtorDetailViewController: WDBaseViewController {
     
-    var model: itemsModel? {
-        didSet {
-            
-        }
-    }
-    
-    var orgmodel: pageDataModel? {
-        didSet {
-            
-        }
-    }
+    var personId: String = ""
+    var orgId: String = ""
     
     var nameTitle: String = ""
     var pageUrl: String = ""
@@ -308,8 +299,8 @@ extension JudgmentDebtorDetailViewController {
     private func getDetailInfo() {
         ViewHud.addLoadView()
         let man = RequestManager()
-        let dict = ["personId": model?.personId ?? "",
-                    "orgId": orgmodel?.orgInfo?.orgId ?? "",
+        let dict = ["personId": personId,
+                    "orgId": orgId,
                     "riskType": riskType,
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]

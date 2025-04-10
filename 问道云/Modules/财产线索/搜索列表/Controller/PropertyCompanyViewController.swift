@@ -270,7 +270,7 @@ extension PropertyCompanyViewController {
                     let bothVc = PropertyLineBothViewController()
                     let enityId = model.subjectId ?? ""
                     let companyName = model.subjectName ?? ""
-                    bothVc.entityType = model.subjectType ?? 0
+                    bothVc.entityType = 1
                     bothVc.enityId.accept(enityId)
                     bothVc.companyName.accept(companyName)
                     bothVc.logoUrl = model.logoUrl ?? ""

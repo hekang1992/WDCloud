@@ -722,9 +722,7 @@ extension PropertyLineOneViewController {
     
     //获取财产线索列表信息
     private func getListInfo(complete: @escaping (() -> Void)) {
-        let subjectId = entityId
-        let subjectType = "1"
-        let dict = ["subjectId": subjectId,
+        let dict = ["subjectId": entityId,
                     "subjectType": subjectType,
                     "conditionCode": conditionCode,
                     "clueDirection": clueDirection,
@@ -869,5 +867,13 @@ extension PropertyLineOneViewController: UICollectionViewDelegate, UICollectionV
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = self.model.value?.relatedEntityList?[indexPath.row]
+        let bothVc = PropertyLineBothViewController()
+        bothVc.enityId.accept(String(model?.entityId ?? 0))
+        bothVc.companyName.accept(model?.entityName ?? "")
+        bothVc.entityType = model?.entityCategory ?? 0
+        self.navigationController?.pushViewController(bothVc, animated: true)
+    }
     
 }

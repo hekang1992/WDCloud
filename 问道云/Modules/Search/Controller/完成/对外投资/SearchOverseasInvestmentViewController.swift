@@ -143,10 +143,7 @@ class SearchOverseasInvestmentViewController: WDBaseViewController {
         }
         
         self.oneView.cellBlock = { [weak self] index, model in
-            let detailListVc = ContorlDetailViewViewController()
-            detailListVc.entityId = model.entityId ?? ""
-            detailListVc.entityCategory = String(model.entityType ?? 1)
-            self?.navigationController?.pushViewController(detailListVc, animated: true)
+            
         }
         
         //删除最近搜索

@@ -272,7 +272,7 @@ extension SearchPeopleDeadbeatViewController: UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
         let detailVc = JudgmentDebtorDetailViewController()
-        detailVc.model = model
+        detailVc.personId = model.personId ?? ""
         detailVc.nameTitle = "失信记录列表"
         detailVc.pageUrl = "/firminfo/v2/home-page/risk-correlation/person"
         detailVc.riskType = "DEP_COUNT"

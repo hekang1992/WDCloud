@@ -278,7 +278,7 @@ extension SearchCompanyDeadbeatViewController: UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
         let detailVc = JudgmentDebtorDetailViewController()
-        detailVc.orgmodel = model
+        detailVc.orgId = model.orgInfo?.orgId ?? ""
         detailVc.nameTitle = "失信记录列表"
         detailVc.pageUrl = "/firminfo/v2/home-page/risk-correlation/org"
         detailVc.riskType = "DEP_COUNT"

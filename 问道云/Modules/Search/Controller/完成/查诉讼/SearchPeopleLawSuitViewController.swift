@@ -272,7 +272,7 @@ extension SearchPeopleLawSuitViewController: UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
         let detailVc = JudgmentDebtorDetailViewController()
-        detailVc.model = model
+        detailVc.personId = model.personId ?? ""
         detailVc.nameTitle = "诉讼记录列表"
         detailVc.pageUrl = "/firminfo/v2/home-page/risk-correlation/person"
         detailVc.riskType = "LAWSUIT_COUNT"

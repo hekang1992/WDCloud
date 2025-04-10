@@ -2126,7 +2126,9 @@ class relatedEntityListModel {
     var entityName: String?
     var identity: String?
     var logoUrl: String?
+    var entityCategory: Int?
     init(json: JSON) {
+        self.entityCategory = json["entityCategory"].intValue
         self.clueNum = json["clueNum"].intValue
         self.clueValuation = json["clueValuation"].stringValue
         self.entityId = json["entityId"].intValue

@@ -161,6 +161,7 @@ class PropertyLineTwoCell: BaseViewCell {
             make.top.equalTo(nameLabel.snp.bottom).offset(4)
             make.height.equalTo(16.5)
             make.left.equalTo(nameLabel.snp.left)
+            make.right.equalToSuperview().offset(-40)
         }
         clueNameLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)

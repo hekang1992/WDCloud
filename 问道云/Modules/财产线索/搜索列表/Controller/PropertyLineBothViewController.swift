@@ -163,6 +163,7 @@ extension PropertyLineBothViewController: JXSegmentedViewDelegate {
             oneVc.entityName = self.companyName.value
             oneVc.monitor = self.monitor
             oneVc.logoUrl = self.logoUrl
+            oneVc.subjectType = String(self.entityType ?? 0)
             oneVc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
             contentScrollView.addSubview(oneVc.view)
             addChild(oneVc)
@@ -172,7 +173,7 @@ extension PropertyLineBothViewController: JXSegmentedViewDelegate {
             twoVc.entityName = self.companyName.value
             twoVc.monitor = self.monitor
             twoVc.logoUrl = self.logoUrl
-            twoVc.entityType = entityType ?? 1
+            twoVc.entityType = entityType ?? 0
             twoVc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
             contentScrollView.addSubview(twoVc.view)
             addChild(twoVc)
@@ -189,7 +190,7 @@ extension PropertyLineBothViewController {
         let man = RequestManager()
         let dict = ["subjectId": enityId.value,
                     "subjectName": companyName.value,
-                    "subjectType": "1"]
+                    "subjectType": String(entityType ?? 0)]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/property/clue/scan/history/add",
                        method: .post) { result in

@@ -278,7 +278,7 @@ extension SearchCompanyJudgmentDebtorViewController: UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
         let detailVc = JudgmentDebtorDetailViewController()
-        detailVc.orgmodel = model
+        detailVc.orgId = model.orgInfo?.orgId ?? ""
         detailVc.nameTitle = "被执行人记录列表"
         detailVc.pageUrl = "/firminfo/v2/home-page/risk-correlation/org"
         detailVc.riskType = "PERSON_ENFORCE_COUNT"

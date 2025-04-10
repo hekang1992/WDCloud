@@ -315,14 +315,9 @@ extension FocusCompanyViewController {
             case .success(let success):
                 if let model = success.data {
                     self.companyView.numLabel.text = String(model.total ?? 0)
-                    if model.total != 0 {
-                        self.companyView.dataModel.accept(model)
-                        self.dataModel.accept(model)
-                        self.companyView.tableView.reloadData()
-                        self.emptyView.removeFromSuperview()
-                    }else {
-                        self.addNodataView(from: self.companyView)
-                    }
+                    self.companyView.dataModel.accept(model)
+                    self.dataModel.accept(model)
+                    self.companyView.tableView.reloadData()
                 }
                 break
             case .failure(_):

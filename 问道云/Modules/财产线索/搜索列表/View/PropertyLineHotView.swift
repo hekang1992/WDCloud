@@ -149,7 +149,7 @@ extension PropertyLineHotView {
     private func checkInfo(from model: DataModel,
                            cell: PropertyListViewCell) {
         ViewHud.addLoadView()
-        let entityType = "1"
+        let entityType = String(model.subjectType ?? 0)
         let entityId = model.subjectId ?? ""
         let entityName = model.subjectName ?? ""
         let dict = ["entityType": entityType,
@@ -167,7 +167,8 @@ extension PropertyLineHotView {
                     let bothVc = PropertyLineBothViewController()
                     let enityId = model.subjectId ?? ""
                     let companyName = model.subjectName ?? ""
-                    bothVc.entityType = model.subjectType ?? 0
+                    let subjectType = model.subjectType ?? 0
+                    bothVc.entityType = subjectType
                     bothVc.enityId.accept(enityId)
                     bothVc.companyName.accept(companyName)
                     bothVc.logoUrl = model.logoUrl ?? ""

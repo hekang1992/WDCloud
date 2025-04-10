@@ -339,11 +339,12 @@ extension PropertyThreeBothViewController: UITableViewDelegate, UITableViewDataS
         let bothVc = PropertyLineBothViewController()
         let enityId = model.entityId ?? ""
         let companyName = model.entityName ?? ""
+        let entityType = model.entityType ?? 0
         bothVc.enityId.accept(enityId)
         bothVc.companyName.accept(companyName)
         bothVc.logoUrl = model.logo ?? ""
         bothVc.monitor = true
-        bothVc.entityType = model.entityType ?? 0
+        bothVc.entityType = entityType
         self.navigationController?.pushViewController(bothVc, animated: true)
     }
     
