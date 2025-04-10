@@ -8,6 +8,7 @@
 import UIKit
 import JXPagingView
 import RxRelay
+import TYAlertController
 
 class PeopleDetailThreeViewController: WDBaseViewController {
     
@@ -123,6 +124,34 @@ extension PeopleDetailThreeViewController: UICollectionViewDelegateFlowLayout, U
         let modelArray = self.model.value?.items?.first?.children ?? []
         let newArray = Array(modelArray.dropLast())[indexPath.section]
         let model = newArray.children?[indexPath.row]
+        
+        let markCount = model?.markCount ?? 0
+        let markFlag = model?.markFlag ?? 0
+        let clickFlag = model?.clickFlag ?? 0
+        if markCount == 0 && markFlag != 0 {
+            ToastViewConfig.showToast(message: "暂无信息")
+            return
+        }
+        //弹窗去购买会员
+        if clickFlag != 0 {
+            let popView = PopOnlyBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 300))
+            let alertVc = TYAlertController(alert: popView, preferredStyle: .alert)!
+            self.present(alertVc, animated: true)
+            popView.cancelBlock = { [weak self] in
+                self?.dismiss(animated: true)
+            }
+            popView.sureBlock = { [weak self] in
+                self?.dismiss(animated: true) {
+                    let menVc = MembershipCenterViewController()
+                    self?.navigationController?.pushViewController(menVc, animated: true)
+                    menVc.payBlock = {
+                        self?.getPeopleDetailItemInfo()
+                    }
+                }
+            }
+            return
+        }
+
         let pageUrl = base_url + (model?.path ?? "")
         let webVc = WebPageViewController()
         webVc.pageUrl.accept(pageUrl)
