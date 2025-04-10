@@ -8,6 +8,7 @@
 import UIKit
 import RxRelay
 import SwiftyJSON
+import TYAlertController
 
 class CompanyDetailViewController: WDBaseViewController {
     
@@ -46,11 +47,49 @@ class CompanyDetailViewController: WDBaseViewController {
         }
         companyDetailView.cellBlock = { [weak self] model in
             guard let self = self else { return }
-            let pathUrl = model.path ?? ""
-            let pageUrl = base_url + pathUrl
-            let webVc = WebPageViewController()
-            webVc.pageUrl.accept(pageUrl)
-            self.navigationController?.pushViewController(webVc, animated: true)
+            let markCount = model.markCount ?? 0
+            let markFlag = model.markFlag ?? 0
+            let clickFlag = model.clickFlag ?? 0
+            if markCount == 0 && markFlag != 0 {
+                ToastViewConfig.showToast(message: "暂无信息")
+                return
+            }
+            //弹窗去购买会员
+            if clickFlag != 0 {
+                let popView = PopOnlyBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 300))
+                let alertVc = TYAlertController(alert: popView, preferredStyle: .alert)!
+                self.present(alertVc, animated: true)
+                popView.cancelBlock = { [weak self] in
+                    self?.dismiss(animated: true)
+                }
+                popView.sureBlock = { [weak self] in
+                    self?.dismiss(animated: true) {
+                        let menVc = MembershipCenterViewController()
+                        self?.navigationController?.pushViewController(menVc, animated: true)
+                        menVc.payBlock = {
+                            self?.getDetailInfo()
+                        }
+                    }
+                }
+                return
+            }
+            let menuId = model.menuId ?? ""
+            if menuId == "20160" {
+                let bothVc = PropertyLineBothViewController()
+                let enityId = headModel.value?.basicInfo?.orgId ?? ""
+                let companyName = headModel.value?.basicInfo?.orgName ?? ""
+                bothVc.enityId.accept(enityId)
+                bothVc.companyName.accept(companyName)
+                bothVc.entityType = 1
+                bothVc.logoUrl = headModel.value?.basicInfo?.logo ?? ""
+                self.navigationController?.pushViewController(bothVc, animated: true)
+            }else {
+                let pathUrl = model.path ?? ""
+                let pageUrl = base_url + pathUrl
+                let webVc = WebPageViewController()
+                webVc.pageUrl.accept(pageUrl)
+                self.navigationController?.pushViewController(webVc, animated: true)
+            }
         }
         
         companyDetailView.activityBlock = { [weak self] in
@@ -100,6 +139,16 @@ class CompanyDetailViewController: WDBaseViewController {
             }
         }).disposed(by: disposeBag)
         
+        getDetailInfo()
+    }
+    
+}
+
+/** 网络数据请求 */
+extension CompanyDetailViewController {
+    
+    //
+    private func getDetailInfo() {
         let group = DispatchGroup()
         ViewHud.addLoadView()
         //获取企业详情item菜单
@@ -136,13 +185,7 @@ class CompanyDetailViewController: WDBaseViewController {
         group.notify(queue: .main) {
             ViewHud.hideLoadView()
         }
-        
     }
-    
-}
-
-/** 网络数据请求 */
-extension CompanyDetailViewController {
     
     //获取常用服务
     private func getCommonServiceInfo(complete: @escaping(() -> Void)) {
@@ -150,7 +193,9 @@ extension CompanyDetailViewController {
         let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
         let dict = ["moduleType": "6",
                     "appleVersion": appleVersion,
-                    "appType": "apple"]
+                    "appType": "apple",
+                    "entityId": enityId,
+                    "entityType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customermenu/customerMenuTree",
                        method: .get) { result in

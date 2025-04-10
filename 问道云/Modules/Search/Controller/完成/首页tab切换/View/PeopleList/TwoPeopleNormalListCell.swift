@@ -163,9 +163,15 @@ class TwoPeopleNormalListCell: BaseViewCell {
             }else if moduleId == "17" {
                 let count = String(model.riskCount ?? 0)
                 self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条税收违法相关记录", font: .regularFontOfSize(size: 13))
+            }else if moduleId == "18" {
+                let count = String(model.riskCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条环保处罚相关记录", font: .regularFontOfSize(size: 13))
             }else if moduleId == "19" {
                 let count = String(model.riskCount ?? 0)
                 self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条行政处罚相关记录", font: .regularFontOfSize(size: 13))
+            }else if moduleId == "20" {
+                let count = String(model.riskCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条贷款逾期相关记录", font: .regularFontOfSize(size: 13))
             }else if moduleId == "21" {
                 let count = String(model.riskCount ?? 0)
                 self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条债券违约相关记录", font: .regularFontOfSize(size: 13))
@@ -175,6 +181,12 @@ class TwoPeopleNormalListCell: BaseViewCell {
             }else if moduleId == "24" {
                 let count = String(model.riskCount ?? 0)
                 self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条资产抵押相关记录", font: .regularFontOfSize(size: 13))
+            }else if moduleId == "25" {
+                let count = String(model.riskCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条对外担保相关记录", font: .regularFontOfSize(size: 13))
+            }else if moduleId == "26" {
+                let count = String(model.riskCount ?? 0)
+                self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条对外投资相关记录", font: .regularFontOfSize(size: 13))
             }else {
                 let count = String(model.companyCount ?? 0)
                 self.numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共关联\(count)家企业", font: .regularFontOfSize(size: 13))

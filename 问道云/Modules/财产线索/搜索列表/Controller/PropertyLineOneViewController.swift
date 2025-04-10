@@ -673,7 +673,7 @@ extension PropertyLineOneViewController {
     //获取财产评估信息
     private func getPropertyInfo(complete: @escaping (() -> Void)) {
         let man = RequestManager()
-        let dict = ["subjectId": entityId]
+        let dict = ["subjectId": entityId, "type": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/property/clues/search/findPropertyAssessmentData",
                        method: .get) { [weak self] result in

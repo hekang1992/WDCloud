@@ -183,8 +183,10 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
             }).disposed(by: disposeBag)
             
             vc.payBlock = { [weak self] in
-                self?.getBuymoreinfo()
-                self?.refreshToke()
+                self?.refreshToke {
+                    self?.getBuymoreinfo()
+                    self?.payBlock?()
+                }
                 DispatchQueue.main.async {
                     ShowAlertManager.showAlert(title: "支付结果", message: "您已经支付成功,感谢您的支持")
                 }
@@ -206,7 +208,7 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
 extension MembershipCenterViewController {
     
     //刷新refreshToke
-    func refreshToke() {
+    func refreshToke(complete: @escaping (() -> Void)) {
         let man = RequestManager()
         let userid = GetSaveLoginInfoConfig.getUserID()
         let customernumber = GetSaveLoginInfoConfig.getPhoneNumber()
@@ -221,8 +223,10 @@ extension MembershipCenterViewController {
                     UserDefaults.standard.setValue(access_token, forKey: WDY_SESSIONID)
                     UserDefaults.standard.synchronize()
                 }
+                complete()
                 break
             case .failure(_):
+                complete()
                 break
             }
         }

@@ -116,13 +116,12 @@ class CompanyCollectionCell: UICollectionViewCell {
                 numlabel.isHidden = true
                 ctImageView.kf.setImage(with: URL(string: model.icon ?? ""))
             }else {
+                numlabel.isHidden = false
                 numlabel.text = String(markCount)
                 if markCount == 0 {
-                    numlabel.isHidden = true
                     ctImageView.kf.setImage(with: URL(string: model.iconGrey ?? ""))
                     numlabel.textColor = UIColor.init(cssStr: model.iconGreyColor ?? "")
                 }else {
-                    numlabel.isHidden = false
                     ctImageView.kf.setImage(with: URL(string: model.icon ?? ""))
                     numlabel.textColor = UIColor.init(cssStr: model.iconColor ?? "")
                 }

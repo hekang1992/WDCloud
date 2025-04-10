@@ -83,7 +83,6 @@ extension BindPhoneViewController {
             guard let self = self else { return }
             switch result {
             case .success(let success):
-                ToastViewConfig.showToast(message: "登录成功")
                 if success.code == 200 {
                     guard let model = success.data else { return }
                     let phone = model.userinfo?.userinfo?.sysUser?.phonenumber ?? ""
@@ -93,6 +92,7 @@ extension BindPhoneViewController {
                     WDLoginConfig.saveLoginInfo(phone, token, customernumber, userID)
                     self.view.endEditing(true)
                     NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
+                    ToastViewConfig.showToast(message: "登录成功")
                 }
                 ViewHud.hideLoadView()
                 break

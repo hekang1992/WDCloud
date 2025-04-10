@@ -36,9 +36,15 @@ class PeopleDetailViewController: WDBaseViewController {
     
     var JXTableHeaderViewHeight: Int = 385
     
-    var JXheightForHeaderInSection: Int = 36
+    var JXheightForHeaderInSection: Int = 40
     
     lazy var pagingView: JXPagingView = preferredPagingView()
+    
+    lazy var footerView: CompanyDerailFooterView = {
+        let footerView = CompanyDerailFooterView()
+        footerView.backgroundColor = .white
+        return footerView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +64,7 @@ class PeopleDetailViewController: WDBaseViewController {
         segmentedView.dataSource = segmentedViewDataSource
         segmentedView.defaultSelectedIndex = 1
         let lineView = JXSegmentedIndicatorLineView()
-        lineView.indicatorColor = UIColor.init(cssStr: "#547AFF ")!
+        lineView.indicatorColor = UIColor.init(cssStr: "#547AFF")!
         lineView.indicatorWidth = 18
         lineView.indicatorHeight = 3
         segmentedView.indicators = [lineView]
@@ -90,6 +96,45 @@ class PeopleDetailViewController: WDBaseViewController {
         group.notify(queue: .main) {
             ViewHud.hideLoadView()
         }
+        
+        view.addSubview(footerView)
+        footerView.snp.makeConstraints { make in
+            make.width.equalTo(SCREEN_WIDTH)
+            make.left.bottom.equalToSuperview()
+            make.height.equalTo(70)
+        }
+        
+        footerView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.navigationController?.popToRootViewController(animated: true)
+        }).disposed(by: disposeBag)
+        
+        //一键报告
+        footerView.backBtn1.rx.tap.subscribe(onNext: {
+            ToastViewConfig.showToast(message: "敬请期待")
+        }).disposed(by: disposeBag)
+        
+        //添加监控 0 未监控; 1 已监控
+        footerView.backBtn2.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = self.model else { return }
+            let monitorStatus = model.monitor ?? false
+            if monitorStatus == false {//未监控->去监控
+                addPeopleMonitoring()
+            }else {//已监控->取消监控
+                cancelPeopleMonitoring()
+            }
+        }).disposed(by: disposeBag)
+        
+        //关注
+        footerView.backBtn3.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self, let model = self.model else { return }
+            let follow = model.follow ?? false
+            if follow == false {
+                addFocusInfo(from: footerView.backBtn3)
+            }else {//已监控->取消监控
+                deleteFocusInfo(from: footerView.backBtn3)
+            }
+        }).disposed(by: disposeBag)
+        
     }
     
     //一定要加上这句代码,否则不会下拉刷新
@@ -302,7 +347,139 @@ extension PeopleDetailViewController {
         self.homeHeadView.model.accept(model)
         self.homeHeadView.pcollectionView.reloadData()
         
+        let monitor = model.monitor ?? false
+        if monitor {
+            footerView.backBtn2.setTitle("已监控", for: .normal)
+            footerView.backBtn2.setImage(UIImage(named: "addminjiakong"), for: .normal)
+        }else {
+            footerView.backBtn2.setTitle("添加监控", for: .normal)
+            footerView.backBtn2.setImage(UIImage(named: "添加监控"), for: .normal)
+        }
+        
+        let follow = model.follow ?? false
+        if follow {
+            footerView.backBtn3.setTitle("已关注", for: .normal)
+            footerView.backBtn3.setImage(UIImage(named: "关注成功"), for: .normal)
+            footerView.backBtn3.backgroundColor = UIColor.init(cssStr: "#EAF1FF")
+            footerView.backBtn3.setTitleColor(UIColor.init(cssStr: "#3F96FF"), for: .normal)
+        }else {
+            footerView.backBtn3.setTitle("关注", for: .normal)
+            footerView.backBtn3.setImage(UIImage(named: "添加关注"), for: .normal)
+            footerView.backBtn3.backgroundColor = UIColor.init(cssStr: "#3F96FF")
+            footerView.backBtn3.setTitleColor(UIColor.init(cssStr: "#FFFFFF"), for: .normal)
+        }
+
     }
+    
+    private func addPeopleMonitoring() {
+        ViewHud.addLoadView()
+        let personId = self.model?.personId ?? ""
+        let personName = self.model?.personName ?? ""
+        let customerId = GetSaveLoginInfoConfig.getCustomerNumber()
+        let man = RequestManager()
+        let dict = ["personId": personId,
+                    "customerId": customerId,
+                    "groupId": "",
+                    "personName": personName]
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                guard let self = self else { return }
+                let code = success.code ?? 0
+                if code == 200 {
+                    self.model?.monitor = true
+                    ToastViewConfig.showToast(message: "监控成功")
+                    footerView.backBtn2.setTitle("已监控", for: .normal)
+                    footerView.backBtn2.setImage(UIImage(named: "addminjiakong"), for: .normal)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    private func cancelPeopleMonitoring() {
+        ViewHud.addLoadView()
+        let dict = ["personId": model?.personId ?? ""]
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/monitor-person/cancelRiskMonitorPerson",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                guard let self = self else { return }
+                if success.code == 200 {
+                    self.model?.monitor = false
+                    ToastViewConfig.showToast(message: "取消监控成功")
+                    footerView.backBtn2.setTitle("添加监控", for: .normal)
+                    footerView.backBtn2.setImage(UIImage(named: "添加监控"), for: .normal)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //添加关注
+    func addFocusInfo(from btn: UIButton) {
+        ViewHud.addLoadView()
+        let man = RequestManager()
+        let dict = ["entityId": model?.personId ?? "",
+                    "followTargetType": "2"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/add-or-cancel",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.model?.follow = true
+                    ToastViewConfig.showToast(message: "关注成功")
+                    btn.setTitle("已关注", for: .normal)
+                    btn.setImage(UIImage(named: "关注成功"), for: .normal)
+                    btn.backgroundColor = UIColor.init(cssStr: "#EAF1FF")
+                    btn.setTitleColor(UIColor.init(cssStr: "#3F96FF"), for: .normal)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //取消关注
+    func deleteFocusInfo(from btn: UIButton) {
+        ViewHud.addLoadView()
+        let man = RequestManager()
+        let dict = ["entityId": model?.personId ?? "",
+                    "followTargetType": "2"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/follow/add-or-cancel",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.model?.follow = false
+                    ToastViewConfig.showToast(message: "取消关注成功")
+                    btn.setTitle("关注", for: .normal)
+                    btn.setImage(UIImage(named: "添加关注"), for: .normal)
+                    btn.backgroundColor = UIColor.init(cssStr: "#3F96FF")
+                    btn.setTitleColor(UIColor.init(cssStr: "#FFFFFF"), for: .normal)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
     
 }
 

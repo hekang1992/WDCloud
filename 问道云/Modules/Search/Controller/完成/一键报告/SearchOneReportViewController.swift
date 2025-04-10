@@ -19,11 +19,15 @@ class SearchOneReportViewController: WDBaseViewController {
     var ddNumber: String = "1"
     var allArray: [pageDataModel] = []
     
-    //热搜
-    var hotWordsArray = BehaviorRelay<[rowsModel]?>(value: nil)
+    //浏览历史
+    var historyArray: [rowsModel] = []
+    //热门搜索
+    var hotsArray: [rowsModel] = []
+    //总数组
+    var modelArray: [[rowsModel]] = []
     
-    lazy var oneView: OneCompanyView = {
-        let oneView = OneCompanyView()
+    lazy var oneView: CommonHotsView = {
+        let oneView = CommonHotsView()
         return oneView
     }()
     
@@ -90,38 +94,6 @@ class SearchOneReportViewController: WDBaseViewController {
             make.left.right.bottom.equalToSuperview()
         }
         
-        //删除最近搜索
-        self.oneView.searchView.deleteBtn
-            .rx
-            .tap.subscribe(onNext: { [weak self] in
-                self?.deleteSearchInfo()
-            }).disposed(by: disposeBag)
-        
-        //删除浏览历史
-        self.oneView.historyView.deleteBtn
-            .rx
-            .tap.subscribe(onNext: { [weak self] in
-                self?.deleteHistoryInfo()
-            }).disposed(by: disposeBag)
-        
-        //点击最近搜索
-        self.oneView.lastSearchTextBlock = { [weak self] keywords in
-            guard let self = self else { return }
-            searchView.searchTx.text = keywords
-            self.keywords = keywords
-            if keywords.isEmpty {
-                oneView.isHidden = false
-                //最近搜索
-                getlastSearch()
-                //浏览历史
-                getBrowsingHistory()
-                //热搜
-                getHotWords()
-            }else {
-                oneView.isHidden = true
-            }
-        }
-        
         // 监听 UITextField 的文本变化
         self.searchView.searchTx
             .rx.text.orEmpty
@@ -129,50 +101,41 @@ class SearchOneReportViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 if self.containsOnlyChinese(text) == true {
-                    if text.isEmpty {
-                        return
-                    }
-                    if text.isEmpty {
+                    if text.count < 2 {
                         oneView.isHidden = false
+                        tableView.isHidden = true
+                        //获取热搜等数据
+                        getHotsSearchInfo()
                     }else {
                         oneView.isHidden = true
+                        tableView.isHidden = false
+                        self.pageIndex = 1
+                        self.keywords = text
+                        getOneReportInfo()
                     }
-                    self.pageIndex = 1
-                    self.keywords = text
-                    getOneReportInfo()
                 }
                 else if self.containsPinyin(text) == true {
                     // 拼音不打印，什么都不做
                 }
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         self.searchView.searchTx
             .rx.controlEvent(.editingDidEndOnExit)
             .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
-                if text.isEmpty {
-                    return
-                }
-                if text.isEmpty {
+                if text.count < 2 {
                     oneView.isHidden = false
+                    //获取热搜等数据
+                    getHotsSearchInfo()
                 }else {
                     oneView.isHidden = true
+                    self.pageIndex = 1
+                    self.keywords = text
+                    getOneReportInfo()
                 }
-                self.pageIndex = 1
-                self.keywords = text
-                getOneReportInfo()
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
 
-        //最近搜索
-        getlastSearch()
-        //浏览历史
-        getBrowsingHistory()
-        //热搜
-        getHotWords()
-        
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             pageIndex = 1
@@ -188,6 +151,7 @@ class SearchOneReportViewController: WDBaseViewController {
     
 }
 
+/** 网络数据请求 */
 extension SearchOneReportViewController {
     
     private func getOneReportInfo() {
@@ -242,224 +206,56 @@ extension SearchOneReportViewController {
         }
     }
     
-    //最近搜索
-    private func getlastSearch() {
-        let man = RequestManager()
-        let dict = ["searchType": "",
-                    "moduleId": "09"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/searchRecord/query",
-                       method: .post) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                if let rows = success.data?.data {
-                    reloadSearchUI(data: rows)
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
-    //最近搜索UI刷新
-    func reloadSearchUI(data: [rowsModel]) {
-        var strArray: [String] = []
-        if data.count > 0 {
-            for model in data {
-                strArray.append(model.searchContent ?? "")
-            }
-            self.oneView.searchView.tagListView.removeAllTags()
-            self.oneView.searchView.tagListView.addTags(strArray)
-            self.oneView.searchView.isHidden = false
-            self.oneView.layoutIfNeeded()
-            let height = self.oneView.searchView.tagListView.frame.height
-            self.oneView.searchView.snp.updateConstraints { make in
-                make.height.equalTo(30 + height + 20)
-            }
-        } else {
-            self.oneView.searchView.isHidden = true
-            self.oneView.searchView.snp.updateConstraints { make in
-                make.height.equalTo(0)
-            }
-        }
-        self.oneView.layoutIfNeeded()
-    }
-    
-    //浏览历史
-    private func getBrowsingHistory() {
-        let man = RequestManager()
-        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
-        let dict = ["customernumber": customernumber,
-                    "viewrecordtype": "",
-                    "moduleId": "09",
-                    "pageNum": "1",
-                    "pageSize": "20"]
-        man.requestAPI(params: dict, pageUrl: "/operation/clientbrowsecb/selectBrowserecord", method: .get) { [weak self] result in
-            switch result {
-            case .success(let success):
-                guard let self = self else { return }
-                if let rows = success.data?.rows {
-                    readHistoryUI(data: rows)
-                }
-                break
-            case .failure(_):
-                
-                break
-            }
-        }
-    }
-    
-    //UI刷新
-    func readHistoryUI(data: [rowsModel]) {
-        for (index, model) in data.enumerated() {
-            let listView = CommonSearchListView()
-            listView.block = { [weak self] in
-                guard let self = self else { return }
-                let type = model.viewrecordtype ?? ""
-                if type == "1" {//企业
-                    self.searchView.searchTx.text = model.firmname ?? ""
-                }else {//个人
-                    self.searchView.searchTx.text = model.personname ?? ""
-                }
-                self.searchView.searchTx.becomeFirstResponder()
-            }
-            let type = model.viewrecordtype ?? ""
-            var name: String = ""
-            if type == "1" {
-                name = model.firmname ?? ""
+    //获取最近搜索,浏览历史,热搜
+    private func getHotsSearchInfo() {
+        let group = DispatchGroup()
+        ViewHud.addLoadView()
+        group.enter()
+        getLastSearchInfo(from: "09") { [weak self] modelArray in
+            if !modelArray.isEmpty {
+                self?.oneView.bgView.isHidden = false
+                self?.oneView.bgView.snp.remakeConstraints({ make in
+                    make.top.equalToSuperview().offset(1)
+                    make.left.equalToSuperview()
+                    make.width.equalTo(SCREEN_WIDTH)
+                })
+                self?.oneView.tagArray = modelArray.map { $0.searchContent ?? "" }
+                self?.oneView.setupScrollView()
             }else {
-                name = model.personname ?? ""
+                self?.oneView.bgView.isHidden = true
+                self?.oneView.bgView.snp.remakeConstraints({ make in
+                    make.top.equalToSuperview().offset(1)
+                    make.left.equalToSuperview()
+                    make.width.equalTo(SCREEN_WIDTH)
+                    make.height.equalTo(0)
+                })
             }
-            listView.nameLabel.text = name
-            listView.timeLabel.text = model.createhourtime ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (22, 22)))
-            self.oneView.historyView.addSubview(listView)
-            listView.snp.makeConstraints { make in
-                make.height.equalTo(40)
-                make.width.equalTo(SCREEN_WIDTH)
-                make.left.equalToSuperview()
-                make.top.equalTo(self.oneView.historyView.lineView.snp.bottom).offset(40 * index)
-            }
+            group.leave()
         }
         
-        self.oneView.historyView.snp.updateConstraints { make in
-            if data.count != 0 {
-                self.oneView.historyView.isHidden = false
-                make.height.equalTo((data.count) * 40 + 30)
-            } else {
-                self.oneView.historyView.isHidden = true
-                make.height.equalTo(0)
-            }
-        }
-        self.oneView.layoutIfNeeded()
-    }
-    
-    //热搜
-    private func getHotWords() {
-        let man = RequestManager()
-        let dict = ["moduleId": "09"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/clientbrowsecb/hot-search",
-                       method: .get) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                if let model = success.data {
-                    self.hotWordsArray.accept(model.data ?? [])
-                    hotsWordsUI(data: model.data ?? [])
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
-    //UI刷新
-    func hotsWordsUI(data: [rowsModel]) {
-        for (index, model) in data.enumerated() {
-            let listView = CommonSearchListView()
-            listView.block = { [weak self] in
-                guard let self = self else { return }
-                self.searchView.searchTx.text = model.name ?? ""
-                self.searchView.searchTx.becomeFirstResponder()
-            }
-            listView.nameLabel.text = model.name ?? ""
-            listView.icon.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.name ?? "", size: (22, 22)))
-            self.oneView.hotWordsView.addSubview(listView)
-            listView.snp.updateConstraints { make in
-                make.height.equalTo(40)
-                make.left.right.equalToSuperview()
-                make.top.equalTo(self.oneView.hotWordsView.lineView.snp.bottom).offset(40 * index)
-            }
+        group.enter()
+        getLastHistroyInfo(from: "09") { [weak self] modelArray in
+            self?.historyArray = modelArray
+            group.leave()
         }
         
-        self.oneView.hotWordsView.snp.updateConstraints { make in
-            if data.count != 0 {
-                self.oneView.hotWordsView.isHidden = false
-                make.height.equalTo((data.count) * 40 + 30)
-            } else {
-                self.oneView.hotWordsView.isHidden = true
-                make.height.equalTo(0)
-            }
+        group.enter()
+        getLastHotsInfo(from: "09") { [weak self] modelArray in
+            self?.hotsArray = modelArray
+            group.leave()
         }
-        self.oneView.layoutIfNeeded()
-    }
-    
-    //删除最近搜索
-    private func deleteSearchInfo() {
-        ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
-            let man = RequestManager()
-            let dict = ["searchType": "",
-                        "moduleId": "09"]
-            man.requestAPI(params: dict,
-                           pageUrl: "/operation/searchRecord/clear",
-                           method: .post) { result in
-                switch result {
-                case .success(let success):
-                    if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功")
-                        self.oneView.searchView.isHidden = true
-                        self.oneView.searchView.snp.updateConstraints({ make in
-                            make.height.equalTo(0)
-                        })
-                    }
-                    break
-                case .failure(_):
-                    break
-                }
-            }
-        })
-    }
-    
-    //删除浏览历史
-    private func deleteHistoryInfo() {
-        ShowAlertManager.showAlert(title: "删除", message: "是否需要删除浏览历史?", confirmAction: {
-            let man = RequestManager()
-            let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
-            let dict = ["customernumber": customernumber,
-                        "moduleId": "09",
-                        "viewrecordtype": ""]
-            man.requestAPI(params: dict,
-                           pageUrl: "/operation/clientbrowsecb/deleteBrowseRecord",
-                           method: .get) { result in
-                switch result {
-                case .success(let success):
-                    if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功")
-                        self.oneView.historyView.isHidden = true
-                        self.oneView.historyView.snp.updateConstraints({ make in
-                            make.height.equalTo(0)
-                        })
-                    }
-                    break
-                case .failure(_):
-                    break
-                }
-            }
-        })
+        
+        group.notify(queue: .main) {
+            self.modelArray = [self.historyArray, self.hotsArray]
+            self.oneView.modelArray = self.modelArray
+            ViewHud.hideLoadView()
+        }
+        
+        oneView.tagClickBlock = { [weak self] label in
+            self?.searchView.searchTx.text = label.text ?? ""
+        
+        }
+        
     }
     
 }

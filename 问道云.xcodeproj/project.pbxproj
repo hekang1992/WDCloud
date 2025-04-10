@@ -209,6 +209,8 @@
 		737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416452D0FD79C00E6CD23 /* AddInvoiceView.swift */; };
 		737416482D0FD94B00E6CD23 /* AddInvoiceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737416472D0FD94B00E6CD23 /* AddInvoiceViewCell.swift */; };
 		7374164E2D100BB200E6CD23 /* SearchInvoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374164D2D100BB200E6CD23 /* SearchInvoiceCell.swift */; };
+		7377AF962DA7781600D4AA12 /* SearchJobListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7377AF952DA7781600D4AA12 /* SearchJobListViewController.swift */; };
+		7377AF982DA79FA900D4AA12 /* PopOnlyBuyVipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7377AF972DA79FA900D4AA12 /* PopOnlyBuyVipView.swift */; };
 		738043322D278EED009B25F8 /* GroupListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738043312D278EED009B25F8 /* GroupListViewCell.swift */; };
 		738043382D27A9F5009B25F8 /* AddGroupPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738043372D27A9F5009B25F8 /* AddGroupPeopleViewController.swift */; };
 		7380433A2D27DA66009B25F8 /* PopChangePeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738043392D27DA66009B25F8 /* PopChangePeopleView.swift */; };
@@ -633,6 +635,8 @@
 		737416452D0FD79C00E6CD23 /* AddInvoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceView.swift; sourceTree = "<group>"; };
 		737416472D0FD94B00E6CD23 /* AddInvoiceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceViewCell.swift; sourceTree = "<group>"; };
 		7374164D2D100BB200E6CD23 /* SearchInvoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInvoiceCell.swift; sourceTree = "<group>"; };
+		7377AF952DA7781600D4AA12 /* SearchJobListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchJobListViewController.swift; sourceTree = "<group>"; };
+		7377AF972DA79FA900D4AA12 /* PopOnlyBuyVipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopOnlyBuyVipView.swift; sourceTree = "<group>"; };
 		738043312D278EED009B25F8 /* GroupListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewCell.swift; sourceTree = "<group>"; };
 		738043372D27A9F5009B25F8 /* AddGroupPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupPeopleViewController.swift; sourceTree = "<group>"; };
 		738043392D27DA66009B25F8 /* PopChangePeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopChangePeopleView.swift; sourceTree = "<group>"; };
@@ -1103,6 +1107,11 @@
 		733D2F432D87AD5F0019C697 /* 完成 */ = {
 			isa = PBXGroup;
 			children = (
+				735A3F732D65BE4000448268 /* 求职监测 */,
+				7340E18B2D5CD3D2008FD5C7 /* 对外担保 */,
+				7340E1C42D5DD6AD008FD5C7 /* 对外投资 */,
+				7340E1AE2D5CD61D008FD5C7 /* 贷款逾期 */,
+				7340E16F2D5CC660008FD5C7 /* 环保处罚 */,
 				7340E1762D5CCF85008FD5C7 /* 税收违法 */,
 				7340E1922D5CD437008FD5C7 /* 限制高消费 */,
 				7340E1A72D5CD5B1008FD5C7 /* 司法拍卖 */,
@@ -1419,6 +1428,7 @@
 			isa = PBXGroup;
 			children = (
 				735A3F742D65BE6300448268 /* SearchJobViewController.swift */,
+				7377AF952DA7781600D4AA12 /* SearchJobListViewController.swift */,
 			);
 			path = "求职监测";
 			sourceTree = "<group>";
@@ -1436,6 +1446,7 @@
 				73DE1D202D7BF72200C554B1 /* PhoneEmailNameView.swift */,
 				73654B1E2D8186BC0004E408 /* PopPrivacyView.swift */,
 				732861772D89749C004CC775 /* PopRightMoreView.swift */,
+				7377AF972DA79FA900D4AA12 /* PopOnlyBuyVipView.swift */,
 			);
 			path = PopView;
 			sourceTree = "<group>";
@@ -1999,11 +2010,6 @@
 			isa = PBXGroup;
 			children = (
 				733D2F432D87AD5F0019C697 /* 完成 */,
-				735A3F732D65BE4000448268 /* 求职监测 */,
-				7340E16F2D5CC660008FD5C7 /* 环保处罚 */,
-				7340E1AE2D5CD61D008FD5C7 /* 贷款逾期 */,
-				7340E18B2D5CD3D2008FD5C7 /* 对外担保 */,
-				7340E1C42D5DD6AD008FD5C7 /* 对外投资 */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2338,10 +2344,12 @@
 				73B362572D37B9CB003BD911 /* PeopleDetailTwoViewController.swift in Sources */,
 				739DCA262D671B45009CFC78 /* MyOneSettingViewController.swift in Sources */,
 				732861782D89749C004CC775 /* PopRightMoreView.swift in Sources */,
+				7377AF982DA79FA900D4AA12 /* PopOnlyBuyVipView.swift in Sources */,
 				730CEDFA2D5446C8002DE9DF /* CompanyLawCellHeadView.swift in Sources */,
 				73EF03DB2D31339A0070F850 /* TwoPeopleCoopViewCell.swift in Sources */,
 				736E977F2D22A61E009CC0DF /* DYFStoreReceiptVerifier.swift in Sources */,
 				73807D492D32C93C00F8B90D /* Networkmanager.swift in Sources */,
+				7377AF962DA7781600D4AA12 /* SearchJobListViewController.swift in Sources */,
 				739E91EE2D8E6C08000E1A11 /* PropertyLineInfoView.swift in Sources */,
 				73FC5E632D5CAA63001D0DEF /* SearchDondDefaultViewController.swift in Sources */,
 				736E97802D22A61E009CC0DF /* SKExtensions.swift in Sources */,

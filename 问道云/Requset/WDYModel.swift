@@ -181,6 +181,7 @@ class DataModel {
     var lawNatureList: [lawNatureListModel]?
     var timelinessList: [lawNatureListModel]?
     var monitor: Bool?
+    var follow: Bool?
     var monitorListId: String?
     var cluesDataList: [cluesDataListModel]?
     var personPage: personPageModel?
@@ -212,6 +213,7 @@ class DataModel {
     var logoColor: String?
     var entityCategory: String?
     init(json: JSON) {
+        self.follow = json["follow"].boolValue
         self.entityCategory = json["entityCategory"].stringValue
         self.logoColor = json["logoColor"].stringValue
         self.tableInfo = tableInfoModel(json: json["tableInfo"])

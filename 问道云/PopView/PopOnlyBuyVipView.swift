@@ -1,18 +1,21 @@
 //
-//  PopPrivacyView.swift
+//  PopOnlyBuyVipView.swift
 //  问道云
 //
-//  Created by Andrew on 2025/3/12.
+//  Created by 何康 on 2025/4/10.
 //
 
 import UIKit
 
-class PopPrivacyView: BaseView {
+class PopOnlyBuyVipView: BaseView {
     
+    var cancelBlock: (() -> Void)?
+    var sureBlock: (() -> Void)?
+
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         ctImageView.isUserInteractionEnabled = true
-        ctImageView.image = UIImage(named: "apppriimage")
+        ctImageView.image = UIImage(named: "onlybuymeis")
         return ctImageView
     }()
     
@@ -25,50 +28,34 @@ class PopPrivacyView: BaseView {
         let sureBtn = UIButton(type: .custom)
         return sureBtn
     }()
-    
-    lazy var oneBtn: UIButton = {
-        let oneBtn = UIButton(type: .custom)
-        return oneBtn
-    }()
-    
-    lazy var twoBtn: UIButton = {
-        let twoBtn = UIButton(type: .custom)
-        return twoBtn
-    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(ctImageView)
         ctImageView.addSubview(cancelBtn)
         ctImageView.addSubview(sureBtn)
-        ctImageView.addSubview(oneBtn)
-        ctImageView.addSubview(twoBtn)
         ctImageView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 310.pix(), height: 385.pix()))
+            make.size.equalTo(CGSize(width: 265.pix(), height: 246.pix()))
         }
         cancelBtn.snp.makeConstraints { make in
             make.left.bottom.equalToSuperview()
-            make.size.equalTo(CGSize(width: 155.pix(), height: 60.pix()))
+            make.size.equalTo(CGSize(width: 88.pix(), height: 60.pix()))
         }
         sureBtn.snp.makeConstraints { make in
             make.right.bottom.equalToSuperview()
             make.size.equalTo(CGSize(width: 155.pix(), height: 60.pix()))
         }
-        oneBtn.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.left.equalToSuperview()
-            make.size.equalTo(CGSize(width: 155.pix(), height: 150.pix()))
-        }
-        twoBtn.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.right.equalToSuperview()
-            make.size.equalTo(CGSize(width: 155.pix(), height: 150.pix()))
-        }
+        cancelBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.cancelBlock?()
+        }).disposed(by: disposeBag)
+        sureBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.sureBlock?()
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

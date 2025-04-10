@@ -46,7 +46,7 @@ class CompanyRiskDetailViewController: WDBaseViewController {
     
     var JXTableHeaderViewHeight: Int = Int(84 + StatusHeightManager.navigationBarHeight)
     
-    var JXheightForHeaderInSection: Int = 36
+    var JXheightForHeaderInSection: Int = 40
     
     lazy var pagingView: JXPagingView = preferredPagingView()
     

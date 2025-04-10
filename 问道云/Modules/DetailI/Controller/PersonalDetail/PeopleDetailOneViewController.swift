@@ -44,7 +44,7 @@ class PeopleDetailOneViewController: WDBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        collectionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 40)
+        collectionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 40 - 70)
         view.addSubview(collectionView)
         
         //获取个人详情item菜单

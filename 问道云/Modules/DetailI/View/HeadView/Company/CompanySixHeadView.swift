@@ -3,9 +3,10 @@
 //  问道云
 //
 //  Created by Andrew on 2025/1/13.
-//
+//  企业详情常用服务
 
 import UIKit
+import SwiftyJSON
 
 class CompanySixHeadView: BaseView {
     
@@ -178,10 +179,32 @@ extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelega
             vc?.pushWebPage(from: webUrl)
         }else {//常用服务
             let model = self.oneItems?[indexPath.row]
-            let pageUrl = base_url + "\(model?.path ?? "")"
-            let dict = ["entityId": dataModel?.basicInfo?.orgId ?? ""]
-            let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-            vc?.pushWebPage(from: webUrl)
+            let menuId = model?.menuId ?? ""
+            if menuId == "60030" {//财产线索
+                let bothVc = PropertyLineBothViewController()
+                let enityId = dataModel?.basicInfo?.orgId ?? ""
+                let companyName = dataModel?.basicInfo?.orgName ?? ""
+                bothVc.enityId.accept(enityId)
+                bothVc.companyName.accept(companyName)
+                bothVc.entityType = 1
+                bothVc.logoUrl = dataModel?.basicInfo?.logo ?? ""
+                vc?.navigationController?.pushViewController(bothVc, animated: true)
+            }else if menuId == "60040" {//一键报告
+                let oneRpVc = OneReportViewController()
+                let orgId = dataModel?.basicInfo?.orgId ?? ""
+                let orgName = dataModel?.basicInfo?.orgName ?? ""
+                let json: JSON = ["orgId": orgId,
+                                  "orgName": orgName]
+                let orgInfo = orgInfoModel(json: json)
+                oneRpVc.orgInfo = orgInfo
+                vc?.navigationController?.pushViewController(oneRpVc, animated: true)
+            }else {
+                let pageUrl = base_url + "\(model?.path ?? "")"
+                let dict = ["entityId": dataModel?.basicInfo?.orgId ?? ""]
+                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                vc?.pushWebPage(from: webUrl)
+            }
+            
         }
     }
     

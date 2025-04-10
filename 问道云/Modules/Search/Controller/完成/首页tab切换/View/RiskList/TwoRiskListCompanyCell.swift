@@ -301,12 +301,22 @@ class TwoRiskListCompanyCell: BaseViewCell {
                 let relevaRiskCnt = String(model.riskCount ?? 0)
                 self.oneNumLabel.isHidden = false
                 self.twoNumLabel.isHidden = true
-                self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(relevaRiskCnt)条司税收违法相关记录", font: .regularFontOfSize(size: 12))
+                self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(relevaRiskCnt)条税收违法相关记录", font: .regularFontOfSize(size: 12))
+            }else if moduleId == "18" {
+                let relevaRiskCnt = String(model.riskCount ?? 0)
+                self.oneNumLabel.isHidden = false
+                self.twoNumLabel.isHidden = true
+                self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(relevaRiskCnt)条环保处罚相关记录", font: .regularFontOfSize(size: 12))
             }else if moduleId == "19" {
                 let relevaRiskCnt = String(model.riskCount ?? 0)
                 self.oneNumLabel.isHidden = false
                 self.twoNumLabel.isHidden = true
                 self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(relevaRiskCnt)条行政处罚相关记录", font: .regularFontOfSize(size: 12))
+            }else if moduleId == "20" {
+                let relevaRiskCnt = String(model.riskCount ?? 0)
+                self.oneNumLabel.isHidden = false
+                self.twoNumLabel.isHidden = true
+                self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(relevaRiskCnt)条贷款逾期相关记录", font: .regularFontOfSize(size: 12))
             }else if moduleId == "21" {
                 let relevaRiskCnt = String(model.riskCount ?? 0)
                 self.oneNumLabel.isHidden = false
@@ -322,6 +332,16 @@ class TwoRiskListCompanyCell: BaseViewCell {
                 self.oneNumLabel.isHidden = false
                 self.twoNumLabel.isHidden = true
                 self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(relevaRiskCnt)条资产抵押相关记录", font: .regularFontOfSize(size: 12))
+            }else if moduleId == "25" {
+                let relevaRiskCnt = String(model.riskCount ?? 0)
+                self.oneNumLabel.isHidden = false
+                self.twoNumLabel.isHidden = true
+                self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(relevaRiskCnt)条对外担保相关记录", font: .regularFontOfSize(size: 12))
+            }else if moduleId == "26" {
+                let relevaRiskCnt = String(model.riskCount ?? 0)
+                self.oneNumLabel.isHidden = false
+                self.twoNumLabel.isHidden = true
+                self.oneNumLabel.attributedText = GetRedStrConfig.getRedStr(from: relevaRiskCnt, fullText: "共\(relevaRiskCnt)条对外投资相关记录", font: .regularFontOfSize(size: 12))
             }else {
                 self.oneNumLabel.isHidden = false
                 self.twoNumLabel.isHidden = false

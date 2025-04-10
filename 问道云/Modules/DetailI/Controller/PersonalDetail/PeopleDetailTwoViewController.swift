@@ -188,7 +188,7 @@ class PeopleDetailTwoViewController: WDBaseViewController {
         whiteView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(lineView.snp.bottom)
-            make.height.equalTo(SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 48)
+            make.height.equalTo(SCREEN_HEIGHT - StatusHeightManager.navigationBarHeight - 40 - 70 - 36)
         }
         
         tableView.snp.makeConstraints { make in
