@@ -77,7 +77,7 @@ class CommonHotsView: BaseView {
         deleteBtn.setImage(UIImage(named: "delete_icon"), for: .normal)
         return deleteBtn
     }()
-
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
@@ -327,7 +327,7 @@ extension CommonHotsView {
         var tagArrayToShow = [String]()
         if needsExpandCollapse {
             if !isOpen {
-                // 收起状态，只显示前两行的内容
+                // 收起状态，只显示前两行的内容，并在第二行末尾添加"展开"按钮
                 var currentLine: CGFloat = 1
                 var currentRight: CGFloat = 0
                 var p = 0
@@ -335,31 +335,36 @@ extension CommonHotsView {
                 for tags in tagArray {
                     let tag = "\(tags)"
                     let titleSize = (tag as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 14)])
-                    let width = titleSize.width
+                    let width = titleSize.width + 10
                     
-                    if width + currentRight > maxWidth {
+                    // 检查当前行是否还能放下这个标签 + 展开按钮（如果是第二行）
+                    let availableWidth = (currentLine == 2) ? (maxWidth - openButtonWidth - buttonSpacing) : maxWidth
+                    
+                    if width + currentRight > availableWidth {
+                        if currentLine == 2 {
+                            break // 第二行放不下更多标签了
+                        }
                         currentLine += 1
                         currentRight = 0
-                        if currentLine > 2 {
-                            break
-                        }
                     }
                     
                     currentRight += width + buttonSpacing
                     p += 1
                 }
                 
+                // 确保不超过数组边界
+                p = min(p, tagArray.count)
                 for i in 0..<p {
                     tagArrayToShow.append(tagArray[i])
                 }
                 tagArrayToShow.append("展开")
             } else {
-                // 展开状态，显示全部
+                // 展开状态，显示全部，并在最后添加"收起"按钮
                 tagArrayToShow.append(contentsOf: tagArray)
                 tagArrayToShow.append("收起")
             }
         } else {
-            // 不超过2行，直接显示全部
+            // 不超过2行，直接显示全部，不添加按钮
             tagArrayToShow.append(contentsOf: tagArray)
         }
         
