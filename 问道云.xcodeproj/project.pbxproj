@@ -382,6 +382,7 @@
 		73F6046C2D1172AD0061D5D3 /* OneTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */; };
 		73F6046E2D1172B90061D5D3 /* TwoTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046D2D1172B90061D5D3 /* TwoTicketViewController.swift */; };
 		73F604702D117F9C0061D5D3 /* OneTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */; };
+		73F63E022DAA697C00C84A6F /* SearchMyFocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F63E012DAA697C00C84A6F /* SearchMyFocusViewController.swift */; };
 		73FB9C842D5EEC3700554CAD /* RiskSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C832D5EEC3700554CAD /* RiskSettingViewController.swift */; };
 		73FB9C862D5EF33E00554CAD /* RiskSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C852D5EF33E00554CAD /* RiskSettingView.swift */; };
 		73FB9C882D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C872D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift */; };
@@ -811,6 +812,7 @@
 		73F6046B2D1172AD0061D5D3 /* OneTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTicketViewController.swift; sourceTree = "<group>"; };
 		73F6046D2D1172B90061D5D3 /* TwoTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoTicketViewController.swift; sourceTree = "<group>"; };
 		73F6046F2D117F9C0061D5D3 /* OneTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTicketView.swift; sourceTree = "<group>"; };
+		73F63E012DAA697C00C84A6F /* SearchMyFocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMyFocusViewController.swift; sourceTree = "<group>"; };
 		73FB9C832D5EEC3700554CAD /* RiskSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskSettingViewController.swift; sourceTree = "<group>"; };
 		73FB9C852D5EF33E00554CAD /* RiskSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskSettingView.swift; sourceTree = "<group>"; };
 		73FB9C872D5EF63300554CAD /* RiskAddRiskGroupViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskAddRiskGroupViewViewController.swift; sourceTree = "<group>"; };
@@ -1491,6 +1493,7 @@
 				73CFEB992D01955300B2FE1B /* UserAllOrderSController.swift */,
 				7335F6E52D0AD8620074985F /* MyDownloadViewController.swift */,
 				73C7524D2D1D5A3100C47187 /* FocusSearchViewController.swift */,
+				73F63E012DAA697C00C84A6F /* SearchMyFocusViewController.swift */,
 				7374162C2D0EB87F00E6CD23 /* FocusAllViewController.swift */,
 				73D50B862D16ACEC00EF081A /* FocusCompanyViewController.swift */,
 				73C752312D18F44F00C47187 /* FocusPeopleViewController.swift */,
@@ -2594,6 +2597,7 @@
 				734896E02D39F30C00B028FE /* RiskDetailHeadView.swift in Sources */,
 				7325A7DA2CFF0BE10043C196 /* CodeView.swift in Sources */,
 				734207192D95527F00D8E42D /* PropertyLineMoreClueView.swift in Sources */,
+				73F63E022DAA697C00C84A6F /* SearchMyFocusViewController.swift in Sources */,
 				7340E1912D5CD420008FD5C7 /* SearchPeopleExternalGuaranteeViewController.swift in Sources */,
 				7340E1A62D5CD5A9008FD5C7 /* SearchPeopleStartCourtNoticeViewController.swift in Sources */,
 				73FC5E4E2D5C78E2001D0DEF /* SearchCompanyDeadbeatViewController.swift in Sources */,
@@ -2660,9 +2664,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XS8842FK7N;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
@@ -2684,9 +2690,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.8;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
+				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2708,9 +2715,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XS8842FK7N;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "问道云/Info.plist";
@@ -2732,9 +2741,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.8;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
+				PRODUCT_BUNDLE_IDENTIFIER = test.app.ald.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = testappaldprofile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

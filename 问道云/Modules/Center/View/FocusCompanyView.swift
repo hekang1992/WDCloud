@@ -32,6 +32,11 @@ class FocusCompanyView: BaseView {
     
     var modelBlock: ((customerFollowListModel) -> Void)?
     
+    //移动
+    var modelMoveBlock: ((customerFollowListModel) -> Void)?
+    //取消关注
+    var modelDeleteBlock: ((customerFollowListModel) -> Void)?
+    
     var isSectionCollapsed: [Bool] = []
     
     var dataModel = BehaviorRelay<DataModel?>(value: nil)
@@ -352,6 +357,32 @@ extension FocusCompanyView: UITableViewDelegate, UITableViewDataSource {
                 self.modelBlock?(model)
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // 创建"移动分组"操作
+        let moveAction = UIContextualAction(style: .normal, title: "移动分组") { (action, view, completion) in
+            // 处理移动分组逻辑
+            if let model = self.modelArray.value[indexPath.section].customerFollowList?[indexPath.row] {
+                self.modelMoveBlock?(model)
+            }
+            completion(true)
+        }
+        moveAction.backgroundColor = .systemBlue
+        
+        // 创建"取消关注"操作
+        let unfollowAction = UIContextualAction(style: .destructive, title: "取消关注") { (action, view, completion) in
+            // 处理取消关注逻辑
+            if let model = self.modelArray.value[indexPath.section].customerFollowList?[indexPath.row] {
+                self.modelDeleteBlock?(model)
+            }
+            completion(true)
+        }
+        
+        // 返回操作配置
+        let configuration = UISwipeActionsConfiguration(actions: [unfollowAction, moveAction])
+        configuration.performsFirstActionWithFullSwipe = false // 禁止全滑动自动执行第一个操作
+        return configuration
     }
     
 }

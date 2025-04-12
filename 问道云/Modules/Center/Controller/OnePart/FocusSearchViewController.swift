@@ -25,6 +25,7 @@ class SearchFocusCell: BaseViewCell {
         nameLabel.font = .regularFontOfSize(size: 14)
         nameLabel.textColor = .init(cssStr: "#666666")
         nameLabel.textAlignment = .left
+        nameLabel.numberOfLines = 0
         return nameLabel
     }()
     
@@ -55,7 +56,7 @@ class SearchFocusCell: BaseViewCell {
         nameLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalTo(icon.snp.right).offset(8)
-            make.height.equalTo(20)
+            make.right.equalToSuperview().offset(-60)
         }
         
         focusBtn.snp.makeConstraints { make in
@@ -149,7 +150,6 @@ class FocusSearchViewController: WDBaseViewController {
         searchTx.layer.borderColor = UIColor.init(cssStr: "#E2E2E2")?.cgColor
         searchTx.leftView = leftView
         searchTx.leftViewMode = .always
-        searchTx.becomeFirstResponder()
         return searchTx
     }()
     
@@ -226,6 +226,9 @@ class FocusSearchViewController: WDBaseViewController {
         
         self.addNodataView(from: coverView)
         
+        DispatchQueue.main.asyncAfter(delay: 0.5) {
+            self.searchTx.becomeFirstResponder()
+        }
     }
 
 }

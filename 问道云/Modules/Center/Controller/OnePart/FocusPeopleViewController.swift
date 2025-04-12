@@ -207,9 +207,7 @@ class FocusPeopleViewController: WDBaseViewController {
             guard let self = self else { return }
             let selectedDataids = companyView.selectedDataIds
             if selectedDataids.count > 0 {
-                ShowAlertManager.showAlert(title: "提示", message: "确认要移动分组吗?", confirmAction: {
-                    self.movePopFocus(from: selectedDataids)
-                })
+                self.movePopFocus(from: selectedDataids)
             }else {
                 ToastViewConfig.showToast(message: "请先选择需要移动的对象")
             }
@@ -220,6 +218,16 @@ class FocusPeopleViewController: WDBaseViewController {
             peopleDetailVc.personId.accept(model.personnumber ?? "")
             peopleDetailVc.peopleName.accept(model.followtargetname ?? "")
             self?.nav?.pushViewController(peopleDetailVc, animated: true)
+        }
+        
+        companyView.modelMoveBlock = { [weak self] model in
+            let selectedDataids = [model.dataid ?? ""]
+            self?.movePopFocus(from: selectedDataids)
+        }
+        
+        companyView.modelDeleteBlock = { [weak self] model in
+            let selectedDataids = [model.dataid ?? ""]
+            self?.cancelFocusInfo(from: selectedDataids)
         }
         
     }
