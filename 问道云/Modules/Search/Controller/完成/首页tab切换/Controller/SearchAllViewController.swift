@@ -75,63 +75,90 @@ class SearchAllViewController: WDBaseViewController {
         
         //获取行业数据
         getAllIndustryInfo()
-        
         // 监听 UITextField 的文本变化
-        self.searchHeadView.searchTx
-            .rx.text.orEmpty
-            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                if self.containsOnlyChinese(text) == true {
-                    print("自动打印中文：\(text)")
-                    if selectIndex == 0 {
-                        enterpriseVc.searchWords.accept(text)
-                    }else if selectIndex == 1 {
-                        peopleVc.searchWords.accept(text)
-                    }else if selectIndex == 2 {
-                        riskVc.searchWords.accept(text)
-                    }else {
-                        
-                    }
-                }else if self.containsPinyin(text) == true {
-                    // 拼音不打印，什么都不做
-                }
-            })
-            .disposed(by: disposeBag)
+        self.searchHeadView.searchTx.delegate = self
         
-        self.searchHeadView.searchTx
-            .rx.controlEvent(.editingDidEndOnExit)
-            .withLatestFrom(self.searchHeadView.searchTx.rx.text.orEmpty)
-            .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                if selectIndex == 0 {
-                    if text.isEmpty {
-                        self.searchHeadView.searchTx.text = self.searchHeadView.searchTx.placeholder
-                        enterpriseVc.searchWords.accept(self.searchHeadView.searchTx.placeholder)
-                    }else {
-                        self.searchHeadView.searchTx.text = text
-                        enterpriseVc.searchWords.accept(text)
-                    }
-                }else if selectIndex == 1 {
-                    if text.isEmpty {
-                        self.searchHeadView.searchTx.text = self.searchHeadView.searchTx.placeholder
-                        peopleVc.searchWords.accept(self.searchHeadView.searchTx.placeholder)
-                    }else {
-                        self.searchHeadView.searchTx.text = text
-                        peopleVc.searchWords.accept(text)
-                    }
-                }else if selectIndex == 2 {
-                    if text.isEmpty {
-                        self.searchHeadView.searchTx.text = self.searchHeadView.searchTx.placeholder
-                        riskVc.searchWords.accept(self.searchHeadView.searchTx.placeholder)
-                    }else {
-                        self.searchHeadView.searchTx.text = text
-                        riskVc.searchWords.accept(text)
-                    }
-                }else {
-                    
-                }
-            }).disposed(by: disposeBag)
+        // 监听文本变化（包括拼音输入确认）
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textDidChange),
+            name: UITextField.textDidChangeNotification,
+            object: self.searchHeadView.searchTx
+        )
+        
+        if selectIndex == 0 {
+            enterpriseVc.searchWords.accept("")
+        }else if selectIndex == 1 {
+            peopleVc.searchWords.accept("")
+        }else {
+            riskVc.searchWords.accept("")
+        }
+    }
+    
+}
+
+extension SearchAllViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let text = textField.text ?? ""
+        if selectIndex == 0 {
+            if text.isEmpty {
+                self.searchHeadView.searchTx.text = self.searchHeadView.searchTx.placeholder
+                enterpriseVc.searchWords.accept(self.searchHeadView.searchTx.placeholder)
+            }else {
+                self.searchHeadView.searchTx.text = text
+                enterpriseVc.searchWords.accept(text)
+            }
+        }else if selectIndex == 1 {
+            if text.isEmpty {
+                self.searchHeadView.searchTx.text = self.searchHeadView.searchTx.placeholder
+                peopleVc.searchWords.accept(self.searchHeadView.searchTx.placeholder)
+            }else {
+                self.searchHeadView.searchTx.text = text
+                peopleVc.searchWords.accept(text)
+            }
+        } else {
+            if text.isEmpty {
+                self.searchHeadView.searchTx.text = self.searchHeadView.searchTx.placeholder
+                riskVc.searchWords.accept(self.searchHeadView.searchTx.placeholder)
+            }else {
+                self.searchHeadView.searchTx.text = text
+                riskVc.searchWords.accept(text)
+            }
+        }
+        return true
+    }
+    
+    @objc private func textDidChange() {
+        let isComposing = self.searchHeadView.searchTx.markedTextRange != nil
+        if !isComposing {
+            let searchStr = self.searchHeadView.searchTx.text ?? ""
+            
+            // Check for special characters
+            let filteredText = filterAllSpecialCharacters(searchStr)
+            if filteredText != searchStr {
+                ToastViewConfig.showToast(message: "禁止输入特殊字符")
+                searchHeadView.searchTx.text = filteredText
+                return
+            }
+            
+            if searchStr.count < 2 && !searchStr.isEmpty {
+                ToastViewConfig.showToast(message: "至少输入2个关键词")
+            } else if searchStr.count > 100 {
+                searchHeadView.searchTx.text = String(searchStr.prefix(100))
+                ToastViewConfig.showToast(message: "最多输入100个关键词")
+            }
+            
+            if selectIndex == 0 {
+                enterpriseVc.searchWords.accept(searchHeadView.searchTx.text ?? "")
+            }else if selectIndex == 1 {
+                peopleVc.searchWords.accept(searchHeadView.searchTx.text ?? "")
+            }else {
+                riskVc.searchWords.accept(searchHeadView.searchTx.text ?? "")
+            }
+            
+        }
+        
     }
     
 }

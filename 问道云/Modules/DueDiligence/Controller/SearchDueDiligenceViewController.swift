@@ -95,37 +95,13 @@ class SearchDueDiligenceViewController: WDBaseViewController {
                 self?.navigationController?.pushViewController(memVc, animated: true)
             }).disposed(by: disposeBag)
         
-        self.searchView.searchTx
-            .rx
-            .controlEvent(.editingChanged)
-            .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] keywords in
-                guard let self = self else { return }
-                if keywords.isEmpty {
-                    bgView.isHidden = false
-                }
-                if self.containsOnlyChinese(keywords) == true {
-                    self.pageIndex = 1
-                    self.keywords = keywords
-                    getDueListInfo()
-                }else if self.containsPinyin(keywords) == true {
-                    // 拼音不打印，什么都不做
-                }
-            }).disposed(by: disposeBag)
-        
-        self.searchView.searchTx
-            .rx.controlEvent(.editingDidEnd)
-            .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
-            .subscribe(onNext: { [weak self] keywords in
-                guard let self = self else { return }
-                self.pageIndex = 1
-                if self.keywords != keywords {
-                    self.keywords = keywords
-                    getDueListInfo()
-                }
-            })
-            .disposed(by: disposeBag)
+        // 监听 UITextField 的文本变化
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textDidChange),
+            name: UITextField.textDidChangeNotification,
+            object: self.searchView.searchTx
+        )
         
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
@@ -144,6 +120,43 @@ class SearchDueDiligenceViewController: WDBaseViewController {
         
     }
     
+}
+
+extension SearchDueDiligenceViewController: UITextFieldDelegate {
+    
+    @objc private func textDidChange() {
+        let isComposing = self.searchView.searchTx.markedTextRange != nil
+        if !isComposing {
+            let searchStr = self.searchView.searchTx.text ?? ""
+            
+            // Check for special characters
+            let filteredText = filterAllSpecialCharacters(searchStr)
+            if filteredText != searchStr {
+                ToastViewConfig.showToast(message: "禁止输入特殊字符")
+                self.searchView.searchTx.text = filteredText
+                return
+            }
+            
+            if searchStr.count < 2 && !searchStr.isEmpty {
+                ToastViewConfig.showToast(message: "至少输入2个关键词")
+                self.bgView.isHidden = false
+                self.tableView.isHidden = true
+                return
+            } else if searchStr.count > 100 {
+                self.searchView.searchTx.text = String(searchStr.prefix(100))
+                ToastViewConfig.showToast(message: "最多输入100个关键词")
+            } else if searchStr.isEmpty {
+                self.bgView.isHidden = false
+                return
+            }
+            self.bgView.isHidden = true
+            self.tableView.isHidden = false
+            self.pageIndex = 1
+            self.keywords = self.searchView.searchTx.text ?? ""
+            getDueListInfo()
+            
+        }
+    }
 }
 
 extension SearchDueDiligenceViewController: UITableViewDelegate, UITableViewDataSource {

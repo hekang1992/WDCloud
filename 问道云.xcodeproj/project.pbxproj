@@ -277,6 +277,7 @@
 		73A21DF82D0C4F7800FC4C49 /* SettingAuthorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */; };
 		73A443E02D8BEF5000CB3A6C /* DIBUView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A443DF2D8BEF5000CB3A6C /* DIBUView.swift */; };
 		73A443E22D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A443E12D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift */; };
+		73A53C302DA8BE71004917C9 /* PopVoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A53C2F2DA8BE71004917C9 /* PopVoiceView.swift */; };
 		73AEAD2D2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AEAD2C2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift */; };
 		73AEAD2F2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */; };
 		73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */; };
@@ -703,6 +704,7 @@
 		73A21DF72D0C4F7800FC4C49 /* SettingAuthorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAuthorityViewController.swift; sourceTree = "<group>"; };
 		73A443DF2D8BEF5000CB3A6C /* DIBUView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIBUView.swift; sourceTree = "<group>"; };
 		73A443E12D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyOneReportOneVipViewController.swift; sourceTree = "<group>"; };
+		73A53C2F2DA8BE71004917C9 /* PopVoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopVoiceView.swift; sourceTree = "<group>"; };
 		73AEAD2C2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyPeopleCollectionViewCell.swift; sourceTree = "<group>"; };
 		73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyAddCustomerViewCell.swift; sourceTree = "<group>"; };
 		73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyNormalListCell.swift; sourceTree = "<group>"; };
@@ -1107,27 +1109,27 @@
 		733D2F432D87AD5F0019C697 /* 完成 */ = {
 			isa = PBXGroup;
 			children = (
-				735A3F732D65BE4000448268 /* 求职监测 */,
 				7340E18B2D5CD3D2008FD5C7 /* 对外担保 */,
 				7340E1C42D5DD6AD008FD5C7 /* 对外投资 */,
-				7340E1AE2D5CD61D008FD5C7 /* 贷款逾期 */,
-				7340E16F2D5CC660008FD5C7 /* 环保处罚 */,
-				7340E1762D5CCF85008FD5C7 /* 税收违法 */,
-				7340E1922D5CD437008FD5C7 /* 限制高消费 */,
-				7340E1A72D5CD5B1008FD5C7 /* 司法拍卖 */,
-				73FC5E612D5CA9A4001D0DEF /* 债券违约 */,
 				7340E1B72D5DD4DD008FD5C7 /* 资产抵押 */,
 				7340E1842D5CD32B008FD5C7 /* 资产查封 */,
 				7340E17D2D5CD209008FD5C7 /* 资产冻结 */,
+				7340E1AE2D5CD61D008FD5C7 /* 贷款逾期 */,
+				7340E16F2D5CC660008FD5C7 /* 环保处罚 */,
+				7340E1762D5CCF85008FD5C7 /* 税收违法 */,
+				7340E1A72D5CD5B1008FD5C7 /* 司法拍卖 */,
 				7340E1A02D5CD53B008FD5C7 /* 开庭公告 */,
 				7340E1992D5CD491008FD5C7 /* 法院公告 */,
+				7340E1922D5CD437008FD5C7 /* 限制高消费 */,
 				7340E16E2D5CC651008FD5C7 /* 被执行人 */,
 				7340E16D2D5CC643008FD5C7 /* 最终受益人 */,
 				7340E1662D5CB930008FD5C7 /* 实际控制人 */,
 				735A3F702D65B9A000448268 /* 风控秘笈 */,
+				735A3F732D65BE4000448268 /* 求职监测 */,
 				73FC5E482D5C3C70001D0DEF /* 一键报告 */,
 				73FC5E462D5C3C53001D0DEF /* 法律法规 */,
 				73FC5E452D5C3C44001D0DEF /* 公告大全 */,
+				73FC5E612D5CA9A4001D0DEF /* 债券违约 */,
 				73FC5E472D5C3C66001D0DEF /* 行政处罚 */,
 				73FC5E682D5CADA4001D0DEF /* 查诉讼 */,
 				73654B222D818DB00004E408 /* 首页tab切换 */,
@@ -1447,6 +1449,7 @@
 				73654B1E2D8186BC0004E408 /* PopPrivacyView.swift */,
 				732861772D89749C004CC775 /* PopRightMoreView.swift */,
 				7377AF972DA79FA900D4AA12 /* PopOnlyBuyVipView.swift */,
+				73A53C2F2DA8BE71004917C9 /* PopVoiceView.swift */,
 			);
 			path = PopView;
 			sourceTree = "<group>";
@@ -2431,6 +2434,7 @@
 				7352B22E2D3548DF00B5391B /* CompanyDerailFooterView.swift in Sources */,
 				73EF03D92D312B330070F850 /* TwoPeopleNormalListCell.swift in Sources */,
 				730487F72D2A525D0024265C /* HomeHeadView.swift in Sources */,
+				73A53C302DA8BE71004917C9 /* PopVoiceView.swift in Sources */,
 				73C752562D1E4DA000C47187 /* HistoryListView.swift in Sources */,
 				7325A7CF2CFEFA510043C196 /* WDLoginConfig.swift in Sources */,
 				739DCA202D671A23009CFC78 /* MyCheckSettingViewController.swift in Sources */,
@@ -2666,7 +2670,9 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "我们希望访问您的相机以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相机，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "需要访问您的文档文件夹以选择PDF文件,提交发票.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要使用麦克风录制您的语音，以实现语音输入、语音备忘录或语音通话功能。我们只会在您明确开始录音时访问麦克风，并且您可以随时在系统设置中关闭此权限。";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "我们希望访问您的相册以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相册，您将无法使用反馈意见、保存图片等功能。";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "我们使用语音识别功能将您说的话转换为文字，用于语音输入、语音搜索或语音控制功能。您的语音数据仅用于实时转换，不会存储或上传到服务器。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -2712,7 +2718,9 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "我们希望访问您的相机以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相机，您将无法使用反馈意见、保存图片等功能。";
 				INFOPLIST_KEY_NSContactsUsageDescription = "我们需要访问您的通讯录，以便您可以在应用中方便地选择联系人进行分享。";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "需要访问您的文档文件夹以选择PDF文件,提交发票.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要使用麦克风录制您的语音，以实现语音输入、语音备忘录或语音通话功能。我们只会在您明确开始录音时访问麦克风，并且您可以随时在系统设置中关闭此权限。";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "我们希望访问您的相册以便您可以上传截图，反映在应用使用过程中遇到的问题。如果无法访问相册，您将无法使用反馈意见、保存图片等功能。";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "我们使用语音识别功能将您说的话转换为文字，用于语音输入、语音搜索或语音控制功能。您的语音数据仅用于实时转换，不会存储或上传到服务器。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

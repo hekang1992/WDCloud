@@ -72,50 +72,12 @@ class SearchControllingPersonViewController: WDBaseViewController {
         addSegmentedView()
         
         // 监听 UITextField 的文本变化
-        self.headView.searchHeadView.searchTx
-            .rx.text.orEmpty
-            .distinctUntilChanged()
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                if self.containsOnlyChinese(text) == true {
-                    print("自动打印中文：\(text)")
-                    if !text.isEmpty && text.count >= 2 {
-                        self.oneView.isHidden = true
-                        getNumInfo(from: text)
-                        if selectIndex == 0 {
-                            peopleVc.searchWordsRelay.accept(text)
-                        }else {
-                            companyVc.searchWordsRelay.accept(text)
-                        }
-                    }else {
-                        getHotsSearchInfo()
-                        self.oneView.isHidden = false
-                    }
-                }
-                else if self.containsPinyin(text) == true {
-                    // 拼音不打印，什么都不做
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        self.headView.searchHeadView.searchTx
-            .rx.controlEvent(.editingDidEndOnExit)
-            .withLatestFrom(self.headView.searchHeadView.searchTx.rx.text.orEmpty)
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                if !text.isEmpty && text.count >= 2 {
-                    self.oneView.isHidden = true
-                    getNumInfo(from: text)
-                    if selectIndex == 0 {
-                        peopleVc.searchWordsRelay.accept(text)
-                    }else {
-                        companyVc.searchWordsRelay.accept(text)
-                    }
-                }
-            })
-            .disposed(by: disposeBag)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textDidChange),
+            name: UITextField.textDidChangeNotification,
+            object: self.headView.searchHeadView.searchTx
+        )
         
         view.addSubview(oneView)
         oneView.snp.makeConstraints { make in
@@ -202,13 +164,52 @@ class SearchControllingPersonViewController: WDBaseViewController {
             })
         }
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        //获取热搜数据
         getHotsSearchInfo()
+        
     }
     
+}
+
+extension SearchControllingPersonViewController: UITextFieldDelegate {
+    
+    @objc private func textDidChange() {
+        let isComposing = self.headView.searchHeadView.searchTx.markedTextRange != nil
+        if !isComposing {
+            let searchStr = self.headView.searchHeadView.searchTx.text ?? ""
+            
+            // Check for special characters
+            let filteredText = filterAllSpecialCharacters(searchStr)
+            if filteredText != searchStr {
+                ToastViewConfig.showToast(message: "禁止输入特殊字符")
+                self.headView.searchHeadView.searchTx.text = filteredText
+                return
+            }
+            
+            if searchStr.count < 2 && !searchStr.isEmpty {
+                ToastViewConfig.showToast(message: "至少输入2个关键词")
+                self.oneView.isHidden = false
+                //获取热搜数据
+                getHotsSearchInfo()
+                return
+            } else if searchStr.count > 100 {
+                self.headView.searchHeadView.searchTx.text = String(searchStr.prefix(100))
+                ToastViewConfig.showToast(message: "最多输入100个关键词")
+            } else if searchStr.isEmpty {
+                self.oneView.isHidden = false
+                //获取热搜数据
+                getHotsSearchInfo()
+                return
+            }
+            self.oneView.isHidden = true
+            if selectIndex == 0 {
+                peopleVc.searchWordsRelay.accept(self.headView.searchHeadView.searchTx.text ?? "")
+            }else {
+                companyVc.searchWordsRelay.accept(self.headView.searchHeadView.searchTx.text ?? "")
+            }
+            self.getNumInfo(from: self.headView.searchHeadView.searchTx.text ?? "")
+        }
+    }
 }
 
 extension SearchControllingPersonViewController: JXPagingViewDelegate, JXSegmentedViewDelegate {

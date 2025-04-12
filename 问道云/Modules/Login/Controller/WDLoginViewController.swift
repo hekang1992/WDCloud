@@ -34,6 +34,7 @@ class WDLoginViewController: WDBaseViewController {
         //获取验证码
         loginView.sendBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.getCodeInfo()
+            self?.loginView.sendBtn.isEnabled = false
         }).disposed(by: disposeBag)
         
         loginView.block1 = { [weak self] in
@@ -89,16 +90,21 @@ extension WDLoginViewController {
     
     //获取验证码
     func getCodeInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["phone": self.loginView.phoneTx.text ?? "",
                     "sendType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            self?.loginView.sendBtn.isEnabled = true
             switch result {
             case .success(let success):
-                self?.pushCodeVc()
-                ToastViewConfig.showToast(message: success.msg ?? "")
+                if success.code == 200 {
+                    self?.pushCodeVc()
+                    ToastViewConfig.showToast(message: success.msg ?? "")
+                }
                 break
             case .failure(_):
                 break

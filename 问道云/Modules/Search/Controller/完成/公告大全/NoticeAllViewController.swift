@@ -253,6 +253,7 @@ class NoticeAllViewController: WDBaseViewController {
             guard let self = self else { return }
             getNoticeListInfo()
         })
+        
         getNoticeListInfo()
     }
     
@@ -321,6 +322,7 @@ extension NoticeAllViewController {
     
     //获取公告信息
     private func getNoticeListInfo() {
+        ViewHud.addLoadView()
         let dict = ["pageNum": pageNum,
                     "pageSize": 20,
                     "keywords": shareSearchKey,
@@ -353,8 +355,10 @@ extension NoticeAllViewController {
                     }
                     self.tableView.reloadData()
                 }
+                ViewHud.hideLoadView()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }

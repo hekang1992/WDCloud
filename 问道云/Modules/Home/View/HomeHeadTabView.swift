@@ -14,6 +14,8 @@ class HomeHeadTabView: BaseView {
     
     var textBlock: ((rowsModel) -> Void)?
     
+    var yuyinBlock: (() -> Void)?
+    
     var modelArray = BehaviorRelay<[rowsModel]?>(value: nil)
     
     lazy var oneBtn: UIButton = {
@@ -60,6 +62,13 @@ class HomeHeadTabView: BaseView {
         return ctImageView
     }()
     
+    lazy var labactImageView: UIImageView = {
+        let labactImageView = UIImageView()
+        labactImageView.image = UIImage(named: "yuyinshuru")
+        labactImageView.isUserInteractionEnabled = true
+        return labactImageView
+    }()
+    
     var scrollLabelView: TXScrollLabelView?
     
     override init(frame: CGRect) {
@@ -70,6 +79,7 @@ class HomeHeadTabView: BaseView {
         addSubview(lineView)
         addSubview(whiteView)
         whiteView.addSubview(ctImageView)
+        whiteView.addSubview(labactImageView)
         twoBtn.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.size.equalTo(CGSize(width: 50.pix(), height: 25))
@@ -91,7 +101,7 @@ class HomeHeadTabView: BaseView {
             make.size.equalTo(CGSize(width: 25, height: 2))
         }
         whiteView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
+            make.right.equalToSuperview().offset(-10)
             make.left.equalToSuperview().offset(10)
             make.height.equalTo(45)
             make.top.equalTo(lineView.snp.bottom).offset(12)
@@ -101,7 +111,11 @@ class HomeHeadTabView: BaseView {
             make.left.equalToSuperview().offset(11.5)
             make.size.equalTo(CGSize(width: 15, height: 15))
         }
-        
+        labactImageView.snp.makeConstraints { make in
+            make.centerY.equalTo(whiteView)
+            make.right.equalToSuperview()
+            make.size.equalTo(CGSize(width: 45, height: 45))
+        }
         oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             self.oneBtn.setTitleColor(UIColor.white, for: .normal)
@@ -141,6 +155,10 @@ class HomeHeadTabView: BaseView {
             }
         }).disposed(by: disposeBag)
         
+        labactImageView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            self?.yuyinBlock?()
+        }).disposed(by: disposeBag)
+        
         modelArray.compactMap { $0 }.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self else { return }
             let titlesArray = modelArray.map { $0.entityName ?? "" }
@@ -151,7 +169,7 @@ class HomeHeadTabView: BaseView {
             scrollLabelView.textAlignment = .left
             scrollLabelView.font = .regularFontOfSize(size: 13)
             scrollLabelView.scrollTitleColor = .init(cssStr: "#333333")
-            scrollLabelView.frame = CGRectMake(38, 0, SCREEN_WIDTH - 70, 45)
+            scrollLabelView.frame = CGRectMake(38, 0, SCREEN_WIDTH - 100, 45)
             scrollLabelView.scrollLabelViewDelegate = self
             self.scrollLabelView = scrollLabelView
             whiteView.addSubview(scrollLabelView)

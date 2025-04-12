@@ -93,6 +93,21 @@ class HighSearchKeyView: BaseView {
             make.right.equalTo(preciseButton.snp.left).offset(-5)
             make.size.equalTo(CGSize(width: 55, height: 19))
         }
+        nameTx.rx.text.orEmpty
+            .map { text -> String in
+                // 1. 过滤特殊字符（只允许中文、字母、数字和常见标点）
+                let pattern = "[^a-zA-Z0-9\\u4e00-\\u9fa5，。、；：？！（）「」『』《》【】,.?;:!()\\[\\]{}'\"\\- ]"
+                let filtered = text.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
+                
+                // 2. 限制最大长度为50个字符
+                if filtered.count > 50 {
+                    let index = filtered.index(filtered.startIndex, offsetBy: 50)
+                    return String(filtered[..<index])
+                }
+                return filtered
+            }
+            .bind(to: nameTx.rx.text)
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
@@ -100,13 +115,13 @@ class HighSearchKeyView: BaseView {
     }
     
     // 选中“精准”按钮
-    @objc private func selectPrecise() {
+    @objc func selectPrecise() {
         updateButtonSelection(selectedButton: preciseButton, unselectedButton: fuzzyButton)
         self.matchType = "2"
     }
     
     // 选中“模糊”按钮
-    @objc private func selectFuzzy() {
+    @objc func selectFuzzy() {
         updateButtonSelection(selectedButton: fuzzyButton, unselectedButton: preciseButton)
         self.matchType = "1"
     }
@@ -204,7 +219,7 @@ class HighThreeView: BaseView {
     lazy var descLabel: UILabel = {
         let descLabel = UILabel()
         descLabel.textColor = .init(cssStr: "#ACACAC")
-        descLabel.text = "全部"
+        descLabel.text = "全国"
         descLabel.font = .regularFontOfSize(size: 13)
         return descLabel
     }()
@@ -900,19 +915,51 @@ class HighSixView: BaseView {
             })
             .disposed(by: disposeBag)
         
-        let combine = Observable.combineLatest(startMoney, endMoney)
-            .map { startMoney, endMoney in
-                if startMoney > endMoney {
-                    return false
-                }else {
-                    return true
+        startTx.rx.text.orEmpty
+            .map { text -> String in
+                // Remove non-digit characters
+                let filtered = text.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+                
+                // Prevent leading zeros (unless the value is exactly "0")
+                let noLeadingZeros: String
+                if filtered == "0" {
+                    noLeadingZeros = "0"  // Allow single zero
+                } else {
+                    noLeadingZeros = filtered.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
                 }
+                
+                // Convert to number and limit to 1,000,000
+                if let number = Int(noLeadingZeros), number > 10_000_000_000 {
+                    ToastViewConfig.showToast(message: "注册资本最多输入100亿")
+                    return "10000000000"
+                }
+                return noLeadingZeros
             }
-        combine.subscribe(onNext: { isValid in
-            if !isValid {
-                ToastViewConfig.showToast(message: "最低资本大于最高资本,请重新填写")
+            .bind(to: startTx.rx.text)
+            .disposed(by: disposeBag)
+        
+        endTx.rx.text.orEmpty
+            .map { text -> String in
+                // Remove non-digit characters
+                let filtered = text.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+                
+                // Prevent leading zeros (unless the value is exactly "0")
+                let noLeadingZeros: String
+                if filtered == "0" {
+                    noLeadingZeros = "0"  // Allow single zero
+                } else {
+                    noLeadingZeros = filtered.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
+                }
+                
+                // Convert to number and limit to 1,000,000
+                if let number = Int(noLeadingZeros), number > 10_000_000_000 {
+                    ToastViewConfig.showToast(message: "注册资本最多输入100亿")
+                    return "10000000000"
+                }
+                return noLeadingZeros
             }
-        }).disposed(by: disposeBag)
+            .bind(to: endTx.rx.text)
+            .disposed(by: disposeBag)
         
     }
     
@@ -930,11 +977,11 @@ extension HighSixView: TagListViewDelegate {
         if title == "不限" {
             self.startTx.text = ""
             self.endTx.text = ""
-//            if isGrand == false {
-//                tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
-//            }else {
-//                tagListViews.forEach { _ in }
-//            }
+            //            if isGrand == false {
+            //                tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
+            //            }else {
+            //                tagListViews.forEach { _ in }
+            //            }
             tagListViews.forEach { $0.isSelected = $0.currentTitle == title }
         } else {
             tagListViews.first(where: { $0.currentTitle == "不限" })?.isSelected = false
@@ -1297,6 +1344,51 @@ class HighPeopleView: BaseView {
             make.left.equalTo(linegView.snp.right)
         }
         
+        startTx.rx.text.orEmpty
+            .map { text -> String in
+                // Remove non-digit characters
+                let filtered = text.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+                
+                // Prevent leading zeros (unless the value is exactly "0")
+                let noLeadingZeros: String
+                if filtered == "0" {
+                    noLeadingZeros = "0"  // Allow single zero
+                } else {
+                    noLeadingZeros = filtered.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
+                }
+                
+                // Convert to number and limit to 1,000,000
+                if let number = Int(noLeadingZeros), number > 1_000_000 {
+                    ToastViewConfig.showToast(message: "参保人数最多100万")
+                    return "1000000"
+                }
+                return noLeadingZeros
+            }
+            .bind(to: startTx.rx.text)
+            .disposed(by: disposeBag)
+        
+        endTx.rx.text.orEmpty
+            .map { text -> String in
+                // Remove non-digit characters
+                let filtered = text.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+                
+                // Prevent leading zeros (unless the value is exactly "0")
+                let noLeadingZeros: String
+                if filtered == "0" {
+                    noLeadingZeros = "0"  // Allow single zero
+                } else {
+                    noLeadingZeros = filtered.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
+                }
+                
+                // Convert to number and limit to 1,000,000
+                if let number = Int(noLeadingZeros), number > 1_000_000 {
+                    ToastViewConfig.showToast(message: "参保人数最多100万")
+                    return "1000000"
+                }
+                return noLeadingZeros
+            }
+            .bind(to: endTx.rx.text)
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {

@@ -13,6 +13,13 @@ import RxRelay
 import SwiftyJSON
 
 class SearchLawsViewController: WDBaseViewController {
+    
+    //浏览历史
+    var historyArray: [rowsModel] = []
+    //热门搜索
+    var hotsArray: [rowsModel] = []
+    //总数组
+    var modelArray: [[rowsModel]] = []
 
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .oneBtn)
@@ -34,8 +41,8 @@ class SearchLawsViewController: WDBaseViewController {
         return searchView
     }()
     
-    lazy var oneView: OneCompanyView = {
-        let oneView = OneCompanyView()
+    lazy var oneView: CommonHotsView = {
+        let oneView = CommonHotsView()
         return oneView
     }()
     
@@ -43,7 +50,6 @@ class SearchLawsViewController: WDBaseViewController {
     var pageNum: Int = 1
     var pageSize: Int = 20
     var allArray: [itemsModel] = []
-    var shareSearchKey: String = ""
     var model: DataModel?
     var lawNature: String = ""
     var timeliness: String = ""
@@ -83,20 +89,14 @@ class SearchLawsViewController: WDBaseViewController {
             make.top.equalTo(headView.snp.bottom).offset(1)
             make.height.equalTo(50)
         }
-        self.searchView.searchTx
-            .rx
-            .controlEvent(.editingChanged)
-            .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
-            .distinctUntilChanged()
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] keywords in
-                if !keywords.isEmpty {
-                    self?.pageNum = 1
-                    self?.shareSearchKey = keywords
-                    self?.getNoticeListInfo()
-                }
-        }).disposed(by: disposeBag)
-        
+
+        // 监听 UITextField 的文本变化
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textDidChange),
+            name: UITextField.textDidChangeNotification,
+            object: self.searchView.searchTx
+        )
         
         let oneMenu = MenuAction(title: "效力位阶", style: .typeList)!
         let twoMenu = MenuAction(title: "时效性", style: .typeList)!
@@ -163,32 +163,97 @@ class SearchLawsViewController: WDBaseViewController {
         self.addNodataView(from: self.tableView)
         
         //删除最近搜索
-        self.oneView.searchView.deleteBtn
-            .rx
-            .tap.subscribe(onNext: { [weak self] in
-                self?.deleteSearchInfo()
-            }).disposed(by: disposeBag)
+        oneView.deleteBlock = {
+            ShowAlertManager.showAlert(title: "删除", message: "是否确定删除最近搜索?", confirmAction: {
+                ViewHud.addLoadView()
+                let man = RequestManager()
+                let dict = ["moduleId": "44"]
+                man.requestAPI(params: dict,
+                               pageUrl: "/operation/searchRecord/clear",
+                               method: .post) { [weak self] result in
+                    ViewHud.hideLoadView()
+                    switch result {
+                    case .success(let success):
+                        if success.code == 200 {
+                            ToastViewConfig.showToast(message: "删除成功")
+                            self?.oneView.bgView.isHidden = true
+                            self?.oneView.bgView.snp.remakeConstraints({ make in
+                                make.top.equalToSuperview().offset(1)
+                                make.left.equalToSuperview()
+                                make.width.equalTo(SCREEN_WIDTH)
+                                make.height.equalTo(0)
+                            })
+                        }
+                        break
+                    case .failure(_):
+                        break
+                    }
+                }
+            })
+        }
         
         //点击最近搜索
-        self.oneView.lastSearchTextBlock = { [weak self] keywords in
+        self.oneView.tagClickBlock = { [weak self] label in
+            let keywords = label.text ?? ""
             self?.searchView.searchTx.text = keywords
             if !keywords.isEmpty {
                 self?.oneView.isHidden = false
                 //最近搜索
-                self?.getlastSearch()
+                self?.getHotsSearchInfo()
                 self?.pageNum = 1
                 self?.getNoticeListInfo()
-            }else {
                 self?.oneView.isHidden = true
+                self?.tableView.isHidden = false
+            }else {
+                self?.oneView.isHidden = false
+                self?.tableView.isHidden = true
             }
         }
         
         //最近搜索
-        self.getlastSearch()
-        
-        
+        self.getHotsSearchInfo()
     }
 
+}
+
+extension SearchLawsViewController: UITextFieldDelegate {
+    
+    @objc private func textDidChange() {
+        let isComposing = self.searchView.searchTx.markedTextRange != nil
+        if !isComposing {
+            let searchStr = self.searchView.searchTx.text ?? ""
+            
+            // Check for special characters
+            let filteredText = filterAllSpecialCharacters(searchStr)
+            if filteredText != searchStr {
+                ToastViewConfig.showToast(message: "禁止输入特殊字符")
+                self.searchView.searchTx.text = filteredText
+                return
+            }
+            
+            if searchStr.count < 2 && !searchStr.isEmpty {
+                ToastViewConfig.showToast(message: "至少输入2个关键词")
+                self.oneView.isHidden = false
+                self.tableView.isHidden = true
+                //获取热搜数据
+                getHotsSearchInfo()
+                return
+            } else if searchStr.count > 100 {
+                self.searchView.searchTx.text = String(searchStr.prefix(100))
+                ToastViewConfig.showToast(message: "最多输入100个关键词")
+            } else if searchStr.isEmpty {
+                self.oneView.isHidden = false
+                self.tableView.isHidden = true
+                //获取热搜数据
+                getHotsSearchInfo()
+                return
+            }
+            self.oneView.isHidden = true
+            self.tableView.isHidden = false
+            self.pageNum = 1
+            getNoticeListInfo()
+        }
+    }
 }
 
 extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -227,8 +292,9 @@ extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
         return headView
     }
     
-    //获取公告信息
+    //获取法律信息
     private func getNoticeListInfo() {
+        ViewHud.addLoadView()
         let dict = ["pageNum": pageNum,
                     "pageSize": pageSize,
                     "title": self.searchView.searchTx.text ?? "",
@@ -238,6 +304,7 @@ extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
         man.requestAPI(params: dict, pageUrl: "/firminfo/laws/list", method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let self = self, let model = success.data, let total = model.total {
@@ -287,74 +354,48 @@ extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension SearchLawsViewController {
     
-    //最近搜索
-    private func getlastSearch() {
-        let man = RequestManager()
-        let dict = ["searchType": "",
-                    "moduleId": "03"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/searchRecord/query",
-                       method: .post) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                if let rows = success.data?.data {
-                    reloadSearchUI(data: rows)
-                }
-                break
-            case .failure(_):
-                break
+    //获取最近搜索,浏览历史,热搜
+    private func getHotsSearchInfo() {
+        let group = DispatchGroup()
+        group.enter()
+        getLastSearchInfo(from: "44") { [weak self] modelArray in
+            if !modelArray.isEmpty {
+                self?.oneView.bgView.isHidden = false
+                self?.oneView.bgView.snp.remakeConstraints({ make in
+                    make.top.equalToSuperview().offset(1)
+                    make.left.equalToSuperview()
+                    make.width.equalTo(SCREEN_WIDTH)
+                })
+                self?.oneView.tagArray = modelArray.map { $0.searchContent ?? "" }
+                self?.oneView.setupScrollView()
+            }else {
+                self?.oneView.bgView.isHidden = true
+                self?.oneView.bgView.snp.remakeConstraints({ make in
+                    make.top.equalToSuperview().offset(1)
+                    make.left.equalToSuperview()
+                    make.width.equalTo(SCREEN_WIDTH)
+                    make.height.equalTo(0)
+                })
             }
+            group.leave()
         }
-    }
-    
-    //最近搜索UI刷新
-    func reloadSearchUI(data: [rowsModel]) {
-        var strArray: [String] = []
-        if data.count > 0 {
-            for model in data {
-                strArray.append(model.searchContent ?? "")
-            }
-            self.oneView.searchView.tagListView.removeAllTags()
-            self.oneView.searchView.tagListView.addTags(strArray)
-            self.oneView.searchView.isHidden = false
-            self.oneView.layoutIfNeeded()
-            let height = self.oneView.searchView.tagListView.frame.height
-            self.oneView.searchView.snp.updateConstraints { make in
-                make.height.equalTo(30 + height + 20)
-            }
-        } else {
-            self.oneView.searchView.isHidden = true
-            self.oneView.searchView.snp.updateConstraints { make in
-                make.height.equalTo(0)
-            }
+        
+        group.enter()
+        getLastHistroyInfo(from: "44") { [weak self] modelArray in
+            self?.historyArray = modelArray
+            group.leave()
         }
-        self.oneView.layoutIfNeeded()
-    }
-    
-    //删除最近搜索
-    private func deleteSearchInfo() {
-        ShowAlertManager.showAlert(title: "删除", message: "是否需要删除最近搜索?", confirmAction: {
-            let man = RequestManager()
-            let dict = ["searchType": "",
-                        "moduleId": "03"]
-            man.requestAPI(params: dict,
-                           pageUrl: "/operation/searchRecord/clear",
-                           method: .post) { result in
-                switch result {
-                case .success(let success):
-                    if success.code == 200 {
-                        ToastViewConfig.showToast(message: "删除成功")
-                        self.oneView.searchView.isHidden = true
-                        self.oneView.searchView.snp.updateConstraints({ make in
-                            make.height.equalTo(0)
-                        })
-                    }
-                    break
-                case .failure(_):
-                    break
-                }
-            }
-        })
+        
+        group.enter()
+        getLastHotsInfo(from: "44") { [weak self] modelArray in
+            self?.hotsArray = modelArray
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            self.modelArray = [self.historyArray, self.hotsArray]
+            self.oneView.modelArray = self.modelArray
+        }
+        
     }
 }

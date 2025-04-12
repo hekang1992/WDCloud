@@ -295,7 +295,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
             let leaderTypeName = model.leaderVec?.leaderTypeName ?? ""
             self.nameView.label1.text = leaderTypeName
             //logo
-            self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (40, 40), bgColor: UIColor.init(cssStr: logoColor)!))
+            self.ctImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (40, 40), bgColor: UIColor.init(cssStr: logoColor) ?? .random()))
             
             //名字
             self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: companyName, colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))

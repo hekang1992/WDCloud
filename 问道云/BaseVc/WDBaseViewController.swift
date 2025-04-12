@@ -532,20 +532,9 @@ extension WDBaseViewController {
 
 extension WDBaseViewController {
     
-    // 判断字符串是否仅包含拼音（字母）
-    func containsPinyin(_ text: String) -> Bool {
-        let regex = "^[a-zA-Z]+$"  // 仅包含字母的字符串
-        return text.range(of: regex, options: .regularExpression) != nil
-    }
-    
-    // 判断字符串是否仅包含中文字符
-    func containsOnlyChinese(_ text: String) -> Bool {
-        for scalar in text.unicodeScalars {
-            if (0x4E00...0x9FA5).contains(scalar.value) == false {
-                return false // 如果包含非中文字符，返回 false
-            }
-        }
-        return true // 如果全是中文字符
+    func filterAllSpecialCharacters(_ text: String) -> String {
+        let pattern = "[^a-zA-Z0-9\\u4e00-\\u9fa5]"
+        return text.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
     }
     
     func popVipView(from entityType: Int, entityId: String, entityName: String, menuId: String, complete: @escaping () -> Void) {
@@ -764,6 +753,22 @@ extension WDBaseViewController {
             case .failure(_):
                 complete([])
                 break
+            }
+        }
+    }
+    
+    func openSettings() {
+        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+            if UIApplication.shared.canOpenURL(settingsURL) {
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: { success in
+                    if success {
+                        print("成功跳转到设置页面")
+                    } else {
+                        print("跳转失败")
+                    }
+                })
+            } else {
+                print("无法打开设置页面")
             }
         }
     }

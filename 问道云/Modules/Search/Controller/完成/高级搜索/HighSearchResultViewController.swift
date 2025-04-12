@@ -149,7 +149,7 @@ class HighSearchResultViewController: WDBaseViewController {
     
     private func getHighSearchInfo() {
         let man = RequestManager()
-        dict = ["pageSize": 20, "pageIndex": pageIndex]
+        dict = ["pageSize": 20, "pageIndex": pageIndex, "queryBoss": false]
         if let keyword = keyword {
             dict.merge(keyword, uniquingKeysWith: { (current, new) in
                 return current
@@ -230,11 +230,13 @@ class HighSearchResultViewController: WDBaseViewController {
                 return current
             })
         }
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/v2/org-list/search",
                        method: .post) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let self = self,
@@ -369,6 +371,10 @@ extension HighSearchResultViewController: UITableViewDelegate, UITableViewDataSo
                 }
             }
         }
+        cell.heightDidUpdate = { [weak self] in
+            self?.tableView.beginUpdates()
+            self?.tableView.endUpdates()
+        }
         return cell
     }
     
@@ -393,12 +399,14 @@ extension HighSearchResultViewController {
     
     //添加关注
     private func addFocusInfo<T: BaseViewCell>(from model: pageDataModel, cell: T) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["entityId": model.orgInfo?.orgId ?? "",
                     "followTargetType": "1"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/follow/add-or-cancel",
                        method: .post) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

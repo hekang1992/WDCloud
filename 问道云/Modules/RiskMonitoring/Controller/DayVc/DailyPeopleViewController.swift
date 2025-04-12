@@ -230,13 +230,12 @@ extension DailyPeopleViewController {
                         self.pageNum += 1
                         self.peopleArray.append(contentsOf: modelArray)
                         if total != 0 {
-                            self.noNetView.removeFromSuperview()
                             self.emptyView.removeFromSuperview()
                         }else {
                             self.addNodataView(from: self.dailyView.tableView)
                             self.emptyView.snp.remakeConstraints { make in
                                 make.left.equalToSuperview()
-                                make.top.equalToSuperview().offset(64)
+                                make.top.equalToSuperview().offset(1)
                                 make.height.equalTo(SCREEN_HEIGHT)
                                 make.width.equalTo(SCREEN_WIDTH)
                             }
@@ -254,19 +253,6 @@ extension DailyPeopleViewController {
                 }
                 break
             case .failure(_):
-                if let self = self, let vc = vc {
-                    self.addNoNetView(from: vc.view)
-                    self.noNetView.snp.makeConstraints { make in
-                        make.left.equalToSuperview()
-                        make.top.equalToSuperview().offset(64)
-                        make.height.equalTo(SCREEN_HEIGHT)
-                        make.width.equalTo(SCREEN_WIDTH)
-                    }
-                    self.noNetView.refreshBlock = { [weak self] in
-                        self?.pageNum = 1
-                        self?.getPeopleInfo()
-                    }
-                }
                 break
             }
         }

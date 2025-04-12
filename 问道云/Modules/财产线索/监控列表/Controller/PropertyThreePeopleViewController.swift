@@ -77,22 +77,13 @@ class PropertyThreePeopleViewController: WDBaseViewController {
             make.height.equalTo(45)
         }
         
-        //搜索
-        self.searchView.searchTx
-            .rx
-            .controlEvent(.editingChanged)
-            .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] keywords in
-                guard let self = self else { return }
-                if self.containsOnlyChinese(keywords) == true {
-                    self.pageNum = 1
-                    self.entityName = keywords
-                    getListInfo()
-                }else if self.containsPinyin(keywords) == true {
-                    // 拼音不打印，什么都不做
-                }
-            }).disposed(by: disposeBag)
+        // 监听 UITextField 的文本变化
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textDidChange),
+            name: UITextField.textDidChangeNotification,
+            object: self.searchView.searchTx
+        )
         
         let oneMenu = MenuAction(title: "类型", style: .typeList)!
         self.groupList.asObservable().subscribe(onNext: { [weak self] modelArray in
@@ -208,6 +199,40 @@ class PropertyThreePeopleViewController: WDBaseViewController {
         getListInfo()
     }
     
+}
+
+extension PropertyThreePeopleViewController: UITextFieldDelegate {
+    
+    @objc private func textDidChange() {
+        let isComposing = self.searchView.searchTx.markedTextRange != nil
+        if !isComposing {
+            let searchStr = self.searchView.searchTx.text ?? ""
+            
+            // Check for special characters
+            let filteredText = filterAllSpecialCharacters(searchStr)
+            if filteredText != searchStr {
+                ToastViewConfig.showToast(message: "禁止输入特殊字符")
+                self.searchView.searchTx.text = filteredText
+                return
+            }
+            
+            if searchStr.count < 2 && !searchStr.isEmpty {
+                ToastViewConfig.showToast(message: "至少输入2个关键词")
+                self.tableView.isHidden = true
+                return
+            } else if searchStr.count > 100 {
+                self.searchView.searchTx.text = String(searchStr.prefix(100))
+                ToastViewConfig.showToast(message: "最多输入100个关键词")
+            } else if searchStr.isEmpty {
+                return
+            }
+            self.tableView.isHidden = false
+            self.pageNum = 1
+            self.entityName = self.searchView.searchTx.text ?? ""
+            getListInfo()
+            
+        }
+    }
 }
 
 /** 网络数据请求 */

@@ -8,6 +8,9 @@
 import UIKit
 import JXPagingView
 import JXSegmentedView
+import TYAlertController
+import Speech
+import AVFoundation
 
 extension JXPagingListContainerView: @retroactive JXSegmentedViewListContainer {}
 
@@ -81,6 +84,13 @@ class WDHomeViewController: WDBaseViewController {
         homeScroView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(Int(StatusHeightManager.navigationBarHeight + 20))
+        }
+        
+        //语音输入
+        self.homeHeadView.tabView.yuyinBlock = { [weak self] in
+            guard let self = self else { return }
+            //语音权限判断
+            requestSpeechAuthorization()
         }
         
         //跳转到会员页面
@@ -255,96 +265,34 @@ class WDHomeViewController: WDBaseViewController {
 
 extension WDHomeViewController {
     
-    //获取首页item
-    private func getHomeItemInfo(complete: @escaping ((childrenModel) -> Void)) {
-        ViewHud.addLoadView()
-        let man = RequestManager()
-        let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
-        let dict = ["moduleType": "1",
-                    "appleVersion": appleVersion,
-                    "appType": "apple"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/customermenu/customerMenuTree",
-                       method: .get) { result in
-            ViewHud.hideLoadView()
-            switch result {
-            case .success(let success):
-                if let model = success.data?.items?.first?.children?.last {
-                    complete(model)
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
-    //获取banner
-    func getBannerInfo() {
-        let man = RequestManager()
-        let dict = ["binnertype": "1"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/configurationoc/selectconfigurationenabledstate2",
-                       method: .get) { [weak self] reslut in
-            switch reslut {
-            case .success(let success):
-                if success.code == 200 {
-                    self?.homeHeadView.bannerModelArray = success.data?.rows ?? []
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
-    //热搜 全部 企业加人员
-    func getHotWords() {
-        let man = RequestManager()
-        let dict = ["moduleId": ""]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/clientbrowsecb/hot-search",
-                       method: .get) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                if let model = success.data {
-                    self.homeHeadView.hotsView.modelArray.accept(model.rows ?? [])
-                    if self.isClickHeadTab {
-                        self.homeHeadView.tabView.modelArray.accept(model.rows ?? [])
-                        self.homeScroView.modelArray.accept(model.rows ?? [])
+    private func requestSpeechAuthorization() {
+            SFSpeechRecognizer.requestAuthorization { authStatus in
+                OperationQueue.main.addOperation {
+                    switch authStatus {
+                    case .authorized:
+                        DispatchQueue.main.async {
+                            let voiceView = PopVoiceView(frame: CGRectMake(0, 0, 300, 220))
+                            let alertVc = TYAlertController(alert: voiceView, preferredStyle: .alert)!
+                            self.present(alertVc, animated: true)
+                        }
+                    case .denied:
+                        ShowAlertManager.showAlert(title: "权限申请", message: "请在iphone的“设置-问道云-麦克风”选项中,允许问道云访问你的麦克风", confirmAction: {[weak self] in
+                            self?.openSettings()
+                        })
+                    case .restricted:
+                        ShowAlertManager.showAlert(title: "权限申请", message: "请在iphone的“设置-问道云-麦克风”选项中,允许问道云访问你的麦克风", confirmAction: {[weak self] in
+                            self?.openSettings()
+                        })
+                    case .notDetermined:
+                        ShowAlertManager.showAlert(title: "权限申请", message: "请在iphone的“设置-问道云-麦克风”选项中,允许问道云访问你的麦克风", confirmAction: { [weak self] in
+                            self?.openSettings()
+                        })
+                    @unknown default:
+                        break
                     }
                 }
-                break
-            case .failure(_):
-                break
             }
         }
-    }
-    
-    //热搜1 企业热搜
-    func getHotCompanyWords() {
-        let man = RequestManager()
-        let dict = ["moduleId": "01"]
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/clientbrowsecb/hot-search",
-                       method: .get) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let success):
-                if let model = success.data {
-                    self.homeHeadView.tabView.modelArray.accept(model.rows ?? [])
-                    self.homeScroView.modelArray.accept(model.rows ?? [])
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
-    }
-}
-
-extension WDHomeViewController {
     
     private func toSearchListPageWithModel(from model: childrenModel) {
         let menuID = model.menuId ?? ""
@@ -442,6 +390,97 @@ extension WDHomeViewController {
     
 }
 
+/** 网络数据请求 */
+extension WDHomeViewController {
+    
+    //获取首页item
+    private func getHomeItemInfo(complete: @escaping ((childrenModel) -> Void)) {
+        ViewHud.addLoadView()
+        let man = RequestManager()
+        let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+        let dict = ["moduleType": "1",
+                    "appleVersion": appleVersion,
+                    "appType": "apple"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/customermenu/customerMenuTree",
+                       method: .get) { result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if let model = success.data?.items?.first?.children?.last {
+                    complete(model)
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //获取banner
+    func getBannerInfo() {
+        let man = RequestManager()
+        let dict = ["binnertype": "1"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/configurationoc/selectconfigurationenabledstate2",
+                       method: .get) { [weak self] reslut in
+            switch reslut {
+            case .success(let success):
+                if success.code == 200 {
+                    self?.homeHeadView.bannerModelArray = success.data?.rows ?? []
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //热搜 全部 企业加人员
+    func getHotWords() {
+        let man = RequestManager()
+        let dict = ["moduleId": ""]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/clientbrowsecb/hot-search",
+                       method: .get) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    self.homeHeadView.hotsView.modelArray.accept(model.rows ?? [])
+                    if self.isClickHeadTab {
+                        self.homeHeadView.tabView.modelArray.accept(model.rows ?? [])
+                        self.homeScroView.modelArray.accept(model.rows ?? [])
+                    }
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    //热搜1 企业热搜
+    func getHotCompanyWords() {
+        let man = RequestManager()
+        let dict = ["moduleId": "01"]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/clientbrowsecb/hot-search",
+                       method: .get) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                if let model = success.data {
+                    self.homeHeadView.tabView.modelArray.accept(model.rows ?? [])
+                    self.homeScroView.modelArray.accept(model.rows ?? [])
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+}
 
 extension WDHomeViewController: JXPagingViewDelegate {
     

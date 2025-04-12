@@ -88,6 +88,7 @@ class SearchPeopleDeadbeatViewController: WDBaseViewController {
         self.searchWords
             .asObservable()
             .distinctUntilChanged()
+            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
                 guard let self = self, let text = text else { return }
                 self.pageIndex = 1

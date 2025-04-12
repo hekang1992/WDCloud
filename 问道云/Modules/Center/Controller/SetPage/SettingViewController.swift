@@ -97,7 +97,7 @@ extension SettingViewController {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                let pageUrl = base_url + "/sfxy.pdf"
+                let pageUrl = base_url + "/tripartite-agreement"
                 self?.pushWebPage(from: pageUrl)
             }).disposed(by: disposeBag)
         

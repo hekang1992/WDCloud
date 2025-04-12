@@ -60,6 +60,7 @@ class PropertyCompanyViewController: WDBaseViewController {
         // Do any additional setup after loading the view.
         self.searchWordsRelay
             .distinctUntilChanged()
+            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 self.pageIndex = 1

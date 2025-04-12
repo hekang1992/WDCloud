@@ -10,6 +10,9 @@ import TYAlertController
 
 class HighSearchViewCell: BaseViewCell {
     
+    // 高度更新回调
+    var heightDidUpdate: (() -> Void)?
+    
     //是否点击了展开是收起
     var companyModel = CompanyModel(isOpenTag: false)
     
@@ -186,13 +189,13 @@ class HighSearchViewCell: BaseViewCell {
         }
         tagListView.snp.makeConstraints { make in
             make.left.equalTo(legalNameLabel.snp.left)
-            make.top.equalTo(legalNameLabel.snp.bottom).offset(6.5)
+            make.top.equalToSuperview().offset(56)
             make.right.equalToSuperview().offset(-40)
             make.height.equalTo(18)
         }
         lineView3.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(tagListView.snp.bottom).offset(8)
+            make.top.equalTo(tagListView.snp.bottom).offset(4)
             make.left.equalToSuperview().offset(17)
             make.height.equalTo(1)
             make.bottom.equalToSuperview().offset(-32.5)
@@ -435,9 +438,6 @@ extension HighSearchViewCell {
         tagScrollView.snp.updateConstraints { make in
             make.height.equalTo(numberOfLine * (buttonHeight + buttonSpacing))
         }
-        self.lineView3.snp.updateConstraints { make in
-            make.top.equalTo(tagListView.snp.bottom).offset(8)
-        }
         openButton.layoutButtonEdgeInsets(style: .right, space: 2)
     }
     
@@ -445,6 +445,7 @@ extension HighSearchViewCell {
     @objc func didOpenTags(_ sender: UIButton) {
         companyModel.isOpenTag.toggle() // 切换展开/收起状态
         setupScrollView(tagScrollView: tagListView, tagArray: tagArray) // 重新设置标签
+        self.heightDidUpdate?()
     }
     
 }

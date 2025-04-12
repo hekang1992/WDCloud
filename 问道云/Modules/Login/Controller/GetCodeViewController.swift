@@ -114,8 +114,9 @@ extension GetCodeViewController {
                         let customernumber = model.customernumber ?? ""
                         let userID = model.user_id ?? ""
                         WDLoginConfig.saveLoginInfo(phone, token, customernumber, userID)
+                        NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
+                        ToastViewConfig.showToast(message: "登录成功")
                     }
-                    NotificationCenter.default.post(name: NSNotification.Name(ROOT_VC), object: nil)
                 }else {
                     self?.grand = true
                     ToastViewConfig.showToast(message: success.msg ?? "")

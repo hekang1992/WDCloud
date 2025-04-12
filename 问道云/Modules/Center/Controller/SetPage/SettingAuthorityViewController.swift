@@ -104,23 +104,6 @@ extension SettingAuthorityViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return nil
     }
-    
-    func openSettings() {
-        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-            if UIApplication.shared.canOpenURL(settingsURL) {
-                UIApplication.shared.open(settingsURL, options: [:], completionHandler: { success in
-                    if success {
-                        print("成功跳转到设置页面")
-                    } else {
-                        print("跳转失败")
-                    }
-                })
-            } else {
-                print("无法打开设置页面")
-            }
-        }
-    }
-    
 }
 
 

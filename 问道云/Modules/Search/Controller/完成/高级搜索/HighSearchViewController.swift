@@ -15,9 +15,9 @@ class HighSearchViewController: WDBaseViewController {
     var searchConditionArray: [String]?
     
     //行业
-    var industryType: String?
+    var industryType: String = ""
     //地区
-    var region: String?
+    var region: String = ""
     
     var model = BehaviorRelay<DataModel?>(value: nil)
     
@@ -241,10 +241,12 @@ class HighSearchViewController: WDBaseViewController {
 extension HighSearchViewController {
     
     private func getHighMessageInfo() {
+        ViewHud.addLoadView()
         let dict = ["typeVec": ""]
         let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/entity/v2/meta", method: .get) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -419,14 +421,15 @@ extension HighSearchViewController {
         regionMenu.didSelectedMenuResult = { [weak self] index, model, grand in
             guard let self = self else { return }
             regionMenu.setTitle("", for: .normal)
+            self.region = model?.currentID ?? ""
             threeView.descLabel.text = model?.displayText ?? ""
             threeView.descLabel.textColor = .init(cssStr: "#333333")
-            self.region = model?.currentID ?? ""
         }
         
         //重置
         oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
+            self.oneView.selectFuzzy()
             //关键词
             self.oneView.nameTx.text = ""
             //行业
@@ -480,10 +483,10 @@ extension HighSearchViewController {
             let matchType = Int(self.oneView.matchType ?? "1")
             
             //行业
-            let industryType = self.industryType ?? ""
+            let industryType = self.industryType
             
             //地区
-            let region = self.region ?? "0"
+            let region = self.region
             
             //登记状态
             var regStatusVec: [Int] = []//ID
@@ -547,7 +550,7 @@ extension HighSearchViewController {
             let regCapLevelVec: [Int] = filteredMoneyModels.map { Int($0.code ?? "0") ?? 0 }
             
             var regCapRange = startMoney + "-" + endMoney
-            if startMoney > endMoney {
+            if (Float(startMoney) ?? 0) > (Float(endMoney) ?? 0) {
                 ToastViewConfig.showToast(message: "最低资本大于最高资本,请重新填写")
                 return
             }
@@ -587,7 +590,7 @@ extension HighSearchViewController {
             let startPeople = self.peopleView.startTx.text ?? ""
             let endPeople = self.peopleView.endTx.text ?? ""
             var sipCountRange = startPeople + "-" + endPeople
-            if startPeople > endPeople {
+            if (Float(startPeople) ?? 0) > (Float(endPeople) ?? 0) {
                 ToastViewConfig.showToast(message: "最低人数大于最高人数,请重新选择")
                 return
             }
@@ -622,8 +625,10 @@ extension HighSearchViewController {
             //所有参数
             var searchConditionArray: [String] = []
             searchConditionArray.append(keyword)//名字
-            searchConditionArray.append(industryType)
-            searchConditionArray.append(region == "0" ? "" : region)
+            let indStr = (self.twoView.descLabel.text ?? "") == "非必填" ? "" : (self.twoView.descLabel.text ?? "")
+            let reginStr = self.threeView.descLabel.text ?? ""
+            searchConditionArray.append(indStr)
+            searchConditionArray.append(reginStr)
             searchConditionArray.append(contentsOf: regStatusTitles)//登记状态
             searchConditionArray.append(contentsOf: selectArray)//成立时间
             searchConditionArray.append(incDateRange)//自定义时间
@@ -660,7 +665,7 @@ extension HighSearchViewController {
             }
             
             //地区
-            if region != "0" {
+            if region != "" {
                 resultVc.region = ["region": Int(region) as Any]
             }
             

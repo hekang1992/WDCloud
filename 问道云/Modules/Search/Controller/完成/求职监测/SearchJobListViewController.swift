@@ -113,51 +113,59 @@ class SearchJobListViewController: WDBaseViewController {
         }
         
         // 监听 UITextField 的文本变化
-        self.searchView.searchTx
-            .rx.text.orEmpty
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                if self.containsOnlyChinese(text) == true {
-                    if text.count < 2 {
-                        oneView.isHidden = false
-                        tableView.isHidden = true
-                        //获取热搜等数据
-                        getHotsSearchInfo()
-                    }else {
-                        oneView.isHidden = true
-                        tableView.isHidden = false
-                        self.pageIndex = 1
-                        self.keyword = text
-                        self.getCompanyListInfo {}
-                    }
-                }
-                else if self.containsPinyin(text) == true {
-                    // 拼音不打印，什么都不做
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        self.searchView.searchTx
-            .rx.controlEvent(.editingDidEndOnExit)
-            .withLatestFrom(self.searchView.searchTx.rx.text.orEmpty)
-            .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                if text.count < 2 {
-                    oneView.isHidden = false
-                    //获取热搜等数据
-                    getHotsSearchInfo()
-                }else {
-                    oneView.isHidden = true
-                    self.pageIndex = 1
-                    self.keyword = text
-                    self.getCompanyListInfo {}
-                }
-            }).disposed(by: disposeBag)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textDidChange),
+            name: UITextField.textDidChangeNotification,
+            object: self.searchView.searchTx
+        )
+        //获取热搜数据
+        getHotsSearchInfo()
         
         setupUI()
     }
     
+}
+
+extension SearchJobListViewController: UITextFieldDelegate {
+    
+    @objc private func textDidChange() {
+        let isComposing = self.searchView.searchTx.markedTextRange != nil
+        if !isComposing {
+            let searchStr = self.searchView.searchTx.text ?? ""
+            
+            // Check for special characters
+            let filteredText = filterAllSpecialCharacters(searchStr)
+            if filteredText != searchStr {
+                ToastViewConfig.showToast(message: "禁止输入特殊字符")
+                self.searchView.searchTx.text = filteredText
+                return
+            }
+            
+            if searchStr.count < 2 && !searchStr.isEmpty {
+                ToastViewConfig.showToast(message: "至少输入2个关键词")
+                self.oneView.isHidden = false
+                self.tableView.isHidden = true
+                //获取热搜数据
+                getHotsSearchInfo()
+                return
+            } else if searchStr.count > 100 {
+                self.searchView.searchTx.text = String(searchStr.prefix(100))
+                ToastViewConfig.showToast(message: "最多输入100个关键词")
+            } else if searchStr.isEmpty {
+                self.oneView.isHidden = false
+                self.tableView.isHidden = true
+                //获取热搜数据
+                getHotsSearchInfo()
+                return
+            }
+            self.oneView.isHidden = true
+            self.tableView.isHidden = false
+            self.pageIndex = 1
+            self.keyword = self.searchView.searchTx.text ?? ""
+            self.getCompanyListInfo {}
+        }
+    }
 }
 
 extension SearchJobListViewController {
