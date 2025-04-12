@@ -533,7 +533,7 @@ extension WDBaseViewController {
 extension WDBaseViewController {
     
     func filterAllSpecialCharacters(_ text: String) -> String {
-        let pattern = "[^a-zA-Z0-9\\u4e00-\\u9fa5]"
+        let pattern = "[^a-zA-Z0-9\\u4e00-\\u9fa5()（）]"
         return text.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
     }
     
