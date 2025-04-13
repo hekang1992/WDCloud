@@ -254,7 +254,6 @@ class NoticeAllViewController: WDBaseViewController {
             getNoticeListInfo()
         })
         
-        getNoticeListInfo()
     }
     
     //按钮点击方法
