@@ -260,7 +260,6 @@ extension SearchBossViewController {
                     "orgArea": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
-        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/person/boss-search",
                        method: .get) { [weak self] result in

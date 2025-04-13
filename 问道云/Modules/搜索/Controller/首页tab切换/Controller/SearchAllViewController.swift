@@ -230,11 +230,16 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 DispatchQueue.main.asyncAfter(delay: 0.25) {
                     self.searchHeadView.searchTx.becomeFirstResponder()
                 }
+                enterpriseVc.searchWords.accept(self.searchHeadView.searchTx
+                    .text ?? "")
             }
             enterpriseVc.moreBtnBlock = { [weak self] in
                 guard let self = self else { return }
-                segmentedView.defaultSelectedIndex = 1
-                segmentedView.reloadData()
+                segmentedView.selectItemAt(index: 1)
+                searchHeadView.searchTx.placeholder = self.searchHeadView.searchTx.text ?? ""
+                searchHeadView.searchTx.text = self.searchHeadView.searchTx.text ?? ""
+                peopleVc.searchWords.accept(self.searchHeadView.searchTx
+                    .text ?? "")
             }
             return enterpriseVc
         }else if index == 1 {
@@ -245,6 +250,8 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 DispatchQueue.main.asyncAfter(delay: 0.25) {
                     self.searchHeadView.searchTx.becomeFirstResponder()
                 }
+                peopleVc.searchWords.accept(self.searchHeadView.searchTx
+                    .text ?? "")
             }
             return peopleVc
         }else {
@@ -255,6 +262,8 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 DispatchQueue.main.asyncAfter(delay: 0.25) {
                     self.searchHeadView.searchTx.becomeFirstResponder()
                 }
+                riskVc.searchWords.accept(self.searchHeadView.searchTx
+                    .text ?? "")
             }
             return riskVc
         }
