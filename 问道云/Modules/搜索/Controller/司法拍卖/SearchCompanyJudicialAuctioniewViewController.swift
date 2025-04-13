@@ -194,7 +194,6 @@ extension SearchCompanyJudicialAuctioniewViewController {
     
     //获取企业列表数据
     private func getCompanyListInfo(complete: @escaping (() -> Void)) {
-        ViewHud.addLoadView()
         let dict = ["keyword": keyword,
                     "matchType": 1,
                     "moduleId": "16",
@@ -245,11 +244,9 @@ extension SearchCompanyJudicialAuctioniewViewController {
                         self.companyListView.tableView.reloadData()
                     }
                 }
-                ViewHud.hideLoadView()
                 complete()
                 break
             case .failure(_):
-                ViewHud.hideLoadView()
                 complete()
                 break
             }

@@ -193,7 +193,6 @@ extension SearchCompanyStartCourtNoticeViewController {
     
     //获取企业列表数据
     private func getCompanyListInfo(complete: @escaping (() -> Void)) {
-        ViewHud.addLoadView()
         let dict = ["keyword": keyword,
                     "matchType": 1,
                     "moduleId": "15",
@@ -244,11 +243,9 @@ extension SearchCompanyStartCourtNoticeViewController {
                         self.companyListView.tableView.reloadData()
                     }
                 }
-                ViewHud.hideLoadView()
                 complete()
                 break
             case .failure(_):
-                ViewHud.hideLoadView()
                 complete()
                 break
             }

@@ -337,10 +337,12 @@ extension SearchCourtNoticeViewController {
     }
     
     private func getNumInfo(from keywords: String){
+        ViewHud.addLoadView()
         let dict = ["keyword": keywords, "riskType": "COURT_ANNO_COUNT"]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/home-page/risk-correlation/table-count",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
