@@ -76,6 +76,7 @@
 		7329269D2D85698F00E93F96 /* ContorlPeopleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329269C2D85698E00E93F96 /* ContorlPeopleListView.swift */; };
 		7329269F2D857B0D00E93F96 /* ContorlDetailViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329269E2D857B0D00E93F96 /* ContorlDetailViewViewController.swift */; };
 		732926A12D857C4100E93F96 /* ContorlDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732926A02D857C4100E93F96 /* ContorlDetailViewCell.swift */; };
+		732CCF0E2DAB966000255401 /* PeopleRiskMoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732CCF0D2DAB966000255401 /* PeopleRiskMoreDetailViewController.swift */; };
 		7330CB7E2D23BFF100778D54 /* DonateMembershipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */; };
 		7330CB802D23C2A800778D54 /* DonateMembershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */; };
 		7330CB822D23E65900778D54 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330CB812D23E65900778D54 /* ContactManager.swift */; };
@@ -500,6 +501,7 @@
 		7329269C2D85698E00E93F96 /* ContorlPeopleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContorlPeopleListView.swift; sourceTree = "<group>"; };
 		7329269E2D857B0D00E93F96 /* ContorlDetailViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContorlDetailViewViewController.swift; sourceTree = "<group>"; };
 		732926A02D857C4100E93F96 /* ContorlDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContorlDetailViewCell.swift; sourceTree = "<group>"; };
+		732CCF0D2DAB966000255401 /* PeopleRiskMoreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleRiskMoreDetailViewController.swift; sourceTree = "<group>"; };
 		7330CB7D2D23BFF100778D54 /* DonateMembershipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateMembershipViewController.swift; sourceTree = "<group>"; };
 		7330CB7F2D23C2A800778D54 /* DonateMembershipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateMembershipView.swift; sourceTree = "<group>"; };
 		7330CB812D23E65900778D54 /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
@@ -895,13 +897,13 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		730DB4152D6C0A06007B49B6 /* Home */ = {
+		730DB4152D6C0A06007B49B6 /* 首页 */ = {
 			isa = PBXGroup;
 			children = (
 				730DB4162D6C0A12007B49B6 /* View */,
 				730DB4172D6C0A19007B49B6 /* Controller */,
 			);
-			path = Home;
+			path = "首页";
 			sourceTree = "<group>";
 		};
 		730DB4162D6C0A12007B49B6 /* View */ = {
@@ -999,31 +1001,31 @@
 			path = "问道云";
 			sourceTree = "<group>";
 		};
-		7325A7A92CFEE6C70043C196 /* Center */ = {
+		7325A7A92CFEE6C70043C196 /* 个人中心 */ = {
 			isa = PBXGroup;
 			children = (
 				73CFEB932D01413A00B2FE1B /* View */,
 				73CFEB942D01413F00B2FE1B /* Controller */,
 			);
-			path = Center;
+			path = "个人中心";
 			sourceTree = "<group>";
 		};
-		7325A7AA2CFEE6DF0043C196 /* DueDiligence */ = {
+		7325A7AA2CFEE6DF0043C196 /* 尽职调查 */ = {
 			isa = PBXGroup;
 			children = (
 				73A21DEC2D0C329300FC4C49 /* View */,
 				73A21DEB2D0C328700FC4C49 /* Controller */,
 			);
-			path = DueDiligence;
+			path = "尽职调查";
 			sourceTree = "<group>";
 		};
-		7325A7AB2CFEE6E20043C196 /* RiskMonitoring */ = {
+		7325A7AB2CFEE6E20043C196 /* 风控 */ = {
 			isa = PBXGroup;
 			children = (
 				73A21DE62D0C2E0B00FC4C49 /* View */,
 				73A21DE52D0C2E0800FC4C49 /* Controller */,
 			);
-			path = RiskMonitoring;
+			path = "风控";
 			sourceTree = "<group>";
 		};
 		7325A7AC2CFEE7B20043C196 /* BaseVc */ = {
@@ -1048,13 +1050,13 @@
 			path = Requset;
 			sourceTree = "<group>";
 		};
-		7325A7C92CFEF1F20043C196 /* Login */ = {
+		7325A7C92CFEF1F20043C196 /* 登录 */ = {
 			isa = PBXGroup;
 			children = (
 				7325A7D32CFEFCAA0043C196 /* View */,
 				7325A7D22CFEFCA70043C196 /* Controller */,
 			);
-			path = Login;
+			path = "登录";
 			sourceTree = "<group>";
 		};
 		7325A7D22CFEFCA70043C196 /* Controller */ = {
@@ -1088,8 +1090,8 @@
 		732926982D8566A400E93F96 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7329269A2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift */,
 				7329269C2D85698E00E93F96 /* ContorlPeopleListView.swift */,
+				7329269A2D8566DF00E93F96 /* SearchContorlPeopleViewCell.swift */,
 				732926A02D857C4100E93F96 /* ContorlDetailViewCell.swift */,
 				731B289F2D869D5A0007C6BB /* PopMoreLegalListView.swift */,
 				731B28A12D86A3D70007C6BB /* PopMoreLegalListViewCell.swift */,
@@ -1106,40 +1108,6 @@
 				7329269E2D857B0D00E93F96 /* ContorlDetailViewViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		733D2F432D87AD5F0019C697 /* 完成 */ = {
-			isa = PBXGroup;
-			children = (
-				7340E1C42D5DD6AD008FD5C7 /* 对外投资 */,
-				7340E18B2D5CD3D2008FD5C7 /* 对外担保 */,
-				7340E1B72D5DD4DD008FD5C7 /* 资产抵押 */,
-				7340E1842D5CD32B008FD5C7 /* 资产查封 */,
-				7340E17D2D5CD209008FD5C7 /* 资产冻结 */,
-				7340E1AE2D5CD61D008FD5C7 /* 贷款逾期 */,
-				7340E16F2D5CC660008FD5C7 /* 环保处罚 */,
-				7340E1762D5CCF85008FD5C7 /* 税收违法 */,
-				7340E1A72D5CD5B1008FD5C7 /* 司法拍卖 */,
-				7340E1A02D5CD53B008FD5C7 /* 开庭公告 */,
-				7340E1992D5CD491008FD5C7 /* 法院公告 */,
-				7340E1922D5CD437008FD5C7 /* 限制高消费 */,
-				7340E16E2D5CC651008FD5C7 /* 被执行人 */,
-				7340E16D2D5CC643008FD5C7 /* 最终受益人 */,
-				7340E1662D5CB930008FD5C7 /* 实际控制人 */,
-				735A3F702D65B9A000448268 /* 风控秘笈 */,
-				735A3F732D65BE4000448268 /* 求职监测 */,
-				73FC5E482D5C3C70001D0DEF /* 一键报告 */,
-				73FC5E462D5C3C53001D0DEF /* 法律法规 */,
-				73FC5E452D5C3C44001D0DEF /* 公告大全 */,
-				73FC5E612D5CA9A4001D0DEF /* 债券违约 */,
-				73FC5E472D5C3C66001D0DEF /* 行政处罚 */,
-				73FC5E682D5CADA4001D0DEF /* 查诉讼 */,
-				73654B222D818DB00004E408 /* 首页tab切换 */,
-				73FC5E4A2D5C784E001D0DEF /* 查老赖 */,
-				73FC5E492D5C3C80001D0DEF /* 查股东 */,
-				73654B232D818E0B0004E408 /* 高级搜索 */,
-			);
-			path = "完成";
 			sourceTree = "<group>";
 		};
 		733D2F442D87B38A0019C697 /* Controller */ = {
@@ -1363,6 +1331,7 @@
 				73C89F162D76E2130002C3C9 /* PeopleMySelfRiskViewController.swift */,
 				73C89F182D76E2290002C3C9 /* PeopleUnioRiskViewController.swift */,
 				73C89F1A2D76E2350002C3C9 /* PeopleHistoryRiskViewController.swift */,
+				732CCF0D2DAB966000255401 /* PeopleRiskMoreDetailViewController.swift */,
 			);
 			path = "人员风险详情";
 			sourceTree = "<group>";
@@ -1553,13 +1522,13 @@
 			path = MorePage;
 			sourceTree = "<group>";
 		};
-		73807D4A2D33697000F8B90D /* DetailI */ = {
+		73807D4A2D33697000F8B90D /* 详情 */ = {
 			isa = PBXGroup;
 			children = (
 				73807D572D33806B00F8B90D /* View */,
 				73807D562D33806300F8B90D /* Controller */,
 			);
-			path = DetailI;
+			path = "详情";
 			sourceTree = "<group>";
 		};
 		73807D4B2D33699100F8B90D /* ComanyDetail */ = {
@@ -1865,14 +1834,14 @@
 		73B3FA712D7EBC200077766F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				7325A7C92CFEF1F20043C196 /* 登录 */,
+				730DB4152D6C0A06007B49B6 /* 首页 */,
+				7325A7AB2CFEE6E20043C196 /* 风控 */,
+				7325A7AA2CFEE6DF0043C196 /* 尽职调查 */,
+				7325A7A92CFEE6C70043C196 /* 个人中心 */,
 				739DCA022D66D24E009CFC78 /* 财产线索 */,
-				7325A7C92CFEF1F20043C196 /* Login */,
-				730DB4152D6C0A06007B49B6 /* Home */,
-				7325A7AB2CFEE6E20043C196 /* RiskMonitoring */,
-				7325A7AA2CFEE6DF0043C196 /* DueDiligence */,
-				7325A7A92CFEE6C70043C196 /* Center */,
-				73FC5E382D5C32CE001D0DEF /* Search */,
-				73807D4A2D33697000F8B90D /* DetailI */,
+				73FC5E382D5C32CE001D0DEF /* 搜索 */,
+				73807D4A2D33697000F8B90D /* 详情 */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -2003,19 +1972,45 @@
 			path = PeopleList;
 			sourceTree = "<group>";
 		};
-		73FC5E382D5C32CE001D0DEF /* Search */ = {
+		73FC5E382D5C32CE001D0DEF /* 搜索 */ = {
 			isa = PBXGroup;
 			children = (
 				73FC5E3A2D5C32EE001D0DEF /* View */,
 				73FC5E392D5C32E6001D0DEF /* Controller */,
 			);
-			path = Search;
+			path = "搜索";
 			sourceTree = "<group>";
 		};
 		73FC5E392D5C32E6001D0DEF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				733D2F432D87AD5F0019C697 /* 完成 */,
+				7340E1C42D5DD6AD008FD5C7 /* 对外投资 */,
+				7340E18B2D5CD3D2008FD5C7 /* 对外担保 */,
+				7340E1B72D5DD4DD008FD5C7 /* 资产抵押 */,
+				7340E1842D5CD32B008FD5C7 /* 资产查封 */,
+				7340E17D2D5CD209008FD5C7 /* 资产冻结 */,
+				7340E1AE2D5CD61D008FD5C7 /* 贷款逾期 */,
+				7340E16F2D5CC660008FD5C7 /* 环保处罚 */,
+				7340E1762D5CCF85008FD5C7 /* 税收违法 */,
+				7340E1A72D5CD5B1008FD5C7 /* 司法拍卖 */,
+				7340E1A02D5CD53B008FD5C7 /* 开庭公告 */,
+				7340E1992D5CD491008FD5C7 /* 法院公告 */,
+				7340E1922D5CD437008FD5C7 /* 限制高消费 */,
+				7340E16E2D5CC651008FD5C7 /* 被执行人 */,
+				7340E16D2D5CC643008FD5C7 /* 最终受益人 */,
+				7340E1662D5CB930008FD5C7 /* 实际控制人 */,
+				735A3F702D65B9A000448268 /* 风控秘笈 */,
+				735A3F732D65BE4000448268 /* 求职监测 */,
+				73FC5E482D5C3C70001D0DEF /* 一键报告 */,
+				73FC5E462D5C3C53001D0DEF /* 法律法规 */,
+				73FC5E452D5C3C44001D0DEF /* 公告大全 */,
+				73FC5E612D5CA9A4001D0DEF /* 债券违约 */,
+				73FC5E472D5C3C66001D0DEF /* 行政处罚 */,
+				73FC5E682D5CADA4001D0DEF /* 查诉讼 */,
+				73FC5E4A2D5C784E001D0DEF /* 查老赖 */,
+				73FC5E492D5C3C80001D0DEF /* 查股东 */,
+				73654B222D818DB00004E408 /* 首页tab切换 */,
+				73654B232D818E0B0004E408 /* 高级搜索 */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2450,6 +2445,7 @@
 				739DCA1A2D670E87009CFC78 /* PropertyThreePeopleViewController.swift in Sources */,
 				73F604682D116F1A0061D5D3 /* MyTicketViewController.swift in Sources */,
 				73B3FA6F2D7EBA3E0077766F /* Utilities.swift in Sources */,
+				732CCF0E2DAB966000255401 /* PeopleRiskMoreDetailViewController.swift in Sources */,
 				734896DA2D39F1AC00B028FE /* MySelfRiskDetailViewController.swift in Sources */,
 				735A3F6B2D65698200448268 /* SearchOneReportViewController.swift in Sources */,
 				73FC5E542D5C80B1001D0DEF /* SearchCompanyDeadbeatCell.swift in Sources */,
