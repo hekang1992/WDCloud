@@ -173,6 +173,10 @@ class SearchOverseasInvestmentViewController: WDBaseViewController {
         //获取行业数据
         getAllIndustryInfo()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         //获取热搜数据
         getHotsSearchInfo()
     }
@@ -334,10 +338,12 @@ extension SearchOverseasInvestmentViewController {
     }
     
     private func getNumInfo(from keywords: String){
+        ViewHud.addLoadView()
         let dict = ["keyword": keywords, "riskType": "FORE_INV_COUNT"]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/home-page/risk-correlation/table-count",
                        method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {

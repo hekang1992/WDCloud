@@ -173,6 +173,10 @@ class SearchEnvironmentalPenaltyViewController: WDBaseViewController {
         //获取行业数据
         getAllIndustryInfo()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         //获取热搜数据
         getHotsSearchInfo()
     }

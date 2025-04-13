@@ -57,7 +57,12 @@ class SearchPeopleShareholderViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 self.pageIndex = 1
-                if !text.isEmpty {
+                if text.count < 2 {
+                    self.tableView.isHidden = true
+                    self.allArray.removeAll()
+                    man.cancelLastRequest()
+                }else {
+                    self.tableView.isHidden = false
                     self.searchListInfo()
                 }
             }).disposed(by: disposeBag)

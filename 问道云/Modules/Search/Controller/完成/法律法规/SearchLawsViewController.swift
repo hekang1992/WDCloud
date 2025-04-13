@@ -14,6 +14,8 @@ import SwiftyJSON
 
 class SearchLawsViewController: WDBaseViewController {
     
+    private let man = RequestManager()
+    
     //浏览历史
     var historyArray: [rowsModel] = []
     //热门搜索
@@ -237,6 +239,7 @@ extension SearchLawsViewController: UITextFieldDelegate {
                 self.tableView.isHidden = true
                 //获取热搜数据
                 getHotsSearchInfo()
+                man.cancelLastRequest()
                 return
             } else if searchStr.count > 100 {
                 self.searchView.searchTx.text = String(searchStr.prefix(100))
@@ -300,7 +303,6 @@ extension SearchLawsViewController: UITableViewDelegate, UITableViewDataSource {
                     "title": self.searchView.searchTx.text ?? "",
                     "lawNature": lawNature,
                     "timeliness": timeliness] as [String : Any]
-        let man = RequestManager()
         man.requestAPI(params: dict, pageUrl: "/firminfo/laws/list", method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()

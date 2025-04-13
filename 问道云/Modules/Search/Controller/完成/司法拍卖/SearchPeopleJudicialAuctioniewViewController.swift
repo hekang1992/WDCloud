@@ -24,11 +24,6 @@ class SearchPeopleJudicialAuctioniewViewController: WDBaseViewController {
         return tableView
     }()
     
-    lazy var oneView: CommonHotsView = {
-        let oneView = CommonHotsView()
-        return oneView
-    }()
-    
     //搜索list列表页面
     lazy var twoPeopleListView: TwoPeopleListView = {
         let twoPeopleListView = TwoPeopleListView()
@@ -64,20 +59,12 @@ class SearchPeopleJudicialAuctioniewViewController: WDBaseViewController {
     
     //搜索的文字
     var searchWords = BehaviorRelay<String?>(value: nil)
-    
-    //点击最近搜索回调
-    var lastSearchTextBlock: ((String) -> Void)?
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
-        view.addSubview(oneView)
-        oneView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
+
         view.addSubview(twoPeopleListView)
         twoPeopleListView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -94,11 +81,10 @@ class SearchPeopleJudicialAuctioniewViewController: WDBaseViewController {
             guard let self = self, let text = text else { return }
             self.pageIndex = 1
             if text.count < 2 {
-                self.oneView.isHidden = false
                 self.twoPeopleListView.isHidden = true
                 self.allArray.removeAll()
+                man.cancelLastRequest()
             }else {
-                self.oneView.isHidden = true
                 self.twoPeopleListView.isHidden = false
                 self.keyword = text
                 self.searchListInfo()
@@ -210,7 +196,6 @@ extension SearchPeopleJudicialAuctioniewViewController {
                    let model = success.data,
                    let code = success.code,
                    code == 200, let total = model.total {
-                    self.oneView.isHidden = true
                     self.twoPeopleListView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1

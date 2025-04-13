@@ -86,6 +86,7 @@ class SearchEnterpriseViewController: WDBaseViewController {
         self.searchWords
             .asObservable()
             .distinctUntilChanged()
+            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
                 guard let self = self, let text = text else { return }
                 self.pageIndex = 1
@@ -95,6 +96,8 @@ class SearchEnterpriseViewController: WDBaseViewController {
                     self.allArray.removeAll()
                     //获取热搜等数据
                     getHotsSearchInfo()
+                    //取消请求
+                    man.cancelLastRequest()
                 }else {
                     self.oneView.isHidden = true
                     self.companyListView.isHidden = false
@@ -104,6 +107,11 @@ class SearchEnterpriseViewController: WDBaseViewController {
             }).disposed(by: disposeBag)
         
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getHotsSearchInfo()
     }
     
 }

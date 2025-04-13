@@ -98,6 +98,7 @@ class SearchDeadbeatViewController: WDBaseViewController {
                 }else {
                     self?.companyVc.searchWords.accept(keywords)
                 }
+                self?.getNumInfo(from: keywords)
             }else {
                 self?.oneView.isHidden = false
             }

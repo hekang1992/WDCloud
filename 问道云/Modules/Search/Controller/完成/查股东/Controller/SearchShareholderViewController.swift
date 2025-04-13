@@ -168,6 +168,10 @@ class SearchShareholderViewController: WDBaseViewController {
             })
         }
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         //获取热搜数据
         getHotsSearchInfo()
     }

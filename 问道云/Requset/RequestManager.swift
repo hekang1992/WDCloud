@@ -117,10 +117,7 @@ class RequestManager {
     
     private func requestData(target: APIService, completion: @escaping (Result<BaseModel, Error>) -> Void) {
         
-        if let lastRequest = currentRequest {
-            lastRequest.cancel()
-            print("🔴 上一次请求已取消")
-        }
+        cancelLastRequest()
  
         print("🟢 发起新的请求: \(target)")
         currentRequest = provider.request(target) { result in
@@ -160,6 +157,13 @@ class RequestManager {
             let error = NSError()
             completion(.failure(error))
             ToastViewConfig.showToast(message: msg)
+        }
+    }
+    
+    func cancelLastRequest() {
+        if let lastRequest = currentRequest {
+            lastRequest.cancel()
+            print("🔴 上一次请求已取消")
         }
     }
     

@@ -313,7 +313,11 @@ class SearchRiskViewController: WDBaseViewController {
             }
         }
         
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getHotsSearchInfo()
     }
     
 }
@@ -342,6 +346,8 @@ extension SearchRiskViewController {
                     self.peopleBtn.isHidden = true
                     self.tableView.reloadData()
                     getHotsSearchInfo()
+                    //取消请求
+                    man.cancelLastRequest()
                 }
         }).disposed(by: disposeBag)
         

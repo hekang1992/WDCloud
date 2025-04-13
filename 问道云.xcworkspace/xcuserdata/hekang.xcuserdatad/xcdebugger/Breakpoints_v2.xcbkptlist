@@ -3,4 +3,22 @@
    uuid = "C6710648-1641-4D7D-B92E-921CD04CB3F1"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EF16EF11-D616-4991-9B83-7208BA25A4CA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x95ee;&#x9053;&#x4e91;/Modules/Search/Controller/&#x5b8c;&#x6210;/&#x6cd5;&#x5f8b;&#x6cd5;&#x89c4;/SearchLawsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "textDidChange()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

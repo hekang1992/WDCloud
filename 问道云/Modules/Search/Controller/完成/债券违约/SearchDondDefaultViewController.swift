@@ -173,7 +173,10 @@ class SearchDondDefaultViewController: WDBaseViewController {
         //获取行业数据
         getAllIndustryInfo()
         
-        //获取热搜数据
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getHotsSearchInfo()
     }
   

@@ -23,12 +23,7 @@ class SearchCompanyTaxViolationViewController: WDBaseViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         return tableView
     }()
-    
-    lazy var oneView: CommonHotsView = {
-        let oneView = CommonHotsView()
-        return oneView
-    }()
-    
+
     //搜索list列表页面
     lazy var companyListView: TwoRiskListView = {
         let companyListView = TwoRiskListView()
@@ -60,19 +55,11 @@ class SearchCompanyTaxViolationViewController: WDBaseViewController {
     
     //搜索的文字
     var searchWords = BehaviorRelay<String?>(value: nil)
-    
-    //点击最近搜索回调
-    var lastSearchTextBlock: ((String) -> Void)?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
-        view.addSubview(oneView)
-        oneView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
         
         view.addSubview(companyListView)
         companyListView.snp.makeConstraints { make in
@@ -86,11 +73,10 @@ class SearchCompanyTaxViolationViewController: WDBaseViewController {
             guard let self = self, let text = text else { return }
             self.pageIndex = 1
             if text.count < 2 {
-                self.oneView.isHidden = false
                 self.companyListView.isHidden = true
                 self.allArray.removeAll()
+                man.cancelLastRequest()
             }else {
-                self.oneView.isHidden = true
                 self.companyListView.isHidden = false
                 self.keyword = text
                 self.getCompanyListInfo {}
@@ -229,7 +215,6 @@ extension SearchCompanyTaxViolationViewController {
                    let code = success.code,
                    code == 200,
                    let total = model.pageMeta?.totalNum {
-                    self.oneView.isHidden = true
                     self.companyListView.isHidden = false
                     if self.pageIndex == 1 {
                         self.pageIndex = 1

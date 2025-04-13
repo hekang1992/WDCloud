@@ -98,6 +98,8 @@ class SearchBossViewController: WDBaseViewController {
                 self.allArray.removeAll()
                 //获取热搜等数据
                 getHotsSearchInfo()
+                //取消请求
+                man.cancelLastRequest()
             }else {
                 self.oneView.isHidden = true
                 self.twoPeopleListView.isHidden = false
@@ -116,6 +118,11 @@ class SearchBossViewController: WDBaseViewController {
         
         setupUI()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getHotsSearchInfo()
     }
     
 }

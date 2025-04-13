@@ -19,11 +19,6 @@ class SearchCompanyHighConsumptionViewController: WDBaseViewController {
     
     var listViewDidScrollCallback: ((UIScrollView) -> Void)?
     
-    lazy var oneView: CommonHotsView = {
-        let oneView = CommonHotsView()
-        return oneView
-    }()
-    
     //搜索list列表页面
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -65,19 +60,11 @@ class SearchCompanyHighConsumptionViewController: WDBaseViewController {
     //搜索的文字
     var searchWords = BehaviorRelay<String?>(value: nil)
     
-    //点击最近搜索回调
-    var lastSearchTextBlock: ((String) -> Void)?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
-        view.addSubview(oneView)
-        oneView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -91,11 +78,10 @@ class SearchCompanyHighConsumptionViewController: WDBaseViewController {
                 guard let self = self, let text = text else { return }
                 self.pageIndex = 1
                 if text.count < 2 {
-                    self.oneView.isHidden = false
                     self.tableView.isHidden = true
                     self.allArray.removeAll()
+                    man.cancelLastRequest()
                 }else {
-                    self.oneView.isHidden = true
                     self.tableView.isHidden = false
                     self.keyword = text
                     self.getCompanyListInfo {}
@@ -198,7 +184,6 @@ extension SearchCompanyHighConsumptionViewController {
                    let code = success.code,
                    code == 200,
                    let total = model.pageMeta?.totalNum {
-                    self.oneView.isHidden = true
                     self.tableView.isHidden = false
                     self.model = model
                     if self.pageIndex == 1 {

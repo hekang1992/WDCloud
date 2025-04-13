@@ -57,7 +57,10 @@ class SearchCompanyControllingPersonViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 self.pageIndex = 1
-                if !text.isEmpty {
+                if text.count < 2 {
+                    self.allArray.removeAll()
+                    man.cancelLastRequest()
+                }else {
                     self.searchListInfo()
                 }
             }).disposed(by: disposeBag)

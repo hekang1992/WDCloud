@@ -164,6 +164,7 @@ extension SearchOneReportViewController: UITextFieldDelegate {
 extension SearchOneReportViewController {
     
     private func getOneReportInfo() {
+        ViewHud.addLoadView()
         let dict = ["pageIndex": pageIndex,
                     "pageSize": 20,
                     "keyword": keywords,
@@ -174,6 +175,7 @@ extension SearchOneReportViewController {
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -261,8 +263,21 @@ extension SearchOneReportViewController {
         }
         
         oneView.tagClickBlock = { [weak self] label in
-            self?.searchView.searchTx.text = label.text ?? ""
-        
+            let keywords = label.text ?? ""
+            self?.keywords = keywords
+            self?.searchView.searchTx.text = keywords
+            if !keywords.isEmpty {
+                self?.oneView.isHidden = false
+                //最近搜索
+                self?.getHotsSearchInfo()
+                self?.pageIndex = 1
+                self?.getOneReportInfo()
+                self?.oneView.isHidden = true
+                self?.tableView.isHidden = false
+            }else {
+                self?.oneView.isHidden = false
+                self?.tableView.isHidden = true
+            }
         }
         
     }
