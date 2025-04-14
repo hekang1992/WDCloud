@@ -541,8 +541,10 @@ extension PeopleDetailHeadView: UICollectionViewDelegate, UICollectionViewDataSo
             vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
         }else {
             let model = self.oneItems?[indexPath.row]
-            let pageUrl = model?.path ?? ""
-            vc?.pushWebPage(from: pageUrl)
+            let dict = ["personId": self.model.value?.personId ?? ""]
+            let pageUrl = base_url + (model?.path ?? "")
+            let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+            vc?.pushWebPage(from: webUrl)
         }
     }
     

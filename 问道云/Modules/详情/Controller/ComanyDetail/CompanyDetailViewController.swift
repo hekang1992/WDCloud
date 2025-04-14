@@ -225,7 +225,12 @@ extension CompanyDetailViewController {
             case .success(let success):
                 if success.code == 200 {
                     if success.code == 200 {
-                        self.companyDetailView.mapArrayModel.accept(success.data?.items?.first?.children?.first?.children ?? [])
+                        let modelArray = success.data?.items?.first?.children ?? []
+                        for model in modelArray {
+                            if model.menuId == "10810" {
+                                self.companyDetailView.mapArrayModel.accept(model.children ?? [])
+                            }
+                        }
                     }
                 }
                 complete()

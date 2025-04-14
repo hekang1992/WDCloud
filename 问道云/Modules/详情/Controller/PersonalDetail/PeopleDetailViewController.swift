@@ -179,7 +179,12 @@ extension PeopleDetailViewController {
             case .success(let success):
                 if success.code == 200 {
                     if success.code == 200 {
-                        self.homeHeadView.oneItems = success.data?.items?.first?.children?.last?.children ?? []
+                        let modelArray = success.data?.items?.first?.children ?? []
+                        for model in modelArray {
+                            if model.menuId == "10860" {
+                                self.homeHeadView.oneItems = model.children ?? []
+                            }
+                        }
                     }
                 }
                 complete()
