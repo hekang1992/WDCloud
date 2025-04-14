@@ -71,7 +71,7 @@ class HomeNewsListViewController: WDBaseViewController {
                 }else if type == "2" {//法典
                     let pageUrl = model.value ?? ""
                     if !pageUrl.isEmpty {
-                        self?.pushWebPage(from:  base_url + pageUrl)
+                        self?.pushWebPage(from: pageUrl)
                     }
                 }else {
                     

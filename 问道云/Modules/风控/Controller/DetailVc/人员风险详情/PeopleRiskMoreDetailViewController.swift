@@ -228,7 +228,7 @@ extension PeopleRiskMoreDetailViewController: UITableViewDelegate, UITableViewDa
                 make.right.equalTo(rightImageView.snp.left).offset(-4)
                 make.height.equalTo(15)
             }
-            namelabel.text = oneModel.riskLevelDesc ?? ""
+            namelabel.text = oneModel.riskName ?? ""
             let total = String(self.model?.total ?? 0)
             numlabel.attributedText = GetRedStrConfig.getRedStr(from: total, fullText: "共\(total)条", font: UIFont.regularFontOfSize(size: 11))
             return headView

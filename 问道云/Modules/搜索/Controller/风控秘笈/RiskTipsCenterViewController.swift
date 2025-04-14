@@ -76,6 +76,22 @@ extension RiskTipsCenterViewController: UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeNewsListViewCell", for: indexPath) as! HomeNewsListViewCell
         cell.selectionStyle = .none
         cell.model.accept(model)
+        cell.block = { [weak self] model in
+            let type = model.type ?? ""
+            if type == "1" {//企业
+                let companyDetailVc = CompanyBothViewController()
+                companyDetailVc.enityId.accept(model.tag ?? "")
+                companyDetailVc.companyName.accept(model.name ?? "")
+                self?.navigationController?.pushViewController(companyDetailVc, animated: true)
+            }else if type == "2" {//法典
+                let pageUrl = model.value ?? ""
+                if !pageUrl.isEmpty {
+                    self?.pushWebPage(from: pageUrl)
+                }
+            }else {
+                
+            }
+        }
         return cell
     }
     

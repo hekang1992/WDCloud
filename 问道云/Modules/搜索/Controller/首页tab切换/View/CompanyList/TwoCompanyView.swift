@@ -44,11 +44,13 @@ class TwoCompanyView: BaseView {
                 self.tableView.snp.updateConstraints { make in
                     make.top.equalTo(brandView.snp.bottom)
                 }
-                let name = items.first?.name ?? ""
-                let logoUrl = items.first?.logoUrl ?? ""
+                let model = items.first
+                let name = model?.name ?? ""
+                let logoUrl = model?.logoUrl ?? ""
                 self.brandView.logoImageView.kf.setImage(with: URL(string: logoUrl), placeholder: UIImage.imageOfText(name, size: (30, 30)))
-                
-                
+                self.brandView.nameLabel.text = name
+                self.brandView.tagLabel.text = model?.tags ?? ""
+                self.brandView.descLabel.text = model?.desc ?? ""
             }
         }
     }
