@@ -56,7 +56,7 @@ class FocusAllViewController: WDBaseViewController {
             make.height.equalTo(StatusHeightManager.navigationBarHeight)
         }
         headView.twoBtn.rx.tap.subscribe(onNext: { [weak self] in
-            let searchVc = FocusSearchViewController()
+            let searchVc = SearchMyFocusViewController()
             self?.navigationController?.pushViewController(searchVc, animated: false)
         }).disposed(by: disposeBag)
         

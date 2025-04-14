@@ -280,6 +280,7 @@
 		73A443E02D8BEF5000CB3A6C /* DIBUView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A443DF2D8BEF5000CB3A6C /* DIBUView.swift */; };
 		73A443E22D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A443E12D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift */; };
 		73A53C302DA8BE71004917C9 /* PopVoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A53C2F2DA8BE71004917C9 /* PopVoiceView.swift */; };
+		73AD72862DACACA500ACD209 /* MessagePushListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AD72852DACACA500ACD209 /* MessagePushListViewCell.swift */; };
 		73AEAD2D2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AEAD2C2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift */; };
 		73AEAD2F2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */; };
 		73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */; };
@@ -710,6 +711,7 @@
 		73A443DF2D8BEF5000CB3A6C /* DIBUView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIBUView.swift; sourceTree = "<group>"; };
 		73A443E12D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyOneReportOneVipViewController.swift; sourceTree = "<group>"; };
 		73A53C2F2DA8BE71004917C9 /* PopVoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopVoiceView.swift; sourceTree = "<group>"; };
+		73AD72852DACACA500ACD209 /* MessagePushListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePushListViewCell.swift; sourceTree = "<group>"; };
 		73AEAD2C2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyPeopleCollectionViewCell.swift; sourceTree = "<group>"; };
 		73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyAddCustomerViewCell.swift; sourceTree = "<group>"; };
 		73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyNormalListCell.swift; sourceTree = "<group>"; };
@@ -1924,6 +1926,7 @@
 				7303844B2D609006008AA7C3 /* ServiceCenterViewCell.swift */,
 				73A443DF2D8BEF5000CB3A6C /* DIBUView.swift */,
 				7342071C2D96370C00D8E42D /* PopFocusListView.swift */,
+				73AD72852DACACA500ACD209 /* MessagePushListViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2538,6 +2541,7 @@
 				737416342D0EBCB000E6CD23 /* ContactUsViewController.swift in Sources */,
 				73CFEB982D01887600B2FE1B /* UserCenterItemCell.swift in Sources */,
 				73C770712D731E140031016F /* RiskHaveDataView.swift in Sources */,
+				73AD72862DACACA500ACD209 /* MessagePushListViewCell.swift in Sources */,
 				734334992D7AA31F006AE608 /* PopIndustryView.swift in Sources */,
 				731B28A02D869D5A0007C6BB /* PopMoreLegalListView.swift in Sources */,
 				73A443E02D8BEF5000CB3A6C /* DIBUView.swift in Sources */,

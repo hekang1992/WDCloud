@@ -54,8 +54,9 @@ extension SettingViewController {
             .rx
             .tapGesture()
             .when(.recognized)
-            .subscribe(onNext: {_ in
-//                ToastViewConfig.showToast(message: "消息推送")
+            .subscribe(onNext: { [weak self] _ in
+                let pushVc = MessagePushCenterViewController()
+                self?.navigationController?.pushViewController(pushVc, animated: true)
             }).disposed(by: disposeBag)
         
         settingView.threeListView.bgView

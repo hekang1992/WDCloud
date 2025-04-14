@@ -1179,7 +1179,9 @@ class customerFollowListModel {
     var logo: String?
     var logoColor: String?
     var personnumber: String?
+    var followtargettype: String?
     init(json: JSON) {
+        self.followtargettype = json["followtargettype"].stringValue
         self.followtargetname = json["followtargetname"].stringValue
         self.createTime = json["createTime"].stringValue
         self.entityId = json["entityId"].stringValue

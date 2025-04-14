@@ -82,7 +82,7 @@ class SearchFocusCell: BaseViewCell {
                 self.focusBtn.setImage(UIImage(named: "havefocusimage"), for: .normal)
             }
         }).disposed(by: disposeBag)
-       
+        
         focusBtn.rx.tap.subscribe(onNext: { [weak self] in
             if let self = self, let mode1 = self.model.value {
                 self.block?(mode1, self.focusBtn)
