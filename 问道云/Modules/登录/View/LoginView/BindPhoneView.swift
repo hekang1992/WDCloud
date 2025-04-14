@@ -83,12 +83,6 @@ class BindPhoneView: BaseView {
         return sendCodeBtn
     }()
     
-    lazy var lineView2: UIView = {
-        let lineView2 = UIView()
-        lineView2.backgroundColor = UIColor.init(cssStr: "#EEEEEE")
-        return lineView2
-    }()
-    
     lazy var compBtn: UIButton = {
         let compBtn = UIButton(type: .custom)
         compBtn.setTitle("完成", for: .normal)
@@ -114,7 +108,6 @@ class BindPhoneView: BaseView {
         addSubview(lineView1)
         addSubview(codeTx)
         addSubview(sendCodeBtn)
-        addSubview(lineView2)
         addSubview(compBtn)
         addSubview(footView)
         backBtn.snp.makeConstraints { make in
@@ -161,16 +154,10 @@ class BindPhoneView: BaseView {
             make.right.equalTo(lineView1.snp.right)
             make.size.equalTo(CGSize(width: 125, height: 18.5))
         }
-        lineView2.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.height.equalTo(1)
-            make.bottom.equalTo(lineView1.snp.bottom).offset(58)
-            make.left.equalToSuperview().offset(30)
-        }
         compBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.height.equalTo(48)
-            make.top.equalTo(lineView2.snp.bottom).offset(114)
+            make.top.equalTo(lineView1.snp.bottom).offset(114)
             make.left.equalToSuperview().offset(30)
         }
         footView.snp.makeConstraints { make in

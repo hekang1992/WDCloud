@@ -39,6 +39,9 @@ class PropertyOneViewController: WDBaseViewController {
     lazy var oneView: PropertyLineHotView = {
         let oneView = PropertyLineHotView()
         oneView.backgroundColor = .white
+        oneView.addMonitoringBlock = { [weak self] in
+            self?.getHotsMessageInfo()
+        }
         return oneView
     }()
     
@@ -75,6 +78,35 @@ class PropertyOneViewController: WDBaseViewController {
         //获取行业数据
         getAllIndustryInfo()
         
+        
+        // 监听 UITextField 的文本变化
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textDidChange),
+            name: UITextField.textDidChangeNotification,
+            object: self.headView.searchHeadView.searchTx
+        )
+        
+        view.addSubview(oneView)
+        oneView.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(self.headView.snp.bottom)
+        }
+        
+        headView.headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.backBlock?()
+        }).disposed(by: disposeBag)
+        
+        //获取热搜浏览历史信息
+        getHotsMessageInfo()
+    }
+    
+}
+
+extension PropertyOneViewController: UITextFieldDelegate {
+    
+    //获取热搜浏览历史信息
+    private func getHotsMessageInfo() {
         let group = DispatchGroup()
         ViewHud.addLoadView()
         //获取热搜数据
@@ -104,30 +136,7 @@ class PropertyOneViewController: WDBaseViewController {
             ViewHud.hideLoadView()
             print("全部执行完成========全部执行完成")
         }
-        
-        // 监听 UITextField 的文本变化
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(textDidChange),
-            name: UITextField.textDidChangeNotification,
-            object: self.headView.searchHeadView.searchTx
-        )
-        
-        view.addSubview(oneView)
-        oneView.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(self.headView.snp.bottom)
-        }
-        
-        headView.headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
-            self?.backBlock?()
-        }).disposed(by: disposeBag)
-        
     }
-    
-}
-
-extension PropertyOneViewController: UITextFieldDelegate {
     
     @objc private func textDidChange() {
         let isComposing = self.headView.searchHeadView.searchTx.markedTextRange != nil

@@ -222,10 +222,10 @@ extension PeopleDetailViewController {
     private func refreshRiskUI(from model: DataModel) {
         homeHeadView.oneRiskView.namelabel.text = "经营风险"
         if let model = model.operationRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
-            let count = model.riskCnt ?? ""
-            let descStr = model.riskInfo ?? ""
+            let count = model.totalRiskCnt ?? ""
+            let descStr = model.riskDetail ?? ""
             homeHeadView.oneRiskView.numLabel.text = count
-            homeHeadView.oneRiskView.descLabel.text = "\(descStr)(\(count))"
+            homeHeadView.oneRiskView.descLabel.text = descStr
             homeHeadView.oneRiskView.timeLabel.text = model.riskTime ?? ""
         }else {
             homeHeadView.oneRiskView.numLabel.text = "0"
@@ -233,13 +233,12 @@ extension PeopleDetailViewController {
             homeHeadView.oneRiskView.timeLabel.text = ""
         }
         
-        
         homeHeadView.twoRiskView.namelabel.text = "法律风险"
         if let model = model.lawRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty {
-            let count = model.riskCnt ?? ""
-            let descStr = model.riskInfo ?? ""
+            let count = model.totalRiskCnt ?? ""
+            let descStr = model.riskDetail ?? ""
             homeHeadView.twoRiskView.numLabel.text = count
-            homeHeadView.twoRiskView.descLabel.text = "\(descStr)(\(count))"
+            homeHeadView.twoRiskView.descLabel.text = descStr
             homeHeadView.twoRiskView.timeLabel.text = model.riskTime ?? ""
         }else {
             homeHeadView.twoRiskView.numLabel.text = "0"
@@ -249,10 +248,10 @@ extension PeopleDetailViewController {
         
         homeHeadView.threeRiskView.namelabel.text = "财务风险"
         if let model = model.financeRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
-            let count = model.riskCnt ?? ""
-            let descStr = model.riskInfo ?? ""
+            let count = model.totalRiskCnt ?? ""
+            let descStr = model.riskDetail ?? ""
             homeHeadView.threeRiskView.numLabel.text = count
-            homeHeadView.threeRiskView.descLabel.text = "\(descStr)(\(count))"
+            homeHeadView.threeRiskView.descLabel.text = descStr
             homeHeadView.threeRiskView.timeLabel.text = model.riskTime ?? ""
         }else {
             homeHeadView.threeRiskView.numLabel.text = "0"
@@ -262,10 +261,10 @@ extension PeopleDetailViewController {
         
         homeHeadView.fourRiskView.namelabel.text = "舆情风险"
         if let model = model.opinionRisk, let riskCnt = model.riskCnt, !riskCnt.isEmpty  {
-            let count = model.riskCnt ?? ""
-            let descStr = model.riskInfo ?? ""
+            let count = model.totalRiskCnt ?? ""
+            let descStr = model.riskDetail ?? ""
             homeHeadView.fourRiskView.numLabel.text = count
-            homeHeadView.fourRiskView.descLabel.text = "\(descStr)(\(count))"
+            homeHeadView.fourRiskView.descLabel.text = descStr
             homeHeadView.fourRiskView.timeLabel.text = model.riskTime ?? ""
         }else {
             homeHeadView.fourRiskView.numLabel.text = "0"

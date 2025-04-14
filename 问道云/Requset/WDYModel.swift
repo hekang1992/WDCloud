@@ -573,7 +573,11 @@ class itemsModel {
     var email: String?
     var tags: String?
     var logoUrl: String?
+    var weburl: String?
+    var phoneList: [phoneListModel]?
     init(json: JSON) {
+        self.phoneList = json["phoneList"].arrayValue.map { phoneListModel(json: $0) }
+        self.weburl = json["website"].stringValue
         self.logoUrl = json["logoUrl"].stringValue
         self.desc = json["desc"].stringValue
         self.email = json["email"].stringValue

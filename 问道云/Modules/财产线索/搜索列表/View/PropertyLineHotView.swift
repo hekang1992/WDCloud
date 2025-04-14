@@ -15,6 +15,9 @@ class PropertyLineHotView: BaseView {
     var modelArray: [[DataModel]]?
     
     var deleteHistoryBlock: (() -> Void)?
+    
+    //添加和取消监控回调
+    var addMonitoringBlock: (() -> Void)?
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -240,6 +243,7 @@ extension PropertyLineHotView {
                     monitoringBtn.setImage(UIImage(named: "propertyhavjiank"), for: .normal)
                     self.addUnioInfo(form: entityId, name: entityName)
                     ToastViewConfig.showToast(message: "监控成功")
+                    self.addMonitoringBlock?()
                 }else if success.code == 702 {
                     let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
                     buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
@@ -302,6 +306,7 @@ extension PropertyLineHotView {
                     model.monitor = false
                     monitoringBtn.setImage(UIImage(named: "propertymongijan"), for: .normal)
                     ToastViewConfig.showToast(message: "取消监控成功")
+                    self.addMonitoringBlock?()
                 }else if success.code == 702 {
                     
                 }

@@ -24,10 +24,13 @@ class TwoCompanyView: BaseView {
     //人员查看更多
     var moreBtnBlock: (() -> Void)?
     
+    var listModel: itemsModel?
+    
     var dataModel: DataModel? {
         didSet {
             guard let dataModel = dataModel else { return }
             let items = dataModel.productList?.items ?? []
+            self.brandView.descLabel.isExpanded = true
             if items.isEmpty {
                 self.brandView.snp.updateConstraints { make in
                     make.top.equalToSuperview()
@@ -37,20 +40,40 @@ class TwoCompanyView: BaseView {
                     make.top.equalTo(brandView.snp.bottom).offset(40)
                 }
             }else {
-                self.brandView.snp.updateConstraints { make in
-                    make.top.equalToSuperview().offset(40)
-                    make.height.equalTo(179.pix())
-                }
-                self.tableView.snp.updateConstraints { make in
-                    make.top.equalTo(brandView.snp.bottom)
-                }
                 let model = items.first
-                let name = model?.name ?? ""
-                let logoUrl = model?.logoUrl ?? ""
-                self.brandView.logoImageView.kf.setImage(with: URL(string: logoUrl), placeholder: UIImage.imageOfText(name, size: (30, 30)))
-                self.brandView.nameLabel.text = name
-                self.brandView.tagLabel.text = model?.tags ?? ""
-                self.brandView.descLabel.text = model?.desc ?? ""
+                self.listModel = model
+                //行数
+                let rows = self.brandView.descLabel.calculateLineCount(for: model?.desc ?? "")
+                if rows > 3 {
+                    self.brandView.descLabel.isExpanded = false
+                    self.brandView.snp.updateConstraints { make in
+                        make.top.equalToSuperview().offset(40)
+                        make.height.equalTo(179.pix())
+                    }
+                }else {
+                    self.brandView.descLabel.isExpanded = true
+                    self.brandView.snp.updateConstraints { make in
+                        make.top.equalToSuperview().offset(40)
+                        make.height.equalTo(179.pix() - CGFloat(15) * CGFloat((3 - rows)))
+                    }
+                }
+                self.brandView.model = model
+                self.brandView.descLabel.isExpandedBlock = { [weak self] grand in
+                    guard let self = self else { return }
+                    if grand {
+                        self.brandView.snp.updateConstraints { make in
+                            make.top.equalToSuperview().offset(40)
+                            make.height.equalTo(179.pix() + CGFloat(15) * CGFloat((rows - 3)))
+                        }
+                    }else {
+                        if rows <= 3 {
+                            self.brandView.snp.updateConstraints { make in
+                                make.top.equalToSuperview().offset(40)
+                                make.height.equalTo(179.pix() - CGFloat(15) * CGFloat((3 - rows)))
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -103,7 +126,7 @@ class TwoCompanyView: BaseView {
         brandView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(40)
             make.left.right.equalToSuperview()
-            make.height.equalTo(179.pix())
+            make.height.equalTo(0.pix())
         }
         tableView.snp.makeConstraints { make in
             make.top.equalTo(brandView.snp.bottom)
@@ -111,6 +134,17 @@ class TwoCompanyView: BaseView {
         }
         tableView.isSkeletonable = true
         tableView.showAnimatedGradientSkeleton()
+        
+        //品牌点击
+        brandView.nameLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            let vc = ViewControllerUtils.findViewController(from: self)
+            let webVc = WebPageViewController()
+            let pageUrl = self.listModel?.detailUrl ?? ""
+            let webUrl = base_url + pageUrl
+            webVc.pageUrl.accept(webUrl)
+            vc?.navigationController?.pushViewController(webVc, animated: true)
+        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {
