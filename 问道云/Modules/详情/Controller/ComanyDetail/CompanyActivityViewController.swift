@@ -163,6 +163,7 @@ extension CompanyActivityViewController: UITableViewDelegate, UITableViewDataSou
 extension CompanyActivityViewController {
     
     private func getActivityInfo() {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["orgId": enityId,
                     "pageNum": pageIndex,
@@ -172,6 +173,7 @@ extension CompanyActivityViewController {
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let self = self,

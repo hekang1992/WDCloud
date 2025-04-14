@@ -164,6 +164,7 @@ extension PeopleActivityViewController {
     
     private func getActivityInfo() {
         let man = RequestManager()
+        ViewHud.addLoadView()
         let dict = ["personId": personId,
                     "pageNum": pageIndex,
                     "pageSize": "20"] as [String : Any]
@@ -172,6 +173,7 @@ extension PeopleActivityViewController {
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let self = self,
