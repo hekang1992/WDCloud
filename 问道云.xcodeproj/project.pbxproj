@@ -281,6 +281,7 @@
 		73A443E22D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A443E12D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift */; };
 		73A53C302DA8BE71004917C9 /* PopVoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A53C2F2DA8BE71004917C9 /* PopVoiceView.swift */; };
 		73AD72862DACACA500ACD209 /* MessagePushListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AD72852DACACA500ACD209 /* MessagePushListViewCell.swift */; };
+		73AD72892DACDDDB00ACD209 /* BrandListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AD72882DACDDDB00ACD209 /* BrandListView.swift */; };
 		73AEAD2D2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AEAD2C2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift */; };
 		73AEAD2F2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */; };
 		73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */; };
@@ -712,6 +713,7 @@
 		73A443E12D8C192C00CB3A6C /* BuyOneReportOneVipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyOneReportOneVipViewController.swift; sourceTree = "<group>"; };
 		73A53C2F2DA8BE71004917C9 /* PopVoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopVoiceView.swift; sourceTree = "<group>"; };
 		73AD72852DACACA500ACD209 /* MessagePushListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePushListViewCell.swift; sourceTree = "<group>"; };
+		73AD72882DACDDDB00ACD209 /* BrandListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandListView.swift; sourceTree = "<group>"; };
 		73AEAD2C2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyPeopleCollectionViewCell.swift; sourceTree = "<group>"; };
 		73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyAddCustomerViewCell.swift; sourceTree = "<group>"; };
 		73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyNormalListCell.swift; sourceTree = "<group>"; };
@@ -1151,8 +1153,7 @@
 		733D2F4D2D87E7D60019C697 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				730037AA2D9A448200A6E789 /* CommonHotsView.swift */,
-				730037AC2D9A5FD000A6E789 /* CommonHotsViewCell.swift */,
+				73AD72872DACDD9B00ACD209 /* CommonHotsView */,
 				73EF03CC2D30F4D50070F850 /* CompanyList */,
 				73EF03CD2D30F4E20070F850 /* PeopleList */,
 				73EABF902D320F250052F4AB /* RiskList */,
@@ -1735,6 +1736,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		73AD72872DACDD9B00ACD209 /* CommonHotsView */ = {
+			isa = PBXGroup;
+			children = (
+				730037AA2D9A448200A6E789 /* CommonHotsView.swift */,
+				730037AC2D9A5FD000A6E789 /* CommonHotsViewCell.swift */,
+			);
+			path = CommonHotsView;
+			sourceTree = "<group>";
+		};
 		73B33B572DA60BB600C37217 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -1964,6 +1974,7 @@
 				73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */,
 				73E971782D2FCF3400F12B15 /* TwoCompanyHeadPeopleCell.swift */,
 				734334942D798DEE006AE608 /* CompanySearchPeopleViewCell.swift */,
+				73AD72882DACDDDB00ACD209 /* BrandListView.swift */,
 			);
 			path = CompanyList;
 			sourceTree = "<group>";
@@ -2642,6 +2653,7 @@
 				737416462D0FD79C00E6CD23 /* AddInvoiceView.swift in Sources */,
 				7325A7D82CFF075B0043C196 /* BaseView.swift in Sources */,
 				73868A452D55F55A00CE107D /* MonthReportViewController.swift in Sources */,
+				73AD72892DACDDDB00ACD209 /* BrandListView.swift in Sources */,
 				7340E16C2D5CBB5A008FD5C7 /* SearchCompanyControllingPersonViewController.swift in Sources */,
 				734056A92D38E34C009C9C96 /* CorrelationViewCell.swift in Sources */,
 				732926A12D857C4100E93F96 /* ContorlDetailViewCell.swift in Sources */,
@@ -2669,7 +2681,7 @@
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2691,7 +2703,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.9;
+				MARKETING_VERSION = 1.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2717,7 +2729,7 @@
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2739,7 +2751,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.9;
+				MARKETING_VERSION = 1.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

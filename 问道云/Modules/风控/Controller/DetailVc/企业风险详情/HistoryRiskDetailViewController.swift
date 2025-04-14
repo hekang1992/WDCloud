@@ -164,7 +164,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
     
     lazy var timeLabel: UILabel = {
         let timeLabel = UILabel()
-        timeLabel.text = "时间"
+//        timeLabel.text = "时间"
         timeLabel.font = .regularFontOfSize(size: 12)
         timeLabel.textColor = .init(cssStr: "#9FA4AD")
         timeLabel.textAlignment = .left
@@ -368,6 +368,7 @@ class HistoryRiskDetailViewController: WDBaseViewController {
         let timeMenu = MenuAction(title: "全部", style: .typeCustom)!
         var modelArray = getListTime(from: true)
         let menuView = DropMenuBar(action: [timeMenu])!
+        menuView.isHidden = true
         view.addSubview(menuView)
         menuView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(2)

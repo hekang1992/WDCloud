@@ -68,6 +68,7 @@ class DataModel {
     var datas: [DataModel]?
     var bossList: bossListModel?
     var pageData: [pageDataModel]?
+    var productList: productListModel?
     var pageMeta: pageMetaModel?
     var contactInfoCount: contactInfoCountModel?
     
@@ -213,6 +214,7 @@ class DataModel {
     var logoColor: String?
     var entityCategory: String?
     init(json: JSON) {
+        self.productList = productListModel(json: json["productList"])
         self.follow = json["follow"].boolValue
         self.entityCategory = json["entityCategory"].stringValue
         self.logoColor = json["logoColor"].stringValue
@@ -567,7 +569,15 @@ class itemsModel {
     var entityType: Int?
     var moduleId: String?
     var detailUrl: String?
+    var desc: String?
+    var email: String?
+    var tags: String?
+    var logoUrl: String?
     init(json: JSON) {
+        self.logoUrl = json["logoUrl"].stringValue
+        self.desc = json["desc"].stringValue
+        self.email = json["email"].stringValue
+        self.tags = json["tags"].stringValue
         self.detailUrl = json["detailUrl"].stringValue
         self.moduleId = json["moduleId"].stringValue
         self.orgStatus = json["orgStatus"].string
@@ -2159,5 +2169,12 @@ class tableInfoModel {
     init(json: JSON) {
         self.total = json["total"].intValue
         self.rows = json["rows"].arrayValue.map { rowsModel(json: $0) }
+    }
+}
+
+class productListModel {
+    var items: [itemsModel]?
+    init(json: JSON) {
+        self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
     }
 }

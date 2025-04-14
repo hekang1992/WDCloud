@@ -321,7 +321,7 @@ extension SearchEnterpriseViewController {
                     "pageIndex": pageIndex,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/entity/v2/org-list",
+                       pageUrl: "/entity/v2.1/org-list",
                        method: .get) { [weak self] result in
             self?.companyListView.tableView.mj_header?.endRefreshing()
             self?.companyListView.tableView.mj_footer?.endRefreshing()

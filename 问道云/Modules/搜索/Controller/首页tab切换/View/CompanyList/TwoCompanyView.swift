@@ -24,7 +24,34 @@ class TwoCompanyView: BaseView {
     //人员查看更多
     var moreBtnBlock: (() -> Void)?
     
-    var dataModel: DataModel?
+    var dataModel: DataModel? {
+        didSet {
+            guard let dataModel = dataModel else { return }
+            let items = dataModel.productList?.items ?? []
+            if items.isEmpty {
+                self.brandView.snp.updateConstraints { make in
+                    make.top.equalToSuperview()
+                    make.height.equalTo(0)
+                }
+                self.tableView.snp.updateConstraints { make in
+                    make.top.equalTo(brandView.snp.bottom).offset(40)
+                }
+            }else {
+                self.brandView.snp.updateConstraints { make in
+                    make.top.equalToSuperview().offset(40)
+                    make.height.equalTo(179.pix())
+                }
+                self.tableView.snp.updateConstraints { make in
+                    make.top.equalTo(brandView.snp.bottom)
+                }
+                let name = items.first?.name ?? ""
+                let logoUrl = items.first?.logoUrl ?? ""
+                self.brandView.logoImageView.kf.setImage(with: URL(string: logoUrl), placeholder: UIImage.imageOfText(name, size: (30, 30)))
+                
+                
+            }
+        }
+    }
     
     var dataModelArray: [pageDataModel]?
     
@@ -34,6 +61,12 @@ class TwoCompanyView: BaseView {
     lazy var whiteView: UIView = {
         let whiteView = UIView()
         return whiteView
+    }()
+    
+    //品牌view
+    lazy var brandView: BrandListView = {
+        let brandView = BrandListView()
+        return brandView
     }()
     
     lazy var tableView: UITableView = {
@@ -60,12 +93,18 @@ class TwoCompanyView: BaseView {
         super.init(frame: frame)
         isSkeletonable = true
         addSubview(whiteView)
+        whiteView.addSubview(brandView)
         whiteView.addSubview(tableView)
         whiteView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        tableView.snp.makeConstraints { make in
+        brandView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(40)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(179.pix())
+        }
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(brandView.snp.bottom)
             make.left.right.bottom.equalToSuperview()
         }
         tableView.isSkeletonable = true
