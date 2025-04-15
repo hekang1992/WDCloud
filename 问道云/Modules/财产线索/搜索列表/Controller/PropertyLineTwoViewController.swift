@@ -6,6 +6,7 @@
 //  财产状况
 
 import UIKit
+import TYAlertController
 
 class PropertyLineTwoViewController: WDBaseViewController {
     
@@ -144,10 +145,32 @@ extension PropertyLineTwoViewController: UIScrollViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = self.modelArray?[indexPath.section].children?[indexPath.row]
         let markCount = model?.markCount ?? 0
-        if markCount == 0 {
+        let markFlag = model?.markFlag ?? 0
+        let clickFlag = model?.clickFlag ?? 0
+        if markCount == 0 && markFlag != 0 {
             ToastViewConfig.showToast(message: "暂无信息")
             return
         }
+        //弹窗去购买会员
+        if clickFlag != 0 {
+            let popView = PopOnlyBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 300))
+            let alertVc = TYAlertController(alert: popView, preferredStyle: .alert)!
+            self.present(alertVc, animated: true)
+            popView.cancelBlock = { [weak self] in
+                self?.dismiss(animated: true)
+            }
+            popView.sureBlock = { [weak self] in
+                self?.dismiss(animated: true) {
+                    let menVc = MembershipCenterViewController()
+                    self?.navigationController?.pushViewController(menVc, animated: true)
+                    menVc.payBlock = {
+                        self?.getListInfo()
+                    }
+                }
+            }
+            return
+        }
+        
         let pageUrl = model?.path ?? ""
         let webUrl = base_url + pageUrl
         let webVc = WebPageViewController()
