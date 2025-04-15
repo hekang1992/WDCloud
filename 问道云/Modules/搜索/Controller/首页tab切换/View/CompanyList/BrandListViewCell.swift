@@ -1,5 +1,5 @@
 //
-//  BrandListView.swift
+//  BrandListViewCell.swift
 //  问道云
 //
 //  Created by 何康 on 2025/4/14.
@@ -7,11 +7,17 @@
 
 import UIKit
 
-class BrandListView: BaseView {
+class BrandListViewCell: BaseViewCell {
     
-    var model: itemsModel? {
+    var productList: productListModel? {
         didSet {
-            guard let model = model else { return }
+            guard let productList = productList, let model = productList.items?.first else { return }
+            let rows = self.descLabel.calculateLineCount(for: model.desc ?? "")
+            if rows <= 3 {
+                self.descLabel.isExpanded = true
+            }else {
+                self.descLabel.isExpanded = false
+            }
             let name = model.name ?? ""
             let logoUrl = model.logoUrl ?? ""
             self.logoImageView.kf.setImage(with: URL(string: logoUrl), placeholder: UIImage.imageOfText(name, size: (30, 30)))
@@ -32,6 +38,10 @@ class BrandListView: BaseView {
                 let phoneView = PhoneListView()
                 phoneView.phoneBtn.setTitle(model.phone ?? "", for: .normal)
                 scrollView.addSubview(phoneView)
+                phoneView.block = { [weak self] in
+                    let phoneNumber = phoneView.phoneBtn.titleLabel?.text ?? ""
+                    self?.makePhoneCall(phoneNumber: phoneNumber)
+                }
                 phoneView.snp.makeConstraints { make in
                     make.centerY.equalToSuperview()
                     make.height.equalTo(40)
@@ -43,11 +53,12 @@ class BrandListView: BaseView {
                     }
                 }
                 lastPhoneView = phoneView
+            }
+            if let phoneView = lastPhoneView  {
                 phoneView.snp.makeConstraints { make in
                     make.right.equalToSuperview().offset(-5)
                 }
             }
-            
         }
     }
     
@@ -93,6 +104,7 @@ class BrandListView: BaseView {
     
     lazy var descLabel: ExpandableTextView = {
         let descLabel = ExpandableTextView()
+        descLabel.isExpanded = false
         return descLabel
     }()
     
@@ -111,16 +123,16 @@ class BrandListView: BaseView {
         return scrollView
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubview(ctImageView)
-        ctImageView.addSubview(logoImageView)
-        ctImageView.addSubview(nameLabel)
-        ctImageView.addSubview(tagLabel)
-        ctImageView.addSubview(brandLabel)
-        ctImageView.addSubview(descLabel)
-        ctImageView.addSubview(webSiteLabel)
-        ctImageView.addSubview(scrollView)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(ctImageView)
+        contentView.addSubview(logoImageView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(tagLabel)
+        contentView.addSubview(brandLabel)
+        contentView.addSubview(descLabel)
+        contentView.addSubview(webSiteLabel)
+        contentView.addSubview(scrollView)
         ctImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -148,7 +160,8 @@ class BrandListView: BaseView {
         descLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
             make.centerX.equalToSuperview()
-            make.top.equalTo(logoImageView.snp.bottom).offset(10)
+            make.top.equalToSuperview().offset(55)
+            make.bottom.equalToSuperview().offset(-70)
         }
         webSiteLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)

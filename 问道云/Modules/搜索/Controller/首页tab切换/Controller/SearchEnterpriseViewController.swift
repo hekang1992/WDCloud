@@ -356,7 +356,6 @@ extension SearchEnterpriseViewController {
                     self.companyListView.searchWordsRelay.accept(keyword)
                     DispatchQueue.main.asyncAfter(delay: 0.25) {
                         self.companyListView.tableView.hideSkeleton()
-                        self.companyListView.tableView.reloadData()
                     }
                 }
                 ViewHud.hideLoadView()

@@ -10,7 +10,7 @@ import RxRelay
 import SkeletonView
 
 class TwoCompanyView: BaseView {
-    
+    var isExpandedBlock: ((Bool) -> Void)?
     //地址回调
     var addressBlock: ((pageDataModel) -> Void)?
     //官网回调
@@ -24,61 +24,13 @@ class TwoCompanyView: BaseView {
     //人员查看更多
     var moreBtnBlock: (() -> Void)?
     
-    var listModel: itemsModel?
+    var dataModel: DataModel?
     
-    var dataModel: DataModel? {
+    var dataModelArray: [pageDataModel]? {
         didSet {
-            guard let dataModel = dataModel else { return }
-            let items = dataModel.productList?.items ?? []
-            self.brandView.descLabel.isExpanded = true
-            if items.isEmpty {
-                self.brandView.snp.updateConstraints { make in
-                    make.top.equalToSuperview()
-                    make.height.equalTo(0)
-                }
-                self.tableView.snp.updateConstraints { make in
-                    make.top.equalTo(brandView.snp.bottom).offset(40)
-                }
-            }else {
-                let model = items.first
-                self.listModel = model
-                //行数
-                let rows = self.brandView.descLabel.calculateLineCount(for: model?.desc ?? "")
-                if rows > 3 {
-                    self.brandView.descLabel.isExpanded = false
-                    self.brandView.snp.updateConstraints { make in
-                        make.top.equalToSuperview().offset(40)
-                        make.height.equalTo(179.pix())
-                    }
-                }else {
-                    self.brandView.descLabel.isExpanded = true
-                    self.brandView.snp.updateConstraints { make in
-                        make.top.equalToSuperview().offset(40)
-                        make.height.equalTo(179.pix() - CGFloat(15) * CGFloat((3 - rows)))
-                    }
-                }
-                self.brandView.model = model
-                self.brandView.descLabel.isExpandedBlock = { [weak self] grand in
-                    guard let self = self else { return }
-                    if grand {
-                        self.brandView.snp.updateConstraints { make in
-                            make.top.equalToSuperview().offset(40)
-                            make.height.equalTo(179.pix() + CGFloat(15) * CGFloat((rows - 3)))
-                        }
-                    }else {
-                        if rows <= 3 {
-                            self.brandView.snp.updateConstraints { make in
-                                make.top.equalToSuperview().offset(40)
-                                make.height.equalTo(179.pix() - CGFloat(15) * CGFloat((3 - rows)))
-                            }
-                        }
-                    }
-                }
-            }
+            tableView.reloadData()
         }
     }
-    
-    var dataModelArray: [pageDataModel]?
     
     //被搜索的文字,根据这个文字,去给cell的namelabel加上颜色
     var searchWordsRelay = BehaviorRelay<String?>(value: nil)
@@ -86,12 +38,6 @@ class TwoCompanyView: BaseView {
     lazy var whiteView: UIView = {
         let whiteView = UIView()
         return whiteView
-    }()
-    
-    //品牌view
-    lazy var brandView: BrandListView = {
-        let brandView = BrandListView()
-        return brandView
     }()
     
     lazy var tableView: UITableView = {
@@ -105,8 +51,11 @@ class TwoCompanyView: BaseView {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        //品牌cell
+        tableView.register(BrandListViewCell.self, forCellReuseIdentifier: "BrandListViewCell")
         //头部人员cell
         tableView.register(TwoCompanyHeadPeopleCell.self, forCellReuseIdentifier: "TwoCompanyHeadPeopleCell")
+        //公司cell
         tableView.register(TwoCompanyNormalListCell.self, forCellReuseIdentifier: "TwoCompanyNormalListCell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
@@ -118,33 +67,17 @@ class TwoCompanyView: BaseView {
         super.init(frame: frame)
         isSkeletonable = true
         addSubview(whiteView)
-        whiteView.addSubview(brandView)
         whiteView.addSubview(tableView)
         whiteView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        brandView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(40)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(0.pix())
-        }
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(brandView.snp.bottom)
+            make.top.equalToSuperview().offset(40)
             make.left.right.bottom.equalToSuperview()
         }
         tableView.isSkeletonable = true
         tableView.showAnimatedGradientSkeleton()
         
-        //品牌点击
-        brandView.nameLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
-            let vc = ViewControllerUtils.findViewController(from: self)
-            let webVc = WebPageViewController()
-            let pageUrl = self.listModel?.detailUrl ?? ""
-            let webUrl = base_url + pageUrl
-            webVc.pageUrl.accept(webUrl)
-            vc?.navigationController?.pushViewController(webVc, animated: true)
-        }).disposed(by: disposeBag)
     }
     
     @MainActor required init?(coder: NSCoder) {
@@ -158,91 +91,80 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         let bossList = dataModel?.bossList?.items ?? []
-        if !bossList.isEmpty {
+        let productList = dataModel?.productList?.items ?? []
+        if bossList.isEmpty && productList.isEmpty {
+            return 1
+        }else if bossList.isEmpty && !productList.isEmpty {
+            return 2
+        }else if !bossList.isEmpty && productList.isEmpty {
             return 2
         }else {
-            return 1
+            return 3
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //人员
         let bossList = dataModel?.bossList?.items ?? []
-        if !bossList.isEmpty {
+        //品牌
+        let productList = dataModel?.productList?.items ?? []
+        if bossList.isEmpty && productList.isEmpty {
+            return dataModelArray?.count ?? 0
+        }else if bossList.isEmpty && !productList.isEmpty {
+            if section == 0 {
+                return 1
+            }else {
+                return dataModelArray?.count ?? 0
+            }
+        }else if !bossList.isEmpty && productList.isEmpty {
             if section == 0 {
                 return 1
             }else {
                 return dataModelArray?.count ?? 0
             }
         }else {
-            return dataModelArray?.count ?? 0
+            if section == 0 || section == 1 {
+                return 1
+            }else {
+                return dataModelArray?.count ?? 0
+            }
         }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let bossList = dataModel?.bossList?.items ?? []
-        if !bossList.isEmpty {
-            if indexPath.section == 0 {
-                let pageDataModel = dataModel?.bossList?.items
-                let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyHeadPeopleCell") as? TwoCompanyHeadPeopleCell
-                cell?.selectionStyle = .none
-                cell?.modelArray = pageDataModel
-                return cell ?? UITableViewCell()
-            }else {
-                let pageDataModel = self.dataModelArray?[indexPath.row]
-                let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
-                pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
-                cell?.selectionStyle = .none
-                cell?.model.accept(pageDataModel)
-                cell?.addressBlock = { [weak self] model in
-                    self?.addressBlock?(model)
-                }
-                cell?.websiteBlock = { [weak self] model in
-                    self?.websiteBlock?(model)
-                }
-                cell?.phoneBlock = { [weak self] model in
-                    self?.phoneBlock?(model)
-                }
-                cell?.peopleBlock = { [weak self] model in
-                    self?.peopleBlock?(model)
-                }
-                cell?.focusBlock = { [weak self] model in
-                    if let cell = cell {
-                        self?.focusInfo(from: model, cell: cell)
-                    }
-                }
-                return cell ?? UITableViewCell()
-            }
-        }else {
+        let productList = dataModel?.productList?.items ?? []
+        //只有公司
+        if bossList.isEmpty && productList.isEmpty {
             let pageDataModel = self.dataModelArray?[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as? TwoCompanyNormalListCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as! TwoCompanyNormalListCell
             pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
-            cell?.selectionStyle = .none
-            cell?.model.accept(pageDataModel)
-            cell?.addressBlock = { [weak self] model in
+            cell.selectionStyle = .none
+            cell.model.accept(pageDataModel)
+            cell.addressBlock = { [weak self] model in
                 self?.addressBlock?(model)
             }
-            cell?.websiteBlock = { [weak self] model in
+            cell.websiteBlock = { [weak self] model in
                 self?.websiteBlock?(model)
             }
-            cell?.phoneBlock = { [weak self] model in
+            cell.phoneBlock = { [weak self] model in
                 self?.phoneBlock?(model)
             }
-            cell?.peopleBlock = { [weak self] model in
+            cell.peopleBlock = { [weak self] model in
                 self?.peopleBlock?(model)
             }
-            cell?.focusBlock = { [weak self] model in
-                if let cell = cell {
-                    self?.focusInfo(from: model, cell: cell)
-                }
+            cell.focusBlock = { [weak self] model in
+                self?.focusInfo(from: model, cell: cell)
             }
-            cell?.heightDidUpdate = { [weak self] in
+            cell.heightDidUpdate = { [weak self] in
                 self?.tableView.beginUpdates()
                 DispatchQueue.main.async {
                     self?.tableView.endUpdates()
                 }
             }
             //跳转风险扫描
-            cell?.riskBlock = { [weak self] model in
+            cell.riskBlock = { [weak self] model in
                 guard let self = self else { return }
                 let vc = ViewControllerUtils.findViewController(from: self)
                 let riskDetailVc = CompanyRiskDetailViewController()
@@ -251,18 +173,157 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 riskDetailVc.logo = model.orgInfo?.logo ?? ""
                 vc?.navigationController?.pushViewController(riskDetailVc, animated: true)
             }
-            return cell ?? UITableViewCell()
+            return cell
+        }else if bossList.isEmpty && !productList.isEmpty {//品牌和公司
+            if indexPath.section == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "BrandListViewCell") as! BrandListViewCell
+                cell.selectionStyle = .none
+                cell.productList = dataModel?.productList
+                cell.descLabel.isExpandedBlock = { [weak self] grand in
+                    self?.tableView.beginUpdates()
+                    self?.tableView.endUpdates()
+                }
+                return cell
+            }else {
+                let pageDataModel = self.dataModelArray?[indexPath.row]
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as! TwoCompanyNormalListCell
+                pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
+                cell.selectionStyle = .none
+                cell.model.accept(pageDataModel)
+                cell.addressBlock = { [weak self] model in
+                    self?.addressBlock?(model)
+                }
+                cell.websiteBlock = { [weak self] model in
+                    self?.websiteBlock?(model)
+                }
+                cell.phoneBlock = { [weak self] model in
+                    self?.phoneBlock?(model)
+                }
+                cell.peopleBlock = { [weak self] model in
+                    self?.peopleBlock?(model)
+                }
+                cell.focusBlock = { [weak self] model in
+                    self?.focusInfo(from: model, cell: cell)
+                }
+                return cell
+            }
+        }else if !bossList.isEmpty && productList.isEmpty {//人员和公司
+            if indexPath.section == 0 {
+                let pageDataModel = dataModel?.bossList?.items
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyHeadPeopleCell") as! TwoCompanyHeadPeopleCell
+                cell.selectionStyle = .none
+                cell.modelArray = pageDataModel
+                return cell
+            }else {
+                let pageDataModel = self.dataModelArray?[indexPath.row]
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as! TwoCompanyNormalListCell
+                pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
+                cell.selectionStyle = .none
+                cell.model.accept(pageDataModel)
+                cell.addressBlock = { [weak self] model in
+                    self?.addressBlock?(model)
+                }
+                cell.websiteBlock = { [weak self] model in
+                    self?.websiteBlock?(model)
+                }
+                cell.phoneBlock = { [weak self] model in
+                    self?.phoneBlock?(model)
+                }
+                cell.peopleBlock = { [weak self] model in
+                    self?.peopleBlock?(model)
+                }
+                cell.focusBlock = { [weak self] model in
+                    self?.focusInfo(from: model, cell: cell)
+                }
+                return cell
+            }
+        }else {//品牌,人员,公司都有
+            if indexPath.section == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "BrandListViewCell") as! BrandListViewCell
+                cell.selectionStyle = .none
+                cell.productList = dataModel?.productList
+                cell.descLabel.isExpandedBlock = { [weak self] grand in
+                    self?.tableView.beginUpdates()
+                    self?.tableView.endUpdates()
+                }
+                return cell
+            }else if indexPath.section == 1 {
+                let pageDataModel = dataModel?.bossList?.items
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyHeadPeopleCell") as! TwoCompanyHeadPeopleCell
+                cell.selectionStyle = .none
+                cell.modelArray = pageDataModel
+                return cell
+            }else {
+                let pageDataModel = self.dataModelArray?[indexPath.row]
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TwoCompanyNormalListCell") as! TwoCompanyNormalListCell
+                pageDataModel?.searchStr = self.searchWordsRelay.value ?? ""
+                cell.selectionStyle = .none
+                cell.model.accept(pageDataModel)
+                cell.addressBlock = { [weak self] model in
+                    self?.addressBlock?(model)
+                }
+                cell.websiteBlock = { [weak self] model in
+                    self?.websiteBlock?(model)
+                }
+                cell.phoneBlock = { [weak self] model in
+                    self?.phoneBlock?(model)
+                }
+                cell.peopleBlock = { [weak self] model in
+                    self?.peopleBlock?(model)
+                }
+                cell.focusBlock = { [weak self] model in
+                    self?.focusInfo(from: model, cell: cell)
+                }
+                return cell
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 35.5
+        let bossList = dataModel?.bossList?.items ?? []
+        let productList = dataModel?.productList?.items ?? []
+        if bossList.isEmpty && productList.isEmpty {
+            return 35.5
+        }else if bossList.isEmpty && !productList.isEmpty {
+            if section == 0 {
+                return 0
+            }else {
+                return 35.5
+            }
+        }else if !bossList.isEmpty && productList.isEmpty {
+            return 35.5
+        }else {
+            if section == 0 {
+                return 0
+            }else {
+                return 35.5
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headView = UIView()
         let bossList = dataModel?.bossList?.items ?? []
-        if !bossList.isEmpty {
+        let productList = dataModel?.productList?.items ?? []
+        if bossList.isEmpty && productList.isEmpty {
+            let companyView = self.companyHeadView()
+            headView.addSubview(companyView)
+            companyView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            return headView
+        }else if bossList.isEmpty && !productList.isEmpty {
+            if section == 0 {
+                return nil
+            }else {
+                let companyView = self.companyHeadView()
+                headView.addSubview(companyView)
+                companyView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                return headView
+            }
+        }else if !bossList.isEmpty && productList.isEmpty {
             if section == 0 {
                 let peopleView = self.peopleHeadView()
                 headView.addSubview(peopleView)
@@ -279,19 +340,72 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 return headView
             }
         }else {
-            let companyView = self.companyHeadView()
-            headView.addSubview(companyView)
-            companyView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+            if section == 0 {
+                return nil
+            }else if section == 0 {
+                let peopleView = self.peopleHeadView()
+                headView.addSubview(peopleView)
+                peopleView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                return headView
+            }else {
+                let companyView = self.companyHeadView()
+                headView.addSubview(companyView)
+                companyView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                return headView
             }
-            return headView
         }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let model = self.dataModelArray?[indexPath.row] {
-            self.entityIdBlock?(model)
+        let bossList = dataModel?.bossList?.items ?? []
+        let productList = dataModel?.productList?.items ?? []
+        if bossList.isEmpty && productList.isEmpty {
+            if let model = self.dataModelArray?[indexPath.row] {
+                self.entityIdBlock?(model)
+            }
+        }else if bossList.isEmpty && !productList.isEmpty {
+            if indexPath.section == 0 {
+                let vc = ViewControllerUtils.findViewController(from: self)
+                let webVc = WebPageViewController()
+                let pageUrl = productList.first?.detailUrl ?? ""
+                let webUrl = base_url + pageUrl
+                webVc.pageUrl.accept(webUrl)
+                vc?.navigationController?.pushViewController(webVc, animated: true)
+            }else {
+                if let model = self.dataModelArray?[indexPath.row] {
+                    self.entityIdBlock?(model)
+                }
+            }
+        }else if !bossList.isEmpty && productList.isEmpty {
+            if indexPath.section == 0 {
+                
+            }else {
+                if let model = self.dataModelArray?[indexPath.row] {
+                    self.entityIdBlock?(model)
+                }
+            }
+        }else {
+            if indexPath.section == 0 {
+                let vc = ViewControllerUtils.findViewController(from: self)
+                let webVc = WebPageViewController()
+                let pageUrl = productList.first?.detailUrl ?? ""
+                let webUrl = base_url + pageUrl
+                webVc.pageUrl.accept(webUrl)
+                vc?.navigationController?.pushViewController(webVc, animated: true)
+            }else if indexPath.section == 1 {
+                
+            }else {
+                if let model = self.dataModelArray?[indexPath.row] {
+                    self.entityIdBlock?(model)
+                }
+            }
         }
+        
     }
     
     func peopleHeadView() -> UIView {
