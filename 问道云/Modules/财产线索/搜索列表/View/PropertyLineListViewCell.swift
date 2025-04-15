@@ -109,6 +109,7 @@ class PropertyLineListViewCell: UICollectionViewCell {
             make.centerY.equalTo(nameLabel.snp.centerY)
             make.height.equalTo(14)
             make.left.equalTo(nameLabel.snp.right).offset(4)
+            make.width.lessThanOrEqualTo(45.pix())
         }
         oneLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
@@ -156,7 +157,12 @@ class PropertyLineListViewCell: UICollectionViewCell {
         didSet {
             guard let model = model else { return }
             nameLabel.text = model.clueDirectionName ?? ""
-            tagLabel.text = model.typeTotalCount ?? ""
+            let num: Int = Int(model.typeTotalCount ?? "0") ?? 0
+            if num >= 10000 {
+                tagLabel.text = "9999+"
+            }else {
+                tagLabel.text = model.typeTotalCount ?? ""
+            }
             let count1 = model.typeNum ?? "0"
             let count2 = model.typeTotalCount ?? "0"
             let count3 = model.typeTotalValuation ?? "0"

@@ -170,7 +170,12 @@ class BrandListView: BaseView {
             let vc = ViewControllerUtils.findViewController(from: self)
             if let vc = vc {
                 let webVc = WebPageViewController()
-                webVc.pageUrl.accept(pageUrl)
+                if !pageUrl.hasPrefix("http") {
+                    let weburl = "http://" + pageUrl
+                    webVc.pageUrl.accept(weburl)
+                }else {
+                    webVc.pageUrl.accept(pageUrl)
+                }
                 vc.navigationController?.pushViewController(webVc, animated: true)
             }
         }).disposed(by: disposeBag)
