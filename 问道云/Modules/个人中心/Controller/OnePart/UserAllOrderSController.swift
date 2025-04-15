@@ -145,7 +145,8 @@ extension UserAllOrderSController {
                     "combotypenumber": combotypenumber,
                     "orderstate": orderstate,
                     "pageNum": pageNum,
-                    "pageSize": 20] as [String : Any]
+                    "pageSize": 20,
+                    "type": "iOS"] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerorder/myorder",
                        method: .get) { [weak self] result in
