@@ -21,7 +21,7 @@ class DataErrorCorrectionViewController: WDBaseViewController {
     var handleby = BehaviorRelay<String>(value: "")
     var pics = BehaviorRelay<[String]>(value: [])
     var feedbacktype = BehaviorRelay<String>(value: "5")
-    
+    var entityId = BehaviorRelay<String>(value: "")
     var picsArray: [String] = []
     
     var count: Int = 0
@@ -479,6 +479,7 @@ class DataErrorCorrectionViewController: WDBaseViewController {
             self.tableView.isHidden = true
             self.nameTx.text = model.orgInfo?.orgName ?? ""
             self.abountfirm.accept(self.nameTx.text ?? "")
+            self.entityId.accept(model.orgInfo?.orgId ?? "")
         }).disposed(by: disposeBag)
         
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
@@ -495,75 +496,6 @@ extension DataErrorCorrectionViewController: UITextViewDelegate, UITableViewDele
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return nil
-    }
-    
-    //搜索公司信息
-    func searchInfo(from searchStr: String) {
-        let dict = ["keyword": searchStr,
-                    "matchType": "1",
-                    "queryBoss": false,
-                    "pageSize": 20] as [String : Any]
-        ViewHud.addLoadView()
-        man.requestAPI(params: dict,
-                       pageUrl: "/entity/v2/org-list",
-                       method: .get) { [weak self] result in
-            ViewHud.hideLoadView()
-            switch result {
-            case .success(let success):
-                if let model = success.data, let pageData = model.pageData, pageData.count > 0 {
-                    self?.tableView.isHidden = false
-                    self?.modelArray.accept(pageData)
-                }else {
-                    self?.tableView.isHidden = true
-                    self?.modelArray.accept([])
-                }
-                break
-            case .failure(_):
-                self?.tableView.isHidden = true
-                self?.modelArray.accept([])
-                break
-            }
-        }
-    }
-    
-    func submitInfo() {
-        let abountfirm = self.abountfirm.value
-        let aboutfunction = aboutfunction.value
-        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
-        let feedbacktype = self.feedbacktype.value
-        
-        let handleby = GetSaveLoginInfoConfig.getPhoneNumber()
-       
-        let pic = self.pics.value.description
-        let question = question.value
-        let tel = self.tel.value
-        
-        let dict = ["abountfirm": abountfirm,
-                    "aboutfunction": aboutfunction,
-                    "customernumber": customernumber,
-                    "feedbacktype": feedbacktype,
-                    "handleby": handleby,
-                    "pic": pic,
-                    "question": question,
-                    "tel": tel] as [String : Any]
-        ViewHud.addLoadView()
-        let man = RequestManager()
-        man.requestAPI(params: dict,
-                       pageUrl: "/operation/operationFeedback",
-                       method: .post) { [weak self] result in
-            ViewHud.hideLoadView()
-            switch result {
-            case .success(let success):
-                if success.code == 200 {
-                    ToastViewConfig.showToast(message: "提交成功")
-                    let listVc = MyOpinioViewController()
-                    self?.navigationController?.pushViewController(listVc, animated: true)
-                }
-                break
-            case .failure(_):
-                break
-            }
-        }
     }
     
     func checkPhotoLibraryPermission() {
@@ -703,6 +635,95 @@ extension DataErrorCorrectionViewController: UIImagePickerControllerDelegate, UI
                 make.size.equalTo(CGSize(width: 70, height: 70))
             }
             self.fourImageView.kf.setImage(with: URL(string: model.url ?? ""))
+        }
+    }
+    
+}
+
+/** 网络数据请求 */
+extension DataErrorCorrectionViewController {
+    
+    //获取纠错模块
+    func getTreeInfo() {
+        let man = RequestManager()
+        let dict = ["entityType": "1",
+                    "moduleType": "2",
+                    "entityId": self.entityId.value]
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/customermenu/customerMenuTree",
+                       method: .get) { result in
+            switch result {
+            case .success(let success):
+                break
+            case .failure(let failure):
+                break
+            }
+        }
+    }
+    
+    //搜索公司信息
+    func searchInfo(from searchStr: String) {
+        let dict = ["keyword": searchStr,
+                    "matchType": "1",
+                    "queryBoss": false,
+                    "pageSize": 20] as [String : Any]
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/v2/org-list",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if let model = success.data, let pageData = model.pageData, pageData.count > 0 {
+                    self?.tableView.isHidden = false
+                    self?.modelArray.accept(pageData)
+                }else {
+                    self?.tableView.isHidden = true
+                    self?.modelArray.accept([])
+                }
+                break
+            case .failure(_):
+                self?.tableView.isHidden = true
+                self?.modelArray.accept([])
+                break
+            }
+        }
+    }
+    
+    func submitInfo() {
+        let abountfirm = self.abountfirm.value
+        let aboutfunction = aboutfunction.value
+        let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
+        let feedbacktype = self.feedbacktype.value
+        let handleby = GetSaveLoginInfoConfig.getPhoneNumber()
+        let pic = self.pics.value.description
+        let question = question.value
+        let tel = self.tel.value
+        let dict = ["abountfirm": abountfirm,
+                    "aboutfunction": aboutfunction,
+                    "customernumber": customernumber,
+                    "feedbacktype": feedbacktype,
+                    "handleby": handleby,
+                    "pic": pic,
+                    "question": question,
+                    "tel": tel] as [String : Any]
+        ViewHud.addLoadView()
+        let man = RequestManager()
+        man.requestAPI(params: dict,
+                       pageUrl: "/operation/operationFeedback",
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if success.code == 200 {
+                    ToastViewConfig.showToast(message: "提交成功")
+                    let listVc = MyOpinioViewController()
+                    self?.navigationController?.pushViewController(listVc, animated: true)
+                }
+                break
+            case .failure(_):
+                break
+            }
         }
     }
     

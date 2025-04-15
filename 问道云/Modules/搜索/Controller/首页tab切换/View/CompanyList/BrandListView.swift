@@ -9,8 +9,6 @@ import UIKit
 
 class BrandListView: BaseView {
     
-    var lastPhoneView: PhoneListView? = nil
-    
     var model: itemsModel? {
         didSet {
             guard let model = model else { return }
@@ -27,7 +25,7 @@ class BrandListView: BaseView {
                     subview.removeFromSuperview()
                 }
             }
-            lastPhoneView = nil // 重置指针
+            var lastPhoneView: PhoneListView?
             // --- 新增结束 ---
             let phoneList = model.phoneList ?? []
             for model in phoneList {
@@ -37,19 +35,19 @@ class BrandListView: BaseView {
                 phoneView.snp.makeConstraints { make in
                     make.centerY.equalToSuperview()
                     make.height.equalTo(40)
-                    if let last = lastPhoneView {
-                        make.left.equalTo(last.snp.right).offset(10)
+                    make.width.lessThanOrEqualTo(120.pix())
+                    if let previousButton = lastPhoneView {
+                        make.left.equalTo(previousButton.snp.right)
                     } else {
-                        make.left.equalTo(scrollView.snp.left).offset(10)
+                        make.left.equalToSuperview().offset(10)
                     }
                 }
                 lastPhoneView = phoneView
-            }
-            if let last = lastPhoneView {
-                last.snp.makeConstraints { make in
-                    make.right.equalTo(scrollView.snp.right).offset(-10)
+                phoneView.snp.makeConstraints { make in
+                    make.right.equalToSuperview().offset(-5)
                 }
             }
+            
         }
     }
     
