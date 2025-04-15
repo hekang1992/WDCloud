@@ -13,6 +13,8 @@ class PopPhoneEmailView: BaseView {
     
     var addressBlock: ((addressListModel) -> Void)?
     var websiteBlock: ((websitesListModel) -> Void)?
+    var emailBlock: ((emailListModel) -> Void)?
+    var wechatBlock: ((wechatListModel) -> Void)?
     
     var model = BehaviorRelay<DataModel?>(value: nil)
     
@@ -347,6 +349,13 @@ class PopPhoneEmailView: BaseView {
                 //地址
                 phoneListView.namelabel.text = address
                 phoneListView.desclabel.text = source
+                phoneListView
+                    .rx
+                    .tapGesture()
+                    .when(.recognized)
+                    .subscribe { [weak self] _ in
+                        self?.emailBlock?(model)
+                }.disposed(by: disposeBag)
                 if !orgCount.isEmpty && orgCount != "0" {
                     phoneListView.numlabel.isHidden = false
                     phoneListView.numlabel.attributedText = GetRedStrConfig.getRedStr(from: orgCount, fullText: "同邮箱企业\(orgCount)", colorStr: "#FF7D00", font: .regularFontOfSize(size: 11))
@@ -364,6 +373,13 @@ class PopPhoneEmailView: BaseView {
                 let orgCount = model.orgCount ?? ""
                 phoneListView.namelabel.text = address
                 phoneListView.desclabel.text = source
+                phoneListView
+                    .rx
+                    .tapGesture()
+                    .when(.recognized)
+                    .subscribe { [weak self] _ in
+                        self?.wechatBlock?(model)
+                }.disposed(by: disposeBag)
                 if !orgCount.isEmpty && orgCount != "0" {
                     phoneListView.numlabel.isHidden = false
                     phoneListView.numlabel.attributedText = GetRedStrConfig.getRedStr(from: orgCount, fullText: "同公众号企业\(orgCount)", colorStr: "#FF7D00", font: .regularFontOfSize(size: 11))

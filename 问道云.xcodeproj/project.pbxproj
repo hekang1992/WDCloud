@@ -282,6 +282,7 @@
 		73A53C302DA8BE71004917C9 /* PopVoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A53C2F2DA8BE71004917C9 /* PopVoiceView.swift */; };
 		73AD72862DACACA500ACD209 /* MessagePushListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AD72852DACACA500ACD209 /* MessagePushListViewCell.swift */; };
 		73AD72892DACDDDB00ACD209 /* BrandListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AD72882DACDDDB00ACD209 /* BrandListViewCell.swift */; };
+		73AD728B2DAE767800ACD209 /* PopWechatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AD728A2DAE767800ACD209 /* PopWechatListView.swift */; };
 		73AEAD2D2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AEAD2C2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift */; };
 		73AEAD2F2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */; };
 		73B332982D30C5EA00934773 /* TwoCompanyNormalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */; };
@@ -714,6 +715,7 @@
 		73A53C2F2DA8BE71004917C9 /* PopVoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopVoiceView.swift; sourceTree = "<group>"; };
 		73AD72852DACACA500ACD209 /* MessagePushListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePushListViewCell.swift; sourceTree = "<group>"; };
 		73AD72882DACDDDB00ACD209 /* BrandListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandListViewCell.swift; sourceTree = "<group>"; };
+		73AD728A2DAE767800ACD209 /* PopWechatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopWechatListView.swift; sourceTree = "<group>"; };
 		73AEAD2C2D97CC3B009EB9C2 /* PropertyPeopleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyPeopleCollectionViewCell.swift; sourceTree = "<group>"; };
 		73AEAD2E2D97E0D6009EB9C2 /* PropertyAddCustomerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyAddCustomerViewCell.swift; sourceTree = "<group>"; };
 		73B332972D30C5EA00934773 /* TwoCompanyNormalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoCompanyNormalListCell.swift; sourceTree = "<group>"; };
@@ -1426,6 +1428,7 @@
 				732861772D89749C004CC775 /* PopRightMoreView.swift */,
 				7377AF972DA79FA900D4AA12 /* PopOnlyBuyVipView.swift */,
 				73A53C2F2DA8BE71004917C9 /* PopVoiceView.swift */,
+				73AD728A2DAE767800ACD209 /* PopWechatListView.swift */,
 			);
 			path = PopView;
 			sourceTree = "<group>";
@@ -2398,6 +2401,7 @@
 				7325A7D52CFEFCC40043C196 /* LoginView.swift in Sources */,
 				73FC5E502D5C78EF001D0DEF /* SearchPeopleDeadbeatViewController.swift in Sources */,
 				730487F52D2932640024265C /* BindPhoneView.swift in Sources */,
+				73AD728B2DAE767800ACD209 /* PopWechatListView.swift in Sources */,
 				733D2F492D87C0DE0019C697 /* CompanyShareholderViewCell.swift in Sources */,
 				73C752582D1E728500C47187 /* HistoryListViewCell.swift in Sources */,
 				73807D502D3369D100F8B90D /* CompanyDetailViewController.swift in Sources */,

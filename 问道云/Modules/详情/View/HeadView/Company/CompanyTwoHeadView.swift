@@ -9,18 +9,12 @@ import UIKit
 import MapKit
 import RxRelay
 import TYAlertController
+import Photos
 
 class CompanyTwoHeadView: BaseView {
     
-//    lazy var refreshBtn: UIButton = {
-//        let refreshBtn = UIButton(type: .custom)
-//        refreshBtn.setTitle("10小时前更新", for: .normal)
-//        refreshBtn.setImage(UIImage(named: "deiconrefgresh"), for: .normal)
-//        refreshBtn.setTitleColor(.init(cssStr: "#666666"), for: .normal)
-//        refreshBtn.titleLabel?.font = .regularFontOfSize(size: 10)
-//        return refreshBtn
-//    }()
     var model = BehaviorRelay<DataModel?>(value: nil)
+    
     var emailModel: DataModel?
     lazy var oneBtn: UIButton = {
         let oneBtn = UIButton(type: .custom)
@@ -67,13 +61,7 @@ class CompanyTwoHeadView: BaseView {
         addSubview(fourBtn)
         addSubview(fiveBtn)
         addSubview(lineView)
-        
-//        refreshBtn.snp.makeConstraints { make in
-//            make.height.equalTo(34)
-//            make.left.equalToSuperview().offset(12)
-//            make.centerY.equalToSuperview()
-//            make.width.equalTo(80)
-//        }
+
         oneBtn.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(6)
             make.left.equalToSuperview().offset(12)
@@ -231,6 +219,42 @@ extension CompanyTwoHeadView {
         phoneView.websiteBlock = { [weak self] model in
             self?.goWensiteInfo(from: model)
         }
+        
+        phoneView.emailBlock = { model in
+            if let url = URL(string: "mailto:\(model.email ?? "")") {
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
+        }
+        
+        phoneView.wechatBlock = { [weak self] model in
+            self?.goWensiteInfo(from: model)
+        }
+    }
+    
+    private func goWensiteInfo(from model: wechatListModel) {
+        let vc = ViewControllerUtils.findViewController(from: self)
+        vc?.dismiss(animated: true) {
+            let listView = PopWechatListView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 346.pix()))
+            let alertVc = TYAlertController(alert: listView, preferredStyle: .alert)!
+            let logoUrl = model.imgUrl ?? ""
+            listView.ctImageView.kf.setImage(with: URL(string: logoUrl))
+            listView.nameLabel.text = "微信号: \(model.wechat ?? "")"
+            vc?.present(alertVc, animated: true)
+            
+            listView.cancelBlock = {
+                vc?.dismiss(animated: true)
+            }
+            
+            listView.saveBlock = {
+                vc?.dismiss(animated: true) {
+                    guard let image = listView.ctImageView.image else { return }
+                    self.saveImage(image)
+                }
+            }
+            
+        }
     }
     
     private func goAddressInfo(from model: addressListModel) {
@@ -248,10 +272,64 @@ extension CompanyTwoHeadView {
     private func goWensiteInfo(from model: websitesListModel) {
         let vc = ViewControllerUtils.findViewController(from: self)
         let webVc = WebPageViewController()
-        webVc.pageUrl.accept(model.website ?? "")
+        let pageUrl = model.website ?? ""
+        if pageUrl.hasPrefix("http") {
+            webVc.pageUrl.accept(pageUrl)
+        }else {
+            let webUrl = "http://" + pageUrl
+            webVc.pageUrl.accept(webUrl)
+        }
         vc?.dismiss(animated: true, completion: {
             vc?.navigationController?.pushViewController(webVc, animated: true)
         })
+    }
+    
+    func saveImage(_ image: UIImage) {
+        let status = PHPhotoLibrary.authorizationStatus(for: .addOnly)
+        if status == .authorized {
+            saveToAlbum(image: image)
+            return
+        }
+        PHPhotoLibrary.requestAuthorization(for: .addOnly) { newStatus in
+            if newStatus == .authorized {
+                self.saveToAlbum(image: image)
+            } else {
+                ShowAlertManager.showAlert(title: "相册权限", message: "请在设置中启用相册权限以便您可以保存图片。", confirmAction: { [weak self] in
+                    self?.openSettings()
+                })
+            }
+        }
+    }
+
+    private func saveToAlbum(image: UIImage) {
+        PHPhotoLibrary.shared().performChanges {
+            PHAssetChangeRequest.creationRequestForAsset(from: image)
+        } completionHandler: { success, error in
+            DispatchQueue.main.async {
+                if success {
+                    ToastViewConfig.showToast(message: "保存成功")
+                } else {
+                    ToastViewConfig.showToast(message: "保存失败")
+                    print("保存失败: \(error?.localizedDescription ?? "未知错误")")
+                }
+            }
+        }
+    }
+    
+    func openSettings() {
+        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+            if UIApplication.shared.canOpenURL(settingsURL) {
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: { success in
+                    if success {
+                        print("成功跳转到设置页面")
+                    } else {
+                        print("跳转失败")
+                    }
+                })
+            } else {
+                print("无法打开设置页面")
+            }
+        }
     }
     
 }
