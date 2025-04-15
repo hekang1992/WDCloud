@@ -184,11 +184,13 @@ extension CompanyTwoHeadView {
         if let emailModel = self.emailModel {
             self.popModel(from: emailModel)
         }else {
+            ViewHud.addLoadView()
             let man = RequestManager()
             let dict = ["orgId": model.value?.basicInfo?.orgId ?? ""]
             man.requestAPI(params: dict,
                            pageUrl: "/firminfo/v2/bus-reg-info/contact-info",
                            method: .get) { result in
+                ViewHud.hideLoadView()
                 switch result {
                 case .success(let success):
                     if success.code == 200 {
@@ -294,9 +296,11 @@ extension CompanyTwoHeadView {
             if newStatus == .authorized {
                 self.saveToAlbum(image: image)
             } else {
-                ShowAlertManager.showAlert(title: "相册权限", message: "请在设置中启用相册权限以便您可以保存图片。", confirmAction: { [weak self] in
-                    self?.openSettings()
-                })
+                DispatchQueue.main.async {
+                    ShowAlertManager.showAlert(title: "相册权限", message: "请在设置中启用相册权限以便您可以保存图片。", confirmAction: { [weak self] in
+                        self?.openSettings()
+                    })
+                }
             }
         }
     }
