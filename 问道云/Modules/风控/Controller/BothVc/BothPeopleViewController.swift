@@ -14,6 +14,8 @@ import SwiftyJSON
 
 class BothPeopleViewController: WDBaseViewController {
     
+    var cancelBlock: (() -> Void)?
+    
     var vc: BothReportViewController?
     
     var pageNum: Int = 1
@@ -312,6 +314,7 @@ extension BothPeopleViewController {
                     self?.pageNum = 1
                     self?.getPeopleInfo()
                     ToastViewConfig.showToast(message: "取消监控成功")
+                    self?.cancelBlock?()
                 }
                 break
             case .failure(_):

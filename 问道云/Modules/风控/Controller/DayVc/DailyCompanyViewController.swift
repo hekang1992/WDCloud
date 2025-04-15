@@ -15,6 +15,8 @@ import TYAlertController
 
 class DailyCompanyViewController: WDBaseViewController {
     
+    var cancelBlock: (() -> Void)?
+    
     var vc: DailyReportViewController?
     
     var pageNum: Int = 1
@@ -230,7 +232,7 @@ extension DailyCompanyViewController {
                             self.addNodataView(from: self.dailyView.tableView)
                             self.emptyView.snp.remakeConstraints { make in
                                 make.left.equalToSuperview()
-                                make.top.equalToSuperview().offset(64)
+                                make.top.equalToSuperview().offset(1)
                                 make.height.equalTo(SCREEN_HEIGHT)
                                 make.width.equalTo(SCREEN_WIDTH)
                             }
@@ -298,18 +300,20 @@ extension DailyCompanyViewController {
     
     //取消监控
     private func cancelMonitoringInfo(from model: rowsModel, indexPath: IndexPath) {
+        ViewHud.addLoadView()
         let dict = ["orgId": model.orgId ?? ""]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-org/cancelRiskMonitorOrg",
                        method: .post) { [weak self] result in
-            
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     self?.pageNum = 1
                     self?.getCompanyInfo()
                     ToastViewConfig.showToast(message: "取消监控成功")
+                    self?.cancelBlock?()
                 }
                 break
             case .failure(_):

@@ -34,11 +34,17 @@ class BothReportViewController: WDBaseViewController {
     
     lazy var companyVc: BothCompanyViewController = {
         let companyVc = BothCompanyViewController()
+        companyVc.cancelBlock = { [weak self] in
+            self?.getNumInfo()
+        }
         return companyVc
     }()
     
     lazy var peopleVc: BothPeopleViewController = {
         let peopleVc = BothPeopleViewController()
+        peopleVc.cancelBlock = { [weak self] in
+            self?.getNumInfo()
+        }
         return peopleVc
     }()
     

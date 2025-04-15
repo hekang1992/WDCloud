@@ -15,6 +15,8 @@ import TYAlertController
 
 class DailyPeopleViewController: WDBaseViewController {
     
+    var cancelBlock: (() -> Void)?
+    
     var vc: DailyReportViewController?
     
     var pageNum: Int = 1
@@ -303,18 +305,20 @@ extension DailyPeopleViewController {
     
     //取消监控
     private func cancelMonitoringInfo(from model: rowsModel, indexPath: IndexPath) {
+        ViewHud.addLoadView()
         let dict = ["personId": model.personId ?? ""]
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/cancelRiskMonitorPerson",
                        method: .post) { [weak self] result in
-            
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     self?.pageNum = 1
                     self?.getPeopleInfo()
                     ToastViewConfig.showToast(message: "取消监控成功")
+                    self?.cancelBlock?()
                 }
                 break
             case .failure(_):

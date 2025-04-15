@@ -34,11 +34,17 @@ class WeekReportViewController: WDBaseViewController {
     
     lazy var companyVc: WeekCompanyViewController = {
         let companyVc = WeekCompanyViewController()
+        companyVc.cancelBlock = { [weak self] in
+            self?.getNumInfo()
+        }
         return companyVc
     }()
     
     lazy var peopleVc: WeekPeopleViewController = {
         let peopleVc = WeekPeopleViewController()
+        peopleVc.cancelBlock = { [weak self] in
+            self?.getNumInfo()
+        }
         return peopleVc
     }()
     

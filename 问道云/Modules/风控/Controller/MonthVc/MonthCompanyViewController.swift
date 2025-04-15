@@ -14,6 +14,8 @@ import SwiftyJSON
 
 class MonthCompanyViewController: WDBaseViewController {
     
+    var cancelBlock: (() -> Void)?
+    
     var vc: MonthReportViewController?
     
     var pageNum: Int = 1
@@ -231,7 +233,7 @@ extension MonthCompanyViewController {
                             self.addNodataView(from: self.dailyView.tableView)
                             self.emptyView.snp.remakeConstraints { make in
                                 make.left.equalToSuperview()
-                                make.top.equalToSuperview().offset(64)
+                                make.top.equalToSuperview().offset(1)
                                 make.height.equalTo(SCREEN_HEIGHT)
                                 make.width.equalTo(SCREEN_WIDTH)
                             }
@@ -312,6 +314,7 @@ extension MonthCompanyViewController {
                     self?.pageNum = 1
                     self?.getCompanyInfo()
                     ToastViewConfig.showToast(message: "取消监控成功")
+                    self?.cancelBlock?()
                 }
                 break
             case .failure(_):

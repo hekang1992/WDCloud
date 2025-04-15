@@ -14,6 +14,8 @@ import SwiftyJSON
 
 class MonthPeopleViewController: WDBaseViewController {
     
+    var cancelBlock: (() -> Void)?
+    
     var vc: MonthReportViewController?
     
     var pageNum: Int = 1
@@ -312,6 +314,7 @@ extension MonthPeopleViewController {
                     self?.pageNum = 1
                     self?.getPeopleInfo()
                     ToastViewConfig.showToast(message: "取消监控成功")
+                    self?.cancelBlock?()
                 }
                 break
             case .failure(_):
