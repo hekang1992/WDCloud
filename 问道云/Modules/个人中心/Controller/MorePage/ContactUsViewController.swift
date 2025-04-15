@@ -18,7 +18,23 @@ class ContactUsViewController: WDBaseViewController {
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         ctImageView.image = UIImage(named: "lianxiwomimag")
+        ctImageView.isUserInteractionEnabled = true
         return ctImageView
+    }()
+    
+    lazy var oneBtn: UIButton = {
+        let oneBtn = UIButton(type: .custom)
+        return oneBtn
+    }()
+    
+    lazy var twoBtn: UIButton = {
+        let twoBtn = UIButton(type: .custom)
+        return twoBtn
+    }()
+    
+    lazy var threeBtn: UIButton = {
+        let threeBtn = UIButton(type: .custom)
+        return threeBtn
     }()
 
     override func viewDidLoad() {
@@ -57,6 +73,48 @@ class ContactUsViewController: WDBaseViewController {
             make.size.equalTo(CGSize(width: SCREEN_WIDTH, height: height))
             make.top.equalTo(mlabel.snp.bottom).offset(18.5)
         }
+        
+        ctImageView.addSubview(oneBtn)
+        ctImageView.addSubview(twoBtn)
+        ctImageView.addSubview(threeBtn)
+        
+        oneBtn.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalToSuperview().offset(50)
+            make.height.equalTo(50)
+        }
+        
+        twoBtn.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(oneBtn.snp.bottom)
+            make.height.equalTo(50)
+        }
+        
+        threeBtn.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(twoBtn.snp.bottom)
+            make.height.equalTo(50)
+        }
+        
+        oneBtn.rx.tap.subscribe(onNext: {
+            if let url = URL(string: "mailto:kefu@wintaocloud.com") {
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
+        }).disposed(by: disposeBag)
+        
+        twoBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            makePhoneCall(phoneNumber: "4006326699")
+        }).disposed(by: disposeBag)
+        
+        threeBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let pageUrl = "https://www.wintaocloud.com"
+            self.pushWebPage(from: pageUrl)
+        }).disposed(by: disposeBag)
+        
     }
     
     /*
