@@ -122,7 +122,7 @@ extension WeekCompanyViewController: UITableViewDataSource, UITableViewDelegate 
         let twoLabel = UILabel()
         let rcount = self.companyModel.value?.totaRiskCnt ?? 0
         twoLabel.textColor = .init(cssStr: "#333333")
-        twoLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(rcount)+", fullText: "当日新动态\(rcount)+", colorStr: "#FF4444")
+        twoLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(rcount)+", fullText: "本周新动态\(rcount)+", colorStr: "#FF4444")
         twoLabel.font = .regularFontOfSize(size: 12)
         headView.addSubview(twoLabel)
         twoLabel.snp.makeConstraints { make in
