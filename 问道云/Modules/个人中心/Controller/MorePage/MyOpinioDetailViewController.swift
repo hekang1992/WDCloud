@@ -160,12 +160,17 @@ class MyOpinioDetailViewController: WDBaseViewController {
         
         self.rowsModel.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
-            onelabel.text = "反馈类型       \(model.feedbacksubtype ?? "")"
+            let feedbacksubtype = model.feedbacksubtype ?? ""
+            if feedbacksubtype.isEmpty  {
+                onelabel.text = "反馈类型: 数据问题"
+            }else {
+                onelabel.text = "反馈类型: \(model.feedbacksubtype ?? "")"
+            }
             let handlestate = model.handlestate ?? ""
             if handlestate == "1"  {
-                twolabel.text = "客服进度       客服已处理"
+                twolabel.text = "客服进度: 客服已处理"
             }else {
-                twolabel.text = "客服进度       客服未处理"
+                twolabel.text = "客服进度: 客服未处理"
             }
             timelabel.text = model.createtime ?? ""
             detaillabel.text = model.question ?? ""

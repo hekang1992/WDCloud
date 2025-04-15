@@ -33,7 +33,7 @@ class MyOpinionViewCell: BaseViewCell {
     lazy var onelabel: UILabel = {
         let onelabel = UILabel()
         onelabel.textColor = UIColor.init(cssStr: "#9FA4AD")
-        onelabel.textAlignment = .center
+        onelabel.textAlignment = .left
         onelabel.font = .regularFontOfSize(size: 12)
         return onelabel
     }()
@@ -41,7 +41,7 @@ class MyOpinionViewCell: BaseViewCell {
     lazy var twolabel: UILabel = {
         let twolabel = UILabel()
         twolabel.textColor = UIColor.init(cssStr: "#9FA4AD")
-        twolabel.textAlignment = .center
+        twolabel.textAlignment = .left
         twolabel.font = .regularFontOfSize(size: 12)
         return twolabel
     }()
@@ -86,6 +86,7 @@ class MyOpinionViewCell: BaseViewCell {
             make.left.equalToSuperview().offset(18)
             make.top.equalTo(onelabel.snp.bottom).offset(3)
             make.height.equalTo(16.5)
+            make.width.equalTo(SCREEN_WIDTH - 40)
             make.bottom.equalToSuperview().offset(-20)
         }
         ctImageView.snp.makeConstraints { make in
@@ -120,7 +121,13 @@ class MyOpinionViewCell: BaseViewCell {
             default:
                 break
             }
-            onelabel.text = "反馈类型: \(model.feedbacksubtype ?? "")"
+            let feedbacksubtype = model.feedbacksubtype ?? ""
+            if feedbacksubtype.isEmpty {
+                onelabel.text = "反馈类型: 其他问题"
+            }else {
+                onelabel.text = "反馈类型: \(model.feedbacksubtype ?? "")"
+            }
+            
             twolabel.text = "反馈问题: \(model.question ?? "")"
             let handlestate = model.handlestate ?? ""
             if handlestate == "0" {

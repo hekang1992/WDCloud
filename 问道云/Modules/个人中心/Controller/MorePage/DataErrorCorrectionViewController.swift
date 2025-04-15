@@ -12,6 +12,7 @@ import RxSwift
 
 class DataErrorCorrectionViewController: WDBaseViewController {
     
+    private let man = RequestManager()
     //参数
     var abountfirm = BehaviorRelay<String>(value: "")
     var aboutfunction = BehaviorRelay<String>(value: "")
@@ -26,6 +27,8 @@ class DataErrorCorrectionViewController: WDBaseViewController {
     var count: Int = 0
     
     let placeholderText = "请填写10个字以上的问题描述，以便我们提供更好的服务。"
+    
+    var modelArray = BehaviorRelay<[pageDataModel]>(value: [])
     
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .none)
@@ -229,6 +232,23 @@ class DataErrorCorrectionViewController: WDBaseViewController {
         submitBtn.isEnabled = false
         return submitBtn
     }()
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.estimatedRowHeight = 80
+        tableView.layer.cornerRadius = 5
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.register(SearchInvoiceCell.self, forCellReuseIdentifier: "SearchInvoiceCell")
+        tableView.layer.borderWidth = 1
+        tableView.layer.borderColor = UIColor.init(cssStr: "#547AFF")?.cgColor
+        tableView.isHidden = true
+        return tableView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -394,25 +414,21 @@ class DataErrorCorrectionViewController: WDBaseViewController {
             make.left.equalToSuperview().offset(45)
             make.bottom.equalToSuperview().offset(-50)
         }
-        
-//        var abountfirm = BehaviorRelay<String>(value: "")
-//        var aboutfunction = BehaviorRelay<String>(value: "")
-//        var question = BehaviorRelay<String>(value: "")
-//        var tel = BehaviorRelay<String>(value: "")
-//        var handleby = BehaviorRelay<String>(value: "")
-//        var pics = BehaviorRelay<[String]>(value: [])
-//        var feedbacktype = BehaviorRelay<String>(value: "5")
-        
+
         //点击,获取相册权限
         uploadBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.checkPhotoLibraryPermission()
         }).disposed(by: disposeBag)
         
-        self.nameTx.rx.controlEvent(.editingChanged)
-            .withLatestFrom(phoneTx.rx.text.orEmpty)
+        self.nameTx.rx.text.orEmpty
+            .distinctUntilChanged()
+            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
-                self.abountfirm.accept(self.nameTx.text ?? "")
+                let isComposing = self.nameTx.markedTextRange != nil
+                if !isComposing && !text.isEmpty {
+                    self.searchInfo(from: text)
+                }
             }).disposed(by: disposeBag)
         
         self.blockTx.rx.controlEvent(.editingChanged)
@@ -430,7 +446,7 @@ class DataErrorCorrectionViewController: WDBaseViewController {
             }).disposed(by: disposeBag)
         
         let combine = Observable.combineLatest(abountfirm, aboutfunction, question, tel, handleby, pics, feedbacktype)
-        combine.map { [weak self] (abountfirm, aboutfunction, question, tel, handleby, [String], feedbacktype) in
+        combine.map { [weak self] (abountfirm, aboutfunction, question, tel, handleby, _: [String], feedbacktype) in
             let grand = !abountfirm.isEmpty && !aboutfunction.isEmpty && !question.isEmpty && !tel.isEmpty
             if grand {
                 self?.submitBtn.backgroundColor = .init(cssStr: "#547AFF")
@@ -443,14 +459,74 @@ class DataErrorCorrectionViewController: WDBaseViewController {
         submitBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.submitInfo()
         }).disposed(by: disposeBag)
+        
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(oneView.snp.bottom)
+            make.left.equalToSuperview().offset(20)
+            make.height.equalTo(300)
+        }
+        
+        modelArray.asObservable().bind(to: tableView.rx.items(cellIdentifier: "SearchInvoiceCell", cellType: SearchInvoiceCell.self)) { row, model, cell in
+            cell.model.accept(model)
+            cell.backgroundColor = .clear
+            cell.selectionStyle = .none
+        }.disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(pageDataModel.self).subscribe(onNext: { [weak self] model in
+            guard let self = self else { return }
+            self.tableView.isHidden = true
+            self.nameTx.text = model.orgInfo?.orgName ?? ""
+            self.abountfirm.accept(self.nameTx.text ?? "")
+        }).disposed(by: disposeBag)
+        
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+        
     }
 
 }
 
-extension DataErrorCorrectionViewController: UITextViewDelegate {
+extension DataErrorCorrectionViewController: UITextViewDelegate, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return nil
+    }
+    
+    //搜索公司信息
+    func searchInfo(from searchStr: String) {
+        let dict = ["keyword": searchStr,
+                    "matchType": "1",
+                    "queryBoss": false,
+                    "pageSize": 20] as [String : Any]
+        ViewHud.addLoadView()
+        man.requestAPI(params: dict,
+                       pageUrl: "/entity/v2/org-list",
+                       method: .get) { [weak self] result in
+            ViewHud.hideLoadView()
+            switch result {
+            case .success(let success):
+                if let model = success.data, let pageData = model.pageData, pageData.count > 0 {
+                    self?.tableView.isHidden = false
+                    self?.modelArray.accept(pageData)
+                }else {
+                    self?.tableView.isHidden = true
+                    self?.modelArray.accept([])
+                }
+                break
+            case .failure(_):
+                self?.tableView.isHidden = true
+                self?.modelArray.accept([])
+                break
+            }
+        }
+    }
     
     func submitInfo() {
-        
         let abountfirm = self.abountfirm.value
         let aboutfunction = aboutfunction.value
         let customernumber = GetSaveLoginInfoConfig.getCustomerNumber()
@@ -470,14 +546,18 @@ extension DataErrorCorrectionViewController: UITextViewDelegate {
                     "pic": pic,
                     "question": question,
                     "tel": tel] as [String : Any]
+        ViewHud.addLoadView()
         let man = RequestManager()
         man.requestAPI(params: dict,
                        pageUrl: "/operation/operationFeedback",
-                       method: .post) { result in
+                       method: .post) { [weak self] result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     ToastViewConfig.showToast(message: "提交成功")
+                    let listVc = MyOpinioViewController()
+                    self?.navigationController?.pushViewController(listVc, animated: true)
                 }
                 break
             case .failure(_):

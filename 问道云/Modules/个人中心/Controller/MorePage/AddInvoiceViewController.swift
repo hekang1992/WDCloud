@@ -84,14 +84,14 @@ class AddInvoiceViewController: WDBaseViewController {
         
         addView.block = { row, model, cell in
             if row == 0 {
-                cell.enterTx
-                    .rx
-                    .controlEvent(.editingChanged)
-                    .withLatestFrom(cell.enterTx.rx.text.orEmpty)
+                cell.enterTx.rx.text.orEmpty
                     .distinctUntilChanged()
-                    .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+                    .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
                     .subscribe(onNext: { text in
-                        self.searchStr.accept(text)
+                        let isComposing = cell.enterTx.markedTextRange != nil
+                        if !isComposing {
+                            self.searchStr.accept(text)
+                        }
                     }).disposed(by: self.disposeBag)
             }else {
                 return
