@@ -2057,7 +2057,9 @@ class pageItemsModel {
     var assetTypeName: String?
     var directionTypeName: String?
     var clueName: String?
+    var logo: String?
     init(json: JSON) {
+        self.logo = json["logo"].string
         self.clueName = json["clueName"].stringValue
         self.assetTypeName = json["assetTypeName"].stringValue
         self.directionTypeName = json["directionTypeName"].stringValue

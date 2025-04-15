@@ -236,9 +236,16 @@ class PropertyLineTwoCell: BaseViewCell {
         didSet {
             guard let model = model else { return }
             let companyName = model.entityName ?? ""
-            logoImageView.image = UIImage.imageOfText(companyName, size: (25, 25))
+            let logo = model.logo ?? ""
+            let clueClassificationName = model.clueClassificationName ?? ""
+            logoImageView.kf.setImage(with: URL(string: logo), placeholder: UIImage.imageOfText(companyName, size: (25, 25)))
             nameLabel.text = companyName
-            oneLabel.text = model.clueClassificationName ?? ""
+            if clueClassificationName.isEmpty {
+                oneLabel.text = "当前企业的财产线索"
+            }else {
+                oneLabel.text = clueClassificationName
+            }
+            
             clueNameLabel.text = model.clueName ?? ""
             tagOneLabel.text = model.assetTypeName ?? ""
             tagTwoLabel.text = model.directionTypeName ?? ""
