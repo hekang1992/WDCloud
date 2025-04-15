@@ -201,7 +201,7 @@ class GroupTeamNorView: BaseView {
             make.top.equalTo(mlabel.snp.bottom).offset(28)
             make.left.equalToSuperview().offset(18)
             make.height.equalTo(20)
-            make.width.equalTo(60)
+            make.width.lessThanOrEqualTo(80.pix())
         }
         lineView.snp.makeConstraints { make in
             make.top.equalTo(onelabel.snp.bottom).offset(17)
@@ -212,19 +212,19 @@ class GroupTeamNorView: BaseView {
             make.top.equalTo(lineView.snp.bottom).offset(21)
             make.left.equalToSuperview().offset(18)
             make.height.equalTo(20)
-            make.width.equalTo(60)
+            make.width.lessThanOrEqualTo(80.pix())
         }
         nameTx.snp.makeConstraints { make in
             make.centerY.equalTo(onelabel.snp.centerY)
             make.height.equalTo(40)
             make.right.equalToSuperview().offset(-12.5)
-            make.left.equalTo(onelabel.snp.right).offset(56)
+            make.left.equalTo(onelabel.snp.right).offset(50)
         }
         emailTx.snp.makeConstraints { make in
             make.centerY.equalTo(twolabel.snp.centerY)
             make.height.equalTo(40)
             make.right.equalToSuperview().offset(-12.5)
-            make.left.equalTo(twolabel.snp.right).offset(56)
+            make.left.equalTo(twolabel.snp.right).offset(50)
         }
         nextBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

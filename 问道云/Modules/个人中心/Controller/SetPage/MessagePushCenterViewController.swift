@@ -97,7 +97,8 @@ class MessagePushCenterViewController: WDBaseViewController {
         openBtn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-20)
-            make.size.equalTo(CGSize(width: 60, height: 20))
+            make.height.equalTo(20)
+            make.width.lessThanOrEqualTo(70.pix())
         }
         
         openBtn.rx.tap.subscribe(onNext: { [weak self] in
