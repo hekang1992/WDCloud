@@ -328,6 +328,9 @@ class PopPhoneEmailView: BaseView {
                 }
                 if owFlag {
                     phoneListView.numlabel.text = "官网"
+                    phoneListView.numlabel.layer.cornerRadius = 3
+                    phoneListView.numlabel.layer.masksToBounds = true
+                    phoneListView.numlabel.layer.borderWidth = 0
                     phoneListView.numlabel.backgroundColor = .init(cssStr: "#547AFF")
                     phoneListView.numlabel.textColor = .white
                     phoneListView.layer.borderColor = UIColor.init(cssStr: "#547AFF")?.cgColor

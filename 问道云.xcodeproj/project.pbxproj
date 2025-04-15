@@ -268,7 +268,6 @@
 		739E91EE2D8E6C08000E1A11 /* PropertyLineInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739E91ED2D8E6C08000E1A11 /* PropertyLineInfoView.swift */; };
 		739E91F02D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739E91EF2D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift */; };
 		73A0509B2D83CCA700208602 /* PropertyListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */; };
-		73A0509D2D84321C00208602 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 73A0509C2D84321C00208602 /* index.html */; };
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
 		73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE02D0C06E700FC4C49 /* SettingView.swift */; };
 		73A21DE32D0C1C8000FC4C49 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */; };
@@ -701,7 +700,6 @@
 		739E91ED2D8E6C08000E1A11 /* PropertyLineInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineInfoView.swift; sourceTree = "<group>"; };
 		739E91EF2D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertMonitoringListViewCell.swift; sourceTree = "<group>"; };
 		73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListViewCell.swift; sourceTree = "<group>"; };
-		73A0509C2D84321C00208602 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		73A21DE02D0C06E700FC4C49 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		73A21DE22D0C1C8000FC4C49 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
@@ -983,7 +981,6 @@
 		7325A79C2CFEE58D0043C196 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				73A0509C2D84321C00208602 /* index.html */,
 				7325A79F2CFEE58D0043C196 /* Info.plist */,
 				7325A79E2CFEE58D0043C196 /* Assets.xcassets */,
 				7325A79D2CFEE58D0043C196 /* AppDelegate.swift */,
@@ -2206,7 +2203,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73A0509D2D84321C00208602 /* index.html in Resources */,
 				730488032D2A64B90024265C /* refreshloading.json in Resources */,
 				73E306D22D154E9E00D18943 /* Launch Screen.storyboard in Resources */,
 				7325A7A42CFEE58D0043C196 /* Assets.xcassets in Resources */,
@@ -2707,7 +2703,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.13;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2755,7 +2751,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.13;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
