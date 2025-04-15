@@ -277,8 +277,8 @@ class OrderListViewCell: BaseViewCell {
         // 清除之前的计时器
         timer?.invalidate()
         
-        // 设置结束时间（开始时间 + 30分钟）
-        endDate = startDate.addingTimeInterval(30 * 60)
+        // 设置结束时间（开始时间 + 1天）
+        endDate = startDate.addingTimeInterval(60 * 60 * 24)
         
         // 立即更新一次显示
         updateCountdown()
@@ -305,7 +305,7 @@ class OrderListViewCell: BaseViewCell {
             let hours = Int(remainingTime) / 3600
             let minutes = (Int(remainingTime) % 3600) / 60
             let seconds = Int(remainingTime) % 60
-            self.syLabel.text = String(format: "剩余支付时间:%02d:%02d", minutes, seconds)
+            self.syLabel.text = String(format: "剩余支付时间:%02d:%02d:%02d", hours, minutes, seconds)
         }
     }
     
