@@ -26,11 +26,11 @@ class PropertyLineListViewCell: UICollectionViewCell {
     
     lazy var tagLabel: PaddedLabel = {
         let tagLabel = PaddedLabel()
-        tagLabel.textColor = .init(cssStr: "#FF7D00")
         tagLabel.font = .mediumFontOfSize(size: 10)
         tagLabel.textAlignment = .center
         tagLabel.layer.cornerRadius = 2
         tagLabel.layer.borderWidth = 1
+        tagLabel.textColor = .init(cssStr: "#FF7D00")
         tagLabel.layer.borderColor = UIColor.init(cssStr: "#FF7D00")?.cgColor
         return tagLabel
     }()
@@ -156,13 +156,28 @@ class PropertyLineListViewCell: UICollectionViewCell {
     var model: cluesDataListModel? {
         didSet {
             guard let model = model else { return }
-            nameLabel.text = model.clueDirectionName ?? ""
+            let name = model.clueDirectionName ?? ""
+            nameLabel.text = name
+            if name == "财产线索" {
+                tagLabel.textColor = .init(cssStr: "#FF7D00")
+                tagLabel.layer.borderColor = UIColor.init(cssStr: "#FF7D00")?.cgColor
+            }else if name == "疑似流入" {
+                tagLabel.textColor = .init(cssStr: "#7B84E3")
+                tagLabel.layer.borderColor = UIColor.init(cssStr: "#7B84E3")?.cgColor
+            }else if name == "疑似流出" {
+                tagLabel.textColor = .init(cssStr: "#F55B5B")
+                tagLabel.layer.borderColor = UIColor.init(cssStr: "#F55B5B")?.cgColor
+            }else {
+                tagLabel.textColor = .init(cssStr: "#666666")
+                tagLabel.layer.borderColor = UIColor.init(cssStr: "#666666")?.cgColor
+            }
             let num: Int = Int(model.typeTotalCount ?? "0") ?? 0
             if num >= 10000 {
                 tagLabel.text = "9999+"
             }else {
                 tagLabel.text = model.typeTotalCount ?? ""
             }
+            
             let count1 = model.typeNum ?? "0"
             let count2 = model.typeTotalCount ?? "0"
             let count3 = model.typeTotalValuation ?? "0"

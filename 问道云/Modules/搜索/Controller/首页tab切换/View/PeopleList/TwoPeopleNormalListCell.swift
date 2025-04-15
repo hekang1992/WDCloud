@@ -139,6 +139,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
             make.left.equalTo(nameLabel.snp.right).offset(5)
             make.centerY.equalTo(nameLabel.snp.centerY)
             make.height.equalTo(14)
+            make.width.lessThanOrEqualTo(40)
         }
         
         lineView.snp.makeConstraints { make in
