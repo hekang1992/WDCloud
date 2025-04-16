@@ -229,10 +229,17 @@ class PropertyLineOneViewController: WDBaseViewController {
         //点击企业名称
         nameLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
-            let detailVc = CompanyBothViewController()
-            detailVc.companyName.accept(entityName)
-            detailVc.enityId.accept(entityId)
-            self.navigationController?.pushViewController(detailVc, animated: true)
+            if subjectType == "1" {
+                let detailVc = CompanyBothViewController()
+                detailVc.companyName.accept(entityName)
+                detailVc.enityId.accept(entityId)
+                self.navigationController?.pushViewController(detailVc, animated: true)
+            }else {
+                let detailVc = PeopleBothViewController()
+                detailVc.peopleName.accept(entityName)
+                detailVc.personId.accept(entityId)
+                self.navigationController?.pushViewController(detailVc, animated: true)
+            }
         }).disposed(by: disposeBag)
         
         //点击

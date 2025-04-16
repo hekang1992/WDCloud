@@ -112,6 +112,7 @@ class CompanyCollectionCell: UICollectionViewCell {
             namelabel.text = model.menuName ?? ""
             let markFlag = model.markFlag ?? 0
             let markCount = model.markCount ?? 0
+            namelabel.textColor = UIColor.init(cssStr: "#27344B")
             if markFlag == 0 {//不统计角标
                 numlabel.isHidden = true
                 ctImageView.kf.setImage(with: URL(string: model.icon ?? ""))
@@ -121,6 +122,7 @@ class CompanyCollectionCell: UICollectionViewCell {
                 if markCount == 0 {
                     ctImageView.kf.setImage(with: URL(string: model.iconGrey ?? ""))
                     numlabel.textColor = UIColor.init(cssStr: model.iconGreyColor ?? "")
+                    namelabel.textColor = numlabel.textColor
                 }else {
                     ctImageView.kf.setImage(with: URL(string: model.icon ?? ""))
                     numlabel.textColor = UIColor.init(cssStr: model.iconColor ?? "")
