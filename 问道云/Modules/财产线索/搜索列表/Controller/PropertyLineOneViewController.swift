@@ -226,6 +226,15 @@ class PropertyLineOneViewController: WDBaseViewController {
             make.size.equalTo(CGSize(width: 175.pix(), height: 23.pix()))
         }
         
+        //点击企业名称
+        nameLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            let detailVc = CompanyBothViewController()
+            detailVc.companyName.accept(entityName)
+            detailVc.enityId.accept(entityId)
+            self.navigationController?.pushViewController(detailVc, animated: true)
+        }).disposed(by: disposeBag)
+        
         //点击
         twoBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }

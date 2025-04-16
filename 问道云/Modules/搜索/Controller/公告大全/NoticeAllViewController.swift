@@ -311,6 +311,9 @@ extension NoticeAllViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.allArray[indexPath.row]
         let pageUrl = model.announcementLink ?? ""
+        if pageUrl.isEmpty {
+            return
+        }
         self.pushWebPage(from: pageUrl)
     }
     
