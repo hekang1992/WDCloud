@@ -88,8 +88,6 @@ class MonitoringCell: BaseViewCell {
         todayLabel.font = .regularFontOfSize(size: 12)
         todayLabel.textAlignment = .left
         todayLabel.textColor = .init(cssStr: "#9FA4AD")
-        todayLabel.text = "今日/累计事件:"
-//        todayLabel.isSkeletonable = true
         return todayLabel
     }()
     

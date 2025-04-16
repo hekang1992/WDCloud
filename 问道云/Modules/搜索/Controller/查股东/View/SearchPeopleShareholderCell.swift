@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import TYAlertController
 
 class SearchPeopleShareholderCell: BaseViewCell {
     
@@ -149,6 +150,7 @@ class SearchPeopleShareholderCell: BaseViewCell {
             make.centerY.equalTo(nameLabel.snp.centerY)
             make.left.equalTo(nameLabel.snp.right).offset(6)
             make.height.equalTo(20)
+            make.width.lessThanOrEqualTo(40)
         }
         footerView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
@@ -289,17 +291,21 @@ extension SearchPeopleShareholderCell {
     
     //添加监控
     private func addMonitrongInfo(from btn: UIButton, model: itemsModel) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["personId": model.personId ?? "", "groupId": ""]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
                     model.monitor = true
                     btn.setImage(UIImage(named: "havejiankong"), for: .normal)
                     ToastViewConfig.showToast(message: "监控成功")
+                }else if success.code == 702 {
+                    self.buyOneVipInfo(from: btn, model: model)
                 }
                 break
             case .failure(_):
@@ -310,11 +316,13 @@ extension SearchPeopleShareholderCell {
     
     //取消监控
     private func cancelMonitrongInfo(from btn: UIButton, model: itemsModel) {
+        ViewHud.addLoadView()
         let man = RequestManager()
         let dict = ["personId": model.personId ?? "", "groupId": ""]
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/cancelRiskMonitorPerson",
                        method: .post) { result in
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if success.code == 200 {
@@ -327,6 +335,40 @@ extension SearchPeopleShareholderCell {
                 break
             }
         }
+    }
+    
+    private func buyOneVipInfo(from btn: UIButton, model: itemsModel) {
+        let vc = ViewControllerUtils.findViewController(from: self)
+        let buyVipView = PopBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 400))
+        buyVipView.bgImageView.image = UIImage(named: "poponereportimge")
+        let alertVc = TYAlertController(alert: buyVipView, preferredStyle: .alert)!
+        buyVipView.cancelBlock = {
+            vc?.dismiss(animated: true)
+        }
+        buyVipView.buyOneBlock = {
+            //跳转购买单次会员
+            vc?.dismiss(animated: true, completion: {
+                let oneVc = BuyMonitoringOneVipViewController()
+                oneVc.entityType = 2
+                oneVc.entityId = model.personId ?? ""
+                oneVc.entityName = model.personName ?? ""
+                //刷新列表
+                oneVc.refreshBlock = { startTime, endTime in
+                    //刷新列表信息
+                    model.monitor = true
+                    btn.setImage(UIImage(named: "havejiankong"), for: .normal)
+                }
+                vc?.navigationController?.pushViewController(oneVc, animated: true)
+            })
+        }
+        buyVipView.buyVipBlock = {
+            //跳转购买会员
+            vc?.dismiss(animated: true, completion: {
+                let memVc = MembershipCenterViewController()
+                vc?.navigationController?.pushViewController(memVc, animated: true)
+            })
+        }
+        vc?.present(alertVc, animated: true)
     }
     
 }

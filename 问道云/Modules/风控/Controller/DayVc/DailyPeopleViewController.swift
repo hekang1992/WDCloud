@@ -161,6 +161,7 @@ extension DailyPeopleViewController: UITableViewDataSource, UITableViewDelegate 
         let cell = tableView.dequeueReusableCell(withIdentifier: "MonitoringCell", for: indexPath) as! MonitoringCell
         cell.selectionStyle = .none
         cell.peopleModel = model
+        cell.todayLabel.text = "今日/累计事件:"
         //弹窗设置分组或者取消监控
         cell.moreBlock = { [weak self] in
             guard let self = self else { return }

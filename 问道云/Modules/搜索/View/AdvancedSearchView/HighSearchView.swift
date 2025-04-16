@@ -292,11 +292,6 @@ class HighFourView: UIView {
         return mlabel
     }()
     
-    lazy var view0: CustomButtonView = {
-        let view0 = CustomButtonView()
-        return view0
-    }()
-    
     lazy var view1: CustomButtonView = {
         let view1 = CustomButtonView()
         return view1
@@ -324,7 +319,6 @@ class HighFourView: UIView {
     // MARK: - 设置UI
     private func setupUI() {
         addSubview(mlabel)
-        addSubview(view0)
         addSubview(view1)
         addSubview(view2)
         addSubview(view3)
@@ -335,13 +329,8 @@ class HighFourView: UIView {
             make.height.equalTo(19)
             make.width.equalTo(60)
         }
-        view0.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(12)
-            make.left.equalTo(mlabel.snp.right).offset(26)
-            make.size.equalTo(CGSize(width: 260, height: 25))
-        }
         view1.snp.makeConstraints { make in
-            make.top.equalTo(view0.snp.bottom).offset(12)
+            make.top.equalToSuperview().offset(12)
             make.left.equalTo(mlabel.snp.right).offset(26)
             make.size.equalTo(CGSize(width: 260, height: 25))
         }

@@ -147,12 +147,7 @@ class HighSearchViewController: WDBaseViewController {
             let orgStatusArray = model.ORG_REG_STATUS ?? []
             for (_, model) in orgStatusArray.enumerated() {
                 let name = model.name ?? ""
-                if name == "未知" {
-                    if let titles = model.children {
-                        fourView.view0.allButton.setTitle(name, for: .normal)
-                        fourView.view0.configureButtons(modelArray: titles)
-                    }
-                }else if name == "正常" {
+                if name == "正常" {
                     if let titles = model.children {
                         fourView.view1.allButton.setTitle(name, for: .normal)
                         fourView.view1.configureButtons(modelArray: titles)
@@ -305,7 +300,7 @@ extension HighSearchViewController {
             make.left.equalToSuperview()
             make.top.equalTo(threeView.snp.bottom)
             make.width.equalTo(SCREEN_WIDTH)
-            make.height.equalTo(203)
+            make.height.equalTo(163)
         }
         fiveView.snp.makeConstraints { make in
             make.left.equalToSuperview()
@@ -439,7 +434,7 @@ extension HighSearchViewController {
             self.threeView.descLabel.text = "全部"
             self.threeView.descLabel.textColor = UIColor.init(cssStr: "#ACACAC")
             //登记状态
-            self.fourView.view0.removeBtnConfig()
+//            self.fourView.view0.removeBtnConfig()
             self.fourView.view1.removeBtnConfig()
             self.fourView.view2.removeBtnConfig()
             self.fourView.view3.removeBtnConfig()
@@ -491,9 +486,9 @@ extension HighSearchViewController {
             //登记状态
             var regStatusVec: [Int] = []//ID
             var regStatusTitles: [String] = []//名称
-            if let oneStatus = self.fourView.view0.dengjiBinder.value {
-                regStatusVec.append(contentsOf: oneStatus.map { Int($0) ?? 0 })
-            }
+//            if let oneStatus = self.fourView.view0.dengjiBinder.value {
+//                regStatusVec.append(contentsOf: oneStatus.map { Int($0) ?? 0 })
+//            }
             if let twoStatus = self.fourView.view1.dengjiBinder.value {
                 regStatusVec.append(contentsOf: twoStatus.map { Int($0) ?? 0 })
             }
@@ -504,9 +499,9 @@ extension HighSearchViewController {
                 regStatusVec.append(contentsOf: fourStatus.map { Int($0) ?? 0 })
             }
             
-            if let oneStatus = self.fourView.view0.dengjiStringBinder.value {
-                regStatusTitles.append(contentsOf: oneStatus)
-            }
+//            if let oneStatus = self.fourView.view0.dengjiStringBinder.value {
+//                regStatusTitles.append(contentsOf: oneStatus)
+//            }
             if let twoStatus = self.fourView.view1.dengjiStringBinder.value {
                 regStatusTitles.append(contentsOf: twoStatus)
             }

@@ -158,6 +158,7 @@ extension WeekCompanyViewController: UITableViewDataSource, UITableViewDelegate 
         let cell = tableView.dequeueReusableCell(withIdentifier: "MonitoringCell", for: indexPath) as! MonitoringCell
         cell.selectionStyle = .none
         cell.companyModel = model
+        cell.todayLabel.text = "本周/累计事件:"
         //弹窗设置分组或者取消监控
         cell.moreBlock = { [weak self] in
             guard let self = self else { return }

@@ -362,7 +362,6 @@ extension SearchLawsViewController {
         group.enter()
         getLastSearchInfo(from: "44") { [weak self] modelArray in
             if !modelArray.isEmpty {
-                self?.oneView.bgView.isHidden = false
                 self?.oneView.bgView.snp.remakeConstraints({ make in
                     make.top.equalToSuperview().offset(1)
                     make.left.equalToSuperview()
@@ -371,7 +370,6 @@ extension SearchLawsViewController {
                 self?.oneView.tagArray = modelArray.map { $0.searchContent ?? "" }
                 self?.oneView.setupScrollView()
             }else {
-                self?.oneView.bgView.isHidden = true
                 self?.oneView.bgView.snp.remakeConstraints({ make in
                     make.top.equalToSuperview().offset(1)
                     make.left.equalToSuperview()

@@ -3,4 +3,22 @@
    uuid = "C6710648-1641-4D7D-B92E-921CD04CB3F1"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9CDBDAA6-1CE6-489C-8289-B0B440D9D637"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x95ee;&#x9053;&#x4e91;/Modules/&#x98ce;&#x63a7;/Controller/DetailVc/&#x4f01;&#x4e1a;&#x98ce;&#x9669;&#x8be6;&#x60c5;/CompanyRiskDetailViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "addMonitoringInfo(complete:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
