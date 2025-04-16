@@ -294,7 +294,6 @@
 		73B362492D37A642003BD911 /* PeopleBothViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362482D37A642003BD911 /* PeopleBothViewController.swift */; };
 		73B3624B2D37A653003BD911 /* PeopleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3624A2D37A653003BD911 /* PeopleDetailViewController.swift */; };
 		73B3624D2D37A665003BD911 /* PeopleActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B3624C2D37A665003BD911 /* PeopleActivityViewController.swift */; };
-		73B362512D37A7FB003BD911 /* PeopleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362502D37A7FB003BD911 /* PeopleDetailView.swift */; };
 		73B362532D37B704003BD911 /* PeopleDetailHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362522D37B704003BD911 /* PeopleDetailHeadView.swift */; };
 		73B362552D37B9BC003BD911 /* PeopleDetailOneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362542D37B9BC003BD911 /* PeopleDetailOneViewController.swift */; };
 		73B362572D37B9CB003BD911 /* PeopleDetailTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B362562D37B9CB003BD911 /* PeopleDetailTwoViewController.swift */; };
@@ -726,7 +725,6 @@
 		73B362482D37A642003BD911 /* PeopleBothViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleBothViewController.swift; sourceTree = "<group>"; };
 		73B3624A2D37A653003BD911 /* PeopleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetailViewController.swift; sourceTree = "<group>"; };
 		73B3624C2D37A665003BD911 /* PeopleActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleActivityViewController.swift; sourceTree = "<group>"; };
-		73B362502D37A7FB003BD911 /* PeopleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetailView.swift; sourceTree = "<group>"; };
 		73B362522D37B704003BD911 /* PeopleDetailHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetailHeadView.swift; sourceTree = "<group>"; };
 		73B362542D37B9BC003BD911 /* PeopleDetailOneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetailOneViewController.swift; sourceTree = "<group>"; };
 		73B362562D37B9CB003BD911 /* PeopleDetailTwoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetailTwoViewController.swift; sourceTree = "<group>"; };
@@ -1801,7 +1799,6 @@
 		73B3624F2D37A7E4003BD911 /* People */ = {
 			isa = PBXGroup;
 			children = (
-				73B362502D37A7FB003BD911 /* PeopleDetailView.swift */,
 				73B362522D37B704003BD911 /* PeopleDetailHeadView.swift */,
 				734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */,
 			);
@@ -2325,7 +2322,6 @@
 				7340E1C82D5DE416008FD5C7 /* SearchCompanyOverseasInvestmentViewController.swift in Sources */,
 				7304880F2D2A97E00024265C /* HomeNewsListViewCell.swift in Sources */,
 				7352B2242D353AB700B5391B /* CompanyThreeHeadView.swift in Sources */,
-				73B362512D37A7FB003BD911 /* PeopleDetailView.swift in Sources */,
 				73FC5E3E2D5C3422001D0DEF /* SearchCompanyShareholderViewController.swift in Sources */,
 				734056AB2D38FE53009C9C96 /* DetailRiskItemView.swift in Sources */,
 				73EABF962D321B7E0052F4AB /* TwoRiskListCompanyCell.swift in Sources */,

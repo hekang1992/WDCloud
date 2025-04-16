@@ -14,8 +14,8 @@
             filePath = "&#x95ee;&#x9053;&#x4e91;/Modules/&#x98ce;&#x63a7;/Controller/DetailVc/&#x4f01;&#x4e1a;&#x98ce;&#x9669;&#x8be6;&#x60c5;/CompanyRiskDetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "addMonitoringInfo(complete:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -19,7 +19,7 @@ class HomeOneReportCell: BaseViewCell {
     var name: String? {
         didSet {
             guard let name = name else { return }
-            namelabel.text = name
+            
         }
     }
     
@@ -136,6 +136,7 @@ class HomeOneReportCell: BaseViewCell {
             guard let self = self, let model = model else { return }
             nlabel.text = model.forshort ?? ""
             desclabel.text = model.descprtion ?? ""
+            namelabel.text = model.reportname ?? ""
             let templatepath = model.templatepath ?? ""
             let authflag = model.authflag ?? 0
             if templatepath.isEmpty {

@@ -144,11 +144,12 @@ class PeopleDetailViewController: WDBaseViewController {
     
     //头部
     func preferredTableHeaderView() -> PeopleDetailHeadView {
+        let model = self.model
         JXTableHeaderViewHeight = 385
         let header = PeopleDetailHeadView()
         header.oneBlock = { [weak self] in
-            let personId = self?.model?.personId ?? ""
-            let personName = self?.model?.personName ?? ""
+            let personId = model?.personId ?? ""
+            let personName = model?.personName ?? ""
             let peopleRiskVc = PeopleRiskDetailViewController()
             peopleRiskVc.name = personName
             peopleRiskVc.personId = personId
@@ -347,9 +348,16 @@ extension PeopleDetailViewController {
             }).disposed(by: disposeBag)
         
         //合作伙伴
-        self.homeHeadView.onenumlabel.text = String(model.shareholderList?.count ?? 0)
+        let shareholderList = model.shareholderList ?? []
+        self.homeHeadView.onenumlabel.text = String(shareholderList.count)
         self.homeHeadView.model.accept(model)
         self.homeHeadView.pcollectionView.reloadData()
+        
+//        if shareholderList.isEmpty {
+//            JXTableHeaderViewHeight = 385 - 81
+//        }else {
+//            JXTableHeaderViewHeight = 385
+//        }
         
         let monitor = model.monitor ?? false
         if monitor {

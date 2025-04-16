@@ -104,12 +104,10 @@ extension OneReportViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let name = self.modelArray?[indexPath.section].name ?? ""
         let model = self.modelArray?[indexPath.section].items?[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeOneReportCell", for: indexPath) as! HomeOneReportCell
         cell.selectionStyle = .none
         cell.model.accept(model)
-        cell.name = name
         cell.block = { [weak self] model in
             guard let self = self else { return }
             let pageUrl = model.templatepath ?? ""
@@ -205,7 +203,8 @@ extension OneReportViewController {
         let man = RequestManager()
         ViewHud.addLoadView()
         let dict = ["entityId": orgInfo?.orgId ?? "",
-                    "entityType": 1] as [String : Any]
+                    "entityType": 1,
+                    "reportType": orgInfo?.reportType ?? ""] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customerreport/reportlist",
                        method: .get) { [weak self] result in

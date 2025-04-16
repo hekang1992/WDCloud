@@ -575,7 +575,9 @@ class itemsModel {
     var logoUrl: String?
     var weburl: String?
     var phoneList: [phoneListModel]?
+    var reportname: String?
     init(json: JSON) {
+        self.reportname = json["reportname"].stringValue
         self.phoneList = json["phoneList"].arrayValue.map { phoneListModel(json: $0) }
         self.weburl = json["website"].stringValue
         self.logoUrl = json["logoUrl"].stringValue
@@ -1271,7 +1273,9 @@ class orgInfoModel {
     var usCreditCode: String?
     var actCap: String?
     var org_no: String?
+    var reportType: String?
     init(json: JSON) {
+        self.reportType = json["reportType"].stringValue
         self.org_no = json["org_no"].stringValue
         self.actCap = json["actCap"].stringValue
         self.usCreditCode = json["usCreditCode"].stringValue

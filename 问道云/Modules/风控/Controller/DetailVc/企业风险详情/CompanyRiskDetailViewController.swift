@@ -106,7 +106,8 @@ class CompanyRiskDetailViewController: WDBaseViewController {
             let entityid = enityId ?? ""
             let firmname = name ?? ""
             let json: JSON = ["orgId": entityid,
-                              "orgName": firmname]
+                              "orgName": firmname,
+                              "reportType": "5"]
             let orgInfo = orgInfoModel(json: json)
             oneRpVc.orgInfo = orgInfo
             self.navigationController?.pushViewController(oneRpVc, animated: true)

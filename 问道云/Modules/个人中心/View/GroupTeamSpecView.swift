@@ -293,12 +293,12 @@ class GroupTeamSpecView: BaseView {
         nextBtn.snp.makeConstraints { make in
             make.centerY.equalTo(currentlabel.snp.centerY)
             make.left.equalTo(currentlabel.snp.right).offset(7.5)
-            make.size.equalTo(CGSizeMake(44, 20))
+            make.size.equalTo(CGSizeMake(44.pix(), 20))
         }
         addBtn.snp.makeConstraints { make in
             make.centerY.equalTo(currentlabel.snp.centerY)
             make.right.equalToSuperview().offset(-10)
-            make.size.equalTo(CGSize(width: 100, height: 20))
+            make.size.equalTo(CGSize(width: 100.pix(), height: 20))
         }
         lineTwoView.snp.makeConstraints { make in
             make.top.equalTo(addBtn.snp.bottom).offset(23)
