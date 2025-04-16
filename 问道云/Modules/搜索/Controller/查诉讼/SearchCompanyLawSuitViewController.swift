@@ -65,11 +65,6 @@ class SearchCompanyLawSuitViewController: WDBaseViewController {
         
         // Do any additional setup after loading the view.
         
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
         self.searchWords
             .asObservable()
             .distinctUntilChanged()
