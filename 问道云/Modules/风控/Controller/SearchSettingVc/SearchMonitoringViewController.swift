@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import MJRefresh
 import TYAlertController
+import RxSwift
 
 class SearchMonitoringViewController: WDBaseViewController {
     
@@ -82,7 +83,6 @@ class SearchMonitoringViewController: WDBaseViewController {
         searchTx.font = UIFont.mediumFontOfSize(size: 14)
         searchTx.textColor = UIColor.init(cssStr: "#333333")
         searchTx.clearButtonMode = .whileEditing
-        searchTx.delegate = self
         return searchTx
     }()
     
@@ -171,19 +171,22 @@ class SearchMonitoringViewController: WDBaseViewController {
                 self?.searchTx.becomeFirstResponder()
             }
         }
+        
+        self.searchTx
+            .rx
+            .controlEvent(.editingChanged)
+            .withLatestFrom(self.searchTx.rx.text.orEmpty)
+            .distinctUntilChanged()
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] keywords in
+                let isComposing = self?.searchTx.markedTextRange != nil
+                if !isComposing && keywords.count >= 2 {
+                    self?.getListInfo()
+                }
+        }).disposed(by: disposeBag)
+        
     }
     
-}
-
-extension SearchMonitoringViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("搜索文字:\(textField.text ?? "")")
-        textField.resignFirstResponder()
-        getListInfo()
-        return true
-    }
-
 }
 
 extension SearchMonitoringViewController: UITableViewDelegate, UITableViewDataSource {

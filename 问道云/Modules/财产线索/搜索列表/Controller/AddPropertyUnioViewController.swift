@@ -231,9 +231,12 @@ class AddPropertyUnioViewController: WDBaseViewController {
             .distinctUntilChanged()
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] keywords in
-                self?.keyWords = keywords
-                self?.pageNum = 1
-                self?.searchInfo()
+                let isComposing = self?.searchTx.markedTextRange != nil
+                if !isComposing && keywords.count >= 2 {
+                    self?.keyWords = keywords
+                    self?.pageNum = 1
+                    self?.searchInfo()
+                }
         }).disposed(by: disposeBag)
         
         self.tableView.mj_header = WDRefreshHeader(refreshingBlock: { [weak self] in
