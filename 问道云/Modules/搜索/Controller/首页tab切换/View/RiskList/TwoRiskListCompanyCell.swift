@@ -51,7 +51,6 @@ class TwoRiskListCompanyCell: BaseViewCell {
     lazy var nameView: BiaoQianView = {
         let nameView = BiaoQianView(frame: .zero, enmu: .hide)
         nameView.label1.text = "法定代表人"
-        nameView.label2.textColor = .init(cssStr: "#F55B5B")
         nameView.lineView.isHidden = false
         return nameView
     }()
@@ -282,7 +281,6 @@ class TwoRiskListCompanyCell: BaseViewCell {
             let leaderList = model.leaderVec?.leaderList ?? []
             let legalName = leaderList.compactMap { $0.name }.joined(separator: ",")
             self.nameView.label2.text = legalName
-            self.nameView.label2.textColor = .init(cssStr: "#F55B5B")
             
             self.moneyView.label2.text = model.orgInfo?.regCap ?? ""
             self.timeView.label2.text = model.orgInfo?.incDate ?? ""

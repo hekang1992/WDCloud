@@ -47,7 +47,7 @@ class BothPeopleViewController: WDBaseViewController {
     }()
     
     lazy var groupView: PopMonitoringGroupView = {
-        let groupView = PopMonitoringGroupView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 280))
+        let groupView = PopMonitoringGroupView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 350))
         return groupView
     }()
     

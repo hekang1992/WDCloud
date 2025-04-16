@@ -154,13 +154,13 @@ extension PeopleRiskMoreDetailViewController {
     private func getDetailInfo() {
         ViewHud.addLoadView()
         let man = RequestManager()
-        let dict = ["orgId": orgId,
+        let dict = ["personId": orgId,
                     "itemId": itemId,
                     "historyFlag": historyFlag,
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
-                       pageUrl: "/entity/risk/queryOrgRiskList",
+                       pageUrl: "/entity/risk/queryPersonRiskList",
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()

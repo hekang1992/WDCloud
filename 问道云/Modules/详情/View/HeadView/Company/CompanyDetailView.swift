@@ -226,10 +226,7 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section != 0 {
             if let items = self.model.value?.items?.first, let item = items.children?[indexPath.section - 1], let model = item.children?[indexPath.row] {
-                let clickFlag = model.clickFlag ?? 0
-                if clickFlag != 1 {
-                    self.cellBlock?(model)
-                }
+                self.cellBlock?(model)
             }
         }
     }

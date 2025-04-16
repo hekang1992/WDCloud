@@ -536,6 +536,7 @@ extension SearchRiskViewController {
             updateButtonStyles(selectedButton: companyBtn, unselectedButton: peopleBtn)
             self.pageIndex = 1
             self.searchListInfo()
+            self.searchPeopleListinfo(from: false)
             self.listPeopleView.isHidden = true
             self.twoRiskListView.isHidden = false
         } else if sender == peopleBtn {

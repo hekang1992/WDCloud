@@ -197,7 +197,6 @@ class PeopleHistoryRiskViewController: WDBaseViewController {
     lazy var twoItemView: RiskNumView = {
         let twoItemView = RiskNumView()
         twoItemView.nameLabel.text = "低风险"
-        twoItemView.numLabel.textColor = .init(cssStr: "#333333")
         twoItemView.numLabel.font = .mediumFontOfSize(size: 14)
         return twoItemView
     }()

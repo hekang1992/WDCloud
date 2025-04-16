@@ -304,7 +304,6 @@ class TwoCompanyNormalListCell: BaseViewCell {
             let leaderList = model.leaderVec?.leaderList ?? []
             let legalName = leaderList.compactMap { $0.name }.joined(separator: ",")
             self.nameView.label2.text = legalName
-            self.nameView.label2.textColor = .init(cssStr: "#F55B5B")
             
             //注册资本
             self.moneyView.label2.text = "\(model.orgInfo?.regCap ?? "--")\(model.firmInfo?.registerCapitalCurrency ?? "")"
