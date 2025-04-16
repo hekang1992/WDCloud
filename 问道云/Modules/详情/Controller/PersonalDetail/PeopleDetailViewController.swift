@@ -144,12 +144,11 @@ class PeopleDetailViewController: WDBaseViewController {
     
     //头部
     func preferredTableHeaderView() -> PeopleDetailHeadView {
-        let model = self.model
         JXTableHeaderViewHeight = 385
         let header = PeopleDetailHeadView()
         header.oneBlock = { [weak self] in
-            let personId = model?.personId ?? ""
-            let personName = model?.personName ?? ""
+            let personId = self?.model?.personId ?? ""
+            let personName = self?.model?.personName ?? ""
             let peopleRiskVc = PeopleRiskDetailViewController()
             peopleRiskVc.name = personName
             peopleRiskVc.personId = personId
