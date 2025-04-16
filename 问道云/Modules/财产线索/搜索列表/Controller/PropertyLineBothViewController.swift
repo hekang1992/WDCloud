@@ -24,6 +24,7 @@ class PropertyLineBothViewController: WDBaseViewController {
     var logoUrl: String = ""
     
     var monitor: Bool = false
+    var monitorListId: String = ""
     
     //是否刷新搜索列表页面
     var refreshBlock: ((Int) -> Void)?
@@ -159,6 +160,7 @@ extension PropertyLineBothViewController: JXSegmentedViewDelegate {
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         if index == 0 {
+            oneVc.monitorListId = self.monitorListId 
             oneVc.entityId = self.enityId.value
             oneVc.entityName = self.companyName.value
             oneVc.monitor = self.monitor

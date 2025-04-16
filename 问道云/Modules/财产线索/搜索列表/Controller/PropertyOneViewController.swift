@@ -97,6 +97,10 @@ class PropertyOneViewController: WDBaseViewController {
             self?.backBlock?()
         }).disposed(by: disposeBag)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         //获取热搜浏览历史信息
         getHotsMessageInfo()
     }

@@ -176,6 +176,7 @@ extension PropertyLineHotView {
                     bothVc.companyName.accept(companyName)
                     bothVc.logoUrl = model.logoUrl ?? ""
                     bothVc.monitor = model.monitor ?? false
+                    bothVc.monitorListId = model.monitorListId ?? ""
                     vc?.navigationController?.pushViewController(bothVc, animated: true)
                 }else if success.code == 702 {
                     let vc = ViewControllerUtils.findViewController(from: self)

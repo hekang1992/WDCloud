@@ -18,6 +18,7 @@ class PropertyLineOneViewController: WDBaseViewController {
     var model = BehaviorRelay<DataModel?>(value: nil)
     //ID
     var entityId: String = ""
+    var monitorListId: String = ""
     //名字
     var entityName: String = ""
     //是否被监控
@@ -790,9 +791,9 @@ extension PropertyLineOneViewController {
     //获取分组
     private func getGroupInfo() {
         let man = RequestManager()
-        let dict = [String: String]()
+        let dict = ["monitorListId": self.monitorListId]
         man.requestAPI(params: dict,
-                       pageUrl: "/firminfo/monitor/group",
+                       pageUrl: "/firminfo/monitor/group/list",
                        method: .get) { result in
             switch result {
             case .success(let success):
@@ -808,7 +809,7 @@ extension PropertyLineOneViewController {
                         }
                         groupView.sblock = { [weak self] model in
                             self?.dismiss(animated: true, completion: {
-                                let monitorListId = self?.entityId
+                                let monitorListId = self?.monitorListId
                                 let groupId = model.eid ?? ""
                                 let dict = ["monitorListId": monitorListId, "groupId": groupId]
                                 man.requestAPI(params: dict as [String : Any],
