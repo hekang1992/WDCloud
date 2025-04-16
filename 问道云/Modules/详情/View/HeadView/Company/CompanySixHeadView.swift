@@ -175,8 +175,12 @@ extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelega
             let model = self.twoItems?[indexPath.row]
             let pageUrl = base_url + "\(model?.path ?? "")"
             let dict = ["entityId": dataModel?.basicInfo?.orgId ?? ""]
-            let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-            vc?.pushWebPage(from: webUrl)
+            if pageUrl.contains("entityId") {
+                vc?.pushWebPage(from: pageUrl)
+            }else {
+                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                vc?.pushWebPage(from: webUrl)
+            }
         }else {//常用服务
             let model = self.oneItems?[indexPath.row]
             let menuId = model?.menuId ?? ""
@@ -201,8 +205,13 @@ extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelega
             }else {
                 let pageUrl = base_url + "\(model?.path ?? "")"
                 let dict = ["entityId": dataModel?.basicInfo?.orgId ?? ""]
-                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-                vc?.pushWebPage(from: webUrl)
+                if pageUrl.contains("entityId") {
+                    vc?.pushWebPage(from: pageUrl)
+                }else {
+                    let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                    vc?.pushWebPage(from: webUrl)
+                }
+                vc?.pushWebPage(from: pageUrl)
             }
             
         }

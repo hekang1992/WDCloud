@@ -219,7 +219,9 @@ extension CompanyDetailViewController {
         let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
         let dict = ["moduleType": "7",
                     "appleVersion": appleVersion,
-                    "appType": "apple"]
+                    "appType": "apple",
+                    "entityId": enityId,
+                    "entityType": "1"]
         man.requestAPI(params: dict, pageUrl: "/operation/customermenu/customerMenuTree", method: .get) { result in
             switch result {
             case .success(let success):

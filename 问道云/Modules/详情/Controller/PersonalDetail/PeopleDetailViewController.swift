@@ -172,7 +172,9 @@ extension PeopleDetailViewController {
         let appleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
         let dict = ["moduleType": "7",
                     "appleVersion": appleVersion,
-                    "appType": "apple"]
+                    "appType": "apple",
+                    "entityId": personId,
+                    "entityType": "2"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/customermenu/customerMenuTree",
                        method: .get) { result in

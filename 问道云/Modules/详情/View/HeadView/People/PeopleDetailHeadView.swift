@@ -543,8 +543,12 @@ extension PeopleDetailHeadView: UICollectionViewDelegate, UICollectionViewDataSo
             let model = self.oneItems?[indexPath.row]
             let dict = ["personId": self.model.value?.personId ?? ""]
             let pageUrl = base_url + (model?.path ?? "")
-            let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
-            vc?.pushWebPage(from: webUrl)
+            if pageUrl.contains("personId") {
+                vc?.pushWebPage(from: pageUrl)
+            }else {
+                let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
+                vc?.pushWebPage(from: webUrl)
+            }
         }
     }
     

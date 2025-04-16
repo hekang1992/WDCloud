@@ -178,7 +178,8 @@ class SearchCompanyDeadbeatCell: BaseViewCell {
             oneLabel.attributedText = GetRedStrConfig.getRedStr(from: legalName, fullText: "\(model.leaderVec?.leaderTypeName ?? ""): \(legalName)", colorStr: "#3F96FF", font: .regularFontOfSize(size: 13))
             
             let registerCapital = model.orgInfo?.regCap ?? ""
-            twoLabel.attributedText = GetRedStrConfig.getRedStr(from: registerCapital, fullText: "注册资本: \(registerCapital)", colorStr: "#333333", font: .regularFontOfSize(size: 13))
+            let regCapCur = model.orgInfo?.regCapCur ?? ""
+            twoLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(registerCapital)\(regCapCur)", fullText: "注册资本: \(registerCapital)\(regCapCur)", colorStr: "#333333", font: .regularFontOfSize(size: 13))
             
             let incorporationTime = model.orgInfo?.incDate ?? ""
             threeLabel.attributedText = GetRedStrConfig.getRedStr(from: incorporationTime, fullText: "成立日期: \(incorporationTime)", colorStr: "#333333", font: .regularFontOfSize(size: 13))

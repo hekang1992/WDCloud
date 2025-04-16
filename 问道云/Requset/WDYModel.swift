@@ -1264,6 +1264,7 @@ class orgInfoModel {
     var orgId: String?
     var orgName: String?
     var regCap: String?
+    var regCapCur: String?
     var regStatusLabel: String?
     var logo: String?
     var phone: String?
@@ -1275,6 +1276,7 @@ class orgInfoModel {
     var org_no: String?
     var reportType: String?
     init(json: JSON) {
+        self.regCapCur = json["regCapCur"].stringValue
         self.reportType = json["reportType"].stringValue
         self.org_no = json["org_no"].stringValue
         self.actCap = json["actCap"].stringValue

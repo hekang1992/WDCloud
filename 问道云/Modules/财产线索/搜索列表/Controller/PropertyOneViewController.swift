@@ -78,7 +78,6 @@ class PropertyOneViewController: WDBaseViewController {
         //获取行业数据
         getAllIndustryInfo()
         
-        
         // 监听 UITextField 的文本变化
         NotificationCenter.default.addObserver(
             self,
