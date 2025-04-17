@@ -1403,8 +1403,8 @@ class entityDataModel {
 
 //风险数据模型人员数据
 class personDataModel {
-    var items: [itemsModel]?
     var total: Int?
+    var items: [itemsModel]?
     init(json: JSON) {
         self.items = json["items"].arrayValue.map { itemsModel(json: $0) }
         self.total = json["total"].intValue
