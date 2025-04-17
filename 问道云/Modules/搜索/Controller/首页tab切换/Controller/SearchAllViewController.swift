@@ -13,6 +13,10 @@ import JXSegmentedView
 
 class SearchAllViewController: WDBaseViewController {
     
+    var isonePopKeybord: Bool = false
+    var istwoPopKeybord: Bool = false
+    var isthreePopKeybord: Bool = false
+    
     var segmentedViewDataSource: JXSegmentedTitleDataSource!
     
     var segmentedView: JXSegmentedView!
@@ -24,9 +28,7 @@ class SearchAllViewController: WDBaseViewController {
     var JXheightForHeaderInSection: Int = 40
     
     lazy var pagingView: JXPagingView = preferredPagingView()
-    
-//    var model = BehaviorRelay<rowsModel?>(value: nil)
-    
+        
     var name: String = ""
     
     let segmentedDataSource = JXSegmentedTitleDataSource()
@@ -45,7 +47,10 @@ class SearchAllViewController: WDBaseViewController {
         enterpriseVc.completeBlock = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.asyncAfter(delay: 0.5) {
-                self.searchHeadView.searchTx.becomeFirstResponder()
+                if self.isonePopKeybord == false {
+                    self.isonePopKeybord = true
+                    self.searchHeadView.searchTx.becomeFirstResponder()
+                }
             }
         }
         return enterpriseVc
@@ -56,7 +61,10 @@ class SearchAllViewController: WDBaseViewController {
         peopleVc.completeBlock = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.asyncAfter(delay: 0.25) {
-                self.searchHeadView.searchTx.becomeFirstResponder()
+                if self.istwoPopKeybord == false {
+                    self.istwoPopKeybord = true
+                    self.searchHeadView.searchTx.becomeFirstResponder()
+                }
             }
         }
         return peopleVc
@@ -67,7 +75,10 @@ class SearchAllViewController: WDBaseViewController {
         riskVc.completeBlock = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.asyncAfter(delay: 0.25) {
-                self.searchHeadView.searchTx.becomeFirstResponder()
+                if self.isthreePopKeybord == false {
+                    self.isthreePopKeybord = true
+                    self.searchHeadView.searchTx.becomeFirstResponder()
+                }
             }
         }
         return riskVc
