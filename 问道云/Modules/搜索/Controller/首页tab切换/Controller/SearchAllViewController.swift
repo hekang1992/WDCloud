@@ -34,6 +34,9 @@ class SearchAllViewController: WDBaseViewController {
     lazy var searchHeadView: SearchHeadView = {
         let searchHeadView = SearchHeadView()
         searchHeadView.searchTx.placeholder = name
+        searchHeadView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.navigationController?.popViewController(animated: false)
+        }).disposed(by: disposeBag)
         return searchHeadView
     }()
     
@@ -113,6 +116,19 @@ class SearchAllViewController: WDBaseViewController {
         }else {
             riskVc.searchWords.accept("")
         }
+        
+        let nameStr = self.searchHeadView.searchTx.text ?? ""
+        if !nameStr.isEmpty {
+            self.searchHeadView.backBtn.isHidden = false
+            self.searchHeadView.clickBtn.isHidden = true
+            self.searchHeadView.searchView.snp.updateConstraints { make in
+                make.left.equalToSuperview().offset(45)
+                make.right.equalToSuperview().offset(-10)
+            }
+            UIView.animate(withDuration: 0.25) {
+                self.searchHeadView.layoutIfNeeded()
+            }
+        }
     }
     
 }
@@ -120,6 +136,7 @@ class SearchAllViewController: WDBaseViewController {
 extension SearchAllViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         let text = textField.text ?? ""
         if selectIndex == 0 {
             if text.isEmpty {
@@ -146,6 +163,18 @@ extension SearchAllViewController: UITextFieldDelegate {
                 riskVc.searchWords.accept(text)
             }
         }
+        let name = self.searchHeadView.searchTx.text ?? ""
+        if name.count >= 2 {
+            self.searchHeadView.backBtn.isHidden = false
+            self.searchHeadView.clickBtn.isHidden = true
+            self.searchHeadView.searchView.snp.updateConstraints { make in
+                make.left.equalToSuperview().offset(45)
+                make.right.equalToSuperview().offset(-10)
+            }
+            UIView.animate(withDuration: 0.25) {
+                self.searchHeadView.layoutIfNeeded()
+            }
+        }
         return true
     }
     
@@ -164,9 +193,28 @@ extension SearchAllViewController: UITextFieldDelegate {
             
             if searchStr.count < 2 && !searchStr.isEmpty {
                 ToastViewConfig.showToast(message: "至少输入2个关键词")
+                self.searchHeadView.backBtn.isHidden = true
+                self.searchHeadView.clickBtn.isHidden = false
+                self.searchHeadView.searchView.snp.updateConstraints { make in
+                    make.left.equalToSuperview().offset(10)
+                    make.right.equalToSuperview().offset(-50)
+                }
+                UIView.animate(withDuration: 0.25) {
+                    self.searchHeadView.layoutIfNeeded()
+                }
             } else if searchStr.count > 100 {
                 searchHeadView.searchTx.text = String(searchStr.prefix(100))
                 ToastViewConfig.showToast(message: "最多输入100个关键词")
+            } else if searchStr.count >= 2 {
+                self.searchHeadView.backBtn.isHidden = false
+                self.searchHeadView.clickBtn.isHidden = true
+                self.searchHeadView.searchView.snp.updateConstraints { make in
+                    make.left.equalToSuperview().offset(45)
+                    make.right.equalToSuperview().offset(-10)
+                }
+                UIView.animate(withDuration: 0.25) {
+                    self.searchHeadView.layoutIfNeeded()
+                }
             }
             
             if selectIndex == 0 {
@@ -176,7 +224,6 @@ extension SearchAllViewController: UITextFieldDelegate {
             }else {
                 riskVc.searchWords.accept(searchHeadView.searchTx.text ?? "")
             }
-            
         }
         
     }
@@ -247,11 +294,20 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 guard let self = self else { return }
                 searchHeadView.searchTx.placeholder = searchStr
                 searchHeadView.searchTx.text = searchStr
-                DispatchQueue.main.asyncAfter(delay: 0.25) {
-                    self.searchHeadView.searchTx.becomeFirstResponder()
-                }
                 enterpriseVc.searchWords.accept(self.searchHeadView.searchTx
                     .text ?? "")
+                self.searchHeadView.backBtn.isHidden = false
+                self.searchHeadView.clickBtn.isHidden = true
+                self.searchHeadView.searchView.snp.updateConstraints { make in
+                    make.left.equalToSuperview().offset(45)
+                    make.right.equalToSuperview().offset(-10)
+                }
+                UIView.animate(withDuration: 0.25) {
+                    self.searchHeadView.layoutIfNeeded()
+                }
+                DispatchQueue.main.asyncAfter(delay: 0.25) {
+                    self.searchHeadView.searchTx.resignFirstResponder()
+                }
             }
             enterpriseVc.moreBtnBlock = { [weak self] in
                 guard let self = self else { return }
@@ -267,11 +323,20 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 guard let self = self else { return }
                 searchHeadView.searchTx.placeholder = searchStr
                 searchHeadView.searchTx.text = searchStr
-                DispatchQueue.main.asyncAfter(delay: 0.25) {
-                    self.searchHeadView.searchTx.becomeFirstResponder()
-                }
                 peopleVc.searchWords.accept(self.searchHeadView.searchTx
                     .text ?? "")
+                self.searchHeadView.backBtn.isHidden = false
+                self.searchHeadView.clickBtn.isHidden = true
+                self.searchHeadView.searchView.snp.updateConstraints { make in
+                    make.left.equalToSuperview().offset(45)
+                    make.right.equalToSuperview().offset(-10)
+                }
+                UIView.animate(withDuration: 0.25) {
+                    self.searchHeadView.layoutIfNeeded()
+                }
+                DispatchQueue.main.asyncAfter(delay: 0.25) {
+                    self.searchHeadView.searchTx.resignFirstResponder()
+                }
             }
             return peopleVc
         }else {
@@ -279,11 +344,20 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 guard let self = self else { return }
                 searchHeadView.searchTx.text = searchStr
                 searchHeadView.searchTx.placeholder = searchStr
-                DispatchQueue.main.asyncAfter(delay: 0.25) {
-                    self.searchHeadView.searchTx.becomeFirstResponder()
-                }
                 riskVc.searchWords.accept(self.searchHeadView.searchTx
                     .text ?? "")
+                self.searchHeadView.backBtn.isHidden = false
+                self.searchHeadView.clickBtn.isHidden = true
+                self.searchHeadView.searchView.snp.updateConstraints { make in
+                    make.left.equalToSuperview().offset(45)
+                    make.right.equalToSuperview().offset(-10)
+                }
+                UIView.animate(withDuration: 0.25) {
+                    self.searchHeadView.layoutIfNeeded()
+                }
+                DispatchQueue.main.asyncAfter(delay: 0.25) {
+                    self.searchHeadView.searchTx.resignFirstResponder()
+                }
             }
             return riskVc
         }
@@ -307,6 +381,7 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
     
 }
 
+/** 网络数据请求 */
 extension SearchAllViewController {
     
     //获取所有城市数据

@@ -46,6 +46,13 @@ class SearchHeadView: BaseView {
         return searchTx
     }()
     
+    lazy var backBtn: UIButton = {
+        let backBtn = UIButton(type: .custom)
+        backBtn.setImage(UIImage(named: "backimage"), for: .normal)
+        backBtn.isHidden = true
+        return backBtn
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(whiteView)
@@ -53,9 +60,15 @@ class SearchHeadView: BaseView {
         searchView.addSubview(searchIcon)
         searchView.addSubview(searchTx)
         whiteView.addSubview(clickBtn)
+        whiteView.addSubview(backBtn)
         whiteView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(104)
+        }
+        clickBtn.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-5)
+            make.size.equalTo(CGSize(width: 50, height: 45))
+            make.right.equalToSuperview()
         }
         searchView.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-50)
@@ -74,11 +87,11 @@ class SearchHeadView: BaseView {
             make.top.equalToSuperview()
             make.right.equalToSuperview()
         }
-        clickBtn.snp.makeConstraints { make in
-            make.top.equalTo(searchView.snp.top)
-            make.bottom.equalTo(searchView.snp.bottom)
-            make.left.equalTo(searchView.snp.right)
-            make.right.equalToSuperview()
+        
+        backBtn.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(10)
+            make.centerY.equalTo(searchView.snp.centerY)
+            make.size.equalTo(CGSize(width: 25, height: 25))
         }
     }
     

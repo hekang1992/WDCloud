@@ -92,20 +92,20 @@ class SearchBossViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] text in
             guard let self = self, let text = text else { return }
             self.pageIndex = 1
-            if text.count < 2 {
-                self.oneView.isHidden = false
-                self.twoPeopleListView.isHidden = true
-                self.allArray.removeAll()
-                //获取热搜等数据
-                getHotsSearchInfo()
-                //取消请求
-                man.cancelLastRequest()
-            }else {
-                self.oneView.isHidden = true
-                self.twoPeopleListView.isHidden = false
-                self.keyword = text
-                self.searchListInfo()
-            }
+                if !text.isEmpty, text.count >= 2 {
+                    self.oneView.isHidden = true
+                    self.twoPeopleListView.isHidden = false
+                    self.keyword = text
+                    self.searchListInfo()
+                }else if !text.isEmpty, text.count < 2 {
+                    self.oneView.isHidden = false
+                    self.twoPeopleListView.isHidden = true
+                    self.allArray.removeAll()
+                    //获取热搜等数据
+                    getHotsSearchInfo()
+                    //取消请求
+                    man.cancelLastRequest()
+                }
         }).disposed(by: disposeBag)
         
         twoPeopleListView.peopleBlock = { [weak self] model in
