@@ -176,7 +176,12 @@ extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelega
         let vc = ViewControllerUtils.findViewController(from: self)
         if collectionView == self.pcollectionView {//图谱
             let model = self.twoItems?[indexPath.row]
-            let pageUrl = base_url + "\(model?.path ?? "")"
+            let path = model?.path ?? ""
+            if path.isEmpty {
+                ToastViewConfig.showToast(message: "敬请期待")
+                return
+            }
+            let pageUrl = base_url + path
             let dict = ["entityId": dataModel?.basicInfo?.orgId ?? ""]
             if pageUrl.contains("entityId") {
                 vc?.pushWebPage(from: pageUrl)
@@ -211,7 +216,12 @@ extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelega
                 oneRpVc.orgInfo = orgInfo
                 vc?.navigationController?.pushViewController(oneRpVc, animated: true)
             }else {
-                let pageUrl = base_url + "\(model?.path ?? "")"
+                let path = model?.path ?? ""
+                if path.isEmpty {
+                    ToastViewConfig.showToast(message: "敬请期待")
+                    return
+                }
+                let pageUrl = base_url + path
                 let dict = ["entityId": dataModel?.basicInfo?.orgId ?? ""]
                 if pageUrl.contains("entityId") {
                     vc?.pushWebPage(from: pageUrl)
@@ -219,7 +229,6 @@ extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelega
                     let webUrl = URLQueryAppender.appendQueryParameters(to: pageUrl, parameters: dict) ?? ""
                     vc?.pushWebPage(from: webUrl)
                 }
-                vc?.pushWebPage(from: pageUrl)
             }
             
         }

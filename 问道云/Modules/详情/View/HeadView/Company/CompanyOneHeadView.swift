@@ -223,7 +223,7 @@ class CompanyOneHeadView: BaseView {
             make.top.equalToSuperview().offset(12)
             make.left.equalTo(iconImageView.snp.right).offset(6)
             make.height.equalTo(22.5)
-            make.width.lessThanOrEqualTo(280)
+            make.right.equalToSuperview().offset(-5)
         }
         historyNamesButton.snp.makeConstraints { make in
             make.top.equalTo(namelabel.snp.bottom).offset(4.5)
