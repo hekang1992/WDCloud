@@ -17,6 +17,7 @@ class DonateMembershipViewController: WDBaseViewController {
     lazy var headView: HeadView = {
         let headView = HeadView(frame: .zero, typeEnum: .none)
         headView.bgView.backgroundColor = .clear
+        headView.lineView.isHidden = true
         return headView
     }()
     
@@ -78,6 +79,10 @@ class DonateMembershipViewController: WDBaseViewController {
                 guard let self = self else { return }
                 if granted {
                     self.present(contactPicker, animated: true, completion: nil)
+                }else {
+                    ShowAlertManager.showAlert(title: "权限申请", message: "请在iphone的“设置-问道云-通讯录”选项中,允许问道云访问你的通讯录", confirmAction: {[weak self] in
+                        self?.openSettings()
+                    })
                 }
             }
         }).disposed(by: disposeBag)

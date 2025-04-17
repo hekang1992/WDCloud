@@ -105,6 +105,7 @@ class PeopleActivityViewController: WDBaseViewController {
             self.getActivityInfo()
         })
         self.tableView.mj_footer?.isHidden = true
+        
         //获取动态数据
         getActivityInfo()
     }
@@ -173,7 +174,6 @@ extension PeopleActivityViewController {
                        method: .get) { [weak self] result in
             self?.tableView.mj_header?.endRefreshing()
             self?.tableView.mj_footer?.endRefreshing()
-            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 if let self = self,
@@ -200,8 +200,10 @@ extension PeopleActivityViewController {
                     }
                     self.tableView.reloadData()
                 }
+                ViewHud.hideLoadView()
                 break
             case .failure(_):
+                ViewHud.hideLoadView()
                 break
             }
         }

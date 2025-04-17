@@ -36,8 +36,6 @@ class SearchJobListViewController: WDBaseViewController {
         return companyListView
     }()
     
-    var completeBlock: (() -> Void)?
-    
     //人员查看更多
     var moreBtnBlock: (() -> Void)?
     
@@ -465,7 +463,9 @@ extension SearchJobListViewController {
         group.notify(queue: .main) {
             self.modelArray = [self.historyArray, self.hotsArray]
             self.oneView.modelArray = self.modelArray
-            self.completeBlock?()
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
+                self.searchView.searchTx.becomeFirstResponder()
+            }
             ViewHud.hideLoadView()
         }
         

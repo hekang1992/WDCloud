@@ -409,6 +409,9 @@ extension SearchJudgmentDebtorViewController {
         group.notify(queue: .main) {
             self.modelArray = [self.historyArray, self.hotsArray]
             self.oneView.modelArray = self.modelArray
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
+                self.headView.searchHeadView.searchTx.becomeFirstResponder()
+            }
         }
         
     }

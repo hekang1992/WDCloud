@@ -260,6 +260,9 @@ extension SearchBeneficialOwnerViewController: JXPagingViewDelegate, JXSegmented
     }
     
     func tableHeaderView(in pagingView: JXPagingView) -> UIView {
+        headView.headView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
         return headView
     }
     
@@ -364,6 +367,9 @@ extension SearchBeneficialOwnerViewController {
             self.modelArray = [self.historyArray, self.hotsArray]
             self.oneView.modelArray = self.modelArray
             ViewHud.hideLoadView()
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
+                self.headView.searchHeadView.searchTx.becomeFirstResponder()
+            }
         }
         
     }

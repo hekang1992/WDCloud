@@ -260,6 +260,9 @@ extension SearchOneReportViewController {
             self.modelArray = [self.historyArray, self.hotsArray]
             self.oneView.modelArray = self.modelArray
             ViewHud.hideLoadView()
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
+                self.searchView.searchTx.becomeFirstResponder()
+            }
         }
         
         oneView.tagClickBlock = { [weak self] label in

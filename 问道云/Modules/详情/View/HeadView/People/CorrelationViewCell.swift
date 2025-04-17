@@ -67,10 +67,10 @@ class CorrelationViewCell: BaseViewCell {
         contentView.addSubview(lineView)
         
         ctImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(15)
             make.left.equalToSuperview().offset(12)
             make.size.equalTo(CGSize(width: 40, height: 40))
-            make.bottom.equalToSuperview().offset(-27)
+            make.bottom.equalToSuperview().offset(-15)
         }
         
         statusLabel.snp.makeConstraints { make in

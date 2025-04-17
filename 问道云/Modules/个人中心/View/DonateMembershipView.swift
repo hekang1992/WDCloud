@@ -85,18 +85,18 @@ class DonateMembershipView: BaseView {
         }
         descLabel.snp.makeConstraints { make in
             make.height.equalTo(16.5)
-            make.top.equalTo(ctImageView.snp.bottom).offset(-40)
+            make.top.equalTo(ctImageView.snp.bottom).offset(-45.pix())
             make.left.equalToSuperview().offset(16)
         }
         enterImageView.snp.makeConstraints { make in
             make.left.equalTo(descLabel.snp.left)
             make.top.equalTo(descLabel.snp.bottom).offset(4)
-            make.size.equalTo(CGSize(width: 343, height: 54.5))
+            make.size.equalTo(CGSize(width: 343.pix(), height: 54.5.pix()))
         }
         phoneTx.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.left.equalToSuperview().offset(9.5)
-            make.size.equalTo(CGSize(width: 210.pix(), height: 31.5))
+            make.size.equalTo(CGSize(width: 220.pix(), height: 31.5.pix()))
         }
         contactBtn.snp.makeConstraints { make in
             make.top.right.equalToSuperview()
@@ -108,7 +108,6 @@ class DonateMembershipView: BaseView {
             make.size.equalTo(CGSize(width: 97.5, height: 14))
         }
         
-        
         phoneTx.rx.controlEvent(.editingChanged)
             .withLatestFrom(phoneTx.rx.text.orEmpty)
             .subscribe(onNext: { [weak self] text in
@@ -116,8 +115,6 @@ class DonateMembershipView: BaseView {
                 self.phoneTx.text = String(text.prefix(11))
             })
             .disposed(by: disposeBag)
-        
-        
         
     }
     
