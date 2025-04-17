@@ -97,6 +97,26 @@ class PopHistoryNameView: BaseView {
             self?.block?(model)
         }).disposed(by: disposeBag)
         
+        modelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
+            guard let self = self, let modelArray = modelArray else { return }
+            mlabel.text = "曾用名(\(modelArray.count))"
+            if !modelArray.isEmpty && modelArray.count > 1 {
+                self.bgViwe.snp.updateConstraints { make in
+                    make.height.equalTo(200)
+                }
+                self.tableView.snp.updateConstraints { make in
+                    make.height.equalTo(100)
+                }
+            }else {
+                self.bgViwe.snp.updateConstraints { make in
+                    make.height.equalTo(150)
+                }
+                self.tableView.snp.updateConstraints { make in
+                    make.height.equalTo(50)
+                }
+            }
+        }).disposed(by: disposeBag)
+        
     }
     
     @MainActor required init?(coder: NSCoder) {

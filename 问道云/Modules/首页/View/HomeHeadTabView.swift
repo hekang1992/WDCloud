@@ -69,7 +69,7 @@ class HomeHeadTabView: BaseView {
     
     lazy var labactImageView: UIImageView = {
         let labactImageView = UIImageView()
-        labactImageView.image = UIImage(named: "yuyinshuru")
+//        labactImageView.image = UIImage(named: "yuyinshuru")
         labactImageView.isUserInteractionEnabled = true
         return labactImageView
     }()
