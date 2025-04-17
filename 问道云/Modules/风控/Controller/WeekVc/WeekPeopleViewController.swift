@@ -312,10 +312,12 @@ extension WeekPeopleViewController {
             switch result {
             case .success(let success):
                 if success.code == 200 {
-                    self?.pageNum = 1
-                    self?.getPeopleInfo()
                     ToastViewConfig.showToast(message: "取消监控成功")
-                    self?.cancelBlock?()
+                    DispatchQueue.main.asyncAfter(delay: 0.25) {
+                        self?.pageNum = 1
+                        self?.getPeopleInfo()
+                        self?.cancelBlock?()
+                    }
                 }
                 break
             case .failure(_):
