@@ -22,10 +22,10 @@ class HistoryListViewController: WDBaseViewController {
     var pageNum: Int = 1
     
     weak var navController: UINavigationController?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.addSubview(historyView)
         historyView.snp.makeConstraints { make in
@@ -46,38 +46,57 @@ class HistoryListViewController: WDBaseViewController {
         
         historyView.modelBlock = { [weak self] model in
             guard let self = self else { return }
-            let viewrecordtype = model.viewrecordtype ?? ""
-            if viewrecordtype == "1" {//企业
+            let entityType = model.entityType ?? 0
+            if entityType == 1 {
+                //企业
                 let companyDetailVc = CompanyBothViewController()
-                companyDetailVc.enityId.accept(model.firmnumber ?? "")
-                companyDetailVc.companyName.accept(model.firmname ?? "")
+                companyDetailVc.enityId.accept(model.entityId ?? "")
+                companyDetailVc.companyName.accept(model.entityName ?? "")
                 navController?.navigationController?.pushViewController(companyDetailVc, animated: true)
-            }else {//个人
+            }else {
+                //个人
                 let peopleDetailVc = PeopleBothViewController()
-                peopleDetailVc.personId.accept(String(model.personnumber ?? ""))
-                peopleDetailVc.peopleName.accept(model.personname ?? "")
+                peopleDetailVc.personId.accept(String(model.entityId ?? ""))
+                peopleDetailVc.peopleName.accept(model.entityName ?? "")
                 navController?.navigationController?.pushViewController(peopleDetailVc, animated: true)
             }
         }
         
     }
-
-
+    
+    
 }
 
-
+/** 网络数据请求 */
 extension HistoryListViewController {
     
     //获取浏览历史列表
     func getHistroyListInfo(from viewType: String, pageNum: Int) {
         ViewHud.addLoadView()
+        var pageUrl: String = ""
+        var dict = [String: Any]()
+        var moduleId: String = ""
         self.viewType = viewType
-        let man = RequestManager()
-        let dict = ["viewrecordtype": viewType,
+        if viewType == "0" {
+            //全部
+            pageUrl = "/operation/view-record/query-list"
+            dict = ["pageNum": pageNum,
+                    "pageSize": 20] as [String : Any]
+        }else {
+            //企业和人员
+            pageUrl = "/operation/view-record/query"
+            if viewType == "1" {
+                moduleId = "01"
+            }else if viewType == "2" {
+                moduleId = "02"
+            }
+            dict = ["moduleId": moduleId,
                     "pageNum": pageNum,
                     "pageSize": 20] as [String : Any]
+        }
+        let man = RequestManager()
         man.requestAPI(params: dict,
-                       pageUrl: "/operation/clientbrowsecb/selectBrowserecord",
+                       pageUrl: pageUrl,
                        method: .get) { [weak self] result in
             guard let self = self else { return }
             ViewHud.hideLoadView()

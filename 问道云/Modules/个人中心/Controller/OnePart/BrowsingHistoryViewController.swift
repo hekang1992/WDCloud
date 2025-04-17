@@ -60,7 +60,7 @@ extension BrowsingHistoryViewController: JXSegmentedViewDelegate {
     func setupViewControllers() {
         listVCArray.forEach { $0.view.removeFromSuperview() }
         listVCArray.removeAll()
-        for _ in 0..<4 {
+        for index in 0..<4 {
             let vc = HistoryListViewController()
             vc.navController = navigationController
             cocsciew.addSubview(vc.view)
@@ -80,7 +80,7 @@ extension BrowsingHistoryViewController: JXSegmentedViewDelegate {
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         if index == 0 {
             let oneVc = self.listVCArray[0] 
-            oneVc.getHistroyListInfo(from: "", pageNum: 1)
+            oneVc.getHistroyListInfo(from: "0", pageNum: 1)
         }else if index == 1 {
             let twoVc = self.listVCArray[1]
             twoVc.getHistroyListInfo(from: "1", pageNum: 1)

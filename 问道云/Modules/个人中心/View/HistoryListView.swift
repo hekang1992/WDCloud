@@ -121,7 +121,7 @@ extension HistoryListView {
     func groupRowsByOrderState(rows: [rowsModel]) -> [SectionModel] {
         var groupedDict: [String: [rowsModel]] = [:]
         for row in rows {
-            guard let state = row.createtime else { continue }
+            guard let state = row.updateTime else { continue }
             if groupedDict[state] != nil {
                 groupedDict[state]?.append(row)
             } else {
