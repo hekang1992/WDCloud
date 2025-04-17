@@ -275,9 +275,10 @@ extension PeopleDetailViewController {
         }
         
         //动态
-        let timeStr = model.riskDynamic?.riskTime?.isEmpty ?? true ? "" : model.riskDynamic!.riskTime!
+        let timeStr = model.riskDynamic?.riskTime?.isEmpty ?? true ? "--" : model.riskDynamic!.riskTime!
+        let descStr = model.riskDynamic?.riskInfo?.isEmpty ?? true ? "--" : model.riskDynamic!.riskInfo!
         homeHeadView.timelabel.text = timeStr
-        homeHeadView.desclabel.text = model.riskDynamic?.riskInfo ?? ""
+        homeHeadView.desclabel.text = descStr
     }
     
     //获取个人头部信息
@@ -354,11 +355,14 @@ extension PeopleDetailViewController {
         self.homeHeadView.model.accept(model)
         self.homeHeadView.pcollectionView.reloadData()
         
-//        if shareholderList.isEmpty {
-//            JXTableHeaderViewHeight = 385 - 81
-//        }else {
-//            JXTableHeaderViewHeight = 385
-//        }
+        if shareholderList.isEmpty {
+            changeTableHeaderViewHeight(form: JXTableHeaderViewHeight - 81)
+            self.homeHeadView.partnerView.removeAllSubviews()
+            self.homeHeadView.partnerView.snp.updateConstraints { make in
+                make.height.equalTo(0)
+                make.top.equalTo(self.homeHeadView.threelineView.snp.bottom).offset(-4)
+            }
+        }
         
         let monitor = model.monitor ?? false
         if monitor {
@@ -381,7 +385,12 @@ extension PeopleDetailViewController {
             footerView.backBtn3.backgroundColor = UIColor.init(cssStr: "#3F96FF")
             footerView.backBtn3.setTitleColor(UIColor.init(cssStr: "#FFFFFF"), for: .normal)
         }
-
+    }
+    
+    //更改头部高度
+    @objc func changeTableHeaderViewHeight(form height: Int) {
+        JXTableHeaderViewHeight = height
+        pagingView.resizeTableHeaderViewHeight(animatable: false)
     }
     
     private func addPeopleMonitoring() {

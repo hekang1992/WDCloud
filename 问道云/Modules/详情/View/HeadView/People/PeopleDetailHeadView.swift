@@ -374,7 +374,7 @@ class PeopleDetailHeadView: BaseView {
         
         desclabel.snp.makeConstraints { make in
             make.left.equalTo(activityImageView.snp.right).offset(6.5)
-            make.top.equalTo(timelabel.snp.bottom).offset(4)
+            make.top.equalTo(timelabel.snp.bottom).offset(2)
             make.height.equalTo(16.5)
         }
         
