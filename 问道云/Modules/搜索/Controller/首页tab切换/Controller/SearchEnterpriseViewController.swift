@@ -90,6 +90,8 @@ class SearchEnterpriseViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self, let text = text else { return }
                 self.pageIndex = 1
+                //取消请求
+                man.cancelLastRequest()
                 if !text.isEmpty, text.count >= 2 {
                     self.oneView.isHidden = true
                     self.companyListView.isHidden = false
@@ -101,8 +103,10 @@ class SearchEnterpriseViewController: WDBaseViewController {
                     self.allArray.removeAll()
                     //获取热搜等数据
                     getHotsSearchInfo()
-                    //取消请求
-                    man.cancelLastRequest()
+                }else if text.isEmpty {
+                    self.oneView.isHidden = false
+                    self.companyListView.isHidden = true
+                    self.allArray.removeAll()
                 }
             }).disposed(by: disposeBag)
         
@@ -332,8 +336,6 @@ extension SearchEnterpriseViewController {
                    let code = success.code,
                    code == 200,
                    let total = model.pageMeta?.totalNum {
-                    self.oneView.isHidden = true
-                    self.companyListView.isHidden = false
                     if self.pageIndex == 1 {
                         self.pageIndex = 1
                         self.allArray.removeAll()

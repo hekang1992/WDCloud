@@ -90,8 +90,9 @@ class SearchBossViewController: WDBaseViewController {
             .asObservable()
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
-            guard let self = self, let text = text else { return }
-            self.pageIndex = 1
+                guard let self = self, let text = text else { return }
+                //取消请求
+                man.cancelLastRequest()
                 if !text.isEmpty, text.count >= 2 {
                     self.oneView.isHidden = true
                     self.twoPeopleListView.isHidden = false
@@ -103,10 +104,12 @@ class SearchBossViewController: WDBaseViewController {
                     self.allArray.removeAll()
                     //获取热搜等数据
                     getHotsSearchInfo()
-                    //取消请求
-                    man.cancelLastRequest()
+                }else if text.isEmpty {
+                    self.oneView.isHidden = false
+                    self.twoPeopleListView.isHidden = true
+                    self.allArray.removeAll()
                 }
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         twoPeopleListView.peopleBlock = { [weak self] model in
             guard let self = self else { return }
@@ -272,8 +275,6 @@ extension SearchBossViewController {
                    let model = success.data,
                    let code = success.code,
                    code == 200, let total = model.total {
-                    self.oneView.isHidden = true
-                    self.twoPeopleListView.isHidden = false
                     if pageIndex == 1 {
                         pageIndex = 1
                         self.allArray.removeAll()

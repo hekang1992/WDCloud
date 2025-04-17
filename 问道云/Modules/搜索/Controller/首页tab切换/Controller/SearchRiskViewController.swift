@@ -332,6 +332,8 @@ extension SearchRiskViewController {
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] text in
                 guard let self = self, let text = text else { return }
+                //取消请求
+                man.cancelLastRequest()
                 self.keyword = text
                 if !text.isEmpty, text.count >= 2 {
                     self.pageIndex = 1
@@ -346,8 +348,6 @@ extension SearchRiskViewController {
                     self.peopleBtn.isHidden = true
                     self.tableView.reloadData()
                     getHotsSearchInfo()
-                    //取消请求
-                    man.cancelLastRequest()
                 }
         }).disposed(by: disposeBag)
         

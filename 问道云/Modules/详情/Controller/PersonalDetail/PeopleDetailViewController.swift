@@ -311,7 +311,9 @@ extension PeopleDetailViewController {
         //名字
         self.homeHeadView.namelabel.text = model.personName ?? ""
         //tags
-        self.homeHeadView.tagArray.accept(model.tags ?? [])
+        let tags = model.peopleTags ?? []
+        let names = tags.map { $0.name ?? "" }
+        self.homeHeadView.tagArray.accept(names)
         //desc
         let descInfo = model.resume ?? ""
         homeHeadView.desLabel.text = "简介: \(descInfo)"

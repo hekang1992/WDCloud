@@ -124,6 +124,7 @@ class DataModel {
     var resume: String?//个人简介
     var shareholderList: [shareholderListModel]?//合作伙伴
     var tags: [String]?
+    var peopleTags: [labelsModel]?
     //风险
     var entityRiskEventInfo: entityRiskEventInfoModel?
     var operationRisk: map1Model?
@@ -214,6 +215,7 @@ class DataModel {
     var logoColor: String?
     var entityCategory: String?
     init(json: JSON) {
+        self.peopleTags = json["tags"].arrayValue.map { labelsModel(json: $0) }
         self.productList = productListModel(json: json["productList"])
         self.follow = json["follow"].boolValue
         self.entityCategory = json["entityCategory"].stringValue
