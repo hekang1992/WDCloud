@@ -1856,7 +1856,9 @@ class phoneListModel {
     var year: String?
     var source: String?
     var orgCount: String?
+    var detailUrl: String?
     init(json: JSON) {
+        self.detailUrl = json["detailUrl"].stringValue
         self.phone = json["phone"].stringValue
         self.year = json["year"].stringValue
         self.source = json["source"].stringValue
@@ -1871,7 +1873,9 @@ class addressListModel {
     var orgCount: String?
     var type: String?
     var source: String?
+    var detailUrl: String?
     init(json: JSON) {
+        self.detailUrl = json["detailUrl"].stringValue
         self.address = json["address"].stringValue
         self.lng = json["lng"].stringValue
         self.lat = json["lat"].stringValue
@@ -1889,7 +1893,9 @@ class websitesListModel {
     var icpFlag: Bool?
     var owFlag: Bool?
     var value: String?
+    var detailUrl: String?
     init(json: JSON) {
+        self.detailUrl = json["detailUrl"].stringValue
         self.value = json["value"].stringValue
         self.website = json["website"].stringValue
         self.year = json["year"].stringValue
@@ -1906,7 +1912,9 @@ class emailListModel {
     var year: String?
     var source: String?
     var orgCount: String?
+    var detailUrl: String?
     init(json: JSON) {
+        self.detailUrl = json["detailUrl"].stringValue
         self.emailId = json["emailId"].stringValue
         self.email = json["email"].stringValue
         self.year = json["year"].stringValue
@@ -1923,7 +1931,9 @@ class wechatListModel {
     var year: String?
     var source: String?
     var orgCount: String?
+    var detailUrl: String?
     init(json: JSON) {
+        self.detailUrl = json["detailUrl"].stringValue
         self.wechatId = json["wechatId"].stringValue
         self.wechat = json["wechat"].stringValue
         self.title = json["title"].stringValue
