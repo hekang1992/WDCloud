@@ -45,6 +45,7 @@ class SearchLawsViewController: WDBaseViewController {
     
     lazy var oneView: CommonHotsView = {
         let oneView = CommonHotsView()
+        oneView.backgroundColor = .white
         return oneView
     }()
     
@@ -117,7 +118,6 @@ class SearchLawsViewController: WDBaseViewController {
             let regionArray = getLawGroupMenuInfo(from: modelArray)
             oneMenu.listDataSource = regionArray
         }).disposed(by: disposeBag)
-        
         
         twoItemArray.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self, let modelArray = modelArray else { return }
@@ -199,7 +199,6 @@ class SearchLawsViewController: WDBaseViewController {
             let keywords = label.text ?? ""
             self?.searchView.searchTx.text = keywords
             if !keywords.isEmpty {
-                self?.oneView.isHidden = false
                 //最近搜索
                 self?.getHotsSearchInfo()
                 self?.pageNum = 1
@@ -251,8 +250,6 @@ extension SearchLawsViewController: UITextFieldDelegate {
                 getHotsSearchInfo()
                 return
             }
-            self.oneView.isHidden = true
-            self.tableView.isHidden = false
             self.pageNum = 1
             getNoticeListInfo()
         }
@@ -362,6 +359,7 @@ extension SearchLawsViewController {
         group.enter()
         getLastSearchInfo(from: "44") { [weak self] modelArray in
             if !modelArray.isEmpty {
+                self?.oneView.bgView.isHidden = false
                 self?.oneView.bgView.snp.remakeConstraints({ make in
                     make.top.equalToSuperview().offset(1)
                     make.left.equalToSuperview()
@@ -370,6 +368,7 @@ extension SearchLawsViewController {
                 self?.oneView.tagArray = modelArray.map { $0.searchContent ?? "" }
                 self?.oneView.setupScrollView()
             }else {
+                self?.oneView.bgView.isHidden = true
                 self?.oneView.bgView.snp.remakeConstraints({ make in
                     make.top.equalToSuperview().offset(1)
                     make.left.equalToSuperview()
@@ -399,3 +398,4 @@ extension SearchLawsViewController {
         
     }
 }
+
