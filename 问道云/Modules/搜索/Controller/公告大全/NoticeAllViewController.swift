@@ -111,9 +111,32 @@ class NoticeAllViewController: WDBaseViewController {
             .distinctUntilChanged()
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] keywords in
-                self?.pageNum = 1
-                self?.shareSearchKey = keywords
-                self?.getNoticeListInfo()
+                guard let self = self else { return }
+                let isComposing = self.searchView.searchTx.markedTextRange != nil
+                if !isComposing {
+                    let searchStr = self.searchView.searchTx.text ?? ""
+                    
+                    // Check for special characters
+                    let filteredText = filterAllSpecialCharacters(searchStr)
+                    if filteredText != searchStr {
+                        ToastViewConfig.showToast(message: "禁止输入特殊字符")
+                        self.searchView.searchTx.text = filteredText
+                        return
+                    }
+                    
+                    if searchStr.count < 2 && !searchStr.isEmpty {
+                        ToastViewConfig.showToast(message: "至少输入2个关键词")
+                        man.cancelLastRequest()
+                        return
+                    } else if searchStr.count > 100 {
+                        self.searchView.searchTx.text = String(searchStr.prefix(100))
+                        ToastViewConfig.showToast(message: "最多输入100个关键词")
+                    }
+
+                    self.pageNum = 1
+                    self.shareSearchKey = self.searchView.searchTx.text ?? ""
+                    getNoticeListInfo()
+                }
         }).disposed(by: disposeBag)
         
         for (index, menuName) in items.enumerated() {

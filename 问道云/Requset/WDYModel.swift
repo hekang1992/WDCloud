@@ -326,7 +326,7 @@ class DataModel {
         self.labels = json["labels"].arrayValue.map { promptLabelsModel(json: $0) }
         self.assetInfo = assetInfoModel(json: json["assetInfo"])
         self.taxInfo = taxInfoModel(json: json["taxInfo"])
-        self.namesHis = json["namesUsedBefore"].arrayValue.map { namesUsedBeforeModel(json: $0) }
+        self.namesHis = json["namesHis"].arrayValue.map { namesUsedBeforeModel(json: $0) }
         self.srMgmtInfos = json["srMgmtInfos"].arrayValue.map { staffInfosModel(json: $0) }
         self.shareHolders = json["shareHolders"].arrayValue.map { shareHoldersModel(json: $0) }
         self.profitInfo = profitInfoModel(json: json["profitInfo"])
@@ -1570,10 +1570,10 @@ class staffInfosModel {
 
 //曾用名
 class namesUsedBeforeModel {
-    var endTime: String?
     var orgId: String?
     var orgName: String?
     var startTime: String?
+    var endTime: String?
     init(json: JSON) {
         self.startTime = json["startTime"].stringValue
         self.endTime = json["endTime"].stringValue
