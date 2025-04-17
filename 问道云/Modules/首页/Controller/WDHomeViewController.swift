@@ -182,37 +182,27 @@ class WDHomeViewController: WDBaseViewController {
         }).disposed(by: disposeBag)
         
         //文字轮博点击
-        homeHeadView.tabView.textBlock = { [weak self] model in
+        homeHeadView.tabView.fourBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let nameStr = homeHeadView.tabView.scrollLabelView?.scrollTitle ?? ""
             if IS_LOGIN {
                 DispatchQueue.main.async {
-                    let selectIndex = self?.selectIndex ?? 0
+                    let selectIndex = self.selectIndex
                     if selectIndex == 3 {
                         let searchClueVc = PropertyTabBarController()
-                        self?.navigationController?.pushViewController(searchClueVc, animated: true)
+                        self.navigationController?.pushViewController(searchClueVc, animated: true)
                     }else {
                         let searchAllVc = SearchAllViewController()
                         searchAllVc.selectIndex = selectIndex
-                        searchAllVc.model.accept(model)
-                        self?.navigationController?.pushViewController(searchAllVc, animated: true)
+                        searchAllVc.name = nameStr
+                        self.navigationController?.pushViewController(searchAllVc, animated: true)
                     }
                 }
             }else {
-                self?.popLogin()
+                self.popLogin()
             }
-        }
-        
-        homeScroView.textBlock = { [weak self] model in
-            if IS_LOGIN {
-                DispatchQueue.main.async {
-                    let searchAllVc = SearchAllViewController()
-                    searchAllVc.selectIndex = self?.selectIndex ?? 0
-                    searchAllVc.model.accept(model)
-                    self?.navigationController?.pushViewController(searchAllVc, animated: true)
-                }
-            }else {
-                self?.popLogin()
-            }
-        }
+            
+        }).disposed(by: disposeBag)
         
         if IS_LOGIN {
             //获取地区信息

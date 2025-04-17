@@ -30,6 +30,8 @@ class CompanyDetailHeadView: BaseView {
     //点击了动态
     var activityBlock: (() -> Void)?
     
+    var vipBlock: (() -> Void)?
+    
     lazy var oneHeadView: CompanyOneHeadView = {
         let oneHeadView = CompanyOneHeadView()
         oneHeadView.moreBtnBlock = { [weak self] in
@@ -69,6 +71,9 @@ class CompanyDetailHeadView: BaseView {
     
     lazy var sixHeadView: CompanySixHeadView = {
         let sixHeadView = CompanySixHeadView()
+        sixHeadView.vipBlock = { [weak self] in
+            self?.vipBlock?()
+        }
         return sixHeadView
     }()
     

@@ -10,6 +10,7 @@ import RxRelay
 
 class CompanyDetailView: BaseView {
     
+    var vipBlock: (() -> Void)?
     //点击了动态
     var activityBlock: (() -> Void)?
     
@@ -251,6 +252,10 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
             
             headerView.headView.activityBlock = { [weak self] in
                 self?.activityBlock?()
+            }
+            
+            headerView.headView.vipBlock = { [weak self] in
+                self?.vipBlock?()
             }
             
             if let headModel = self.headModel.value {

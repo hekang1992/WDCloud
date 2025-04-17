@@ -34,6 +34,8 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
     
     static let identifier = "MyCollectionSpecialReusableView"
     
+    var vipBlock: (() -> Void)?
+    
     lazy var headView: CompanyDetailHeadView = {
         let headView = CompanyDetailHeadView()
         headView.moreClickBlcok = { [weak self] model in
@@ -42,6 +44,9 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
         }
         headView.activityBlock = { [weak self] in
             self?.activityBlock?()
+        }
+        headView.vipBlock = { [weak self] in
+            self?.vipBlock?()
         }
         return headView
     }()

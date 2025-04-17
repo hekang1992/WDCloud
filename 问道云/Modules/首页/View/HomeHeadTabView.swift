@@ -42,6 +42,11 @@ class HomeHeadTabView: BaseView {
         return threeBtn
     }()
     
+    lazy var fourBtn: UIButton = {
+        let fourBtn = UIButton(type: .custom)
+        return fourBtn
+    }()
+    
     lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .white
@@ -64,7 +69,7 @@ class HomeHeadTabView: BaseView {
     
     lazy var labactImageView: UIImageView = {
         let labactImageView = UIImageView()
-//        labactImageView.image = UIImage(named: "yuyinshuru")
+        labactImageView.image = UIImage(named: "yuyinshuru")
         labactImageView.isUserInteractionEnabled = true
         return labactImageView
     }()
@@ -174,6 +179,10 @@ class HomeHeadTabView: BaseView {
             self.scrollLabelView = scrollLabelView
             whiteView.addSubview(scrollLabelView)
             scrollLabelView.beginScrolling()
+            whiteView.addSubview(fourBtn)
+            fourBtn.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
         }).disposed(by: disposeBag)
         
     }

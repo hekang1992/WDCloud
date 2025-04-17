@@ -7,8 +7,11 @@
 
 import UIKit
 import SwiftyJSON
+import TYAlertController
 
 class CompanySixHeadView: BaseView {
+    
+    var vipBlock: (() -> Void)?
     
     //常用服务
     var oneItems: [childrenModel]? {
@@ -184,6 +187,11 @@ extension CompanySixHeadView: UICollectionViewDataSource, UICollectionViewDelega
         }else {//常用服务
             let model = self.oneItems?[indexPath.row]
             let menuId = model?.menuId ?? ""
+            let clickFlag = model?.clickFlag ?? 0
+            if clickFlag != 0 {
+                self.vipBlock?()
+                return
+            }
             if menuId == "60030" {//财产线索
                 let bothVc = PropertyLineBothViewController()
                 let enityId = dataModel?.basicInfo?.orgId ?? ""

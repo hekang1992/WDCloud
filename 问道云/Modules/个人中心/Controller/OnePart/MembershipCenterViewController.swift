@@ -33,10 +33,10 @@ class MembershipCenterViewController: WDBaseViewController {
     
     var vipTypeModel = BehaviorRelay<DataModel?>(value: nil)
     
-    private lazy var segmentedView: JXSegmentedView = createSegmentedView()
-    private lazy var cocsciew: UIScrollView = createCocsciew()
-    private var segmurce: JXSegmentedTitleDataSource!
-    private var listVCArray = [MembershipListViewController]()
+    lazy var segmentedView: JXSegmentedView = createSegmentedView()
+    lazy var cocsciew: UIScrollView = createCocsciew()
+    var segmurce: JXSegmentedTitleDataSource!
+    var listVCArray = [MembershipListViewController]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,7 +180,7 @@ extension MembershipCenterViewController: JXSegmentedViewDelegate {
                 .when(.recognized)
                 .subscribe(onNext: { [weak self] _ in
                     self?.pushWebPage(from: base_url + membership_agreement)
-            }).disposed(by: disposeBag)
+                }).disposed(by: disposeBag)
             
             vc.payBlock = { [weak self] in
                 self?.refreshToke {

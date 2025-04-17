@@ -96,6 +96,25 @@ class CompanyDetailViewController: WDBaseViewController {
             self?.activityBlock?()
         }
         
+        companyDetailView.vipBlock = { [weak self] in
+            guard let self = self else { return }
+            let popView = PopOnlyBuyVipView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 300))
+            let alertVc = TYAlertController(alert: popView, preferredStyle: .alert)!
+            self.present(alertVc, animated: true)
+            popView.cancelBlock = { [weak self] in
+                self?.dismiss(animated: true)
+            }
+            popView.sureBlock = { [weak self] in
+                self?.dismiss(animated: true) {
+                    let menVc = MembershipCenterViewController()
+                    self?.navigationController?.pushViewController(menVc, animated: true)
+                    menVc.payBlock = {
+                        self?.getDetailInfo()
+                    }
+                }
+            }
+        }
+        
         //回到首页
         companyDetailView.footerView.backBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.navigationController?.popToRootViewController(animated: true)

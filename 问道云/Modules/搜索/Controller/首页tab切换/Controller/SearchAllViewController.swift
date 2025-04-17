@@ -25,28 +25,48 @@ class SearchAllViewController: WDBaseViewController {
     
     lazy var pagingView: JXPagingView = preferredPagingView()
     
-    var model = BehaviorRelay<rowsModel?>(value: nil)
+//    var model = BehaviorRelay<rowsModel?>(value: nil)
+    
+    var name: String = ""
     
     let segmentedDataSource = JXSegmentedTitleDataSource()
     
     lazy var searchHeadView: SearchHeadView = {
         let searchHeadView = SearchHeadView()
-        searchHeadView.searchTx.placeholder = model.value?.entityName ?? ""
+        searchHeadView.searchTx.placeholder = name
         return searchHeadView
     }()
     
     lazy var enterpriseVc: SearchEnterpriseViewController = {
         let enterpriseVc = SearchEnterpriseViewController()
+        enterpriseVc.completeBlock = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.asyncAfter(delay: 0.5) {
+                self.searchHeadView.searchTx.becomeFirstResponder()
+            }
+        }
         return enterpriseVc
     }()
     
     lazy var peopleVc: SearchBossViewController = {
         let peopleVc = SearchBossViewController()
+        peopleVc.completeBlock = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
+                self.searchHeadView.searchTx.becomeFirstResponder()
+            }
+        }
         return peopleVc
     }()
     
     lazy var riskVc: SearchRiskViewController = {
         let riskVc = SearchRiskViewController()
+        riskVc.completeBlock = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
+                self.searchHeadView.searchTx.becomeFirstResponder()
+            }
+        }
         return riskVc
     }()
     
