@@ -70,7 +70,6 @@ class CorrelationViewCell: BaseViewCell {
             make.top.equalToSuperview().offset(15)
             make.left.equalToSuperview().offset(12)
             make.size.equalTo(CGSize(width: 40, height: 40))
-            make.bottom.equalToSuperview().offset(-15)
         }
         
         statusLabel.snp.makeConstraints { make in
@@ -83,6 +82,7 @@ class CorrelationViewCell: BaseViewCell {
             make.top.equalToSuperview().offset(19)
             make.left.equalTo(ctImageView.snp.right).offset(8)
             make.width.equalTo(220.pix())
+            make.bottom.equalToSuperview().offset(-40)
         }
         
         mlabel.snp.makeConstraints { make in

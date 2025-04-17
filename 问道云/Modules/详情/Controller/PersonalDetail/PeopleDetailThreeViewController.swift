@@ -122,7 +122,7 @@ extension PeopleDetailThreeViewController: UICollectionViewDelegateFlowLayout, U
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let modelArray = self.model.value?.items?.first?.children ?? []
-        let newArray = Array(modelArray.dropLast())[indexPath.section]
+        let newArray = Array(modelArray.suffix(1))[indexPath.section]
         let model = newArray.children?[indexPath.row]
         
         let markCount = model?.markCount ?? 0
