@@ -203,6 +203,7 @@ extension OneReportViewController {
         let man = RequestManager()
         ViewHud.addLoadView()
         let dict = ["entityId": orgInfo?.orgId ?? "",
+                    "entityName": orgInfo?.orgName ?? "",
                     "entityType": 1,
                     "reportType": orgInfo?.reportType ?? ""] as [String : Any]
         man.requestAPI(params: dict,

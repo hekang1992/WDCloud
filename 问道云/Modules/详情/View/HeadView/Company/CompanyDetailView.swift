@@ -32,7 +32,7 @@ class CompanyDetailView: BaseView {
     var mapArrayModel = BehaviorRelay<[childrenModel]?>(value: nil)
     
     //返回当前在第几个section
-    var intBlock: ((Double) -> Void)?
+    var intBlock: ((Double, String) -> Void)?
     
     // 用于存储所有按钮
     var buttons: [UIButton] = []
@@ -329,7 +329,7 @@ extension CompanyDetailView: UIScrollViewDelegate, UICollectionViewDataSource, U
     
     // 滚动时调用，计算当前最上方的 Section
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.intBlock?(scrollView.contentOffset.y)
+        self.intBlock?(scrollView.contentOffset.y, self.headModel.value?.basicInfo?.orgName ?? "")
         if scrollView.contentOffset.y < 0 {
             scrollView.contentOffset.y = 0
             return

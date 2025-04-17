@@ -46,7 +46,7 @@ class HeadView: BaseView {
         let titlelabel = UILabel()
         titlelabel.textColor = .init(cssStr: "#333333")
         titlelabel.textAlignment = .center
-        titlelabel.font = .mediumFontOfSize(size: 18)
+        titlelabel.font = .mediumFontOfSize(size: 16)
         return titlelabel
     }()
     
@@ -86,6 +86,16 @@ class HeadView: BaseView {
         return lineView
     }()
     
+    lazy var nameLabel: UILabel = {
+        let nameLabel = UILabel()
+        nameLabel.textColor = .init(cssStr: "#333333")
+        nameLabel.textAlignment = .left
+        nameLabel.font = .mediumFontOfSize(size: 16)
+        nameLabel.isHidden = true
+        nameLabel.numberOfLines = 0
+        return nameLabel
+    }()
+    
     init(frame: CGRect, typeEnum: NavRightType) {
         super.init(frame: frame)
         addSubview(bgView)
@@ -96,6 +106,7 @@ class HeadView: BaseView {
         bgView.addSubview(threeBtn)
         bgView.addSubview(headTitleView)
         bgView.addSubview(lineView)
+        bgView.addSubview(nameLabel)
         let hiddenStates: [Bool]
         switch typeEnum {
         case .none:
@@ -124,7 +135,7 @@ class HeadView: BaseView {
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
         titlelabel.snp.makeConstraints { make in
-            make.left.equalTo(backBtn.snp.right).offset(5)
+            make.left.equalTo(backBtn.snp.right).offset(10)
             make.centerY.equalTo(backBtn.snp.centerY)
             make.height.equalTo(20)
             make.centerX.equalToSuperview()
@@ -154,7 +165,11 @@ class HeadView: BaseView {
             make.left.bottom.right.equalToSuperview()
             make.height.equalTo(1)
         }
-        
+        nameLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(backBtn.snp.centerY)
+            make.left.equalTo(backBtn.snp.right).offset(5)
+            make.width.lessThanOrEqualTo(210)
+        }
         oneBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.oneBlock?()
         }).disposed(by: disposeBag)
@@ -170,11 +185,15 @@ class HeadView: BaseView {
         backBtn.rx.tap.subscribe(onNext: { [weak self] in
             self?.backBlock?()
         }).disposed(by: disposeBag)
+        
+        backBtn.rx.tap.subscribe(onNext: { [weak self] in
+            self?.backBlock?()
+        }).disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }
 

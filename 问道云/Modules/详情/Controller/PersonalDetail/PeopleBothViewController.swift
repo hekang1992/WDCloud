@@ -50,15 +50,15 @@ class PeopleBothViewController: WDBaseViewController {
         
         setheadUI()
         
-        peopleDetailVc.intBlock = { [weak self] contentY in
+        peopleDetailVc.intBlock = { [weak self] contentY, name in
             guard let self = self else { return  }
             if contentY >= 200 {
                 self.headView.headTitleView.isHidden = true
-                self.headView.titlelabel.isHidden = false
-                self.headView.titlelabel.text = peopleName.value
+                self.headView.nameLabel.isHidden = false
+                self.headView.nameLabel.text = name
             }else {
                 self.headView.headTitleView.isHidden = false
-                self.headView.titlelabel.isHidden = true
+                self.headView.nameLabel.isHidden = true
             }
         }
         

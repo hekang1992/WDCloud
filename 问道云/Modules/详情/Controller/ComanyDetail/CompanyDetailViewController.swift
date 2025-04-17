@@ -14,7 +14,7 @@ class CompanyDetailViewController: WDBaseViewController {
     
     var enityId: String = ""
     
-    var intBlock: ((Double) -> Void)?
+    var intBlock: ((Double, String) -> Void)?
     
     //头部的数据模型
     var headModel = BehaviorRelay<DataModel?>(value: nil)
@@ -42,8 +42,8 @@ class CompanyDetailViewController: WDBaseViewController {
         companyDetailView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        companyDetailView.intBlock = { [weak self] contentY in
-            self?.intBlock?(contentY)
+        companyDetailView.intBlock = { [weak self] contentY, name in
+            self?.intBlock?(contentY, name)
         }
         companyDetailView.cellBlock = { [weak self] model in
             guard let self = self else { return }

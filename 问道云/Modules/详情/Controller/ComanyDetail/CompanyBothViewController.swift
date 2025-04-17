@@ -117,17 +117,44 @@ class CompanyBothViewController: WDBaseViewController {
         }
         setheadUI()
         
-        companyDetailVc.intBlock = { [weak self] contentY in
+        companyDetailVc.intBlock = { [weak self] contentY, name in
             guard let self = self else { return }
+            self.headView.titlelabel.isHidden = true
             if contentY >= 200 {
                 self.headView.headTitleView.isHidden = true
-                self.headView.titlelabel.isHidden = false
-                self.headView.titlelabel.text = companyName.value
+                self.headView.nameLabel.isHidden = false
+                let rows = numberOfLines(for: name, font: .mediumFontOfSize(size: 16))
+                if rows > 1 {
+                    self.headView.nameLabel.font = .mediumFontOfSize(size: 12)
+                }else {
+                    self.headView.nameLabel.font = .mediumFontOfSize(size: 16)
+                }
+                self.headView.nameLabel.text = name
             }else {
                 self.headView.headTitleView.isHidden = false
-                self.headView.titlelabel.isHidden = true
+                self.headView.nameLabel.isHidden = true
             }
         }
+    }
+    
+    func numberOfLines(for text: String, font: UIFont, maxWidth: CGFloat = 200) -> Int {
+        let label = UILabel()
+        label.font = font
+        label.numberOfLines = 0
+        label.text = text
+        
+        let constraintRect = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+        let boundingBox = text.boundingRect(
+            with: constraintRect,
+            options: .usesLineFragmentOrigin,
+            attributes: [.font: font],
+            context: nil
+        )
+        
+        let lineHeight = font.lineHeight
+        let lines = Int(ceil(boundingBox.height / lineHeight))
+        
+        return lines
     }
     
 }

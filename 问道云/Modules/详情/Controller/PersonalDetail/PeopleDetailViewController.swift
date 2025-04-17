@@ -15,7 +15,7 @@ class PeopleDetailViewController: WDBaseViewController {
     
     var personId: String = ""
     
-    var intBlock: ((Double) -> Void)?
+    var intBlock: ((Double, String) -> Void)?
     
     var activityBlock: (() -> Void)?
     
@@ -537,6 +537,6 @@ extension PeopleDetailViewController: JXPagingViewDelegate {
     func pagingView(_ pagingView: JXPagingView, mainTableViewDidScroll scrollView: UIScrollView) {
         let contentOffsetY = scrollView.contentOffset.y
         print("contentOffsetY======\(contentOffsetY)")
-        self.intBlock?(contentOffsetY)
+        self.intBlock?(contentOffsetY, self.model?.personName ?? "")
     }
 }
