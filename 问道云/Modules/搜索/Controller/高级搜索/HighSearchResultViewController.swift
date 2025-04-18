@@ -327,6 +327,13 @@ extension HighSearchResultViewController: SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, skeletonCellForRowAt indexPath: IndexPath) -> UITableViewCell? {
+        let cell = skeletonView.dequeueReusableCell(withIdentifier: "HighSearchViewCell", for: indexPath) as! HighSearchViewCell
+        cell.selectionStyle = .none
+        return cell
+    }
+    
 }
 
 extension HighSearchResultViewController: UITableViewDelegate, UITableViewDataSource {

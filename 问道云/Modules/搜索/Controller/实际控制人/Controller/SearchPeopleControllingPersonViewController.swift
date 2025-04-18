@@ -144,6 +144,13 @@ extension SearchPeopleControllingPersonViewController: SkeletonTableViewDataSour
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, skeletonCellForRowAt indexPath: IndexPath) -> UITableViewCell? {
+        let cell = skeletonView.dequeueReusableCell(withIdentifier: "SearchContorlPeopleViewCell", for: indexPath) as! SearchContorlPeopleViewCell
+        cell.selectionStyle = .none
+        return cell
+    }
+    
 }
 
 /** 网络数据请求 */

@@ -339,6 +339,13 @@ extension PropertyThreeBothViewController: SkeletonTableViewDataSource {
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, skeletonCellForRowAt indexPath: IndexPath) -> UITableViewCell? {
+        let cell = skeletonView.dequeueReusableCell(withIdentifier: "PropertMonitoringListViewCell", for: indexPath) as! PropertMonitoringListViewCell
+        cell.selectionStyle = .none
+        return cell
+    }
+    
 }
 
 extension PropertyThreeBothViewController: UITableViewDelegate, UITableViewDataSource {

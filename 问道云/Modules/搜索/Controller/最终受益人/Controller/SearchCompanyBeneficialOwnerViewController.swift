@@ -139,6 +139,13 @@ extension SearchCompanyBeneficialOwnerViewController: SkeletonTableViewDataSourc
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, skeletonCellForRowAt indexPath: IndexPath) -> UITableViewCell? {
+        let cell = skeletonView.dequeueReusableCell(withIdentifier: "BeneficialCompanyViewCell", for: indexPath) as! BeneficialCompanyViewCell
+        cell.selectionStyle = .none
+        return cell
+    }
+    
 }
 
 /** 网络数据请求 */
