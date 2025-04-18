@@ -1416,7 +1416,9 @@ class dynamiccontentModel {
     var fieldName: String?
     var title: String?
     var fieldValue: String?
+    var clickFlag: Int?
     init(json: JSON) {
+        self.clickFlag = json["clickFlag"].intValue
         self.fieldName = json["fieldName"].stringValue
         self.title = json["title"].stringValue
         self.fieldValue = json["fieldValue"].stringValue

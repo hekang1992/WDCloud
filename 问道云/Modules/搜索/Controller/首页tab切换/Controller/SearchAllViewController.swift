@@ -233,7 +233,7 @@ extension SearchAllViewController: UITextFieldDelegate {
                     self.searchHeadView.layoutIfNeeded()
                 }
             }
-            
+            self.searchHeadView.searchTx.placeholder = searchHeadView.searchTx.text ?? ""
             if selectIndex == 0 {
                 enterpriseVc.searchWords.accept(searchHeadView.searchTx.text ?? "")
             }else if selectIndex == 1 {

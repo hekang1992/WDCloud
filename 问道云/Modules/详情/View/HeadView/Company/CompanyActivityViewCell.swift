@@ -95,7 +95,7 @@ class CompanyActivityViewCell: BaseViewCell {
             make.left.equalTo(contentView.snp.left).offset(27.5)
             make.width.equalTo(SCREEN_WIDTH - 43.5)
             make.top.equalTo(nameLabel.snp.bottom).offset(6)
-            make.bottom.equalTo(contentView.snp.bottom)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-5)
         }
         ctImageView.snp.makeConstraints { make in
             make.centerY.equalTo(stackView.snp.centerY)
@@ -165,7 +165,46 @@ class CompanyActivityViewCell: BaseViewCell {
             let title = model.title ?? ""
             let fieldValue = model.fieldValue ?? ""
             listView.titleLabel.text = title
-            listView.contentLabel.text = fieldValue
+            let clickFlag = model.clickFlag ?? 0
+            if clickFlag == 1 {
+                if let data = fieldValue.data(using: .utf8) {
+                    do {
+                        if let array = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+                            let dict = array.first
+                            let name = dict?["name"] as? String ?? ""
+                            listView.contentLabel.text = name
+                            listView.contentLabel.textColor = UIColor.init(cssStr: "#3F96FF")
+                            
+                            let id = dict?["id"] as? Int ?? 0
+                            let type = dict?["type"] as? Int ?? 0
+                            
+                            listView.contentLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+                                guard let self = self else { return }
+                                let vc = ViewControllerUtils.findViewController(from: self)
+                                if type == 1 {
+                                    //企业
+                                    let companyVc = CompanyBothViewController()
+                                    companyVc.enityId.accept(String(id))
+                                    companyVc.companyName.accept(name)
+                                    vc?.navigationController?.pushViewController(companyVc, animated: true)
+                                }else {
+                                    //人员
+                                    let peopleVc = PeopleBothViewController()
+                                    peopleVc.personId.accept(String(id))
+                                    peopleVc.peopleName.accept(name)
+                                    vc?.navigationController?.pushViewController(peopleVc, animated: true)
+                                }
+                                
+                            }).disposed(by: disposeBag)
+                        }
+                    } catch {
+                        print("JSON 转换错误: \(error)")
+                    }
+                }
+            }else {
+                listView.contentLabel.text = fieldValue
+                listView.contentLabel.textColor = UIColor.init(cssStr: "#333333")
+            }
             listView.setContentHuggingPriority(.defaultLow, for: .vertical)
             stackView.addArrangedSubview(listView)
         }
@@ -185,7 +224,7 @@ class ActivityListView: UIView {
     
     lazy var contentLabel: UILabel = {
         let contentLabel = UILabel()
-        contentLabel.font = .regularFontOfSize(size: 13)
+        contentLabel.font = .regularFontOfSize(size: 12)
         contentLabel.textColor = .init(cssStr: "#333333")
         contentLabel.textAlignment = .left
         contentLabel.numberOfLines = 0

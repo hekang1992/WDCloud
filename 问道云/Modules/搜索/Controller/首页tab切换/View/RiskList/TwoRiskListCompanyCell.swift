@@ -170,7 +170,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
             make.top.equalToSuperview().offset(10)
             make.left.equalTo(ctImageView.snp.right).offset(8)
             make.height.lessThanOrEqualTo(40)
-            make.width.lessThanOrEqualTo(SCREEN_WIDTH - 100)
+            make.width.lessThanOrEqualTo(SCREEN_WIDTH - 110)
         }
         
         tagListView.snp.makeConstraints { make in
