@@ -59,7 +59,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         let nameView = BiaoQianView(frame: .zero, enmu: .hide)
         nameView.label1.text = "法定代表人"
         nameView.lineView.isHidden = false
-        nameView.isSkeletonable = true
+        nameView.isHidden = true
         return nameView
     }()
     
@@ -67,14 +67,14 @@ class TwoCompanyNormalListCell: BaseViewCell {
         let moneyView = BiaoQianView(frame: .zero, enmu: .hide)
         moneyView.label1.text = "注册资本"
         moneyView.lineView.isHidden = false
-        moneyView.isSkeletonable = true
+        moneyView.isHidden = true
         return moneyView
     }()
     
     lazy var timeView: BiaoQianView = {
         let timeView = BiaoQianView(frame: .zero, enmu: .hide)
         timeView.label1.text = "成立时间"
-        timeView.isSkeletonable = true
+        timeView.isHidden = true
         return timeView
     }()
     
@@ -90,7 +90,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         addressimageView.image = UIImage(named: "adressimageicon")
         addressimageView.contentMode = .scaleAspectFill
         addressimageView.isUserInteractionEnabled = true
-        addressimageView.isSkeletonable = true
+        addressimageView.isHidden = true
         return addressimageView
     }()
     
@@ -99,7 +99,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         websiteimageView.image = UIImage(named: "guanwangimage")
         websiteimageView.contentMode = .scaleAspectFill
         websiteimageView.isUserInteractionEnabled = true
-        websiteimageView.isSkeletonable = true
+        websiteimageView.isHidden = true
         return websiteimageView
     }()
     
@@ -108,7 +108,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
         phoneimageView.image = UIImage(named: "dianhuaimageicon")
         phoneimageView.contentMode = .scaleAspectFill
         phoneimageView.isUserInteractionEnabled = true
-        phoneimageView.isSkeletonable = true
+        phoneimageView.isHidden = true
         return phoneimageView
     }()
     
@@ -289,6 +289,12 @@ class TwoCompanyNormalListCell: BaseViewCell {
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
+            nameView.isHidden = false
+            moneyView.isHidden = false
+            timeView.isHidden = false
+            addressimageView.isHidden = false
+            websiteimageView.isHidden = false
+            phoneimageView.isHidden = false
             let logo = model.orgInfo?.logo ?? ""
             let companyName = model.orgInfo?.orgName ?? ""
             let logoColor = model.orgInfo?.logoColor ?? ""
