@@ -388,11 +388,11 @@ extension OpinioUpLoadViewController: UITextViewDelegate {
             DispatchQueue.main.async {
                 self.openPhotoLibrary()
             }
+            break
         case .denied, .restricted:
             print("未授权，无法访问相册")
-            ShowAlertManager.showAlert(title: "相册权限", message: "请在设置中启用相册权限以便您可以上传截图。", confirmAction: { [weak self] in
-                self?.openSettings()
-            })
+            self.photoAuthInfo()
+            break
         case .notDetermined:
             print("未决定，请求权限")
             PHPhotoLibrary.requestAuthorization { newStatus in
@@ -401,14 +401,25 @@ extension OpinioUpLoadViewController: UITextViewDelegate {
                     DispatchQueue.main.async {
                         self.openPhotoLibrary()
                     }
-                } else {
-                    self.openSettings()
+                }else {
+                    self.photoAuthInfo()
                 }
             }
+            break
         case .limited:
             print("部分授权（iOS 14+）")
+            break
         @unknown default:
             print("未知状态")
+            break
+        }
+    }
+    
+    func photoAuthInfo() {
+        DispatchQueue.main.async {
+            ShowAlertManager.showAlert(title: "权限申请", message: "请在设置中启用相册权限以便您可以上传截图。", confirmAction: { [weak self] in
+                self?.openSettings()
+            })
         }
     }
     
