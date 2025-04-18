@@ -12,6 +12,7 @@ class PopMoreLegalListView: BaseView {
     var dataList: [leaderListModel]? {
         didSet {
             guard let dataList = dataList else { return }
+            tableView.reloadData()
         }
     }
     

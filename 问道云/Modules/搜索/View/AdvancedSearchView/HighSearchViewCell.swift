@@ -58,6 +58,7 @@ class HighSearchViewCell: BaseViewCell {
         legalNameLabel.font = .regularFontOfSize(size: 12)
         legalNameLabel.isUserInteractionEnabled = true
         legalNameLabel.isSkeletonable = true
+        legalNameLabel.numberOfLines = 2
         return legalNameLabel
     }()
     
@@ -158,7 +159,8 @@ class HighSearchViewCell: BaseViewCell {
         legalNameLabel.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
             make.top.equalTo(nameLabel.snp.bottom).offset(6)
-            make.height.equalTo(16.5)
+            make.width.lessThanOrEqualTo(100)
+            
         }
         lineView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
@@ -166,31 +168,31 @@ class HighSearchViewCell: BaseViewCell {
         }
         lineView1.snp.makeConstraints { make in
             make.height.equalTo(12)
-            make.centerY.equalTo(legalNameLabel.snp.centerY)
+            make.top.equalTo(legalNameLabel.snp.top)
             make.left.equalTo(legalNameLabel.snp.right).offset(7)
             make.width.equalTo(1)
         }
         moneyLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(legalNameLabel.snp.centerY)
+            make.centerY.equalTo(lineView1.snp.centerY)
             make.top.equalTo(legalNameLabel.snp.top)
             make.left.equalTo(lineView1.snp.right).offset(7)
             make.height.equalTo(16.5)
         }
         lineView2.snp.makeConstraints { make in
             make.height.equalTo(12)
-            make.centerY.equalTo(legalNameLabel.snp.centerY)
+            make.centerY.equalTo(lineView1.snp.centerY)
             make.left.equalTo(moneyLabel.snp.right).offset(7)
             make.width.equalTo(1)
         }
         timeLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(legalNameLabel.snp.centerY)
+            make.centerY.equalTo(lineView1.snp.centerY)
             make.top.equalTo(legalNameLabel.snp.top)
             make.left.equalTo(lineView2.snp.right).offset(7)
             make.height.equalTo(16.5)
         }
         tagListView.snp.makeConstraints { make in
             make.left.equalTo(legalNameLabel.snp.left)
-            make.top.equalTo(legalNameLabel.snp.bottom).offset(2)
+            make.top.equalTo(legalNameLabel.snp.bottom).offset(3)
             make.right.equalToSuperview().offset(-40)
             make.height.equalTo(18)
         }
@@ -212,9 +214,7 @@ class HighSearchViewCell: BaseViewCell {
             make.height.equalTo(16.5)
         }
         
-        focusBtn
-            .rx
-            .tap
+        focusBtn.rx.tap
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
                 self.focusBlock?()
@@ -298,12 +298,29 @@ extension HighSearchViewCell {
             }
             vc?.present(alertVc, animated: true)
         }else {
-            let personId = model.leaderVec?.leaderList?.first?.leaderId ?? ""
-            let peopleName = model.leaderVec?.leaderList?.first?.name ?? ""
-            let peopleDetailVc = PeopleBothViewController()
-            peopleDetailVc.personId.accept(personId)
-            peopleDetailVc.peopleName.accept(peopleName)
-            vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
+            let model = model.leaderVec?.leaderList?.first
+            let leaderCategory = model?.leaderCategory ?? ""
+            let enityId = model?.leaderId ?? ""
+            if enityId.isEmpty {
+                return
+            }
+            if leaderCategory == "1" {
+                //企业
+                let enityId = model?.leaderId ?? ""
+                let companyName = model?.name ?? ""
+                let companyDetailVc = CompanyBothViewController()
+                companyDetailVc.enityId.accept(enityId)
+                companyDetailVc.companyName.accept(companyName)
+                vc?.navigationController?.pushViewController(companyDetailVc, animated: true)
+            }else {
+                //人员
+                let personId = model?.leaderId ?? ""
+                let peopleName = model?.name ?? ""
+                let peopleDetailVc = PeopleBothViewController()
+                peopleDetailVc.personId.accept(personId)
+                peopleDetailVc.peopleName.accept(peopleName)
+                vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
+            }
         }
         
     }
