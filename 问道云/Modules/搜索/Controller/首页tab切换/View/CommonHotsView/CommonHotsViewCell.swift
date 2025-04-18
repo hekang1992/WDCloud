@@ -34,6 +34,7 @@ class CommonHotsViewCell: BaseViewCell {
         nameLabel.textAlignment = .left
         nameLabel.font = .regularFontOfSize(size: 13)
         nameLabel.isSkeletonable = true
+        nameLabel.numberOfLines = 0
         return nameLabel
     }()
     
@@ -63,23 +64,23 @@ class CommonHotsViewCell: BaseViewCell {
         
         ctImageView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 22, height: 22))
-            make.top.equalToSuperview().offset(9)
+            make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(10.5)
         }
         
         timeLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(11)
+            make.centerY.equalToSuperview()
             make.height.equalTo(20)
             make.right.equalToSuperview().offset(-12)
             make.width.equalTo(60)
-            make.bottom.equalToSuperview().offset(-11)
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(ctImageView.snp.centerY)
-            make.height.equalTo(20)
+            make.top.equalToSuperview().offset(9)
             make.left.equalTo(ctImageView.snp.right).offset(4)
-            make.right.equalTo(timeLabel.snp.left)
+            make.right.equalTo(timeLabel.snp.left).offset(-5)
+            make.height.lessThanOrEqualTo(40)
+            make.bottom.equalToSuperview().offset(-9)
         }
         
         lineView.snp.makeConstraints { make in
