@@ -151,17 +151,17 @@ public class SKLoadingView: UIView {
     /// Configures properties for the widget used.
     private func configure(_ text: String) {
         self.autoresizingMask = UIView.AutoresizingMask(rawValue:
-            UIView.AutoresizingMask.flexibleLeftMargin.rawValue |
-            UIView.AutoresizingMask.flexibleTopMargin.rawValue  |
-            UIView.AutoresizingMask.flexibleWidth.rawValue      |
-            UIView.AutoresizingMask.flexibleHeight.rawValue
+                                                            UIView.AutoresizingMask.flexibleLeftMargin.rawValue |
+                                                        UIView.AutoresizingMask.flexibleTopMargin.rawValue  |
+                                                        UIView.AutoresizingMask.flexibleWidth.rawValue      |
+                                                        UIView.AutoresizingMask.flexibleHeight.rawValue
         )
         
         self.maskPanel.autoresizingMask = UIView.AutoresizingMask(rawValue:
-            UIView.AutoresizingMask.flexibleLeftMargin.rawValue |
-            UIView.AutoresizingMask.flexibleTopMargin.rawValue  |
-            UIView.AutoresizingMask.flexibleWidth.rawValue      |
-            UIView.AutoresizingMask.flexibleHeight.rawValue
+                                                                    UIView.AutoresizingMask.flexibleLeftMargin.rawValue |
+                                                                  UIView.AutoresizingMask.flexibleTopMargin.rawValue  |
+                                                                  UIView.AutoresizingMask.flexibleWidth.rawValue      |
+                                                                  UIView.AutoresizingMask.flexibleHeight.rawValue
         )
         
         var cW: CGFloat = 0.0
@@ -289,9 +289,9 @@ public class SKLoadingView: UIView {
     }
     
     deinit {
-        #if DEBUG
+#if DEBUG
         print("\(type(of: self)) deinit.")
-        #endif
+#endif
     }
     
 }

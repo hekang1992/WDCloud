@@ -118,7 +118,7 @@ class RequestManager {
     private func requestData(target: APIService, completion: @escaping (Result<BaseModel, Error>) -> Void) {
         
         cancelLastRequest()
- 
+        
         print("🟢 发起新的请求: \(target)")
         currentRequest = provider.request(target) { result in
             switch result {

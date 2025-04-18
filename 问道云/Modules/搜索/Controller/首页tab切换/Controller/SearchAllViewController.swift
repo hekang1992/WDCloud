@@ -16,6 +16,7 @@ class SearchAllViewController: WDBaseViewController {
     var isonePopKeybord: Bool = false
     var istwoPopKeybord: Bool = false
     var isthreePopKeybord: Bool = false
+    var isVoice: Bool = false
     
     var segmentedViewDataSource: JXSegmentedTitleDataSource!
     
@@ -60,7 +61,7 @@ class SearchAllViewController: WDBaseViewController {
         let peopleVc = SearchBossViewController()
         peopleVc.completeBlock = { [weak self] in
             guard let self = self else { return }
-            DispatchQueue.main.asyncAfter(delay: 0.25) {
+            DispatchQueue.main.asyncAfter(delay: 0.5) {
                 if self.istwoPopKeybord == false {
                     self.istwoPopKeybord = true
                     self.searchHeadView.searchTx.becomeFirstResponder()
@@ -74,7 +75,7 @@ class SearchAllViewController: WDBaseViewController {
         let riskVc = SearchRiskViewController()
         riskVc.completeBlock = { [weak self] in
             guard let self = self else { return }
-            DispatchQueue.main.asyncAfter(delay: 0.25) {
+            DispatchQueue.main.asyncAfter(delay: 0.5) {
                 if self.isthreePopKeybord == false {
                     self.isthreePopKeybord = true
                     self.searchHeadView.searchTx.becomeFirstResponder()
@@ -140,6 +141,11 @@ class SearchAllViewController: WDBaseViewController {
                 self.searchHeadView.layoutIfNeeded()
             }
         }
+        
+        if isVoice {
+            textDidChange()
+        }
+        
     }
     
 }
@@ -316,7 +322,7 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 UIView.animate(withDuration: 0.25) {
                     self.searchHeadView.layoutIfNeeded()
                 }
-                DispatchQueue.main.asyncAfter(delay: 0.25) {
+                DispatchQueue.main.asyncAfter(delay: 0.5) {
                     self.searchHeadView.searchTx.resignFirstResponder()
                 }
             }
@@ -345,7 +351,7 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 UIView.animate(withDuration: 0.25) {
                     self.searchHeadView.layoutIfNeeded()
                 }
-                DispatchQueue.main.asyncAfter(delay: 0.25) {
+                DispatchQueue.main.asyncAfter(delay: 0.5) {
                     self.searchHeadView.searchTx.resignFirstResponder()
                 }
             }
@@ -366,7 +372,7 @@ extension SearchAllViewController: JXPagingViewDelegate, JXSegmentedViewDelegate
                 UIView.animate(withDuration: 0.25) {
                     self.searchHeadView.layoutIfNeeded()
                 }
-                DispatchQueue.main.asyncAfter(delay: 0.25) {
+                DispatchQueue.main.asyncAfter(delay: 0.5) {
                     self.searchHeadView.searchTx.resignFirstResponder()
                 }
             }

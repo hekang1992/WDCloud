@@ -11,7 +11,7 @@ typealias completion = () -> Void
 class ApplePayConfig {
     
     static func buy(with storeID: String, completion: completion? = nil ) {
-    
+        
         guard !GetSaveLoginInfoConfig.getPhoneNumber().isEmpty else {
             ToastViewConfig.showToast(message: "请先登录")
             return

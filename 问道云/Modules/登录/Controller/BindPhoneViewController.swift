@@ -62,7 +62,7 @@ extension BindPhoneViewController {
         self.bindView.sendCodeBtn.setTitle("Resend", for: .normal)
         codeTime = 60
     }
-
+    
 }
 
 /** 网络数据请求 */

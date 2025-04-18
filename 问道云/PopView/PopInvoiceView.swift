@@ -11,7 +11,7 @@ import RxRelay
 class PopInvoiceView: BaseView {
     
     var model = BehaviorRelay<DataModel?>(value: nil)
-
+    
     lazy var bgViwe: UIView = {
         let bgViwe = UIView()
         bgViwe.backgroundColor = .white

@@ -129,7 +129,12 @@ class WDHomeViewController: WDBaseViewController {
             .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] voiceStr in
                 guard let self = self, let voiceStr = voiceStr, !voiceStr.isEmpty else { return }
-                print("识别的语音文字=======:\(voiceStr)")
+                let searchAllVc = SearchAllViewController()
+                searchAllVc.selectIndex = selectIndex
+                searchAllVc.name = voiceStr
+                searchAllVc.searchHeadView.searchTx.text = voiceStr
+                searchAllVc.isVoice = true
+                self.navigationController?.pushViewController(searchAllVc, animated: true)
             }).disposed(by: disposeBag)
         
         //跳转到会员页面
@@ -181,7 +186,7 @@ class WDHomeViewController: WDBaseViewController {
                 let type = model.entityType ?? 0
                 searchVc.searchHeadView.searchTx.text = model.entityName ?? ""
                 searchVc.searchHeadView.searchTx.placeholder = model.entityName ?? ""
-                DispatchQueue.main.asyncAfter(delay: 0.25) {
+                DispatchQueue.main.asyncAfter(delay: 0.5) {
                     searchVc.searchHeadView.searchTx.becomeFirstResponder()
                 }
                 if type == 1 {

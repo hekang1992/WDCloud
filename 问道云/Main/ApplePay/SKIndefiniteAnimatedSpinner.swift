@@ -214,9 +214,9 @@ public class SKIndefiniteAnimatedSpinner: UIView {
     }
     
     deinit {
-        #if DEBUG
+#if DEBUG
         print("\(type(of: self)) deinit.")
-        #endif
+#endif
         self.executeWhenReleasing()
     }
     

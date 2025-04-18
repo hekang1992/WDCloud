@@ -224,10 +224,10 @@ open class SKIAPManager: NSObject, DYFStoreReceiptVerifierDelegate {
         DYFStoreLog()
         self.sk_hideLoading()
         self.sk_showAlert(withTitle: NSLocalizedString("Notification", tableName: nil, comment: ""),
-                       message: "Fail to refresh receipt! Please check if your device can access the internet.",
-                       cancelButtonTitle: "Cancel",
-                       cancel: { (cancelAction) in },
-                       confirmButtonTitle: NSLocalizedString("Retry", tableName: nil, comment: ""))
+                          message: "Fail to refresh receipt! Please check if your device can access the internet.",
+                          cancelButtonTitle: "Cancel",
+                          cancel: { (cancelAction) in },
+                          confirmButtonTitle: NSLocalizedString("Retry", tableName: nil, comment: ""))
         { (action) in
             self.refreshReceipt()
         }
@@ -274,10 +274,10 @@ open class SKIAPManager: NSObject, DYFStoreReceiptVerifierDelegate {
     
     private func sendNotice(_ message: String) {
         self.sk_showAlert(withTitle: "温馨提示",
-                       message: message,
-                       cancelButtonTitle: nil,
-                       cancel: nil,
-                       confirmButtonTitle: "好的")
+                          message: message,
+                          cancelButtonTitle: nil,
+                          cancel: nil,
+                          confirmButtonTitle: "好的")
         { (action) in
             DYFStoreLog("alert action title: \(action.title!)")
         }
@@ -288,7 +288,7 @@ open class SKIAPManager: NSObject, DYFStoreReceiptVerifierDelegate {
     public func verifyReceiptDidFinish(_ verifier: DYFStoreReceiptVerifier, didReceiveData data: [String : Any]) {
         DYFStoreLog("data: \(data)")
         self.sk_hideLoading()
-//        ToastViewConfig.showToast(message: "购买成功")
+        //        ToastViewConfig.showToast(message: "购买成功")
         
         DispatchQueue.main.asyncAfter(delay: 1.2) {
             let info = self.purchaseInfo!

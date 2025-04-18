@@ -8,7 +8,7 @@
 import UIKit
 
 class PhoneEmailListView: BaseView {
-
+    
     lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = .init(cssStr: "#F5F5F5")

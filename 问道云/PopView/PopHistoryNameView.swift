@@ -13,7 +13,7 @@ class PopHistoryNameView: BaseView {
     var block: ((namesUsedBeforeModel) -> Void)?
     
     var modelArray = BehaviorRelay<[namesUsedBeforeModel]?>(value: nil)
-
+    
     lazy var bgViwe: UIView = {
         let bgViwe = UIView()
         bgViwe.backgroundColor = .white
@@ -94,8 +94,8 @@ class PopHistoryNameView: BaseView {
         
         tableView.rx.modelSelected(namesUsedBeforeModel.self)
             .subscribe(onNext: { [weak self] model in
-            self?.block?(model)
-        }).disposed(by: disposeBag)
+                self?.block?(model)
+            }).disposed(by: disposeBag)
         
         modelArray.asObservable().subscribe(onNext: { [weak self] modelArray in
             guard let self = self, let modelArray = modelArray else { return }

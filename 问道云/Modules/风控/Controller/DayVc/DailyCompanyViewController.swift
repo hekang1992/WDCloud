@@ -243,7 +243,7 @@ extension DailyCompanyViewController {
                         }else {
                             self.dailyView.tableView.mj_footer?.isHidden = true
                         }
-                        DispatchQueue.main.asyncAfter(delay: 0.25) {
+                        DispatchQueue.main.asyncAfter(delay: 0.5) {
                             self.dailyView.tableView.hideSkeleton()
                             self.dailyView.tableView.reloadData()
                         }                        
@@ -312,7 +312,7 @@ extension DailyCompanyViewController {
             case .success(let success):
                 if success.code == 200 {
                     ToastViewConfig.showToast(message: "取消监控成功")
-                    DispatchQueue.main.asyncAfter(delay: 0.25) {
+                    DispatchQueue.main.asyncAfter(delay: 0.5) {
                         self?.pageNum = 1
                         self?.getCompanyInfo()
                         self?.cancelBlock?()

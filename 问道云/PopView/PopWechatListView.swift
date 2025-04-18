@@ -11,7 +11,7 @@ class PopWechatListView: BaseView {
     
     var cancelBlock: (() -> Void)?
     var saveBlock: (() -> Void)?
-
+    
     lazy var bgView: UIView = {
         let bgView = UIView()
         bgView.layer.cornerRadius = 5
@@ -32,7 +32,7 @@ class PopWechatListView: BaseView {
         let ctImageView = UIImageView()
         return ctImageView
     }()
-
+    
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.textColor = .init(cssStr: "#999999")

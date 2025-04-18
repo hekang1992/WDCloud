@@ -16,7 +16,7 @@ class PopRightMoreView: BaseView {
     var fourBlock: (() -> Void)?
     var fiveBlock: (() -> Void)?
     var sixBlock: (() -> Void)?
-
+    
     lazy var bgView: UIView = {
         let bgView = UIView()
         bgView.backgroundColor = .init(cssStr: "#F5F5F5")

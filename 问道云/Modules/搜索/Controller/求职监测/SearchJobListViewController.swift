@@ -405,7 +405,7 @@ extension SearchJobListViewController {
                     self.companyListView.dataModel = model
                     self.companyListView.dataModelArray = self.allArray
                     self.companyListView.searchWordsRelay.accept(keyword)
-                    DispatchQueue.main.asyncAfter(delay: 0.25) {
+                    DispatchQueue.main.asyncAfter(delay: 0.5) {
                         self.companyListView.tableView.hideSkeleton()
                         self.companyListView.tableView.reloadData()
                     }
@@ -463,7 +463,7 @@ extension SearchJobListViewController {
         group.notify(queue: .main) {
             self.modelArray = [self.historyArray, self.hotsArray]
             self.oneView.modelArray = self.modelArray
-            DispatchQueue.main.asyncAfter(delay: 0.25) {
+            DispatchQueue.main.asyncAfter(delay: 0.5) {
                 self.searchView.searchTx.becomeFirstResponder()
             }
             ViewHud.hideLoadView()

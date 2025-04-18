@@ -95,7 +95,8 @@ extension ForgetPasswordViewController {
     
     func getCodeInfo() {
         let man = RequestManager()
-        let dict = ["phone": self.forgetView.phoneTx.text ?? "", "sendType": "2"]
+        let dict = ["phone": self.forgetView.phoneTx.text ?? "",
+                    "sendType": "2"]
         man.requestAPI(params: dict,
                        pageUrl: "/operation/messageVerification/sendcode",
                        method: .post) { [weak self] result in

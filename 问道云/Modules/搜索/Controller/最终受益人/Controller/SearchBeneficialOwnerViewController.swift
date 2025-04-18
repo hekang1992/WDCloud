@@ -367,8 +367,11 @@ extension SearchBeneficialOwnerViewController {
             self.modelArray = [self.historyArray, self.hotsArray]
             self.oneView.modelArray = self.modelArray
             ViewHud.hideLoadView()
-            DispatchQueue.main.asyncAfter(delay: 0.25) {
-                self.headView.searchHeadView.searchTx.becomeFirstResponder()
+            DispatchQueue.main.asyncAfter(delay: 0.5) {
+                if self.isShowKeyboard {
+                    self.isShowKeyboard = false
+                    self.headView.searchHeadView.searchTx.becomeFirstResponder()
+                }
             }
         }
         

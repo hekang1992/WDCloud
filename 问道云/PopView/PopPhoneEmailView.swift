@@ -25,7 +25,7 @@ class PopPhoneEmailView: BaseView {
         scrollView.delegate = self
         return scrollView
     }()
-
+    
     lazy var bgViwe: UIView = {
         let bgViwe = UIView()
         bgViwe.backgroundColor = .init(cssStr: "#F3F3F3")
@@ -129,7 +129,7 @@ class PopPhoneEmailView: BaseView {
         wechatStackView.translatesAutoresizingMaskIntoConstraints = false
         return wechatStackView
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(bgViwe)
@@ -266,7 +266,7 @@ class PopPhoneEmailView: BaseView {
                     .when(.recognized)
                     .subscribe { [weak self] _ in
                         self?.goPhoneInfo(from: model)
-                }.disposed(by: disposeBag)
+                    }.disposed(by: disposeBag)
                 if !orgCount.isEmpty && orgCount != "0" {
                     phoneListView.numlabel.isHidden = false
                     phoneListView.numlabel.attributedText = GetRedStrConfig.getRedStr(from: orgCount, fullText: "同电话企业\(orgCount)", colorStr: "#FF7D00", font: .regularFontOfSize(size: 11))
@@ -291,7 +291,7 @@ class PopPhoneEmailView: BaseView {
                     .when(.recognized)
                     .subscribe { [weak self] _ in
                         self?.addressBlock?(model)
-                }.disposed(by: disposeBag)
+                    }.disposed(by: disposeBag)
                 if !type.isEmpty {
                     phoneListView.tagLabel.isHidden = false
                     phoneListView.tagLabel.text = type
@@ -319,7 +319,7 @@ class PopPhoneEmailView: BaseView {
                     .when(.recognized)
                     .subscribe { [weak self] _ in
                         self?.websiteBlock?(model)
-                }.disposed(by: disposeBag)
+                    }.disposed(by: disposeBag)
                 if type {
                     phoneListView.tagLabel.text = "ICP"
                     phoneListView.tagLabel.isHidden = false
@@ -358,7 +358,7 @@ class PopPhoneEmailView: BaseView {
                     .when(.recognized)
                     .subscribe { [weak self] _ in
                         self?.emailBlock?(model)
-                }.disposed(by: disposeBag)
+                    }.disposed(by: disposeBag)
                 if !orgCount.isEmpty && orgCount != "0" {
                     phoneListView.numlabel.isHidden = false
                     phoneListView.numlabel.attributedText = GetRedStrConfig.getRedStr(from: orgCount, fullText: "同邮箱企业\(orgCount)", colorStr: "#FF7D00", font: .regularFontOfSize(size: 11))
@@ -382,7 +382,7 @@ class PopPhoneEmailView: BaseView {
                     .when(.recognized)
                     .subscribe { [weak self] _ in
                         self?.wechatBlock?(model)
-                }.disposed(by: disposeBag)
+                    }.disposed(by: disposeBag)
                 if !orgCount.isEmpty && orgCount != "0" {
                     phoneListView.numlabel.isHidden = false
                     phoneListView.numlabel.attributedText = GetRedStrConfig.getRedStr(from: orgCount, fullText: "同公众号企业\(orgCount)", colorStr: "#FF7D00", font: .regularFontOfSize(size: 11))

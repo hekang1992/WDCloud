@@ -9,7 +9,7 @@ import UIKit
 
 //行业
 class IndustruDataManager {
-
+    
     static let shared = IndustruDataManager()
     
     private init() {}
@@ -32,7 +32,7 @@ class IndustruDataManager {
 
 //地区
 class RegionDataManager {
-
+    
     static let shared = RegionDataManager()
     
     private init() {}

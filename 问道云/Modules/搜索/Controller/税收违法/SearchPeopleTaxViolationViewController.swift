@@ -219,7 +219,7 @@ extension SearchPeopleTaxViolationViewController {
                     self.twoPeopleListView.dataModel.accept(model)
                     self.twoPeopleListView.dataModelArray.accept(self.allArray)
                     self.twoPeopleListView.searchWordsRelay.accept(keyword)
-                    DispatchQueue.main.asyncAfter(delay: 0.25) {
+                    DispatchQueue.main.asyncAfter(delay: 0.5) {
                         self.twoPeopleListView.tableView.hideSkeleton()
                         self.twoPeopleListView.tableView.reloadData()
                     }

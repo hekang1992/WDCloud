@@ -11,7 +11,7 @@ class PopOnlyBuyVipView: BaseView {
     
     var cancelBlock: (() -> Void)?
     var sureBlock: (() -> Void)?
-
+    
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         ctImageView.isUserInteractionEnabled = true
@@ -28,7 +28,7 @@ class PopOnlyBuyVipView: BaseView {
         let sureBtn = UIButton(type: .custom)
         return sureBtn
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(ctImageView)
@@ -57,5 +57,5 @@ class PopOnlyBuyVipView: BaseView {
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }

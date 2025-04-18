@@ -83,6 +83,7 @@ class CompanyShareholderViewCell: BaseViewCell {
         nameView.lineView.isHidden = false
         nameView.label1.text = "法定代表人"
         nameView.label2.textColor = .init(cssStr: "#547AFF")
+        nameView.isSkeletonable = true
         return nameView
     }()
     
@@ -91,6 +92,7 @@ class CompanyShareholderViewCell: BaseViewCell {
         moneyView.lineView.isHidden = false
         moneyView.label1.text = "注册资本"
         moneyView.label2.textColor = .init(cssStr: "#333333")
+        moneyView.isSkeletonable = true
         return moneyView
     }()
     

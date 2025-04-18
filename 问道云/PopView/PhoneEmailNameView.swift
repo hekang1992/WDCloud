@@ -14,7 +14,7 @@ class PhoneEmailNameView: BaseView {
         bgView.backgroundColor = .white
         return bgView
     }()
-
+    
     lazy var phonelabel: UILabel = {
         let phonelabel = UILabel()
         phonelabel.textColor = UIColor.init(cssStr: "#333333")
@@ -41,5 +41,5 @@ class PhoneEmailNameView: BaseView {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+    
 }

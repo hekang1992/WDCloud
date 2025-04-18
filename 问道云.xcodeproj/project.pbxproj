@@ -1079,7 +1079,12 @@
 		7325A7D32CFEFCAA0043C196 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				73B3FA612D7EB1750077766F /* LoginView */,
+				7325A7D42CFEFCC40043C196 /* LoginView.swift */,
+				7325A7D92CFF0BE10043C196 /* CodeView.swift */,
+				7325A7DB2CFF0DBE0043C196 /* PasswordLoginView.swift */,
+				7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */,
+				730487F42D2932640024265C /* BindPhoneView.swift */,
+				73C89F122D74047D0002C3C9 /* PopAgainLoginView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1805,19 +1810,6 @@
 				734056A82D38E34C009C9C96 /* CorrelationViewCell.swift */,
 			);
 			path = People;
-			sourceTree = "<group>";
-		};
-		73B3FA612D7EB1750077766F /* LoginView */ = {
-			isa = PBXGroup;
-			children = (
-				7325A7D42CFEFCC40043C196 /* LoginView.swift */,
-				7325A7D92CFF0BE10043C196 /* CodeView.swift */,
-				7325A7DB2CFF0DBE0043C196 /* PasswordLoginView.swift */,
-				7325A7E12CFF14A90043C196 /* ForgetPasswordView.swift */,
-				730487F42D2932640024265C /* BindPhoneView.swift */,
-				73C89F122D74047D0002C3C9 /* PopAgainLoginView.swift */,
-			);
-			path = LoginView;
 			sourceTree = "<group>";
 		};
 		73B3FA672D7EB9330077766F /* Common */ = {

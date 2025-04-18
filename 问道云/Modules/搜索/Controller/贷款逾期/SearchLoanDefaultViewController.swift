@@ -400,8 +400,11 @@ extension SearchLoanDefaultViewController {
         group.notify(queue: .main) {
             self.modelArray = [self.historyArray, self.hotsArray]
             self.oneView.modelArray = self.modelArray
-            DispatchQueue.main.asyncAfter(delay: 0.25) {
-                self.headView.searchHeadView.searchTx.becomeFirstResponder()
+            DispatchQueue.main.asyncAfter(delay: 0.5) {
+                if self.isShowKeyboard {
+                    self.isShowKeyboard = false
+                    self.headView.searchHeadView.searchTx.becomeFirstResponder()
+                }
             }
         }
         

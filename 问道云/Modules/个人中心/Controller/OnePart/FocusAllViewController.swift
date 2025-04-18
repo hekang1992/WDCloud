@@ -175,7 +175,7 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
             listVCArray.append(companyVc)
             companyVc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: cocsciew.frame.height)
             companyVc.nav = navigationController
-            DispatchQueue.main.asyncAfter(delay: 0.25) {
+            DispatchQueue.main.asyncAfter(delay: 0.5) {
                 self.companyVc.getCompanyAllInfo()
             }   
         }else {
@@ -183,7 +183,7 @@ extension FocusAllViewController: JXSegmentedViewDelegate {
             listVCArray.append(peopleVc)
             peopleVc.view.frame = CGRect(x: SCREEN_WIDTH * CGFloat(index), y: 0, width: SCREEN_WIDTH, height: cocsciew.frame.height)
             peopleVc.nav = navigationController
-            DispatchQueue.main.asyncAfter(delay: 0.25) {
+            DispatchQueue.main.asyncAfter(delay: 0.5) {
                 self.peopleVc.getPeopleAllInfo()
             }
         }

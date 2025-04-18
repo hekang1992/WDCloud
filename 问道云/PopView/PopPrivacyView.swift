@@ -35,7 +35,7 @@ class PopPrivacyView: BaseView {
         let twoBtn = UIButton(type: .custom)
         return twoBtn
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(ctImageView)
