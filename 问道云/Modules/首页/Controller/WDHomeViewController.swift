@@ -347,9 +347,11 @@ extension WDHomeViewController {
     }
     
     private func judgeVoiceInfo() {
-        ShowAlertManager.showAlert(title: "权限申请", message: "请在iphone的“设置-问道云-麦克风”选项中,允许问道云访问你的麦克风", confirmAction: {[weak self] in
-            self?.openSettings()
-        })
+        DispatchQueue.main.async {
+            ShowAlertManager.showAlert(title: "权限申请", message: "请在iphone的“设置-问道云-麦克风”选项中,允许问道云访问你的麦克风", confirmAction: {[weak self] in
+                self?.openSettings()
+            })
+        }
     }
     
     private func speechInfo() {
