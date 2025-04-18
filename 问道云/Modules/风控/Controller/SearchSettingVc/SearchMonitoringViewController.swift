@@ -403,10 +403,12 @@ extension SearchMonitoringViewController {
                     "customerId": customerId,
                     "groupId": groupId,
                     "personName": personName]
+        ViewHud.addLoadView()
         man.requestAPI(params: dict,
                        pageUrl: "/entity/monitor-person/addRiskMonitorPerson",
                        method: .post) { [weak self] result in
             guard let self = self else { return }
+            ViewHud.hideLoadView()
             switch result {
             case .success(let success):
                 let code = success.code ?? 0

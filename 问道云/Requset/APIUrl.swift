@@ -6,8 +6,8 @@
 //
 
 //域名
-let base_url = "https://testh5.wintaocloud.com"
-//let base_url = "https://h5.wintaocloud.com"
+//let base_url = "https://testh5.wintaocloud.com"
+let base_url = "https://h5.wintaocloud.com"
 //用户协议
 let agreement_url = "/user-agreement"
 //隐私政策
