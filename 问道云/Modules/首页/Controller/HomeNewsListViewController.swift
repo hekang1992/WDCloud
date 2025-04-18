@@ -59,22 +59,22 @@ class HomeNewsListViewController: WDBaseViewController {
             cell.selectionStyle = .none
             cell.block = { [weak self] model in
                 let type = model.type ?? ""
-                if !IS_LOGIN {
-                    self?.popLogin()
-                    return
-                }
-                if type == "1" {//企业
-                    let companyDetailVc = CompanyBothViewController()
-                    companyDetailVc.enityId.accept(model.tag ?? "")
-                    companyDetailVc.companyName.accept(model.name ?? "")
-                    self?.navigationController?.pushViewController(companyDetailVc, animated: true)
-                }else if type == "2" {//法典
-                    let pageUrl = model.value ?? ""
-                    if !pageUrl.isEmpty {
-                        self?.pushWebPage(from: pageUrl)
+                if IS_LOGIN {
+                    if type == "1" {//企业
+                        let companyDetailVc = CompanyBothViewController()
+                        companyDetailVc.enityId.accept(model.tag ?? "")
+                        companyDetailVc.companyName.accept(model.name ?? "")
+                        self?.navigationController?.pushViewController(companyDetailVc, animated: true)
+                    }else if type == "2" {//法典
+                        let pageUrl = model.value ?? ""
+                        if !pageUrl.isEmpty {
+                            self?.pushWebPage(from: pageUrl)
+                        }
+                    }else {
+                        
                     }
                 }else {
-                    
+                    self?.popLogin()
                 }
             }
         }.disposed(by: disposeBag)
