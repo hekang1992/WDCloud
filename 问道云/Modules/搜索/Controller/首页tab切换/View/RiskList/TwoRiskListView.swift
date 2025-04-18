@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import SkeletonView
 
 class TwoRiskListView: BaseView {
     
@@ -67,6 +68,23 @@ class TwoRiskListView: BaseView {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+extension TwoRiskListView: SkeletonTableViewDataSource {
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "TwoRiskListCompanyCell"
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, skeletonCellForRowAt indexPath: IndexPath) -> UITableViewCell? {
+        let cell = skeletonView.dequeueReusableCell(withIdentifier: "TwoRiskListCompanyCell", for: indexPath) as! TwoRiskListCompanyCell
+        cell.selectionStyle = .none
+        return cell
+    }
 }
 
 extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {

@@ -63,6 +63,8 @@ class SearchRiskViewController: WDBaseViewController {
         let twoRiskListView = TwoRiskListView()
         twoRiskListView.backgroundColor = .white
         twoRiskListView.isHidden = true
+        twoRiskListView.tableView.isSkeletonable = true
+        twoRiskListView.tableView.showAnimatedGradientSkeleton()
         return twoRiskListView
     }()
     
@@ -71,6 +73,8 @@ class SearchRiskViewController: WDBaseViewController {
         let listPeopleView = RiskListPeopleView()
         listPeopleView.backgroundColor = .white
         listPeopleView.isHidden = true
+        listPeopleView.tableView.isSkeletonable = true
+        listPeopleView.tableView.showAnimatedGradientSkeleton()
         return listPeopleView
     }()
     
@@ -346,7 +350,6 @@ extension SearchRiskViewController {
                     self.listPeopleView.isHidden = true
                     self.companyBtn.isHidden = true
                     self.peopleBtn.isHidden = true
-                    self.tableView.reloadData()
                     getHotsSearchInfo()
                 }
         }).disposed(by: disposeBag)
@@ -397,7 +400,10 @@ extension SearchRiskViewController {
                     self.twoRiskListView.dataModel.accept(model)
                     self.twoRiskListView.dataModelArray.accept(self.allArray)
                     self.twoRiskListView.searchWordsRelay.accept(keyword)
-                    self.twoRiskListView.tableView.reloadData()
+                    DispatchQueue.main.asyncAfter(delay: 0.25) {
+                        self.twoRiskListView.tableView.hideSkeleton()
+                        self.twoRiskListView.tableView.reloadData()
+                    }
                     //根据数据刷新按钮文字
                     let companyNum = String(model.pageMeta?.totalNum ?? 0)
                     self.companyBtn.setTitle("企业 \(companyNum)", for: .normal)
@@ -460,7 +466,11 @@ extension SearchRiskViewController {
                     self.listPeopleView.dataModel.accept(model)
                     //                    self.listPeopleView.dataModelArray.accept(self.allPeopleArray)
                     self.listPeopleView.searchWordsRelay.accept(keyword)
-                    self.listPeopleView.tableView.reloadData()
+                    DispatchQueue.main.asyncAfter(delay: 0.25) {
+                        self.listPeopleView.tableView.hideSkeleton()
+                        self.listPeopleView.tableView.reloadData()
+                    }
+                    
                     //根据数据刷新按钮文字
                     let peopleNum = String(model.total ?? 0)
                     self.peopleBtn.setTitle("人员 \(peopleNum)", for: .normal)

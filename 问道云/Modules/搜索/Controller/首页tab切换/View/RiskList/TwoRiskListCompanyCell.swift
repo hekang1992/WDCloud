@@ -31,6 +31,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
     lazy var ctImageView: UIImageView = {
         let ctImageView = UIImageView()
         ctImageView.layer.cornerRadius = 3
+        ctImageView.isSkeletonable = true
         return ctImageView
     }()
     
@@ -40,6 +41,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
         nameLabel.textColor = .init(cssStr: "#333333")
         nameLabel.textAlignment = .left
         nameLabel.numberOfLines = 0
+        nameLabel.isSkeletonable = true
         return nameLabel
     }()
     
@@ -52,6 +54,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
         let nameView = BiaoQianView(frame: .zero, enmu: .hide)
         nameView.label1.text = "法定代表人"
         nameView.lineView.isHidden = false
+        nameView.isHidden = true
         return nameView
     }()
     
@@ -60,6 +63,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
         moneyView.label1.text = "注册资本"
         moneyView.label2.textColor = .init(cssStr: "#333333")
         moneyView.lineView.isHidden = false
+        moneyView.isHidden = true
         return moneyView
     }()
     
@@ -67,6 +71,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
         let timeView = BiaoQianView(frame: .zero, enmu: .hide)
         timeView.label1.text = "成立时间"
         timeView.label2.textColor = .init(cssStr: "#333333")
+        timeView.isHidden = true
         return timeView
     }()
     
@@ -126,12 +131,14 @@ class TwoRiskListCompanyCell: BaseViewCell {
     lazy var moreBtn: UIButton = {
         let moreBtn = UIButton(type: .custom)
         moreBtn.setImage(UIImage(named: "chakanmoreimge"), for: .normal)
+        moreBtn.isHidden = true
         return moreBtn
     }()
     
     lazy var focusBtn: UIButton = {
         let focusBtn = UIButton(type: .custom)
         focusBtn.setImage(UIImage(named: "addfocunimage"), for: .normal)
+        focusBtn.isHidden = true
         return focusBtn
     }()
     
@@ -143,6 +150,7 @@ class TwoRiskListCompanyCell: BaseViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        isSkeletonable = true
         contentView.addSubview(ctImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(tagListView)
@@ -263,6 +271,11 @@ class TwoRiskListCompanyCell: BaseViewCell {
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
+            nameView.isHidden = false
+            moneyView.isHidden = false
+            timeView.isHidden = false
+            focusBtn.isHidden = false
+            moreBtn.isHidden = false
             let companyName = model.orgInfo?.orgName ?? ""
             let logoColor = model.orgInfo?.logoColor ?? ""
             let logo = model.orgInfo?.logo ?? ""

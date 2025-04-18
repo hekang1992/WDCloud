@@ -26,6 +26,7 @@ class CompanyShareholderViewCell: BaseViewCell {
         namelabel.textAlignment = .left
         namelabel.font = .mediumFontOfSize(size: 15)
         namelabel.isSkeletonable = true
+        namelabel.numberOfLines = 0
         return namelabel
     }()
     
@@ -34,6 +35,7 @@ class CompanyShareholderViewCell: BaseViewCell {
         tagLabel.font = .regularFontOfSize(size: 10)
         tagLabel.layer.cornerRadius = 2.5
         tagLabel.layer.masksToBounds = true
+        tagLabel.isSkeletonable = true
         return tagLabel
     }()
     
@@ -48,7 +50,7 @@ class CompanyShareholderViewCell: BaseViewCell {
         let coverView = UIView()
         coverView.backgroundColor = .init(cssStr: "#F8F8F8")
         coverView.layer.cornerRadius = 3
-        coverView.isSkeletonable = true
+        coverView.isHidden = true
         return coverView
     }()
     
@@ -83,7 +85,6 @@ class CompanyShareholderViewCell: BaseViewCell {
         nameView.lineView.isHidden = false
         nameView.label1.text = "法定代表人"
         nameView.label2.textColor = .init(cssStr: "#547AFF")
-        nameView.isSkeletonable = true
         return nameView
     }()
     
@@ -92,7 +93,6 @@ class CompanyShareholderViewCell: BaseViewCell {
         moneyView.lineView.isHidden = false
         moneyView.label1.text = "注册资本"
         moneyView.label2.textColor = .init(cssStr: "#333333")
-        moneyView.isSkeletonable = true
         return moneyView
     }()
     
@@ -100,7 +100,6 @@ class CompanyShareholderViewCell: BaseViewCell {
         let timeView = BiaoQianView(frame: .zero, enmu: .hide)
         timeView.label1.text = "成立时间"
         timeView.label2.textColor = .init(cssStr: "#333333")
-        timeView.isSkeletonable = true
         return timeView
     }()
     
@@ -128,7 +127,7 @@ class CompanyShareholderViewCell: BaseViewCell {
         addressimageView.image = UIImage(named: "adressimageicon")
         addressimageView.contentMode = .scaleAspectFill
         addressimageView.isUserInteractionEnabled = true
-        addressimageView.isSkeletonable = true
+        addressimageView.isHidden = true
         return addressimageView
     }()
     
@@ -137,7 +136,7 @@ class CompanyShareholderViewCell: BaseViewCell {
         websiteimageView.image = UIImage(named: "guanwangimage")
         websiteimageView.contentMode = .scaleAspectFill
         websiteimageView.isUserInteractionEnabled = true
-        websiteimageView.isSkeletonable = true
+        websiteimageView.isHidden = true
         return websiteimageView
     }()
     
@@ -146,7 +145,7 @@ class CompanyShareholderViewCell: BaseViewCell {
         phoneimageView.image = UIImage(named: "dianhuaimageicon")
         phoneimageView.contentMode = .scaleAspectFill
         phoneimageView.isUserInteractionEnabled = true
-        phoneimageView.isSkeletonable = true
+        phoneimageView.isHidden = true
         return phoneimageView
     }()
     
@@ -178,7 +177,8 @@ class CompanyShareholderViewCell: BaseViewCell {
         namelabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(14)
             make.left.equalTo(ctImageView.snp.right).offset(6)
-            make.height.equalTo(21)
+            make.width.lessThanOrEqualTo(SCREEN_WIDTH - 110)
+            make.height.lessThanOrEqualTo(40)
         }
         tagLabel.snp.makeConstraints { make in
             make.left.equalTo(namelabel.snp.left)
@@ -263,6 +263,10 @@ class CompanyShareholderViewCell: BaseViewCell {
         }
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
+            coverView.isHidden = false
+            phoneimageView.isHidden = false
+            websiteimageView.isHidden = false
+            addressimageView.isHidden = false
             let companyName = model.orgName ?? ""
             let logoColor = model.logoColor ?? ""
             let orgLogo = URL(string: model.orgLogo ?? "")

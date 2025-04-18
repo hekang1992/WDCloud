@@ -7,6 +7,7 @@
 
 import UIKit
 import RxRelay
+import SkeletonView
 
 class RiskListPeopleView: BaseView {
     
@@ -56,6 +57,24 @@ class RiskListPeopleView: BaseView {
     
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+extension RiskListPeopleView: SkeletonTableViewDataSource {
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "TwoRiskListOnlyPeopleCell"
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, skeletonCellForRowAt indexPath: IndexPath) -> UITableViewCell? {
+        let cell = skeletonView.dequeueReusableCell(withIdentifier: "TwoRiskListOnlyPeopleCell", for: indexPath) as! TwoRiskListOnlyPeopleCell
+        cell.selectionStyle = .none
+        return cell
     }
     
 }
