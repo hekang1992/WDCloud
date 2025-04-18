@@ -69,7 +69,7 @@ class HomeHeadTabView: BaseView {
     
     lazy var labactImageView: UIImageView = {
         let labactImageView = UIImageView()
-//        labactImageView.image = UIImage(named: "yuyinshuru")
+        labactImageView.image = UIImage(named: "yuyinshuru")
         labactImageView.isUserInteractionEnabled = true
         return labactImageView
     }()
@@ -181,7 +181,8 @@ class HomeHeadTabView: BaseView {
             scrollLabelView.beginScrolling()
             whiteView.addSubview(fourBtn)
             fourBtn.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+                make.left.bottom.top.equalToSuperview()
+                make.right.equalToSuperview().offset(-50)
             }
         }).disposed(by: disposeBag)
         

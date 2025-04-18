@@ -11,6 +11,8 @@ import JXSegmentedView
 import TYAlertController
 import Speech
 import AVFoundation
+import RxRelay
+import RxSwift
 
 extension JXPagingListContainerView: @retroactive JXSegmentedViewListContainer {}
 
@@ -36,6 +38,15 @@ class WDHomeViewController: WDBaseViewController {
     var JXheightForHeaderInSection: Int = 40
     
     lazy var pagingView: JXPagingView = preferredPagingView()
+    
+    /** 语音识别 */
+    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "zh-CN"))
+    private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+    private var recognitionTask: SFSpeechRecognitionTask?
+    private let audioEngine = AVAudioEngine()
+    private var isSpeechAuthorized = false
+    private var isMicAuthorized = false
+    var vociceStr = BehaviorRelay<String?>(value: nil)
     
     lazy var homeBgImageView: UIImageView = {
         let homeBgImageView = UIImageView()
@@ -89,9 +100,37 @@ class WDHomeViewController: WDBaseViewController {
         //语音输入
         self.homeHeadView.tabView.yuyinBlock = { [weak self] in
             guard let self = self else { return }
-            //语音权限判断
-            requestSpeechAuthorization()
+            if IS_LOGIN {
+                let group = DispatchGroup()
+                group.enter()
+                requestSpeechAuthorization { grand in
+                    self.isSpeechAuthorized = grand
+                    group.leave()
+                }
+                group.enter()
+                requestAudioAuthorization { grand in
+                    self.isMicAuthorized = grand
+                    group.leave()
+                }
+                group.notify(queue: .main) {
+                    if self.isMicAuthorized && self.isSpeechAuthorized {
+                        self.speechInfo()
+                    }else {
+                        self.judgeVoiceInfo()
+                    }
+                }
+            }else {
+                self.popLogin()
+            }
         }
+        
+        self.vociceStr
+            .asObservable()
+            .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] voiceStr in
+                guard let self = self, let voiceStr = voiceStr, !voiceStr.isEmpty else { return }
+                print("识别的语音文字=======:\(voiceStr)")
+            }).disposed(by: disposeBag)
         
         //跳转到会员页面
         homeHeadView.vipImageView
@@ -182,6 +221,27 @@ class WDHomeViewController: WDBaseViewController {
         }).disposed(by: disposeBag)
         
         //文字轮博点击
+        homeScroView.fourBtn.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            let nameStr = homeScroView.scrollLabelView?.scrollTitle ?? ""
+            if IS_LOGIN {
+                DispatchQueue.main.async {
+                    let selectIndex = self.selectIndex
+                    if selectIndex == 3 {
+                        let searchClueVc = PropertyTabBarController()
+                        self.navigationController?.pushViewController(searchClueVc, animated: true)
+                    }else {
+                        let searchAllVc = SearchAllViewController()
+                        searchAllVc.selectIndex = selectIndex
+                        searchAllVc.name = nameStr
+                        self.navigationController?.pushViewController(searchAllVc, animated: true)
+                    }
+                }
+            }else {
+                self.popLogin()
+            }
+        }).disposed(by: disposeBag)
+        
         homeHeadView.tabView.fourBtn.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             let nameStr = homeHeadView.tabView.scrollLabelView?.scrollTitle ?? ""
@@ -201,7 +261,6 @@ class WDHomeViewController: WDBaseViewController {
             }else {
                 self.popLogin()
             }
-            
         }).disposed(by: disposeBag)
         
         if IS_LOGIN {
@@ -255,34 +314,98 @@ class WDHomeViewController: WDBaseViewController {
 
 extension WDHomeViewController {
     
-    private func requestSpeechAuthorization() {
-            SFSpeechRecognizer.requestAuthorization { authStatus in
-                OperationQueue.main.addOperation {
-                    switch authStatus {
-                    case .authorized:
-                        DispatchQueue.main.async {
-                            let voiceView = PopVoiceView(frame: CGRectMake(0, 0, 300, 220))
-                            let alertVc = TYAlertController(alert: voiceView, preferredStyle: .alert)!
-                            self.present(alertVc, animated: true)
-                        }
-                    case .denied:
-                        ShowAlertManager.showAlert(title: "权限申请", message: "请在iphone的“设置-问道云-麦克风”选项中,允许问道云访问你的麦克风", confirmAction: {[weak self] in
-                            self?.openSettings()
-                        })
-                    case .restricted:
-                        ShowAlertManager.showAlert(title: "权限申请", message: "请在iphone的“设置-问道云-麦克风”选项中,允许问道云访问你的麦克风", confirmAction: {[weak self] in
-                            self?.openSettings()
-                        })
-                    case .notDetermined:
-                        ShowAlertManager.showAlert(title: "权限申请", message: "请在iphone的“设置-问道云-麦克风”选项中,允许问道云访问你的麦克风", confirmAction: { [weak self] in
-                            self?.openSettings()
-                        })
-                    @unknown default:
-                        break
-                    }
+    // 请求语音识别权限
+    private func requestSpeechAuthorization(complete: @escaping ((Bool) -> Void)) {
+        SFSpeechRecognizer.requestAuthorization { authStatus in
+            DispatchQueue.main.async {
+                switch authStatus {
+                case .authorized:
+                    complete(true)
+                default:
+                    complete(false)
                 }
             }
         }
+    }
+    
+    //请求麦克风权限
+    private func requestAudioAuthorization(complete: @escaping ((Bool) -> Void)) {
+        AVAudioSession.sharedInstance().requestRecordPermission { granted in
+            DispatchQueue.main.async {
+                if granted {
+                    complete(true)
+                } else {
+                    complete(false)
+                }
+            }
+        }
+    }
+    
+    private func judgeVoiceInfo() {
+        ShowAlertManager.showAlert(title: "权限申请", message: "请在iphone的“设置-问道云-麦克风”选项中,允许问道云访问你的麦克风", confirmAction: {[weak self] in
+            self?.openSettings()
+        })
+    }
+    
+    private func speechInfo() {
+        let voiceView = PopVoiceView(frame: CGRectMake(0, 0, SCREEN_WIDTH, 220))
+        let alertVc = TYAlertController(alert: voiceView, preferredStyle: .alert)!
+        self.present(alertVc, animated: true)
+        
+        if audioEngine.isRunning {
+            stopRecording()
+        } else {
+            try? startRecording()
+        }
+        
+    }
+    
+    private func startRecording() throws {
+        recognitionTask?.cancel()
+        recognitionTask = nil
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+        try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+        
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        guard let recognitionRequest = recognitionRequest else { fatalError("无法创建请求对象") }
+        recognitionRequest.shouldReportPartialResults = true
+        
+        let inputNode = audioEngine.inputNode
+        
+        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
+            DispatchQueue.main.asyncAfter(delay: 1.0) {
+                if let result = result {
+                    self.stopRecording()
+                    self.dismiss(animated: true) {
+                        let voiceStr = result.bestTranscription.formattedString
+                        self.vociceStr.accept(voiceStr)
+                    }
+                }
+                
+                if error != nil || (result?.isFinal ?? false) {
+                    self.audioEngine.stop()
+                    self.audioEngine.inputNode.removeTap(onBus: 0)
+                    self.recognitionRequest = nil
+                    self.recognitionTask = nil
+                }
+            }
+        }
+        
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
+            self.recognitionRequest?.append(buffer)
+        }
+        
+        audioEngine.prepare()
+        try audioEngine.start()
+    }
+    
+    private func stopRecording() {
+        audioEngine.stop()
+        recognitionRequest?.endAudio()
+    }
     
     private func toSearchListPageWithModel(from model: childrenModel) {
         let menuID = model.menuId ?? ""

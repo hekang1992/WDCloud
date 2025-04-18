@@ -190,13 +190,13 @@ class TwoCompanyNormalListCell: BaseViewCell {
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.left.equalTo(ctImageView.snp.right).offset(8)
-            make.height.equalTo(20)
+            make.height.lessThanOrEqualTo(40)
             make.width.lessThanOrEqualTo(SCREEN_WIDTH - 100)
         }
         
         tagListView.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
-            make.top.equalToSuperview().offset(32.5)
+            make.top.equalTo(nameLabel.snp.bottom).offset(4)
             make.width.equalTo(SCREEN_WIDTH - 80)
             make.height.equalTo(18)
         }

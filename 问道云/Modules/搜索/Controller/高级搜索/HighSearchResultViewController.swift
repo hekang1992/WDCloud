@@ -360,6 +360,7 @@ extension HighSearchResultViewController: UITableViewDelegate, UITableViewDataSo
         let model = self.allArray[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "HighSearchViewCell", for: indexPath) as! HighSearchViewCell
         cell.selectionStyle = .none
+        model.searchStr = self.dict["keyword"] as? String ?? ""
         cell.model = model
         cell.focusBlock = { [weak self] in
             if let self = self {
@@ -372,8 +373,10 @@ extension HighSearchResultViewController: UITableViewDelegate, UITableViewDataSo
             }
         }
         cell.heightDidUpdate = { [weak self] in
-            self?.tableView.beginUpdates()
-            self?.tableView.endUpdates()
+            UIView.setAnimationsEnabled(false)
+            self?.tableView.performBatchUpdates({
+                self?.tableView.reloadRows(at: [indexPath], with: .none)
+                }, completion: nil)
         }
         return cell
     }

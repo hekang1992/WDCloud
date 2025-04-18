@@ -137,15 +137,19 @@ extension CompanyActivityViewController: UITableViewDelegate, UITableViewDataSou
             if indexPath.section == 0 {
                 if indexPath.row == 0 {
                     cell.lineView1.isHidden = true
-                    cell.cycleView.backgroundColor = UIColor.init(cssStr: "#3849F7")
-                    cell.cycleView.layer.borderWidth = 4
-                    cell.cycleView.layer.borderColor = UIColor.init(cssStr: "#3849F7")?.withAlphaComponent(0.3).cgColor
+                    cell.cycleViewImage.image = UIImage(named: "dontaiimgeblue")
+                    cell.cycleViewImage.snp.updateConstraints { make in
+                        make.size.equalTo(CGSize(width: 9, height: 9))
+                        make.left.equalToSuperview().offset(14)
+                    }
                 }
             }else {
                 cell.lineView1.isHidden = false
-                cell.cycleView.backgroundColor = UIColor.init(cssStr: "#D8D8D8")
-                cell.cycleView.layer.borderWidth = 0
-                cell.cycleView.layer.borderColor = UIColor.clear.cgColor
+                cell.cycleViewImage.image = UIImage(named: "dontaiimgegray")
+                cell.cycleViewImage.snp.updateConstraints { make in
+                    make.size.equalTo(CGSize(width: 5, height: 5))
+                    make.left.equalToSuperview().offset(16)
+                }
             }
             return cell
         }
@@ -189,7 +193,6 @@ extension CompanyActivityViewController {
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
-                        self.noNetView.removeFromSuperview()
                     }else {
                         self.addNodataView(from: self.view)
                     }

@@ -267,6 +267,7 @@
 		739DCA2B2D67362B009CFC78 /* MyPropertySettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739DCA2A2D67362B009CFC78 /* MyPropertySettingCell.swift */; };
 		739E91EE2D8E6C08000E1A11 /* PropertyLineInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739E91ED2D8E6C08000E1A11 /* PropertyLineInfoView.swift */; };
 		739E91F02D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739E91EF2D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift */; };
+		739F7C062DB21F9900F698BE /* yuyindonghua.json in Resources */ = {isa = PBXBuildFile; fileRef = 739F7C052DB21F9900F698BE /* yuyindonghua.json */; };
 		73A0509B2D83CCA700208602 /* PropertyListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */; };
 		73A21DDF2D0C01C400FC4C49 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */; };
 		73A21DE12D0C06E700FC4C49 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A21DE02D0C06E700FC4C49 /* SettingView.swift */; };
@@ -698,6 +699,7 @@
 		739DCA2A2D67362B009CFC78 /* MyPropertySettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPropertySettingCell.swift; sourceTree = "<group>"; };
 		739E91ED2D8E6C08000E1A11 /* PropertyLineInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLineInfoView.swift; sourceTree = "<group>"; };
 		739E91EF2D8E94B1000E1A11 /* PropertMonitoringListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertMonitoringListViewCell.swift; sourceTree = "<group>"; };
+		739F7C052DB21F9900F698BE /* yuyindonghua.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = yuyindonghua.json; sourceTree = "<group>"; };
 		73A0509A2D83CCA700208602 /* PropertyListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListViewCell.swift; sourceTree = "<group>"; };
 		73A21DDE2D0C01C400FC4C49 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		73A21DE02D0C06E700FC4C49 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -915,13 +917,13 @@
 			children = (
 				730487F62D2A525B0024265C /* HomeHeadView.swift */,
 				730488062D2A72200024265C /* HomeHeadTabView.swift */,
+				733B5FFD2D574D3D00ADE7C5 /* HomeNavSearchView.swift */,
 				730488082D2A7ACD0024265C /* HomeHeadHotsView.swift */,
 				7304880E2D2A97E00024265C /* HomeNewsListViewCell.swift */,
 				730488102D2A97F00024265C /* HomeVideoListViewCell.swift */,
 				730488122D2BD2090024265C /* HomeBannerViewCell.swift */,
 				730488142D2BD2380024265C /* HomeItemViewCell.swift */,
 				73C36A692D2CCB1600D6DC46 /* HomeHotWordsCell.swift */,
-				733B5FFD2D574D3D00ADE7C5 /* HomeNavSearchView.swift */,
 				73EDE9E02D59A1A000A0A7E3 /* HomeItemSearchView.swift */,
 			);
 			path = View;
@@ -1837,6 +1839,7 @@
 			isa = PBXGroup;
 			children = (
 				7325A7E32CFFF8EE0043C196 /* loading.json */,
+				739F7C052DB21F9900F698BE /* yuyindonghua.json */,
 				730488022D2A64B90024265C /* refreshloading.json */,
 				7325A7F12D0008D30043C196 /* 问道云-Bridging-Header.h */,
 			);
@@ -2204,6 +2207,7 @@
 				73E306D22D154E9E00D18943 /* Launch Screen.storyboard in Resources */,
 				7325A7A42CFEE58D0043C196 /* Assets.xcassets in Resources */,
 				7325A7E42CFFF8EE0043C196 /* loading.json in Resources */,
+				739F7C062DB21F9900F698BE /* yuyindonghua.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2677,7 +2681,7 @@
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2725,7 +2729,7 @@
 				CODE_SIGN_ENTITLEMENTS = "问道云/问道云.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = XS8842FK7N;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;

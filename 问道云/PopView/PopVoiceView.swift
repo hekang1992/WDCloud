@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Lottie
 
 class PopVoiceView: BaseView {
     
@@ -25,25 +26,28 @@ class PopVoiceView: BaseView {
         return bgView
     }()
     
-    lazy var ctImageView: UIImageView = {
-        let ctImageView = UIImageView()
-        ctImageView.image = UIImage(named: "yuimage")
-        return ctImageView
+    lazy var voiceView: LottieAnimationView = {
+        let voiceView = LottieAnimationView(name: "yuyindonghua.json", bundle: Bundle.main)
+        voiceView.loopMode = .loop
+        voiceView.play()
+        return voiceView
     }()
     
-    lazy var ct1ImageView: UIImageView = {
-        let ct1ImageView = UIImageView()
-        ct1ImageView.contentMode = .scaleAspectFit
-        ct1ImageView.clipsToBounds = true
-        return ct1ImageView
+    lazy var desclabel: UILabel = {
+        let desclabel = UILabel()
+        desclabel.text = "语音识别能力由苹果提供"
+        desclabel.textColor = UIColor.init(cssStr: "#BABABA")
+        desclabel.textAlignment = .center
+        desclabel.font = .regularFontOfSize(size: 11)
+        return desclabel
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(bgView)
         bgView.addSubview(mlabel)
-        bgView.addSubview(ctImageView)
-        bgView.addSubview(ct1ImageView)
+        bgView.addSubview(voiceView)
+        bgView.addSubview(desclabel)
         bgView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.size.equalTo(CGSize(width: 273.pix(), height: 200.pix()))
@@ -53,27 +57,16 @@ class PopVoiceView: BaseView {
             make.top.equalToSuperview().offset(15)
             make.height.equalTo(22.5)
         }
-        ctImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(74.pix())
-            make.size.equalTo(CGSize(width: 61.pix(), height: 61.pix()))
+        voiceView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20.pix())
+            make.size.equalTo(CGSize(width: 180.pix(), height: 180.pix()))
             make.centerX.equalToSuperview()
         }
-        ct1ImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(46.pix())
-            make.size.equalTo(CGSize(width: 119.pix(), height: 119.pix()))
+        desclabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-1)
+            make.height.equalTo(15)
         }
-        
-        var images = [UIImage]()
-        for i in 1...4 {
-            if let image = UIImage(named: "one_iamge_\(i)") {
-                images.append(image)
-            }
-        }
-        ct1ImageView.animationImages = images
-        ct1ImageView.animationDuration = 1.0
-        ct1ImageView.animationRepeatCount = 0
-        ct1ImageView.startAnimating()
     }
     
     @MainActor required init?(coder: NSCoder) {

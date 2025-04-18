@@ -110,10 +110,6 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                 let model = dataModelArray.value?[indexPath.row]
                 model?.searchStr = self.searchWordsRelay.value ?? ""
                 cell?.model.accept(model)
-                cell?.heightDidUpdate = { [weak self] in
-                    self?.tableView.beginUpdates()
-                    self?.tableView.endUpdates()
-                }
                 cell?.focusBlock = { [weak self] in
                     if let self = self, let model = model, let cell = cell {
                         let followStatus = model.followStatus ?? 0
@@ -133,10 +129,9 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                     self.moreBlock?(pageUrl)
                 }
                 cell?.heightDidUpdate = { [weak self] in
-                    DispatchQueue.main.async {
-                        self?.tableView.beginUpdates()
-                        self?.tableView.endUpdates()
-                    }
+                    UIView.setAnimationsEnabled(false)
+                    self?.tableView.beginUpdates()
+                    self?.tableView.endUpdates()
                 }
                 return cell ?? UITableViewCell()
             }
@@ -147,10 +142,6 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
             cell?.backgroundColor = .clear
             cell?.selectionStyle = .none
             cell?.model.accept(model)
-            cell?.heightDidUpdate = { [weak self] in
-                self?.tableView.beginUpdates()
-                self?.tableView.endUpdates()
-            }
             cell?.moreBlock = { [weak self] in
                 guard let self = self else { return }
                 let pageUrl = model?.detailUrl ?? ""
@@ -167,10 +158,9 @@ extension TwoRiskListView: UITableViewDelegate, UITableViewDataSource {
                 }
             }
             cell?.heightDidUpdate = { [weak self] in
-                DispatchQueue.main.async {
-                    self?.tableView.beginUpdates()
-                    self?.tableView.endUpdates()
-                }
+                UIView.setAnimationsEnabled(false)
+                self?.tableView.beginUpdates()
+                self?.tableView.endUpdates()
             }
             cell?.peopleBlock = { [weak self] model in
                 self?.peopleBlock?(model)

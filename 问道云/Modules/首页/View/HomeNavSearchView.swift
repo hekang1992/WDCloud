@@ -32,6 +32,11 @@ class HomeNavSearchView: BaseView {
         return searchIcon
     }()
     
+    lazy var fourBtn: UIButton = {
+        let fourBtn = UIButton(type: .custom)
+        return fourBtn
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(searchView)
@@ -62,6 +67,10 @@ class HomeNavSearchView: BaseView {
             self.scrollLabelView = scrollLabelView
             searchView.addSubview(scrollLabelView)
             scrollLabelView.beginScrolling()
+            searchView.addSubview(fourBtn)
+            fourBtn.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
         }).disposed(by: disposeBag)
     }
     

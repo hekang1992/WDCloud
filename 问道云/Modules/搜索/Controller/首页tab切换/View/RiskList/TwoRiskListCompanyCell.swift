@@ -169,13 +169,13 @@ class TwoRiskListCompanyCell: BaseViewCell {
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.left.equalTo(ctImageView.snp.right).offset(8)
-            make.right.lessThanOrEqualTo(280)
-            make.height.equalTo(20)
+            make.height.lessThanOrEqualTo(40)
+            make.width.lessThanOrEqualTo(SCREEN_WIDTH - 100)
         }
         
         tagListView.snp.makeConstraints { make in
             make.left.equalTo(nameLabel.snp.left)
-            make.top.equalToSuperview().offset(32.5)
+            make.top.equalTo(nameLabel.snp.bottom).offset(4)
             make.width.equalTo(SCREEN_WIDTH - 80)
             make.height.equalTo(18)
         }
@@ -416,7 +416,6 @@ class TwoRiskListCompanyCell: BaseViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
 }
 
 extension TwoRiskListCompanyCell {
@@ -553,9 +552,9 @@ extension TwoRiskListCompanyCell {
     
     // 按钮点击事件
     @objc func didOpenTags(_ sender: UIButton) {
+        companyModel.isOpenTag.toggle()
+        setupScrollView(tagScrollView: tagListView, tagArray: tagArray)
         self.heightDidUpdate?()
-        companyModel.isOpenTag.toggle() // 切换展开/收起状态
-        setupScrollView(tagScrollView: tagListView, tagArray: tagArray) // 重新设置标签
     }
     
 }

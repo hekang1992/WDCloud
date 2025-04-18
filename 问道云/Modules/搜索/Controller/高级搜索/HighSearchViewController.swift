@@ -523,7 +523,7 @@ extension HighSearchViewController {
             }
             //成立年限参数
             let incDateTypeVec: [Int] = filteredModels.map { Int($0.code ?? "0") ?? 0 }
-            var incDateRange = startTime + "-" + endTime
+            var incDateRange = startTime + "|" + endTime
             if startTime > endTime {
                 ToastViewConfig.showToast(message: "开始日期大于结束日期,请重新选择")
                 return
@@ -656,22 +656,22 @@ extension HighSearchViewController {
             resultVc.matchType = ["matchType": matchType as Any]
             //行业
             if !industryType.isEmpty {
-                resultVc.industryType = ["industryType": industryType]
+                resultVc.industryType = ["INDUSTRY": industryType]
             }
             
             //地区
             if region != "" {
-                resultVc.region = ["region": Int(region) as Any]
+                resultVc.region = ["REGION": Int(region) as Any]
             }
             
             //登记状态
             if regStatusVec.count > 0 {
-                resultVc.regStatusVec = ["regStatusVec": regStatusVec]
+                resultVc.regStatusVec = ["ORG_REG_STATUS": regStatusVec]
             }
             
             //成立年限
             if incDateTypeVec.count > 0 {
-                resultVc.incDateTypeVec = ["incDateTypeVec": incDateTypeVec]
+                resultVc.incDateTypeVec = ["INC_DATE_LEVEL": incDateTypeVec]
             }
             
             //自定义年限
@@ -681,7 +681,7 @@ extension HighSearchViewController {
             
             //注册资本
             if regCapLevelVec.count > 0 {
-                resultVc.regCapLevelVec = ["regCapLevelVec": regCapLevelVec]
+                resultVc.regCapLevelVec = ["REG_CAP_LEVEL": regCapLevelVec]
             }
             
             //自定义资本
@@ -691,17 +691,17 @@ extension HighSearchViewController {
             
             //机构类型
             if econTypeVec.count > 0 {
-                resultVc.econTypeVec = ["econTypeVec": econTypeVec]
+                resultVc.econTypeVec = ["ORG_CATEGORY": econTypeVec]
             }
             
             //企业类型
             if categoryVec.count > 0 {
-                resultVc.categoryVec = ["categoryVec": categoryVec]
+                resultVc.categoryVec = ["ORG_ECON": categoryVec]
             }
             
             //参保人数
             if sipCountLevelVec.count > 0 {
-                resultVc.sipCountLevelVec = ["sipCountLevelVec": sipCountLevelVec]
+                resultVc.sipCountLevelVec = ["SIP_LEVEL": sipCountLevelVec]
             }
             
             //自定义参保人数
@@ -711,12 +711,12 @@ extension HighSearchViewController {
             
             //上市状态
             if listStatusVec.count > 0 {
-                resultVc.listStatusVec = ["listStatusVec": listStatusVec]
+                resultVc.listStatusVec = ["LIST_STATUS": listStatusVec]
             }
             
             //上市板块
             if listingSectorVec.count > 0 {
-                resultVc.listingSectorVec = ["listingSectorVec": listingSectorVec]
+                resultVc.listingSectorVec = ["LIST_SECTOR": listingSectorVec]
             }
             
             //是否有邮箱

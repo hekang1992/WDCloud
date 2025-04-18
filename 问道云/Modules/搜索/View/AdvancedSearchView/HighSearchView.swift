@@ -93,21 +93,14 @@ class HighSearchKeyView: BaseView {
             make.right.equalTo(preciseButton.snp.left).offset(-5)
             make.size.equalTo(CGSize(width: 55, height: 19))
         }
-        nameTx.rx.text.orEmpty
-            .map { text -> String in
-                // 1. 过滤特殊字符（只允许中文、字母、数字和常见标点）
-                let pattern = "[^a-zA-Z0-9\\u4e00-\\u9fa5，。、；：？！（）「」『』《》【】,.?;:!()\\[\\]{}'\"\\- ]"
-                let filtered = text.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
-                
-                // 2. 限制最大长度为50个字符
-                if filtered.count > 50 {
-                    let index = filtered.index(filtered.startIndex, offsetBy: 50)
-                    return String(filtered[..<index])
-                }
-                return filtered
-            }
-            .bind(to: nameTx.rx.text)
-            .disposed(by: disposeBag)
+        
+        // 监听 UITextField 的文本变化
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textDidChange),
+            name: UITextField.textDidChangeNotification,
+            object: nameTx
+        )
     }
     
     required init?(coder: NSCoder) {
@@ -132,6 +125,35 @@ class HighSearchKeyView: BaseView {
         
         unselectedButton.setTitleColor(UIColor.init(cssStr: "#666666"), for: .normal)
         unselectedButton.setImage(UIImage(named: "iconselcehignor"), for: .normal)
+    }
+    
+    @objc private func textDidChange() {
+        let isComposing = nameTx.markedTextRange != nil
+        if !isComposing {
+            let searchStr = nameTx.text ?? ""
+            
+            // Check for special characters
+            let filteredText = filterAllSpecialCharacters(searchStr)
+            if filteredText != searchStr {
+                ToastViewConfig.showToast(message: "禁止输入特殊字符")
+                nameTx.text = filteredText
+                return
+            }
+            
+            if searchStr.count < 2 && !searchStr.isEmpty {
+                ToastViewConfig.showToast(message: "至少输入2个关键词")
+                return
+            } else if searchStr.count > 100 {
+                nameTx.text = String(searchStr.prefix(100))
+                ToastViewConfig.showToast(message: "最多输入100个关键词")
+            }
+            
+        }
+    }
+    
+    func filterAllSpecialCharacters(_ text: String) -> String {
+        let pattern = "[^a-zA-Z0-9\\u4e00-\\u9fa5()（）]"
+        return text.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
     }
     
 }

@@ -32,6 +32,7 @@ class HighSearchViewCell: BaseViewCell {
         nameLabel.textColor = .init(cssStr: "#333333")
         nameLabel.textAlignment = .left
         nameLabel.isSkeletonable = true
+        nameLabel.numberOfLines = 0
         return nameLabel
     }()
 
@@ -146,8 +147,8 @@ class HighSearchViewCell: BaseViewCell {
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(11.5)
             make.left.equalTo(logoImageView.snp.right).offset(8)
-            make.height.equalTo(20)
             make.right.equalToSuperview().offset(-60)
+            make.height.lessThanOrEqualTo(48)
         }
         focusBtn.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-15.5)
@@ -189,7 +190,7 @@ class HighSearchViewCell: BaseViewCell {
         }
         tagListView.snp.makeConstraints { make in
             make.left.equalTo(legalNameLabel.snp.left)
-            make.top.equalToSuperview().offset(56)
+            make.top.equalTo(legalNameLabel.snp.bottom).offset(2)
             make.right.equalToSuperview().offset(-40)
             make.height.equalTo(18)
         }
@@ -240,7 +241,7 @@ class HighSearchViewCell: BaseViewCell {
             let companyName = model.orgInfo?.orgName ?? ""
             let logoColor = model.orgInfo?.logoColor ?? ""
             logoImageView.image = UIImage.imageOfText(companyName, size: (27.pix(), 27.pix()), bgColor: UIColor.init(cssStr: logoColor)!)
-            nameLabel.text = companyName
+            nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: companyName)
             
             //关注
             let followStatus = model.followStatus ?? 0

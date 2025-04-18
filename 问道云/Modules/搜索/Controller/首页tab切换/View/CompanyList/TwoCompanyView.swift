@@ -158,10 +158,9 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 self?.focusInfo(from: model, cell: cell)
             }
             cell.heightDidUpdate = { [weak self] in
+                UIView.setAnimationsEnabled(false)
                 self?.tableView.beginUpdates()
-                DispatchQueue.main.async {
-                    self?.tableView.endUpdates()
-                }
+                self?.tableView.endUpdates()
             }
             //跳转风险扫描
             cell.riskBlock = { [weak self] model in
@@ -180,6 +179,7 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 cell.selectionStyle = .none
                 cell.productList = dataModel?.productList
                 cell.descLabel.isExpandedBlock = { [weak self] grand in
+                    UIView.setAnimationsEnabled(false)
                     self?.tableView.beginUpdates()
                     self?.tableView.endUpdates()
                 }
@@ -204,6 +204,11 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 }
                 cell.focusBlock = { [weak self] model in
                     self?.focusInfo(from: model, cell: cell)
+                }
+                cell.heightDidUpdate = { [weak self] in
+                    UIView.setAnimationsEnabled(false)
+                    self?.tableView.beginUpdates()
+                    self?.tableView.endUpdates()
                 }
                 return cell
             }
@@ -235,6 +240,11 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 cell.focusBlock = { [weak self] model in
                     self?.focusInfo(from: model, cell: cell)
                 }
+                cell.heightDidUpdate = { [weak self] in
+                    UIView.setAnimationsEnabled(false)
+                    self?.tableView.beginUpdates()
+                    self?.tableView.endUpdates()
+                }
                 return cell
             }
         }else {//品牌,人员,公司都有
@@ -243,6 +253,7 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 cell.selectionStyle = .none
                 cell.productList = dataModel?.productList
                 cell.descLabel.isExpandedBlock = { [weak self] grand in
+                    UIView.setAnimationsEnabled(false)
                     self?.tableView.beginUpdates()
                     self?.tableView.endUpdates()
                 }
@@ -273,6 +284,11 @@ extension TwoCompanyView: UITableViewDelegate, UITableViewDataSource {
                 }
                 cell.focusBlock = { [weak self] model in
                     self?.focusInfo(from: model, cell: cell)
+                }
+                cell.heightDidUpdate = { [weak self] in
+                    UIView.setAnimationsEnabled(false)
+                    self?.tableView.beginUpdates()
+                    self?.tableView.endUpdates()
                 }
                 return cell
             }

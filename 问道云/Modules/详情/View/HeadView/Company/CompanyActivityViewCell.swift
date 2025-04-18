@@ -46,11 +46,10 @@ class CompanyActivityViewCell: BaseViewCell {
         return typeLabel
     }()
     
-    lazy var cycleView: UIView = {
-        let cycleView = UIView()
-        cycleView.backgroundColor = UIColor.init(cssStr: "#D8D8D8")
-        cycleView.layer.cornerRadius = 2.5
-        return cycleView
+    lazy var cycleViewImage: UIImageView = {
+        let cycleViewImage = UIImageView()
+        cycleViewImage.contentMode = .scaleAspectFit
+        return cycleViewImage
     }()
     
     lazy var lineView: UIView = {
@@ -72,7 +71,7 @@ class CompanyActivityViewCell: BaseViewCell {
         contentView.addSubview(timeLabel)
         contentView.addSubview(stackView)
         contentView.addSubview(ctImageView)
-        contentView.addSubview(cycleView)
+        contentView.addSubview(cycleViewImage)
         contentView.addSubview(lineView)
         contentView.addSubview(lineView1)
         stackView.axis = .vertical
@@ -108,22 +107,22 @@ class CompanyActivityViewCell: BaseViewCell {
             make.right.equalTo(stackView.snp.right)
             make.height.equalTo(15)
         }
-        cycleView.snp.makeConstraints { make in
+        cycleViewImage.snp.makeConstraints { make in
             make.centerY.equalTo(nameLabel.snp.centerY)
-            make.size.equalTo(CGSize(width: 5, height: 5))
+            make.size.equalTo(CGSize(width: 9, height: 9))
             make.left.equalToSuperview().offset(14)
         }
         lineView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
-            make.centerX.equalTo(cycleView.snp.centerX)
-            make.width.equalTo(0.5)
-            make.top.equalTo(cycleView.snp.bottom)
+            make.centerX.equalTo(cycleViewImage.snp.centerX)
+            make.width.equalTo(1)
+            make.top.equalTo(cycleViewImage.snp.bottom)
         }
         lineView1.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.centerX.equalTo(cycleView.snp.centerX)
-            make.width.equalTo(0.5)
-            make.bottom.equalTo(cycleView.snp.top)
+            make.centerX.equalTo(cycleViewImage.snp.centerX)
+            make.width.equalTo(1)
+            make.bottom.equalTo(cycleViewImage.snp.top)
         }
         
         model.asObservable().subscribe(onNext: { [weak self] model in
@@ -198,15 +197,16 @@ class ActivityListView: UIView {
         addSubview(titleLabel)
         addSubview(contentLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(5)
+            make.top.equalToSuperview().offset(2)
             make.left.equalToSuperview().offset(8)
-            make.height.equalTo(16.5)
+            make.height.equalTo(16.5.pix())
+            make.width.lessThanOrEqualTo(150.pix())
         }
         contentLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.top)
-            make.right.equalToSuperview().offset(-30)
+            make.right.equalToSuperview().offset(-25)
             make.left.equalTo(titleLabel.snp.right).offset(2)
-            make.bottom.equalToSuperview().offset(-5)
+            make.bottom.equalToSuperview().offset(-2)
         }
     }
     
