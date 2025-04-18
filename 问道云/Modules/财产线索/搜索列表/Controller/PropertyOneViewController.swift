@@ -132,7 +132,7 @@ extension PropertyOneViewController: UITextFieldDelegate {
             let two = self?.twoArray ?? []
             self?.allArray = [two, one]
             self?.oneView.modelArray = self?.allArray ?? []
-            DispatchQueue.main.asyncAfter(delay: 0.5) {
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
                 self?.oneView.tableView.hideSkeleton()
                 self?.oneView.tableView.reloadData()
             }

@@ -25,7 +25,7 @@ class CommonHotsView: BaseView {
     
     var modelArray: [[rowsModel]]? {
         didSet {
-            DispatchQueue.main.asyncAfter(delay: 0.5) {
+            DispatchQueue.main.asyncAfter(delay: 0.25) {
                 self.tableView.hideSkeleton()
                 self.tableView.reloadData()
             }

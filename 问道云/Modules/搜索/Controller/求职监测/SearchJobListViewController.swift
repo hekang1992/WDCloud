@@ -405,7 +405,7 @@ extension SearchJobListViewController {
                     self.companyListView.dataModel = model
                     self.companyListView.dataModelArray = self.allArray
                     self.companyListView.searchWordsRelay.accept(keyword)
-                    DispatchQueue.main.asyncAfter(delay: 0.5) {
+                    DispatchQueue.main.asyncAfter(delay: 0.25) {
                         self.companyListView.tableView.hideSkeleton()
                         self.companyListView.tableView.reloadData()
                     }

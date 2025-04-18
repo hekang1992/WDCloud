@@ -192,7 +192,7 @@ extension SearchCompanyShareholderViewController {
                         }else {
                             self.tableView.mj_footer?.isHidden = true
                         }
-                        DispatchQueue.main.asyncAfter(delay: 0.5) {
+                        DispatchQueue.main.asyncAfter(delay: 0.25) {
                             self.tableView.hideSkeleton()
                             self.tableView.reloadData()
                         }

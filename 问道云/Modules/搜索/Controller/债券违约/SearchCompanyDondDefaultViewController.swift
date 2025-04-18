@@ -239,7 +239,7 @@ extension SearchCompanyDondDefaultViewController {
                     self.companyListView.dataModel.accept(model)
                     self.companyListView.dataModelArray.accept(self.allArray)
                     self.companyListView.searchWordsRelay.accept(keyword)
-                    DispatchQueue.main.asyncAfter(delay: 0.5) {
+                    DispatchQueue.main.asyncAfter(delay: 0.25) {
                         self.companyListView.tableView.hideSkeleton()
                         self.companyListView.tableView.reloadData()
                     }
