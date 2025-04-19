@@ -81,6 +81,7 @@ class BeneficialCompanyViewCell: BaseViewCell {
         nameView.lineView.isHidden = false
         nameView.label1.text = "法定代表人"
         nameView.label2.textColor = .init(cssStr: "#547AFF")
+        nameView.isHidden = true
         return nameView
     }()
     
@@ -89,6 +90,7 @@ class BeneficialCompanyViewCell: BaseViewCell {
         moneyView.lineView.isHidden = false
         moneyView.label1.text = "注册资本"
         moneyView.label2.textColor = .init(cssStr: "#333333")
+        moneyView.isHidden = true
         return moneyView
     }()
     
@@ -97,6 +99,7 @@ class BeneficialCompanyViewCell: BaseViewCell {
         timeView.label1.text = "成立时间"
         timeView.label2.textColor = .init(cssStr: "#333333")
         timeView.isSkeletonable = true
+        timeView.isHidden = true
         return timeView
     }()
     
@@ -260,13 +263,16 @@ class BeneficialCompanyViewCell: BaseViewCell {
         }
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model else { return }
+            moneyView.isHidden = false
+            timeView.isHidden = false
+            nameView.isHidden = false
             let companyName = model.orgName ?? ""
             let logoColor = model.logoColor ?? ""
             let orgLogo = URL(string: model.orgLogo ?? "")
             ctImageView.kf.setImage(with: orgLogo, placeholder: UIImage.imageOfText(companyName, size: (40, 40), bgColor: UIColor.init(cssStr: logoColor)!))
-            namelabel.text = companyName
+            namelabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: companyName)
             
-            nameView.label2.text = model.legalName ?? ""
+            nameView.label2.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: model.legalName ?? "", font: .mediumFontOfSize(size: 12))
             moneyView.label2.text = "\(model.regCap ?? "")" + "\(model.regCapCur ?? "")"
             timeView.label2.text = model.incDate ?? ""
             

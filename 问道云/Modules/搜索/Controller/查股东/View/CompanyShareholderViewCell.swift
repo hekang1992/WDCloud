@@ -271,7 +271,7 @@ class CompanyShareholderViewCell: BaseViewCell {
             let logoColor = model.logoColor ?? ""
             let orgLogo = URL(string: model.orgLogo ?? "")
             ctImageView.kf.setImage(with: orgLogo, placeholder: UIImage.imageOfText(companyName, size: (40, 40), bgColor: UIColor.init(cssStr: logoColor)!))
-            namelabel.text = companyName
+            namelabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: companyName)
             
             nameView.label2.text = model.legalName ?? ""
             moneyView.label2.text = "\(model.regCap ?? "")" + "\(model.regCapCur ?? "")"

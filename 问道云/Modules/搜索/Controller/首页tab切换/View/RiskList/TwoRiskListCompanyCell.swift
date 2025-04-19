@@ -293,7 +293,9 @@ class TwoRiskListCompanyCell: BaseViewCell {
             //法人
             let leaderList = model.leaderVec?.leaderList ?? []
             let legalName = leaderList.compactMap { $0.name }.joined(separator: ",")
-            self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: companyName, colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))
+            let leaderTypeName = model.leaderVec?.leaderTypeName ?? ""
+            self.nameView.label1.text = leaderTypeName
+            self.nameView.label2.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: legalName, font: .mediumFontOfSize(size: 12))
             
             self.moneyView.label2.text = model.orgInfo?.regCap ?? ""
             self.timeView.label2.text = model.orgInfo?.incDate ?? ""

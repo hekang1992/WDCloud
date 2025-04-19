@@ -87,7 +87,7 @@ class SearchContorlPeopleViewCell: BaseViewCell {
     
     lazy var monitoringBtn: UIButton = {
         let monitoringBtn = UIButton(type: .custom)
-        monitoringBtn.isSkeletonable = true
+        monitoringBtn.isHidden = true
         monitoringBtn.setImage(UIImage(named: "jiankonganniu"), for: .normal)
         return monitoringBtn
     }()
@@ -156,11 +156,14 @@ class SearchContorlPeopleViewCell: BaseViewCell {
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model, let name = model.personName, !name.isEmpty else { return }
-            
+            monitoringBtn.isHidden = false
             let logoColor = UIColor.init(cssStr: model.logoColor ?? "")!
             
             ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (40, 40), bgColor: logoColor))
-            nameLabel.text = name
+            
+            let srarchStr = model.searchStr ?? ""
+            
+            nameLabel.attributedText = GetRedStrConfig.getRedStr(from: srarchStr, fullText: model.personName ?? "")
             
             let count = model.listCompany?.count ?? 0
             numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(count)", fullText: "共担任\(count)家企业实控人")
@@ -320,7 +323,7 @@ extension SearchContorlPeopleViewCell {
             let name = model.entityName ?? ""
             let shrInfo = model.shrInfo ?? ""
             let positions = model.positions ?? ""
-            listView.nameLabel.text = name
+            listView.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: self.model.value?.searchStr ?? "", fullText: name, font: .regularFontOfSize(size: 13))
             var totalStr: String = ""
             if !positions.isEmpty {
                 totalStr  = shrInfo + "、\(positions)"

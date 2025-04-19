@@ -198,6 +198,7 @@ extension SearchCompanySanctionViewController {
                     "moduleId": "19",
                     "riskType": "ADMIN_PENALTY_COUNT",
                     "industryType": entityIndustry,
+                    "queryBoss": false,
                     "region": entityArea,
                     "pageIndex": pageIndex,
                     "pageSize": 20] as [String : Any]

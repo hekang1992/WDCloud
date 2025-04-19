@@ -23,6 +23,7 @@ class FocusCompanyViewNormalCell: BaseViewCell {
         mlabel.textColor = UIColor.init(cssStr: "#333333")
         mlabel.textAlignment = .left
         mlabel.font = .mediumFontOfSize(size: 15)
+        mlabel.numberOfLines = 0
         return mlabel
     }()
     
@@ -63,7 +64,6 @@ class FocusCompanyViewNormalCell: BaseViewCell {
         mlabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(12)
             make.left.equalTo(ctImageView.snp.right).offset(6)
-            make.height.equalTo(21)
             make.right.equalToSuperview().offset(-80)
         }
         typelabel.snp.makeConstraints { make in
@@ -75,7 +75,6 @@ class FocusCompanyViewNormalCell: BaseViewCell {
         timelabel.snp.makeConstraints { make in
             make.centerY.equalTo(mlabel.snp.centerY)
             make.right.equalToSuperview().offset(-10)
-            make.left.equalTo(mlabel.snp.right)
             make.height.equalTo(15)
         }
         lineView.snp.makeConstraints { make in

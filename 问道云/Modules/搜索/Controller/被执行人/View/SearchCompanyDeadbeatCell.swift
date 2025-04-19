@@ -174,8 +174,11 @@ class SearchCompanyDeadbeatCell: BaseViewCell {
                 numLabel.attributedText = GetRedStrConfig.getRedStr(from: count, fullText: "共\(count)条失信记录", font: .regularFontOfSize(size: 13))
             }
             
+            //名字
             let legalName = model.leaderVec?.leaderList?.first?.name ?? ""
             oneLabel.attributedText = GetRedStrConfig.getRedStr(from: legalName, fullText: "\(model.leaderVec?.leaderTypeName ?? ""): \(legalName)", colorStr: "#3F96FF", font: .regularFontOfSize(size: 13))
+            
+            
             
             let registerCapital = model.orgInfo?.regCap ?? ""
             let regCapCur = model.orgInfo?.regCapCur ?? ""

@@ -179,6 +179,7 @@ extension SearchPeopleSanctionViewController {
                     "moduleId": "19",
                     "riskType": "ADMIN_PENALTY_COUNT",
                     "orgIndustry": entityIndustry,
+                    "queryBoss": false,
                     "orgArea": entityArea,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]

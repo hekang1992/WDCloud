@@ -261,6 +261,7 @@ extension SearchBossViewController {
         let dict = ["keywords": keyword,
                     "orgIndustry": entityIndustry,
                     "orgArea": entityArea,
+                    "queryBoss": false,
                     "pageNum": pageIndex,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,

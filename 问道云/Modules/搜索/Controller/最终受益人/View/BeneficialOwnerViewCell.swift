@@ -66,9 +66,8 @@ class BeneficialOwnerViewCell: BaseViewCell {
     
     lazy var monitoringBtn: UIButton = {
         let monitoringBtn = UIButton(type: .custom)
-        monitoringBtn.isSkeletonable = true
         monitoringBtn.setImage(UIImage(named: "jiankonganniu"), for: .normal)
-        monitoringBtn.isSkeletonable = true
+        monitoringBtn.isHidden = true
         return monitoringBtn
     }()
     
@@ -146,11 +145,11 @@ class BeneficialOwnerViewCell: BaseViewCell {
         
         model.asObservable().subscribe(onNext: { [weak self] model in
             guard let self = self, let model = model, let name = model.personName, !name.isEmpty else { return }
-            
+            monitoringBtn.isHidden = false
             let logoColor = UIColor.init(cssStr: model.logoColor ?? "")!
             
             ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(name, size: (40, 40), bgColor: logoColor))
-            nameLabel.text = name
+            nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: name)
             
             let count = model.listCompany?.count ?? 0
             numLabel.attributedText = GetRedStrConfig.getRedStr(from: "\(count)", fullText: "共担任\(count)家企业最终受益人")

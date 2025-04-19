@@ -569,6 +569,10 @@ extension WDBaseViewController {
     
     //弹窗跳转
     func pushPageWithModel(from model: leaderListModel) {
+        let leaderId = model.leaderId ?? ""
+        if leaderId.isEmpty {
+            return
+        }
         if model.leaderCategory == "2" {
             let legalName = model.name ?? ""
             let personNumber = model.leaderId ?? ""

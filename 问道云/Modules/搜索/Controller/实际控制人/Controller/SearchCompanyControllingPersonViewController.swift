@@ -161,6 +161,7 @@ extension SearchCompanyControllingPersonViewController {
         ViewHud.addLoadView()
         let dict = ["keywords": self.searchWordsRelay.value,
                     "pageNum": pageIndex,
+                    "queryBoss": false,
                     "pageSize": 20] as [String : Any]
         man.requestAPI(params: dict,
                        pageUrl: "/firminfo/v2/home-page/actual/org",

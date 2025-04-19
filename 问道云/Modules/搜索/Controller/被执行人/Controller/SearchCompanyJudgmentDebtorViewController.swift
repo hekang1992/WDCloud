@@ -277,16 +277,40 @@ extension SearchCompanyJudgmentDebtorViewController: UITableViewDelegate, UITabl
             popMoreListView.closeBlock = {
                 self.dismiss(animated: true)
             }
+            popMoreListView.clickBlock = { [weak self] model in
+                guard let self = self else { return }
+                clickModelInfo(from: model)
+            }
             self.present(alertVc, animated: true)
         }else {
-            let personId = model.leaderList?.first?.leaderId ?? ""
-            let peopleName = model.leaderList?.first?.name ?? ""
+            if let model = leaderList.first {
+                clickModelInfo(from: model)
+            }
+        }
+        
+    }
+    
+    private func clickModelInfo(from model: leaderListModel) {
+        let personId = model.leaderId ?? ""
+        if personId.isEmpty {
+            return
+        }
+        let leaderCategory = model.leaderCategory ?? ""
+        if leaderCategory == "1" {
+            let personId = model.leaderId ?? ""
+            let peopleName = model.name ?? ""
+            let companyDetailVc = CompanyBothViewController()
+            companyDetailVc.enityId.accept(personId)
+            companyDetailVc.companyName.accept(peopleName)
+            self.navigationController?.pushViewController(companyDetailVc, animated: true)
+        }else {
+            let personId = model.leaderId ?? ""
+            let peopleName = model.name ?? ""
             let peopleDetailVc = PeopleBothViewController()
             peopleDetailVc.personId.accept(personId)
             peopleDetailVc.peopleName.accept(peopleName)
             self.navigationController?.pushViewController(peopleDetailVc, animated: true)
         }
-        
     }
     
 }
