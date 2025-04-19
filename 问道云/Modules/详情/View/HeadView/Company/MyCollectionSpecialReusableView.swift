@@ -176,11 +176,13 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             }
             
             //法定代表人
+            headView.oneHeadView.nameView.label1.text = model.leaderVec?.leaderTypeName ?? ""
             headView.oneHeadView.nameView.label2.text = model.leaderVec?.leaderList?.first?.name ?? ""
             //注册资本
             let moneyStr = model.basicInfo?.regCap ?? ""
             let unit = model.basicInfo?.regCapCur ?? ""
             headView.oneHeadView.moneyView.label2.text = moneyStr + unit
+            
             //成立时间
             headView.oneHeadView.timeView.label2.text = model.basicInfo?.incDate ?? ""
             //行业
@@ -201,11 +203,15 @@ class MyCollectionSpecialReusableView: UICollectionReusableView {
             headView.oneHeadView.sixView.label2.text = model.assetInfo?.lastAmount ?? ""
             //电话个数
             headView.twoHeadView.model.accept(model)
+            
             //主要股东
             headView.threeHeadView.dataModel.accept(model)
             headView.threeHeadView.shareHoldersBlock = { model in
                 let category = model.category ?? ""
                 let vc = ViewControllerUtils.findViewController(from: self)
+                if category.isEmpty {
+                    return
+                }
                 if category == "1" {
                     let companyVc = CompanyBothViewController()
                     companyVc.enityId.accept(model.id ?? "")

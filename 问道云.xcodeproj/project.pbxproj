@@ -1782,9 +1782,9 @@
 		73B3624E2D37A7CD003BD911 /* Company */ = {
 			isa = PBXGroup;
 			children = (
-				73807D5A2D3396A100F8B90D /* CompanyDetailView.swift */,
 				73807D582D33808400F8B90D /* CompanyCollectionCell.swift */,
 				73807D5E2D33B7D100F8B90D /* CompanyActivityViewCell.swift */,
+				73807D5A2D3396A100F8B90D /* CompanyDetailView.swift */,
 				73C6B1B52D3503D400CD3816 /* MyCollectionSpecialReusableView.swift */,
 				73C6B1A62D34EC8900CD3816 /* CompanyDetailHeadView.swift */,
 				73C6B1B32D34FAB700CD3816 /* CompanyOneHeadView.swift */,
@@ -2695,7 +2695,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.16;
+				MARKETING_VERSION = 1.0.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2743,7 +2743,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.16;
+				MARKETING_VERSION = 1.0.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wentao.ald;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

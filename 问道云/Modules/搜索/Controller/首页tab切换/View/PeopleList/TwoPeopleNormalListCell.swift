@@ -152,7 +152,7 @@ class TwoPeopleNormalListCell: BaseViewCell {
             self.collectionView.reloadData()
             self.ctImageView.kf.setImage(with: URL(string: model.logo ?? ""), placeholder: UIImage.imageOfText(model.personName ?? "", size: (40, 40), bgColor: UIColor.init(cssStr: model.logoColor ?? "")!))
             
-            nameLabel.text = model.personName ?? ""
+            self.nameLabel.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: model.personName ?? "", colorStr: "#F55B5B", font: .mediumFontOfSize(size: 14))
             
             let moduleId = model.moduleId ?? ""
             if moduleId == "14" || moduleId == "15" {

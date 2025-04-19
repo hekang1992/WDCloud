@@ -310,7 +310,7 @@ class TwoCompanyNormalListCell: BaseViewCell {
             //法人
             let leaderList = model.leaderVec?.leaderList ?? []
             let legalName = leaderList.compactMap { $0.name }.joined(separator: ",")
-            self.nameView.label2.text = legalName
+            self.nameView.label2.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: legalName, font: .mediumFontOfSize(size: 12))
             
             //注册资本
             self.moneyView.label2.text = "\(model.orgInfo?.regCap ?? "--")\(model.firmInfo?.registerCapitalCurrency ?? "")"

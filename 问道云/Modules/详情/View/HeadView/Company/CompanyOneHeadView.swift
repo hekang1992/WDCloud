@@ -374,12 +374,25 @@ class CompanyOneHeadView: BaseView {
                 guard let self = self else { return }
                 if let peopleModel = self.model.value?.leaderVec?.leaderList?.first {
                     let vc = ViewControllerUtils.findViewController(from: self)
-                    let personId = peopleModel.leaderId ?? ""
-                    let peopleName = peopleModel.name ?? ""
-                    let peopleDetailVc = PeopleBothViewController()
-                    peopleDetailVc.personId.accept(personId)
-                    peopleDetailVc.peopleName.accept(peopleName)
-                    vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
+                    let leaderCategory = peopleModel.leaderCategory ?? ""
+                    if leaderCategory.isEmpty {
+                        return
+                    }
+                    if leaderCategory == "1" {
+                        let enityId = peopleModel.leaderId ?? ""
+                        let companyName = peopleModel.name ?? ""
+                        let companyDetailVc = CompanyBothViewController()
+                        companyDetailVc.enityId.accept(enityId)
+                        companyDetailVc.companyName.accept(companyName)
+                        vc?.navigationController?.pushViewController(companyDetailVc, animated: true)
+                    }else {
+                        let personId = peopleModel.leaderId ?? ""
+                        let peopleName = peopleModel.name ?? ""
+                        let peopleDetailVc = PeopleBothViewController()
+                        peopleDetailVc.personId.accept(personId)
+                        peopleDetailVc.peopleName.accept(peopleName)
+                        vc?.navigationController?.pushViewController(peopleDetailVc, animated: true)
+                    }
                 }
         }).disposed(by: disposeBag)
         
