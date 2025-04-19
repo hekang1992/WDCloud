@@ -92,6 +92,7 @@ class SearchBossViewController: WDBaseViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self, let text = text else { return }
                 //取消请求
+                self.pageIndex = 1
                 man.cancelLastRequest()
                 if !text.isEmpty, text.count >= 2 {
                     self.oneView.isHidden = true

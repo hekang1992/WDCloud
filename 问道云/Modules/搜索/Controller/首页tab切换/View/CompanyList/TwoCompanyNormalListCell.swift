@@ -313,7 +313,12 @@ class TwoCompanyNormalListCell: BaseViewCell {
             self.nameView.label2.attributedText = GetRedStrConfig.getRedStr(from: model.searchStr ?? "", fullText: legalName, font: .mediumFontOfSize(size: 12))
             
             //注册资本
-            self.moneyView.label2.text = "\(model.orgInfo?.regCap ?? "--")\(model.firmInfo?.registerCapitalCurrency ?? "")"
+            let  moneyStr = model.orgInfo?.regCap ?? ""
+            if moneyStr.isEmpty {
+                self.moneyView.label2.text = "--"
+            }else {
+                self.moneyView.label2.text = "\(moneyStr)\(model.orgInfo?.actCapCur ?? "")"
+            }
             self.moneyView.label2.textColor = .init(cssStr: "#333333")
             
             //成立时间
