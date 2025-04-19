@@ -194,7 +194,7 @@ extension CompanyActivityViewController {
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
                     }else {
-                        self.addNodataView(from: self.view)
+                        self.addNodataView(from: self.tableView)
                     }
                     if self.allArray.count != total {
                         self.tableView.mj_footer?.isHidden = false

@@ -71,7 +71,7 @@ class CompanyThreeHeadView: BaseView {
         let onenumlabel = UILabel()
         onenumlabel.textColor = UIColor.init(cssStr: "#58408B")
         onenumlabel.textAlignment = .center
-        onenumlabel.font = .mediumFontOfSize(size: 12)
+        onenumlabel.font = .mediumFontOfSize(size: 10)
         return onenumlabel
     }()
     
@@ -79,7 +79,7 @@ class CompanyThreeHeadView: BaseView {
         let twoNumlabel = UILabel()
         twoNumlabel.textColor = UIColor.init(cssStr: "#58408B")
         twoNumlabel.textAlignment = .center
-        twoNumlabel.font = .mediumFontOfSize(size: 12)
+        twoNumlabel.font = .mediumFontOfSize(size: 10)
         return twoNumlabel
     }()
     

@@ -193,9 +193,8 @@ extension PeopleActivityViewController {
                     self.allArray.append(contentsOf: pageData)
                     if total != 0 {
                         self.emptyView.removeFromSuperview()
-                        self.noNetView.removeFromSuperview()
                     }else {
-                        self.addNodataView(from: self.view)
+                        self.addNodataView(from: self.tableView)
                     }
                     if self.allArray.count != total {
                         self.tableView.mj_footer?.isHidden = false

@@ -31,14 +31,11 @@ class PeopleBothViewController: WDBaseViewController {
     
     lazy var peopleDetailVc: PeopleDetailViewController = {
         let peopleDetailVc = PeopleDetailViewController()
-        peopleDetailVc.personId = self.personId.value
         return peopleDetailVc
     }()
     
     lazy var activityDetailVc: PeopleActivityViewController = {
         let activityDetailVc = PeopleActivityViewController()
-        activityDetailVc.personId = self.personId.value
-        activityDetailVc.personName = self.peopleName.value
         return activityDetailVc
     }()
 
@@ -67,6 +64,10 @@ class PeopleBothViewController: WDBaseViewController {
             self.segmentedView.selectItemAt(index: 1)
         }
         
+        peopleDetailVc.refreshBlock = { [weak self] model in
+            guard let self = self else { return }
+            self.activityDetailVc.personName = model.personName ?? ""
+        }
     }
     
 }
@@ -84,6 +85,7 @@ extension PeopleBothViewController: JXSegmentedViewDelegate {
         segmentedView.dataSource = segmentedDataSource
         segmentedView.backgroundColor = .white
         segmentedView.delegate = self
+        
         // 设置指示器
         let indicator = JXSegmentedIndicatorLineView()
         indicator.indicatorWidth = 16
@@ -94,13 +96,14 @@ extension PeopleBothViewController: JXSegmentedViewDelegate {
         segmentedView.frame = CGRect(x: 0, y: 0, width: 200, height: 40)
         setupContentScrollView()
         segmentedView.contentScrollView = contentScrollView
+        segmentedView(segmentedView, didSelectedItemAt: 0)
     }
     
     func setupContentScrollView() {
         contentScrollView.isPagingEnabled = true
         contentScrollView.bounces = false
-        contentScrollView.showsHorizontalScrollIndicator = false
         contentScrollView.showsVerticalScrollIndicator = false
+        contentScrollView.showsHorizontalScrollIndicator = false
         view.addSubview(contentScrollView)
         contentScrollView.snp.makeConstraints { make in
             make.left.equalToSuperview()
@@ -108,14 +111,25 @@ extension PeopleBothViewController: JXSegmentedViewDelegate {
             make.bottom.equalToSuperview()
             make.top.equalTo(headView.snp.bottom)
         }
-        contentScrollView.contentSize = CGSize(width: SCREEN_WIDTH * 2, height: contentScrollView.bounds.height)
-        
-        let modules = [peopleDetailVc, activityDetailVc]
-        for (index, vc) in modules.enumerated() {
-            vc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: SCREEN_WIDTH, height: contentScrollView.bounds.height)
-            contentScrollView.addSubview(vc.view)
-            addChild(vc)
-            vc.didMove(toParent: self)
+        contentScrollView.contentSize = CGSize(width: view.bounds.width * 2, height: contentScrollView.bounds.height)
+    }
+    
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        if index == 0 {
+            peopleDetailVc.personId = self.personId.value
+            peopleDetailVc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
+            contentScrollView.addSubview(peopleDetailVc.view)
+            addChild(peopleDetailVc)
+            peopleDetailVc.didMove(toParent: self)
+        }else {
+            activityDetailVc.personId = self.personId.value
+            if !self.peopleName.value.isEmpty {
+                activityDetailVc.personName = self.peopleName.value
+            }
+            activityDetailVc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
+            contentScrollView.addSubview(activityDetailVc.view)
+            addChild(activityDetailVc)
+            activityDetailVc.didMove(toParent: self)
         }
     }
     

@@ -17,7 +17,11 @@ class PeopleDetailViewController: WDBaseViewController {
     
     var intBlock: ((Double, String) -> Void)?
     
+    //点击
     var activityBlock: (() -> Void)?
+    
+    //刷新
+    var refreshBlock: ((DataModel) -> Void)?
     
     //简介
     lazy var infoView: CompanyDescInfoView = {
@@ -293,6 +297,7 @@ extension PeopleDetailViewController {
             case .success(let success):
                 if let model = success.data {
                     self?.model = model
+                    self?.refreshBlock?(model)
                     self?.refreshHeadUI(from: model)
                 }
                 complete()

@@ -23,9 +23,10 @@ class CompanyDetailViewController: WDBaseViewController {
     
     //是否刷新上一个页面
     var refreshBlock: ((Int) -> Void)?
+    var refreshHeadBlock: ((DataModel) -> Void)?
     
     //点击了动态
-    var activityBlock: (() -> Void)?
+    var activityBlock: ((String) -> Void)?
     
     lazy var companyDetailView: CompanyDetailView = {
         let companyDetailView = CompanyDetailView()
@@ -93,7 +94,8 @@ class CompanyDetailViewController: WDBaseViewController {
         }
         
         companyDetailView.activityBlock = { [weak self] in
-            self?.activityBlock?()
+            let companyName = self?.headModel.value?.basicInfo?.orgName ?? ""
+            self?.activityBlock?(companyName)
         }
         
         companyDetailView.vipBlock = { [weak self] in
@@ -305,6 +307,7 @@ extension CompanyDetailViewController {
                     self.refreshFooterInfo(form: model)
                     self.companyDetailView.headModel.accept(model)
                     self.companyDetailView.collectionView.reloadData()
+                    self.refreshHeadBlock?(model)
                 }
                 complete()
                 break

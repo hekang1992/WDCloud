@@ -38,21 +38,23 @@ class CompanyBothViewController: WDBaseViewController {
     
     lazy var companyDetailVc: CompanyDetailViewController = {
         let companyDetailVc = CompanyDetailViewController()
-        companyDetailVc.enityId = self.enityId.value
         companyDetailVc.refreshBlock = { [weak self] index in
             self?.refreshBlock?(index)
         }
-        companyDetailVc.activityBlock = { [weak self] in
+        companyDetailVc.activityBlock = { [weak self] companyName in
             guard let self = self else { return }
+            self.companyName.accept(companyName)
             self.segmentedView.selectItemAt(index: 1)
+        }
+        companyDetailVc.refreshHeadBlock = { [weak self] model in
+            guard let self = self else { return }
+            self.activityDetailVc.companyName = model.basicInfo?.orgName ?? ""
         }
         return companyDetailVc
     }()
     
     lazy var activityDetailVc: CompanyActivityViewController = {
         let activityDetailVc = CompanyActivityViewController()
-        activityDetailVc.enityId = self.enityId.value
-        activityDetailVc.companyName = self.companyName.value
         return activityDetailVc
     }()
     
@@ -210,7 +212,10 @@ extension CompanyBothViewController: JXSegmentedViewDelegate {
             companyDetailVc.didMove(toParent: self)
         }else {
             activityDetailVc.enityId = self.enityId.value
-            activityDetailVc.companyName = self.companyName.value
+            let companyName = self.companyName.value
+            if !companyName.isEmpty {
+                activityDetailVc.companyName = companyName
+            }
             activityDetailVc.view.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: view.bounds.width, height: contentScrollView.bounds.height)
             contentScrollView.addSubview(activityDetailVc.view)
             addChild(activityDetailVc)
